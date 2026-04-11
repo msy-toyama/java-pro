@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用規約 — Java Pro</title>
+    <meta name="description" content="Java Pro アプリの利用規約です。サービス内容、課金、免責事項等についてご確認いただけます。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F5F6FA;
+            --card-bg: #FFFFFF;
+            --text-primary: #1B1F3B;
+            --text-secondary: #4A4E6A;
+            --text-tertiary: #8B8FA8;
+            --accent: #4361EE;
+            --accent-light: #E8EDFF;
+            --accent-dark: #3451D1;
+            --success: #10B981;
+            --success-light: #ECFDF5;
+            --warning: #92400E;
+            --warning-bg: #FFFBEB;
+            --warning-border: #FCD34D;
+            --border: #E2E5F1;
+            --border-light: #F0F1F8;
+            --shadow: 0 1px 3px rgba(27,31,59,.06), 0 1px 2px rgba(27,31,59,.04);
+            --shadow-md: 0 4px 12px rgba(27,31,59,.08);
+            --radius: 14px;
+            --nav-height: 56px;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0C0E1A;
+                --card-bg: #161829;
+                --text-primary: #E4E6F0;
+                --text-secondary: #9DA1BE;
+                --text-tertiary: #6B6F8A;
+                --accent: #6B85F5;
+                --accent-light: #1C2240;
+                --accent-dark: #8DA2FF;
+                --success: #34D399;
+                --success-light: #0D2818;
+                --warning: #FCD34D;
+                --warning-bg: #2A2008;
+                --warning-border: #92750D;
+                --border: #252840;
+                --border-light: #1E2035;
+                --shadow: 0 1px 3px rgba(0,0,0,.3);
+                --shadow-md: 0 4px 12px rgba(0,0,0,.4);
+            }
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-height) + 20px)}
+        body{
+            font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+            background:var(--bg);color:var(--text-primary);line-height:1.85;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        /* ===== ナビゲーション ===== */
+        .navbar{
+            position:sticky;top:0;z-index:100;
+            border-bottom:1px solid var(--border);
+            backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+            background:rgba(245,246,250,.82);
+            height:var(--nav-height);
+        }
+        @media(prefers-color-scheme:dark){
+            .navbar{background:rgba(12,14,26,.88)}
+        }
+        .navbar-inner{
+            max-width:760px;margin:0 auto;padding:0 24px;height:100%;
+            display:flex;align-items:center;justify-content:space-between;
+        }
+        .navbar-brand{
+            display:flex;align-items:center;gap:10px;
+            text-decoration:none;color:var(--text-primary);font-weight:700;font-size:1rem;
+        }
+        .navbar-brand .logo{
+            width:32px;height:32px;
+            background:linear-gradient(135deg,#4361EE,#7C3AED);
+            border-radius:8px;display:flex;align-items:center;justify-content:center;
+            color:#FFF;font-weight:800;font-size:.75rem;letter-spacing:-.5px;
+        }
+        .navbar-links{display:flex;gap:4px}
+        .navbar-links a{
+            padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:500;
+            color:var(--text-secondary);text-decoration:none;transition:all .2s;
+        }
+        .navbar-links a:hover{background:var(--accent-light);color:var(--accent)}
+        .navbar-links a.active{background:var(--accent);color:#FFF}
+
+        /* ===== コンテナ ===== */
+        .container{max-width:760px;margin:0 auto;padding:32px 24px 80px}
+
+        /* ===== ヘッダー ===== */
+        .page-header{text-align:center;padding:40px 0 32px}
+        .page-header .badge{
+            display:inline-flex;align-items:center;gap:6px;
+            background:var(--accent-light);color:var(--accent);
+            font-size:.8rem;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:16px;
+        }
+        .page-header h1{font-size:2rem;font-weight:700;letter-spacing:-.5px;margin-bottom:8px}
+        .page-header .updated{font-size:.85rem;color:var(--text-tertiary)}
+
+        /* ===== 非公式バナー ===== */
+        .unofficial-banner{
+            background:var(--warning-bg);border:1px solid var(--warning-border);
+            border-radius:var(--radius);padding:20px 24px;margin-bottom:28px;
+            display:flex;align-items:flex-start;gap:14px;
+        }
+        .unofficial-banner .icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+        .unofficial-banner .content{flex:1}
+        .unofficial-banner .title{font-weight:700;font-size:.92rem;color:var(--warning);margin-bottom:6px}
+        .unofficial-banner p{font-size:.85rem;color:var(--text-secondary);margin:0;line-height:1.7}
+
+        /* ===== 目次 ===== */
+        .toc{
+            background:var(--card-bg);border:1px solid var(--border);
+            border-radius:var(--radius);padding:24px 28px;margin-bottom:28px;box-shadow:var(--shadow);
+        }
+        .toc-title{
+            font-size:.8rem;font-weight:700;color:var(--text-tertiary);
+            text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;
+        }
+        .toc ol{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 24px}
+        @media(max-width:520px){.toc ol{grid-template-columns:1fr}}
+        .toc li a{
+            font-size:.88rem;color:var(--text-secondary);text-decoration:none;
+            padding:7px 0;display:block;transition:color .2s;
+        }
+        .toc li a:hover{color:var(--accent)}
+        .toc li a::before{content:attr(data-num);display:inline-block;width:26px;font-weight:600;color:var(--accent);font-size:.82rem}
+
+        /* ===== セクション ===== */
+        .section{
+            background:var(--card-bg);border:1px solid var(--border);
+            border-radius:var(--radius);padding:28px;margin-bottom:16px;
+            box-shadow:var(--shadow);transition:box-shadow .25s;
+        }
+        .section:hover{box-shadow:var(--shadow-md)}
+        .section h2{
+            font-size:1.12rem;font-weight:700;margin-bottom:16px;
+            padding-bottom:12px;border-bottom:1px solid var(--border-light);
+            display:flex;align-items:center;gap:10px;
+        }
+        .section h2 .num{
+            background:var(--accent);color:#FFF;font-size:.72rem;font-weight:700;
+            width:26px;height:26px;border-radius:7px;
+            display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+        }
+        .section p,.section li{font-size:.92rem;color:var(--text-secondary);margin-bottom:10px}
+        .section ol,.section ul{padding-left:1.4em;margin-bottom:12px}
+        .section li{margin-bottom:8px;padding-left:4px}
+
+        /* ===== ハイライト ===== */
+        .highlight{
+            background:var(--accent-light);border-radius:10px;padding:16px 20px;
+            margin:16px 0;border-left:3px solid var(--accent);
+        }
+        .highlight p{margin:0;font-weight:500;color:var(--text-primary);font-size:.9rem}
+
+        /* ===== 信頼バッジ ===== */
+        .trust-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0 24px}
+        @media(max-width:520px){.trust-badges{grid-template-columns:1fr}}
+        .trust-badge{
+            background:var(--card-bg);border:1px solid var(--border);
+            border-radius:12px;padding:20px 16px;text-align:center;box-shadow:var(--shadow);
+        }
+        .trust-badge .icon{font-size:1.6rem;margin-bottom:8px}
+        .trust-badge .label{font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+        .trust-badge .desc{font-size:.75rem;color:var(--text-tertiary);line-height:1.5}
+
+        /* ===== お問い合わせ ===== */
+        .contact-section{
+            background:var(--card-bg);border:1px solid var(--border);
+            border-radius:var(--radius);padding:28px;margin-top:28px;
+            box-shadow:var(--shadow);text-align:center;
+        }
+        .contact-section h2{font-size:1.1rem;font-weight:700;margin-bottom:12px}
+        .contact-section p{font-size:.9rem;color:var(--text-secondary);margin-bottom:16px}
+        .instagram-link{
+            display:inline-flex;align-items:center;gap:10px;
+            background:linear-gradient(135deg,#833AB4,#E1306C,#F77737);
+            color:#FFF;font-weight:600;font-size:.92rem;
+            padding:12px 28px;border-radius:12px;text-decoration:none;
+            transition:transform .2s,box-shadow .2s;
+        }
+        .instagram-link:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(225,48,108,.3);text-decoration:none}
+        .instagram-link svg{width:20px;height:20px;fill:currentColor}
+
+        /* ===== フッター ===== */
+        footer{margin-top:48px;padding:32px 0;border-top:1px solid var(--border);text-align:center}
+        .footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:16px;flex-wrap:wrap}
+        .footer-links a{font-size:.85rem;color:var(--text-secondary);text-decoration:none;font-weight:500;transition:color .2s}
+        .footer-links a:hover{color:var(--accent)}
+        .footer-copyright{font-size:.8rem;color:var(--text-tertiary)}
+        .footer-disclaimer{
+            font-size:.75rem;color:var(--text-tertiary);margin-top:12px;
+            max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;
+        }
+
+        /* ===== トップに戻る ===== */
+        .back-to-top{
+            position:fixed;bottom:24px;right:24px;width:44px;height:44px;
+            background:var(--accent);color:#FFF;border:none;border-radius:12px;
+            cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;
+            box-shadow:var(--shadow-md);opacity:0;transform:translateY(12px);
+            transition:opacity .3s,transform .3s;z-index:50;
+        }
+        .back-to-top.visible{opacity:1;transform:translateY(0)}
+        .back-to-top:hover{background:var(--accent-dark)}
+
+        /* ===== ユーティリティ ===== */
+        a{color:var(--accent);text-decoration:none}
+        a:hover{text-decoration:underline}
+        strong{color:var(--text-primary)}
+    </style>
+</head>
+<body>
+
+    <!-- ナビゲーション -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="terms.html" class="navbar-brand">
+                <div class="logo">JP</div>
+                <span>Java Pro</span>
+            </a>
+            <div class="navbar-links">
+                <a href="terms.html" class="active">利用規約</a>
+                <a href="privacy.html">プライバシーポリシー</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- ヘッダー -->
+        <div class="page-header">
+            <div class="badge">📄 Terms of Service</div>
+            <h1>利用規約</h1>
+            <div class="updated">最終更新日: 2026年4月11日</div>
+        </div>
+
+        <!-- 非公式バナー -->
+        <div class="unofficial-banner">
+            <div class="icon">⚠️</div>
+            <div class="content">
+                <div class="title">非公式アプリケーションについて</div>
+                <p>Java Pro は Oracle 認定資格の学習を支援する<strong>非公式</strong>のアプリケーションです。Oracle Corporation、Pearson VUE、その他の試験実施機関による認定・推奨・後援を受けたものではありません。本アプリ内の模擬試験・学習コンテンツはすべて独自に作成されており、公式試験問題を含みません。</p>
+            </div>
+        </div>
+
+        <!-- 目次 -->
+        <div class="toc">
+            <div class="toc-title">目次</div>
+            <ol>
+                <li><a href="#sec1" data-num="1.">適用</a></li>
+                <li><a href="#sec2" data-num="2.">サービスの内容</a></li>
+                <li><a href="#sec3" data-num="3.">無料範囲と課金</a></li>
+                <li><a href="#sec4" data-num="4.">知的財産権と商標</a></li>
+                <li><a href="#sec5" data-num="5.">非公式コンテンツ</a></li>
+                <li><a href="#sec6" data-num="6.">禁止事項</a></li>
+                <li><a href="#sec7" data-num="7.">免責事項</a></li>
+                <li><a href="#sec8" data-num="8.">学習データの取り扱い</a></li>
+                <li><a href="#sec9" data-num="9.">規約の変更</a></li>
+                <li><a href="#sec10" data-num="10.">準拠法・管轄</a></li>
+            </ol>
+        </div>
+
+        <!-- 第1条 -->
+        <div class="section" id="sec1">
+            <h2><span class="num">1</span>適用</h2>
+            <p>本利用規約（以下「本規約」といいます）は、Masaya Kobayashi（以下「開発者」といいます）が提供する iOS アプリケーション「Java Pro」（以下「本アプリ」といいます）の利用条件を定めるものです。</p>
+            <p>ユーザーは、本アプリをダウンロード、インストール、または使用することにより、本規約のすべての条項に同意したものとみなされます。本規約に同意いただけない場合は、本アプリの使用をお控えください。</p>
+        </div>
+
+        <!-- 第2条 -->
+        <div class="section" id="sec2">
+            <h2><span class="num">2</span>サービスの内容</h2>
+            <p>本アプリは、Java プログラミング言語の学習および Oracle Java 認定資格（SE 11 / SE 17 の Silver / Gold）の取得に向けた学習を支援する iOS アプリケーションです。以下の機能を提供します。</p>
+            <ol>
+                <li>体系的な Java 学習コンテンツ（全32チャプター・138レッスン）の閲覧</li>
+                <li>多様なクイズ形式による理解度確認（四択・複数選択・穴埋め・並び替え・出力予測・エラー発見・コード補完の全7種、計414問）</li>
+                <li>非公式模擬試験の受験（SE11/SE17 × Silver/Gold × 各2セット = 計8種）</li>
+                <li>学習進捗の管理およびゲーミフィケーション（XP・バッジ・レベル・連続学習日数）</li>
+                <li>弱点分析・資格別進捗トラッキング</li>
+                <li>Java 用語集（60語）の閲覧・検索</li>
+                <li>学習リマインダー通知（ローカル通知）</li>
+            </ol>
+            <div class="highlight">
+                <p>本アプリは Java 学習を支援するツールであり、資格試験の合格を保証するものではありません。</p>
+            </div>
+        </div>
+
+        <!-- 第3条 -->
+        <div class="section" id="sec3">
+            <h2><span class="num">3</span>無料範囲と課金</h2>
+            <ol>
+                <li><strong>無料コンテンツ:</strong> 本アプリは無料でダウンロードできます。入門コース（第1章〜第9章の全レッスン・クイズ）および SE11 Silver 模擬試験1は無料でご利用いただけます。</li>
+                <li><strong>フルアクセス（買い切り）:</strong> Silver / Gold 範囲のコースおよび全模擬試験をご利用いただくには、アプリ内課金（買い切り）による「フルアクセス」の購入が必要です。サブスクリプション（月額・年額課金）ではありません。</li>
+                <li><strong>決済:</strong> 購入は Apple の App Store 決済を通じて行われます。課金・返金については <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener noreferrer">Apple メディアサービス利用規約</a> に準拠します。</li>
+                <li><strong>購入の復元:</strong> 機種変更やアプリの再インストール時は、設定画面の「購入を復元」ボタンから購入済みの権利を復元できます。</li>
+            </ol>
+        </div>
+
+        <!-- 第4条 -->
+        <div class="section" id="sec4">
+            <h2><span class="num">4</span>知的財産権と商標</h2>
+            <ol>
+                <li>本アプリに含まれるすべてのコンテンツ（テキスト、コード例、クイズ問題、解説、デザイン、アイコン等）の著作権は、別段の記載がない限り開発者に帰属します。</li>
+                <li>「Java」「Oracle」「Oracle Certified Professional」は Oracle Corporation およびその関連会社の登録商標または商標です。その他の商標はすべて各権利者に帰属します。</li>
+                <li>本アプリにおけるこれら商標の使用は、対応する資格試験の学習コンテンツを説明する目的に限定されます。</li>
+            </ol>
+        </div>
+
+        <!-- 第5条 -->
+        <div class="section" id="sec5">
+            <h2><span class="num">5</span>非公式コンテンツに関する重要事項</h2>
+            <div class="highlight">
+                <p>本条は、本アプリと Oracle 認定資格試験の関係について重要な内容を記載しています。必ずお読みください。</p>
+            </div>
+            <ol>
+                <li>本アプリは Oracle Corporation、Pearson VUE、その他の認定試験実施機関とは<strong>一切関係のない非公式な学習支援アプリケーション</strong>です。いかなる認定・推奨・後援も受けておりません。</li>
+                <li>本アプリ内の模擬試験問題はすべて開発者が独自に作成したものであり、<strong>Oracle の公式試験問題（実試験で出題される問題）を一切含みません</strong>。出題形式・難易度・範囲は公式試験と異なる場合があります。</li>
+                <li>本アプリでの学習成績や模擬試験の結果は、実際の Oracle 認定試験の合否を予測・保証するものではありません。</li>
+                <li>Oracle 認定資格試験に関する最新の出題範囲・試験形式・合格基準・受験方法等は、必ず <a href="https://education.oracle.com/ja/" target="_blank" rel="noopener noreferrer">Oracle University 公式サイト</a> でご確認ください。</li>
+            </ol>
+        </div>
+
+        <!-- 第6条 -->
+        <div class="section" id="sec6">
+            <h2><span class="num">6</span>禁止事項</h2>
+            <p>ユーザーは、本アプリの利用にあたり、以下の行為を行ってはなりません。</p>
+            <ol>
+                <li>本アプリのコンテンツ（問題文、解説、コード例等）を無断で複製、転載、配布、販売、または二次利用する行為</li>
+                <li>本アプリのリバースエンジニアリング、逆コンパイル、逆アセンブル、またはソースコードの抽出を試みる行為</li>
+                <li>不正な手段による課金の回避、アプリの改ざん、または不正利用を行う行為</li>
+                <li>本アプリの運営を妨害し、他のユーザーの利用を阻害する行為</li>
+                <li>法令、公序良俗、または本規約に違反する行為</li>
+            </ol>
+        </div>
+
+        <!-- 第7条 -->
+        <div class="section" id="sec7">
+            <h2><span class="num">7</span>免責事項</h2>
+            <ol>
+                <li>本アプリは「現状のまま（as is）」で提供されます。特定目的への適合性、正確性、完全性について、明示・黙示を問わず一切の保証を行いません。</li>
+                <li>開発者はコンテンツの正確性向上に最善の努力を尽くしますが、Java 言語仕様の更新や Oracle 認定試験の出題範囲の変更に即座に対応できない場合があります。</li>
+                <li>本アプリの利用または利用不能により生じた直接的・間接的な損害について、開発者は法令で許容される範囲において一切の責任を負いません。</li>
+                <li>本アプリは予告なくサービスの内容変更、一時停止、または終了を行う場合があります。</li>
+                <li>通信障害、端末の故障、OS アップデート等の外的要因による不具合について、開発者は責任を負いません。</li>
+            </ol>
+        </div>
+
+        <!-- 第8条 -->
+        <div class="section" id="sec8">
+            <h2><span class="num">8</span>学習データの取り扱い</h2>
+            <ol>
+                <li>学習進捗、クイズ結果、模擬試験スコア等のデータは、すべて<strong>ユーザーの端末内にのみ保存</strong>されます。外部サーバーへの送信は一切行いません。</li>
+                <li>アプリのアンインストールまたはデータリセット操作により、学習データは完全に消失します。開発者はデータの復元について一切の責任を負いません。</li>
+                <li>設定画面から学習データを JSON 形式でエクスポートできます。エクスポートされたデータの管理・保護はユーザーの責任となります。</li>
+            </ol>
+            <p>データの取り扱いに関する詳細は <a href="privacy.html">プライバシーポリシー</a> をご確認ください。</p>
+        </div>
+
+        <!-- 第9条 -->
+        <div class="section" id="sec9">
+            <h2><span class="num">9</span>規約の変更</h2>
+            <p>開発者は、法令の改正、サービス内容の変更、その他必要に応じて本規約を変更できるものとします。重要な変更を行う場合は、本アプリ内の通知または本ページの更新により周知します。</p>
+            <p>変更後の規約は公開された時点から効力を生じ、変更後に本アプリの利用を継続した場合は、変更後の規約に同意したものとみなされます。</p>
+        </div>
+
+        <!-- 第10条 -->
+        <div class="section" id="sec10">
+            <h2><span class="num">10</span>準拠法・管轄</h2>
+            <p>本規約は日本国法に準拠し、日本国法に従って解釈されるものとします。本規約に関する一切の紛争については、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+        </div>
+
+        <!-- 信頼バッジ -->
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <div class="icon">🔒</div>
+                <div class="label">データ端末内保存</div>
+                <div class="desc">個人情報の収集・外部送信は一切ありません</div>
+            </div>
+            <div class="trust-badge">
+                <div class="icon">💎</div>
+                <div class="label">買い切り課金</div>
+                <div class="desc">サブスク不要。一度の購入で全機能を永久利用</div>
+            </div>
+            <div class="trust-badge">
+                <div class="icon">📝</div>
+                <div class="label">独自作成コンテンツ</div>
+                <div class="desc">全問題・解説を独自に作成。公式問題は不使用</div>
+            </div>
+        </div>
+
+        <!-- お問い合わせ -->
+        <div class="contact-section">
+            <h2>お問い合わせ</h2>
+            <p>本規約に関するご質問やご意見は、Instagram DM にてお気軽にお問い合わせください。</p>
+            <a href="https://www.instagram.com/photoyasan16" target="_blank" rel="noopener noreferrer" class="instagram-link">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                @photoyasan16
+            </a>
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <div class="footer-links">
+                <a href="terms.html">利用規約</a>
+                <a href="privacy.html">プライバシーポリシー</a>
+                <a href="https://www.instagram.com/photoyasan16" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+            <div class="footer-copyright">&copy; 2026 Masaya Kobayashi. All rights reserved.</div>
+            <div class="footer-disclaimer">
+                「Java」「Oracle」「Oracle Certified Professional」は Oracle Corporation の登録商標です。<br>
+                Java Pro は Oracle Corporation とは一切関係のない非公式アプリケーションです。
+            </div>
+        </footer>
+    </div>
+
+    <!-- トップに戻るボタン -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="ページの先頭に戻る">↑</button>
+
+    <script>
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            btn.classList.toggle('visible', window.scrollY > 400);
+        });
+    </script>
+</body>
+</html>
