@@ -1,0 +1,940 @@
+{
+  "courseId": "ch28",
+  "lessons": [
+    {
+      "id": "ch28_01",
+      "courseId": "ch28",
+      "title": "従来のI/O",
+      "summary": "JavaのInputStream/OutputStreamを中心としたバイトストリームの階層構造を学びます。FileInputStream/FileOutputStream、BufferedReader/BufferedWriterの使い方を理解します。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "overview",
+          "title": "JavaのI/O概要",
+          "body": "このレッスンでは以下を学びます:\n\n・InputStreamとOutputStream（バイトストリーム）の基本\n・FileInputStream / FileOutputStreamの使い方\n・BufferedStreamでI/O性能を向上させる方法\n\nファイルの読み書きの基礎を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "rule",
+          "title": "InputStream / OutputStreamの階層",
+          "body": "InputStreamはバイト入力の抽象基底クラスで、read()メソッドが中心です。\nOutputStreamはバイト出力の抽象基底クラスで、write()メソッドが中心です。\n主なサブクラスとして、FileInputStream、FileOutputStream、ByteArrayInputStream、ByteArrayOutputStreamなどがあります。\nBufferedInputStream / BufferedOutputStreamはバッファリングによりI/O効率を向上させます。\nDataInputStream / DataOutputStreamはプリミティブ型の読み書きを提供します。\nObjectInputStream / ObjectOutputStreamはオブジェクトのシリアライズ・デシリアライズに使います。",
+          "code": null,
+          "note": "InputStream/OutputStreamはバイト単位の処理、Reader/Writerは文字単位の処理であることを区別しましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "code",
+          "title": "FileInputStream / FileOutputStreamの使用",
+          "body": "FileInputStreamはファイルからバイトを読み込むストリームです。\nFileOutputStreamはファイルにバイトを書き込むストリームです。\nコンストラクタにファイルパスまたはFileオブジェクトを渡します。\nread()はバイトを1つ読み込み、ファイル末尾で-1を返します。\nclose()でリソースを解放する必要があります。try-with-resourcesの使用が推奨されます。",
+          "code": "import java.io.*;\n\n// FileOutputStreamでファイルに書き込み\n// 例外が発生する可能性がある処理\ntry (FileOutputStream fos = new FileOutputStream(\"output.dat\")) {\n    fos.write(65);  // 'A'のASCIIコード\n    fos.write(66);  // 'B'\n    byte[] data = {67, 68, 69}; // C, D, E\n    fos.write(data);\n} // 自動的にclose()される\n\n// FileInputStreamでファイルから読み込み\n// 例外が発生する可能性がある処理\ntry (FileInputStream fis = new FileInputStream(\"output.dat\")) {\n    int b;\n    // 条件が成り立つ間、繰り返す\n    while ((b = fis.read()) != -1) {\n        System.out.print((char) b); // ABCDE\n    }\n}\n\n// バッファ付きで効率的に読み込み\n// 例外が発生する可能性がある処理\ntry (BufferedInputStream bis = new BufferedInputStream(\n        new FileInputStream(\"output.dat\"))) {\n    byte[] buffer = new byte[1024];\n    // 変数の宣言と初期化\n    int len = bis.read(buffer);\n    System.out.println(new String(buffer, 0, len)); // ABCDE\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "code",
+          "title": "BufferedReader / BufferedWriter",
+          "body": "BufferedReaderは文字入力ストリームにバッファリング機能を追加します。\nreadLine()メソッドで1行ずつテキストを読み込めます。\nBufferedWriterは文字出力ストリームにバッファリング機能を追加します。\nnewLine()メソッドでプラットフォーム依存の改行を書き込めます。\nInputStreamReaderを介してバイトストリームを文字ストリームに変換できます。",
+          "code": "import java.io.*;\n\n// BufferedWriterでテキスト書き込み\ntry (BufferedWriter bw = new BufferedWriter(\n        new FileWriter(\"sample.txt\"))) {\n    bw.write(\"Hello, Java!\");\n    bw.newLine();\n    bw.write(\"I/O is important.\");\n}\n\n// BufferedReaderで1行ずつ読み込み\ntry (BufferedReader br = new BufferedReader(\n        new FileReader(\"sample.txt\"))) {\n    String line;\n    while ((line = br.readLine()) != null) {\n        System.out.println(line);\n    }\n}\n// 出力:\n// Hello, Java!\n// I/O is important.",
+          "note": "**BufferedReader**.readLine()はファイル末尾に達するとnullを返します。空行は空文字列(\"\")を返します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "tip",
+          "title": "試験対策：従来のI/O",
+          "body": "バイトストリーム（InputStream/OutputStream）と文字ストリーム（Reader/Writer）の違いを明確に区別しましょう。\nデコレータパターン（ストリームのラップ）の組み合わせが試験で問われます。\nclose()の呼び忘れによるリソースリークは重要なトピックです。\ntry-with-resourcesを使えばAutoCloseableなリソースが自動的にclose()されます。\nread()が-1を返す条件、readLine()がnullを返す条件を覚えましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_01_q1",
+          "lessonId": "ch28_01",
+          "type": "fourChoice",
+          "question": "InputStreamクラスについて正しい説明はどれですか？",
+          "code": "Path path = Path.of(\"data\", \"output.txt\");\nFiles.writeString(path, \"Hello Java NIO!\");\nString content = Files.readString(path);",
+          "explanation": "InputStreamはバイト単位でデータを読み込む抽象クラスです。read()メソッドは1バイトを読み込み、ストリームの終端に達すると-1を返します。文字単位の読み込みはReaderクラスが担当します。",
+          "choices": [
+            {
+              "id": "ch28_01_q1_a",
+              "text": "バイト単位でデータを読み込む抽象クラスである",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_01_q1_b",
+              "text": "文字単位でデータを読み込む具象クラスである",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_01_q1_c",
+              "text": "read()はストリームの終端で0を返す",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_01_q1_d",
+              "text": "close()を呼ぶ必要はない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_01_q2",
+          "lessonId": "ch28_01",
+          "type": "fillBlank",
+          "question": "BufferedReaderのreadLine()メソッドは、ファイル末尾に達すると___を返す。",
+          "code": "try (BufferedReader br = Files.newBufferedReader(\n        Path.of(\"input.txt\"))) {\n    br.lines()\n      .filter(line -> !line.isBlank())\n      .forEach(System.out::println);\n}",
+          "explanation": "BufferedReader.readLine()はファイルの末尾に達するとnullを返します。空行の場合は空文字列(\"\")が返されます。-1を返すのはread()メソッドでバイト/文字を1つずつ読む場合です。",
+          "choices": [
+            {
+              "id": "ch28_01_q2_a",
+              "text": "null",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_01_q2_b",
+              "text": "-1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_01_q2_c",
+              "text": "空文字列",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_01_q2_d",
+              "text": "IOException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_01_q3",
+          "lessonId": "ch28_01",
+          "type": "fourChoice",
+          "question": "バイトストリームに対してバッファリング機能を追加するクラスはどれですか？",
+          "code": "try (var stream = Files.walk(Path.of(\"src\"))) {\n    stream.filter(p -> p.toString().endsWith(\".java\"))\n          .forEach(System.out::println);\n}",
+          "explanation": "BufferedInputStreamはInputStreamをラップしてバッファリング機能を追加するクラスです。BufferedReaderは文字ストリーム（Reader）用のバッファリングクラスです。DataInputStreamはプリミティブ型の読み込み用です。",
+          "choices": [
+            {
+              "id": "ch28_01_q3_a",
+              "text": "BufferedInputStream",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_01_q3_b",
+              "text": "BufferedReader",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_01_q3_c",
+              "text": "DataInputStream",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_01_q3_d",
+              "text": "ObjectInputStream",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch28_02",
+      "courseId": "ch28",
+      "title": "Readerとwriter",
+      "summary": "FileReader/FileWriterによる文字ストリームの操作、Charsetによる文字エンコーディングの指定、try-with-resourcesによる安全なリソース管理を学びます。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "overview",
+          "title": "文字ストリームの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・ReaderとWriter（文字ストリーム）の基本\n・FileReader / FileWriter、**BufferedReader** / **BufferedWriter**\n・バイトストリームとの違い（文字エンコーディング対応）\n\nテキストファイルの処理に適した文字ストリームです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "code",
+          "title": "FileReader / FileWriterの使用",
+          "body": "FileWriterはファイルに文字データを書き込むクラスです。\nコンストラクタの第2引数にtrueを指定すると追記モードになります。\nFileReaderはファイルから文字データを読み込むクラスです。\nread()メソッドは1文字ずつ読み込み、ファイル末尾で-1を返します。\nread(char[])でchar配列にまとめて読み込むことも可能です。",
+          "code": "import java.io.*;\nimport java.nio.charset.StandardCharsets;\n\n// FileWriterでテキスト書き込み\ntry (FileWriter fw = new FileWriter(\"hello.txt\")) {\n    fw.write(\"こんにちは\\n\");\n    fw.write(\"Java I/O\");\n}\n\n// 追記モード\ntry (FileWriter fw = new FileWriter(\"hello.txt\", true)) {\n    fw.write(\"\\n追記テキスト\");\n}\n\n// FileReaderで読み込み\ntry (FileReader fr = new FileReader(\"hello.txt\")) {\n    int ch;\n    while ((ch = fr.read()) != -1) {\n        System.out.print((char) ch);\n    }\n}\n\n// Java 11以降：Charset指定\ntry (FileReader fr = new FileReader(\"hello.txt\",\n        StandardCharsets.UTF_8)) {\n    // UTF-8で読み込み\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "rule",
+          "title": "文字エンコーディング（Charset）",
+          "body": "Charsetクラスは文字エンコーディングを表します。\nStandardCharsetsクラスにはUTF_8、ISO_8859_1、US_ASCIIなどの定数が定義されています。\nCharset.forName(\"UTF-8\")のように文字列から取得することもできます。\nエンコーディングを指定しない場合、システムのデフォルトエンコーディングが使われます。\n異なるエンコーディングで読み書きすると文字化けが発生します。\nInputStreamReaderを使うと、バイトストリームを特定のエンコーディングで文字ストリームに変換できます。",
+          "code": "import java.io.*;\nimport java.nio.charset.*;\n\n// InputStreamReaderでエンコーディング指定\ntry (BufferedReader br = new BufferedReader(\n        new InputStreamReader(\n            new FileInputStream(\"data.txt\"),\n            StandardCharsets.UTF_8))) {\n    String line;\n    while ((line = br.readLine()) != null) {\n        System.out.println(line);\n    }\n}\n\n// OutputStreamWriterでエンコーディング指定\ntry (BufferedWriter bw = new BufferedWriter(\n        new OutputStreamWriter(\n            new FileOutputStream(\"output.txt\"),\n            StandardCharsets.UTF_8))) {\n    bw.write(\"UTF-8エンコーディング\");\n}",
+          "note": "Java 18以降、デフォルトエンコーディングはUTF-8です。それ以前はプラットフォームに依存していました。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "code",
+          "title": "try-with-resourcesとI/O",
+          "body": "try-with-resources文はAutoCloseableを実装したリソースを自動的にclose()します。\nI/OクラスはすべてAutoCloseableを実装しているため、try-with-resourcesと組み合わせて使うべきです。\n複数のリソースをセミコロンで区切って宣言できます。\nリソースはclose()される順番が宣言順と逆になります（後入れ先出し）。\nJava 9以降、事前に宣言されたfinalまたは実質的finalな変数をtry-with-resourcesで使えます。",
+          "code": "import java.io.*;\n\n// 基本的なtry-with-resources\n// 例外が発生する可能性がある処理\ntry (FileReader fr = new FileReader(\"input.txt\");\n     BufferedReader br = new BufferedReader(fr)) {\n    System.out.println(br.readLine());\n} // br → fr の順でclose()される\n\n// Java 9以降：事前宣言した変数の使用\nFileReader fr = new FileReader(\"input.txt\");\nBufferedReader br = new BufferedReader(fr);\n// 例外が発生する可能性がある処理\ntry (br) {  // 実質的final変数\n    System.out.println(br.readLine());\n}\n\n// catch/finallyも使用可能\n// 例外が発生する可能性がある処理\ntry (FileWriter fw = new FileWriter(\"log.txt\")) {\n    fw.write(\"ログメッセージ\");\n} catch (IOException e) {\n    System.err.println(\"書き込みエラー: \" + e.getMessage());\n} finally {\n    System.out.println(\"処理完了\");\n}",
+          "note": "try-with-resourcesでの例外とclose()時の例外が同時に発生した場合、close()の例外はsuppressed exceptionになります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "tip",
+          "title": "試験対策：ReaderとWriter",
+          "body": "FileReaderとFileWriterのコンストラクタにCharsetを指定できるのはJava 11以降です。\nInputStreamReaderはバイトストリームから文字ストリームへの変換ブリッジです。\ntry-with-resourcesのリソースclose順序（宣言の逆順）が試験で問われます。\nJava 9以降、実質的final変数をtry-with-resourcesで直接使える点も重要です。\nwrite()した後にflush()を呼ぶか、close()することでバッファの内容がファイルに書き出されます。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_02_q1",
+          "lessonId": "ch28_02",
+          "type": "fourChoice",
+          "question": "InputStreamReaderの役割として正しいものはどれですか？",
+          "code": "ByteBuffer buf = ByteBuffer.allocate(1024);\ntry (FileChannel ch = FileChannel.open(\n        Path.of(\"data.bin\"),\n        StandardOpenOption.READ)) {\n    ch.read(buf);\n    buf.flip();\n}",
+          "explanation": "InputStreamReaderはバイトストリーム（InputStream）を文字ストリーム（Reader）に変換するブリッジクラスです。コンストラクタでCharsetを指定することで、特定のエンコーディングでバイトを文字に変換できます。",
+          "choices": [
+            {
+              "id": "ch28_02_q1_a",
+              "text": "バイトストリームを文字ストリームに変換する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_02_q1_b",
+              "text": "文字ストリームをバイトストリームに変換する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_02_q1_c",
+              "text": "ファイルをバイト単位で読み込む",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_02_q1_d",
+              "text": "ストリームにバッファリング機能を追加する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_02_q2",
+          "lessonId": "ch28_02",
+          "type": "outputPredict",
+          "question": "次のコードを実行した結果、コンソールに出力される内容はどれですか？",
+          "code": "import java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        try (StringWriter sw = new StringWriter()) {\n            sw.write(\"Hello\");\n            sw.write(' ');\n            sw.write(\"World\");\n            System.out.println(sw.toString());\n        }\n    }\n}",
+          "explanation": "StringWriterはメモリ上の文字列バッファに書き込むWriterです。write(\"Hello\")で\"Hello\"、write(' ')でスペース、write(\"World\")で\"World\"が書き込まれます。toString()で結合された文字列\"Hello World\"が返されます。",
+          "choices": [
+            {
+              "id": "ch28_02_q2_a",
+              "text": "Hello World",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_02_q2_b",
+              "text": "HelloWorld",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_02_q2_c",
+              "text": "Hello\\nWorld",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_02_q2_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_02_q3",
+          "lessonId": "ch28_02",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。問題のある箇所はどれですか？",
+          "code": "import java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        FileReader fr = new FileReader(\"data.txt\");\n        try (fr) {\n            fr = new FileReader(\"other.txt\"); // ★\n            System.out.println(fr.read());\n        }\n    }\n}",
+          "explanation": "try-with-resourcesで使用する変数は、tryブロック内で再代入できません。Java 9以降、事前宣言した変数をtry-with-resourcesで使えますが、その変数はfinalまたは実質的finalでなければなりません。tryブロック内でfrに再代入しているためコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch28_02_q3_a",
+              "text": "try-with-resourcesの変数frに再代入している",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_02_q3_b",
+              "text": "FileReaderのコンストラクタが不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_02_q3_c",
+              "text": "fr.read()の戻り値の型が不正",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_02_q3_d",
+              "text": "throws IOExceptionが不要",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch28_02_q4",
+          "lessonId": "ch28_02",
+          "type": "codeComplete",
+          "question": "NIOのPathとFilesでファイルを読み取るコードを完成させてください。",
+          "code": "Path path = Path.of(\"data\", \"output.txt\");\nFiles.writeString(path, \"Hello Java NIO!\");\nString content = Files.readString(path);",
+          "explanation": "Path.get()でファイルパスを取得し、Files.readAllLines()で全行を読み取ります。Java 11以降はPath.of()も使えます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Path path = __BLANK_1__.get(\"data.txt\");\nList<String> lines = __BLANK_2__.readAllLines(path);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①パス取得",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Path",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Paths",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "File",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②ファイル読み取り",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Files",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "File",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "IO",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch28_03",
+      "courseId": "ch28",
+      "title": "NIO.2 Path",
+      "summary": "NIO.2のPathインターフェースを学びます。Paths.get()やPath.of()によるパスの作成、resolve()、relativize()、normalize()などのパス操作メソッドを理解します。",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "overview",
+          "title": "NIO.2とは",
+          "body": "このレッスンでは以下を学びます:\n\n・**NIO**.2 のPathインターフェース（Java 7+）\n・Paths.get()とPath.of()によるパス生成\n・resolve(), relativize(), normalize()等の操作\n\n従来のjava.io.Fileに代わるモダンなファイルパス操作です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "rule",
+          "title": "Pathの作成方法",
+          "body": "Pathインターフェースはjava.nio.file.Pathにあります。\nPaths.get()メソッドでPathオブジェクトを作成できます（Java 7以降）。\nPath.of()メソッドでもPathを作成できます（Java 11以降）。\nパスは複数の引数で要素を指定することもできます。\nFileオブジェクトからtoPath()でPathに変換、PathからtoFile()でFileに変換できます。\n相対パスと絶対パスの両方を扱えます。",
+          "code": "import java.nio.file.*;\nimport java.io.File;\n\n// Paths.get()でPathを作成\nPath p1 = Paths.get(\"/home/user/docs/file.txt\");\nPath p2 = Paths.get(\"/home\", \"user\", \"docs\", \"file.txt\");\n\n// Path.of()でPathを作成（Java 11以降）\nPath p3 = Path.of(\"/home/user/docs/file.txt\");\nPath p4 = Path.of(\"/home\", \"user\", \"docs\");\n\n// Fileとの相互変換\nFile file = p1.toFile();\nPath p5 = file.toPath();\n\n// 相対パス\nPath relative = Path.of(\"src\", \"main\", \"App.java\");\nSystem.out.println(relative); // src/main/App.java",
+          "note": "Paths.get()とPath.of()は機能的に同等です。Java 11以降ではPath.of()が推奨されます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "code",
+          "title": "resolve / relativize / normalize",
+          "body": "| メソッド | 説明 |\n|---|---|\n| resolve() | パスを結合します。引数が絶対パスの場合、引数がそのまま返されます。 |\n| relativize() | 2つのパスの相対パスを求めます。両方とも相対パスまたは絶対パスである必要があります。 |\n| normalize() | 冗長な要素（.や..）を解決します。 |\nこれらのメソッドはPathオブジェクトを返し、元のPathは変更されません（不変オブジェクト）。",
+          "code": "import java.nio.file.*;\n\n// resolve：パスの結合\nPath base = Path.of(\"/home/user\");\nSystem.out.println(base.resolve(\"docs/file.txt\"));\n// → /home/user/docs/file.txt\n\n// 絶対パスをresolveすると引数がそのまま返る\nSystem.out.println(base.resolve(\"/etc/config\"));\n// → /etc/config\n\n// relativize：相対パスの算出\nPath p1 = Path.of(\"/home/user/docs\");\nPath p2 = Path.of(\"/home/user/pics/photo.jpg\");\nSystem.out.println(p1.relativize(p2));\n// → ../pics/photo.jpg\n\n// normalize：冗長要素の除去\nPath p3 = Path.of(\"/home/user/../user/./docs/file.txt\");\nSystem.out.println(p3.normalize());\n// → /home/user/docs/file.txt",
+          "note": "relativize()で絶対パスと相対パスを混在させるとIllegalArgumentExceptionが発生します。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "point",
+          "title": "Pathの情報取得メソッド",
+          "body": "| メソッド | 説明 |\n|---|---|\n| getFileName() | パスの最後の要素（ファイル名）を返します。 |\n| getParent() | 親ディレクトリのパスを返します。ルート要素のみの場合はnullです。 |\n| getRoot() | ルート要素を返します。相対パスの場合はnullです。 |\n| getNameCount() | パスの名前要素数を返します（ルートは含まない）。 |\n| getName(int) | インデックス指定で名前要素を返します。 |\n| toAbsolutePath() | 絶対パスに変換します。 |",
+          "code": "import java.nio.file.*;\n\nPath p = Path.of(\"/home/user/docs/file.txt\");\n\nSystem.out.println(p.getFileName());   // file.txt\nSystem.out.println(p.getParent());     // /home/user/docs\nSystem.out.println(p.getRoot());       // /\nSystem.out.println(p.getNameCount());  // 4 (home, user, docs, file.txt)\nSystem.out.println(p.getName(0));      // home\nSystem.out.println(p.getName(3));      // file.txt\nSystem.out.println(p.subpath(1, 3));   // user/docs\nSystem.out.println(p.toAbsolutePath());\n// → /home/user/docs/file.txt（既に絶対パス）\n\n// 相対パスの場合\nPath rel = Path.of(\"src/App.java\");\nSystem.out.println(rel.getRoot());     // null\nSystem.out.println(rel.toAbsolutePath());\n// → カレントディレクトリ/src/App.java",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "tip",
+          "title": "試験対策：Pathのメソッド",
+          "body": "resolve()に絶対パスを渡すと引数がそのまま返される点は頻出です。\n| メソッド | 説明 |\n|---|---|\n| relativize() | 両方が絶対パスまたは両方が相対パスでなければ例外になります。 |\n| normalize() | ファイルシステムにアクセスせずパス文字列のみを処理します。 |\n| getNameCount() | ルート要素を含みません。getName(0)はルート直下の要素です。 |\nsubpath(begin, end)の範囲はbegin以上end未満（0始まり）です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_03_q1",
+          "lessonId": "ch28_03",
+          "type": "outputPredict",
+          "question": "次のコードの出力はどれですか？",
+          "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p = Path.of(\"/home/user/docs\");\n        System.out.println(p.resolve(\"file.txt\"));\n    }\n}",
+          "explanation": "resolve()は引数が相対パスの場合、元のパスに引数を結合します。/home/user/docsにfile.txtを結合して/home/user/docs/file.txtになります。",
+          "choices": [
+            {
+              "id": "ch28_03_q1_a",
+              "text": "/home/user/docs/file.txt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_03_q1_b",
+              "text": "file.txt",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_03_q1_c",
+              "text": "/home/user/file.txt",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_03_q1_d",
+              "text": "docs/file.txt",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_03_q2",
+          "lessonId": "ch28_03",
+          "type": "fourChoice",
+          "question": "Path.of(\"/a/b/c\").getNameCount()の戻り値はどれですか？",
+          "code": "try (BufferedReader br = Files.newBufferedReader(\n        Path.of(\"input.txt\"))) {\n    br.lines()\n      .filter(line -> !line.isBlank())\n      .forEach(System.out::println);\n}",
+          "explanation": "getNameCount()はパスの名前要素の数を返します。ルート要素（/）はカウントに含まれません。/a/b/cの名前要素はa、b、cの3つです。",
+          "choices": [
+            {
+              "id": "ch28_03_q2_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_03_q2_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_03_q2_c",
+              "text": "2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_03_q2_d",
+              "text": "1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_03_q3",
+          "lessonId": "ch28_03",
+          "type": "fillBlank",
+          "question": "Pathのnormalize()メソッドは、パスに含まれる冗長な___や..を解決して正規化されたパスを返す。",
+          "code": "try (var stream = Files.walk(Path.of(\"src\"))) {\n    stream.filter(p -> p.toString().endsWith(\".java\"))\n          .forEach(System.out::println);\n}",
+          "explanation": "normalize()メソッドはパス文字列に含まれる冗長な要素（.は現在のディレクトリ、..は親ディレクトリ）を解決して正規化されたパスを返します。ファイルシステムにはアクセスしません。",
+          "choices": [
+            {
+              "id": "ch28_03_q3_a",
+              "text": ".（ドット）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_03_q3_b",
+              "text": "/（スラッシュ）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_03_q3_c",
+              "text": "*（アスタリスク）",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_03_q3_d",
+              "text": "~（チルダ）",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch28_03_q4",
+          "lessonId": "ch28_03",
+          "type": "multiChoice",
+          "question": "NIO.2(java.nio.file)のFilesクラスのメソッドとして正しいものをすべて選んでください。",
+          "code": "ByteBuffer buf = ByteBuffer.allocate(1024);\ntry (FileChannel ch = FileChannel.open(\n        Path.of(\"data.bin\"),\n        StandardOpenOption.READ)) {\n    ch.read(buf);\n    buf.flip();\n}",
+          "explanation": "FilesクラスはreadAllLines(), copy(), exists(), walk()などを提供します。open()はFilesのメソッドではありません（newInputStream()等を使います）。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "readAllLines()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "copy()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "exists()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "open()",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "walk()",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch28_04",
+      "courseId": "ch28",
+      "title": "NIO.2 Files",
+      "summary": "FilesクラスによるファイルI/O操作を学びます。readAllLines()、write()によるファイル読み書き、copy()、move()、delete()、exists()などのファイル操作メソッドを理解します。",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "overview",
+          "title": "Filesクラスの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・Files.readAllLines(), Files.write()による簡易ファイル操作\n・Files.copy(), Files.move(), Files.delete()\n・ファイル属性の取得（size, lastModifiedTime等）\n\n**NIO**.2のFilesクラスで多くのファイル操作が1行で書けます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "code",
+          "title": "ファイルの読み書き",
+          "body": "| メソッド | 説明 |\n|---|---|\n| Files.readAllLines() | 全行をList<String>として読み込み |\n| Files.readString() | 内容をStringとして読み込み（Java 11以降） |\n| Files.write() | バイト配列や文字列のリストをファイルに書き込み |\n| Files.writeString() | 文字列をファイルに書き込み（Java 11以降） |\nOpenOptionで書き込みモード（上書き、追記など）を指定できます。",
+          "code": "import java.nio.file.*;\nimport java.util.*;\n\nPath path = Path.of(\"sample.txt\");\n\n// ファイルに書き込み\nList<String> lines = List.of(\"1行目\", \"2行目\", \"3行目\");\nFiles.write(path, lines);\n\n// 追記モード\nFiles.write(path, List.of(\"4行目\"),\n    StandardOpenOption.APPEND);\n\n// 全行読み込み\nList<String> result = Files.readAllLines(path);\nresult.forEach(System.out::println);\n// 1行目\n// 2行目\n// 3行目\n// 4行目\n\n// Java 11以降：文字列として読み書き\nFiles.writeString(path, \"Hello NIO.2\");\nString content = Files.readString(path);\nSystem.out.println(content); // Hello NIO.2",
+          "note": "readAllLines()はファイル全体をメモリに読み込むため、大きなファイルにはFiles.lines()を使いましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "code",
+          "title": "ファイルのコピー・移動・削除",
+          "body": "Files.copy()はファイルをコピーします。デフォルトでは既存ファイルがあるとFileAlreadyExistsExceptionが発生します。\nFiles.move()はファイルを移動またはリネームします。\nCopyOptionで上書きやアトミック操作を指定できます。\nFiles.delete()はファイルを削除し、存在しない場合はNoSuchFileExceptionをスローします。\nFiles.deleteIfExists()はファイルが存在する場合のみ削除し、存在しない場合は例外ではなくfalseを返します。",
+          "code": "import java.nio.file.*;\n\nPath source = Path.of(\"original.txt\");\nPath target = Path.of(\"copy.txt\");\n\n// コピー（既存ファイルがあると例外）\nFiles.copy(source, target);\n\n// 上書きコピー\nFiles.copy(source, target,\n    StandardCopyOption.REPLACE_EXISTING);\n\n// 移動（リネーム）\nPath moved = Path.of(\"renamed.txt\");\nFiles.move(target, moved,\n    StandardCopyOption.REPLACE_EXISTING);\n\n// アトミック移動\nFiles.move(source, target,\n    StandardCopyOption.ATOMIC_MOVE);\n\n// 削除\nFiles.delete(moved);           // 存在しないと例外\nFiles.deleteIfExists(moved);   // 存在しなくてもOK（falseを返す）",
+          "note": "REPLACE_EXISTINGを指定しないcopy/moveで対象ファイルが既に存在する場合はFileAlreadyExistsExceptionです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "rule",
+          "title": "ファイルの情報確認",
+          "body": "| メソッド | 説明 |\n|---|---|\n| Files.exists() | ファイルまたはディレクトリの存在を確認 |\n| Files.isDirectory() | 対象がディレクトリかどうか確認 |\n| Files.isRegularFile() | 対象が通常ファイルかどうか確認 |\n| Files.size() | ファイルのサイズ（バイト数）を返す |\n| Files.getLastModifiedTime() | 最終更新日時を返す |\nFiles.isReadable()、Files.isWritable()、Files.isExecutable()でアクセス権を確認できます。",
+          "code": "import java.nio.file.*;\nimport java.nio.file.attribute.*;\n\nPath p = Path.of(\"sample.txt\");\n\nSystem.out.println(Files.exists(p));         // true/false\nSystem.out.println(Files.isDirectory(p));    // false\nSystem.out.println(Files.isRegularFile(p));  // true\nSystem.out.println(Files.size(p));           // バイト数\nSystem.out.println(Files.isReadable(p));     // true/false\n\nFileTime time = Files.getLastModifiedTime(p);\nSystem.out.println(time); // 2024-01-15T10:30:00Z\n\n// ディレクトリの作成\nFiles.createDirectory(Path.of(\"newDir\"));\n// 中間ディレクトリも作成\nFiles.createDirectories(Path.of(\"a/b/c\"));",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "tip",
+          "title": "試験対策：Filesクラス",
+          "body": "Files.copy()とFiles.move()のデフォルト動作（上書きしない）を覚えましょう。\ndelete()とdeleteIfExists()の動作の違いは試験で問われます。\nreadAllLines()はList<String>を返し、readString()はString（Java 11以降）を返します。\ncreateDirectory()とcreateDirectories()の違いも重要です（中間ディレクトリの自動作成の有無）。\nStandardCopyOptionとStandardOpenOptionの主要な定数を覚えましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_04_q1",
+          "lessonId": "ch28_04",
+          "type": "fourChoice",
+          "question": "Files.copy()で既存のファイルに上書きコピーする場合に必要なオプションはどれですか？",
+          "code": null,
+          "explanation": "Files.copy()はデフォルトでは既存ファイルがあるとFileAlreadyExistsExceptionをスローします。上書きするにはStandardCopyOption.REPLACE_EXISTINGを指定する必要があります。",
+          "choices": [
+            {
+              "id": "ch28_04_q1_a",
+              "text": "StandardCopyOption.REPLACE_EXISTING",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_04_q1_b",
+              "text": "StandardOpenOption.APPEND",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_04_q1_c",
+              "text": "StandardCopyOption.COPY_ATTRIBUTES",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_04_q1_d",
+              "text": "StandardOpenOption.CREATE_NEW",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_04_q2",
+          "lessonId": "ch28_04",
+          "type": "fillBlank",
+          "question": "Files.___()はファイルが存在しない場合にfalseを返し、Files.delete()は___をスローする。",
+          "code": null,
+          "explanation": "Files.deleteIfExists()はファイルが存在しない場合にfalseを返し、例外はスローしません。一方、Files.delete()はファイルが存在しない場合にNoSuchFileExceptionをスローします。",
+          "choices": [
+            {
+              "id": "ch28_04_q2_a",
+              "text": "deleteIfExists / NoSuchFileException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_04_q2_b",
+              "text": "deleteIfExists / FileNotFoundException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_04_q2_c",
+              "text": "tryDelete / IOException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_04_q2_d",
+              "text": "remove / IllegalStateException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_04_q3",
+          "lessonId": "ch28_04",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。問題のある箇所はどれですか？",
+          "code": "import java.nio.file.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Path dir = Path.of(\"myDir/subDir\");\n        Files.createDirectory(dir); // ★\n        Files.writeString(dir.resolve(\"test.txt\"), \"Hello\");\n    }\n}",
+          "explanation": "Files.createDirectory()は1階層のディレクトリのみ作成します。myDir/subDirのように中間ディレクトリ（myDir）が存在しない場合、NoSuchFileExceptionが発生します。中間ディレクトリも含めて作成するにはFiles.createDirectories()を使います。",
+          "choices": [
+            {
+              "id": "ch28_04_q3_a",
+              "text": "createDirectory()は中間ディレクトリを自動作成しないため、createDirectories()を使うべき",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_04_q3_b",
+              "text": "writeString()のパス指定が不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_04_q3_c",
+              "text": "Path.of()の引数にスラッシュを含められない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_04_q3_d",
+              "text": "resolve()のメソッド名が間違っている",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch28_05",
+      "courseId": "ch28",
+      "title": "ディレクトリ操作とストリーム",
+      "summary": "NIO.2のディレクトリ操作メソッド（Files.list、Files.walk、Files.find）とDirectoryStream、Files.lines()を使ったStream APIとの連携を学びます。",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "overview",
+          "title": "ディレクトリ操作とストリームの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・Files.list(), Files.walk()でディレクトリのStream取得\n・Files.find()で条件に合うファイルを検索\n・DirectoryStreamとの違い\n\nStream APIとNIO.2を組み合わせた効率的なファイル操作です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "code",
+          "title": "Files.list() と Files.walk()",
+          "body": "Files.list()はディレクトリ直下のエントリ（ファイルとサブディレクトリ）をStream<Path>として返します。\n再帰的な走査は行いません。深さ1のみです。\nFiles.walk()はディレクトリツリーを深さ優先で再帰的に走査します。\n第2引数でmaxDepth（最大深さ）を指定できます。\nどちらもStream<Path>を返すため、使用後はclose()またはtry-with-resourcesでクローズする必要があります。",
+          "code": "import java.nio.file.*;\nimport java.io.IOException;\n\n// list()：直下のエントリのみ\ntry (var stream = Files.list(Path.of(\"src\"))) {\n    stream.forEach(System.out::println);\n}\n// 出力例:\n// src/main\n// src/test\n// src/App.java\n\n// walk()：再帰的に全ファイル走査\ntry (var stream = Files.walk(Path.of(\"src\"))) {\n    stream.filter(Files::isRegularFile)\n          .forEach(System.out::println);\n}\n// 出力例:\n// src/App.java\n// src/main/Main.java\n// src/test/TestMain.java\n\n// maxDepth指定\ntry (var stream = Files.walk(Path.of(\"src\"), 1)) {\n    stream.forEach(System.out::println);\n}\n// depth=1: srcディレクトリ自身と直下のエントリのみ",
+          "note": "Files.list()とFiles.walk()が返すStreamはI/Oリソースを保持しているため、必ずclose()する必要があります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "code",
+          "title": "Files.find() と DirectoryStream",
+          "body": "Files.find()は再帰的にファイルを検索し、BiPredicate<Path, BasicFileAttributes>で条件を指定します。\nDirectoryStreamはディレクトリの内容をイテレートするためのインターフェースです。\nFiles.newDirectoryStream()でDirectoryStreamを取得でき、glob パターンでフィルタリングできます。\nDirectoryStreamはIterableを実装しているため、拡張for文で使えます。",
+          "code": "import java.nio.file.*;\nimport java.nio.file.attribute.*;\n\n// find()：条件に一致するファイルを検索\n// 例外が発生する可能性がある処理\ntry (var stream = Files.find(Path.of(\"src\"), 10,\n        (path, attrs) -> attrs.isRegularFile()\n            && path.toString().endsWith(\".java\"))) {\n    stream.forEach(System.out::println);\n}\n\n// DirectoryStream：globパターンでフィルタ\n// 例外が発生する可能性がある処理\ntry (DirectoryStream<Path> ds = Files.newDirectoryStream(\n        Path.of(\"src\"), \"*.java\")) {\n    // 拡張for文（コレクションの全要素を順番に処理）\n    for (Path p : ds) {\n        System.out.println(p.getFileName());\n    }\n}\n\n// DirectoryStream：複数パターン\n// 例外が発生する可能性がある処理\ntry (DirectoryStream<Path> ds = Files.newDirectoryStream(\n        Path.of(\"docs\"), \"*.{txt,md,csv}\")) {\n    for (Path p : ds) {\n        System.out.println(p);\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "point",
+          "title": "Files.lines()とStream API",
+          "body": "Files.lines()はファイルの各行をStream<String>として遅延読み込みします。\nreadAllLines()と異なり、全行をメモリに保持しないため大きなファイルに適しています。\nStream APIの各種操作（filter、map、collectなど）と組み合わせて使えます。\n返されるStreamもI/Oリソースを保持するため、close()が必要です。\nCharsetを第2引数で指定可能で、デフォルトはUTF-8です。",
+          "code": "import java.nio.file.*;\nimport java.util.stream.*;\n\n// ファイルの各行をStreamとして処理\ntry (Stream<String> lines = Files.lines(Path.of(\"data.csv\"))) {\n    lines.filter(line -> !line.startsWith(\"#\"))\n         .map(String::trim)\n         .forEach(System.out::println);\n}\n\n// 行数をカウント\ntry (Stream<String> lines = Files.lines(Path.of(\"log.txt\"))) {\n    long count = lines.filter(l -> l.contains(\"ERROR\")).count();\n    System.out.println(\"エラー行数: \" + count);\n}\n\n// 結果をリストに収集\ntry (Stream<String> lines = Files.lines(Path.of(\"names.txt\"))) {\n    var sorted = lines.sorted()\n                      .distinct()\n                      .collect(Collectors.toList());\n    sorted.forEach(System.out::println);\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "tip",
+          "title": "試験対策：ディレクトリ操作とストリーム",
+          "body": "Files.list()は直下のみ、Files.walk()は再帰的、という違いを明確に覚えましょう。\nFiles.walk()のデフォルトのmaxDepthはInteger.MAX_VALUEです。\nFiles.list()、Files.walk()、Files.find()、Files.lines()が返すStreamはすべてclose()が必要です。\nDirectoryStreamはStreamではなくIterableの一種で、拡張for文で使います。\nFiles.find()のBiPredicateは(Path, BasicFileAttributes)を受け取ります。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_05_q1",
+          "lessonId": "ch28_05",
+          "type": "outputPredict",
+          "question": "次のコードでsrcディレクトリに直接含まれるファイルがApp.java、Main.javaの2つ、サブディレクトリがutilsの1つだった場合、出力される行数は何行ですか？",
+          "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        try (var stream = Files.list(Path.of(\"src\"))) {\n            long count = stream.count();\n            System.out.println(count);\n        }\n    }\n}",
+          "explanation": "Files.list()はディレクトリ直下のすべてのエントリ（ファイルとサブディレクトリ）を返します。App.java、Main.java、utilsの3つのエントリがあるので、count()は3を返します。",
+          "choices": [
+            {
+              "id": "ch28_05_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_05_q1_b",
+              "text": "2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_05_q1_c",
+              "text": "1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_05_q1_d",
+              "text": "0",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_05_q2",
+          "lessonId": "ch28_05",
+          "type": "fourChoice",
+          "question": "Files.walk()とFiles.list()の違いについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "Files.walk()はディレクトリツリーを再帰的に走査し、サブディレクトリ内のファイルも含めてStream<Path>として返します。Files.list()はディレクトリ直下のエントリのみを返し、再帰的な走査は行いません。",
+          "choices": [
+            {
+              "id": "ch28_05_q2_a",
+              "text": "walk()は再帰的に走査し、list()は直下のエントリのみ返す",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_05_q2_b",
+              "text": "list()は再帰的に走査し、walk()は直下のエントリのみ返す",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_05_q2_c",
+              "text": "walk()はList<Path>を返し、list()はStream<Path>を返す",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_05_q2_d",
+              "text": "どちらも同じ動作で名前だけ異なる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_05_q3",
+          "lessonId": "ch28_05",
+          "type": "fourChoice",
+          "question": "Files.lines()について正しい説明はどれですか？",
+          "code": null,
+          "explanation": "Files.lines()はファイルの各行を遅延読み込みでStream<String>として返します。Files.readAllLines()とは異なり、全行をメモリに一度に読み込まないため、大きなファイルに適しています。返されるStreamはI/Oリソースを保持するため、close()が必要です。",
+          "choices": [
+            {
+              "id": "ch28_05_q3_a",
+              "text": "ファイルの各行を遅延読み込みでStream<String>として返す",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_05_q3_b",
+              "text": "ファイルの全行をList<String>として即座に返す",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_05_q3_c",
+              "text": "返されたStreamのclose()は不要である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_05_q3_d",
+              "text": "バイナリファイルの各行をStream<byte[]>として返す",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

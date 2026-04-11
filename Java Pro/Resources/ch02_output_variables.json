@@ -1,0 +1,1278 @@
+{
+  "courseId": "ch02",
+  "lessons": [
+    {
+      "id": "ch02_01",
+      "courseId": "ch02",
+      "title": "文字を表示しよう",
+      "summary": "println・print・printfの違いを理解する",
+      "estimatedMinutes": 3,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**System.out.println**() で文字を画面に表示する方法\n・println と print の違い\n・文字列の連結（+演算子）\n\nプログラミングの最初の一歩は「画面に文字を出す」ことです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "code",
+          "title": "3つの表示方法",
+          "body": "Javaで文字を表示するメソッドは主に3つあります。",
+          "code": "// 改行あり\nSystem.out.println(\"Hello\");\nSystem.out.println(\"World\");\n// 出力: Hello\n//       World\n\n// 改行なし\nSystem.out.print(\"Hello\");\nSystem.out.print(\"World\");\n// 出力: HelloWorld\n\n// 書式指定\nSystem.out.printf(\"名前は%sです。年齢は%d歳です。\", \"太郎\", 20);\n// 出力: 名前は太郎です。年齢は20歳です。",
+          "note": "printlnの ln は line（行）の略。改行を自動で入れてくれます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "tip",
+          "title": "printlnとprintの違い",
+          "body": "初学者がよく混乱するポイントです。\n\n| メソッド | 動作 | 出力例 |\n|---|---|---|\n| println | 出力後に改行する | Hello（改行）World |\n| print | 改行しない | HelloWorld |\n\nprintln は「print + line（行）」の略です。ほとんどの場合 println を使います。",
+          "code": null,
+          "note": "改行コード「\\n」を使えば print でも改行できますが、println の方がシンプルです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "| 項目 | 説明 |\n|---|---|\n| println | 表示して改行する（最もよく使う） |\n| print | 表示して改行しない |\n| printf | 書式を指定して表示する（%s=文字列, %d=整数） |",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "code",
+          "title": "エスケープシーケンス",
+          "body": "文字列の中で改行やタブなどの特殊文字を表現するには、バックスラッシュ（\\）で始まる**エスケープシーケンス**を使います。\nprintlnの自動改行とは別に、文字列の途中で改行を入れたい場合に使います。",
+          "code": "// \\n → 改行\nSystem.out.println(\"Hello\\nWorld\");\n// 出力: Hello\n//       World\n\n// \\t → タブ（字下げ）\nSystem.out.println(\"名前\\t年齢\");\nSystem.out.println(\"太郎\\t20\");\n// 出力: 名前\t年齢\n//       太郎\t20\n\n// \\\\ → バックスラッシュ自身\nSystem.out.println(\"C:\\\\Users\\\\\");\n// 出力: C:\\Users\\\n\n// \\\" → ダブルクォート\nSystem.out.println(\"彼は\\\"Java\\\"が好きです\");\n// 出力: 彼は\"Java\"が好きです",
+          "note": "\\n（改行）と\\t（タブ）は特に頻出です。文字列リテラル内でダブルクォートを使いたい場合は\\\"とエスケープします。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "rule",
+          "title": "printfフォーマット指定子",
+          "body": "printfでよく使うフォーマット指定子を覚えましょう。\n\n| 指定子 | 意味 | 例 |\n|--------|------|------|\n| %s | 文字列 | printf(\"%s\", \"Java\") → Java |\n| %d | 整数 | printf(\"%d\", 42) → 42 |\n| %f | 小数（デフォルト6桁） | printf(\"%f\", 3.14) → 3.140000 |\n| %.2f | 小数（2桁指定） | printf(\"%.2f\", 3.14) → 3.14 |\n| %n | 改行（OS依存の改行文字） | printf(\"Hello%n\") |",
+          "code": "int price = 1980;\ndouble tax = 1.10;\nSystem.out.printf(\"商品価格: %d円%n\", price);\nSystem.out.printf(\"税込価格: %.0f円%n\", price * tax);\n// 出力: 商品価格: 1980円\n//       税込価格: 2178円",
+          "note": "printfは自動で改行しません。改行したい場合は%nまたは\\nを末尾に付けましょう。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_01_q1",
+          "lessonId": "ch02_01",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "System.out.print(\"A\");\nSystem.out.println(\"B\");\nSystem.out.print(\"C\");",
+          "explanation": "print(\"A\") で改行なしAを表示、println(\"B\") でBを表示して改行、print(\"C\") でCを表示します。結果は AB（改行）C です。",
+          "choices": [
+            {
+              "id": "ch02_01_q1_a",
+              "text": "AB\\nC",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_01_q1_b",
+              "text": "A\\nB\\nC",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_01_q1_c",
+              "text": "ABC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_01_q1_d",
+              "text": "A B C",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "AB\nC",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_01_q2",
+          "lessonId": "ch02_01",
+          "type": "fourChoice",
+          "question": "表示後に改行しないメソッドはどれですか？",
+          "code": null,
+          "explanation": "print() は改行なしで表示します。println() は改行ありです。",
+          "choices": [
+            {
+              "id": "ch02_01_q2_a",
+              "text": "System.out.println()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_01_q2_b",
+              "text": "System.out.print()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_01_q2_c",
+              "text": "System.out.printLine()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_01_q2_d",
+              "text": "System.out.write()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_01_q3",
+          "lessonId": "ch02_01",
+          "type": "fillBlank",
+          "question": "整数を書式指定で表示する場合、空欄に入るものはどれですか？\nSystem.out.printf(\"合計は_____円です\", 1000);",
+          "code": null,
+          "explanation": "%d は整数を埋め込むための書式指定子です。%s は文字列、%f は小数に使います。",
+          "choices": [
+            {
+              "id": "ch02_01_q3_a",
+              "text": "%d",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_01_q3_b",
+              "text": "%s",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_01_q3_c",
+              "text": "%f",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_01_q3_d",
+              "text": "%n",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch02_02",
+      "courseId": "ch02",
+      "title": "変数とは",
+      "summary": "データに名前を付けて保存する仕組みを理解する",
+      "estimatedMinutes": 4,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・変数とは何か（データの入れ物）\n・変数の宣言と値の代入の書き方\n・変数の命名ルール（キャメルケース）\n\n変数はプログラミングの最も基本的な概念です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "rule",
+          "title": "変数の宣言と代入",
+          "body": "変数を使うには2つのステップがあります。\n\n① 宣言: 変数を作る（箱を用意する）\n② 代入: 値を入れる（箱にデータを入れる）\n\nこの2つを同時に行うことを「初期化」と呼びます。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "tip",
+          "title": "変数は「名前のついた箱」",
+          "body": "変数は「名前のついた箱」をイメージしましょう。\n\n・箱に名前をつける = 変数を宣言する\n・箱に値を入れる = 値を代入する\n・箱の中身を見る = 変数を参照する\n\n一度箱に入れた値は、後から別の値に入れ替えることもできます（再代入）。",
+          "code": null,
+          "note": "変数名にはキャメルケース（myAge, totalCount 等）を使うのがJavaの慣習です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "code",
+          "title": "変数の使い方",
+          "body": "型名 変数名 = 値; の形で書きます。",
+          "code": "// 宣言と代入を別々に\nint age;        // 宣言（int型の変数ageを作る）\nage = 25;       // 代入（ageに25を入れる）\n\n// 初期化（宣言と代入を同時に）\nString name = \"太郎\";\ndouble height = 170.5;\n\n// 変数の値を表示\nSystem.out.println(name);   // 太郎\nSystem.out.println(age);    // 25",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "rule",
+          "title": "変数名のルール",
+          "body": "・先頭は英字・_・$のいずれか（数字は不可）\n・2文字目以降は英数字・_・$が使える\n・大文字小文字は区別される（age と Age は別物）\n・予約語（class, int, forなど）は使えない\n・慣例としてキャメルケース（myAge, userName）を使う",
+          "code": null,
+          "note": "日本語の変数名も技術的には可能ですが、実務では英語が標準です。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・変数は「型名 変数名 = 値;」で作る\n・宣言（箱を作る）と代入（値を入れる）がある\n・同時に行うのが初期化\n・変数名はキャメルケースが慣例",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_02_q1",
+          "lessonId": "ch02_02",
+          "type": "errorFind",
+          "question": "次のコードにエラーがあります。原因はどれですか？",
+          "code": "int 1number = 10;",
+          "explanation": "変数名の先頭に数字は使えません。英字・_・$で始める必要があります。number1 なら正しい変数名です。",
+          "choices": [
+            {
+              "id": "ch02_02_q1_a",
+              "text": "intは型名として使えない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_02_q1_b",
+              "text": "変数名が数字で始まっている",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_02_q1_c",
+              "text": "10は代入できない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_02_q1_d",
+              "text": "セミコロンが不要",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:2: error: <identifier> expected\n        int 1number = 10;\n               ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_02_q2",
+          "lessonId": "ch02_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 10;\nx = 20;\nSystem.out.println(x);",
+          "explanation": "変数は後から値を上書き（再代入）できます。xに10を入れた後、20を代入しているので、出力は20です。",
+          "choices": [
+            {
+              "id": "ch02_02_q2_a",
+              "text": "10",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_02_q2_b",
+              "text": "20",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_02_q2_c",
+              "text": "1020",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_02_q2_d",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "20\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_02_q3",
+          "lessonId": "ch02_02",
+          "type": "fourChoice",
+          "question": "変数名として正しいものはどれですか？",
+          "code": null,
+          "explanation": "myAge はキャメルケースの正しい変数名です。my-age はハイフンが使えず、class は予約語、3rdValue は数字始まりで不可です。",
+          "choices": [
+            {
+              "id": "ch02_02_q3_a",
+              "text": "my-age",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_02_q3_b",
+              "text": "class",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_02_q3_c",
+              "text": "myAge",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch02_02_q3_d",
+              "text": "3rdValue",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch02_02_q4",
+          "lessonId": "ch02_02",
+          "type": "reorder",
+          "question": "「Hello World」を出力するJavaプログラムを正しい順序に並べてください。",
+          "code": null,
+          "explanation": "Javaプログラムはクラス宣言→mainメソッド→処理→閉じカッコの順で構成します。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public class Main {",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "    public static void main(String[] args) {",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "        System.out.println(\"Hello World\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "    }",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "}",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch02_03",
+      "courseId": "ch02",
+      "title": "データ型を知ろう",
+      "summary": "int・double・String・boolean・charの使い分け",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・Javaの**基本データ型**（8種類）\n・整数型・浮動小数点型・文字型・論理型の使い分け\n・各型のサイズと値の範囲\n\nデータ型を理解することで、適切な変数を選べるようになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "rule",
+          "title": "基本データ型（プリミティブ型）",
+          "body": "Javaには8つの**基本データ型**がありますが、まずは以下の4つを覚えましょう。\n\n| 型 | 説明 |\n|---|---|\n| int | 整数（-21億〜21億） |\n| double | 小数（浮動小数点数） |\n| boolean | 真偽値（trueまたはfalse） |\n| char | 1文字（シングルクォートで囲む） |",
+          "code": null,
+          "note": "long（大きな整数）、float（低精度の小数）、byte・short（小さな整数）もありますが、初学者はintとdoubleから始めれば十分です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "code",
+          "title": "型の使い方",
+          "body": "それぞれの型の宣言例を見てみましょう。",
+          "code": "// 変数の宣言と初期化\nint age = 25;              // 整数\ndouble price = 198.5;      // 小数\nboolean isStudent = true;  // 真偽値\nchar initial = 'A';        // 1文字\nString name = \"太郎\";      // 文字列（参照型）",
+          "note": "Stringは**基本データ型**ではなく「**参照型**」ですが、特別に扱いやすく設計されています。大文字Sで始まるのが目印です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "tip",
+          "title": "基本型と参照型の違い",
+          "body": "基本型（int, doubleなど）は値そのものを保持します。**参照型**（String, 配列など）はデータの「場所」を保持します。\n\nこの違いは後の章で重要になりますが、今は「Stringだけ大文字で始まる特別な存在」と覚えておけばOKです。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・int（整数）、double（小数）、boolean（真偽）、char（1文字）が基本\n・String（文字列）は**参照型**だが頻繁に使う\n・charはシングルクォート、Stringはダブルクォート\n・型が違う変数に代入するとエラーになる",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_03_q1",
+          "lessonId": "ch02_03",
+          "type": "fourChoice",
+          "question": "小数を扱うのに適切な型はどれですか？",
+          "code": null,
+          "explanation": "double は小数（浮動小数点数）を扱う型です。intは整数のみ、booleanは真偽値、charは1文字です。",
+          "choices": [
+            {
+              "id": "ch02_03_q1_a",
+              "text": "int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_03_q1_b",
+              "text": "double",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_03_q1_c",
+              "text": "boolean",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_03_q1_d",
+              "text": "char",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_03_q2",
+          "lessonId": "ch02_03",
+          "type": "errorFind",
+          "question": "次のコードにエラーがあります。原因はどれですか？",
+          "code": "String msg = 'こんにちは';",
+          "explanation": "Stringの値はダブルクォート(\")で囲みます。シングルクォート(')はchar型（1文字）に使います。",
+          "choices": [
+            {
+              "id": "ch02_03_q2_a",
+              "text": "日本語は使えない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_03_q2_b",
+              "text": "シングルクォートで囲んでいる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_03_q2_c",
+              "text": "変数名msgが不正",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_03_q2_d",
+              "text": "Stringの型名が間違い",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:2: error: unclosed character literal\n        String msg = 'こんにちは';\n                     ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_03_q3",
+          "lessonId": "ch02_03",
+          "type": "fillBlank",
+          "question": "真偽値を格納する変数の宣言を完成させてください。\n_____ isReady = true;",
+          "code": null,
+          "explanation": "boolean は true または false の真偽値を扱う型です。条件判定でよく使います。",
+          "choices": [
+            {
+              "id": "ch02_03_q3_a",
+              "text": "boolean",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_03_q3_b",
+              "text": "bool",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_03_q3_c",
+              "text": "Boolean",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_03_q3_d",
+              "text": "bit",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch02_03_q4",
+          "lessonId": "ch02_03",
+          "type": "codeComplete",
+          "question": "int型の変数に値を代入して出力するコードを完成させてください。",
+          "code": null,
+          "explanation": "intは整数型、System.out.println()は改行付き出力です。print()も正常に動作しますが、改行なしで出力されます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ age = 25;\nSystem.out.__BLANK_2__(age);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①型",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "int",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "String",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "double",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②出力",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "println",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "print",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "write",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch02_04",
+      "courseId": "ch02",
+      "title": "変数を使って計算",
+      "summary": "算術演算子と計算の優先順位を理解する",
+      "estimatedMinutes": 4,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・型変換（キャスト）の仕組み\n・自動変換（**暗黙的キャスト**）と**明示的キャスト**\n・型変換時のデータの損失に注意\n\n異なるデータ型を混在させるとき、型変換の理解が重要になります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "code",
+          "title": "算術演算子",
+          "body": "Javaで使える計算記号（演算子）です。",
+          "code": "// 変数の宣言と初期化\nint a = 10;\nint b = 3;\n\nSystem.out.println(a + b);  // 13（足し算）\nSystem.out.println(a - b);  // 7 （引き算）\nSystem.out.println(a * b);  // 30（掛け算）\nSystem.out.println(a / b);  // 3 （割り算・整数同士は小数切捨て）\nSystem.out.println(a % b);  // 1 （余り）",
+          "note": "整数同士の割り算は小数点以下が切り捨てられます。10 / 3 = 3 であり 3.33... ではありません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "tip",
+          "title": "型変換の方向に注意",
+          "body": "小さい型から大きい型への変換（拡大変換）は自動で行われますが、大きい型から小さい型への変換（縮小変換）は明示的なキャストが必要です。\n\n| 変換方向 | 例 | 動作 |\n|---|---|---|\n| 拡大（自動） | int → long, double | 値がそのまま保持される |\n| 縮小（明示） | double → int | 小数部分が切り捨てられる |\n\ndouble d = 9.7; int i = (int) d; → i は 9 になります（四捨五入ではない）。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "code",
+          "title": "複合代入演算子",
+          "body": "計算と代入を同時に行う省略記法です。",
+          "code": "// 変数の宣言と初期化\nint score = 100;\nscore += 10;  // score = score + 10;  → 110\nscore -= 20;  // score = score - 20;  → 90\nscore *= 2;   // score = score * 2;   → 180\nscore /= 3;   // score = score / 3;   → 60\nscore++;      // score = score + 1;   → 61\nscore--;      // score = score - 1;   → 60",
+          "note": "コード中の // はコメント（説明文）です。プログラムの動作には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・+  -  *  /  % の5つが基本演算子\n・整数同士の / は小数切捨て\n・% は余りを求める（偶数判定などで活用）\n・+=, -=, ++, -- は省略記法",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_04_q1",
+          "lessonId": "ch02_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int a = 7;\nint b = 2;\nSystem.out.println(a / b);",
+          "explanation": "int同士の割り算では小数点以下が切り捨てられます。7 ÷ 2 = 3.5 ですが、int型なので 3 になります。",
+          "choices": [
+            {
+              "id": "ch02_04_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_04_q1_b",
+              "text": "3.5",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_04_q1_c",
+              "text": "4",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_04_q1_d",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "3\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_04_q2",
+          "lessonId": "ch02_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 10;\nx += 5;\nx *= 2;\nSystem.out.println(x);",
+          "explanation": "x=10 → x+=5で15 → x*=2で30。複合代入演算子は「左辺 = 左辺 演算 右辺」の省略です。",
+          "choices": [
+            {
+              "id": "ch02_04_q2_a",
+              "text": "20",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_04_q2_b",
+              "text": "25",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_04_q2_c",
+              "text": "30",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch02_04_q2_d",
+              "text": "35",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "30\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_04_q3",
+          "lessonId": "ch02_04",
+          "type": "fourChoice",
+          "question": "10 % 3 の結果はどれですか？",
+          "code": null,
+          "explanation": "% は剰余演算子で、割り算の余りを求めます。10 ÷ 3 = 3 余り 1 なので、10 % 3 = 1 です。",
+          "choices": [
+            {
+              "id": "ch02_04_q3_a",
+              "text": "3",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_04_q3_b",
+              "text": "1",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_04_q3_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_04_q3_d",
+              "text": "3.33",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch02_04_q4",
+          "lessonId": "ch02_04",
+          "type": "multiChoice",
+          "question": "Javaのプリミティブ型として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "int, boolean, doubleはプリミティブ型です。Stringは参照型、Integerはintのラッパークラス（参照型）です。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "int",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "boolean",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "String",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "double",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "Integer",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 3,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch02_05",
+      "courseId": "ch02",
+      "title": "文字列の操作",
+      "summary": "文字列の連結・長さ取得・比較の方法を学ぶ",
+      "estimatedMinutes": 4,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・定数（final）の宣言と使い方\n・なぜ定数を使うべきか（マジックナンバーの回避）\n・定数の命名規則（大文字のスネークケース）\n\n変更されるべきでない値を「定数」として守りましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "code",
+          "title": "文字列の連結",
+          "body": "+ 演算子で文字列を結合できます。",
+          "code": "// 変数の宣言と初期化\nString first = \"Java\";\nString second = \"Pro\";\nString app = first + \" \" + second;\nSystem.out.println(app);  // Java Pro\n\n// 数値と文字列の結合\nint age = 20;\nSystem.out.println(\"年齢は\" + age + \"歳\");  // 年齢は20歳",
+          "note": "文字列と数値を + で結合すると、数値が自動的に文字列に変換されます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "tip",
+          "title": "定数の命名は大文字スネークケース",
+          "body": "Javaの定数（final変数）は大文字のスネークケースで名前を付けるのが慣習です。\n\n・正しい例: MAX_SIZE, TAX_RATE, DEFAULT_NAME\n・避けるべき: maxSize, taxrate, MAXSIZE\n\nfinalを付けると再代入できなくなります。プログラム中の「マジックナンバー」（意味不明な数字）を定数に置き換えましょう。",
+          "code": null,
+          "note": "マジックナンバーの例: if (price > 1000) → if (price > FREE_SHIPPING_THRESHOLD)",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "code",
+          "title": "よく使うStringメソッド",
+          "body": "Stringにはたくさんの便利なメソッドがあります。",
+          "code": "// 変数の宣言と初期化\nString s = \"Hello, Java!\";\n\ns.length()          // 12（文字数）\ns.charAt(0)         // 'H'（0番目の文字）\ns.contains(\"Java\")  // true（含むか判定）\ns.toUpperCase()     // \"HELLO, JAVA!\"\ns.toLowerCase()     // \"hello, java!\"\ns.replace(\"Java\", \"World\")  // \"Hello, World!\"\n\n// 文字列の比較は equals() を使う\nString a = \"abc\";\nString b = \"abc\";\na.equals(b)  // true ✓\n// a == b は参照の比較なので使わない ✗",
+          "note": "コード中の // はコメント（説明文）です。プログラムの動作には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・文字列の結合は + 演算子\n・length() で文字数を取得\n・文字列の比較は equals() を使う（== は使わない）\n・Stringは**不変**（immutable）で、メソッドは新しい文字列を返す",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "code",
+          "title": "文字列の検索・切り出し",
+          "body": "文字列から一部を取り出したり、位置を検索するメソッドも覚えましょう。実務で頻繁に使います。",
+          "code": "String s = \"Hello, Java!\";\n\n// indexOf: 文字列の位置を検索（見つからなければ-1）\ns.indexOf(\"Java\")     // 7\ns.indexOf(\"Python\")   // -1\n\n// substring: 文字列の一部を切り出し\ns.substring(7)        // \"Java!\"（7番目以降）\ns.substring(0, 5)     // \"Hello\"（0〜4番目）\n\n// trim: 前後の空白を除去\n\"  Hello  \".trim()    // \"Hello\"\n\n// startsWith / endsWith: 先頭・末尾の判定\ns.startsWith(\"Hello\") // true\ns.endsWith(\"!\")       // true\n\n// isEmpty / isBlank（Java 11以降）\n\"\".isEmpty()           // true\n\"  \".isEmpty()         // false\n\"  \".isBlank()         // true（空白のみ）",
+          "note": "substringの第2引数は「その位置の手前まで」です。substring(0, 5)は0,1,2,3,4番目の5文字を返します。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_05_q1",
+          "lessonId": "ch02_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "String s = \"Java\";\nSystem.out.println(s.length());",
+          "explanation": "length()は文字列の文字数を返します。\"Java\"は4文字なので4が出力されます。",
+          "choices": [
+            {
+              "id": "ch02_05_q1_a",
+              "text": "3",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_05_q1_b",
+              "text": "4",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_05_q1_c",
+              "text": "5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_05_q1_d",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "4\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_05_q2",
+          "lessonId": "ch02_05",
+          "type": "fourChoice",
+          "question": "文字列の比較で正しい方法はどれですか？",
+          "code": null,
+          "explanation": "Javaでは文字列の中身を比較するには equals() メソッドを使います。== は参照（メモリ上の場所）を比較するため、意図しない結果になることがあります。",
+          "choices": [
+            {
+              "id": "ch02_05_q2_a",
+              "text": "a == b",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_05_q2_b",
+              "text": "a.equals(b)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_05_q2_c",
+              "text": "a.compare(b)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_05_q2_d",
+              "text": "a.is(b)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_05_q3",
+          "lessonId": "ch02_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "System.out.println(\"数値:\" + 3 + 5);",
+          "explanation": "文字列 + 数値は左から順に結合されます。\"数値:\" + 3 = \"数値:3\"、\"数値:3\" + 5 = \"数値:35\" となります。",
+          "choices": [
+            {
+              "id": "ch02_05_q3_a",
+              "text": "数値:8",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_05_q3_b",
+              "text": "数値:35",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_05_q3_c",
+              "text": "数値:3 5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_05_q3_d",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "数値:35\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch02_06",
+      "courseId": "ch02",
+      "title": "型変換",
+      "summary": "自動変換と明示的キャストの違いを学ぶ",
+      "estimatedMinutes": 4,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・文字列（String）の基本操作\n・文字列の連結・長さ取得・比較\n・equalsメソッドと==演算子の違い\n\n文字列はJavaで最も頻繁に使うデータです。基本操作を確実に身につけましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "code",
+          "title": "自動型変換（暗黙の変換）",
+          "body": "小さい型から大きい型へは自動で変換されます。",
+          "code": "int i = 100;\ndouble d = i;  // int → double は自動変換OK\nSystem.out.println(d);  // 100.0\n\n// 小さい型 → 大きい型の順\n// byte → short → int → long → float → double",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "code",
+          "title": "キャスト（明示的変換）",
+          "body": "大きい型から小さい型への変換は、意図的にキャストを書く必要があります。",
+          "code": "double d = 3.14;\nint i = (int) d;  // キャスト: double → int\nSystem.out.println(i);  // 3（小数点以下は切り捨て）\n\n// 文字列 → 数値の変換\nString numStr = \"123\";\nint num = Integer.parseInt(numStr);  // 123\ndouble dbl = Double.parseDouble(\"3.14\"); // 3.14\n\n// 数値 → 文字列の変換\nString s = String.valueOf(100);  // \"100\"",
+          "note": "キャストでは情報が失われる可能性があります。double → int で小数部が消えるなど。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "tip",
+          "title": "==とequals()の違いに注意",
+          "body": "Javaの文字列比較で最も多いバグの原因です。\n\n| 演算子/メソッド | 比較対象 | 文字列で使える？ |\n|---|---|---|\n| == | 参照（メモリ上の場所） | × 正しく比較できない場合がある |\n| equals() | 値（文字列の内容） | ○ 常に正しく比較できる |\n\n文字列の比較には必ず equals() を使いましょう。",
+          "code": null,
+          "note": "int や double などの基本型は == で比較できます。equals() はオブジェクト同士の比較に使います。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "| 項目 | 説明 |\n|---|---|\n| 小→大（拡大変換） | 自動変換（例: int→double） |\n| 大→小（縮小変換） | キャスト必須（例: (int)d の形式） |\n| 文字列→数値 | Integer.parseInt() など |\n| 数値→文字列 | String.valueOf() |\n・キャストでは情報が失われることがある",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_06_q1",
+          "lessonId": "ch02_06",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "double d = 9.8;\nint i = (int) d;\nSystem.out.println(i);",
+          "explanation": "double → int のキャストでは小数点以下が切り捨てられます。9.8 → 9 になります（四捨五入ではありません）。",
+          "choices": [
+            {
+              "id": "ch02_06_q1_a",
+              "text": "9",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_06_q1_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_06_q1_c",
+              "text": "9.8",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_06_q1_d",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "9\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_06_q2",
+          "lessonId": "ch02_06",
+          "type": "errorFind",
+          "question": "次のコードにエラーがあります。原因はどれですか？",
+          "code": "double d = 3.14;\nint i = d;",
+          "explanation": "double → int は情報が失われる変換のため、自動変換されません。(int) d のように明示的なキャストが必要です。",
+          "choices": [
+            {
+              "id": "ch02_06_q2_a",
+              "text": "変数名iが不正",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_06_q2_b",
+              "text": "3.14が不正な値",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_06_q2_c",
+              "text": "キャストが必要",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch02_06_q2_d",
+              "text": "セミコロンが不足",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:3: error: incompatible types: possible lossy conversion from double to int\n        int i = d;\n                ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_06_q3",
+          "lessonId": "ch02_06",
+          "type": "fillBlank",
+          "question": "文字列\"42\"をint型の数値に変換するコードを完成させてください。\nint num = Integer._____(\"42\");",
+          "code": null,
+          "explanation": "Integer.parseInt() は文字列を int に変換するメソッドです。変換できない文字列を渡すと NumberFormatException が発生します。",
+          "choices": [
+            {
+              "id": "ch02_06_q3_a",
+              "text": "parseInt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_06_q3_b",
+              "text": "toInt",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_06_q3_c",
+              "text": "convert",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_06_q3_d",
+              "text": "valueOf",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

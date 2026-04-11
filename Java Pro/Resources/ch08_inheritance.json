@@ -1,0 +1,1333 @@
+{
+  "courseId": "ch08",
+  "lessons": [
+    {
+      "id": "ch08_01",
+      "courseId": "ch08",
+      "title": "継承の基本",
+      "summary": "既存クラスを拡張して新しいクラスを作る",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**継承**の基本構文（extends キーワード）\n・親クラス（スーパークラス）と子クラス（サブクラス）の関係\n・コードの再利用性を高める設計\n\n継承を理解すると、大規模なプログラムを効率的に設計できるようになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "code",
+          "title": "extendsによる継承",
+          "body": "子クラスはextendsキーワードで親クラスを**継承**します。",
+          "code": "// 親クラス（スーパークラス）\n// Animalクラスの定義\nclass Animal {\n    String name;\n\n    // eatメソッドの定義\n    void eat() {\n        System.out.println(name + \"が食事中\");\n    }\n\n    // sleepメソッドの定義\n    void sleep() {\n        System.out.println(name + \"が睡眠中\");\n    }\n}\n\n// 子クラス（サブクラス）\n// Dogクラスの定義\nclass Dog extends Animal {\n    // 親のフィールド(name)とメソッド(eat, sleep)を継承\n\n    // 子クラス独自のメソッド\n    void bark() {\n        System.out.println(name + \"がワンワン!\");\n    }\n}\n\nDog dog = new Dog();\ndog.name = \"ポチ\";     // 親クラスのフィールド\ndog.eat();             // 親クラスのメソッド → ポチが食事中\ndog.bark();            // 子クラスのメソッド → ポチがワンワン!",
+          "note": "Javaの**継承**は単一継承です。1つのクラスは1つの親クラスしか持てません。多重継承（extends A, B）はできません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "rule",
+          "title": "protectedアクセス修飾子",
+          "body": "**継承**に深く関わるアクセス修飾子の比較:\n\n| 修飾子 | 同じクラス | 同じパッケージ | 子クラス | 他パッケージ |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (なし) | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\nprotectedは「子クラスからアクセスできる」修飾子です。\nprivateフィールドは子クラスにも継承されますが、直接アクセスできません。\ngetterやsetterなどpublic/protectedメソッド経由でアクセスします。",
+          "code": null,
+          "note": "パッケージプライベート（修飾子なし）は同じパッケージ内でのみアクセス可能で、異なるパッケージの子クラスからはアクセスできません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "tip",
+          "title": "継承の「is-a」関係",
+          "body": "**継承**は「A is a B（AはBの一種）」の関係が成り立つときに使います。\n\n✅ 適切な継承:\n・Dog is an Animal（犬は動物の一種）\n・Student is a Person（学生は人の一種）\n\n❌ 不適切な継承:\n・Car is an Engine（車はエンジン?）→ 「has-a」関係\n → Carクラスにengineフィールドを持つ（コンポジション）\n\n継承は**is-a関係**の場合のみ使い、has-a関係にはコンポジション（フィールドとして持つ）を使いましょう。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**継承**: extendsで親クラスの機能を引き継ぐ\n・Javaは単一継承のみ（extends 1つ）\n・protected: 同パッケージ + 子クラスからアクセス可能\n・privateフィールドは継承されるが直接アクセス不可\n・**is-a関係**の時に継承を使う",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_01_q1",
+          "lessonId": "ch08_01",
+          "type": "fillBlank",
+          "question": "クラスBがクラスAを継承するとき、空欄を埋めてください。\nclass B _____ A { }",
+          "code": null,
+          "explanation": "Javaではextendsキーワードを使ってクラスを継承します。class B extends A と書くと、BはAのサブクラス（子クラス）になり、Aのpublic/protectedメンバを継承します。",
+          "choices": [
+            {
+              "id": "ch08_01_q1_a",
+              "text": "extends",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_01_q1_b",
+              "text": "implements",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_01_q1_c",
+              "text": "inherits",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_01_q1_d",
+              "text": "super",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_01_q2",
+          "lessonId": "ch08_01",
+          "type": "fourChoice",
+          "question": "protectedアクセス修飾子の説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "protectedは「同じパッケージ内のクラス」と「異なるパッケージでもサブクラス」からアクセスできる修飾子です。privateは同クラス内のみ、publicはどこからでもアクセス可能です。",
+          "choices": [
+            {
+              "id": "ch08_01_q2_a",
+              "text": "同じクラス内のみアクセス可能",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_01_q2_b",
+              "text": "同パッケージとサブクラスからアクセス可能",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_01_q2_c",
+              "text": "どこからでもアクセス可能",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_01_q2_d",
+              "text": "サブクラスのみアクセス可能",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_01_q3",
+          "lessonId": "ch08_01",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class A {\n    void hello() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void world() { System.out.println(\"B\"); }\n}\nB b = new B();\nb.hello();\nb.world();",
+          "explanation": "BはAを継承しているため、Aのhello()メソッドを呼び出せます。b.hello()は「A」を、b.world()は「B」を出力します。",
+          "choices": [
+            {
+              "id": "ch08_01_q3_a",
+              "text": "A\nB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_01_q3_b",
+              "text": "B\nA",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_01_q3_c",
+              "text": "A",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_01_q3_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_02",
+      "courseId": "ch08",
+      "title": "コンストラクタチェーン",
+      "summary": "super()による親コンストラクタの呼び出し",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・子クラスのコンストラクタが親クラスのコンストラクタを呼ぶ仕組み\n・super()を使った明示的な呼び出し\n・暗黙のsuper()が挿入される条件\n\nコンストラクタチェーンを理解しないと、コンパイルエラーの原因がわかりません。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "code",
+          "title": "super()の基本",
+          "body": "子クラスのコンストラクタからsuper()で親クラスのコンストラクタを呼びます。",
+          "code": "// Animalクラスの定義\nclass Animal {\n    String name;\n\n    Animal(String name) {\n        this.name = name;\n        System.out.println(\"Animalコンストラクタ: \" + name);\n    }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    String breed;\n\n    Dog(String name, String breed) {\n        super(name);  // 親のコンストラクタを呼ぶ（必ず先頭行！）\n        this.breed = breed;\n        System.out.println(\"Dogコンストラクタ: \" + breed);\n    }\n}\n\nDog d = new Dog(\"ポチ\", \"柴犬\");\n// 出力:\n// Animalコンストラクタ: ポチ\n// Dogコンストラクタ: 柴犬\nSystem.out.println(d.name + \"(\" + d.breed + \")\");\n// ポチ(柴犬)",
+          "note": "super()はコンストラクタの先頭行でなければなりません。this()と同時に使うことはできません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "tip",
+          "title": "super()は必ずコンストラクタの最初の行に書く",
+          "body": "コンストラクタ内でsuper()を呼ぶ場合の重要なルール:\n\n・super()はコンストラクタの最初の行に書く必要がある\n・this()（同じクラスの別コンストラクタ呼出し）とsuper()は同時に使えない\n・引数なしコンストラクタが親にない場合、super(引数)が必須\n\nsuper()を明示しなくても、コンパイラが自動で「super()」を挿入します（引数なし版のみ）。",
+          "code": null,
+          "note": "試験では「コンパイルエラーになるコンストラクタの組み合わせ」が頻出です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "rule",
+          "title": "暗黙のsuper()呼び出し",
+          "body": "重要なルール:\n\n1. 子クラスのコンストラクタでsuper()を書かない場合、コンパイラが自動的にsuper()（引数なし）を挿入する\n\n2. 親クラスに引数なしコンストラクタがない場合、子クラスで明示的にsuper(引数)を書く必要がある → 書かないとコンパイルエラー\n\n3. super()とthis()は両方ともコンストラクタの先頭行でなければならないため、同時に使えない\n\n4. コンストラクタの呼び出し順序は「親→子」\n   - 最上位のObjectクラスから順に実行される\n\n5. クラスにコンストラクタを1つも定義しない場合、引数なしのデフォルトコンストラクタが自動生成される。ただしコンストラクタを1つでも定義すると自動生成されない",
+          "code": null,
+          "note": "試験頻出: 親にデフォルトコンストラクタがなく、子でsuper()を明示しないケースはコンパイルエラーになります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "code",
+          "title": "コンパイルエラーになるパターン",
+          "body": "よくある間違いを確認しましょう。",
+          "code": "// ❌ コンパイルエラーのパターン\nclass Parent {\n    Parent(String msg) { // 引数ありコンストラクタのみ\n        System.out.println(msg);\n    }\n    // → デフォルトコンストラクタ Parent() は自動生成されない！\n}\n\nclass Child extends Parent {\n    Child() {\n        // super()が暗黙的に挿入される\n        // → Parent()がないのでコンパイルエラー！\n    }\n}\n\n// ✅ 修正方法1: 明示的にsuper(引数)を呼ぶ\nclass Child extends Parent {\n    Child() {\n        super(\"hello\"); // 親の引数ありコンストラクタを呼ぶ\n    }\n}\n\n// ✅ 修正方法2: 親に引数なしコンストラクタを追加\nclass Parent {\n    Parent() {}            // 引数なし追加\n    Parent(String msg) {}  // 引数あり\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・super(): 親クラスのコンストラクタを呼ぶ\n・super()はコンストラクタの先頭行に書く\n・省略するとsuper()（引数なし）が自動挿入\n・親に引数なしコンストラクタがなければ明示必須\n・コンストラクタの実行順: 親→子\n・super()とthis()は同時使用不可",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_02_q1",
+          "lessonId": "ch08_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class A {\n    A() { System.out.print(\"A \"); }\n}\nclass B extends A {\n    B() { System.out.print(\"B \"); }\n}\nclass C extends B {\n    C() { System.out.print(\"C \"); }\n}\nnew C();",
+          "explanation": "コンストラクタは親から順に実行されます。C()→B()→A()の順で呼ばれますが、super()が先に実行されるため出力順はA→B→Cです。Cのコンストラクタ → 暗黙のsuper()でBのコンストラクタ → 暗黙のsuper()でAのコンストラクタ → 「A 」→「B 」→「C 」。",
+          "choices": [
+            {
+              "id": "ch08_02_q1_a",
+              "text": "A B C ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_02_q1_b",
+              "text": "C B A ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_02_q1_c",
+              "text": "C ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_02_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_02_q2",
+          "lessonId": "ch08_02",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する箇所はどれですか？",
+          "code": "class Parent {\n    Parent(int x) {\n        System.out.println(x);\n    }\n}\nclass Child extends Parent {\n    Child() {\n        System.out.println(\"Child\");\n    }\n}",
+          "explanation": "Childのコンストラクタにsuper()が書かれていないため、コンパイラがsuper()（引数なし）を暗黙的に挿入します。しかしParentには引数なしコンストラクタが存在しないため、7行目のChild()でコンパイルエラーが発生します。super(値)を明示的に書く必要があります。",
+          "choices": [
+            {
+              "id": "ch08_02_q2_a",
+              "text": "Parentクラスの定義",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_02_q2_b",
+              "text": "Childのコンストラクタ（super()が必要）",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_02_q2_c",
+              "text": "System.out.println(\"Child\")",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_02_q2_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_02_q3",
+          "lessonId": "ch08_02",
+          "type": "fourChoice",
+          "question": "super()とthis()について正しい説明はどれですか？",
+          "code": null,
+          "explanation": "super()は親クラスのコンストラクタを、this()は同じクラスの別コンストラクタを呼び出します。どちらもコンストラクタの先頭行に書く必要があるため、同時に使うことはできません。",
+          "choices": [
+            {
+              "id": "ch08_02_q3_a",
+              "text": "super()とthis()をコンストラクタ内で同時に使える",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_02_q3_b",
+              "text": "super()はメソッド内のどこにでも書ける",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_02_q3_c",
+              "text": "super()とthis()は同時に使えない（先頭行の制約）",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch08_02_q3_d",
+              "text": "this()は親クラスのコンストラクタを呼ぶ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_03",
+      "courseId": "ch08",
+      "title": "メソッドのオーバーライド",
+      "summary": "親のメソッドを子クラスで再定義する",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**オーバーライド**: 親メソッドを子クラスで再定義する\n・**@Override**アノテーションの重要性\n・オーバーロードとオーバーライドの明確な違い\n\n名前が似ていますが、全く異なる概念を区別することが重要です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "code",
+          "title": "オーバーライドの実装",
+          "body": "**@Override**アノテーションを付けて親メソッドを再定義します。",
+          "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n\n    // getInfoメソッドの定義\n    String getInfo() {\n        return \"動物\";\n    }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    @Override  // オーバーライドを明示（推奨）\n    void speak() {\n        System.out.println(\"ニャー\");\n    }\n\n    @Override\n    String getInfo() {\n        return \"猫: \" + super.getInfo(); // 親のメソッドも呼べる\n    }\n}\n\nAnimal a = new Cat();\na.speak();                     // ニャー（子クラスのメソッドが実行）\nSystem.out.println(a.getInfo()); // 猫: 動物",
+          "note": "**@Override**は省略可能ですが、付けることが強く推奨されます。タイプミスがあるとコンパイルエラーで検出できるためです。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "tip",
+          "title": "オーバーライドとオーバーロードの違い",
+          "body": "名前が似ていますが全く異なる概念です。\n\n| 項目 | オーバーライド | オーバーロード |\n|---|---|---|\n| 英語 | Override（上書き） | Overload（多重定義） |\n| 場所 | 親クラスと子クラス | 同じクラス内 |\n| メソッド名 | 同じ | 同じ |\n| 引数 | 同じ | 異なる |\n| 戻り値 | 同じ（共変戻り値も可） | 異なってもよい |\n| アノテーション | @Override推奨 | なし |\n",
+          "code": null,
+          "note": "**@Override** をつけると、スペルミスなどで**オーバーライド**になっていない場合にコンパイルエラーで教えてくれます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "rule",
+          "title": "オーバーライドのルール",
+          "body": "**オーバーライド**には厳密なルールがあります:\n\n1. メソッド名・引数リストが完全に一致すること\n2. 戻り値の型は同じか、そのサブタイプ（共変戻り値型）\n   ・親: Object getX() → 子: String getX() ○\n3. アクセス修飾子は同じか、より緩く\n   ・親: protected → 子: public ○\n   ・親: public → 子: protected × コンパイルエラー\n4. throws句の例外は同じか、そのサブクラス\n5. finalメソッドはオーバーライドできない\n6. staticメソッドはオーバーライドではなく「隠蔽（hiding）」\n\nオーバーライド vs オーバーロード:\n| 比較項目 | オーバーライド | オーバーロード |\n|---|---|---|\n| 定義場所 | 親子クラス間 | 同じクラス内 |\n| メソッド名 | 同じ | 同じ |\n| 引数 | 同じ | 異なる |\n| 戻り値 | 同じ/サブタイプ | 自由 |",
+          "code": null,
+          "note": "finalメソッド・finalクラスは設計意図として「これ以上変更しない」ことを示します。Stringクラスがfinal宣言されているのもこの理由です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "code",
+          "title": "super.メソッド名()の活用",
+          "body": "子クラスから親のメソッドを呼び出す方法です。",
+          "code": "class Logger {\n    void log(String msg) {\n        System.out.println(\"[LOG] \" + msg);\n    }\n}\n\nclass TimedLogger extends Logger {\n    @Override\n    void log(String msg) {\n        // 親のメソッドを活用しつつ、機能を追加\n        String timestamp = java.time.LocalTime.now().toString();\n        super.log(timestamp + \" - \" + msg);\n    }\n}\n\nTimedLogger logger = new TimedLogger();\nlogger.log(\"サーバー起動\");\n// [LOG] 12:30:45.123 - サーバー起動\n\n// super.の使い方まとめ:\n// super.メソッド名()  → 親のメソッドを呼ぶ\n// super.フィールド名  → 親のフィールドを参照（同名フィールド時）\n// super()            → 親のコンストラクタを呼ぶ",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**オーバーライド**: 親メソッドを子クラスで再定義\n・**@Override**アノテーションを必ず付ける\n・名前・引数は同じ、戻り値は同じかサブタイプ\n・アクセスは同じかより緩く\n・finalメソッドはオーバーライド不可\n・super.メソッド名()で親のメソッドを呼べる",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_03_q1",
+          "lessonId": "ch08_03",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class A {\n    void greet() { System.out.print(\"Hello \"); }\n}\nclass B extends A {\n    @Override\n    void greet() {\n        super.greet();\n        System.out.print(\"World\");\n    }\n}\nnew B().greet();",
+          "explanation": "B.greet()が呼ばれ、まずsuper.greet()でAのgreet()が実行されて「Hello 」が出力されます。次にSystem.out.print(\"World\")で「World」が出力されます。",
+          "choices": [
+            {
+              "id": "ch08_03_q1_a",
+              "text": "Hello World",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_03_q1_b",
+              "text": "World",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_03_q1_c",
+              "text": "Hello ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_03_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_03_q2",
+          "lessonId": "ch08_03",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する箇所はどれですか？",
+          "code": "class Parent {\n    public void show() {\n        System.out.println(\"Parent\");\n    }\n}\nclass Child extends Parent {\n    @Override\n    private void show() {\n        System.out.println(\"Child\");\n    }\n}",
+          "explanation": "オーバーライドではアクセス修飾子を親より厳しくできません。親がpublic → 子がprivateは制約違反でコンパイルエラーです。同じpublicか、それより緩くする必要があります（publicが最も緩いので、この場合はpublicのみ可能）。",
+          "choices": [
+            {
+              "id": "ch08_03_q2_a",
+              "text": "@Overrideアノテーション",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_03_q2_b",
+              "text": "private void show()（アクセスが厳しい）",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_03_q2_c",
+              "text": "System.out.println(\"Child\")",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_03_q2_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_03_q3",
+          "lessonId": "ch08_03",
+          "type": "fourChoice",
+          "question": "オーバーライドとオーバーロードの違いとして正しいものはどれですか？",
+          "code": null,
+          "explanation": "オーバーライドは親子クラス間で同名・同引数のメソッドを再定義します。オーバーロードは同じクラス内で同名だが引数が異なるメソッドを複数定義します。",
+          "choices": [
+            {
+              "id": "ch08_03_q3_a",
+              "text": "オーバーライドは引数の型を変える",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_03_q3_b",
+              "text": "オーバーロードは親子クラス間で行う",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_03_q3_c",
+              "text": "オーバーライドは親メソッドを子で再定義、オーバーロードは同名別引数",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch08_03_q3_d",
+              "text": "どちらも戻り値の型だけが異なればよい",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch08_03_q4",
+          "lessonId": "ch08_03",
+          "type": "codeComplete",
+          "question": "子クラスから親クラスのコンストラクタを呼び出すコードを完成させてください。",
+          "code": null,
+          "explanation": "extendsでクラスを継承し、super()で親クラスのコンストラクタを呼び出します。implementsはインターフェース実装に使います。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class Dog __BLANK_1__ Animal {\n    public Dog(String name) {\n        __BLANK_2__(name);\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①継承",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "extends",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "implements",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "inherits",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②親呼び出し",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "super",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "this",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "parent",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch08_04",
+      "courseId": "ch08",
+      "title": "抽象クラス",
+      "summary": "共通の枠組みを定義して実装を強制する",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・抽象クラス（abstractクラス）の定義と使い方\n・抽象メソッドで子クラスに実装を強制する仕組み\n・抽象クラスを使った設計パターン\n\n「共通の骨組みを提供しつつ、詳細は各クラスに任せる」設計を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "code",
+          "title": "抽象クラスの定義と使用",
+          "body": "abstractキーワードでクラスやメソッドを宣言します。",
+          "code": "// 抽象クラス\n// Shapeクラスの定義\nabstract class Shape {\n    String color;\n\n    Shape(String color) {\n        this.color = color;\n    }\n\n    // 抽象メソッド（処理なし、子クラスで実装を強制）\n    abstract double area();\n\n    // 通常メソッド（共通処理はここに書ける）\n    // displayメソッドの定義\n    void display() {\n        System.out.println(color + \"の図形、面積: \" + area());\n    }\n}\n\n// 子クラスで抽象メソッドを実装\n// Circleクラスの定義\nclass Circle extends Shape {\n    double radius;\n\n    Circle(String color, double radius) {\n        super(color);\n        this.radius = radius;\n    }\n    @Override\n    // areaメソッドの定義\n    double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\n// Rectangleクラスの定義\nclass Rectangle extends Shape {\n    double w, h;\n\n    Rectangle(String color, double w, double h) {\n        super(color);\n        this.w = w;\n        this.h = h;\n    }\n    @Override\n    double area() {\n        return w * h;\n    }\n}\n\n// Shape s = new Shape(\"赤\"); // コンパイルエラー！抽象クラスはnewできない\nShape s = new Circle(\"赤\", 5.0);\ns.display(); // 赤の図形、面積: 78.539...",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "tip",
+          "title": "抽象クラスはインスタンス化できない",
+          "body": "抽象クラスは「未完成のクラス」なので、new でインスタンスを作れません。\n\n・new Animal() → コンパイルエラー（Animalが抽象クラスの場合）\n・Animal a = new Dog() → OK（Dog が Animal を**継承**し、抽象メソッドを実装済み）\n\n抽象クラスの目的は「共通の設計を提供しつつ、具体的な実装を子クラスに任せる」ことです。",
+          "code": null,
+          "note": "抽象クラスに抽象メソッドがなくても定義できます（new を禁止する目的で使うことがあります）。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "rule",
+          "title": "抽象クラスのルール",
+          "body": "1. abstractクラスはインスタンス化できない（new不可）\n2. 抽象メソッド: abstract修飾子 + 処理本体なし + セミコロンで終わる\n   abstract void doSomething();  // { } は書かない\n3. 抽象メソッドを持つクラスは必ずabstractクラスにする\n4. 子クラスはすべての抽象メソッドを**オーバーライド**する\n   → しない場合は子クラスもabstractにする\n5. 抽象クラスは通常メソッド・フィールド・コンストラクタも持てる\n6. 抽象メソッドにprivateは使えない（子クラスからアクセスできないため）\n\n抽象クラスの用途:\n・共通処理をまとめつつ、個別処理の実装を強制\n・Template Methodパターン（共通の流れ + カスタマイズポイント）",
+          "code": null,
+          "note": "抽象クラスはインスタンス化できませんが、コンストラクタは定義できます。これは子クラスからsuper()で呼ぶためです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・abstract class: インスタンス化不可の未完成クラス\n・abstract method: 処理なし、子クラスで実装必須\n・通常メソッド・フィールド・コンストラクタも持てる\n・子クラスが全抽象メソッドを実装しなければ子もabstract\n・共通処理 + 個別実装の強制に使う",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_04_q1",
+          "lessonId": "ch08_04",
+          "type": "fourChoice",
+          "question": "抽象クラスについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "抽象クラスはabstract修飾子を付けたクラスで、通常のメソッドとフィールドを持つことができます。ただしインスタンス化（new）はできません。抽象メソッドがなくてもabstract宣言は可能です。",
+          "choices": [
+            {
+              "id": "ch08_04_q1_a",
+              "text": "抽象クラスはnewでインスタンス化できる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_04_q1_b",
+              "text": "抽象クラスは通常メソッドもフィールドも持てない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_04_q1_c",
+              "text": "抽象クラスは通常メソッドやフィールドも持てる",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch08_04_q1_d",
+              "text": "抽象メソッドにはprivateを付けられる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_04_q2",
+          "lessonId": "ch08_04",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "abstract class Base {\n    abstract String name();\n    void print() { System.out.println(\"名前: \" + name()); }\n}\nclass Impl extends Base {\n    @Override\n    String name() { return \"Java\"; }\n}\nnew Impl().print();",
+          "explanation": "Implクラスで name() を \"Java\" を返すように実装しています。print() メソッドはBaseの通常メソッドで、name() を呼んでいます。ポリモーフィズムにより Impl.name() が呼ばれ、「名前: Java」が出力されます。",
+          "choices": [
+            {
+              "id": "ch08_04_q2_a",
+              "text": "名前: Java",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_04_q2_b",
+              "text": "名前: null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_04_q2_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_04_q2_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_04_q3",
+          "lessonId": "ch08_04",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "abstract class Animal {\n    abstract void speak();\n}\nclass Dog extends Animal {\n}\nDog d = new Dog();",
+          "explanation": "Dogクラスが抽象メソッドspeak()をオーバーライドしていません。抽象メソッドを全て実装しないクラスはabstract宣言が必要です。4行目のclass Dog extends Animalでコンパイルエラーが発生します。",
+          "choices": [
+            {
+              "id": "ch08_04_q3_a",
+              "text": "1行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_04_q3_b",
+              "text": "4行目（Dogクラスの宣言）",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_04_q3_c",
+              "text": "6行目（new Dog()）",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_04_q3_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch08_04_q4",
+          "lessonId": "ch08_04",
+          "type": "reorder",
+          "question": "クラスの継承とメソッドオーバーライドの手順を正しい順序に並べてください。",
+          "code": null,
+          "explanation": "まず親クラスを定義し、その後子クラスでextendsして@Overrideでメソッドを再定義します。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "class Animal { void speak() { } }",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "class Dog extends Animal {",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "    @Override void speak() { }",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch08_05",
+      "courseId": "ch08",
+      "title": "インターフェース",
+      "summary": "契約を定義して実装を約束する",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・インターフェースの定義（implementsキーワード）\n・クラスとインターフェースの違い\n・複数のインターフェースを同時に実装する方法\n\nインターフェースは「何ができるか」の契約を定義する仕組みです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "code",
+          "title": "インターフェースの定義と実装",
+          "body": "interfaceキーワードで定義し、implementsで実装します。",
+          "code": "// インターフェースの定義\n// Printableインターフェースの定義\ninterface Printable {\n    void print(); // 暗黙的に public abstract\n}\n\n// Loggableインターフェースの定義\ninterface Loggable {\n    void log(String message);\n}\n\n// 複数のインターフェースを実装\n// Documentクラスの定義\nclass Document implements Printable, Loggable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n\n    @Override\n    // printメソッドの定義\n    public void print() {\n        System.out.println(\"印刷: \" + content);\n    }\n\n    @Override\n    // logメソッドの定義\n    public void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n    }\n}\n\n// インターフェース型の変数として扱える\nPrintable p = new Document(\"報告書\");\np.print();  // 印刷: 報告書\n\nLoggable l = new Document(\"設計書\");\nl.log(\"作成完了\"); // [LOG] 作成完了",
+          "note": "インターフェースのメソッドは暗黙的にpublic abstractです。実装クラスではpublicを付けないとコンパイルエラーになります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "tip",
+          "title": "抽象クラスとインターフェースの使い分け",
+          "body": "どちらを使うか迷ったときの判断基準:\n\n| 特徴 | 抽象クラス | インターフェース |\n|---|---|---|\n| 関係 | 「〜は〜の一種」| 「〜ができる」 |\n| 多重 | 単一継承のみ | 複数実装OK |\n| フィールド | 持てる | 定数のみ（static final） |\n| コンストラクタ | 持てる | 持てない |\n| 例 | Animal → Dog | Comparable, Serializable |\n\nJava 8以降、インターフェースにdefaultメソッド（実装付き）を書けるようになりました。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "code",
+          "title": "defaultメソッドとstaticメソッド",
+          "body": "Java 8以降、インターフェースにも処理を持つメソッドを定義できます。",
+          "code": "// Greeterインターフェースの定義\ninterface Greeter {\n    // 抽象メソッド（実装必須）\n    String getName();\n\n    // defaultメソッド（デフォルト実装あり、オーバーライド任意）\n    default void greet() {\n        System.out.println(\"こんにちは、\" + getName() + \"さん\");\n    }\n\n    // staticメソッド（インターフェース名で呼ぶ）\n    // infoメソッドの定義\n    static void info() {\n        System.out.println(\"Greeterインターフェース v1.0\");\n    }\n}\n\n// Userクラスの定義\nclass User implements Greeter {\n    private String name;\n    User(String name) { this.name = name; }\n\n    @Override\n    // getNameメソッドの定義\n    public String getName() { return name; }\n    // greet() はdefault実装をそのまま使える\n}\n\nUser u = new User(\"太郎\");\nu.greet();       // こんにちは、太郎さん（default実装）\nGreeter.info();  // Greeterインターフェース v1.0（static呼び出し）\n\n// defaultメソッドをオーバーライドすることも可能\n// VIPUserクラスの定義\nclass VIPUser implements Greeter {\n    @Override public String getName() { return \"VIP\"; }\n    @Override public void greet() {\n        System.out.println(\"特別なご挨拶: \" + getName() + \"様\");\n    }\n}",
+          "note": "defaultメソッドはJava 8で追加されました。既存インターフェースに新メソッドを追加しても、実装クラスを壊さないための仕組みです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "rule",
+          "title": "インターフェース vs 抽象クラス",
+          "body": "| 特徴 | インターフェース | 抽象クラス |\n|---|---|---|\n| 多重継承 | ○（複数implements可） | ×（extends 1つ） |\n| コンストラクタ | × | ○ |\n| インスタンス変数 | ×（定数のみ） | ○ |\n| default/staticメソッド | ○（Java 8+） | ○ |\n| 使い分け | 「何ができるか」契約 | 「何であるか」共通基盤 |\n\nインターフェースのフィールド:\n・暗黙的に public static final（定数）\n・interface Colors { int RED = 1; } // = public static final int RED = 1;\n\n使い分けの目安:\n・「犬は動物の一種」→ 抽象クラス（is-a）\n・「犬は泳げる」→ インターフェース（can-do / has-ability）",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・interface: 契約（何ができるか）を定義\n・implements で実装、複数インターフェース実装可能\n・メソッドは暗黙的に public abstract\n・default メソッド: デフォルト実装あり（Java 8+）\n・static メソッド: インターフェース名.メソッド()で呼ぶ\n・フィールドは暗黙的に public static final（定数のみ）\n・抽象クラスはis-a、インターフェースはcan-do",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_05_q1",
+          "lessonId": "ch08_05",
+          "type": "fillBlank",
+          "question": "クラスがインターフェースを実装するときに使うキーワードの空欄を埋めてください。\nclass Dog _____ Runnable { }",
+          "code": null,
+          "explanation": "クラスがインターフェースを実装するにはimplementsキーワードを使います。extends（継承）とは異なり、複数のインターフェースをカンマ区切りで指定できます。",
+          "choices": [
+            {
+              "id": "ch08_05_q1_a",
+              "text": "implements",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q1_b",
+              "text": "extends",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q1_c",
+              "text": "inherits",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q1_d",
+              "text": "uses",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_05_q2",
+          "lessonId": "ch08_05",
+          "type": "fourChoice",
+          "question": "Java 8以降のインターフェースのdefaultメソッドについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "defaultメソッドはインターフェースにデフォルトの実装を提供します。実装クラスはオーバーライドしてもしなくてもOKです。これにより既存のインターフェースに新しいメソッドを追加しても、既存の実装クラスを壊しません。",
+          "choices": [
+            {
+              "id": "ch08_05_q2_a",
+              "text": "実装クラスで必ずオーバーライドしなければならない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q2_b",
+              "text": "デフォルト実装を提供し、オーバーライドは任意",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q2_c",
+              "text": "abstractメソッドと同じ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q2_d",
+              "text": "privateキーワードと共に使う",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_05_q3",
+          "lessonId": "ch08_05",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "interface Calc {\n    default int doubleIt(int n) { return n * 2; }\n}\nclass MyCalc implements Calc {\n    @Override\n    public int doubleIt(int n) { return n * 3; }\n}\nCalc c = new MyCalc();\nSystem.out.println(c.doubleIt(5));",
+          "explanation": "MyCalcクラスでdoubleItをオーバーライドしてn * 3を返すように変更しています。cの実体はMyCalcなので、オーバーライドされたメソッドが呼ばれ、5 * 3 = 15が出力されます。",
+          "choices": [
+            {
+              "id": "ch08_05_q3_a",
+              "text": "15",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q3_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q3_c",
+              "text": "5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q3_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch08_05_q4",
+          "lessonId": "ch08_05",
+          "type": "multiChoice",
+          "question": "メソッドのオーバーライドの条件として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "オーバーライドではメソッド名と引数リストが同一であることが必須です。戻り値は同じ型か共変戻り値（サブクラス型）が許容されます。アクセス修飾子は同じか、より広い範囲にする必要があります（例: protectedをpublicに拡大はOK、逆はNG）。staticメソッドはオーバーライドできません（隠蔽になります）。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch08_05_q4_a",
+              "text": "メソッド名と引数リストが同一であること",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q4_b",
+              "text": "アクセス修飾子は同じか、より広い範囲にすること",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q4_c",
+              "text": "staticメソッドもオーバーライドできる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q4_d",
+              "text": "戻り値は共変戻り値型が許容される",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_06",
+      "courseId": "ch08",
+      "title": "型チェックとキャスト",
+      "summary": "instanceofとアップキャスト・ダウンキャスト",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・instanceof演算子でオブジェクトの型を判定\n・**アップキャスト**と**ダウンキャスト**の違い\n・ClassCastExceptionを防ぐ安全なキャスト方法\n\n**ポリモーフィズム**を活用するうえで必須の知識です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "code",
+          "title": "instanceofによる型チェック",
+          "body": "オブジェクトが特定の型かどうかを判定します。",
+          "code": "// Animalクラスの定義\nclass Animal { }\n// Dogクラスの定義\nclass Dog extends Animal {\n    // barkメソッドの定義\n    void bark() { System.out.println(\"ワン!\"); }\n}\n// Catクラスの定義\nclass Cat extends Animal {\n    // meowメソッドの定義\n    void meow() { System.out.println(\"ニャー!\"); }\n}\n\n// instanceof で型を判定\nAnimal a = new Dog();\nSystem.out.println(a instanceof Dog);    // true\nSystem.out.println(a instanceof Animal); // true （DogはAnimalの一種）\nSystem.out.println(a instanceof Cat);    // false\n\n// nullの場合は常にfalse\nAnimal n = null;\nSystem.out.println(n instanceof Animal); // false\n\n// 実用例: 型チェックしてからキャスト\nstatic void handleAnimal(Animal animal) {\n    // 条件分岐\n    if (animal instanceof Dog) {\n        Dog dog = (Dog) animal;\n        dog.bark();\n    // 別の条件をチェック\n    } else if (animal instanceof Cat) {\n        Cat cat = (Cat) animal;\n        cat.meow();\n    }\n}\n\n// Java 16+: パターンマッチング\nif (animal instanceof Dog dog) {\n    dog.bark(); // キャスト不要！\n}",
+          "note": "Java 16以降のパターンマッチング for instanceofを使うと、型チェックとキャストを同時に行えます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "tip",
+          "title": "ダウンキャストは危険 — 必ずinstanceofで確認",
+          "body": "**アップキャスト**は安全ですが、**ダウンキャスト**はClassCastExceptionの危険があります。\n\n・アップキャスト（子→親）: 常に安全。暗黙的に行われる\n・ダウンキャスト（親→子）: 明示的なキャストが必要。型が違うと例外\n\n必ず **instanceof** で確認してからキャストしましょう。\n\nJava 16以降は「パターンマッチング instanceof」が使えます（Chapter 19参照）。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "code",
+          "title": "アップキャストとダウンキャスト",
+          "body": "子→親（**アップキャスト**）は安全、親→子（**ダウンキャスト**）は明示的キャストが必要です。",
+          "code": "class Vehicle {\n    void run() { System.out.println(\"走行中\"); }\n}\nclass Car extends Vehicle {\n    void drift() { System.out.println(\"ドリフト!\"); }\n}\n\n// アップキャスト（子→親）: 暗黙的、常に安全\nVehicle v = new Car();  // 自動（キャスト不要）\nv.run();                // OK\n// v.drift();           // コンパイルエラー！ Vehicle型にdrift()はない\n\n// ダウンキャスト（親→子）: 明示的キャストが必要\nCar c = (Car) v;        // キャスト（実体がCarなのでOK）\nc.drift();              // OK → ドリフト!\n\n// ⚠️ 実体と異なる型へのダウンキャストは実行時エラー\nVehicle v2 = new Vehicle(); // 実体はVehicle\n// Car c2 = (Car) v2;      // ClassCastException!\n\n// 安全なダウンキャスト: instanceofで先にチェック\nif (v instanceof Car) {\n    Car safeCar = (Car) v;  // 安全\n    safeCar.drift();\n}",
+          "note": "コンパイルエラーと実行時エラーの区別が重要です。**ダウンキャスト**のコンパイルは通りますが、実体が異なるとClassCastExceptionが発生します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "| 概念 | 説明 |\n|---|---|\n| instanceof | オブジェクトの型を判定（nullは常にfalse） |\n| アップキャスト（子→親） | 暗黙的、安全、子固有メソッド使用不可 |\n| ダウンキャスト（親→子） | 明示的キャスト必要 |\n・実体と異なる型へのダウンキャスト → ClassCastException\n・ダウンキャスト前にinstanceofでチェックが安全\n・Java 16+: パターンマッチングで型チェック+キャスト同時",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_06_q1",
+          "lessonId": "ch08_06",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class A {}\nclass B extends A {}\nA obj = new B();\nSystem.out.print(obj instanceof A);\nSystem.out.print(\",\");\nSystem.out.print(obj instanceof B);",
+          "explanation": "objの実体はBです。BはAのサブクラスなので、obj instanceof A も obj instanceof B も true です。instanceofは実際のオブジェクトの型階層をチェックします。",
+          "choices": [
+            {
+              "id": "ch08_06_q1_a",
+              "text": "true,true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_06_q1_b",
+              "text": "true,false",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_06_q1_c",
+              "text": "false,true",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_06_q1_d",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_06_q2",
+          "lessonId": "ch08_06",
+          "type": "fourChoice",
+          "question": "以下のコードで何が発生しますか？",
+          "code": "class Animal {}\nclass Dog extends Animal {}\nAnimal a = new Animal();\nDog d = (Dog) a;",
+          "explanation": "変数aの実体はAnimalクラスのインスタンスです。DogへのダウンキャストはコンパイルはOKですが、実行時にAnimalをDogに変換できないためClassCastExceptionが発生します。",
+          "choices": [
+            {
+              "id": "ch08_06_q2_a",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_06_q2_b",
+              "text": "ClassCastException（実行時エラー）",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_06_q2_c",
+              "text": "正常に実行される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_06_q2_d",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_06_q3",
+          "lessonId": "ch08_06",
+          "type": "fourChoice",
+          "question": "null instanceof String の結果はどれですか？",
+          "code": null,
+          "explanation": "instanceofの左辺がnullの場合、結果は常にfalseです。nullはどの型のインスタンスでもないためです。NullPointerExceptionは発生しません。",
+          "choices": [
+            {
+              "id": "ch08_06_q3_a",
+              "text": "true",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_06_q3_b",
+              "text": "false",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_06_q3_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_06_q3_d",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_07",
+      "courseId": "ch08",
+      "title": "ポリモーフィズムの活用",
+      "summary": "多態性で柔軟なプログラムを作る",
+      "estimatedMinutes": 8,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**ポリモーフィズム**（多態性）の実践的な使い方\n・親型の変数で子クラスのメソッドを呼ぶ仕組み\n・ポリモーフィズムがもたらす柔軟な設計\n\n**継承**・**オーバーライド**・インターフェースの総合力が試されます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "code",
+          "title": "ポリモーフィズムの実例",
+          "body": "親型の変数で異なる子クラスを同じように扱えます。",
+          "code": "// Shapeクラスの定義\nabstract class Shape {\n    abstract double area();\n\n    @Override\n    // toStringメソッドの定義\n    public String toString() {\n        return getClass().getSimpleName() + \": 面積=\" + area();\n    }\n}\n\n// Circleクラスの定義\nclass Circle extends Shape {\n    double r;\n    Circle(double r) { this.r = r; }\n    @Override double area() { return Math.PI * r * r; }\n}\n\n// Rectクラスの定義\nclass Rect extends Shape {\n    double w, h;\n    Rect(double w, double h) { this.w = w; this.h = h; }\n    @Override double area() { return w * h; }\n}\n\n// ポリモーフィズム: 同じShape型で異なる動作\nShape[] shapes = {\n    new Circle(5),\n    new Rect(3, 4),\n    new Circle(2)\n};\n\n// 拡張for文（コレクションの全要素を順番に処理）\nfor (Shape s : shapes) {\n    System.out.println(s.toString());\n    // Circle: 面積=78.539...\n    // Rect: 面積=12.0\n    // Circle: 面積=12.566...\n}\n\n// 面積の合計も簡単に計算\n// 変数の宣言と初期化\ndouble total = 0;\nfor (Shape s : shapes) total += s.area();\nSystem.out.println(\"合計面積: \" + total);",
+          "note": "新しい図形（Triangle等）を追加しても、既存のループ処理を変更する必要がありません。これが**ポリモーフィズム**の最大の利点です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "tip",
+          "title": "ポリモーフィズムの3つの条件",
+          "body": "**ポリモーフィズム**が機能するには、以下の3つが必要です。\n\n1. **継承**関係がある（extends / implements）\n2. メソッドが**オーバーライド**されている\n3. 親クラス/インターフェース型の変数で子クラスのオブジェクトを参照\n\nこの3つが揃うと、「同じコードが異なる動作をする」多態性が実現します。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "code",
+          "title": "Objectクラスのメソッド",
+          "body": "すべてのクラスはObjectクラスを暗黙的に**継承**しています。",
+          "code": "// Objectクラスの主要メソッド:\n// toString() — 文字列表現を返す\n// equals()   — 等価性を判定する\n// hashCode() — ハッシュ値を返す\n\n// Studentクラスの定義\nclass Student {\n    String name;\n    int id;\n\n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n    @Override\n    // toStringメソッドの定義\n    public String toString() {\n        return \"Student{name='\" + name + \"', id=\" + id + \"}\";\n    }\n    @Override\n    // equalsメソッドの定義\n    public boolean equals(Object obj) {\n        // 条件分岐\n        if (this == obj) return true;\n        if (!(obj instanceof Student)) return false;\n        Student other = (Student) obj;\n        return this.id == other.id &&\n               this.name.equals(other.name);\n    }\n    @Override\n    public int hashCode() {\n        return name.hashCode() * 31 + id;\n    }\n}\nStudent s1 = new Student(\"太郎\", 1);\nStudent s2 = new Student(\"太郎\", 1);\nSystem.out.println(s1.toString()); // Student{name='太郎', id=1}\nSystem.out.println(s1.equals(s2)); // true\nSystem.out.println(s1 == s2);      // false（参照比較）",
+          "note": "equals()を**オーバーライド**したらhashCode()も必ずオーバーライドします。equalsがtrueの2つのオブジェクトは同じhashCodeを返す必要があります（HashMapやHashSetで正しく動くため）。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**ポリモーフィズム**: 同じ呼び出しで型によって異なる動作\n・親型の配列/リストで異なる子クラスをまとめて扱える\n・新しい型を追加しても既存コードの修正が不要\n・すべてのクラスはObjectを暗黙的に**継承**\n・toString(): 文字列表現（デバッグ/表示に有用）\n・equals(): 等価判定（==は参照比較なので注意）\n・equalsを**オーバーライド**→hashCodeも必ずオーバーライド",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_07_q1",
+          "lessonId": "ch08_07",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class A {\n    String name() { return \"A\"; }\n}\nclass B extends A {\n    @Override\n    String name() { return \"B\"; }\n}\nA obj = new B();\nSystem.out.println(obj.name());",
+          "explanation": "変数の型はAですが実体はBです。ポリモーフィズムにより、実行時にはオブジェクトの実際の型（B）のメソッドが呼ばれるため、\"B\"が出力されます。",
+          "choices": [
+            {
+              "id": "ch08_07_q1_a",
+              "text": "B",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_07_q1_b",
+              "text": "A",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_07_q1_c",
+              "text": "AB",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_07_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_07_q2",
+          "lessonId": "ch08_07",
+          "type": "fourChoice",
+          "question": "equals()メソッドをオーバーライドしたとき、必ず一緒にオーバーライドすべきメソッドはどれですか？",
+          "code": null,
+          "explanation": "equals()をオーバーライドしたらhashCode()も必ずオーバーライドします。これはJavaの契約で、equalsがtrueの2つのオブジェクトは同じhashCodeを返す必要があります。HashMapやHashSetが正しく動作するために不可欠です。",
+          "choices": [
+            {
+              "id": "ch08_07_q2_a",
+              "text": "hashCode()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_07_q2_b",
+              "text": "toString()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_07_q2_c",
+              "text": "clone()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_07_q2_d",
+              "text": "finalize()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_07_q3",
+          "lessonId": "ch08_07",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class Point {\n    int x, y;\n    Point(int x, int y) { this.x = x; this.y = y; }\n    @Override\n    public boolean equals(Object o) {\n        if (!(o instanceof Point)) return false;\n        Point p = (Point) o;\n        return this.x == p.x && this.y == p.y;\n    }\n}\nPoint a = new Point(1, 2);\nPoint b = new Point(1, 2);\nSystem.out.print(a == b);\nSystem.out.print(\",\");\nSystem.out.print(a.equals(b));",
+          "explanation": "a == bは参照比較で、aとbは別のオブジェクトなのでfalse。a.equals(b)はオーバーライドしたequals()が呼ばれ、x==1&&y==2が一致するのでtrue。参照比較(==)と等価判定(equals)の違いがポイントです。",
+          "choices": [
+            {
+              "id": "ch08_07_q3_a",
+              "text": "false,true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_07_q3_b",
+              "text": "true,true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_07_q3_c",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_07_q3_d",
+              "text": "true,false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

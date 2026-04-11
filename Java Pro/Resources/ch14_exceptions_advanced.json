@@ -1,0 +1,960 @@
+{
+  "courseId": "ch14",
+  "lessons": [
+    {
+      "id": "ch14_01",
+      "courseId": "ch14",
+      "title": "例外の階層と種類",
+      "summary": "Javaの例外クラス階層とChecked例外・Unchecked例外の違いを理解する",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・Throwableクラスをルートとする例外の階層構造\n・Error, Exception, RuntimeExceptionの関係\n・チェック例外と非チェック例外の分類ルール\n\n例外の全体像を階層的に理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "rule",
+          "title": "例外クラスの階層構造",
+          "body": "Javaの例外階層は以下のように構成されています。\n\nThrowable（すべての例外・エラーの親クラス）\n├── Error（深刻なエラー。プログラムでは通常捕捉しない）\n│   └── OutOfMemoryError, StackOverflowError など\n└── Exception（プログラムで対処可能な例外）\n    ├── RuntimeException（Unchecked例外：コンパイラがチェックしない）\n    │   └── NullPointerException, ArrayIndexOutOfBoundsException など\n    └── その他のException（Checked例外：必ずtry-catchまたはthrowsが必要）\n        └── IOException, SQLException, ClassNotFoundException など\n\nChecked例外は処理しないとコンパイルエラーになります。\nUnchecked例外（RuntimeExceptionとそのサブクラス）は処理しなくてもコンパイルが通ります。",
+          "code": null,
+          "note": "ErrorもUnchecked（コンパイラがチェックしない）ですが、通常捕捉すべきではありません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "code",
+          "title": "代表的なRuntimeExceptionの例",
+          "body": "RuntimeExceptionのサブクラスはプログラミングのミスに起因することが多いです。\n以下のコードで代表的なUnchecked例外を確認しましょう。\nこれらはコンパイル時にはチェックされず、実行時に初めて発生します。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // NullPointerException\n        String s = null;\n        // s.length();  // 実行時にNullPointerException\n\n        // ArrayIndexOutOfBoundsException\n        int[] arr = {1, 2, 3};\n        // System.out.println(arr[5]);  // 範囲外アクセス\n\n        // ClassCastException\n        Object obj = \"Hello\";\n        // Integer num = (Integer) obj;  // 不正なキャスト\n\n        // ArithmeticException\n        // int result = 10 / 0;  // ゼロ除算\n\n        // NumberFormatException\n        // int n = Integer.parseInt(\"abc\");  // 数値に変換不可\n\n        System.out.println(\"すべてコメントアウト中のため正常終了\");\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "tip",
+          "title": "Checked例外とUnchecked例外の見分け方",
+          "body": "試験で例外の種類を問われたとき、見分ける基準は明確です。\n\n| 種類 | 説明 |\n|---|---|\n| RuntimeExceptionまたはそのサブクラス | Unchecked例外 |\n| それ以外のException | Checked例外 |\n| Errorおよびそのサブクラス | Unchecked（ただし捕捉は非推奨） |\n\n具体的には、IOExceptionやSQLExceptionはChecked例外です。\nNullPointerExceptionやIllegalArgumentExceptionはUnchecked例外です。\n「コンパイラが処理を強制するかどうか」で分類を覚えましょう。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・Throwable → Error / Exception の2系統に分かれる\n・Errorはプログラムで捕捉せず、JVMレベルの深刻な問題を表す\n・Checked例外（IOException等）はtry-catchかthrowsで処理が必須\n・Unchecked例外（RuntimeException系）は処理しなくてもコンパイルが通る\n・NullPointerException, ClassCastException, ArithmeticExceptionはUnchecked例外",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_01_q1",
+          "lessonId": "ch14_01",
+          "type": "fourChoice",
+          "question": "Checked例外に該当するものはどれですか？",
+          "code": null,
+          "explanation": "IOExceptionはExceptionのサブクラスですがRuntimeExceptionのサブクラスではないため、Checked例外です。NullPointerException、ArithmeticException、ArrayIndexOutOfBoundsExceptionはすべてRuntimeExceptionのサブクラスでありUnchecked例外です。",
+          "choices": [
+            {
+              "id": "ch14_01_q1_a",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_01_q1_b",
+              "text": "IOException",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_01_q1_c",
+              "text": "ArithmeticException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_01_q1_d",
+              "text": "ArrayIndexOutOfBoundsException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_01_q2",
+          "lessonId": "ch14_01",
+          "type": "fourChoice",
+          "question": "Javaの例外階層に関する説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "Javaの例外階層ではThrowableが最上位で、ErrorとExceptionに分岐します。Exceptionの中でRuntimeExceptionとそのサブクラスがUnchecked例外、それ以外がChecked例外です。ErrorはExceptionのサブクラスではなく、Throwableの直接のサブクラスです。",
+          "choices": [
+            {
+              "id": "ch14_01_q2_a",
+              "text": "ErrorはExceptionのサブクラスである",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_01_q2_b",
+              "text": "RuntimeExceptionはChecked例外である",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_01_q2_c",
+              "text": "Throwableはすべてのエラーと例外のスーパークラスである",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_01_q2_d",
+              "text": "Unchecked例外はコンパイル時に必ず処理しなければならない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_01_q3",
+          "lessonId": "ch14_01",
+          "type": "fillBlank",
+          "question": "RuntimeExceptionとそのサブクラスは【①】例外と呼ばれ、コンパイラによるチェックが行われません。",
+          "code": null,
+          "explanation": "RuntimeExceptionおよびそのサブクラスは「Unchecked例外（非検査例外）」と呼ばれます。コンパイラが処理を強制しないため、try-catchやthrowsがなくてもコンパイルが通ります。",
+          "choices": [
+            {
+              "id": "ch14_01_q3_a",
+              "text": "Unchecked",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_01_q3_b",
+              "text": "Checked",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_01_q3_c",
+              "text": "Error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_01_q3_d",
+              "text": "Fatal",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch14_02",
+      "courseId": "ch14",
+      "title": "多重キャッチとマルチキャッチ",
+      "summary": "複数のcatchブロックの記述順序とマルチキャッチ構文を学ぶ",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・多重キャッチ（複数のcatchブロック）の記述順序\n・**マルチキャッチ**（Java 7+）で複数例外を1つのcatchで処理\n・例外のポリモーフィズムと具象度のルール\n\n正しいcatchの順序は試験でも重要なポイントです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "code",
+          "title": "多重キャッチの記述順序",
+          "body": "複数のcatchブロックを使い分ける場合、サブクラスの例外を先に書きます。\nExceptionはすべての例外のスーパークラスなので、最後に書く必要があります。\n上のcatchブロックから順にマッチングされ、最初に一致したブロックのみが実行されます。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            int[] arr = {1, 2, 3};\n            System.out.println(arr[5]);\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"配列の範囲外: \" + e.getMessage());\n        } catch (RuntimeException e) {\n            System.out.println(\"実行時例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外: \" + e.getMessage());\n        }\n    }\n}",
+          "note": "上のコードでExceptionのcatchを最初に書くと、それ以降のcatchに到達できずコンパイルエラーになります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "tip",
+          "title": "catchブロックの順序ルール",
+          "body": "複数のcatchを書くとき、具象（子クラス）→抽象（親クラス）の順番で書く必要があります。\n\n| 順番 | 正しい | 間違い |\n|---|---|---|\n| 1番目 | FileNotFoundException | Exception |\n| 2番目 | IOException | IOException |\n| 3番目 | Exception | FileNotFoundException |\n\n親クラスを先に書くと、子クラスのcatchに到達できず、コンパイルエラーになります。",
+          "code": null,
+          "note": "**マルチキャッチ** catch(A | B e) では、AとBに継承関係があるとコンパイルエラーです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "code",
+          "title": "マルチキャッチ構文（Java 7+）",
+          "body": "Java 7以降では、パイプ（|）を使って複数の例外型を1つのcatchブロックでまとめて捕捉できます。\nこれにより、同じ処理を行う場合にコードの重複を避けることができます。\nただし、**マルチキャッチ**で指定する例外同士に継承関係があるとコンパイルエラーになります。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            // 変数の宣言と初期化\n            String s = \"abc\";\n            int num = Integer.parseInt(s);\n        } catch (NumberFormatException | ArithmeticException e) {\n            System.out.println(\"数値関連の例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外\");\n        }\n    }\n}",
+          "note": "**マルチキャッチ**の変数eは**暗黙的にfinal**です。catch内でe = new Exception()のように再代入するとコンパイルエラーになります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "rule",
+          "title": "マルチキャッチのルール",
+          "body": "**マルチキャッチ**を使う際のルールを整理します。\n\n| ルール |\n| --- |\n| マルチキャッチの変数は暗黙的にfinalであり、再代入できない |\n| 通常のcatchブロックの変数はfinalではなく、再代入が可能 |\n| マルチキャッチと通常のcatchは混在して使用できる |\n| パイプ（\\ ）で区切って複数の例外型を指定できる |\n| 5 | マルチキャッチで指定する例外型同士に継承関係があってはならない（例: catch (Exception \\ IOException e) はコンパイルエラー） |",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・多重キャッチではサブクラスの例外を先に、スーパークラスを後に書く\n・順序を間違えると到達不能コードとしてコンパイルエラーになる\n・**マルチキャッチ**は |（パイプ）で複数の例外をまとめて捕捉する\n・マルチキャッチの例外型同士に継承関係があるとコンパイルエラー\n・マルチキャッチの変数は**暗黙的にfinal**で再代入不可",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_02_q1",
+          "lessonId": "ch14_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            String s = null;\n            System.out.println(s.length());\n        } catch (NullPointerException e) {\n            System.out.println(\"A\");\n        } catch (RuntimeException e) {\n            System.out.println(\"B\");\n        } catch (Exception e) {\n            System.out.println(\"C\");\n        }\n        System.out.println(\"D\");\n    }\n}",
+          "explanation": "s.length()でNullPointerExceptionが発生します。最初のcatchがNullPointerExceptionに一致するため\"A\"が出力されます。一度catchされると後続のcatchは実行されません。try-catchの後の\"D\"も出力されます。",
+          "choices": [
+            {
+              "id": "ch14_02_q1_a",
+              "text": "A\nD",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_02_q1_b",
+              "text": "A\nB\nD",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_02_q1_c",
+              "text": "B\nD",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_02_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_02_q2",
+          "lessonId": "ch14_02",
+          "type": "fourChoice",
+          "question": "マルチキャッチ構文に関する説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "マルチキャッチでは |（パイプ）で複数の例外型を指定しますが、指定する例外型同士に継承関係がある場合はコンパイルエラーになります。マルチキャッチの変数は暗黙的にfinalであり、catch内で再代入できません。",
+          "choices": [
+            {
+              "id": "ch14_02_q2_a",
+              "text": "マルチキャッチではカンマ（,）で例外型を区切る",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_02_q2_b",
+              "text": "マルチキャッチの変数は暗黙的にfinalである",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_02_q2_c",
+              "text": "マルチキャッチでは継承関係のある例外型を指定できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_02_q2_d",
+              "text": "マルチキャッチはJava 5から使用できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_02_q3",
+          "lessonId": "ch14_02",
+          "type": "errorFind",
+          "question": "次のコードにはコンパイルエラーがあります。原因はどれですか？",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            int x = Integer.parseInt(\"abc\");\n        } catch (Exception e) {\n            System.out.println(\"例外\");\n        } catch (NumberFormatException e) {\n            System.out.println(\"数値変換エラー\");\n        }\n    }\n}",
+          "explanation": "Exceptionは NumberFormatExceptionのスーパークラスです。スーパークラスのcatchが先にあると、サブクラスのcatchには到達できないため、コンパイルエラーになります。NumberFormatExceptionのcatchをExceptionのcatchより前に記述する必要があります。",
+          "choices": [
+            {
+              "id": "ch14_02_q3_a",
+              "text": "catchブロックの順序が正しくない（サブクラスを先に書く必要がある）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_02_q3_b",
+              "text": "Integer.parseInt()はChecked例外をスローする",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_02_q3_c",
+              "text": "tryブロック内に複数の文が必要である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_02_q3_d",
+              "text": "catchブロックでは変数名eを重複して使えない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch14_02_q4",
+          "lessonId": "ch14_02",
+          "type": "codeComplete",
+          "question": "try-with-resources構文でリソースを自動クローズするコードを完成させてください。",
+          "code": null,
+          "explanation": "try-with-resourcesはAutoCloseableを実装したリソースを自動的にclose()します。BufferedReader.readLine()は1行ずつ読み取ります。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ (BufferedReader br = new BufferedReader(new FileReader(\"test.txt\"))) {\n    String line = br.__BLANK_2__();\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①キーワード",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "try",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "using",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "with",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②読み取り",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "readLine",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "read",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "nextLine",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch14_03",
+      "courseId": "ch14",
+      "title": "throwsとthrow",
+      "summary": "メソッドでの例外宣言と例外を明示的にスローする方法を学ぶ",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・throw文で意図的に例外を投げる方法\n・throws句でメソッドの例外宣言を行う方法\n・throwとthrowsの違いを明確に区別\n\n紛らわしい2つのキーワードを正確に使い分けましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "code",
+          "title": "throwで例外をスローする",
+          "body": "throwキーワードを使うと、任意の場所で例外を発生させることができます。\nnewで例外オブジェクトを生成し、throwで投げます。\nthrowの後に処理を書くと到達不能コードとしてコンパイルエラーになります。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // checkAgeメソッドの定義\n    static void checkAge(int age) {\n        // 条件分岐\n        if (age < 0) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\"年齢は0以上でなければなりません: \" + age);\n        }\n        System.out.println(\"年齢: \" + age);\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            checkAge(-5);\n        } catch (IllegalArgumentException e) {\n            System.out.println(\"エラー: \" + e.getMessage());\n        }\n    }\n}",
+          "note": "IllegalArgumentExceptionはRuntimeException（Unchecked例外）なので、throwsを宣言しなくてもコンパイルが通ります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "tip",
+          "title": "throwとthrowsの違い",
+          "body": "| 項目 | throw | throws |\n|---|---|---|\n| 用途 | 例外を投げる | 例外の可能性を宣言 |\n| 場所 | メソッドの本体内 | メソッド宣言の末尾 |\n| 対象 | 例外オブジェクト1つ | 例外クラス（複数可） |\n| 例 | throw new Exception() | throws IOException, SQLException |\n\nthrow は「今この場で例外を発生させる」、throws は「このメソッドは例外を投げるかもしれない」という宣言です。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "code",
+          "title": "throwsによるChecked例外の宣言と伝播",
+          "body": "Checked例外をスローする場合、メソッド宣言にthrowsを付ける必要があります。\n呼び出し側はtry-catchで処理するか、さらにthrowsで上位に伝播させます。\n例外は処理されるまでコールスタックを遡り、どこでも処理されなければプログラムが異常終了します。",
+          "code": "import java.io.IOException;\n\n// Mainクラスの定義\npublic class Main {\n    // readFileメソッドの定義\n    static void readFile() throws IOException {\n        // 例外を投げる\n        throw new IOException(\"ファイルが見つかりません\");\n    }\n\n    // processFileメソッドの定義\n    static void processFile() throws IOException {\n        readFile();  // 例外をさらに上位に伝播\n    }\n\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            processFile();\n        } catch (IOException e) {\n            System.out.println(\"捕捉: \" + e.getMessage());\n        }\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "rule",
+          "title": "throwとthrowsの違い",
+          "body": "throwとthrowsは名前が似ていますが、役割が異なります。\n\n【throw】\n・メソッド内で使用する\n・実際に例外オブジェクトを投げる命令\n・throw new 例外クラス(メッセージ) の形式で使う\n\n【throws】\n・メソッド宣言に使用する\n・そのメソッドが例外を投げる可能性があることを宣言する\n・複数の例外型をカンマ区切りで指定できる\n・Checked例外をスローするメソッドには必須\n\nUnchecked例外（RuntimeException系）にはthrowsを付けなくてもコンパイルが通ります。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・throwは例外オブジェクトを実際に投げるキーワード\n・throwsはメソッドが例外をスローする可能性を宣言するキーワード\n・Checked例外をthrowする場合、throwsの宣言が必須\n・Unchecked例外にはthrows宣言は不要（任意）\n・例外は捕捉されるまでコールスタックを遡って伝播する",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_03_q1",
+          "lessonId": "ch14_03",
+          "type": "fourChoice",
+          "question": "throwsキーワードに関する説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "throwsはメソッド宣言に使用し、そのメソッドがスローする可能性のあるChecked例外を宣言します。Unchecked例外（RuntimeException系）にはthrowsを宣言しなくてもコンパイルが通ります。throwsは実際に例外を投げるのではなく、投げる可能性があることを示すだけです。",
+          "choices": [
+            {
+              "id": "ch14_03_q1_a",
+              "text": "throwsはメソッド内で例外オブジェクトを投げるために使う",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q1_b",
+              "text": "throwsを宣言すると例外が必ず発生する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q1_c",
+              "text": "throwsはメソッド宣言に付けて例外をスローする可能性を示す",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q1_d",
+              "text": "RuntimeExceptionをスローするメソッドにはthrowsが必須である",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_03_q2",
+          "lessonId": "ch14_03",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "public class Main {\n    static void methodA() {\n        System.out.println(\"A-start\");\n        throw new RuntimeException(\"エラー\");\n    }\n\n    public static void main(String[] args) {\n        try {\n            System.out.println(\"main-start\");\n            methodA();\n            System.out.println(\"main-end\");\n        } catch (RuntimeException e) {\n            System.out.println(\"caught\");\n        }\n    }\n}",
+          "explanation": "main()で\"main-start\"を出力後、methodA()を呼び出します。methodA()で\"A-start\"を出力後、RuntimeExceptionがスローされます。例外はmain()のcatchで捕捉されて\"caught\"が出力されます。\"main-end\"は例外発生後なので出力されません。",
+          "choices": [
+            {
+              "id": "ch14_03_q2_a",
+              "text": "main-start\nA-start\ncaught",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q2_b",
+              "text": "main-start\nA-start\nmain-end\ncaught",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q2_c",
+              "text": "main-start\ncaught",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q2_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_03_q3",
+          "lessonId": "ch14_03",
+          "type": "fillBlank",
+          "question": "Checked例外をメソッド外にスローするには、メソッド宣言に【①】キーワードを付けて例外型を宣言する必要があります。",
+          "code": null,
+          "explanation": "Checked例外をメソッドからスローする場合、メソッド宣言にthrowsキーワードを付けて、スローする例外型を宣言する必要があります。これがないとコンパイルエラーになります。throwは例外を投げるキーワードで別物です。",
+          "choices": [
+            {
+              "id": "ch14_03_q3_a",
+              "text": "throws",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q3_b",
+              "text": "throw",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q3_c",
+              "text": "catch",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q3_d",
+              "text": "finally",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch14_03_q4",
+          "lessonId": "ch14_03",
+          "type": "multiChoice",
+          "question": "try-with-resources文について正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "try-with-resources文ではAutoCloseableを実装したリソースが自動的にclose()されます。複数リソースをセミコロンで区切って宣言でき、宣言の逆順でcloseされます。catch節やfinally節は省略可能です。close()で例外が発生した場合、元の例外にsuppressedとして追加されます。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch14_03_q4_a",
+              "text": "AutoCloseableを実装したリソースが自動でclose()される",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q4_b",
+              "text": "複数リソースを宣言でき、逆順でcloseされる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q4_c",
+              "text": "catch節は必ず記述しなければならない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q4_d",
+              "text": "close()時の例外はsuppressedとして追加される",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch14_04",
+      "courseId": "ch14",
+      "title": "カスタム例外クラス",
+      "summary": "独自の例外クラスを作成してアプリケーション固有のエラーを表現する",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・独自の例外クラスの作成方法\n・**例外チェーン**（cause）で根本原因を伝搬\n・ビジネスルールに応じた例外設計\n\nアプリ固有のエラーを適切に表現する技術です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "code",
+          "title": "Checked例外のカスタムクラス",
+          "body": "Exceptionを継承してChecked例外を作成します。\nコンストラクタでメッセージを受け取り、superでExceptionに渡すのが一般的です。\n呼び出し側はtry-catchまたはthrowsで処理が必要になります。",
+          "code": "// InsufficientBalanceExceptionクラスの定義\nclass InsufficientBalanceException extends Exception {\n    private int balance;\n    private int amount;\n\n    InsufficientBalanceException(int balance, int amount) {\n        super(\"残高不足: 残高\" + balance + \"円に対して\" + amount + \"円の引き出し\");\n        this.balance = balance;\n        this.amount = amount;\n    }\n\n    // getBalanceメソッドの定義\n    int getBalance() { return balance; }\n    // getAmountメソッドの定義\n    int getAmount() { return amount; }\n}\n\n// BankAccountクラスの定義\nclass BankAccount {\n    private int balance;\n\n    BankAccount(int balance) { this.balance = balance; }\n\n    void withdraw(int amount) throws InsufficientBalanceException {\n        // 条件分岐\n        if (amount > balance) {\n            // 例外を投げる\n            throw new InsufficientBalanceException(balance, amount);\n        }\n        balance -= amount;\n        System.out.println(amount + \"円引き出し。残高: \" + balance + \"円\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount account = new BankAccount(1000);\n        // 例外が発生する可能性がある処理\n        try {\n            account.withdraw(500);\n            account.withdraw(800);\n        } catch (InsufficientBalanceException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "code",
+          "title": "Unchecked例外のカスタムクラス",
+          "body": "RuntimeExceptionを継承するとUnchecked例外になります。\n処理の強制がないため、呼び出し側でtry-catchやthrowsが不要です。\nプログラミングエラーやバグを示す場合はUnchecked例外が適しています。",
+          "code": "// InvalidProductCodeExceptionクラスの定義\nclass InvalidProductCodeException extends RuntimeException {\n    InvalidProductCodeException(String code) {\n        super(\"無効な商品コード: \" + code);\n    }\n}\n\n// Productクラスの定義\nclass Product {\n    // validateメソッドの定義\n    static void validate(String code) {\n        // 条件分岐\n        if (code == null || code.length() != 8) {\n            // 例外を投げる\n            throw new InvalidProductCodeException(code);\n        }\n        System.out.println(\"商品コード \" + code + \" は有効です\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        Product.validate(\"PROD0001\");  // 有効\n        Product.validate(\"ABC\");       // 例外発生\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "tip",
+          "title": "カスタム例外のベストプラクティス",
+          "body": "**カスタム例外**を作成する際のベストプラクティスをまとめます。\n\n| プラクティス |\n| --- |\n| クラス名は「〜Exception」で終わるようにする（命名規則） |\n| 少なくとも引数なしコンストラクタとString引数のコンストラクタを用意する |\n| 回復可能なエラー → Exceptionを継承（Checked例外） |\n| プログラミングエラー → RuntimeExceptionを継承（Unchecked例外） |\n| 必要に応じてエラーに関する追加情報をフィールドに持たせる |\n| 6 | Throwableのcause（原因例外）を受け取るコンストラクタも用意すると例外チェーンに便利 |",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**カスタム例外**はExceptionまたはRuntimeExceptionを継承して作成する\n・Exceptionを継承 → Checked例外（処理が強制される）\n・RuntimeExceptionを継承 → Unchecked例外（処理は任意）\n・コンストラクタでsuperにメッセージを渡すのが基本パターン\n・クラス名は「〜Exception」で終わる命名規則に従う",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_04_q1",
+          "lessonId": "ch14_04",
+          "type": "fourChoice",
+          "question": "Checked例外のカスタムクラスを作成する場合、どのクラスを継承しますか？",
+          "code": null,
+          "explanation": "Checked例外を作成するにはExceptionクラスを継承します。RuntimeExceptionを継承するとUnchecked例外になります。Throwableを直接継承することは推奨されません。Errorを継承するのはJVMレベルのエラー用であり、アプリケーション例外には使いません。",
+          "choices": [
+            {
+              "id": "ch14_04_q1_a",
+              "text": "RuntimeException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_04_q1_b",
+              "text": "Throwable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_04_q1_c",
+              "text": "Exception",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_04_q1_d",
+              "text": "Error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_04_q2",
+          "lessonId": "ch14_04",
+          "type": "reorder",
+          "question": "カスタムChecked例外を定義してスローするコードの正しい順序に並べ替えてください。",
+          "code": null,
+          "explanation": "まずカスタム例外クラスを定義し（Exceptionを継承）、次にコンストラクタでsuperにメッセージを渡し、メソッド宣言にthrowsを付けてから、throw newで例外をスローします。",
+          "choices": [
+            {
+              "id": "ch14_04_q2_a",
+              "text": "class MyException extends Exception {",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_04_q2_b",
+              "text": "    MyException(String msg) { super(msg); }",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_04_q2_c",
+              "text": "void doWork() throws MyException {",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_04_q2_d",
+              "text": "    throw new MyException(\"エラー\");",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch14_04_q2_a",
+            "ch14_04_q2_b",
+            "ch14_04_q2_c",
+            "ch14_04_q2_d"
+          ],
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_04_q3",
+          "lessonId": "ch14_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "class AgeException extends RuntimeException {\n    AgeException(String msg) { super(msg); }\n}\n\npublic class Main {\n    static void checkAge(int age) {\n        if (age < 0 || age > 150) {\n            throw new AgeException(\"不正: \" + age);\n        }\n        System.out.println(\"年齢OK: \" + age);\n    }\n\n    public static void main(String[] args) {\n        try {\n            checkAge(25);\n            checkAge(200);\n            checkAge(30);\n        } catch (AgeException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+          "explanation": "checkAge(25)は条件を満たすので\"年齢OK: 25\"が出力されます。checkAge(200)は150を超えているのでAgeExceptionがスローされ、catchで\"不正: 200\"が出力されます。checkAge(30)は例外の後なので実行されません。",
+          "choices": [
+            {
+              "id": "ch14_04_q3_a",
+              "text": "年齢OK: 25\n不正: 200",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_04_q3_b",
+              "text": "年齢OK: 25\n不正: 200\n年齢OK: 30",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_04_q3_c",
+              "text": "年齢OK: 25\n年齢OK: 30",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_04_q3_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch14_05",
+      "courseId": "ch14",
+      "title": "try-with-resources",
+      "summary": "AutoCloseableとtry-with-resources構文でリソースを安全に管理する",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**try-with-resources**文の構文と動作\n・AutoCloseableインターフェースの実装\n・Suppressed例外の仕組み\n\nリソース管理の最善の方法を身につけましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "code",
+          "title": "try-with-resources構文の基本",
+          "body": "AutoCloseableを実装したクラスをtryの括弧内で宣言すると、ブロック終了時に自動でclose()が呼ばれます。\n例外が発生してもしなくてもclose()は必ず実行されます。\n複数のリソースをセミコロンで区切って宣言でき、宣言と逆の順序でクローズされます。",
+          "code": "class MyResource implements AutoCloseable {\n    String name;\n\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n\n    void use() {\n        System.out.println(name + \" used\");\n    }\n\n    @Override\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyResource r1 = new MyResource(\"R1\");\n             MyResource r2 = new MyResource(\"R2\")) {\n            r1.use();\n            r2.use();\n        }\n    }\n}\n// 出力:\n// R1 opened\n// R2 opened\n// R1 used\n// R2 used\n// R2 closed  ← 宣言と逆順にクローズ\n// R1 closed",
+          "note": "リソースは宣言された順と逆の順序でクローズされます。これはスタック（LIFO）の動作と同じです。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "tip",
+          "title": "Suppressed例外とは",
+          "body": "**try-with-resources**では、tryブロック内の例外とclose()の例外が同時に発生することがあります。\n\n・tryブロックの例外が「主例外」として伝搬\n・close()の例外は「Suppressed例外」として主例外に付加\n・getSuppressed() で取得可能\n\n従来のtry-finallyでは、close()の例外がtryの例外を上書きしてしまう問題がありました。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "rule",
+          "title": "try-with-resourcesのルール",
+          "body": "**try-with-resources**構文には以下のルールがあります。\n\n| ルール |\n| --- |\n| tryの括弧内で宣言するクラスはAutoCloseable（またはCloseable）を実装している必要がある |\n| 括弧内で宣言した変数は暗黙的にfinalで、try内で再代入するとコンパイルエラー |\n| 複数のリソースはセミコロン（;）で区切って宣言する |\n| リソースは宣言の逆順でクローズされる |\n| catchやfinallyブロックは省略可能（従来のtryでは少なくともcatchかfinallyが必要） |\n| 6 | close()で発生した例外はtryブロック内の例外に「抑制された例外（suppressed exception）」として追加される |",
+          "code": null,
+          "note": "Java 9以降では、tryブロックの外で宣言された実質的にfinalな変数もtryの括弧内で参照できます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "code",
+          "title": "抑制された例外（Suppressed Exception）",
+          "body": "tryブロック内で例外が発生し、さらにclose()でも例外が発生した場合、close()の例外は抑制された例外として記録されます。\nmainの例外が優先的にcatchに渡され、suppressed exceptionはgetSuppressed()で取得できます。\nこの仕組みにより、本来のエラー原因が隠されることを防ぎます。",
+          "code": "// ErrorResourceクラスの定義\nclass ErrorResource implements AutoCloseable {\n    @Override\n    // closeメソッドの定義\n    public void close() {\n        // 例外を投げる\n        throw new RuntimeException(\"close時のエラー\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try (ErrorResource r = new ErrorResource()) {\n            // 例外を投げる\n            throw new RuntimeException(\"tryブロックのエラー\");\n        } catch (RuntimeException e) {\n            System.out.println(\"主例外: \" + e.getMessage());\n            // 拡張for文（コレクションの全要素を順番に処理）\n            for (Throwable s : e.getSuppressed()) {\n                System.out.println(\"抑制: \" + s.getMessage());\n            }\n        }\n    }\n}\n// 出力:\n// 主例外: tryブロックのエラー\n// 抑制: close時のエラー",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**try-with-resources**はAutoCloseableを実装したリソースを自動クローズする\n・リソースは宣言された順の逆順でクローズされる\n・try-with-resourcesではcatchやfinallyを省略できる\n・tryブロック内の例外が優先され、close()の例外は抑制された例外になる\n・括弧内の変数は**暗黙的にfinal**であり再代入不可",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_05_q1",
+          "lessonId": "ch14_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) {\n        this.name = name;\n        System.out.println(\"open: \" + name);\n    }\n    @Override\n    public void close() {\n        System.out.println(\"close: \" + name);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (Res a = new Res(\"A\"); Res b = new Res(\"B\")) {\n            System.out.println(\"use\");\n        }\n    }\n}",
+          "explanation": "リソースAが生成され\"open: A\"、次にBが生成され\"open: B\"が出力されます。tryブロック内で\"use\"が出力された後、リソースは宣言と逆順にクローズされるため\"close: B\"→\"close: A\"の順に出力されます。",
+          "choices": [
+            {
+              "id": "ch14_05_q1_a",
+              "text": "open: A\nopen: B\nuse\nclose: B\nclose: A",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_05_q1_b",
+              "text": "open: A\nopen: B\nuse\nclose: A\nclose: B",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_05_q1_c",
+              "text": "open: B\nopen: A\nuse\nclose: A\nclose: B",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_05_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_05_q2",
+          "lessonId": "ch14_05",
+          "type": "fourChoice",
+          "question": "try-with-resources構文で自動クローズされるために、リソースクラスが実装すべきインターフェースはどれですか？",
+          "code": null,
+          "explanation": "try-with-resources構文で自動クローズされるリソースは、AutoCloseableインターフェース（またはそのサブインターフェースであるCloseable）を実装している必要があります。SerializableやIterableは関係ありません。",
+          "choices": [
+            {
+              "id": "ch14_05_q2_a",
+              "text": "Serializable",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_05_q2_b",
+              "text": "AutoCloseable",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_05_q2_c",
+              "text": "Iterable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_05_q2_d",
+              "text": "Comparable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_05_q3",
+          "lessonId": "ch14_05",
+          "type": "errorFind",
+          "question": "次のコードにはコンパイルエラーがあります。原因はどれですか？",
+          "code": "class MyStream {\n    void write(String data) {\n        System.out.println(data);\n    }\n    void close() {\n        System.out.println(\"closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyStream s = new MyStream()) {\n            s.write(\"Hello\");\n        }\n    }\n}",
+          "explanation": "try-with-resources構文を使うには、リソースクラスがAutoCloseable（またはCloseable）インターフェースを実装している必要があります。MyStreamクラスにはclose()メソッドはありますが、AutoCloseableをimplementsしていないため、コンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch14_05_q3_a",
+              "text": "MyStreamクラスがAutoCloseableを実装していない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_05_q3_b",
+              "text": "close()メソッドの戻り値がvoidではいけない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_05_q3_c",
+              "text": "try-with-resourcesにはcatchブロックが必須である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_05_q3_d",
+              "text": "write()メソッドがstaticでないといけない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

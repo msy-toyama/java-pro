@@ -1,0 +1,830 @@
+{
+  "courseId": "ch25",
+  "lessons": [
+    {
+      "id": "ch25_01",
+      "courseId": "ch25",
+      "title": "try-with-resourcesの詳細",
+      "summary": "try-with-resources文の仕組みを詳しく学びます。AutoCloseableとCloseableの違い、複数リソースの宣言方法、リソースがクローズされる順序（宣言の逆順）を理解します。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "overview",
+          "title": "try-with-resourcesの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・**try-with-resources** の詳細なルール\n・Java 9以降の事実上finalなリソース変数\n・複数リソースの同時管理\n\nリソース自動管理の仕様を正確に理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "rule",
+          "title": "AutoCloseableとCloseable",
+          "body": "AutoCloseableインターフェースはjava.langパッケージに属し、close()メソッドを宣言しています。\nCloseableインターフェースはjava.ioパッケージに属し、AutoCloseableのサブインターフェースです。\nAutoCloseableのclose()はExceptionをスローできますが、Closeableのclose()はIOExceptionのみをスローします。\n**try-with-resources**で使えるのはAutoCloseableを実装したクラスです。\nCloseableはAutoCloseableを継承しているため、当然try-with-resourcesで使えます。\nJava 9以降では、tryブロックの外で宣言した実質的にfinalな変数もtry-with-resourcesで使えます。",
+          "code": "// AutoCloseableを実装したカスタムリソース\nclass MyResource implements AutoCloseable {\n    String name;\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n    @Override\n    public void close() throws Exception {\n        System.out.println(name + \" closed\");\n    }\n}\n\n// try-with-resourcesで使用\ntry (MyResource r = new MyResource(\"Resource1\")) {\n    System.out.println(\"Using \" + r.name);\n}\n// 出力:\n// Resource1 opened\n// Using Resource1\n// Resource1 closed",
+          "note": "CloseableはAutoCloseableのサブインターフェースです。型の階層を問う問題に注意しましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "code",
+          "title": "複数リソースとクローズ順序",
+          "body": "**try-with-resources**では、セミコロンで区切って複数のリソースを宣言できます。\nリソースは宣言された順とは逆の順序でクローズされます（スタックのLIFO方式）。\nこれはリソース間の依存関係を正しく解消するための仕組みです。\n例えば、先に開いたコネクションの上に作られたステートメントは、先にクローズされるべきです。\nクローズ中に例外が発生しても、他のリソースのクローズは引き続き試みられます。",
+          "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\ntry (Res r1 = new Res(\"A\"); Res r2 = new Res(\"B\"); Res r3 = new Res(\"C\")) {\n    System.out.println(\"Processing\");\n}\n// 出力:\n// A opened\n// B opened\n// C opened\n// Processing\n// C closed（逆順）\n// B closed\n// A closed",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "point",
+          "title": "Java 9以降の改善",
+          "body": "Java 9以降では、tryブロックの外で宣言された実質的にfinal（effectively final）な変数を直接tryの丸括弧に記述できます。\nこれにより、既に生成済みのリソースを**try-with-resources**で管理する際のコードが簡潔になりました。\n変数は再代入されていない必要があります（effectively final）。\n再代入された変数をtryの丸括弧に渡すとコンパイルエラーになります。",
+          "code": "// Java 9以降\nMyResource r1 = new MyResource(\"R1\");\nMyResource r2 = new MyResource(\"R2\");\n\ntry (r1; r2) {  // 外部で宣言した変数を直接参照\n    System.out.println(\"Using resources\");\n}\n// r1, r2は自動的にクローズされる\n\n// 注意：再代入するとコンパイルエラー\nMyResource r3 = new MyResource(\"R3\");\nr3 = new MyResource(\"R3b\"); // 再代入\n// try (r3) { } // コンパイルエラー！（effectively finalでない）",
+          "note": "Java 9の改善は試験でも出題されます。effectively finalの条件をしっかり理解しましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "tip",
+          "title": "試験対策：リソース管理",
+          "body": "Gold試験では、リソースのクローズ順序を問う問題が頻出です。\n宣言の逆順でクローズされることを覚えておきましょう。\ntryブロック内で例外が発生した場合でもリソースはクローズされます。\nリソースの宣言時（コンストラクタ）に例外が発生した場合、それまでに生成されたリソースのみクローズされます。\ncatch/finallyブロックはリソースがクローズされた後に実行されます。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_01_q1",
+          "lessonId": "ch25_01",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "class R implements AutoCloseable {\n    String n;\n    R(String n) { this.n = n; System.out.println(n + \" open\"); }\n    public void close() { System.out.println(n + \" close\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"X\"); R b = new R(\"Y\")) {\n            System.out.println(\"use\");\n        }\n    }\n}",
+          "explanation": "リソースはX→Yの順に生成されますが、クローズは宣言の逆順で行われるため、Y→Xの順にクローズされます。出力は「X open」「Y open」「use」「Y close」「X close」となります。",
+          "choices": [
+            {
+              "id": "ch25_01_q1_a",
+              "text": "X open → Y open → use → Y close → X close",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_01_q1_b",
+              "text": "X open → Y open → use → X close → Y close",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_01_q1_c",
+              "text": "Y open → X open → use → X close → Y close",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_01_q1_d",
+              "text": "X open → Y open → X close → Y close → use",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_01_q2",
+          "lessonId": "ch25_01",
+          "type": "fourChoice",
+          "question": "AutoCloseableとCloseableの関係について正しいものはどれですか？",
+          "code": "public class BankAccount {\n    public void withdraw(int amount) {\n        if (amount <= 0)\n            throw new IllegalArgumentException(\n                \"金額は正の値\");\n        if (amount > balance)\n            throw new InsufficientFundsException();\n        balance -= amount;\n    }\n}",
+          "explanation": "CloseableはAutoCloseableのサブインターフェースです。AutoCloseableはjava.langパッケージに属し、close()メソッドはExceptionをスローできます。一方、CloseableはIOExceptionのみをスローします。",
+          "choices": [
+            {
+              "id": "ch25_01_q2_a",
+              "text": "CloseableはAutoCloseableのサブインターフェースである",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_01_q2_b",
+              "text": "AutoCloseableはCloseableのサブインターフェースである",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_01_q2_c",
+              "text": "両者に継承関係はない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_01_q2_d",
+              "text": "Closeableのclose()はExceptionをスローする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_01_q3",
+          "lessonId": "ch25_01",
+          "type": "fillBlank",
+          "question": "try-with-resourcesで使えるリソースは、___インターフェースを実装している必要がある。",
+          "code": "try {\n    Files.readString(Path.of(\"config.txt\"));\n} catch (NoSuchFileException e) {\n    logger.warning(\"設定ファイルなし\");\n} catch (IOException e) {\n    logger.severe(\"読み込みエラー: \" + e);\n}",
+          "explanation": "try-with-resourcesで管理できるリソースは、AutoCloseableインターフェースを実装している必要があります。CloseableはAutoCloseableのサブインターフェースなので、Closeableを実装したクラスも使用できます。",
+          "choices": [
+            {
+              "id": "ch25_01_q3_a",
+              "text": "AutoCloseable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_01_q3_b",
+              "text": "Serializable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_01_q3_c",
+              "text": "Iterable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_01_q3_d",
+              "text": "Flushable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch25_02",
+      "courseId": "ch25",
+      "title": "抑制された例外",
+      "summary": "try-with-resourcesにおける抑制された例外（Suppressed Exception）の仕組みを学びます。tryブロックとclose()の両方で例外が発生した場合の挙動、getSuppressed()メソッドの使い方を理解します。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "overview",
+          "title": "抑制された例外とは",
+          "body": "このレッスンでは以下を学びます:\n\n・Suppressed例外の仕組みと取得方法\n・tryブロックとclose()の両方で例外が起きた場合の動作\n・getSuppressed()による例外情報の取得\n\n例外が「握りつぶされない」仕組みを理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "rule",
+          "title": "抑制された例外の仕組み",
+          "body": "tryブロックで例外Aが発生し、close()で例外Bが発生した場合、例外Aがスローされ例外Bは抑制されます。\n抑制された例外はプライマリ例外のgetSuppressed()メソッドで取得できます。\ngetSuppressed()はThrowable[]を返します。\n複数のリソースのclose()で例外が発生した場合、すべて抑制された例外として追加されます。\ntryブロックで例外が発生せず、close()でのみ例外が発生した場合は、そのclose()の例外がそのままスローされます（抑制ではなく通常の例外）。",
+          "code": "class FailClose implements AutoCloseable {\n    public void close() {\n        throw new RuntimeException(\"close error\");\n    }\n}\n\ntry (FailClose fc = new FailClose()) {\n    throw new RuntimeException(\"try error\");\n} catch (RuntimeException e) {\n    System.out.println(\"Primary: \" + e.getMessage());\n    for (Throwable t : e.getSuppressed()) {\n        System.out.println(\"Suppressed: \" + t.getMessage());\n    }\n}\n// 出力:\n// Primary: try error\n// Suppressed: close error",
+          "note": "tryブロックの例外がプライマリ、close()の例外がサプレスドになるという優先順位を覚えましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "code",
+          "title": "複数リソースと抑制された例外",
+          "body": "複数のリソースが宣言されている場合、各リソースのclose()で発生した例外はすべて抑制された例外になります。\nリソースは逆順にクローズされるので、最後に宣言されたリソースから順にclose()が呼ばれます。\n各close()の例外はgetSuppressed()配列に追加されていきます。\ntryブロックで例外が発生しなくても、最初のclose()で例外が発生した場合、それがプライマリ例外となり、残りのclose()例外は抑制されます。",
+          "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) { this.name = name; }\n    public void close() {\n        throw new RuntimeException(name + \" close fail\");\n    }\n}\n\ntry (Res a = new Res(\"A\"); Res b = new Res(\"B\")) {\n    throw new RuntimeException(\"main error\");\n} catch (RuntimeException e) {\n    System.out.println(\"Primary: \" + e.getMessage());\n    for (Throwable t : e.getSuppressed()) {\n        System.out.println(\"Suppressed: \" + t.getMessage());\n    }\n}\n// 出力:\n// Primary: main error\n// Suppressed: B close fail（逆順でBが先にclose）\n// Suppressed: A close fail",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "point",
+          "title": "addSuppressedメソッド",
+          "body": "ThrowableクラスにはaddSuppressed(Throwable)メソッドが定義されており、プログラマが手動で抑制された例外を追加することもできます。\ngetSuppressed()はThrowable[]を返し、追加された順に要素が格納されています。\n**try-with-resources**では、JVMが自動的にaddSuppressed()を呼び出して抑制された例外を追加します。\n自分自身をsuppressedとして追加しようとするとIllegalArgumentExceptionが発生します。",
+          "code": "RuntimeException primary = new RuntimeException(\"main\");\nRuntimeException suppressed1 = new RuntimeException(\"sub1\");\nRuntimeException suppressed2 = new RuntimeException(\"sub2\");\n\nprimary.addSuppressed(suppressed1);\nprimary.addSuppressed(suppressed2);\n\nSystem.out.println(primary.getSuppressed().length); // 2\nSystem.out.println(primary.getSuppressed()[0].getMessage()); // sub1\nSystem.out.println(primary.getSuppressed()[1].getMessage()); // sub2",
+          "note": "addSuppressed()は手動でも使えますが、通常は**try-with-resources**の自動処理で使われます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "tip",
+          "title": "試験対策：抑制された例外",
+          "body": "Gold試験では、tryブロック・close()・catch・finallyの実行順序と例外の関係が問われます。\n**try-with-resources**の実行順序は「tryブロック → close()（逆順） → catch → finally」です。\ntryブロックとclose()の両方で例外が発生した場合、catchで受け取るのはtryブロックの例外です。\nclose()のみで例外が発生した場合は、その例外がそのままcatchに渡されます。\n従来のtry-finallyとの違いを比較する問題にも注意しましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_02_q1",
+          "lessonId": "ch25_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "class R implements AutoCloseable {\n    public void close() {\n        throw new RuntimeException(\"close\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R r = new R()) {\n            throw new RuntimeException(\"try\");\n        } catch (RuntimeException e) {\n            System.out.println(e.getMessage());\n            System.out.println(e.getSuppressed().length);\n        }\n    }\n}",
+          "explanation": "tryブロックで「try」例外が発生し、close()で「close」例外が発生します。tryブロックの例外がプライマリとなるため、e.getMessage()は「try」を返します。close()の例外は抑制された例外として追加されるため、getSuppressed().lengthは1になります。",
+          "choices": [
+            {
+              "id": "ch25_02_q1_a",
+              "text": "try と 1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_02_q1_b",
+              "text": "close と 1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_02_q1_c",
+              "text": "try と 0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_02_q1_d",
+              "text": "close と 0",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_02_q2",
+          "lessonId": "ch25_02",
+          "type": "fourChoice",
+          "question": "try-with-resourcesにおいて、tryブロックで例外Aが発生し、close()で例外Bが発生した場合の説明として正しいものはどれですか？",
+          "code": "public void process() {\n    Exception suppressed = null;\n    Resource r = acquire();\n    try {\n        r.use();\n    } catch (Exception e) {\n        suppressed = e;\n    } finally {\n        try { r.close(); }\n        catch (Exception e2) {\n            if (suppressed != null)\n                suppressed.addSuppressed(e2);\n        }\n    }\n}",
+          "explanation": "try-with-resourcesでは、tryブロックの例外がプライマリ例外として扱われ、close()の例外はプライマリ例外に抑制された例外として追加されます。catchブロックで受け取るのは例外Aで、getSuppressed()で例外Bを取得できます。",
+          "choices": [
+            {
+              "id": "ch25_02_q2_a",
+              "text": "例外Aがスローされ、例外BはAの抑制された例外になる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_02_q2_b",
+              "text": "例外Bがスローされ、例外AはBの抑制された例外になる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_02_q2_c",
+              "text": "例外Aのみがスローされ、例外Bは失われる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_02_q2_d",
+              "text": "例外Bのみがスローされ、例外Aは失われる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_02_q3",
+          "lessonId": "ch25_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "class R implements AutoCloseable {\n    String name;\n    R(String name) { this.name = name; }\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"A\"); R b = new R(\"B\")) {\n            System.out.println(\"run\");\n        } catch (Exception e) {\n            System.out.println(\"caught\");\n        } finally {\n            System.out.println(\"finally\");\n        }\n    }\n}",
+          "explanation": "tryブロックが正常に実行され「run」が出力されます。次にリソースがクローズされ、逆順で「B closed」「A closed」が出力されます。例外は発生しないのでcatchは実行されません。最後にfinallyが実行され「finally」が出力されます。",
+          "choices": [
+            {
+              "id": "ch25_02_q3_a",
+              "text": "run → B closed → A closed → finally",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_02_q3_b",
+              "text": "run → A closed → B closed → finally",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_02_q3_c",
+              "text": "run → B closed → A closed → caught → finally",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_02_q3_d",
+              "text": "run → finally → B closed → A closed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch25_02_q4",
+          "lessonId": "ch25_02",
+          "type": "codeComplete",
+          "question": "カスタム例外クラスを定義するコードを完成させてください。",
+          "code": "public class BankAccount {\n    public void withdraw(int amount) {\n        if (amount <= 0)\n            throw new IllegalArgumentException(\n                \"金額は正の値\");\n        if (amount > balance)\n            throw new InsufficientFundsException();\n        balance -= amount;\n    }\n}",
+          "explanation": "カスタム例外はExceptionを継承して作成します。super(msg)で親のコンストラクタにメッセージを渡します。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class InvalidAgeException __BLANK_1__ __BLANK_2__ {\n    public InvalidAgeException(String msg) {\n        super(msg);\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①継承",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "extends",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "implements",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "throws",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②親クラス",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Exception",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "Error",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "Throwable",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_02_q5",
+          "lessonId": "ch25_02",
+          "type": "reorder",
+          "question": "例外処理の正しいフローを正しい順序に並べてください。",
+          "code": "try {\n    Files.readString(Path.of(\"config.txt\"));\n} catch (NoSuchFileException e) {\n    logger.warning(\"設定ファイルなし\");\n} catch (IOException e) {\n    logger.severe(\"読み込みエラー: \" + e);\n}",
+          "explanation": "catchは具体的な例外から先に記述します。Exceptionを先に書くとコンパイルエラーになります。finallyは最後です。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "try {",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "    riskyMethod();",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "} catch (SpecificException e) {",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "} catch (Exception e) {",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "} finally {",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch25_03",
+      "courseId": "ch25",
+      "title": "アサーション",
+      "summary": "Javaのアサーション（assert文）について学びます。assert文の構文、有効化・無効化の方法（-eaフラグ）、適切な使用場面（事前条件・事後条件のチェック）を理解します。",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "overview",
+          "title": "アサーションとは",
+          "body": "このレッスンでは以下を学びます:\n\n・assert文の構文と使い方\n・アサーションの有効化（-ea オプション）\n・アサーションを使うべき場所と使ってはいけない場所\n\n開発時のバグ検出ツールとしてのアサーションを学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "rule",
+          "title": "assert文の構文",
+          "body": "assert文には2つの形式があります。\n第1形式：「assert 条件式;」条件がfalseの場合、メッセージなしのAssertionErrorがスローされます。\n第2形式：「assert 条件式 : エラーメッセージ;」条件がfalseの場合、指定したメッセージ付きのAssertionErrorがスローされます。\nエラーメッセージには任意の式を指定でき、toString()で文字列に変換されます。\n条件式はboolean型でなければなりません。\nAssertionErrorはErrorのサブクラスであり、通常はcatchすべきではありません。",
+          "code": "int age = -5;\n\n// 第1形式：条件のみ\nassert age >= 0;\n// age が負の場合 → AssertionError（メッセージなし）\n\n// 第2形式：条件 + メッセージ\nassert age >= 0 : \"年齢が不正です: \" + age;\n// age が負の場合 → AssertionError: 年齢が不正です: -5\n\n// エラーメッセージに式を指定\nassert age >= 0 : age;\n// AssertionError: -5",
+          "note": "assert条件式の後にコロン（:）でメッセージを指定できます。これはGold試験で頻出の構文です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "code",
+          "title": "アサーションの有効化と無効化",
+          "body": "アサーションはデフォルトで無効です。有効にするにはJVM起動時にオプションを指定します。\n-ea（または-enableassertions）：アサーションを有効にします。\n-da（または-disableassertions）：アサーションを無効にします。\nパッケージ単位で有効化・無効化を制御することもできます。\nシステムクラスのアサーションは-esaで有効化します。",
+          "code": "// コマンドラインでの実行例\n\n// 全クラスでアサーションを有効化\n// java -ea MainClass\n\n// 特定のクラスのみ有効化\n// java -ea:com.example.MyClass MainClass\n\n// 特定のパッケージとサブパッケージで有効化\n// java -ea:com.example... MainClass\n\n// アサーションの確認\npublic class AssertDemo {\n    public static void main(String[] args) {\n        int x = 10;\n        assert x > 0 : \"xは正の数であるべき\";\n        System.out.println(\"x = \" + x);\n        // -ea なし → 正常に出力\n        // -ea あり → xが0以下ならAssertionError\n    }\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "point",
+          "title": "アサーションの適切な使用場面",
+          "body": "アサーションはメソッドの事前条件（precondition）のチェックに使えますが、publicメソッドの引数チェックには不適切です。\npublicメソッドの引数チェックにはIllegalArgumentExceptionなどを使うべきです。\nprivateメソッドの引数チェックにはアサーションが適しています（呼び出し元が自クラスに限定されるため）。\n事後条件（postcondition）の検証、つまりメソッドの処理結果が期待通りかの確認に適しています。\nクラス不変条件の検証にも使えます。\n制御フロー上到達しないはずの箇所（switch文のdefaultなど）の検証にも使えます。",
+          "code": "// 適切な使用例\nprivate void setSpeed(int speed) {\n    assert speed >= 0 && speed <= 200 : \"不正な速度: \" + speed;\n    this.speed = speed;\n}\n\n// 到達不能箇所の検証\nswitch (suit) {\n    case HEARTS: return Color.RED;\n    case DIAMONDS: return Color.RED;\n    case CLUBS: return Color.BLACK;\n    case SPADES: return Color.BLACK;\n    default: assert false : \"未知のスート: \" + suit;\n}\n\n// 不適切な使用例（publicメソッドの引数チェック）\npublic void withdraw(int amount) {\n    // assert amount > 0;  // NG：publicメソッドにassertは不適切\n    if (amount <= 0) throw new IllegalArgumentException(); // OK\n}",
+          "note": "publicメソッドの引数チェックにassertを使わない理由は、アサーションが無効の場合にチェックが行われないためです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "tip",
+          "title": "試験対策：アサーション",
+          "body": "Gold試験では、assert文の構文（コロンの後のメッセージ）が正しいかを判断する問題が出ます。\nassert文の条件式はboolean型でなければならず、void型のメソッド呼び出しはエラーメッセージ部分に書けません。\nアサーションは副作用のある処理に使うべきではありません（無効時に実行されないため）。\nassert文のメッセージ部分にvoid型メソッドを指定するとコンパイルエラーになります。\nAssertionErrorはErrorクラスを継承しており、checkedではないことを覚えておきましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_03_q1",
+          "lessonId": "ch25_03",
+          "type": "fourChoice",
+          "question": "アサーションの使用に関して正しい説明はどれですか？",
+          "code": "public void process() {\n    Exception suppressed = null;\n    Resource r = acquire();\n    try {\n        r.use();\n    } catch (Exception e) {\n        suppressed = e;\n    } finally {\n        try { r.close(); }\n        catch (Exception e2) {\n            if (suppressed != null)\n                suppressed.addSuppressed(e2);\n        }\n    }\n}",
+          "explanation": "アサーションはデフォルトで無効であり、JVM起動時に-eaオプションを指定することで有効化します。有効化されていない場合、assert文は無視されます。publicメソッドの引数チェックにはアサーションではなく例外をスローすべきです。",
+          "choices": [
+            {
+              "id": "ch25_03_q1_a",
+              "text": "アサーションはデフォルトで無効であり、-eaオプションで有効化する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_03_q1_b",
+              "text": "アサーションはデフォルトで有効であり、-daオプションで無効化する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_03_q1_c",
+              "text": "publicメソッドの引数チェックにはアサーションが最適である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_03_q1_d",
+              "text": "AssertionErrorはExceptionのサブクラスである",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_03_q2",
+          "lessonId": "ch25_03",
+          "type": "fourChoice",
+          "question": "次のうち、アサーションの使用が適切な場面はどれですか？",
+          "code": null,
+          "explanation": "privateメソッドは呼び出し元が自クラスに限定されるため、引数の事前条件チェックにアサーションを使うのが適切です。publicメソッドの引数チェックにはIllegalArgumentExceptionなどを使うべきです。ユーザー入力の検証は常にチェックすべきなので、アサーションは不適切です。",
+          "choices": [
+            {
+              "id": "ch25_03_q2_a",
+              "text": "privateメソッドの引数の事前条件チェック",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_03_q2_b",
+              "text": "publicメソッドの引数チェック",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_03_q2_c",
+              "text": "ユーザーからの入力値の検証",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_03_q2_d",
+              "text": "データベース接続の確認",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_03_q3",
+          "lessonId": "ch25_03",
+          "type": "errorFind",
+          "question": "次のコードに含まれるエラーを選んでください。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 5;\n        assert x > 0 : System.out.println(\"error\");\n        System.out.println(\"OK\");\n    }\n}",
+          "explanation": "assert文の第2式（コロンの後）にはvoid型の式を書くことはできません。System.out.println()はvoidを返すため、コンパイルエラーになります。文字列リテラルや変数など、値を持つ式を指定する必要があります。",
+          "choices": [
+            {
+              "id": "ch25_03_q3_a",
+              "text": "assert文のメッセージ部分にvoid型の式（println）を使っている",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_03_q3_b",
+              "text": "assert文の条件がint型になっている",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_03_q3_c",
+              "text": "assert文はmainメソッド内では使えない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_03_q3_d",
+              "text": "assert文にはcatchブロックが必要である",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch25_03_q4",
+          "lessonId": "ch25_03",
+          "type": "multiChoice",
+          "question": "RuntimeExceptionのサブクラスをすべて選んでください。",
+          "code": null,
+          "explanation": "NullPointerException, ArrayIndexOutOfBoundsException, ClassCastExceptionは非検査例外（RuntimeException）です。IOExceptionとSQLExceptionは検査例外です。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "NullPointerException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "ArrayIndexOutOfBoundsException",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "IOException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "ClassCastException",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "SQLException",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 3,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch25_04",
+      "courseId": "ch25",
+      "title": "マルチキャッチとリスロー",
+      "summary": "Goldレベルのマルチキャッチ構文の詳細と、例外の再スロー（rethrow）パターンを学びます。より具体的な型での再スロー、例外のラッピングパターンを理解します。",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "overview",
+          "title": "マルチキャッチの詳細",
+          "body": "このレッスンでは以下を学びます:\n\n・マルチキャッチ（catch(A | B e)）の構文と制約\n・リスロー（throw e）時の型推論\n・Java 7以降の例外処理の進化\n\n高度な例外処理テクニックを身につけましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "rule",
+          "title": "マルチキャッチの制約",
+          "body": "マルチキャッチで指定する例外型に継承関係があるとコンパイルエラーになります。\n例えば、catch (IOException | Exception e) は不正です（IOExceptionはExceptionのサブクラス）。\nマルチキャッチの例外変数は暗黙的にfinalとなり、再代入できません。\n単一のcatch節の例外変数は再代入可能です。\nマルチキャッチの例外変数の型は、指定した例外型の共通の親型として扱われます。",
+          "code": "try {\n    // ...\n} catch (IOException | SQLException e) {\n    // OK：継承関係がない\n    // e = new IOException(); // コンパイルエラー：再代入不可\n    System.out.println(e.getMessage());\n}\n\n// コンパイルエラーの例\ntry {\n    // ...\n} catch (FileNotFoundException | IOException e) { // エラー！\n    // FileNotFoundExceptionはIOExceptionのサブクラス\n}\n\n// 単一catchは再代入可能\ntry {\n    // ...\n} catch (IOException e) {\n    e = new IOException(\"wrapped\"); // OK\n}",
+          "note": "マルチキャッチの変数がfinalである点は頻出です。必ず覚えておきましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "code",
+          "title": "例外の再スロー（Rethrow）",
+          "body": "Java 7以降、コンパイラはcatchブロック内で再スローされる例外の型をより正確に推論できるようになりました。\ncatch節でExceptionをキャッチしても、tryブロックで実際にスローされる例外の型に基づいて、メソッドのthrows宣言をより具体的にできます。\nただし、この型推論が働くのは例外変数に再代入していない場合のみです。\n例外変数に再代入すると、コンパイラは正確な型推論ができなくなります。",
+          "code": "// Java 7以降の再スロー型推論\npublic void process() throws IOException, SQLException {\n    try {\n        // IOExceptionまたはSQLExceptionをスローする可能性\n        callMethod();\n    } catch (Exception e) {\n        // eの型はExceptionだが、コンパイラは実際のスロー型を追跡\n        // throws句にはIOException, SQLExceptionのみ宣言すればOK\n        System.out.println(\"Error: \" + e.getMessage());\n        throw e; // コンパイラがより具体的な型として扱う\n    }\n}\n\n// 再代入すると型推論が効かない\npublic void process2() throws Exception { // Exceptionが必要\n    try {\n        callMethod();\n    } catch (Exception e) {\n        e = new Exception(\"changed\"); // 再代入\n        throw e; // Exceptionとしてしか推論できない\n    }\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "point",
+          "title": "例外のラッピングパターン",
+          "body": "例外のラッピング（wrapping）とは、キャッチした例外を別の例外でくるんで再スローするパターンです。\n元の例外をcause（原因）として新しい例外のコンストラクタに渡します。\nこれにより、レイヤー間で適切な抽象度の例外を使いながら、元の例外情報を保持できます。\ngetCause()メソッドで元の例外を取得できます。\nこのパターンは実務でも非常に重要です。",
+          "code": "public class ServiceException extends Exception {\n    public ServiceException(String msg, Throwable cause) {\n        super(msg, cause);\n    }\n}\n\npublic void processData() throws ServiceException {\n    try {\n        // データベース操作\n        connectDB();\n    } catch (SQLException e) {\n        // SQLExceptionをServiceExceptionでラップ\n        throw new ServiceException(\"データ処理エラー\", e);\n    }\n}\n\n// 呼び出し側で原因を取得\ntry {\n    processData();\n} catch (ServiceException e) {\n    System.out.println(e.getMessage()); // データ処理エラー\n    System.out.println(e.getCause());   // java.sql.SQLException: ...\n}",
+          "note": "例外のラッピングは、下位レイヤーの実装詳細を上位レイヤーに漏らさないための重要なパターンです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "tip",
+          "title": "試験対策：マルチキャッチとリスロー",
+          "body": "マルチキャッチの制約（継承関係の禁止、変数のfinal性）はほぼ確実に出題されます。\n再スロー時の型推論は、例外変数を再代入した場合に効かなくなることを覚えましょう。\n例外のラッピングパターンでは、getCause()で元の例外を取得できることを理解しておきましょう。\ninitCause()メソッドで後から原因例外を設定することもできます（ただし一度だけ）。\ncatchブロック内の処理順序（ログ出力→ラップ→再スロー）のパターンにも慣れておきましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_04_q1",
+          "lessonId": "ch25_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            try {\n                throw new RuntimeException(\"inner\");\n            } catch (RuntimeException e) {\n                throw new RuntimeException(\"outer\", e);\n            }\n        } catch (RuntimeException e) {\n            System.out.println(e.getMessage());\n            System.out.println(e.getCause().getMessage());\n        }\n    }\n}",
+          "explanation": "内側のtryで「inner」例外がスローされ、catchでキャッチされます。そこで新しい「outer」例外を作成し、元の「inner」例外をcauseとして設定して再スローします。外側のcatchで受け取った例外のgetMessage()は「outer」を返し、getCause().getMessage()は「inner」を返します。",
+          "choices": [
+            {
+              "id": "ch25_04_q1_a",
+              "text": "outer と inner",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_04_q1_b",
+              "text": "inner と outer",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_04_q1_c",
+              "text": "outer と NullPointerException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_04_q1_d",
+              "text": "inner と null",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_04_q2",
+          "lessonId": "ch25_04",
+          "type": "fourChoice",
+          "question": "マルチキャッチ構文について正しい説明はどれですか？",
+          "code": null,
+          "explanation": "マルチキャッチの例外変数は暗黙的にfinalとなるため、再代入はできません。継承関係のある例外型を指定するとコンパイルエラーになります。マルチキャッチはJava 7以降で使用できます。",
+          "choices": [
+            {
+              "id": "ch25_04_q2_a",
+              "text": "マルチキャッチの例外変数は暗黙的にfinalであり再代入できない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_04_q2_b",
+              "text": "マルチキャッチの例外変数は再代入可能である",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_04_q2_c",
+              "text": "継承関係のある例外型をマルチキャッチで指定できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_04_q2_d",
+              "text": "マルチキャッチはJava 5で導入された",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_04_q3",
+          "lessonId": "ch25_04",
+          "type": "fillBlank",
+          "question": "例外のラッピングパターンで、元の例外を取得するには___メソッドを使用する。",
+          "code": null,
+          "explanation": "例外のラッピングパターンでは、新しい例外のコンストラクタに元の例外をcause（原因）として渡します。ラップされた元の例外はgetCause()メソッドで取得できます。",
+          "choices": [
+            {
+              "id": "ch25_04_q3_a",
+              "text": "getCause()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_04_q3_b",
+              "text": "getSuppressed()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_04_q3_c",
+              "text": "getOriginal()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_04_q3_d",
+              "text": "getSource()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

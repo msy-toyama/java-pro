@@ -1,0 +1,1046 @@
+{
+  "courseId": "ch19",
+  "lessons": [
+    {
+      "id": "ch19_01",
+      "courseId": "ch19",
+      "title": "enum型の基本",
+      "summary": "列挙型（enum）の定義方法、主要メソッド、switch文での活用法を学びます。",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch19_01",
+          "sectionType": "overview",
+          "title": "enum（列挙型）とは",
+          "body": "このレッスンでは以下を学びます:\n\n・Java 17の主要な新機能の概要\n・LTS（長期サポート）バージョンの意味\n・Java 11からJava 17への変更点\n\nJava 17はエンタープライズ開発の主流バージョンです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch19_01",
+          "sectionType": "code",
+          "title": "基本的なenum定義",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// enum型の定義\npublic enum Season {\n    SPRING, SUMMER, AUTUMN, WINTER\n}\n\n// 使い方\npublic class Main {\n    public static void main(String[] args) {\n        Season s = Season.SPRING;\n        System.out.println(s);          // SPRING\n        System.out.println(s.name());   // SPRING\n        System.out.println(s.ordinal());// 0（定義順のインデックス）\n\n        // values() — 全列挙定数の配列\n        for (Season season : Season.values()) {\n            System.out.println(season);\n        }\n\n        // valueOf() — 文字列から変換\n        Season w = Season.valueOf(\"WINTER\");\n        System.out.println(w); // WINTER\n        // Season.valueOf(\"spring\"); → IllegalArgumentException\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch19_01",
+          "sectionType": "tip",
+          "title": "LTS（長期サポート版）とは",
+          "body": "| バージョン | リリース年 | LTS |\n|---|---|---|\n| Java 8 | 2014年 | ○ LTS |\n| Java 11 | 2018年 | ○ LTS |\n| Java 17 | 2021年 | ○ LTS |\n| Java 21 | 2023年 | ○ LTS |\n\nLTS版は企業で長期間サポートされるため、実務で使われることが多いバージョンです。\n非LTS版は半年ごとにリリースされますが、サポート期間は短いです。",
+          "code": null,
+          "note": "Oracle認定資格はJava SE 11とJava SE 17が対象バージョンです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch19_01",
+          "sectionType": "rule",
+          "title": "enumの重要な特徴",
+          "body": "1. enumは暗黙的にjava.lang.Enumを継承 — 他のクラスをextendsできない\n2. 暗黙的にfinal — enumを継承するサブクラスは作れない\n3. コンストラクタはprivateのみ — 外部からnewできない\n4. ==で比較可能 — equals()より ==推奨（null安全・高速）\n5. Comparable・Serializableを自動実装\n6. values()はコンパイラが自動生成するstaticメソッド",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch19_01",
+          "sectionType": "code",
+          "title": "switch文でのenum使用",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        Season s = Season.AUTUMN;\n\n        // switch文：caseにはenum定数名のみ（型名不要）\n        // 値に応じた分岐処理\n        switch (s) {\n            case SPRING:\n                System.out.println(\"春\");\n                break;\n            case SUMMER:\n                System.out.println(\"夏\");\n                break;\n            case AUTUMN:\n                System.out.println(\"秋\");\n                break;\n            case WINTER:\n                System.out.println(\"冬\");\n                break;\n        }\n        // 出力: 秋\n\n        // ==で比較（推奨）\n        // 条件分岐\n        if (s == Season.AUTUMN) {\n            System.out.println(\"紅葉の季節\");\n        }\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch19_01",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• enumは定数の集合を型安全に定義する仕組み\n• name() — 定数名を文字列で取得\n• ordinal() — 定義順のインデックス（0始まり）\n• values() — 全定数の配列を取得\n• valueOf(String) — 文字列から定数へ変換（不一致はIllegalArgumentException）\n• switch文のcaseでは型名なしで定数名のみ書く\n• ==で比較可能（推奨） — null安全で高速",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch19_01_q1",
+          "lessonId": "ch19_01",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を予測してください。",
+          "explanation": "ordinal()は定義順のインデックスを返します。RED=0, GREEN=1, BLUE=2なので、出力は「2」です。",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch19_01_q1_a",
+              "text": "2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_01_q1_b",
+              "text": "3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_01_q1_c",
+              "text": "BLUE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_01_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "enum Color { RED, GREEN, BLUE }\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Color.BLUE.ordinal());\n    }\n}"
+        },
+        {
+          "id": "ch19_01_q2",
+          "lessonId": "ch19_01",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "switch文のcaseでenum定数を指定する際、**型名（Day.）を付けるとコンパイルエラー**になります。正しくは「case MON:」と書きます。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_01_q2_a",
+              "text": "caseにDay.MONと書いている（型名は不要でMONのみ）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_01_q2_b",
+              "text": "switch文にenumを使えない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_01_q2_c",
+              "text": "breakが不要",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_01_q2_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "enum Day { MON, TUE, WED }\npublic class Main {\n    public static void main(String[] args) {\n        Day d = Day.MON;\n        switch (d) {\n            case Day.MON:  // ← ここに注目\n                System.out.println(\"月曜\");\n                break;\n        }\n    }\n}"
+        },
+        {
+          "id": "ch19_01_q3",
+          "lessonId": "ch19_01",
+          "type": "fourChoice",
+          "question": "Season.valueOf(\"spring\")を実行すると何が起きますか？（enumにSPRINGは定義済み）",
+          "explanation": "valueOf()は**大文字・小文字を区別**します。enumにはSPRINGが定義されていますが、\"spring\"（小文字）は一致しないためIllegalArgumentExceptionが発生します。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_01_q3_a",
+              "text": "IllegalArgumentExceptionが発生する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_01_q3_b",
+              "text": "Season.SPRINGが返る",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_01_q3_c",
+              "text": "nullが返る",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_01_q3_d",
+              "text": "コンパイルエラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        }
+      ]
+    },
+    {
+      "id": "ch19_02",
+      "courseId": "ch19",
+      "title": "enumの応用 — フィールド・メソッド・コンストラクタ",
+      "summary": "enumにフィールドやメソッドを持たせる方法、抽象メソッドの定義を学びます。",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch19_02",
+          "sectionType": "overview",
+          "title": "enumはクラスの一種",
+          "body": "このレッスンでは以下を学びます:\n\n・テキストブロック（\"\"\"）で複数行文字列を簡潔に記述\n・varキーワードによるローカル変数の型推論\n・レコードクラス（record）で不変データクラスを簡潔に定義\n\nボイラープレートコードを大幅に削減する機能群です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch19_02",
+          "sectionType": "code",
+          "title": "フィールドとコンストラクタ付きenum",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "public enum Planet {\n    MERCURY(3.303e+23, 2.4397e6),\n    VENUS(4.869e+24, 6.0518e6),\n    EARTH(5.976e+24, 6.37814e6);\n    //        ↑ 最後の定数の後にセミコロン必須\n\n    private final double mass;    // kg\n    private final double radius;  // m\n\n    // コンストラクタ（暗黙的にprivate）\n    Planet(double mass, double radius) {\n        this.mass = mass;\n        this.radius = radius;\n    }\n\n    // メソッド\n    public double surfaceGravity() {\n        final double G = 6.67300E-11;\n        return G * mass / (radius * radius);\n    }\n\n    public double surfaceWeight(double otherMass) {\n        return otherMass * surfaceGravity();\n    }\n}\n\n// 使用例\nSystem.out.println(Planet.EARTH.surfaceGravity());\n// 出力: 9.802652743337129（約9.8 m/s²）",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch19_02",
+          "sectionType": "tip",
+          "title": "enumにメソッドやフィールドを持たせる",
+          "body": "Javaのenumは単なる定数の列挙ではなく、フィールド・メソッド・コンストラクタを持てます。\n\n・各enum定数にデータを持たせることができる\n・コンストラクタはprivateのみ（外部からnewできない）\n・抽象メソッドを定義して各定数に実装させることも可能\n\nStrategy パターンをenumで実現する手法はJavaの実務でよく使われます。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch19_02",
+          "sectionType": "code",
+          "title": "定数ごとに振る舞いを変える — 抽象メソッド",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// 列挙型の定義\npublic enum Operation {\n    PLUS {\n        @Override\n        // applyメソッドの定義\n        public double apply(double x, double y) {\n            return x + y;\n        }\n    },\n    MINUS {\n        @Override\n        // applyメソッドの定義\n        public double apply(double x, double y) {\n            return x - y;\n        }\n    },\n    TIMES {\n        @Override\n        public double apply(double x, double y) {\n            return x * y;\n        }\n    };\n\n    // 抽象メソッド — 各定数で必ず実装が必要\n    public abstract double apply(double x, double y);\n}\n\n// 使用例\n// 変数の宣言と初期化\ndouble result = Operation.PLUS.apply(3, 4);\nSystem.out.println(result); // 7.0",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch19_02",
+          "sectionType": "rule",
+          "title": "enumのコンストラクタルール",
+          "body": "1. コンストラクタはprivateのみ — publicやprotectedは不可（コンパイルエラー）\n2. 定数リストの後にフィールド/メソッドを書く場合、最後の定数の後にセミコロン（;）が必須\n3. 抽象メソッドを宣言したら、全ての定数でオーバーライドが必要\n4. enumにインターフェースをimplementsすることは可能\n5. enumにstaticメソッドやstaticフィールドを定義できる",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch19_02",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• enumにフィールド・コンストラクタ・メソッドを追加可能\n• コンストラクタは暗黙的にprivate（public/protectedは不可）\n• 抽象メソッドを定義し、各定数で個別の実装を提供できる\n• 定数の後にメンバーを書く場合はセミコロン（;）が必須\n• interfaceのimplementsは可能だが、extendsは不可\n• enumはStrategy パターンの実装に最適",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch19_02_q1",
+          "lessonId": "ch19_02",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "enumのコンストラクタは**暗黙的にprivate**であり、publicやprotectedを指定するとコンパイルエラーになります。正しくは `Size(String label)` または `private Size(String label)` と書きます。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_02_q1_a",
+              "text": "enumのコンストラクタにpublicを付けている（privateのみ可）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_02_q1_b",
+              "text": "フィールドがfinalでない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_02_q1_c",
+              "text": "セミコロンの位置が間違っている",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_02_q1_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public enum Size {\n    S(\"Small\"), M(\"Medium\"), L(\"Large\");\n    \n    private String label;\n    \n    public Size(String label) {\n        this.label = label;\n    }\n}"
+        },
+        {
+          "id": "ch19_02_q2",
+          "lessonId": "ch19_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を予測してください。",
+          "explanation": "DIME(10)なのでgetValue()は10を返します。name()はenum定数名そのものの文字列を返すため「NICKEL」が出力されます。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_02_q2_a",
+              "text": "10\\nNICKEL",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_02_q2_b",
+              "text": "DIME\\nNICKEL",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_02_q2_c",
+              "text": "10\\n5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_02_q2_d",
+              "text": "2\\nNICKEL",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "enum Coin {\n    PENNY(1), NICKEL(5), DIME(10);\n    \n    private final int value;\n    Coin(int value) { this.value = value; }\n    public int getValue() { return value; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Coin.DIME.getValue());\n        System.out.println(Coin.NICKEL.name());\n    }\n}"
+        },
+        {
+          "id": "ch19_02_q3",
+          "lessonId": "ch19_02",
+          "type": "fillBlank",
+          "question": "enumに抽象メソッドを定義するキーワードを埋めてください。",
+          "explanation": "Javaでは抽象メソッドを定義するキーワードは**abstract**です。enum内で抽象メソッドを宣言すると、すべてのenum定数でそのメソッドをオーバーライドする必要があります。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_02_q3_a",
+              "text": "abstract",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_02_q3_b",
+              "text": "virtual",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_02_q3_c",
+              "text": "override",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_02_q3_d",
+              "text": "default",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public enum Shape {\n    CIRCLE { public double area(double r) { return Math.PI * r * r; } },\n    SQUARE { public double area(double r) { return r * r; } };\n\n    public [___] double area(double r);\n}"
+        }
+      ]
+    },
+    {
+      "id": "ch19_03",
+      "courseId": "ch19",
+      "title": "var — ローカル変数型推論",
+      "summary": "Java 10で導入されたvarによるローカル変数型推論の使い方と制約を学びます。",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch19_03",
+          "sectionType": "overview",
+          "title": "varとは",
+          "body": "このレッスンでは以下を学びます:\n\n・switch式（値を返すswitch）の構文\n・アロー構文（case X ->）によるフォールスルー防止\n・yield キーワードで値を返す方法\n\nswitch文の進化形で、より安全で簡潔な分岐が書けます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch19_03",
+          "sectionType": "code",
+          "title": "varの基本的な使い方",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 従来の書き方\n        // 変数の宣言と初期化\n        String message = \"Hello\";\n        ArrayList<String> list = new ArrayList<String>();\n\n        // varを使った書き方（コンパイラが型推論）\n        var msg = \"Hello\";            // String型と推論\n        // オブジェクトを生成して変数に代入\n        var nums = new ArrayList<Integer>(); // ArrayList<Integer>型\n        var count = 10;               // int型と推論\n        var pi = 3.14;                // double型と推論\n\n        // 拡張for文でも使える\n        var names = List.of(\"Alice\", \"Bob\", \"Carol\");\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (var name : names) {\n            System.out.println(name); // nameはString型\n        }\n\n        // try-with-resources文でも使える\n        // 例外が発生する可能性がある処理\n        try (var reader = new BufferedReader(new FileReader(\"test.txt\"))) {\n            var line = reader.readLine();\n        }\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch19_03",
+          "sectionType": "tip",
+          "title": "switch文とswitch式の違い",
+          "body": "Java 14以降、switchは「文」だけでなく「式」としても使えます。\n\n| 特徴 | switch文 | switch式 |\n|---|---|---|\n| 値を返す | × | ○ |\n| break | 必要 | 不要（アロー構文） |\n| フォールスルー | 起きうる | 起きない（アロー構文） |\n| 網羅性チェック | なし | あり（全ケースを網羅する必要） |\n\nswitch式ではdefaultを書かないと、enumの全値をカバーしない限りコンパイルエラーになります。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch19_03",
+          "sectionType": "rule",
+          "title": "varが使えない場所",
+          "body": "varは以下の場所では使用できません（コンパイルエラー）:\n\n| 使えない場所 | 例 | 理由 |\n|---|---|---|\n| フィールド宣言 | `var x = 10;`（クラス直下） | ローカル変数限定 |\n| メソッドの引数 | `void m(var x)` | 型が不明 |\n| 戻り値の型 | `var m() { ... }` | 型が不明 |\n| 初期化なし | `var x;` | 推論する情報がない |\n| null代入 | `var x = null;` | 型が確定しない |\n| 配列初期化子 | `var a = {1, 2, 3};` | 型が曖昧 |\n| ラムダ式 | `var f = (x) -> x + 1;` | 関数型IFが不明 |",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch19_03",
+          "sectionType": "code",
+          "title": "varの注意点 — ダイヤモンド演算子との組合せ",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// ダイヤモンド演算子<>とvar\nvar list1 = new ArrayList<String>();  // ✅ ArrayList<String>\nvar list2 = new ArrayList<>();        // ⚠️ ArrayList<Object>に推論される！\n\n// 匿名クラスとvar（Java 10+）\nvar obj = new Object() {\n    int value = 42;\n    String name = \"test\";\n};\n// obj.value にアクセス可能！（匿名クラスの固有型が推論される）\nSystem.out.println(obj.value); // 42\n\n// Java 11: ラムダ式の引数でvar（アノテーション付与用）\n// (@NotNull var x, @Nullable var y) -> x + y\n// ただし、一部の引数だけvarにはできない",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch19_03",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• varはローカル変数の宣言にのみ使える（フィールド・引数・戻り値は不可）\n• 初期化が必須 — 右辺から型を推論するため\n• null / 配列初期化子 / ラムダ式の直接代入は不可\n• varは予約された型名であり予約語ではない\n• Diamond演算子<>との組合せに注意 — `new ArrayList<>()` はObject型に推論\n• 可読性の観点：型が明確な場面で使うのが推奨\n• Java 11以降：ラムダ引数での `(@Annotation var x)` が可能",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch19_03_q1",
+          "lessonId": "ch19_03",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "varは**ローカル変数の宣言にのみ使用**できます。クラスのフィールド宣言で使うとコンパイルエラーになります。mainメソッド内のvarは正しい使い方です。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_03_q1_a",
+              "text": "varをフィールド宣言で使っている（ローカル変数のみ可）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_03_q1_b",
+              "text": "varをString型に使えない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_03_q1_c",
+              "text": "mainメソッドでvarは使えない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_03_q1_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public class Main {\n    var count = 0;  // フィールド宣言\n\n    public static void main(String[] args) {\n        var msg = \"Hello\";\n        System.out.println(msg);\n    }\n}"
+        },
+        {
+          "id": "ch19_03_q2",
+          "lessonId": "ch19_03",
+          "type": "fourChoice",
+          "question": "以下のコードで変数listの型は何になりますか？",
+          "explanation": "varとダイヤモンド演算子<>を組み合わせると、型パラメータの推論情報が不足するため、**ArrayList<Object>**と推論されます。`new ArrayList<String>()`のように明示的に型を指定しましょう。",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch19_03_q2_a",
+              "text": "ArrayList<Object>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_03_q2_b",
+              "text": "ArrayList<String>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_03_q2_c",
+              "text": "List<Object>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_03_q2_d",
+              "text": "コンパイルエラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "var list = new ArrayList<>();"
+        },
+        {
+          "id": "ch19_03_q3",
+          "lessonId": "ch19_03",
+          "type": "multiChoice",
+          "question": "以下のうち、varが使用**できない**場面をすべて選んでください。",
+          "explanation": "varが使えないのは: (1)メソッド引数、(2)初期化子なしの宣言、(3)フィールド宣言です。拡張for文の `for (var item : list)` は使用可能です。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_03_q3_a",
+              "text": "メソッドの引数の型宣言",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_03_q3_b",
+              "text": "初期化子なしのローカル変数宣言",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch19_03_q3_c",
+              "text": "拡張for文の変数宣言",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_03_q3_d",
+              "text": "クラスのフィールド宣言",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "requiredSelections": 3
+        }
+      ]
+    },
+    {
+      "id": "ch19_04",
+      "courseId": "ch19",
+      "title": "switch式とパターンマッチング",
+      "summary": "Java 14以降のswitch式（アロー構文・yield）、Java 16+のパターンマッチングを学びます。",
+      "estimatedMinutes": 9,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch19_04",
+          "sectionType": "overview",
+          "title": "switch文からswitch式へ",
+          "body": "このレッスンでは以下を学びます:\n\n・パターンマッチング instanceof（instanceof + 変数宣言）\n・sealedクラスで継承を制限する仕組み\n・permits句で許可するサブクラスを列挙\n\n型の安全性をさらに強化する新しい言語機能群です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch19_04",
+          "sectionType": "code",
+          "title": "アロー構文のswitch式",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 変数の宣言と初期化\n        int day = 3;\n\n        // 従来のswitch文\n        String name1;\n        // 値に応じた分岐処理\n        switch (day) {\n            case 1: name1 = \"月\"; break;\n            case 2: name1 = \"火\"; break;\n            case 3: name1 = \"水\"; break;\n            default: name1 = \"？\"; break;\n        }\n\n        // Java 14+ switch式（アロー構文）\n        // switchメソッドの定義\n        String name2 = switch (day) {\n            case 1 -> \"月\";\n            case 2 -> \"火\";\n            case 3 -> \"水\";\n            default -> \"？\";\n        };\n        // ↑ switch式はセミコロンが必要\n\n        System.out.println(name2); // 水\n\n        // 複数のcase値をカンマで列挙\n        String type = switch (day) {\n            case 1, 2, 3, 4, 5 -> \"平日\";\n            case 6, 7 -> \"休日\";\n            default -> \"不正\";\n        };\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch19_04",
+          "sectionType": "tip",
+          "title": "sealedクラスの3種類のサブクラス",
+          "body": "sealedクラスのサブクラスは以下の3つの修飾子のいずれかを指定する必要があります。\n\n| 修飾子 | 意味 |\n|---|---|\n| final | これ以上継承できない |\n| sealed | さらに限定した継承を許可 |\n| non-sealed | 制限を解除し自由に継承可能 |\n\nsealedクラスはパターンマッチングと組み合わせることで真価を発揮します。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch19_04",
+          "sectionType": "code",
+          "title": "yield文とブロック構文",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 変数の宣言と初期化\n        int score = 85;\n\n        // ブロック構文 + yield\n        // switchメソッドの定義\n        String grade = switch (score / 10) {\n            case 10, 9 -> \"A\";\n            case 8 -> {\n                System.out.println(\"Good!\");\n                yield \"B\";  // ブロック内ではyieldで値を返す\n            }\n            case 7 -> \"C\";\n            default -> {\n                yield \"D\";\n            }\n        };\n        // 出力: Good!\n        System.out.println(grade); // B\n\n        // 注意: アロー構文でreturnは使えない（yieldを使う）\n        // case 8 -> { return \"B\"; } // コンパイルエラー\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch19_04",
+          "sectionType": "code",
+          "title": "パターンマッチング for instanceof（Java 16+）",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "public class Main {\n    // 従来のinstanceof + キャスト\n    static void oldStyle(Object obj) {\n        if (obj instanceof String) {\n            String s = (String) obj;  // 明示的キャスト必要\n            System.out.println(s.length());\n        }\n    }\n\n    // Java 16+ パターンマッチング\n    static void newStyle(Object obj) {\n        if (obj instanceof String s) {  // 型チェック + 変数束縛\n            System.out.println(s.length()); // sはString型として使える\n        }\n\n        // &&との組合せ（スコープに注意）\n        if (obj instanceof String s && s.length() > 3) {\n            System.out.println(\"長い文字列: \" + s);\n        }\n\n        // || では使えない（コンパイルエラー）\n        // if (obj instanceof String s || s.isEmpty()) { } // NG\n    }\n\n    // パターン変数のスコープ\n    static void scopeExample(Object obj) {\n        if (!(obj instanceof String s)) {\n            return; // ここではsは使えない\n        }\n        // ここではsが使える（フロースコーピング）\n        System.out.println(s.toUpperCase());\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch19_04",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• switch式 — 値を返す式として使える（末尾にセミコロン必要）\n• アロー構文（->） — フォールスルーなし、breakが不要\n• yield — ブロック構文内で値を返す（returnではない）\n• 複数caseのカンマ列挙 — `case 1, 2, 3 ->` が可能\n• enum網羅性 — switch式でenumの全定数をカバーするか、defaultが必要\n• パターンマッチング for instanceof — `obj instanceof Type var` で型チェックと変数束縛を同時に行う\n• パターン変数は &&では使えるが||では使えない\n• フロースコーピング — `if (!(obj instanceof ...)) return;` の後でパターン変数が使える",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch19_04_q1",
+          "lessonId": "ch19_04",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を予測してください。",
+          "explanation": "x=2は`case 1, 2`にマッチします。アロー構文なのでフォールスルーなく「AB」が返され、出力は「AB」です。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_04_q1_a",
+              "text": "AB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_04_q1_b",
+              "text": "C",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_04_q1_c",
+              "text": "X",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_04_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 2;\n        String r = switch (x) {\n            case 1, 2 -> \"AB\";\n            case 3 -> {\n                yield \"C\";\n            }\n            default -> \"X\";\n        };\n        System.out.println(r);\n    }\n}"
+        },
+        {
+          "id": "ch19_04_q2",
+          "lessonId": "ch19_04",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "switch式のブロック構文内で値を返すには**yield**を使います。returnはメソッドからの復帰を意味するため、switch式のブロック内では使えません。正しくは `yield \"Perfect\";` です。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_04_q2_a",
+              "text": "switch式のブロック内でreturnを使っている（yieldを使うべき）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_04_q2_b",
+              "text": "defaultにブロック構文が必要",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_04_q2_c",
+              "text": "switch式の末尾にセミコロンが不要",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_04_q2_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "String grade = switch (score) {\n    case 100 -> {\n        return \"Perfect\";\n    }\n    default -> \"Normal\";\n};"
+        },
+        {
+          "id": "ch19_04_q3",
+          "lessonId": "ch19_04",
+          "type": "fillBlank",
+          "question": "Java 16以降のパターンマッチングを使って、型チェックと変数束縛を同時に行う構文を完成させてください。",
+          "explanation": "Java 16以降の**パターンマッチング for instanceof**では、`obj instanceof String s` と書くことで、型チェックと同時にString型の変数sに束縛できます。",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch19_04_q3_a",
+              "text": "instanceof",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_04_q3_b",
+              "text": "is",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_04_q3_c",
+              "text": "as",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_04_q3_d",
+              "text": "typeof",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "if (obj [___] String s) {\n    System.out.println(s.length());\n}"
+        }
+      ]
+    },
+    {
+      "id": "ch19_05",
+      "courseId": "ch19",
+      "title": "テキストブロックとrecord",
+      "summary": "Java 13+のテキストブロック（複数行文字列）とJava 16+のrecordクラスを学びます。",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch19_05",
+          "sectionType": "overview",
+          "title": "Java SE 17の便利な新機能",
+          "body": "このレッスンでは以下を学びます:\n\n・NullPointerExceptionの改善メッセージ（Java 14+）\n・Stream.toList()の追加（Java 16+）\n・その他の便利な改善点\n\n日常的なコーディングが楽になる小さな改善の数々です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch19_05",
+          "sectionType": "code",
+          "title": "テキストブロック — 複数行の文字列",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 従来の書き方\n        // 変数の宣言と初期化\n        String json1 = \"{\\n\" +\n                       \"  \\\"name\\\": \\\"Alice\\\",\\n\" +\n                       \"  \\\"age\\\": 25\\n\" +\n                       \"}\";\n\n        // テキストブロック（Java 13+）\n        String json2 = \"\"\"\n                {\n                    \"name\": \"Alice\",\n                    \"age\": 25\n                }\n                \"\"\";\n\n        // インデント制御: 閉じ\"\"\"の位置で共通インデントが決まる\n        String html = \"\"\"\n                <html>\n                    <body>\n                        <p>Hello</p>\n                    </body>\n                </html>\n                \"\"\";  // ← 閉じ\"\"\"と同じ列より右のスペースだけが残る\n\n        // 末尾改行の制御\n        String noTrailingNewline = \"\"\"\n                Hello World\\\n                \"\"\"; // \\で末尾の改行を抑制\n\n        // エスケープ文字\n        String s = \"\"\"\n                tab:\\there\n                改行なし:one\\stwo\n                \"\"\";\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch19_05",
+          "sectionType": "tip",
+          "title": "テキストブロックのインデント制御",
+          "body": "テキストブロック（\"\"\"...\"\"\"）のインデントは閉じ\"\"\"の位置で制御されます。\n\n・閉じ\"\"\"を左に寄せる → インデントが残る\n・閉じ\"\"\"をテキストと同じ位置に → インデントが除去される\n\nrecordクラスはコンパクトコンストラクタというバリデーション用の特別なコンストラクタを持てます。",
+          "code": null,
+          "note": "recordの等価比較（equals/hashCode/toString）は自動生成されます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch19_05",
+          "sectionType": "code",
+          "title": "record — イミュータブルなデータクラス",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// recordの定義\npublic record Point(int x, int y) { }\n// ↑ これだけで以下が自動生成される:\n// - private finalフィールド（x, y）\n// - コンストラクタ（全フィールド引数）\n// - アクセサメソッド x(), y()（getX()ではない！）\n// - toString(), equals(), hashCode()\n\npublic class Main {\n    public static void main(String[] args) {\n        var p = new Point(3, 4);\n        System.out.println(p.x());  // 3（getter名にgetは付かない）\n        System.out.println(p.y());  // 4\n        System.out.println(p);      // Point[x=3, y=4]\n\n        // equals — フィールド値で比較\n        var p2 = new Point(3, 4);\n        System.out.println(p.equals(p2)); // true\n\n        // recordはイミュータブル — setterなし\n        // p.x = 10;  // コンパイルエラー\n    }\n}\n\n// コンパクトコンストラクタ（バリデーション用）\npublic record Range(int min, int max) {\n    // コンパクトコンストラクタ — 引数リストを省略\n    public Range {\n        if (min > max) {\n            throw new IllegalArgumentException(\n                \"min must be <= max\");\n        }\n    }\n    // フィールドへの代入は自動で行われる\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch19_05",
+          "sectionType": "rule",
+          "title": "recordの制約",
+          "body": "recordにはいくつかの重要な制約があります:\n\n| 制約 | 説明 |\n|---|---|\n| extendsできない | 暗黙的にjava.lang.Recordを継承 |\n| フィールドは暗黙的にfinal | 再代入不可（イミュータブル） |\n| インスタンスフィールド追加不可 | コンポーネント以外のフィールドなし |\n| abstractにできない | 暗黙的にfinal |\n| implements は可能 | インターフェース実装はOK |\n| staticフィールド・メソッドは追加可能 | staticメンバーは制約なし |\n| メソッド追加は可能 | インスタンスメソッドを定義できる |\n| ジェネリクス対応 | `record Pair<A, B>(A first, B second) {}` |",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch19_05",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "テキストブロック:\n• `\"\"\"` で開始・終了（開始直後は改行が必要）\n• 閉じ `\"\"\"` の位置で共通インデントが決定\n• `\\` で行末改行を抑制、`\\s` でスペース確保\n\nrecord:\n• `record Name(型 フィールド, ...) {}` でイミュータブルクラスを簡潔に定義\n• 自動生成: コンストラクタ、アクセサ（getなし）、toString、equals、hashCode\n• コンパクトコンストラクタ — バリデーション用（引数リスト省略可）\n• extendsは不可、implementsは可能\n• フィールドは暗黙的にprivate final",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch19_05_q1",
+          "lessonId": "ch19_05",
+          "type": "fourChoice",
+          "question": "`record User(String name, int age) {}` で、nameフィールドにアクセスするメソッド名は？",
+          "explanation": "recordのアクセサメソッドは、**フィールド名と同じ名前**のメソッドです（`name()`, `age()`）。JavaBeansの `get` プレフィックスは付きません。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_05_q1_a",
+              "text": "name()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_05_q1_b",
+              "text": "getName()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_05_q1_c",
+              "text": "name",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_05_q1_d",
+              "text": "get(\"name\")",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch19_05_q2",
+          "lessonId": "ch19_05",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "recordにはコンポーネント（宣言時に定義したフィールド）以外のインスタンスフィールドを追加できません。ただし、**メソッドの追加は可能**です。`getGrade()`メソッド自体はエラーではありません。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_05_q2_a",
+              "text": "recordにインスタンスフィールドを追加している",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_05_q2_b",
+              "text": "メソッドを追加している",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_05_q2_c",
+              "text": "コンストラクタがない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_05_q2_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public record Student(String name, int score) {\n    private String grade;  // 追加フィールド\n\n    public String getGrade() {\n        return score >= 60 ? \"合格\" : \"不合格\";\n    }\n}"
+        },
+        {
+          "id": "ch19_05_q3",
+          "lessonId": "ch19_05",
+          "type": "outputPredict",
+          "question": "以下のコードで変数sの内容は何行になりますか？",
+          "explanation": "テキストブロックの内容は「ABC\\nDEF\\n」です。閉じ`\"\"\"`が新しい行にあるため末尾に改行が入ります。lines()は末尾の空行を含まないため、lines().count()は**2**（\"ABC\"と\"DEF\"）を返します。",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch19_05_q3_a",
+              "text": "2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_05_q3_b",
+              "text": "3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_05_q3_c",
+              "text": "1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_05_q3_d",
+              "text": "4",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "String s = \"\"\"\n        ABC\n        DEF\n        \"\"\";\nSystem.out.println(s.lines().count());"
+        }
+      ]
+    },
+    {
+      "id": "ch19_06",
+      "courseId": "ch19",
+      "title": "sealed classesとJava SE 17総まとめ",
+      "summary": "Java 17で正式化されたsealed classesの仕組みと、SE 17新機能の総合演習を行います。",
+      "estimatedMinutes": 9,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch19_06",
+          "sectionType": "overview",
+          "title": "sealed classesとは",
+          "body": "このレッスンでは以下を学びます:\n\n・Java 17で正式に削除された機能・API\n・Applet、SecurityManager等の非推奨化\n・バージョンアップ時の互換性の注意点\n\n古い機能の廃止状況を把握しておきましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch19_06",
+          "sectionType": "code",
+          "title": "sealed classの基本構文",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// 継承先をpermitsで指定\npublic sealed class Shape\n        permits Circle, Rectangle, Triangle {\n    // 共通のフィールドやメソッド\n    public abstract double area();\n}\n\n// finalで封鎖されたサブクラス（これ以上継承不可）\npublic final class Circle extends Shape {\n    private final double radius;\n    public Circle(double radius) { this.radius = radius; }\n    @Override\n    public double area() { return Math.PI * radius * radius; }\n}\n\n// non-sealedで自由に継承可能にする\npublic non-sealed class Rectangle extends Shape {\n    private final double width, height;\n    public Rectangle(double w, double h) { width = w; height = h; }\n    @Override\n    public double area() { return width * height; }\n}\n// Rectangleはnon-sealedなので誰でもextends可能\npublic class Square extends Rectangle {\n    public Square(double side) { super(side, side); }\n}\n\n// sealedで再度制限（チェーンも可能）\npublic sealed class Triangle extends Shape\n        permits RightTriangle, EquilateralTriangle {\n    // ...\n    @Override\n    public double area() { return 0; }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch19_06",
+          "sectionType": "tip",
+          "title": "sealedクラスとパターンマッチングの組み合わせ",
+          "body": "sealedクラスを使うと、switch式でのパターンマッチングが網羅的になります。\n\n・許可されたサブクラスが全てcaseに含まれていれば、defaultは不要\n・新しいサブクラスを追加すると、対応するcaseがないswitch式がコンパイルエラーに\n・これにより、新しい型への対応漏れを防止できる\n\nsealedクラスは「変更に対して安全な設計」を実現する強力な機能です。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch19_06",
+          "sectionType": "rule",
+          "title": "sealedクラスのルール",
+          "body": "| ルール | 説明 |\n|---|---|\n| permitsで許可クラスを列挙 | 同じファイル内なら省略可能 |\n| サブクラスは3つの修飾子から1つを選択 | `final`, `sealed`, `non-sealed` |\n| サブクラスは同じモジュールまたはパッケージ内 | 別パッケージからの継承は不可 |\n| インターフェースもsealed化可能 | `sealed interface` + permits |\n| recordはimplicitly final | sealed interfaceのpermitsにrecord使用可 |\n\nサブクラスの修飾子の意味:\n• `final` — これ以上の継承を完全に禁止\n• `sealed` — さらに限定されたサブクラスのみ許可\n• `non-sealed` — 通常通り自由に継承可能（封印を解除）",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch19_06",
+          "sectionType": "code",
+          "title": "sealed + switch式の組合せ",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// sealedインターフェース\npublic sealed interface Expr\n        permits Num, Add, Mul {\n}\npublic record Num(int value) implements Expr {}\npublic record Add(Expr left, Expr right) implements Expr {}\npublic record Mul(Expr left, Expr right) implements Expr {}\n\n// switch式での網羅性チェック（将来のパターンマッチング対応に向けて）\n// Calculatorクラスの定義\npublic class Calculator {\n    // evalメソッドの定義\n    public static int eval(Expr expr) {\n        // Java 21+のパターンマッチング for switch\n        // ここではinstanceofで簡潔に書く例\n        // 条件分岐\n        if (expr instanceof Num n) {\n            return n.value();\n        // 別の条件をチェック\n        } else if (expr instanceof Add a) {\n            return eval(a.left()) + eval(a.right());\n        // 別の条件をチェック\n        } else if (expr instanceof Mul m) {\n            return eval(m.left()) * eval(m.right());\n        }\n        // 例外を投げる\n        throw new IllegalArgumentException();\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 2 + 3 * 4 = 14\n        Expr expr = new Add(\n            new Num(2),\n            new Mul(new Num(3), new Num(4))\n        );\n        System.out.println(eval(expr)); // 14\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch19_06",
+          "sectionType": "point",
+          "title": "Java SE 17新機能の総まとめ",
+          "body": "このチャプターで学んだJava SE 17の主要機能:\n\n| 機能 | 導入バージョン | 試験重要度 |\n|---|---|---|\n| enum（応用含む） | Java 5 | ★★★ |\n| var（ローカル変数型推論） | Java 10 | ★★★ |\n| テキストブロック | Java 15（正式） | ★★☆ |\n| switch式（アロー構文・yield） | Java 14（正式） | ★★★ |\n| パターンマッチング for instanceof | Java 16（正式） | ★★★ |\n| record | Java 16（正式） | ★★☆ |\n| sealed classes | Java 17（正式） | ★★☆ |\n\n• 試験対策: enumの特殊ルール、varの制約、switch式のyield vs return、recordのアクセサ名（getなし）が頻出\n• 実務: record + sealed classesを組合せた堅牢なデータモデリングが現代Javaの主流",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch19_06_q1",
+          "lessonId": "ch19_06",
+          "type": "fourChoice",
+          "question": "sealed classのサブクラスに指定できない修飾子はどれですか？",
+          "explanation": "sealedクラスのサブクラスは `final`, `sealed`, `non-sealed` の3つのうち**いずれか1つを必ず指定**する必要があります。abstractだけでは不十分で、追加してsealed abstractやnon-sealed abstractとする必要があります。",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch19_06_q1_a",
+              "text": "abstract",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_06_q1_b",
+              "text": "final",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_06_q1_c",
+              "text": "sealed",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_06_q1_d",
+              "text": "non-sealed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch19_06_q2",
+          "lessonId": "ch19_06",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "sealed classのサブクラスは、必ず**final, sealed, non-sealed**のいずれかを指定する必要があります。何も指定しない`public class Cat extends Animal`はコンパイルエラーです。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch19_06_q2_a",
+              "text": "Catにfinal/sealed/non-sealedが指定されていない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_06_q2_b",
+              "text": "permitsの中にCatがない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_06_q2_c",
+              "text": "sealedクラスをextendsできない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch19_06_q2_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public sealed class Animal permits Dog, Cat { }\npublic final class Dog extends Animal { }\npublic class Cat extends Animal { }  // ← ここに注目"
+        },
+        {
+          "id": "ch19_06_q3",
+          "lessonId": "ch19_06",
+          "type": "multiChoice",
+          "question": "以下のうち、Java SE 17の範囲内で**正しい記述**をすべて選んでください。",
+          "explanation": "正しいのは: (1) recordのアクセサはフィールド名と同じ（`name()`）、(3) sealedクラスのサブクラスは同じモジュール/パッケージ内が必要。varは戻り値型には使えず、switch式のブロック内ではyield（returnではない）を使います。",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch19_06_q3_a",
+              "text": "recordのアクセサメソッドにはgetプレフィックスが付かない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch19_06_q3_b",
+              "text": "varはメソッドの戻り値型として使用できる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch19_06_q3_c",
+              "text": "sealed classのサブクラスは同じモジュールまたはパッケージ内に定義する",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch19_06_q3_d",
+              "text": "switch式のブロック内ではreturnで値を返す",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "requiredSelections": 2
+        }
+      ]
+    }
+  ]
+}

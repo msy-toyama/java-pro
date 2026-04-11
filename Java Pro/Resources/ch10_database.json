@@ -1,0 +1,1150 @@
+{
+  "courseId": "ch10",
+  "lessons": [
+    {
+      "id": "ch10_01",
+      "courseId": "ch10",
+      "title": "データベースとは",
+      "summary": "RDBの概念とMySQLの基礎を学ぶ",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**データベース**（DB）の役割と種類\n・リレーショナルデータベース（RDB）の基本概念\n・テーブル・行・列の関係\n\nデータの永続的な保存と効率的な検索を実現するデータベースの基礎を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "rule",
+          "title": "リレーショナルデータベースの基本",
+          "body": "リレーショナル**データベース**（RDB）は、データを「テーブル（表）」で管理します。\n\n基本用語:\n| 用語 | 説明 |\n|---|---|\n| テーブル（Table） | データを格納する表。Excelのシートに似ている |\n| 行（Row / Record） | 1件分のデータ。「レコード」とも呼ぶ |\n| 列（Column / Field） | データの属性。「名前」「年齢」など |\n| 主キー（Primary Key） | 各行を一意に識別する列。重複不可 |\n| 外部キー（Foreign Key） | 他テーブルの主キーを参照し、テーブル間を関連づける |\n\n例えば「社員テーブル」なら、社員ID（主キー）・名前・部署ID（外部キー）・入社日などの列を持ちます。",
+          "code": null,
+          "note": "RDBの「リレーショナル」は、テーブル同士を関連（リレーション）で結べることに由来します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "tip",
+          "title": "RDBの基本用語を整理する",
+          "body": "**データベース**の用語は日常用語と異なるので、整理しておきましょう。\n\n| DB用語 | 一般的な表現 | 例 |\n|---|---|---|\n| テーブル | 表 | 社員テーブル |\n| 行（レコード） | 1件のデータ | 田中さんのデータ |\n| 列（カラム） | 項目 | 名前、年齢、部署 |\n| 主キー | ID | 社員番号（一意に特定） |\n| 外部キー | 参照先 | 部署コード → 部署テーブル |\n",
+          "code": null,
+          "note": "**主キー**は null にできません。テーブル内で重複も許されません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "rule",
+          "title": "MySQLとは",
+          "body": "MySQL（マイエスキューエル）は世界で最も普及しているオープンソースのRDBMS（リレーショナル**データベース**管理システム）です。\n\n主な特徴:\n・無料で使えるオープンソース（商用版もあり）\n・高速で安定した動作\n・Web系企業で広く採用（Instagram, Twitter, YouTube等）\n・Java（JDBC）との親和性が高い\n・WindowsでもmacOSでもLinuxでも動作\n\n他の代表的なRDBMS:\n| 項目 | 説明 |\n|---|---|\n| PostgreSQL | 高機能。複雑なクエリに強い |\n| Oracle Database | 企業の基幹システムで多く使われる |\n| SQLite | ファイルベースの軽量DB。モバイルアプリに最適 |",
+          "code": null,
+          "note": "Java Gold試験ではJDBCの知識が出題されます。本章でDB基礎を固めておくと、後のJDBC学習がスムーズです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "rule",
+          "title": "SQLとは",
+          "body": "SQL（Structured Query Language）は**データベース**を操作するための言語です。どのRDBMSでもほぼ同じ文法で使えます。\n\nSQLは大きく3種類に分かれます:\n\n1. DDL（データ定義言語）: テーブルの作成・変更・削除\n   → CREATE, ALTER, DROP\n\n2. DML（データ操作言語）: データの追加・取得・更新・削除\n   → INSERT, SELECT, UPDATE, DELETE\n\n3. DCL（データ制御言語）: 権限の付与・取り消し\n   → GRANT, REVOKE\n\n最も頻繁に使うのはDMLの4つ。これらをCRUD（Create, Read, Update, Delete）と呼びます。",
+          "code": null,
+          "note": "SQLのキーワードは大文字でも小文字でも動きますが、慣例として予約語は大文字で書くことが多いです。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**データベース**はデータを永続的に保存・管理する仕組み\n・RDBはデータをテーブル（表）の形で管理する\n・**主キー**は各行を一意に識別し、**外部キー**でテーブル間を関連づける\n・MySQLは世界で最も普及しているオープンソースRDBMS\n・SQLはDDL（定義）・DML（操作）・DCL（制御）の3種類\n・**CRUD** = Create, Read, Update, Delete",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_01_q1",
+          "lessonId": "ch10_01",
+          "type": "fourChoice",
+          "question": "リレーショナルデータベースにおいて、各行を一意に識別するための列を何と呼びますか？",
+          "code": "CREATE TABLE employees (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    salary DECIMAL(10,2)\n);",
+          "explanation": "主キー（Primary Key）は、テーブル内の各行（レコード）を一意に識別するための列です。同じ値を持つ行は存在できません。例えば社員IDや注文番号などが主キーとして使われます。",
+          "choices": [
+            {
+              "id": "ch10_01_q1_a",
+              "text": "外部キー",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_01_q1_b",
+              "text": "主キー",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_01_q1_c",
+              "text": "インデックス",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_01_q1_d",
+              "text": "ユニークキー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_01_q2",
+          "lessonId": "ch10_01",
+          "type": "fourChoice",
+          "question": "SQLのDML（データ操作言語）に含まれないものはどれですか？",
+          "code": "SELECT e.name, d.dept_name\nFROM employees e\nJOIN departments d\n  ON e.dept_id = d.id\nWHERE e.salary > 50000;",
+          "explanation": "CREATE TABLE はDDL（データ定義言語）に分類されます。DMLはデータの操作（INSERT, SELECT, UPDATE, DELETE）を行う命令です。CREATE, ALTER, DROP がDDLに属します。",
+          "choices": [
+            {
+              "id": "ch10_01_q2_a",
+              "text": "SELECT",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_01_q2_b",
+              "text": "INSERT",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_01_q2_c",
+              "text": "CREATE TABLE",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_01_q2_d",
+              "text": "DELETE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_01_q3",
+          "lessonId": "ch10_01",
+          "type": "reorder",
+          "question": "CRUDの操作を、対応するSQL文と正しく対応させた場合、C → R → U → D の順番は？",
+          "code": "INSERT INTO employees (id, name, salary)\nVALUES (1, '田中太郎', 450000);",
+          "explanation": "CRUD はCreate(作成)=INSERT、Read(読取)=SELECT、Update(更新)=UPDATE、Delete(削除)=DELETE に対応します。データベース操作の基本4操作です。",
+          "choices": [
+            {
+              "id": "ch10_01_q3_a",
+              "text": "INSERT",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_01_q3_b",
+              "text": "SELECT",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_01_q3_c",
+              "text": "UPDATE",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_01_q3_d",
+              "text": "DELETE",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch10_01_q3_a",
+            "ch10_01_q3_b",
+            "ch10_01_q3_c",
+            "ch10_01_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_02",
+      "courseId": "ch10",
+      "title": "テーブル設計の基礎",
+      "summary": "CREATE TABLE・データ型・制約を学ぶ",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・CREATE TABLE文でテーブルを作成する方法\n・**主キー**（PRIMARY KEY）の役割\n・データ型（INT, VARCHAR, DATE等）の使い分け\n\nテーブル設計はアプリケーションの土台となる重要な作業です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "code",
+          "title": "CREATE TABLEの基本",
+          "body": "MySQLでテーブルを作成するSQL文です。「社員テーブル」を例に見てみましょう。",
+          "code": "-- データベースの作成と選択\nCREATE DATABASE IF NOT EXISTS company_db;\nUSE company_db;\n\n-- 部署テーブル（親テーブル）\nCREATE TABLE departments (\n    dept_id   INT          PRIMARY KEY AUTO_INCREMENT,\n    dept_name VARCHAR(50)  NOT NULL UNIQUE,\n    created_at DATETIME    DEFAULT CURRENT_TIMESTAMP\n);\n\n-- 社員テーブル（子テーブル）\nCREATE TABLE employees (\n    emp_id    INT          PRIMARY KEY AUTO_INCREMENT,\n    name      VARCHAR(100) NOT NULL,\n    email     VARCHAR(255) UNIQUE,\n    age       INT          CHECK (age >= 18 AND age <= 100),\n    salary    DECIMAL(10,2) DEFAULT 0.00,\n    dept_id   INT,\n    hire_date DATE         NOT NULL,\n    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)\n);",
+          "note": "AUTO_INCREMENTを使うと、MySQLが自動的に連番を振ってくれます。**主キー**によく使われます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "rule",
+          "title": "MySQLの主要データ型",
+          "body": "MySQLで使用頻度の高いデータ型を覚えましょう。\n\n【整数型】\n| データ型 | 説明 |\n|---|---|\n| INT | 整数（約-21億〜21億）。最もよく使う |\n| BIGINT | 大きな整数。IDが多い場合に使う |\n| TINYINT | 小さな整数（-128〜127）。フラグに便利 |\n\n【小数型】\n・DECIMAL(m,d): 正確な小数。金額に最適（例: DECIMAL(10,2)→12345678.99）\n・DOUBLE: 浮動小数点。科学計算向き\n\n【文字列型】\n| データ型 | 説明 |\n|---|---|\n| VARCHAR(n) | 可変長文字列（最大n文字）。最も一般的 |\n| CHAR(n) | 固定長文字列。郵便番号など固定長向き |\n| TEXT | 長い文字列。記事本文など |\n\n【日時型】\n| データ型 | 説明 |\n|---|---|\n| DATE | 日付のみ（2025-04-01） |\n| DATETIME | 日付と時刻（2025-04-01 10:30:00） |\n| TIMESTAMP | タイムスタンプ。自動更新可能 |\n\n【その他】\n・BOOLEAN: 真偽値（内部的にはTINYINT(1)）\n・BLOB: バイナリデータ。画像など",
+          "code": null,
+          "note": "金額にはDOUBLEではなくDECIMALを使うのが鉄則です。DOUBLEは計算誤差が発生する可能性があります。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "rule",
+          "title": "制約（Constraints）",
+          "body": "制約はデータの整合性を守るルールです。不正なデータの登録を防ぎます。\n\n| 制約 | 説明 |\n|---|---|\n| PRIMARY KEY | 主キー。NOT NULL + UNIQUE の組み合わせ。テーブルに1つだけ |\n| NOT NULL | NULL（値なし）を禁止する |\n| UNIQUE | 重複する値を禁止する（NULLは許可） |\n| DEFAULT | 値が指定されなかった場合のデフォルト値 |\n| CHECK | 値の範囲や条件を指定する |\n| FOREIGN KEY | 他テーブルの主キーを参照し、存在しない値の登録を防ぐ |\n| AUTO_INCREMENT | 自動採番。新しい行が追加されるたびに自動で1増える |\n\n制約違反のINSERTを実行するとエラーになり、データは登録されません。これにより「存在しない部署に社員を登録」「同じメールアドレスを重複登録」といった不整合を防げます。",
+          "code": null,
+          "note": "FOREIGN KEYは「参照整合性」を保証します。親テーブルに存在しないIDを子テーブルに登録しようとするとエラーになります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "tip",
+          "title": "テーブル設計のコツ",
+          "body": "良いテーブル設計のポイント:\n\n1. **主キー**は必ず設定する（AUTO_INCREMENT の INTが定番）\n2. 列名は意味がわかる英語にする（name, email, created_at 等）\n3. NOT NULLを積極的に使う（NULLは扱いが難しい）\n4. 金額はDECIMAL型を使う（DOUBLEの計算誤差を避ける）\n5. 日時列にはDATETIMEまたはTIMESTAMPを使う\n6. テーブル間の関連はFOREIGN KEYで明示する\n\nテーブル設計（スキーマ設計）は、アプリケーション開発の最初に行う重要な工程です。後からテーブル構造を変更するのは大変なので、最初にしっかり考えましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・CREATE TABLEで列名・データ型・制約を定義する\n・INT, VARCHAR, DECIMAL, DATE/DATETIME が頻出データ型\n・PRIMARY KEY, NOT NULL, UNIQUE, FOREIGN KEY が重要な制約\n・AUTO_INCREMENTで**主キー**の自動採番が可能\n・FOREIGN KEYで参照整合性を保証する\n・金額にはDECIMAL型が鉄則",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_02_q1",
+          "lessonId": "ch10_02",
+          "type": "fourChoice",
+          "question": "MySQLで金額を扱うのに最も適切なデータ型はどれですか？",
+          "code": "UPDATE employees\nSET salary = salary * 1.1\nWHERE dept_id = 3;",
+          "explanation": "DECIMAL型は正確な小数計算が可能で、金額の計算に最適です。DOUBLEやFLOATは浮動小数点型のため、計算誤差が発生する可能性があり、金額には不適切です。DECIMAL(10,2)とすると、小数点以下2桁で最大10桁（整数部8桁）の数値を正確に扱えます。",
+          "choices": [
+            {
+              "id": "ch10_02_q1_a",
+              "text": "DOUBLE",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_02_q1_b",
+              "text": "INT",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_02_q1_c",
+              "text": "DECIMAL",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_02_q1_d",
+              "text": "FLOAT",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_02_q2",
+          "lessonId": "ch10_02",
+          "type": "fourChoice",
+          "question": "FOREIGN KEY制約の役割として正しいものはどれですか？",
+          "code": "DELETE FROM employees\nWHERE id = 5;",
+          "explanation": "FOREIGN KEY（外部キー）は、子テーブルの列が親テーブルの主キーに存在する値のみを参照できるようにする制約です。これにより参照整合性が保たれ、「存在しない部署IDを持つ社員」のような不整合なデータの登録を防ぎます。",
+          "choices": [
+            {
+              "id": "ch10_02_q2_a",
+              "text": "列の値を自動的に暗号化する",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_02_q2_b",
+              "text": "他テーブルに存在しない値の登録を防ぐ",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_02_q2_c",
+              "text": "列の値を自動的に連番にする",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_02_q2_d",
+              "text": "列にNULLを設定できるようにする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_02_q3",
+          "lessonId": "ch10_02",
+          "type": "fillBlank",
+          "question": "次のSQLの空欄を埋めて、usersテーブルを作成してください。\nCREATE _____ users (\n  id INT PRIMARY KEY AUTO_INCREMENT,\n  name VARCHAR(100) NOT NULL\n);",
+          "code": "SELECT dept_id, AVG(salary) as avg_sal\nFROM employees\nGROUP BY dept_id\nHAVING AVG(salary) > 400000;",
+          "explanation": "DDL（データ定義言語）のCREATE TABLE文でテーブルを作成します。CREATE TABLE テーブル名 (列定義) の形式で記述します。",
+          "choices": [
+            {
+              "id": "ch10_02_q3_a",
+              "text": "TABLE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_02_q3_b",
+              "text": "DATABASE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_02_q3_c",
+              "text": "SCHEMA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_02_q3_d",
+              "text": "VIEW",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_03",
+      "courseId": "ch10",
+      "title": "データの追加・更新・削除",
+      "summary": "INSERT / UPDATE / DELETE文をマスター",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・INSERT文でデータを追加する方法\n・UPDATE文でデータを更新する方法\n・DELETE文でデータを削除する方法\n\nこれらはCRUD操作の基本であり、あらゆるアプリケーション開発で使います。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "code",
+          "title": "INSERT — データの追加",
+          "body": "INSERT INTO文でテーブルに新しいデータを追加します。",
+          "code": "-- 部署データの追加\nINSERT INTO departments (dept_name)\nVALUES ('開発部');\n\nINSERT INTO departments (dept_name)\nVALUES ('営業部');\n\n-- 社員データの追加\nINSERT INTO employees (name, email, age, salary, dept_id, hire_date)\nVALUES ('山田太郎', 'yamada@example.com', 28, 350000.00, 1, '2024-04-01');\n\n-- 複数行を一度に追加（MySQL特有の効率的な書き方）\nINSERT INTO employees (name, email, age, salary, dept_id, hire_date)\nVALUES\n  ('佐藤花子', 'sato@example.com', 32, 420000.00, 1, '2021-04-01'),\n  ('鈴木一郎', 'suzuki@example.com', 25, 300000.00, 2, '2025-04-01'),\n  ('田中美咲', 'tanaka@example.com', 30, 380000.00, 2, '2022-10-01');",
+          "note": "AUTO_INCREMENTの列（emp_id）は省略できます。MySQLが自動的に連番を割り当てます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "code",
+          "title": "UPDATE — データの更新",
+          "body": "UPDATE文で既存のデータを更新します。WHERE句で更新対象を限定することが極めて重要です。",
+          "code": "-- 特定の社員の給料を更新\nUPDATE employees\nSET salary = 400000.00\nWHERE emp_id = 1;\n\n-- 複数列を同時に更新\nUPDATE employees\nSET salary = salary * 1.05,\n    dept_id = 1\nWHERE name = '鈴木一郎';\n\n-- ⚠️ 危険！ WHERE句を忘れると全行が更新される！\n-- UPDATE employees SET salary = 0;  -- 全員の給料が0に！",
+          "note": "UPDATE文では必ずWHERE句をつけましょう。WHERE句なしで実行すると、テーブルの全行が更新されてしまいます。これは実務で最もよくある重大ミスです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "code",
+          "title": "DELETE — データの削除",
+          "body": "DELETE文でデータを削除します。こちらもWHERE句が必須です。",
+          "code": "-- 特定の社員を削除\nDELETE FROM employees\nWHERE emp_id = 3;\n\n-- 条件に合う複数行を削除\nDELETE FROM employees\nWHERE dept_id = 2 AND salary < 350000;\n\n-- ⚠️ 危険！ WHERE句を忘れると全行が削除される！\n-- DELETE FROM employees;  -- 全データ消滅！\n\n-- テーブルのデータを全削除したい場合はTRUNCATEが高速\n-- TRUNCATE TABLE employees;  -- 全行削除（AUTO_INCREMENTもリセット）",
+          "note": "DELETE は行単位で削除し、ログが残ります。TRUNCATE はテーブルを空にする高速な方法ですが、ロールバックできません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "tip",
+          "title": "実務での鉄則",
+          "body": "UPDATE/DELETE を実行する前の鉄則:\n\n1. まずSELECTで対象を確認する\n   SELECT * FROM employees WHERE emp_id = 1;\n   → 意図通りの行が出るか確認してから UPDATE/DELETE する\n\n2. BEGIN（**トランザクション**開始）してから実行する\n   → 失敗したらROLLBACKでやり直せる\n\n3. WHERE句を必ず書く\n   → WHERE句なしのUPDATE/DELETEは事故のもと\n\nこれらは実務の**データベース**操作で絶対に守るべきルールです。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・INSERT INTO ... VALUES で行を追加\n・複数行の一括INSERTで効率的にデータ投入可能\n・UPDATE ... SET ... WHERE で特定行を更新\n・DELETE FROM ... WHERE で特定行を削除\n・WHERE句を忘れると全行が対象になる（重大事故の原因）\n・実行前にSELECTで対象を確認するのが鉄則",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_03_q1",
+          "lessonId": "ch10_03",
+          "type": "outputPredict",
+          "question": "次のSQLを実行すると、employeesテーブルのデータはどうなりますか？\n\nUPDATE employees SET salary = 0;",
+          "code": "UPDATE employees SET salary = 0;",
+          "explanation": "WHERE句がないため、employeesテーブルの全行のsalaryが0に更新されます。UPDATE文でWHERE句を省略すると全行が対象になります。実務では必ずWHERE句をつけ、事前にSELECTで対象を確認するのが鉄則です。",
+          "choices": [
+            {
+              "id": "ch10_03_q1_a",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_03_q1_b",
+              "text": "全社員のsalaryが0になる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_03_q1_c",
+              "text": "1行目のsalaryだけ0になる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_03_q1_d",
+              "text": "何も変わらない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "Query OK, 全行が更新されました",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_03_q2",
+          "lessonId": "ch10_03",
+          "type": "fillBlank",
+          "question": "社員名が'山田太郎'のデータを削除するSQLの空欄を埋めてください。\n_____ FROM employees WHERE name = '山田太郎';",
+          "code": "SELECT name, salary,\n  RANK() OVER (ORDER BY salary DESC) as rank\nFROM employees;",
+          "explanation": "DELETE FROM テーブル名 WHERE 条件 の形でデータを削除します。DELETE文はWHERE句で指定した条件に合致する行を削除します。",
+          "choices": [
+            {
+              "id": "ch10_03_q2_a",
+              "text": "DELETE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_03_q2_b",
+              "text": "REMOVE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_03_q2_c",
+              "text": "DROP",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_03_q2_d",
+              "text": "ERASE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_03_q3",
+          "lessonId": "ch10_03",
+          "type": "fourChoice",
+          "question": "DELETEとTRUNCATEの違いとして正しいものはどれですか？",
+          "code": "CREATE INDEX idx_emp_name\n  ON employees(name);",
+          "explanation": "TRUNCATEはテーブルの全データを高速に削除しますが、ロールバック（元に戻す）ができません。一方DELETEはWHERE句で行を選んで削除でき、トランザクション内であればロールバックで元に戻すことが可能です。",
+          "choices": [
+            {
+              "id": "ch10_03_q3_a",
+              "text": "TRUNCATEは条件を指定して一部の行だけ削除できる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_03_q3_b",
+              "text": "DELETEはテーブル自体を削除する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_03_q3_c",
+              "text": "TRUNCATEはロールバックできない",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_03_q3_d",
+              "text": "DELETEとTRUNCATEに違いはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch10_03_q4",
+          "lessonId": "ch10_03",
+          "type": "codeComplete",
+          "question": "JDBCでデータベースに接続するコードを完成させてください。",
+          "code": "ALTER TABLE employees\n  ADD COLUMN email VARCHAR(200);",
+          "explanation": "DriverManager.getConnection()でデータベース接続を取得し、createStatement()でSQL実行用のStatementを作成します。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Connection conn = __BLANK_1__.getConnection(url);\n__BLANK_2__ stmt = conn.createStatement();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①接続取得",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "DriverManager",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Connection",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "DataSource",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②ステートメント",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Statement",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "ResultSet",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "Query",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch10_04",
+      "courseId": "ch10",
+      "title": "データの検索（SELECT）",
+      "summary": "WHERE・ORDER BY・集約関数・GROUP BY",
+      "estimatedMinutes": 10,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・SELECT文の基本構文と全件取得\n・WHERE句で条件を指定した絞り込み\n・ORDER BY、GROUP BY、集計関数（COUNT, SUM, AVG）\n\nSELECT文はSQLで最も頻繁に使う命令です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "code",
+          "title": "SELECT文の基本構文",
+          "body": "SELECT文でデータを検索し、WHERE句で条件を絞り込みます。",
+          "code": "-- 全列・全行を取得\nSELECT * FROM employees;\n\n-- 特定の列だけ取得\nSELECT name, salary FROM employees;\n\n-- WHERE句で条件を指定\nSELECT name, salary\nFROM employees\nWHERE salary >= 350000;\n\n-- 複数条件（AND / OR）\nSELECT name, age, dept_id\nFROM employees\nWHERE dept_id = 1 AND age >= 25;\n\nSELECT name FROM employees\nWHERE dept_id = 1 OR dept_id = 2;\n\n-- IN句で複数値を指定（ORの簡潔な書き方）\nSELECT name FROM employees\nWHERE dept_id IN (1, 2, 3);\n\n-- LIKE句でパターンマッチ（% = 任意の文字列）\nSELECT name FROM employees\nWHERE name LIKE '山田%';  -- \"山田\"で始まる名前\n\n-- BETWEEN で範囲指定\nSELECT name, salary FROM employees\nWHERE salary BETWEEN 300000 AND 400000;\n\n-- NULLの判定（= ではなく IS NULL / IS NOT NULL を使う）\nSELECT name FROM employees\nWHERE email IS NOT NULL;",
+          "note": "NULLの比較は「= NULL」ではなく「IS NULL」を使います。NULLは「値が存在しない」という特殊な状態で、= では比較できません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "code",
+          "title": "並べ替えと件数制限",
+          "body": "ORDER BY句で結果を並べ替え、LIMITで取得件数を制限します。",
+          "code": "-- 給料の高い順に並べ替え（DESC = 降順）\nSELECT name, salary\nFROM employees\nORDER BY salary DESC;\n\n-- 名前の昇順（ASC = 昇順。省略するとASC）\nSELECT name, hire_date\nFROM employees\nORDER BY name ASC;\n\n-- 複数キーで並べ替え（部署ごと→給料順）\nSELECT name, dept_id, salary\nFROM employees\nORDER BY dept_id ASC, salary DESC;\n\n-- 上位3件だけ取得（MySQL特有のLIMIT）\nSELECT name, salary\nFROM employees\nORDER BY salary DESC\nLIMIT 3;\n\n-- 4件目から3件取得（ページネーション）\nSELECT name, salary\nFROM employees\nORDER BY salary DESC\nLIMIT 3 OFFSET 3;  -- LIMIT 3, 3 とも書ける",
+          "note": "LIMITはMySQL独自の構文です。Oracle DatabaseではROWNUM、SQL標準ではFETCH FIRSTを使います。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "code",
+          "title": "集約関数とGROUP BY",
+          "body": "集約関数でデータを集計し、GROUP BYでグループ化して分析します。",
+          "code": "-- 基本的な集約関数\nSELECT\n  COUNT(*) AS 社員数,          -- 行数\n  AVG(salary) AS 平均給料,      -- 平均\n  MAX(salary) AS 最高給料,      -- 最大値\n  MIN(salary) AS 最低給料,      -- 最小値\n  SUM(salary) AS 給料合計       -- 合計\nFROM employees;\n\n-- GROUP BY: 部署ごとに集計\nSELECT\n  dept_id,\n  COUNT(*) AS 人数,\n  AVG(salary) AS 平均給料\nFROM employees\nGROUP BY dept_id;\n\n-- HAVING: グループ化した結果に条件をつける\nSELECT\n  dept_id,\n  COUNT(*) AS 人数,\n  AVG(salary) AS 平均給料\nFROM employees\nGROUP BY dept_id\nHAVING COUNT(*) >= 2;  -- 2人以上の部署のみ表示\n\n-- WHERE と HAVING の違い\n-- WHERE: グループ化の前にフィルタ\n-- HAVING: グループ化の後にフィルタ",
+          "note": "WHEREは個々の行に対する条件、HAVINGはグループ化した結果に対する条件です。HAVINGではCOUNT()やAVG()などの集約関数が使えます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "rule",
+          "title": "SELECT文の実行順序",
+          "body": "SELECT文の各句は書く順番と実行される順番が異なります。実行順序を理解するとSQL文の動きが正確にわかります。\n\n記述順序:\n  SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT\n\n実行順序:\n  1. FROM   — 対象テーブルを決定\n  2. WHERE  — 行をフィルタ\n  3. GROUP BY — グループ化\n  4. HAVING — グループをフィルタ\n  5. SELECT — 表示する列を決定\n  6. ORDER BY — 並べ替え\n  7. LIMIT  — 件数制限\n\nこの順序のため、SELECT句で定義した別名（AS）はWHERE句では使えませんが、ORDER BY句では使えます。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "tip",
+          "title": "WHERE句の比較演算子はJavaと少し違う",
+          "body": "SQLとJavaの比較演算子の違いに注意:\n\n| 目的 | Java | SQL |\n|---|---|---|\n| 等しい | == | = |\n| 等しくない | != | <> または != |\n| NULLチェック | obj == null | IS NULL |\n| NULLでない | obj != null | IS NOT NULL |\n\n特にNULLは = NULL では判定できません。IS NULL を使ってください。",
+          "code": null,
+          "note": null,
+          "order": 6
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・SELECT文は最も使用頻度の高いSQL文\n・WHERE句で条件指定（AND, OR, IN, LIKE, BETWEEN, IS NULL）\n・ORDER BYで並べ替え（ASC昇順 / DESC降順）\n・LIMITで取得件数を制限（ページネーションに活用）\n・COUNT, AVG, MAX, MIN, SUM が5大集約関数\n・GROUP BYでグループ化、HAVINGでグループ条件指定\n・WHERE = グループ化前のフィルタ、HAVING = グループ化後のフィルタ",
+          "code": null,
+          "note": null,
+          "order": 7
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_04_q1",
+          "lessonId": "ch10_04",
+          "type": "fourChoice",
+          "question": "NULLを判定するために正しいSQL文はどれですか？",
+          "code": "CREATE TABLE employees (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    salary DECIMAL(10,2)\n);",
+          "explanation": "NULLは特殊な状態（値が存在しない）を表し、通常の比較演算子（=, !=）では正しく判定できません。IS NULL または IS NOT NULL を使って判定する必要があります。WHERE email = NULL は常にfalseになります。",
+          "choices": [
+            {
+              "id": "ch10_04_q1_a",
+              "text": "WHERE email = NULL",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_04_q1_b",
+              "text": "WHERE email IS NULL",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_04_q1_c",
+              "text": "WHERE email == NULL",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_04_q1_d",
+              "text": "WHERE email EQUALS NULL",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_04_q2",
+          "lessonId": "ch10_04",
+          "type": "fourChoice",
+          "question": "WHEREとHAVINGの違いとして正しいものはどれですか？",
+          "code": "SELECT e.name, d.dept_name\nFROM employees e\nJOIN departments d\n  ON e.dept_id = d.id\nWHERE e.salary > 50000;",
+          "explanation": "WHEREはGROUP BYの前に実行され、個々の行をフィルタリングします。HAVINGはGROUP BYの後に実行され、グループ化された結果に対して条件を指定します。HAVINGではCOUNT()やAVG()などの集約関数を使って条件を書けます。",
+          "choices": [
+            {
+              "id": "ch10_04_q2_a",
+              "text": "WHEREとHAVINGはまったく同じ機能",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_04_q2_b",
+              "text": "WHEREは行フィルタ、HAVINGはグループフィルタ",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_04_q2_c",
+              "text": "HAVINGの方がWHEREより先に実行される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_04_q2_d",
+              "text": "WHEREでは集約関数が使える",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_04_q3",
+          "lessonId": "ch10_04",
+          "type": "reorder",
+          "question": "SELECT文の実行順序を正しい順番に並べ替えてください。",
+          "code": "INSERT INTO employees (id, name, salary)\nVALUES (1, '田中太郎', 450000);",
+          "explanation": "SELECT文は記述順序と実行順序が異なります。FROM→WHERE→GROUP BY→HAVING→SELECT→ORDER BYの順で実行されます。この順序を理解すると、別名が使える場所・使えない場所が明確になります。",
+          "choices": [
+            {
+              "id": "ch10_04_q3_a",
+              "text": "FROM",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_04_q3_b",
+              "text": "WHERE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_04_q3_c",
+              "text": "GROUP BY",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_04_q3_d",
+              "text": "SELECT",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch10_04_q3_a",
+            "ch10_04_q3_b",
+            "ch10_04_q3_c",
+            "ch10_04_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_05",
+      "courseId": "ch10",
+      "title": "テーブル結合（JOIN）",
+      "summary": "複数テーブルを結合してデータ取得",
+      "estimatedMinutes": 10,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・INNER JOIN：両方のテーブルに一致するデータだけ取得\n・LEFT/RIGHT JOIN：片方にしかないデータも取得\n・複数テーブルを結合した実践的なクエリ\n\n実務では複数テーブルにまたがるデータ取得が基本です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "code",
+          "title": "INNER JOIN（内部結合）",
+          "body": "INNER JOINは両方のテーブルに一致するデータだけを取得します。最も基本的で、最もよく使うJOINです。",
+          "code": "-- 社員名と部署名を一緒に表示\nSELECT\n  e.name AS 社員名,\n  e.salary AS 給料,\n  d.dept_name AS 部署名\nFROM employees e\nINNER JOIN departments d\n  ON e.dept_id = d.dept_id;\n\n-- 結果:\n-- 社員名    | 給料      | 部署名\n-- 山田太郎  | 350000.00 | 開発部\n-- 佐藤花子  | 420000.00 | 開発部\n-- 鈴木一郎  | 300000.00 | 営業部\n-- 田中美咲  | 380000.00 | 営業部\n\n-- WHERE句と組み合わせ\nSELECT e.name, d.dept_name\nFROM employees e\nINNER JOIN departments d ON e.dept_id = d.dept_id\nWHERE e.salary >= 350000\nORDER BY e.salary DESC;",
+          "note": "テーブルに別名（e, d）をつけると、列名の前に「e.name」のように書けて見やすくなります。同名の列がある場合は必須です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "code",
+          "title": "LEFT JOIN / RIGHT JOIN（外部結合）",
+          "body": "外部結合は、一致しないデータも含めて取得します。",
+          "code": "-- LEFT JOIN: 左のテーブル（employees）の全行を保持\n-- 部署が未配属（dept_id = NULL）の社員も表示される\nSELECT e.name, d.dept_name\nFROM employees e\nLEFT JOIN departments d\n  ON e.dept_id = d.dept_id;\n\n-- 結果（部署未配属の社員も表示される）:\n-- 山田太郎  | 開発部\n-- 佐藤花子  | 開発部\n-- 新入社員  | NULL     ← 部署未配属\n\n-- RIGHT JOIN: 右テーブル（departments）の全行を保持\n-- 社員がいない部署も表示される\nSELECT e.name, d.dept_name\nFROM employees e\nRIGHT JOIN departments d\n  ON e.dept_id = d.dept_id;\n\n-- 結果（社員がいない部署も出る）:\n-- 山田太郎  | 開発部\n-- NULL      | 総務部   ← 社員なし",
+          "note": "LEFT JOINはFROM側（左テーブル）の全行を残します。実務ではINNER JOINとLEFT JOINの2つで大半のケースに対応できます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "rule",
+          "title": "JOINの種類まとめ",
+          "body": "JOINの種類と動きを整理しましょう。\n\n| JOIN種類 | 動作 | 備考 |\n|---|---|---|\n| INNER JOIN | 両テーブルの一致する行だけ返す | 最も基本 |\n| LEFT JOIN | 左テーブルの全行 + 右の一致行 | 一致なしはNULL |\n| RIGHT JOIN | 右テーブルの全行 + 左の一致行 | 一致なしはNULL |\n| CROSS JOIN | 両テーブルの全組み合わせ（直積） | テストデータ生成等に使用 |\n\n実務で使う頻度:\n  INNER JOIN ≫ LEFT JOIN > RIGHT JOIN ≫ CROSS JOIN\n\nFROM句に複数テーブルをカンマで区切ると暗黙のCROSS JOINになるので注意。",
+          "code": null,
+          "note": "RIGHT JOINはテーブルの記述順を逆にすればLEFT JOINで書き直せます。コードの統一性のためにLEFT JOINだけを使うチームも多いです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "tip",
+          "title": "JOINのイメージ図",
+          "body": "JOINの種類を集合のイメージで理解しましょう。\n\n| JOIN種類 | 取得範囲 | イメージ |\n|---|---|---|\n| INNER JOIN | 両方にあるもの | 共通部分のみ |\n| LEFT JOIN | 左テーブル全部 + 右の一致分 | 左を基準 |\n| RIGHT JOIN | 右テーブル全部 + 左の一致分 | 右を基準 |\n| FULL OUTER JOIN | 両方全部 | すべて（MySQL非対応） |\n\n実務では INNER JOIN と LEFT JOIN を使うことがほとんどです。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "code",
+          "title": "複数テーブルの結合とサブクエリ",
+          "body": "3つ以上のテーブルを結合することも多いです。JOINを連続して書きます。",
+          "code": "-- プロジェクトテーブルがあるとして\n-- 社員名、部署名、担当プロジェクト名を一覧表示\nSELECT\n  e.name AS 社員名,\n  d.dept_name AS 部署名,\n  p.project_name AS プロジェクト\nFROM employees e\nINNER JOIN departments d ON e.dept_id = d.dept_id\nLEFT JOIN projects p ON e.emp_id = p.lead_emp_id\nWHERE d.dept_name = '開発部'\nORDER BY e.name;\n\n-- サブクエリでの絞り込み\nSELECT name, salary\nFROM employees\nWHERE dept_id = (\n  SELECT dept_id FROM departments\n  WHERE dept_name = '開発部'\n);\n\n-- 平均給料より高い社員を取得\nSELECT name, salary\nFROM employees\nWHERE salary > (SELECT AVG(salary) FROM employees);",
+          "note": "JOINが多くなるとSQLが複雑になります。テーブル別名（e, d, p）を使い、ON句のキーを明示することで可読性を保ちましょう。",
+          "order": 6
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・JOINは複数テーブルのデータを結合して取得する\n・INNER JOIN: 一致する行のみ（最頻出）\n・LEFT JOIN: 左テーブルの全行を保持（不一致はNULL）\n・ON句で結合条件（通常は**外部キー** = **主キー**）を指定\n・テーブル別名で可読性を向上させる\n・3テーブル以上の結合はJOINを連鎖させる\n・サブクエリで複雑な条件指定も可能",
+          "code": null,
+          "note": null,
+          "order": 7
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_05_q1",
+          "lessonId": "ch10_05",
+          "type": "fourChoice",
+          "question": "INNER JOINの動作として正しいものはどれですか？",
+          "code": "UPDATE employees\nSET salary = salary * 1.1\nWHERE dept_id = 3;",
+          "explanation": "INNER JOINは両方のテーブルでON句の条件に一致する行だけを結果に含めます。一致しない行は結果から除外されます。LEFT JOINなら左テーブルの全行を含みます。",
+          "choices": [
+            {
+              "id": "ch10_05_q1_a",
+              "text": "左テーブルの全行を返す",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_05_q1_b",
+              "text": "両テーブルで一致する行だけを返す",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_05_q1_c",
+              "text": "両テーブルの全組み合わせを返す",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_05_q1_d",
+              "text": "右テーブルの全行を返す",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_05_q2",
+          "lessonId": "ch10_05",
+          "type": "fourChoice",
+          "question": "LEFT JOINで右テーブルに一致する行がない場合、その列の値はどうなりますか？",
+          "code": "DELETE FROM employees\nWHERE id = 5;",
+          "explanation": "LEFT JOINでは左テーブルの全行が結果に含まれます。右テーブルに一致する行がない場合、右テーブルの列はすべてNULLになります。これにより「部署に所属していない社員」なども検索結果に含めることができます。",
+          "choices": [
+            {
+              "id": "ch10_05_q2_a",
+              "text": "その行自体が結果から除外される",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_05_q2_b",
+              "text": "空文字列になる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_05_q2_c",
+              "text": "NULLになる",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_05_q2_d",
+              "text": "0になる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_05_q3",
+          "lessonId": "ch10_05",
+          "type": "errorFind",
+          "question": "次のSQLにはエラーがあります。どこが問題ですか？",
+          "code": "SELECT e.name, d.dept_name\nFROM employees e\nINNER JOIN departments d\nWHERE e.dept_id = d.dept_id;",
+          "explanation": "JOINの結合条件はON句で指定します。WHERE句ではなくON句を使う必要があります。正しくは「INNER JOIN departments d ON e.dept_id = d.dept_id」です。WHERE句はJOINの結合条件ではなく、結果をフィルタリングする条件に使います。",
+          "choices": [
+            {
+              "id": "ch10_05_q3_a",
+              "text": "テーブル別名が使えない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_05_q3_b",
+              "text": "ON句がなく、結合条件をWHEREに書いている",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_05_q3_c",
+              "text": "SELECT句の列名が間違っている",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_05_q3_d",
+              "text": "INNER JOINではなくLEFT JOINを使うべき",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_06",
+      "courseId": "ch10",
+      "title": "JDBCでJavaからDB操作",
+      "summary": "JavaプログラムからMySQLに接続する",
+      "estimatedMinutes": 10,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・JDBC（Java Database Connectivity）でDBに接続\n・PreparedStatementで安全にSQLを実行\n・ResultSetで検索結果を取得・処理\n\nJavaからDBを操作する基本的な方法を身につけます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "rule",
+          "title": "JDBCの処理フロー",
+          "body": "JDBCで**データベース**を操作する手順は4ステップです。\n\n1. 接続（Connection）\n   → DriverManager.getConnection() でDBに接続\n\n2. SQL準備（Statement / **PreparedStatement**）\n   → 実行するSQLを準備。パラメータ付きはPreparedStatement\n\n3. 実行（execute）\n   → SELECT → executeQuery() で ResultSet を取得\n   → INSERT/UPDATE/DELETE → executeUpdate() で影響行数を取得\n\n4. 終了（Close）\n   → try-with-resources で自動的にクローズ\n\nJDBCドライバ（mysql-connector-j）はプロジェクトの依存関係に追加します。Mavenなら pom.xml に記述します。",
+          "code": null,
+          "note": "Java 6以降はJDBCドライバが自動検出されるため、Class.forName()によるドライバの手動ロードは不要です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "code",
+          "title": "SELECT — データの取得",
+          "body": "JDBCで**データベース**からデータを取得する例です。",
+          "code": "import java.sql.*;\n\n// 変数の宣言と初期化\nString url  = \"jdbc:mysql://localhost:3306/company_db\";\nString user = \"root\";\nString pass = \"password\";\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, user, pass);\n     Statement stmt = conn.createStatement();\n     ResultSet rs = stmt.executeQuery(\n         \"SELECT emp_id, name, salary FROM employees\")) {\n\n    // 条件が成り立つ間、繰り返す\n    while (rs.next()) {\n        int id       = rs.getInt(\"emp_id\");\n        String name  = rs.getString(\"name\");\n        double salary = rs.getDouble(\"salary\");\n        System.out.printf(\"%d: %s (%.0f円)%n\", id, name, salary);\n    }\n} catch (SQLException e) {\n    System.err.println(\"DBエラー: \" + e.getMessage());\n    e.printStackTrace();\n}",
+          "note": "try-with-resources構文を使うと、Connection・Statement・ResultSetが自動的にクローズされます。リソースの閉じ忘れを防ぐ最も安全な方法です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "code",
+          "title": "PreparedStatement — 安全なデータ操作",
+          "body": "PreparedStatementを使えば、SQLインジェクション攻撃を防ぎながらデータを操作できます。",
+          "code": "// 変数の宣言と初期化\nString url = \"jdbc:mysql://localhost:3306/company_db\";\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, \"root\", \"pass\")) {\n\n    // INSERT — データの追加\n    String insertSql = \"INSERT INTO employees (name, email, age, salary, dept_id, hire_date) VALUES (?, ?, ?, ?, ?, ?)\";\n    // 例外が発生する可能性がある処理\n    try (PreparedStatement ps = conn.prepareStatement(insertSql)) {\n        ps.setString(1, \"高橋健太\");\n        ps.setString(2, \"takahashi@example.com\");\n        ps.setInt(3, 27);\n        ps.setDouble(4, 320000);\n        ps.setInt(5, 1);\n        ps.setDate(6, java.sql.Date.valueOf(\"2025-04-01\"));\n        int rows = ps.executeUpdate();\n        System.out.println(rows + \"件追加しました\");\n    }\n\n    // UPDATE — データの更新\n    String updateSql = \"UPDATE employees SET salary = ? WHERE name = ?\";\n    // 例外が発生する可能性がある処理\n    try (PreparedStatement ps = conn.prepareStatement(updateSql)) {\n        ps.setDouble(1, 350000);\n        ps.setString(2, \"高橋健太\");\n        ps.executeUpdate();\n    }\n\n} catch (SQLException e) {\n    e.printStackTrace();\n}",
+          "note": "PreparedStatementの ? (プレースホルダ) は1始まりの番号で指定します。setString(1, ...)は最初の ? に値をセットします。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "tip",
+          "title": "SQLインジェクションとは",
+          "body": "SQLインジェクションは、ユーザー入力を直接SQL文に埋め込むことで発生する重大なセキュリティ脆弱性です。\n\n危険な例（文字列結合でSQL構築）:\n  String sql = \"SELECT * FROM users WHERE name = '\" + userInput + \"'\";\n\nもし userInput に「' OR '1'='1」と入力されると:\n  SELECT * FROM users WHERE name = '' OR '1'='1'\n  → 全件取得されてしまう！\n\nさらに悪意ある入力で:\n  SELECT * FROM users WHERE name = ''; DROP TABLE users; --\n  → テーブル削除の可能性も！\n\n対策: 必ずPreparedStatementを使う\n  PreparedStatementは入力を自動的にエスケープするため、\n  SQLインジェクションを根本から防ぎます。\n  これはセキュリティの基本中の基本です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・JDBC = JavaからDBを操作する標準API\n| 項目 | 説明 |\n|---|---|\n| 処理フロー | Connection → Statement → 実行 → Close |\n| SELECT | executeQuery() で ResultSet を取得 |\n| INSERT/UPDATE/DELETE | executeUpdate() で影響行数を取得 |\n・try-with-resources で自動クローズ（最重要パターン）\n・**PreparedStatement** でSQLインジェクションを防止\n・文字列結合でSQLを構築するのは絶対にNG",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_06_q1",
+          "lessonId": "ch10_06",
+          "type": "fourChoice",
+          "question": "PreparedStatementを使う最も重要な理由はどれですか？",
+          "code": "SELECT dept_id, AVG(salary) as avg_sal\nFROM employees\nGROUP BY dept_id\nHAVING AVG(salary) > 400000;",
+          "explanation": "PreparedStatementはパラメータを自動的にエスケープ処理するため、SQLインジェクション攻撃を防ぐことができます。文字列結合でSQLを構築すると、悪意のある入力によりデータベースの不正操作が可能になってしまいます。",
+          "choices": [
+            {
+              "id": "ch10_06_q1_a",
+              "text": "コードの記述量が減る",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_06_q1_b",
+              "text": "SQLインジェクション攻撃を防ぐ",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_06_q1_c",
+              "text": "実行速度が速くなる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_06_q1_d",
+              "text": "try-with-resourcesが使える",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_06_q2",
+          "lessonId": "ch10_06",
+          "type": "fillBlank",
+          "question": "JDBCでSELECT文を実行して結果を取得するメソッドはどれですか？\nResultSet rs = stmt._____(\"SELECT * FROM users\");",
+          "code": "SELECT name, salary,\n  RANK() OVER (ORDER BY salary DESC) as rank\nFROM employees;",
+          "explanation": "SELECT文の実行にはexecuteQuery()メソッドを使います。戻り値はResultSetオブジェクトで、rs.next()で1行ずつ結果を読み取ります。INSERT/UPDATE/DELETEにはexecuteUpdate()を使います。",
+          "choices": [
+            {
+              "id": "ch10_06_q2_a",
+              "text": "executeQuery",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_06_q2_b",
+              "text": "executeUpdate",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_06_q2_c",
+              "text": "execute",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_06_q2_d",
+              "text": "runQuery",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_06_q3",
+          "lessonId": "ch10_06",
+          "type": "reorder",
+          "question": "JDBCの処理手順を正しい順番に並べ替えてください。",
+          "code": "CREATE INDEX idx_emp_name\n  ON employees(name);",
+          "explanation": "JDBCの基本フローは、まずデータベースに接続し、SQL文を準備・実行し、結果（ResultSet等）を取得して処理し、最後に接続を閉じます。try-with-resourcesを使えばClose処理は自動です。",
+          "choices": [
+            {
+              "id": "ch10_06_q3_a",
+              "text": "DriverManager.getConnection()で接続",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_06_q3_b",
+              "text": "Statement/PreparedStatementでSQL準備",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_06_q3_c",
+              "text": "executeQuery()/executeUpdate()で実行",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_06_q3_d",
+              "text": "結果の取得とクローズ",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch10_06_q3_a",
+            "ch10_06_q3_b",
+            "ch10_06_q3_c",
+            "ch10_06_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

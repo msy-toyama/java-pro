@@ -1,0 +1,960 @@
+{
+  "courseId": "ch12",
+  "lessons": [
+    {
+      "id": "ch12_01",
+      "courseId": "ch12",
+      "title": "ポリモーフィズムとは",
+      "summary": "同じ操作が異なるオブジェクトで異なる振る舞いをする仕組みを学ぶ",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**ポリモーフィズム**（**多態性**）の概念と定義\n・なぜポリモーフィズムが重要なのか\n・OOP三大要素との関係\n\nオブジェクト指向の最も強力な機能を理解する第一歩です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "rule",
+          "title": "ポリモーフィズムの基本ルール",
+          "body": "Javaにおける**ポリモーフィズム**は、大きく2種類に分けられます。\n\n① コンパイル時ポリモーフィズム（静的束縛）：メソッドのオーバーロードで実現されます。引数の型や個数でどのメソッドが呼ばれるかがコンパイル時に決まります。\n\n② 実行時ポリモーフィズム（動的束縛）：メソッドのオーバーライドで実現されます。親クラス型の変数にサブクラスのインスタンスを代入し、オーバーライドされたメソッドを呼び出すと、実際のオブジェクトの型に基づいてメソッドが選択されます。\n\nJava Silver試験では、特に実行時ポリモーフィズム（動的束縛）が重要です。",
+          "code": null,
+          "note": "staticメソッドやprivateメソッドはオーバーライドできないため、**ポリモーフィズム**の対象外です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "code",
+          "title": "ポリモーフィズムの基本例",
+          "body": "親クラス型の変数でサブクラスのインスタンスを参照し、オーバーライドされたメソッドを呼び出すと、実際のオブジェクトの型に応じたメソッドが実行されます。これが実行時**ポリモーフィズム**の基本です。",
+          "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    @Override\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"ワンワン\");\n    }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    @Override\n    void speak() {\n        System.out.println(\"ニャー\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal a1 = new Dog();  // 親クラス型でDogを参照\n        Animal a2 = new Cat();  // 親クラス型でCatを参照\n        a1.speak();  // ワンワン（Dogのspeak()が呼ばれる）\n        a2.speak();  // ニャー（Catのspeak()が呼ばれる）\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "tip",
+          "title": "なぜポリモーフィズムが重要なのか",
+          "body": "**ポリモーフィズム**を使うと、コードの柔軟性と拡張性が大きく向上します。\n\n・新しいサブクラスを追加しても、既存のコードを変更する必要がありません（開放/閉鎖原則）。\n・メソッドの引数や戻り値を親クラス型にすることで、あらゆるサブクラスを統一的に扱えます。\n・条件分岐（if/switch）を減らし、クリーンなコードを実現できます。\n\n例えば、Animal型の配列にDog、Cat、Birdなどを格納し、ループで一括処理することが可能になります。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**ポリモーフィズム**は「同じ操作が型に応じて異なる動作をする」仕組み\n・コンパイル時（オーバーロード）と実行時（オーバーライド）の2種類がある\n・親クラス型の変数でサブクラスを参照できる\n・呼び出されるメソッドは実行時のオブジェクトの型で決まる\n・ポリモーフィズムにより拡張性の高い設計ができる",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_01_q1",
+          "lessonId": "ch12_01",
+          "type": "fourChoice",
+          "question": "Javaにおけるポリモーフィズム（多態性）の説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "ポリモーフィズムとは、同じメソッド呼び出しでも、実際のオブジェクトの型に応じて異なるメソッドが実行される仕組みです。親クラス型の変数にサブクラスのインスタンスを代入し、オーバーライドされたメソッドを呼ぶことで実現されます。",
+          "choices": [
+            {
+              "id": "ch12_01_q1_a",
+              "text": "同じメソッド名でも、オブジェクトの実際の型に応じて異なる動作をする仕組み",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_01_q1_b",
+              "text": "クラスのフィールドを外部から直接アクセスできるようにする仕組み",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_01_q1_c",
+              "text": "1つのクラスが複数のクラスを同時に継承する仕組み",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_01_q1_d",
+              "text": "クラスのインスタンスを生成せずにメソッドを呼び出す仕組み",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_01_q2",
+          "lessonId": "ch12_01",
+          "type": "fourChoice",
+          "question": "実行時ポリモーフィズム（動的束縛）を実現するために使われるJavaの仕組みはどれですか？",
+          "code": null,
+          "explanation": "実行時ポリモーフィズムはメソッドのオーバーライドによって実現されます。サブクラスで親クラスのメソッドを再定義し、親クラス型の変数を通じて呼び出すと、実際のオブジェクト型に応じたメソッドが実行されます。オーバーロードはコンパイル時に解決されるため、コンパイル時ポリモーフィズムに該当します。",
+          "choices": [
+            {
+              "id": "ch12_01_q2_a",
+              "text": "メソッドのオーバーロード",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_01_q2_b",
+              "text": "メソッドのオーバーライド",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_01_q2_c",
+              "text": "コンストラクタの呼び出し",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_01_q2_d",
+              "text": "staticメソッドの定義",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_01_q3",
+          "lessonId": "ch12_01",
+          "type": "fillBlank",
+          "question": "親クラス型の変数でサブクラスのオーバーライドされたメソッドを呼ぶと、___時のオブジェクトの型に基づいてメソッドが選択されます。",
+          "code": null,
+          "explanation": "オーバーライドされたメソッドの呼び出しは、コンパイル時ではなく実行時（ランタイム）にオブジェクトの実際の型に基づいて決定されます。これを動的束縛（ダイナミックバインディング）と呼びます。",
+          "choices": [
+            {
+              "id": "ch12_01_q3_a",
+              "text": "実行",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_01_q3_b",
+              "text": "コンパイル",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_01_q3_c",
+              "text": "宣言",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_01_q3_d",
+              "text": "読み込み",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch12_02",
+      "courseId": "ch12",
+      "title": "アップキャストとダウンキャスト",
+      "summary": "型変換の仕組みとinstanceof演算子によるチェックを学ぶ",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・アップキャスト（子→親型）の自動変換\n・ダウンキャスト（親→子型）の明示的変換\n・ClassCastExceptionを防ぐinstanceofチェック\n\n型変換の仕組みを正確に理解することが**ポリモーフィズム**の基礎です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "code",
+          "title": "アップキャスト（自動変換）",
+          "body": "サブクラスのインスタンスを親クラス型の変数に代入することをアップキャストと呼びます。\nサブクラスは親クラスの機能をすべて持っているため、アップキャストは常に安全であり、明示的なキャストは不要です。\nただし、アップキャスト後はサブクラス独自のメソッドは呼び出せなくなります。コンパイラは変数の宣言型（親クラス型）のメソッドのみを認識するためです。",
+          "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    @Override\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"ワンワン\");\n    }\n    void fetch() {\n        System.out.println(\"ボールを取ってきた！\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();  // アップキャスト（自動）\n        a.speak();   // OK → ワンワン（実行時の型Dogのメソッド）\n        // a.fetch(); // コンパイルエラー！ Animal型にfetch()はない\n    }\n}",
+          "note": "アップキャスト後も、オーバーライドされたメソッドは実際のオブジェクト型のものが呼ばれます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "tip",
+          "title": "アップキャストとダウンキャストの安全性",
+          "body": "| キャスト | 方向 | 安全性 | 構文 |\n|---|---|---|---|\n| アップキャスト | 子→親 | 常に安全 | 暗黙的（自動） |\n| ダウンキャスト | 親→子 | 危険 | 明示的 (SubClass)obj |\n\nダウンキャストは失敗するとClassCastExceptionが発生します。必ずinstanceofで確認してからキャストしましょう。",
+          "code": null,
+          "note": "Java 16以降の「パターンマッチングinstanceof」を使えば、チェックとキャストを1行で書けます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "code",
+          "title": "ダウンキャスト（明示的変換）",
+          "body": "親クラス型の変数をサブクラス型に変換することをダウンキャストと呼びます。\nダウンキャストは明示的にキャスト演算子を書く必要があります。\nただし、実際のオブジェクトがそのサブクラスのインスタンスでない場合、実行時にClassCastExceptionが発生するため注意が必要です。",
+          "code": "Animal a = new Dog();  // アップキャスト\nDog d = (Dog) a;       // ダウンキャスト（成功：元々Dogだから）\nd.fetch();             // OK → ボールを取ってきた！\n\nAnimal a2 = new Cat();\n// Dog d2 = (Dog) a2;  // 実行時エラー！ ClassCastException\n// a2は実際にはCatのインスタンスなのでDogにキャストできない",
+          "note": "ダウンキャスト前にinstanceof演算子で型を確認するのが安全です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "code",
+          "title": "instanceof演算子",
+          "body": "instanceof演算子は、オブジェクトが指定した型のインスタンスかどうかを判定します。\nダウンキャスト前にinstanceofでチェックすることで、ClassCastExceptionを防ぐことができます。\nこの演算子は**ポリモーフィズム**を安全に扱うための重要なツールであり、Java Silver試験でも頻出です。\nnullに対してinstanceofを使うと、常にfalseが返されます。",
+          "code": "Animal a = new Dog();\n\n// 条件分岐\nif (a instanceof Dog) {\n    Dog d = (Dog) a;  // 安全にダウンキャスト\n    d.fetch();\n}\n\nif (a instanceof Cat) {\n    // ここは実行されない（aはDogなので）\n    Cat c = (Cat) a;\n}\n\nAnimal nullAnimal = null;\nSystem.out.println(nullAnimal instanceof Animal); // false",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・アップキャスト：サブクラス→親クラス型（自動、常に安全）\n・ダウンキャスト：親クラス型→サブクラス型（明示的、失敗の可能性あり）\n・不正なダウンキャストはClassCastExceptionを発生させる\n・instanceof演算子でキャスト前に安全確認できる\n・nullに対するinstanceofは常にfalse",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_02_q1",
+          "lessonId": "ch12_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "class Animal {\n    void speak() {\n        System.out.println(\"Animal\");\n    }\n}\nclass Dog extends Animal {\n    @Override\n    void speak() {\n        System.out.println(\"Dog\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.speak();\n        System.out.println(a instanceof Dog);\n        System.out.println(a instanceof Animal);\n    }\n}",
+          "explanation": "変数aはAnimal型ですが、実際のオブジェクトはDogです。speak()はオーバーライドされているため、Dogのspeak()が呼ばれ「Dog」と出力されます。instanceofでは、aはDogのインスタンスであるためtrue、DogはAnimalのサブクラスなのでAnimalに対してもtrueとなります。",
+          "choices": [
+            {
+              "id": "ch12_02_q1_a",
+              "text": "Dog\ntrue\ntrue",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_02_q1_b",
+              "text": "Animal\ntrue\ntrue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_02_q1_c",
+              "text": "Dog\nfalse\ntrue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_02_q1_d",
+              "text": "Animal\ntrue\nfalse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_02_q2",
+          "lessonId": "ch12_02",
+          "type": "fourChoice",
+          "question": "次のコードを実行した場合、何が起こりますか？\n\nAnimal a = new Cat();\nDog d = (Dog) a;",
+          "code": null,
+          "explanation": "変数aの実際のオブジェクトはCatです。CatをDogにキャストしようとすると、実行時にClassCastExceptionが発生します。コンパイル時にはAnimalからDogへのダウンキャストは文法的に正しいためコンパイルエラーにはなりません。",
+          "choices": [
+            {
+              "id": "ch12_02_q2_a",
+              "text": "コンパイルエラーが発生する",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_02_q2_b",
+              "text": "実行時にClassCastExceptionが発生する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_02_q2_c",
+              "text": "正常に実行される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_02_q2_d",
+              "text": "nullが代入される",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_02_q3",
+          "lessonId": "ch12_02",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。どこが問題ですか？",
+          "code": "class Vehicle {\n    void drive() {\n        System.out.println(\"走行中\");\n    }\n}\nclass Truck extends Vehicle {\n    void loadCargo() {\n        System.out.println(\"荷物を積む\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Vehicle v = new Truck();\n        v.loadCargo();\n    }\n}",
+          "explanation": "変数vはVehicle型として宣言されています。アップキャスト後は、コンパイラは変数の宣言型（Vehicle）のメソッドのみを認識します。loadCargo()はTruckクラス独自のメソッドであり、Vehicle型からは呼び出せません。ダウンキャストして((Truck) v).loadCargo()とするか、instanceof確認後にキャストする必要があります。",
+          "choices": [
+            {
+              "id": "ch12_02_q3_a",
+              "text": "Vehicle型の変数vからTruck独自のloadCargo()を呼び出しているためコンパイルエラー",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_02_q3_b",
+              "text": "TruckクラスでVehicleのdrive()をオーバーライドしていないためエラー",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_02_q3_c",
+              "text": "Vehicle v = new Truck() のアップキャストでClassCastExceptionが発生する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_02_q3_d",
+              "text": "Truckクラスにコンストラクタがないためエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch12_02_q4",
+          "lessonId": "ch12_02",
+          "type": "codeComplete",
+          "question": "ポリモーフィズムを利用したメソッド呼び出しのコードを完成させてください。",
+          "code": null,
+          "explanation": "親クラス型の変数で子クラスインスタンスを保持し、実行時に子クラスのオーバーライドメソッドが呼ばれます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ animal = new Dog();\nanimal.__BLANK_2__();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①型",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Animal",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Dog",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Object",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②メソッド",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "speak",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "bark",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "toString",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch12_03",
+      "courseId": "ch12",
+      "title": "メソッドのオーバーライドと動的束縛",
+      "summary": "オーバーライドのルールと実行時のメソッド選択の仕組みを学ぶ",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・メソッドのオーバーライドと動的束縛の関係\n・コンパイル時の型と実行時の型の違い\n・どのメソッドが呼ばれるかの判定ルール\n\n動的束縛は**ポリモーフィズム**の仕組みの核心です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "rule",
+          "title": "オーバーライドのルール",
+          "body": "メソッドをオーバーライドするには、以下のルールを満たす必要があります。\n\n| ルール |\n| --- |\n| メソッド名と引数リスト（型・順番・個数）が親クラスと完全に一致すること |\n| 戻り値の型は親クラスと同じか、そのサブクラス型であること（共変戻り値型） |\n| アクセス修飾子は親クラスと同じか、より広いアクセスレベルであること（例：protectedをpublicに変更はOK、逆はNG） |\n| 親クラスのメソッドがfinalの場合はオーバーライドできない |\n| staticメソッドはオーバーライドではなく「隠蔽（hiding）」になる |\n\nこれらの条件を1つでも満たさないと、オーバーライドにはなりません。",
+          "code": null,
+          "note": "アクセス修飾子の広さの順序：private < デフォルト < protected < public",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "code",
+          "title": "@Overrideアノテーション",
+          "body": "@Overrideアノテーションを付けると、コンパイラがオーバーライドの正しさをチェックしてくれます。\nメソッド名のスペルミスや引数の型違いなど、意図しないミスをコンパイル時に検出できるため、必ず付けることが推奨されています。\n@Overrideを付けなくてもオーバーライド自体は有効ですが、付けることでコードの意図が明確になります。",
+          "code": "// Shapeクラスの定義\nclass Shape {\n    // areaメソッドの定義\n    double area() {\n        return 0;\n    }\n}\n\n// Circleクラスの定義\nclass Circle extends Shape {\n    double radius;\n\n    Circle(double radius) {\n        this.radius = radius;\n    }\n\n    @Override\n    // areaメソッドの定義\n    double area() {\n        return Math.PI * radius * radius;\n    }\n\n    // @Override\n    // double Area() { }  // コンパイルエラー！ 親クラスにArea()がない\n}",
+          "note": "@Overrideアノテーションは必須ではありませんが、常に付けることがベストプラクティスです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "tip",
+          "title": "コンパイル時の型 vs 実行時の型",
+          "body": "**ポリモーフィズム**の動作を理解するための最重要概念です。\n\nAnimal a = new Dog();\n\n| 観点 | 型 | 決まるもの |\n|---|---|---|\n| コンパイル時（宣言型） | Animal | 呼べるメソッドの一覧 |\n| 実行時（実際の型） | Dog | 実際に実行されるメソッドの実装 |\n\n「呼べるメソッドは宣言型で決まり、実行される実装は実際の型で決まる」",
+          "code": null,
+          "note": "試験では「コンパイルエラーか？実行時エラーか？正常に動作するか？」を問う問題が頻出です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "code",
+          "title": "動的束縛（ダイナミックディスパッチ）",
+          "body": "動的束縛とは、メソッド呼び出しの際に、変数の宣言型ではなく実行時のオブジェクトの型に基づいてメソッドが決定される仕組みです。\nフィールドアクセスは宣言型に基づく（静的束縛）のに対し、インスタンスメソッド呼び出しは動的束縛で解決される点に注意しましょう。\nこの違いはJava Silver試験でよく問われます。",
+          "code": "// Parentクラスの定義\nclass Parent {\n    // 変数の宣言と初期化\n    String name = \"親\";\n    // greetメソッドの定義\n    void greet() {\n        System.out.println(\"こんにちは、\" + name);\n    }\n}\n\n// Childクラスの定義\nclass Child extends Parent {\n    String name = \"子\";\n    @Override\n    // greetメソッドの定義\n    void greet() {\n        System.out.println(\"やあ、\" + name);\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.name);  // 親（フィールドは静的束縛）\n        p.greet();                   // やあ、子（メソッドは動的束縛）\n    }\n}",
+          "note": "フィールドは動的束縛の対象外です。変数の宣言型のフィールドが参照されます。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・@Overrideアノテーションでコンパイラにオーバーライドを検証させる\n・戻り値の型は同じかサブクラス型（**共変戻り値型**）にできる\n・アクセス修飾子は同じかより広くする必要がある\n・インスタンスメソッドは動的束縛（実行時の型で決定）\n・フィールドアクセスは静的束縛（宣言型で決定）",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_03_q1",
+          "lessonId": "ch12_03",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "class Parent {\n    String type = \"Parent\";\n    String getType() {\n        return \"Parent\";\n    }\n}\nclass Child extends Parent {\n    String type = \"Child\";\n    @Override\n    String getType() {\n        return \"Child\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.type);\n        System.out.println(p.getType());\n    }\n}",
+          "explanation": "フィールドアクセス（p.type）は変数の宣言型（Parent）に基づくため「Parent」が出力されます。一方、メソッド呼び出し（p.getType()）は実行時のオブジェクトの型（Child）に基づくため「Child」が出力されます。これが静的束縛と動的束縛の違いです。",
+          "choices": [
+            {
+              "id": "ch12_03_q1_a",
+              "text": "Parent\nChild",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q1_b",
+              "text": "Child\nChild",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q1_c",
+              "text": "Parent\nParent",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q1_d",
+              "text": "Child\nParent",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_03_q2",
+          "lessonId": "ch12_03",
+          "type": "fourChoice",
+          "question": "メソッドをオーバーライドする際、アクセス修飾子についてのルールとして正しいものはどれですか？",
+          "code": null,
+          "explanation": "オーバーライドする際、アクセス修飾子は親クラスのメソッドと同じか、より広いアクセスレベルにする必要があります。例えばprotectedのメソッドをpublicに変更することはOKですが、publicをprotectedに狭めるとコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch12_03_q2_a",
+              "text": "アクセス修飾子は親クラスと完全に一致しなければならない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q2_b",
+              "text": "アクセス修飾子を親クラスより狭くしてもよい",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q2_c",
+              "text": "アクセス修飾子は親クラスと同じか、より広くする必要がある",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q2_d",
+              "text": "アクセス修飾子は自由に変更できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_03_q3",
+          "lessonId": "ch12_03",
+          "type": "fillBlank",
+          "question": "コンパイラにオーバーライドの正しさを検証させるために、メソッドの前に ___ アノテーションを付けます。",
+          "code": null,
+          "explanation": "@Overrideアノテーションを付けると、メソッドが正しく親クラスのメソッドをオーバーライドしているかをコンパイラがチェックします。メソッド名のスペルミスや引数の不一致をコンパイル時に検出できます。",
+          "choices": [
+            {
+              "id": "ch12_03_q3_a",
+              "text": "@Override",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q3_b",
+              "text": "@Overload",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q3_c",
+              "text": "@Inherited",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q3_d",
+              "text": "@Super",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch12_03_q4",
+          "lessonId": "ch12_03",
+          "type": "multiChoice",
+          "question": "ポリモーフィズムの実現方法として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "ポリモーフィズムは「メソッドのオーバーライド」「インターフェースの実装」「抽象クラスの継承」により実現されます。コンストラクタはオーバーライドできないため、ポリモーフィズムの実現方法には含まれません。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch12_03_q4_a",
+              "text": "メソッドのオーバーライド",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q4_b",
+              "text": "インターフェースの実装",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q4_c",
+              "text": "コンストラクタのオーバーライド",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q4_d",
+              "text": "抽象クラスの継承",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch12_04",
+      "courseId": "ch12",
+      "title": "多態性を使った設計",
+      "summary": "親クラス型やインターフェース型を使った柔軟な設計手法を学ぶ",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・インターフェース型を使った柔軟な設計\n・開放閉鎖原則（OCP）の考え方\n・新しいクラスを追加しても既存コードを変更しない設計\n\n**ポリモーフィズム**の真価は「変更に強い設計」にあります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "code",
+          "title": "ポリモーフィックな配列とコレクション",
+          "body": "親クラス型の配列やリストを使うと、異なるサブクラスのオブジェクトを一つのコレクションで管理できます。\nこれにより、ループ処理で統一的にメソッドを呼び出すことが可能になります。\n新しいサブクラスを追加しても、ループ処理のコードを変更する必要がないのが大きなメリットです。",
+          "code": "// Animalクラスの定義\nclass Animal {\n    String name;\n    Animal(String name) { this.name = name; }\n    // speakメソッドの定義\n    void speak() { System.out.println(name + \": ...\"); }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    Dog(String name) { super(name); }\n    @Override\n    // speakメソッドの定義\n    void speak() { System.out.println(name + \": ワンワン\"); }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    Cat(String name) { super(name); }\n    @Override\n    void speak() { System.out.println(name + \": ニャー\"); }\n}\n\n// Birdクラスの定義\nclass Bird extends Animal {\n    Bird(String name) { super(name); }\n    @Override\n    void speak() { System.out.println(name + \": チュンチュン\"); }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal[] animals = {\n            new Dog(\"ポチ\"),\n            new Cat(\"タマ\"),\n            new Bird(\"ピッピ\")\n        };\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Animal a : animals) {\n            a.speak();  // 各オブジェクトの型に応じたspeak()が呼ばれる\n        }\n    }\n}\n// 出力:\n// ポチ: ワンワン\n// タマ: ニャー\n// ピッピ: チュンチュン",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "code",
+          "title": "メソッドの引数にポリモーフィズムを活用",
+          "body": "メソッドの引数を親クラス型やインターフェース型にすると、任意のサブクラスのインスタンスを渡すことができます。\nこれにより、1つのメソッドで様々な型のオブジェクトに対応でき、コードの重複を排除できます。\n「実装ではなくインターフェースに対してプログラミングする」という原則の実践です。",
+          "code": "// Printerクラスの定義\nclass Printer {\n    // Animal型の引数 → Dog、Cat、Bird何でも受け取れる\n    // printAnimalSoundメソッドの定義\n    static void printAnimalSound(Animal animal) {\n        System.out.print(animal.name + \"の鳴き声: \");\n        animal.speak();\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        printAnimalSound(new Dog(\"ポチ\"));   // ポチの鳴き声: ポチ: ワンワン\n        printAnimalSound(new Cat(\"タマ\"));   // タマの鳴き声: タマ: ニャー\n        printAnimalSound(new Bird(\"ピッピ\")); // ピッピの鳴き声: ピッピ: チュンチュン\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "tip",
+          "title": "ストラテジーパターンの基礎",
+          "body": "ストラテジーパターンは、**ポリモーフィズム**を活用した有名なデザインパターンです。\nアルゴリズムや処理をインターフェースとして定義し、具体的な処理をクラスとして実装します。\n実行時に処理を切り替えることで、if/switchによる条件分岐を排除し、拡張性の高い設計を実現できます。\n\n例えば、支払い処理を「クレジットカード」「銀行振込」「電子マネー」で切り替える場合、\nPaymentStrategyインターフェースを定義し、各支払い方法をクラスとして実装します。\n新しい支払い方法を追加する際、既存のコードを変更する必要がありません。",
+          "code": null,
+          "note": "ストラテジーパターンはJava Silver試験の出題範囲外ですが、**ポリモーフィズム**の活用法として理解しておくと良いでしょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・親クラス型の配列やリストで異なるサブクラスをまとめて管理できる\n・メソッド引数を親クラス型にすると、あらゆるサブクラスを受け取れる\n・新しいサブクラスを追加しても既存コードの変更が不要\n・「実装ではなくインターフェースに対してプログラミングする」が重要な原則\n・ストラテジーパターンは**ポリモーフィズム**の代表的な活用例",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_04_q1",
+          "lessonId": "ch12_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "class Shape {\n    double area() { return 0; }\n}\nclass Rectangle extends Shape {\n    double width, height;\n    Rectangle(double w, double h) { width = w; height = h; }\n    @Override\n    double area() { return width * height; }\n}\nclass Circle extends Shape {\n    double radius;\n    Circle(double r) { radius = r; }\n    @Override\n    double area() { return 3.14 * radius * radius; }\n}\npublic class Main {\n    static void printArea(Shape s) {\n        System.out.println(s.area());\n    }\n    public static void main(String[] args) {\n        printArea(new Rectangle(3, 4));\n        printArea(new Circle(5));\n    }\n}",
+          "explanation": "printAreaメソッドはShape型の引数を受け取りますが、実際のオブジェクト型に応じたarea()メソッドが呼ばれます。Rectangleの場合は3×4=12.0、Circleの場合は3.14×5×5=78.5が出力されます。",
+          "choices": [
+            {
+              "id": "ch12_04_q1_a",
+              "text": "12.0\n78.5",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_04_q1_b",
+              "text": "0\n0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_04_q1_c",
+              "text": "12.0\n0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_04_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_04_q2",
+          "lessonId": "ch12_04",
+          "type": "fourChoice",
+          "question": "ポリモーフィズムを使った設計のメリットとして正しくないものはどれですか？",
+          "code": null,
+          "explanation": "ポリモーフィズムの目的は柔軟性と拡張性の向上であり、プログラムの実行速度を直接速くする仕組みではありません。むしろ動的束縛のオーバーヘッドがわずかに存在します。ただし実際にはJVMの最適化により影響はほぼ無視できます。",
+          "choices": [
+            {
+              "id": "ch12_04_q2_a",
+              "text": "新しいサブクラスを追加しても既存コードの変更が不要",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_04_q2_b",
+              "text": "プログラムの実行速度が必ず速くなる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_04_q2_c",
+              "text": "条件分岐を減らしてコードがシンプルになる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_04_q2_d",
+              "text": "親クラス型の配列で異なるサブクラスを管理できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_04_q3",
+          "lessonId": "ch12_04",
+          "type": "reorder",
+          "question": "Animal配列を作成し、ループで各要素のspeak()を呼び出すコードを正しい順に並べ替えてください。",
+          "code": null,
+          "explanation": "まずAnimal型の配列を宣言し、DogとCatのインスタンスで初期化します。次に拡張for文でループし、各要素のspeak()メソッドを呼び出します。配列を閉じる中括弧も忘れずに。",
+          "choices": [
+            {
+              "id": "ch12_04_q3_a",
+              "text": "Animal[] animals = {",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_04_q3_b",
+              "text": "new Dog(), new Cat()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_04_q3_c",
+              "text": "};",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch12_04_q3_d",
+              "text": "for (Animal a : animals) { a.speak(); }",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch12_04_q3_a",
+            "ch12_04_q3_b",
+            "ch12_04_q3_c",
+            "ch12_04_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch12_05",
+      "courseId": "ch12",
+      "title": "ポリモーフィズムの実践",
+      "summary": "実践的な例とよくある落とし穴を通じてポリモーフィズムの理解を深める",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・支払いシステムでの**多態性**活用例\n・図形計算での**ポリモーフィズム**実践\n・テスト容易性を高める設計への応用\n\n実践的な例を通じて、ポリモーフィズムの活用力を身につけましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "code",
+          "title": "実践例：支払いシステム",
+          "body": "**ポリモーフィズム**の典型的な活用例として、支払いシステムを見てみましょう。\nPaymentインターフェースを定義し、各支払い方法を別クラスとして実装します。\n処理を呼び出す側はPayment型だけを意識すれば良く、具体的な支払い方法を知る必要がありません。\n新しい支払い方法を追加する場合も、Paymentインターフェースを実装した新クラスを作るだけで対応できます。",
+          "code": "// Paymentインターフェースの定義\ninterface Payment {\n    void pay(int amount);\n}\n\n// CreditCardクラスの定義\nclass CreditCard implements Payment {\n    @Override\n    // payメソッドの定義\n    public void pay(int amount) {\n        System.out.println(\"クレジットカードで\" + amount + \"円支払い\");\n    }\n}\n\n// BankTransferクラスの定義\nclass BankTransfer implements Payment {\n    @Override\n    // payメソッドの定義\n    public void pay(int amount) {\n        System.out.println(\"銀行振込で\" + amount + \"円支払い\");\n    }\n}\n\n// EMoneyクラスの定義\nclass EMoney implements Payment {\n    @Override\n    public void pay(int amount) {\n        System.out.println(\"電子マネーで\" + amount + \"円支払い\");\n    }\n}\n\n// Shopクラスの定義\npublic class Shop {\n    static void checkout(Payment payment, int amount) {\n        payment.pay(amount);  // どの支払い方法でも同じ呼び出し\n    }\n\n    public static void main(String[] args) {\n        checkout(new CreditCard(), 5000);\n        checkout(new BankTransfer(), 3000);\n        checkout(new EMoney(), 1000);\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "tip",
+          "title": "ポリモーフィズムを使わない場合の問題",
+          "body": "**ポリモーフィズム**を使わないと、型ごとにif-else分岐が必要になります。\n\n・新しい型を追加するたびに、すべての分岐を修正\n・修正漏れによるバグのリスク\n・コードが肥大化して可読性が低下\n\nポリモーフィズムを使えば、新しいクラスを追加するだけで拡張でき、既存コードは変更不要です。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "code",
+          "title": "継承とポリモーフィズムの組み合わせ",
+          "body": "継承による共通処理の再利用と**ポリモーフィズム**による**多態性**を組み合わせることで、効率的で拡張性の高い設計ができます。\n抽象クラスで共通の処理を定義し、サブクラスで具体的な処理を実装するパターンは、実務でもよく使われます。",
+          "code": "// Employeeクラスの定義\nabstract class Employee {\n    String name;\n    int baseSalary;\n\n    Employee(String name, int baseSalary) {\n        this.name = name;\n        this.baseSalary = baseSalary;\n    }\n    abstract int calculateBonus();  // サブクラスで実装\n\n    // totalSalaryメソッドの定義\n    int totalSalary() {\n        return baseSalary + calculateBonus();  // 共通処理\n    }\n}\n\n// Managerクラスの定義\nclass Manager extends Employee {\n    Manager(String name) { super(name, 500000); }\n    @Override\n    // calculateBonusメソッドの定義\n    int calculateBonus() { return 200000; }\n}\n\n// Engineerクラスの定義\nclass Engineer extends Employee {\n    Engineer(String name) { super(name, 400000); }\n    @Override\n    int calculateBonus() { return 100000; }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Employee[] staff = { new Manager(\"田中\"), new Engineer(\"鈴木\") };\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Employee e : staff) {\n            System.out.println(e.name + \": \" + e.totalSalary() + \"円\");\n        }\n    }\n}\n// 出力:\n// 田中: 700000円\n// 鈴木: 500000円",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "rule",
+          "title": "よくある落とし穴",
+          "body": "**ポリモーフィズム**に関して注意すべき落とし穴をまとめます。\n\n① フィールドは動的束縛されない：フィールドアクセスは変数の宣言型に基づきます。メソッドのように実行時の型では解決されません。\n\n② staticメソッドはオーバーライドされない：staticメソッドは隠蔽（hiding）であり、変数の宣言型のメソッドが呼ばれます。\n\n③ privateメソッドはオーバーライドできない：サブクラスで同名のメソッドを定義しても、それはオーバーライドではなく別の新しいメソッドになります。\n\n④ コンストラクタからオーバーライド可能なメソッドを呼ぶと危険：サブクラスのフィールドが初期化される前にオーバーライドされたメソッドが実行される可能性があります。",
+          "code": null,
+          "note": "Java Silver試験では特に①と②の違いがよく問われます。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・インターフェースを使った**多態性**は実務で最も多く使われるパターン\n・抽象クラスで共通処理を定義し、サブクラスで具体的な処理を実装する\n・フィールドとstaticメソッドは動的束縛の対象外\n・privateメソッドはオーバーライドできない\n・コンストラクタからオーバーライド可能なメソッドを呼ぶのは避ける",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_05_q1",
+          "lessonId": "ch12_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "class Base {\n    static void hello() {\n        System.out.println(\"Base hello\");\n    }\n    void greet() {\n        System.out.println(\"Base greet\");\n    }\n}\nclass Sub extends Base {\n    static void hello() {\n        System.out.println(\"Sub hello\");\n    }\n    @Override\n    void greet() {\n        System.out.println(\"Sub greet\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Sub();\n        b.hello();\n        b.greet();\n    }\n}",
+          "explanation": "staticメソッドhello()は動的束縛されず、変数の宣言型（Base）のメソッドが呼ばれるため「Base hello」と出力されます。一方、インスタンスメソッドgreet()は動的束縛により、実際のオブジェクト型（Sub）のメソッドが呼ばれ「Sub greet」と出力されます。",
+          "choices": [
+            {
+              "id": "ch12_05_q1_a",
+              "text": "Base hello\nSub greet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_05_q1_b",
+              "text": "Sub hello\nSub greet",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_05_q1_c",
+              "text": "Base hello\nBase greet",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_05_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_05_q2",
+          "lessonId": "ch12_05",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。どこが問題ですか？",
+          "code": "class Animal {\n    public void speak() {\n        System.out.println(\"...\");\n    }\n}\nclass Dog extends Animal {\n    @Override\n    protected void speak() {\n        System.out.println(\"ワンワン\");\n    }\n}",
+          "explanation": "オーバーライドする際、アクセス修飾子は親クラスのメソッドと同じか、より広いアクセスレベルにする必要があります。親クラスのspeak()がpublicなのに、サブクラスでprotectedに狭めているためコンパイルエラーになります。publicのままにするか、それより広い修飾子にする必要があります。",
+          "choices": [
+            {
+              "id": "ch12_05_q2_a",
+              "text": "アクセス修飾子をpublicからprotectedに狭めているためコンパイルエラー",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_05_q2_b",
+              "text": "@Overrideアノテーションが不要なため",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_05_q2_c",
+              "text": "DogクラスにコンストラクタがないためClassCastExceptionが発生する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_05_q2_d",
+              "text": "speak()メソッドの戻り値の型が一致しないため",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_05_q3",
+          "lessonId": "ch12_05",
+          "type": "fourChoice",
+          "question": "次のうち、ポリモーフィズム（動的束縛）が適用されないものはどれですか？",
+          "code": null,
+          "explanation": "staticメソッドはクラスに属するメソッドであり、インスタンスに属しません。そのため、staticメソッドはオーバーライドではなく隠蔽（hiding）となり、動的束縛の対象外です。変数の宣言型に基づいて呼び出されます。インスタンスメソッド、オーバーライドされたメソッド、抽象メソッドの実装はいずれも動的束縛の対象です。",
+          "choices": [
+            {
+              "id": "ch12_05_q3_a",
+              "text": "インスタンスメソッドの呼び出し",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_05_q3_b",
+              "text": "staticメソッドの呼び出し",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_05_q3_c",
+              "text": "オーバーライドされたメソッドの呼び出し",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_05_q3_d",
+              "text": "抽象メソッドの実装の呼び出し",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

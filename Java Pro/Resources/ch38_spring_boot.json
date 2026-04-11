@@ -1,0 +1,780 @@
+{
+  "courseId": "ch38",
+  "lessons": [
+    {
+      "id": "ch38_01",
+      "courseId": "ch38",
+      "title": "Spring Bootとは",
+      "summary": "Spring Bootの概要、Spring Frameworkとの違い、Convention over Configurationの考え方を学びます。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "overview",
+          "title": "Spring Bootの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・**Spring Boot**とは何か（Springフレームワークの簡易版）\n・DI（**依存性注入**）の基本概念\n・Spring Bootの「設定より規約」の考え方\n\nJavaのWebアプリ開発で最も人気のあるフレームワークです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "rule",
+          "title": "Spring FrameworkとSpring Bootの違い",
+          "body": "Spring Frameworkは強力ですが、大量のXML設定やJava設定が必要でした。\n**Spring Boot**はAutoConfiguration（自動設定）により、多くの設定を自動化します。\nSpring Bootはスターター依存関係（starter dependencies）で必要なライブラリをまとめて提供します。\n組み込みサーバーにより、WARファイルを外部サーバーにデプロイする必要がありません。\napplication.propertiesまたはapplication.ymlで簡潔に設定を管理できます。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "point",
+          "title": "Convention over Configuration",
+          "body": "Convention over Configuration（設定より規約）は**Spring Boot**の中心的な設計思想です。\n合理的なデフォルト値があらかじめ設定されているため、明示的な設定は最小限で済みます。\n例えば、ポート番号のデフォルトは8080、コンテキストパスのデフォルトは\"/\"です。\n必要な場合のみデフォルト値を上書きするという考え方です。\nこれにより、少ないコードで素早くアプリケーションを構築できます。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "code",
+          "title": "最小限のSpring Bootアプリケーション",
+          "body": "**Spring Boot**アプリケーションは、mainメソッドを持つクラスに@SpringBootApplicationアノテーションを付けるだけで起動できます。\nSpringApplication.run()メソッドでアプリケーションが起動します。",
+          "code": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApplication.class, args);\n    }\n}\n\n// これだけでWebサーバーが起動し、\n// http://localhost:8080 でアクセス可能になる",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "tip",
+          "title": "Spring Bootのバージョン",
+          "body": "**Spring Boot** 3.x はJava 17以上が必要です。\nSpring Boot 3.x はJakarta EE 9+（javax → jakartaパッケージ変更）に対応しています。\nSpring Boot 2.x はJava 8以上で動作しますが、サポート終了に近づいています。\n新規プロジェクトではSpring Boot 3.x の使用が推奨されます。",
+          "code": null,
+          "note": "**Spring Boot** 3.x 以降はjavaxパッケージがjakartaに変更されているため、既存コードの移行時は注意が必要です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_01_q1",
+          "lessonId": "ch38_01",
+          "type": "fourChoice",
+          "question": "Spring BootがSpring Frameworkと比べて簡略化した点として正しいものはどれですか？",
+          "code": "@RestController\n@RequestMapping(\"/api/users\")\npublic class UserController {\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n}",
+          "explanation": "Spring BootのAutoConfiguration機能により、Spring Frameworkで必要だった多くのXML設定やJava設定が自動化されます。開発者は最小限の設定のみ行えばよくなりました。",
+          "choices": [
+            {
+              "id": "ch38_01_q1_a",
+              "text": "AutoConfigurationにより多くの設定が自動化された",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_01_q1_b",
+              "text": "Javaの文法が簡略化された",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_01_q1_c",
+              "text": "データベースの設定が不要になった",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_01_q1_d",
+              "text": "テストが不要になった",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_01_q2",
+          "lessonId": "ch38_01",
+          "type": "errorFind",
+          "question": "以下のSpring Bootコードのエラーを見つけてください。",
+          "code": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApp {\n    public void main(String[] args) {\n        SpringApplication.run(MyApp.class, args);\n    }\n}",
+          "explanation": "mainメソッドにstatic修飾子がありません。SpringApplication.run()を呼ぶmainメソッドは `public static void main(String[] args)` でなければなりません。staticがないとJVMがエントリポイントとして認識できません。",
+          "choices": [
+            {
+              "id": "ch38_01_q2_a",
+              "text": "mainメソッドにstaticが付いていない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_01_q2_b",
+              "text": "@SpringBootApplicationの位置が間違っている",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_01_q2_c",
+              "text": "importが不足している",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_01_q2_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_01_q3",
+          "lessonId": "ch38_01",
+          "type": "fourChoice",
+          "question": "Spring Boot 3.x を使用するために最低限必要なJavaのバージョンはどれですか？",
+          "code": "@Service\npublic class UserService {\n    @Autowired\n    private UserRepository repo;\n\n    @Transactional\n    public User save(User user) {\n        return repo.save(user);\n    }\n}",
+          "explanation": "Spring Boot 3.x はJakarta EE 9+に対応しており、Java 17以上が必須要件です。Java 8やJava 11では動作しません。",
+          "choices": [
+            {
+              "id": "ch38_01_q3_a",
+              "text": "Java 17",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_01_q3_b",
+              "text": "Java 11",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_01_q3_c",
+              "text": "Java 8",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_01_q3_d",
+              "text": "Java 21",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch38_02",
+      "courseId": "ch38",
+      "title": "プロジェクトの作成",
+      "summary": "Spring Initializrによるプロジェクト作成、ディレクトリ構成、@SpringBootApplicationアノテーションを学びます。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "overview",
+          "title": "Spring Initializrとは",
+          "body": "このレッスンでは以下を学びます:\n\n・Spring Initializrでプロジェクトを生成する方法\n・pom.xml / build.gradleでの依存関係管理\n・アプリケーションの起動と基本構成\n\n実際にプロジェクトを作成して動かしてみましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "rule",
+          "title": "プロジェクト構造",
+          "body": "**Spring Boot**プロジェクトは標準的なMaven/Gradleのディレクトリ構造に従います。\nsrc/main/javaにJavaソースコードを配置します。\nsrc/main/resourcesに設定ファイルや静的リソースを配置します。\napplication.propertiesまたはapplication.ymlが主要な設定ファイルです。\nsrc/test/javaにテストコードを配置します。\npom.xml（Maven）またはbuild.gradle（Gradle）でビルド設定と依存関係を管理します。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "code",
+          "title": "プロジェクト構造の例",
+          "body": "典型的な**Spring Boot**プロジェクトのディレクトリ構造を確認しましょう。\nメインクラスはルートパッケージに配置するのが慣例です。",
+          "code": "# Spring Bootプロジェクトの標準ディレクトリ構造\nmy-app/\n├── pom.xml\n├── src/\n│   ├── main/\n│   │   ├── java/\n│   │   │   └── com/example/myapp/\n│   │   │       ├── MyAppApplication.java\n│   │   │       ├── controller/\n│   │   │       │   └── HelloController.java\n│   │   │       ├── service/\n│   │   │       │   └── HelloService.java\n│   │   │       └── model/\n│   │   │           └── User.java\n│   │   └── resources/\n│   │       ├── application.properties\n│   │       ├── static/\n│   │       └── templates/\n│   └── test/\n│       └── java/\n│           └── com/example/myapp/\n│               └── MyAppApplicationTests.java",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "point",
+          "title": "@SpringBootApplicationアノテーション",
+          "body": "@SpringBootApplicationは3つのアノテーションを統合したメタアノテーションです。\n| アノテーション | 役割 |\n|---|---|\n| @Configuration | このクラスがBean定義のソースであることを示します。 |\n| @EnableAutoConfiguration | AutoConfigurationを有効にします。 |\n| @ComponentScan | 現在のパッケージ以下のコンポーネントを自動スキャンします。 |\nそのため、メインクラスはルートパッケージに配置するのが重要です。\nサブパッケージのコンポーネントは自動的に検出されます。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "tip",
+          "title": "application.propertiesの設定",
+          "body": "server.port=9090 でサーバーポートを変更できます。\nspring.datasource.url でデータベース接続URLを設定できます。\nlogging.level.root=DEBUG でログレベルを変更できます。\nプロファイル機能（application-dev.properties等）で環境ごとの設定を管理できます。",
+          "code": null,
+          "note": "application.ymlはYAML形式で同じ設定を記述でき、階層構造が見やすくなります。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_02_q1",
+          "lessonId": "ch38_02",
+          "type": "fourChoice",
+          "question": "Spring Bootプロジェクトの設定ファイルを配置するディレクトリはどれですか？",
+          "code": "@Entity\n@Table(name = \"users\")\npublic class User {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    \n    @Column(nullable = false)\n    private String name;\n}",
+          "explanation": "Spring Bootの設定ファイル（application.properties等）はsrc/main/resourcesディレクトリに配置します。このディレクトリの内容はクラスパスのルートに配置されます。",
+          "choices": [
+            {
+              "id": "ch38_02_q1_a",
+              "text": "src/main/resources",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_02_q1_b",
+              "text": "src/main/java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_02_q1_c",
+              "text": "src/main/config",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_02_q1_d",
+              "text": "src/main/webapp",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_02_q2",
+          "lessonId": "ch38_02",
+          "type": "fillBlank",
+          "question": "@SpringBootApplicationに含まれる3つのアノテーションのうち、コンポーネントの自動検出を行うアノテーション名を答えてください。\n@_____",
+          "code": "@SpringBootApplication\npublic class MyApp {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApp.class, args);\n    }\n}",
+          "explanation": "@ComponentScanは現在のパッケージおよびサブパッケージにある@Component、@Service、@Repository、@Controller等のアノテーションが付いたクラスを自動的に検出してBeanとして登録します。",
+          "choices": [
+            {
+              "id": "ch38_02_q2_a",
+              "text": "ComponentScan",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_02_q2_b",
+              "text": "AutoScan",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_02_q2_c",
+              "text": "EnableAutoConfiguration",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_02_q2_d",
+              "text": "Configuration",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_02_q3",
+          "lessonId": "ch38_02",
+          "type": "errorFind",
+          "question": "以下のSpring Bootプロジェクト構成で問題を見つけてください。\nUserControllerが自動検出されません。なぜですか？",
+          "code": "com/example/\n├── MyApplication.java  (@SpringBootApplication)\ncom/other/\n├── controller/\n│   └── UserController.java  (@RestController)",
+          "explanation": "@SpringBootApplicationの@ComponentScanは、メインクラスのパッケージ（com.example）以下を自動スキャンします。UserControllerはcom.otherパッケージにあるため、スキャン対象外です。メインクラスのパッケージ以下にコントローラーを配置するか、@ComponentScanのbasePackagesを明示的に指定する必要があります。",
+          "choices": [
+            {
+              "id": "ch38_02_q3_a",
+              "text": "メインクラスのパッケージ（com.example）配下にControllerがない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_02_q3_b",
+              "text": "@RestControllerの代わりに@Controllerが必要",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_02_q3_c",
+              "text": "application.propertiesにスキャン設定が必要",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_02_q3_d",
+              "text": "controllerフォルダが不要",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch38_02_q4",
+          "lessonId": "ch38_02",
+          "type": "codeComplete",
+          "question": "Spring BootのRESTコントローラーを完成させてください。",
+          "code": "@RestController\n@RequestMapping(\"/api/users\")\npublic class UserController {\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n}",
+          "explanation": "@RestControllerはJSONレスポンスを返すコントローラーです。@GetMappingでGETリクエストをマッピングします。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "@__BLANK_1__\npublic class UserController {\n    @__BLANK_2__(\"/users\")\n    public List<User> getUsers() { return userService.findAll(); }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①アノテーション",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "RestController",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Controller",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Component",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②マッピング",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "GetMapping",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "RequestMapping",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "PostMapping",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch38_03",
+      "courseId": "ch38",
+      "title": "RESTful APIの基本",
+      "summary": "@RestController、HTTPメソッドマッピング、リクエストパラメータの扱い方を学びます。",
+      "estimatedMinutes": 7,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "overview",
+          "title": "RESTful APIとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**@RestController**でREST APIを作成\n・@GetMapping, @PostMapping等のリクエストマッピング\n・@RequestBody, @PathVariableでリクエストデータを取得\n\n**Spring Boot**の最も基本的なAPI開発パターンです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "code",
+          "title": "@RestControllerとマッピング",
+          "body": "**@RestController**はコントローラークラスに付けるアノテーションです。\n@GetMapping、@PostMapping、@PutMapping、@DeleteMappingでHTTPメソッドに対応するエンドポイントを定義します。\nメソッドの戻り値はJacksonライブラリにより自動的にJSONに変換されます。",
+          "code": "import org.springframework.web.bind.annotation.*;\nimport java.util.*;\n\n@RestController\n@RequestMapping(\"/api/users\")\n// UserControllerクラスの定義\npublic class UserController {\n\n    @GetMapping\n    // getAllUsersメソッドの定義\n    public List<User> getAllUsers() {\n        return userService.findAll();\n    }\n\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n\n    @PostMapping\n    public User createUser(@RequestBody User user) {\n        return userService.save(user);\n    }\n\n    @DeleteMapping(\"/{id}\")\n    // deleteUserメソッドの定義\n    public void deleteUser(@PathVariable Long id) {\n        userService.deleteById(id);\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "rule",
+          "title": "リクエストパラメータのアノテーション",
+          "body": "| アノテーション | 説明 |\n|---|---|\n| @PathVariable | URLパスの一部を変数として受け取ります（例: /users/{id}）。 |\n| @RequestParam | クエリパラメータを受け取ります（例: /users?name=Java）。 |\n| @RequestBody | リクエストボディのJSONをオブジェクトに変換して受け取ります。 |\n@PathVariableと@RequestParamにはrequired属性やdefaultValue属性を指定できます。\n@RequestBodyは主にPOSTやPUTリクエストで使用します。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "code",
+          "title": "リクエストパラメータの使用例",
+          "body": "各アノテーションの具体的な使い方を確認しましょう。\nクエリパラメータにはデフォルト値を設定できます。",
+          "code": "@RestController\n@RequestMapping(\"/api\")\n// SearchControllerクラスの定義\npublic class SearchController {\n\n    // GET /api/search?keyword=Java&page=1\n    @GetMapping(\"/search\")\n    public List<Item> search(\n            @RequestParam String keyword,\n            @RequestParam(defaultValue = \"1\") int page) {\n        return itemService.search(keyword, page);\n    }\n\n    // GET /api/items/42\n    @GetMapping(\"/items/{id}\")\n    public Item getItem(@PathVariable(\"id\") Long itemId) {\n        return itemService.findById(itemId);\n    }\n\n    // POST /api/items (body: {\"name\":\"Book\",\"price\":1500})\n    @PostMapping(\"/items\")\n    public Item addItem(@RequestBody Item item) {\n        return itemService.save(item);\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "tip",
+          "title": "レスポンスとステータスコード",
+          "body": "ResponseEntity<T>を使うとHTTPステータスコードを明示的に設定できます。\n@ResponseStatus(HttpStatus.CREATED)でデフォルトのステータスコードを変更できます。\nデフォルトでは、正常時は200 OK、例外時は500 Internal Server Errorが返されます。\n@ExceptionHandlerで特定の例外に対するエラーレスポンスをカスタマイズできます。",
+          "code": null,
+          "note": "ResponseEntity.ok(body)、ResponseEntity.notFound().build()などのファクトリメソッドが便利です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_03_q1",
+          "lessonId": "ch38_03",
+          "type": "fourChoice",
+          "question": "@RestControllerの説明として正しいものはどれですか？",
+          "code": "@Service\npublic class UserService {\n    @Autowired\n    private UserRepository repo;\n\n    @Transactional\n    public User save(User user) {\n        return repo.save(user);\n    }\n}",
+          "explanation": "@RestControllerは@Controllerと@ResponseBodyを組み合わせたアノテーションです。メソッドの戻り値がビュー名ではなく、そのままHTTPレスポンスボディ（通常はJSON）として返されます。",
+          "choices": [
+            {
+              "id": "ch38_03_q1_a",
+              "text": "メソッドの戻り値が自動的にHTTPレスポンスボディとして返される",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_03_q1_b",
+              "text": "メソッドの戻り値がHTMLテンプレート名として解釈される",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_03_q1_c",
+              "text": "クラスがデータベースアクセス用のリポジトリになる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_03_q1_d",
+              "text": "クラスがサービスレイヤーのビジネスロジックを担当する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_03_q2",
+          "lessonId": "ch38_03",
+          "type": "fillBlank",
+          "question": "URLパスの一部を変数として受け取るアノテーション名を答えてください。\npublic User getUser(@_____ Long id) { ... }",
+          "code": "@Entity\n@Table(name = \"users\")\npublic class User {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    \n    @Column(nullable = false)\n    private String name;\n}",
+          "explanation": "@PathVariableはURLパスに含まれる変数（例: /users/{id}のid部分）をメソッドの引数にバインドするアノテーションです。",
+          "choices": [
+            {
+              "id": "ch38_03_q2_a",
+              "text": "PathVariable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_03_q2_b",
+              "text": "RequestParam",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_03_q2_c",
+              "text": "RequestBody",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_03_q2_d",
+              "text": "PathParam",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_03_q3",
+          "lessonId": "ch38_03",
+          "type": "reorder",
+          "question": "Spring Boot RESTful APIでクライアントからのリクエストが処理される順序を正しく並べてください。",
+          "code": "@SpringBootApplication\npublic class MyApp {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApp.class, args);\n    }\n}",
+          "explanation": "リクエストは: (1)HTTPリクエストが組み込みTomcatに到達 → (2)DispatcherServletがリクエストをルーティング → (3)対応するControllerメソッドが実行される → (4)戻り値がJacksonでJSONに変換されてレスポンスとして返される、という順序で処理されます。",
+          "choices": [
+            {
+              "id": "ch38_03_q3_a",
+              "text": "HTTPリクエストが組み込みTomcatに到達する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_03_q3_b",
+              "text": "DispatcherServletがURLに基づきControllerへルーティングする",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch38_03_q3_c",
+              "text": "対応する@GetMapping等のメソッドが実行される",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch38_03_q3_d",
+              "text": "戻り値がJSONに変換されレスポンスとして返される",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch38_03_q3_a",
+            "ch38_03_q3_b",
+            "ch38_03_q3_c",
+            "ch38_03_q3_d"
+          ],
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch38_03_q4",
+          "lessonId": "ch38_03",
+          "type": "multiChoice",
+          "question": "Spring Bootの主要アノテーションをすべて選んでください。",
+          "code": null,
+          "explanation": "@SpringBootApplication, @RestController, @Autowired, @RequestMappingはSpring Bootの主要アノテーションです。@OverrideはJava標準のアノテーションで、Spring固有ではありません。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "@SpringBootApplication",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "@RestController",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "@Autowired",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "@Override",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "@RequestMapping",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch38_04",
+      "courseId": "ch38",
+      "title": "DIとBean管理",
+      "summary": "依存性注入（DI）の概念と、@Component、@Service、@Repository、@Autowiredの使い方を学びます。",
+      "estimatedMinutes": 7,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "overview",
+          "title": "依存性注入（DI）とは",
+          "body": "このレッスンでは以下を学びます:\n\n・DI（**依存性注入**）の仕組みと**@Autowired**\n・@Component, @Service, @Repositoryの使い分け\n・**Bean**（管理対象オブジェクト）のライフサイクル\n\n**Spring Boot**の設計の根幹を支えるDIコンテナを理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "rule",
+          "title": "ステレオタイプアノテーション",
+          "body": "Springでは、クラスの役割に応じたステレオタイプアノテーションを使用します。\n| アノテーション | 役割 |\n|---|---|\n| @Component | 汎用的なSpring管理コンポーネントを表します。 |\n| @Service | ビジネスロジックを持つサービスレイヤーのクラスに使用します。 |\n| @Repository | データアクセスレイヤーのクラスに使用し、例外変換機能が追加されます。 |\n| @Controller | MVCのコントローラーに使用します（@RestControllerの親）。 |\nすべてのステレオタイプアノテーションは@Componentを内包しています。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "code",
+          "title": "DIの実装例",
+          "body": "**@Autowired**アノテーションで依存関係を自動注入できます。\nコンストラクタインジェクションが最も推奨される方法です。\nコンストラクタが1つだけの場合、@Autowiredは省略可能です。",
+          "code": "// サービスクラス\n@Service\n// UserServiceクラスの定義\npublic class UserService {\n    private final UserRepository repository;\n\n    // コンストラクタインジェクション（推奨）\n    // コンストラクタが1つの場合@Autowired省略可能\n    public UserService(UserRepository repository) {\n        this.repository = repository;\n    }\n\n    // findAllメソッドの定義\n    public List<User> findAll() {\n        return repository.findAll();\n    }\n}\n\n// リポジトリクラス\n@Repository\n// UserRepositoryクラスの定義\npublic class UserRepository {\n    // findAllメソッドの定義\n    public List<User> findAll() {\n        // データベースアクセス\n        return List.of(new User(\"Alice\"), new User(\"Bob\"));\n    }\n}\n\n// コントローラー\n@RestController\n// UserControllerクラスの定義\npublic class UserController {\n    private final UserService userService;\n\n    public UserController(UserService userService) {\n        this.userService = userService;\n    }\n    @GetMapping(\"/users\")\n    public List<User> getUsers() {\n        return userService.findAll();\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "point",
+          "title": "注入方法の種類",
+          "body": "| 方法 | 説明 |\n|---|---|\n| コンストラクタインジェクション | 依存関係をコンストラクタの引数で受け取ります。最も推奨されます。 |\n| フィールドインジェクション | @Autowiredをフィールドに直接付けます。テストが難しくなるため非推奨です。 |\n| セッターインジェクション | @Autowiredをsetterメソッドに付けます。オプションの依存関係に適しています。 |\nコンストラクタインジェクションではfinalフィールドを使用でき、不変性が保証されます。\nSpringの公式ドキュメントでもコンストラクタインジェクションが推奨されています。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "tip",
+          "title": "Beanのスコープとライフサイクル",
+          "body": "SpringのBeanはデフォルトでシングルトンスコープです（アプリケーション全体で1つのインスタンス）。\n@Scope(\"prototype\")を付けると、注入のたびに新しいインスタンスが生成されます。\nWebスコープとしてrequest、session、applicationスコープもあります。\n@PostConstructでBean初期化後の処理、@PreDestroyで破棄前の処理を定義できます。",
+          "code": null,
+          "note": "シングルトンBeanはスレッドセーフに設計する必要があります。状態を持たないように心がけましょう。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_04_q1",
+          "lessonId": "ch38_04",
+          "type": "fourChoice",
+          "question": "Spring Bootで最も推奨される依存性注入の方法はどれですか？",
+          "code": null,
+          "explanation": "コンストラクタインジェクションが最も推奨されます。finalフィールドを使用でき不変性が保証される、テストが容易、依存関係が明確になる等のメリットがあります。",
+          "choices": [
+            {
+              "id": "ch38_04_q1_a",
+              "text": "コンストラクタインジェクション",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_04_q1_b",
+              "text": "フィールドインジェクション",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_04_q1_c",
+              "text": "セッターインジェクション",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_04_q1_d",
+              "text": "メソッドインジェクション",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_04_q2",
+          "lessonId": "ch38_04",
+          "type": "errorFind",
+          "question": "以下のSpring Bootコードの問題を見つけてください。",
+          "code": "@Service\npublic class OrderService {\n    @Autowired\n    private OrderRepository repository;\n\n    public List<Order> getOrders() {\n        return repository.findAll();\n    }\n}",
+          "explanation": "このコードはフィールドインジェクション（@Autowiredをフィールドに直接付与）を使用しています。動作はしますが、Spring公式では**コンストラクタインジェクション**が推奨されます。フィールドインジェクションではfinalにできず不変性が保証されない、テスト時にモック注入が難しい等の問題があります。",
+          "choices": [
+            {
+              "id": "ch38_04_q2_a",
+              "text": "フィールドインジェクションを使用している（コンストラクタインジェクション推奨）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_04_q2_b",
+              "text": "@Serviceの代わりに@Componentを使うべき",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_04_q2_c",
+              "text": "OrderRepositoryに@Repositoryが必要",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_04_q2_d",
+              "text": "問題はない（最適なコード）",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_04_q3",
+          "lessonId": "ch38_04",
+          "type": "fillBlank",
+          "question": "SpringのBeanのデフォルトスコープの名前を答えてください。\n@Scope(\"_____\")",
+          "code": null,
+          "explanation": "Springでは、Beanのデフォルトスコープはsingleton（シングルトン）です。シングルトンスコープでは、DIコンテナ内に1つのインスタンスのみが生成され、すべての注入箇所で同じインスタンスが共有されます。",
+          "choices": [
+            {
+              "id": "ch38_04_q3_a",
+              "text": "singleton",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_04_q3_b",
+              "text": "prototype",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_04_q3_c",
+              "text": "request",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_04_q3_d",
+              "text": "session",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

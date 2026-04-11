@@ -1,0 +1,691 @@
+{
+  "courseId": "ch20",
+  "lessons": [
+    {
+      "id": "ch20_01",
+      "courseId": "ch20",
+      "title": "ネストクラスの全体像",
+      "summary": "Javaのネストクラス（内部クラス）の4種類を概観し、それぞれの特徴と用途を理解します。",
+      "estimatedMinutes": 7,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "overview",
+          "title": "ネストクラスとは",
+          "body": "このレッスンでは以下を学びます:\n\n・ネストされたクラスの4種類の概要\n・内部クラス（インナークラス）の定義と使い方\n・外部クラスのメンバへのアクセス方法\n\nクラスの中にクラスを定義する仕組みを学びます。",
+          "code": null,
+          "note": "実務Tips: ネストクラスは「そのクラスの内部でしか使わない補助的な型」を定義するときに使います。例えば HashMap 内部の Node クラスや、Builderパターンの Builder クラスが代表例です。",
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "rule",
+          "title": "4種類のネストクラス",
+          "body": "| 種類 | 定義場所 | static | 外部クラス参照 | 主な用途 |\n|---|---|---|---|---|\n| staticネストクラス | クラス直下 | ✅ | ❌ | ヘルパークラス |\n| メンバークラス（inner class） | クラス直下 | ❌ | ✅ | 外部状態に依存する処理 |\n| ローカルクラス | メソッド内 | ❌ | ✅ | メソッド内の一時的な型 |\n| 匿名クラス（anonymous class） | 式の中 | ❌ | ✅ | インターフェースの一回限りの実装 |\n\n重要な違い: staticネストクラスは外部クラスのインスタンスなしで使えますが、内部クラス（非static）は外部クラスのインスタンスが必要です。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "code",
+          "title": "4種類の簡単な例",
+          "body": "以下のコード例を確認しましょう。\n\n実際の使用場面:\n• staticネスト: `Map.Entry`, `Builderパターン`\n• メンバークラス: `Iterator`実装, `ViewHolder`\n• ローカルクラス: 現代ではほぼ使われない\n• 匿名クラス: GUIイベントリスナー、コールバック",
+          "code": "// Outerクラスの定義\npublic class Outer {\n    private int value = 10;\n\n    // 1. staticネストクラス\n    static class StaticNested {\n        // showメソッドの定義\n        void show() {\n            // value にアクセス不可（staticなので）\n            System.out.println(\"static nested\");\n        }\n    }\n\n    // 2. メンバークラス（inner class）\n    // Innerクラスの定義\n    class Inner {\n        // showメソッドの定義\n        void show() {\n            // 外部クラスのフィールドにアクセス可能\n            System.out.println(\"inner: \" + value);\n        }\n    }\n\n    void method() {\n        // 3. ローカルクラス\n        // Localクラスの定義\n        class Local {\n            void show() {\n                System.out.println(\"local: \" + value);\n            }\n        }\n        new Local().show();\n\n        // 4. 匿名クラス\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(\"anonymous: \" + value);\n            }\n        };\n        r.run();\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "tip",
+          "title": "ネストされたクラスの4種類を整理",
+          "body": "| 種類 | 場所 | static | 外部インスタンス |\n|---|---|---|---|\n| 内部クラス | クラス内 | なし | 必要 |\n| staticネストクラス | クラス内 | あり | 不要 |\n| ローカルクラス | メソッド内 | なし | - |\n| 匿名クラス | 式の中 | なし | - |\n\n最もよく使うのはstaticネストクラスです。内部クラスは外部インスタンスへの暗黙参照を持つため、メモリリークの原因になることがあります。",
+          "code": null,
+          "note": "Java 16以降、内部クラスにstaticメンバを持てるように緩和されました。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• ネストクラスは4種類 — staticネスト、メンバー（inner）、ローカル、匿名\n• staticネストクラスは外部クラスのインスタンスメンバーにアクセス不可\n• 内部クラス（非static）は外部クラスのprivateメンバーにもアクセス可能\n• それぞれの用途を理解し、適切な場面で使い分けることが重要\n• Gold試験では特にstaticネストクラスとメンバークラスの違いが頻出",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_01_q1",
+          "lessonId": "ch20_01",
+          "type": "fourChoice",
+          "question": "外部クラスのインスタンスなしで使えるネストクラスはどれですか？",
+          "explanation": "staticネストクラスはstatic修飾子があるため、外部クラスのインスタンスなしで直接使用できます。他の3種類は非static（内部クラス）であり、外部クラスのインスタンスに紐づきます。",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch20_01_q1_a",
+              "text": "staticネストクラス",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_01_q1_b",
+              "text": "メンバークラス（inner class）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_01_q1_c",
+              "text": "ローカルクラス",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_01_q1_d",
+              "text": "匿名クラス",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_01_q2",
+          "lessonId": "ch20_01",
+          "type": "fillBlank",
+          "question": "メンバークラス（inner class）が外部クラスのprivateフィールドにアクセスできるのは、なぜですか？空欄を埋めてください。\n\n「内部クラスは外部クラスの[___]を暗黙的に保持しているため」",
+          "explanation": "内部クラス（非static）は、外部クラスの**インスタンスへの暗黙的な参照**を保持しています。これにより、外部クラスのprivateフィールドやメソッドにも直接アクセスできます。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_01_q2_a",
+              "text": "インスタンスへの参照",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_01_q2_b",
+              "text": "クラスオブジェクト",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_01_q2_c",
+              "text": "コンストラクタ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_01_q2_d",
+              "text": "staticメンバー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_01_q3",
+          "lessonId": "ch20_01",
+          "type": "multiChoice",
+          "question": "以下のうち、**非staticな内部クラス（メンバークラス）**に当てはまるものをすべて選んでください。",
+          "explanation": "メンバークラス（inner class）は外部クラスへの暗黙的参照を持ち、privateメンバーにもアクセス可能です。Java 16以降、内部クラスにもstaticメソッドが許可されるようになりました。外部インスタンスなしではnewできません。",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch20_01_q3_a",
+              "text": "外部クラスのprivateフィールドにアクセスできる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_01_q3_b",
+              "text": "外部クラスのインスタンスなしでnewできる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_01_q3_c",
+              "text": "外部クラスへの暗黙的な参照を持つ",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch20_01_q3_d",
+              "text": "staticメソッドを定義できる（Java 16以降）",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "requiredSelections": 3
+        }
+      ]
+    },
+    {
+      "id": "ch20_02",
+      "courseId": "ch20",
+      "title": "staticネストクラスとメンバークラス",
+      "summary": "staticネストクラスとメンバークラスの詳細な違い、インスタンス化の方法を学びます。",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "overview",
+          "title": "staticネストクラス vs メンバークラス",
+          "body": "このレッスンでは以下を学びます:\n\n・staticネストクラスの定義と特徴\n・内部クラスとの違い（外部クラスインスタンス不要）\n・staticネストクラスの適切な使いどころ\n\nstaticを付けるかどうかで動作が大きく変わります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "code",
+          "title": "staticネストクラスの詳細",
+          "body": "以下のコード例を確認しましょう。\n\n実務での使用例: Builderパターンでは `User.Builder`のようにstaticネストクラスを使い、`new User.Builder(\\\"田中\\\").age(25).build()` のように可読性の高いオブジェクト生成を実現します。また `java.util.Map.Entry` もstaticネストクラスの代表例です。",
+          "code": "public class Outer {\n    private static int staticVal = 100;\n    private int instanceVal = 200;\n\n    // staticネストクラス\n    static class StaticNested {\n        void show() {\n            System.out.println(staticVal);    // ✅ staticメンバーにアクセス可\n            // System.out.println(instanceVal); // ❌ インスタンスメンバーは不可\n        }\n\n        static void staticMethod() {\n            System.out.println(\"static nested static method\");\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        // staticネストクラスのインスタンス化\n        // 外部クラスのインスタンスは不要\n        Outer.StaticNested sn = new Outer.StaticNested();\n        sn.show();\n\n        // staticメソッドの呼び出し\n        Outer.StaticNested.staticMethod();\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "tip",
+          "title": "staticネストクラスが推奨される理由",
+          "body": "多くの場合、staticネストクラスの方が内部クラスより適切です。\n\n・内部クラスは外部クラスへの暗黙的な参照を保持する → メモリリークの原因\n・staticネストクラスは独立しており、外部インスタンスなしで使える\n・Effective Java推奨: 「ネストするならstaticにせよ」\n\n外部クラスのインスタンスメンバにアクセスする必要がない場合は、staticを付けましょう。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "code",
+          "title": "メンバークラス（inner class）の詳細",
+          "body": "以下のコード例を確認しましょう。\n\n実務での使用例: コレクションのIterator実装では、メンバークラスとして定義するのが定石です。外部クラスの内部データに直接アクセスできるため、効率的に要素を走査できます。またAndroid開発のRecyclerView.ViewHolderも近いパターンです。",
+          "code": "// Outerクラスの定義\npublic class Outer {\n    private int value = 42;\n\n    // Innerクラスの定義\n    class Inner {\n        private int value = 99;\n\n        // showメソッドの定義\n        void show() {\n            System.out.println(value);            // 99（Inner.this.value）\n            System.out.println(this.value);        // 99（this = Inner）\n            System.out.println(Outer.this.value);  // 42（外部クラス参照）\n        }\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // メンバークラスのインスタンス化\n        // 外部クラスのインスタンスが必要！\n        Outer outer = new Outer();\n        Outer.Inner inner = outer.new Inner();\n        //                    ↑ outer.new の構文に注意\n        inner.show();\n\n        // 1行で書く場合\n        Outer.Inner inner2 = new Outer().new Inner();\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "rule",
+          "title": "比較表",
+          "body": "| 観点 | staticネストクラス | メンバークラス |\n|---|---|---|\n| static修飾子 | あり | なし |\n| 外部クラスのstatic参照 | ✅ | ✅ |\n| 外部クラスのinstance参照 | ❌ | ✅ |\n| Outer.thisの使用 | ❌ | ✅ |\n| インスタンス化 | `new Outer.StaticNested()` | `outer.new Inner()` |\n| staticメンバー定義 | ✅ | Java 16以降のみ |\n| アクセス修飾子 | 4種すべて | 4種すべて |\n| メモリリークリスク | なし | あり（外部参照を保持） |",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• staticネストクラス — `new Outer.StaticNested()` で外部インスタンス不要\n• メンバークラス — `outer.new Inner()` で外部インスタンスが必須\n• メンバークラスは `Outer.this` で外部クラスのthis参照を取得\n• 同名フィールドの参照: `this.x`（内部）vs `Outer.this.x`（外部）\n• 設計指針: 外部インスタンスが不要ならstaticネストクラスを選択（メモリリーク回避）",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_02_q1",
+          "lessonId": "ch20_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を予測してください。",
+          "explanation": "ローカル変数x=30が最も近いスコープ、this.xはInnerのフィールドx=20、Outer.this.xは外部クラスOuterのフィールドx=10を参照します。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_02_q1_a",
+              "text": "30\\n20\\n10",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_02_q1_b",
+              "text": "10\\n20\\n30",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_02_q1_c",
+              "text": "30\\n30\\n10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_02_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "class Outer {\n    int x = 10;\n    class Inner {\n        int x = 20;\n        void show() {\n            int x = 30;\n            System.out.println(x);\n            System.out.println(this.x);\n            System.out.println(Outer.this.x);\n        }\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Outer().new Inner().show();\n    }\n}"
+        },
+        {
+          "id": "ch20_02_q2",
+          "lessonId": "ch20_02",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "メンバークラス（非staticな内部クラス）のインスタンス化には外部クラスのインスタンスが必要です。正しくは `Outer outer = new Outer(); Outer.Inner inner = outer.new Inner();` です。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_02_q2_a",
+              "text": "new Outer.Inner()としている（outer.new Inner()が正しい）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_02_q2_b",
+              "text": "InnerクラスにstaticがないのでOuter内でしか使えない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_02_q2_c",
+              "text": "Outer.Innerという型名が間違い",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_02_q2_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "class Outer {\n    class Inner {\n        void greet() { System.out.println(\"Hello\"); }\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Outer.Inner inner = new Outer.Inner();\n        inner.greet();\n    }\n}"
+        },
+        {
+          "id": "ch20_02_q3",
+          "lessonId": "ch20_02",
+          "type": "fillBlank",
+          "question": "staticネストクラスから外部クラスのメンバーへのアクセスについて、空欄を埋めてください。\n\n「staticネストクラスからは、外部クラスの[___]メンバーにのみアクセスできる」",
+          "explanation": "staticネストクラスは外部クラスのインスタンスへの参照を持たないため、外部クラスの**staticメンバーにのみ**アクセスできます。インスタンスメンバーにはアクセスできません。",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch20_02_q3_a",
+              "text": "static",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_02_q3_b",
+              "text": "public",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_02_q3_c",
+              "text": "instance",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_02_q3_d",
+              "text": "すべての",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        }
+      ]
+    },
+    {
+      "id": "ch20_03",
+      "courseId": "ch20",
+      "title": "ローカルクラスと匿名クラス",
+      "summary": "メソッド内で定義するローカルクラスと、名前のない匿名クラスの使い方を学びます。",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "overview",
+          "title": "メソッド内のクラス定義",
+          "body": "このレッスンでは以下を学びます:\n\n・ローカルクラス（メソッド内で定義するクラス）\n・匿名クラス（名前のないクラス）の構文\n・ラムダ式との関係と使い分け\n\n特定のスコープでのみ使うクラスを定義する方法です。",
+          "code": null,
+          "note": "実務Tips: ローカルクラスは現代のJava開発ではほとんど使われません。匿名クラスはGUIアプリ（Swing/JavaFX）のイベントリスナーや、スレッド生成（new Thread(new Runnable() {...})）で使われていましたが、Java 8以降はラムダ式に置き換えられています。",
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "code",
+          "title": "ローカルクラス",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "public class Outer {\n    private String name = \"Outer\";\n\n    void process(String prefix) {\n        int count = 5;  // 実質的にfinal（再代入されない）\n\n        // ローカルクラスの定義\n        class Helper {\n            void execute() {\n                // 外部クラスのフィールドにアクセス可\n                System.out.println(name);\n                // メソッドのローカル変数にアクセス可\n                // （ただし実質的にfinal）\n                System.out.println(prefix + count);\n            }\n        }\n\n        // ローカルクラスのインスタンス化\n        Helper h = new Helper();\n        h.execute();\n\n        // count = 10; // これがあるとHelper内のcountがコンパイルエラー\n    }\n}\n\n// 注意: ローカルクラスにアクセス修飾子は付けられない\n// 注意: staticは付けられない（Java 16以降はstatic可だが特殊）",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "tip",
+          "title": "匿名クラスとラムダ式の違い",
+          "body": "ラムダ式は匿名クラスの短縮記法ですが、いくつかの違いがあります。\n\n| 項目 | 匿名クラス | ラムダ式 |\n|---|---|---|\n| 対象 | どんなインターフェース/クラス | 関数型インターフェースのみ |\n| this | 匿名クラス自身 | 外側のクラス |\n| 状態 | フィールドを持てる | 持てない |\n| 読みやすさ | 冗長 | 簡潔 |\n\n関数型インターフェースの場合は、ラムダ式を使うのが推奨です。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "code",
+          "title": "匿名クラス",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // インターフェースの匿名実装\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // Comparatorの匿名クラス実装\n        List<String> names = new ArrayList<>(List.of(\"Charlie\", \"Alice\", \"Bob\"));\n\n        Comparator<String> comp = new Comparator<String>() {\n            @Override\n            // compareメソッドの定義\n            public int compare(String a, String b) {\n                return a.length() - b.length();  // 文字列長で比較\n            }\n        };\n        names.sort(comp);\n        System.out.println(names); // [Bob, Alice, Charlie]\n\n        // 抽象クラスの匿名サブクラス\n        // Greetingクラスの定義\n        abstract class Greeting {\n            abstract String message();\n        }\n        Greeting g = new Greeting() {\n            @Override\n            String message() {\n                return \"こんにちは\";\n            }\n        };\n        System.out.println(g.message());\n\n        // 具象クラスのオーバーライドも可能\n        Object obj = new Object() {\n            @Override\n            public String toString() {\n                return \"カスタムObject\";\n            }\n        };\n        System.out.println(obj); // カスタムObject\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "rule",
+          "title": "匿名クラスの制約",
+          "body": "1. 名前がない — 型名として参照できない（再利用不可）\n2. コンストラクタを定義できない — 名前がないため\n3. 1つのスーパークラスまたはインターフェースのみ — 同時に複数implementsは不可\n4. 実質的にfinalなローカル変数のみ参照可能\n5. extendsとimplementsを同時にはできない\n\n実質的にfinal（effectively final）とは:\n宣言後に一度も値が変更されない変数のこと。Java 8以降、明示的なfinalキーワードがなくても、再代入がなければ実質的にfinalとして扱われます。",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "point",
+          "title": "まとめ",
+          "body": "• ローカルクラス — メソッド内で定義、そのメソッド内でのみ使用可能\n• 匿名クラス — 名前なし、クラス定義とインスタンス化を同時に行う\n• 両方とも実質的にfinalなローカル変数にのみアクセス可能\n• 匿名クラスはコンストラクタを定義できない\n• 匿名クラスは1つのインターフェースまたは1つのクラスのみ継承/実装可能\n• Java 8以降: 匿名クラスの多くはラムダ式で代替可能（関数型インターフェースの場合）",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_03_q1",
+          "lessonId": "ch20_03",
+          "type": "errorFind",
+          "question": "以下のコードのエラーを見つけてください。",
+          "explanation": "匿名クラス（やラムダ式）から参照できるローカル変数は**実質的にfinal**でなければなりません。`count = 5;`で再代入しているため、countは実質的にfinalではなくコンパイルエラーになります。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_03_q1_a",
+              "text": "匿名クラス内でcountを参照しているが、countは再代入されているため実質的にfinalでない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_03_q1_b",
+              "text": "Runnableにジェネリクスが必要",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_03_q1_c",
+              "text": "匿名クラス内でローカル変数は参照できない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_03_q1_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        count = 5;  // 再代入\n\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(count);\n            }\n        };\n        r.run();\n    }\n}"
+        },
+        {
+          "id": "ch20_03_q2",
+          "lessonId": "ch20_03",
+          "type": "fourChoice",
+          "question": "匿名クラスについて正しい記述はどれですか？",
+          "explanation": "匿名クラスには名前がないため、**コンストラクタを定義できません**。ただし、メソッドの追加やフィールドの定義は可能です。複数インターフェースの同時implementsはサポートされていません。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_03_q2_a",
+              "text": "コンストラクタを定義できない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_03_q2_b",
+              "text": "複数のインターフェースを同時にimplementsできる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_03_q2_c",
+              "text": "名前がないため、メソッドを追加できない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_03_q2_d",
+              "text": "static修飾子を付けて定義できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_03_q3",
+          "lessonId": "ch20_03",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を予測してください。",
+          "explanation": "変数nameは宣言後に再代入されていないため実質的にfinalであり、匿名クラス内から参照可能です。greet()は「Hello, World」を返します。",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch20_03_q3_a",
+              "text": "Hello, World",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_03_q3_b",
+              "text": "Hello, null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_03_q3_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_03_q3_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "interface Greeter {\n    String greet();\n}\npublic class Main {\n    public static void main(String[] args) {\n        String name = \"World\";\n        Greeter g = new Greeter() {\n            @Override\n            public String greet() {\n                return \"Hello, \" + name;\n            }\n        };\n        System.out.println(g.greet());\n    }\n}"
+        }
+      ]
+    },
+    {
+      "id": "ch20_04",
+      "courseId": "ch20",
+      "title": "匿名クラスからラムダ式へ",
+      "summary": "匿名クラスをラムダ式に置換する方法、Lambda式との違い、ネストクラスの設計パターンを学びます。",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "overview",
+          "title": "匿名クラスとラムダ式の関係",
+          "body": "このレッスンでは以下を学びます:\n\n・ネストされたクラスの使い分け判断基準\n・各種ネストクラスのアクセスルールの比較\n・実務での活用パターン（Builder, Iterator等）\n\n適切な種類のネストクラスを選べるようになりましょう。",
+          "code": null,
+          "note": "実務Tips: Spring FrameworkやJUnit 5などモダンなフレームワークでは関数型インターフェースを多用するため、ラムダ式が日常的に使われます。例: assertThrows(Exception.class, () -> service.process());  匿名クラスをラムダ式に置き換えるリファクタリングは、レガシーコードのモダナイズでもよく行われます。",
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "code",
+          "title": "匿名クラス → ラムダ式への変換",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "import java.util.Comparator;\nimport java.util.function.Predicate;\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 匿名クラス版\n        Comparator<String> comp1 = new Comparator<String>() {\n            @Override\n            // compareメソッドの定義\n            public int compare(String a, String b) {\n                return a.length() - b.length();\n            }\n        };\n\n        // ラムダ式版（引数の型推論も可能）\n        Comparator<String> comp2 = (a, b) -> a.length() - b.length();\n\n        // Predicate の例\n        Predicate<String> isLong1 = new Predicate<String>() {\n            @Override\n            public boolean test(String s) {\n                return s.length() > 5;\n            }\n        };\n        Predicate<String> isLong2 = s -> s.length() > 5;\n\n        // Runnable の例\n        Runnable r1 = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(\"Hello\");\n            }\n        };\n        Runnable r2 = () -> System.out.println(\"Hello\");\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "tip",
+          "title": "匿名クラスからラムダ式への移行",
+          "body": "Java 8以降、関数型インターフェースの実装は匿名クラスからラムダ式に置き換えられます。\n\n・匿名クラス: new Comparator<String>() { public int compare(String a, String b) { return a.compareTo(b); } }\n・ラムダ式: (a, b) -> a.compareTo(b)\n・メソッド参照: String::compareTo\n\nコードが劇的に簡潔になるため、関数型インターフェースには積極的にラムダ式を使いましょう。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "rule",
+          "title": "匿名クラスとラムダ式の決定的な違い",
+          "body": "| 観点 | 匿名クラス | ラムダ式 |\n|---|---|---|\n| 対象 | クラス・インターフェース全般 | 関数型インターフェースのみ |\n| thisの参照先 | 匿名クラス自身 | 外部クラス（囲むクラス） |\n| 抽象メソッド数 | 複数可 | 1つのみ |\n| コンストラクタ | 定義不可 | N/A |\n| フィールド定義 | 可能 | 不可 |\n| クラスファイル | 別途生成（Outer$1.class） | invokedynamic |\n\n特に重要: ラムダ式内の`this`は外部クラスのインスタンスを指す。匿名クラス内の`this`は匿名クラス自身のインスタンスを指す。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "code",
+          "title": "thisの違い — 試験頻出",
+          "body": "以下のコード例を確認しましょう。",
+          "code": "public class Outer {\n    private String name = \"Outer\";\n\n    void test() {\n        // 匿名クラス: thisは匿名クラス自身\n        Runnable r1 = new Runnable() {\n            @Override\n            public void run() {\n                // this → 匿名クラスのインスタンス\n                System.out.println(this.getClass().getSimpleName());\n                // 出力: \"\"（匿名クラスは名前がない）\n            }\n        };\n\n        // ラムダ式: thisは外部クラス（Outer）\n        Runnable r2 = () -> {\n            // this → Outerのインスタンス\n            System.out.println(this.name);\n            // 出力: \"Outer\"\n        };\n\n        r1.run();\n        r2.run();\n    }\n}\n\n// ラムダ化できないケース\ninterface MultiMethod {\n    void method1();\n    void method2();  // 抽象メソッドが2つ → ラムダ不可\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "point",
+          "title": "ネストクラスの使い分けまとめ",
+          "body": "使い分けの指針:\n• staticネストクラス — 外部インスタンス不要。ヘルパー型（Builder、Entry等）\n• メンバークラス — 外部状態が必要（Iterator実装など）。ただし可能ならstatic推奨\n• ローカルクラス — メソッド内で一時的に使う型。稀に使用\n• 匿名クラス — 1回限りの実装。関数型IFならラムダ式推奨\n• ラムダ式 — 関数型IFの簡潔な実装。thisが外部クラスを指す点に注意\n\nEffective Java推奨: 「ネストクラスは可能な限りstaticにせよ」（メモリリーク防止）",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_04_q1",
+          "lessonId": "ch20_04",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を予測してください。",
+          "explanation": "ラムダ式内のthisは**外部クラス（App）のインスタンス**を指します。したがって`this.name`は`App`インスタンスのnameフィールド「App」を出力します。匿名クラスの場合と異なる点に注意してください。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_04_q1_a",
+              "text": "App",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_04_q1_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_04_q1_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_04_q1_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public class App {\n    String name = \"App\";\n\n    void run() {\n        Runnable lambda = () -> System.out.println(this.name);\n        lambda.run();\n    }\n\n    public static void main(String[] args) {\n        new App().run();\n    }\n}"
+        },
+        {
+          "id": "ch20_04_q2",
+          "lessonId": "ch20_04",
+          "type": "fourChoice",
+          "question": "匿名クラスをラムダ式に変換できないのはどの場合ですか？",
+          "explanation": "ラムダ式は**関数型インターフェース（抽象メソッドが1つ）**でのみ使用できます。抽象メソッドが2つ以上あるインターフェースはラムダ式に変換できません。defaultメソッドの有無は関係ありません。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_04_q2_a",
+              "text": "実装するインターフェースに抽象メソッドが2つある",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_04_q2_b",
+              "text": "インターフェースにdefaultメソッドがある",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_04_q2_c",
+              "text": "匿名クラス内で外部の変数を参照している",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_04_q2_d",
+              "text": "匿名クラスが引数にジェネリクスを使っている",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_04_q3",
+          "lessonId": "ch20_04",
+          "type": "reorder",
+          "question": "匿名クラスをラムダ式に変換する手順を正しい順序に並べてください。",
+          "explanation": "ラムダ変換の手順: (1) 関数型IFかの確認 → (2) 匿名クラスのボイラープレートを削除 → (3) メソッド名を削除し引数を残す → (4) -> で引数と本体を接続。本体が1文なら {} と return も省略可能です。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_04_q3_a",
+              "text": "対象が関数型インターフェース（抽象メソッド1つ）であることを確認する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_04_q3_b",
+              "text": "new Interface名() { ... } の記述を削除する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch20_04_q3_c",
+              "text": "メソッド名と@Overrideを削除し、引数リストのみ残す",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch20_04_q3_d",
+              "text": "引数リストと本体の間にアロー（->）を記述する",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch20_04_q3_a",
+            "ch20_04_q3_b",
+            "ch20_04_q3_c",
+            "ch20_04_q3_d"
+          ]
+        }
+      ]
+    }
+  ]
+}

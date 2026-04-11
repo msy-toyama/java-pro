@@ -1,0 +1,1025 @@
+{
+  "courseId": "ch03",
+  "lessons": [
+    {
+      "id": "ch03_01",
+      "courseId": "ch03",
+      "title": "if文の基本",
+      "summary": "条件によって処理を分岐させる方法を学ぶ",
+      "estimatedMinutes": 4,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・if文の基本構文\n・条件式（比較演算子）の書き方\n・条件が成立したときだけ処理を実行する仕組み\n\n条件分岐はプログラムに「判断力」を与える重要な機能です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "code",
+          "title": "if文の書き方",
+          "body": "if文は指定した条件がtrueのときだけ処理を実行します。",
+          "code": "int score = 80;\n\nif (score >= 60) {\n    System.out.println(\"合格です！\");\n}\n// 出力: 合格です！",
+          "note": "{}（ブレース）内の処理がif文の本体です。条件がfalseなら何も実行されません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "rule",
+          "title": "条件式の書き方",
+          "body": "if の () 内には boolean（true/false）になる式を書きます。\n\n比較演算子:\n| 演算子 | 意味 |\n|---|---|\n| == | 等しい |\n| != | 等しくない |\n| > | より大きい |\n| < | より小さい |\n| >= | 以上 |\n| <= | 以下 |",
+          "code": null,
+          "note": "=（代入）と ==（比較）を間違えないように注意！",
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "tip",
+          "title": "条件式の「真（true）」と「偽（false）」",
+          "body": "if文の条件式は必ず true（真）か false（偽）のどちらかになります。\n\n| 演算子 | 意味 | 例 |\n|---|---|---|\n| == | 等しい | age == 20 |\n| != | 等しくない | score != 0 |\n| > | より大きい | price > 1000 |\n| >= | 以上 | age >= 18 |\n| < | より小さい | count < 10 |\n| <= | 以下 | speed <= 60 |\n\n条件式が true のときだけ、if文のブロック {} 内の処理が実行されます。",
+          "code": null,
+          "note": "= は「代入」、== は「比較」です。似ていますが全く異なる意味なので要注意。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・if (条件) { 処理 } の形で書く\n・条件がtrueのときだけ { } 内が実行される\n・条件式は比較演算子を使って書く\n・==（比較）と =（代入）を混同しないこと",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_01_q1",
+          "lessonId": "ch03_01",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 5;\nif (x > 3) {\n    System.out.println(\"A\");\n}\nif (x > 10) {\n    System.out.println(\"B\");\n}",
+          "explanation": "x=5で、x>3はtrueなので\"A\"が表示されます。x>10はfalseなので\"B\"は表示されません。",
+          "choices": [
+            {
+              "id": "ch03_01_q1_a",
+              "text": "A",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_01_q1_b",
+              "text": "AB",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_01_q1_c",
+              "text": "B",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_01_q1_d",
+              "text": "何も表示されない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "A\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_01_q2",
+          "lessonId": "ch03_01",
+          "type": "fourChoice",
+          "question": "int型の変数aとbが等しいことを表すJavaの条件式はどれですか？",
+          "code": null,
+          "explanation": "Javaでは == が等値比較演算子です。= は代入演算子なので間違えないようにしましょう。なお、intやdoubleなどのプリミティブ型の比較では==を使いますが、Stringなどの参照型ではequals()メソッドを使います。",
+          "choices": [
+            {
+              "id": "ch03_01_q2_a",
+              "text": "a = b",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_01_q2_b",
+              "text": "a == b",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_01_q2_c",
+              "text": "a === b",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_01_q2_d",
+              "text": "a.equals(b)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_01_q3",
+          "lessonId": "ch03_01",
+          "type": "fillBlank",
+          "question": "xが0より大きい（正の数）ときに\"正の数\"と表示するコードを完成してください。\nif (x _____ 0) {",
+          "code": null,
+          "explanation": "> は「より大きい」を表す比較演算子です。x > 0 で「xが正の数（0より大きい）」という条件になります。なお >= は「以上（0を含む）」です。",
+          "choices": [
+            {
+              "id": "ch03_01_q3_a",
+              "text": ">",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_01_q3_b",
+              "text": ">=",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_01_q3_c",
+              "text": ">>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_01_q3_d",
+              "text": "=<",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch03_02",
+      "courseId": "ch03",
+      "title": "if-else文",
+      "summary": "条件が偽のときの処理も書く方法を学ぶ",
+      "estimatedMinutes": 4,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**if-else**文で「もし〜なら／そうでなければ」を表現する\n・if-else if-else で複数条件を順番にチェック\n・条件分岐のネスト（入れ子）の注意点\n\n2つ以上の選択肢がある場面でelseを活用しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "code",
+          "title": "if-else文",
+          "body": "elseで「それ以外」の処理を書けます。",
+          "code": "// 変数の宣言と初期化\nint score = 45;\n\n// 条件分岐\nif (score >= 60) {\n    System.out.println(\"合格\");\n} else {\n    System.out.println(\"不合格\");\n}\n// 出力: 不合格",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "tip",
+          "title": "if-else if の評価順序に注意",
+          "body": "**if-else** if チェーンは上から順番に評価され、最初にtrueになった条件のブロックだけが実行されます。\n\n・条件は相互排他的でなくてもOK（上から順に評価される）\n・より具体的な条件を上に、一般的な条件を下に書く\n・最後のelseは「上のどれにも当てはまらない」場合のデフォルト処理\n\n条件の順番を間違えると、期待した処理が実行されないバグの原因になります。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "code",
+          "title": "else if で複数条件",
+          "body": "条件を3つ以上に分けたいときはelse ifを使います。",
+          "code": "// 変数の宣言と初期化\nint score = 75;\n\n// 条件分岐\nif (score >= 90) {\n    System.out.println(\"優\");\n// 別の条件をチェック\n} else if (score >= 70) {\n    System.out.println(\"良\");\n// 別の条件をチェック\n} else if (score >= 60) {\n    System.out.println(\"可\");\n} else {\n    System.out.println(\"不可\");\n}\n// 出力: 良",
+          "note": "条件は上から順に判定され、最初にtrueになったブロックだけが実行されます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**if-else** で2択の分岐ができる\n・else if で3択以上の分岐ができる\n・条件は上から順に判定される\n・最初にtrueになったブロックだけ実行される",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_02_q1",
+          "lessonId": "ch03_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int n = 85;\nif (n >= 90) {\n    System.out.println(\"A\");\n} else if (n >= 80) {\n    System.out.println(\"B\");\n} else if (n >= 70) {\n    System.out.println(\"C\");\n} else {\n    System.out.println(\"D\");\n}",
+          "explanation": "n=85で、n>=90はfalse、n>=80はtrueなので\"B\"が表示されます。n>=70もtrueですが、先にn>=80がtrueになったため\"C\"は表示されません。",
+          "choices": [
+            {
+              "id": "ch03_02_q1_a",
+              "text": "A",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_02_q1_b",
+              "text": "B",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_02_q1_c",
+              "text": "BC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_02_q1_d",
+              "text": "D",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "B\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_02_q2",
+          "lessonId": "ch03_02",
+          "type": "fourChoice",
+          "question": "if-else if文で条件はどの順番で判定されますか？",
+          "code": null,
+          "explanation": "if-else if文は上から順に条件を判定し、最初にtrueになった箇所のブロックだけが実行されます。",
+          "choices": [
+            {
+              "id": "ch03_02_q2_a",
+              "text": "上から順に",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_02_q2_b",
+              "text": "下から順に",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_02_q2_c",
+              "text": "ランダムに",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_02_q2_d",
+              "text": "全ての条件を同時に",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_02_q3",
+          "lessonId": "ch03_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 10;\nif (x > 5) {\n    System.out.println(\"A\");\n} else {\n    System.out.println(\"B\");\n}\nSystem.out.println(\"C\");",
+          "explanation": "x>5はtrueなので\"A\"を表示。elseブロックはスキップ。if文の外にあるprintln(\"C\")は常に実行されます。",
+          "choices": [
+            {
+              "id": "ch03_02_q3_a",
+              "text": "A\\nC",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_02_q3_b",
+              "text": "A",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_02_q3_c",
+              "text": "A\\nB\\nC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_02_q3_d",
+              "text": "B\\nC",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "A\nC\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch03_02_q4",
+          "lessonId": "ch03_02",
+          "type": "codeComplete",
+          "question": "年齢に応じて料金を決定するコードの空欄を埋めてください。18歳未満は500円、65歳以上は800円、それ以外は1000円です。",
+          "code": null,
+          "explanation": "if-else if-else 構文で条件を上から順に評価します。最初に合致した条件ブロックだけが実行されます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "int age = 70;\nint price;\n__BLANK_1__ (age < 18) {\n    price = 500;\n} __BLANK_2__ (age >= 65) {\n    price = 800;\n} else {\n    price = 1000;\n}\nSystem.out.println(price);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "if",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "switch",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "while",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "else if",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "elif",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "else",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch03_03",
+      "courseId": "ch03",
+      "title": "比較演算子と論理演算子",
+      "summary": "複数の条件を組み合わせる方法を学ぶ",
+      "estimatedMinutes": 4,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・switch文の構文と動作\n・caseとbreakの関係\n・defaultラベルの使い方\n\n値ごとに処理を分けたいとき、switch文を使うとコードが読みやすくなります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "code",
+          "title": "論理演算子",
+          "body": "条件を組み合わせる3つの演算子です。",
+          "code": "// 変数の宣言と初期化\nint age = 20;\nboolean hasTicket = true;\n\n// AND（かつ）: 両方trueならtrue\n// 条件分岐\nif (age >= 18 && hasTicket) {\n    System.out.println(\"入場できます\");\n}\n\n// OR（または）: どちらかtrueならtrue\nint day = 6; // 土曜\nif (day == 6 || day == 0) {\n    System.out.println(\"休日です\");\n}\n\n// NOT（否定）: true/falseを反転\nboolean isHoliday = false;\nif (!isHoliday) {\n    System.out.println(\"平日です\");\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "tip",
+          "title": "breakを忘れるとフォールスルーする",
+          "body": "switch文でbreakを書き忘れると、次のcaseの処理も実行されてしまいます。\n\nこれを「フォールスルー（fall-through）」と呼びます。\n\n意図せずフォールスルーすると予期しない動作になるため、breakは必ず書く習慣をつけましょう。",
+          "code": null,
+          "note": "Java 14以降の「**switch式**（アロー構文）」ではbreakが不要です。Chapter 19で学びます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "rule",
+          "title": "短絡評価",
+          "body": "&&と||は「**短絡評価**」を行います。\n\n・&& は左側がfalseなら右側を評価しない\n・|| は左側がtrueなら右側を評価しない\n\nこの性質を利用してnullチェックなどを安全に書けます。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・&& は「かつ」（AND）\n・|| は「または」（OR）\n・! は「否定」（NOT）\n・**短絡評価**: 結果が確定した時点で評価を止める",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_03_q1",
+          "lessonId": "ch03_03",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 15;\nif (x >= 10 && x <= 20) {\n    System.out.println(\"範囲内\");\n} else {\n    System.out.println(\"範囲外\");\n}",
+          "explanation": "x=15で、x>=10はtrue、x<=20もtrue。&&（AND）は両方trueのときtrueなので\"範囲内\"が表示されます。",
+          "choices": [
+            {
+              "id": "ch03_03_q1_a",
+              "text": "範囲内",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q1_b",
+              "text": "範囲外",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q1_c",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q1_d",
+              "text": "何も表示されない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "範囲内\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_03_q2",
+          "lessonId": "ch03_03",
+          "type": "fourChoice",
+          "question": "||演算子がtrueを返す条件はどれですか？",
+          "code": null,
+          "explanation": "||（OR）はどちらか一方でもtrueなら結果がtrueになります。両方falseのときだけfalseです。",
+          "choices": [
+            {
+              "id": "ch03_03_q2_a",
+              "text": "両方trueのときだけ",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q2_b",
+              "text": "どちらか一方でもtrueのとき",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q2_c",
+              "text": "両方falseのときだけ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q2_d",
+              "text": "片方だけtrueのとき",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_03_q3",
+          "lessonId": "ch03_03",
+          "type": "fillBlank",
+          "question": "「xが正の数かつ偶数」を判定する条件式を完成させてください。\nif (x > 0 _____ x % 2 == 0) {",
+          "code": null,
+          "explanation": "「かつ」はAND演算子 && で表現します。x > 0 && x % 2 == 0 で「正の偶数」を判定できます。",
+          "choices": [
+            {
+              "id": "ch03_03_q3_a",
+              "text": "&&",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q3_b",
+              "text": "||",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q3_c",
+              "text": "&",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q3_d",
+              "text": "and",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch03_03_q4",
+          "lessonId": "ch03_03",
+          "type": "multiChoice",
+          "question": "switch文について正しい説明をすべて選んでください。",
+          "code": null,
+          "explanation": "switch文ではint, char, String, enumが使用可能です。各caseにbreakを書かないとフォールスルーが発生します。defaultラベルは省略可能で、どのcaseにも一致しない場合に実行されます。boolean型はswitch文で使用できません。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch03_03_q4_a",
+              "text": "int, char, String, enumが使用可能",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q4_b",
+              "text": "breakを省略するとフォールスルーが発生する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q4_c",
+              "text": "boolean型もswitch文で使用できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q4_d",
+              "text": "defaultラベルは省略可能",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch03_03_q5",
+          "lessonId": "ch03_03",
+          "type": "reorder",
+          "question": "switch文の構成要素を正しい順序に並べてください。",
+          "code": null,
+          "explanation": "switch文は式→caseラベル→処理→breakの順で構成します。breakがないとフォールスルーします。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "switch (value) {",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "    case 1:",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "        System.out.println(\"One\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "        break;",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "}",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch03_04",
+      "courseId": "ch03",
+      "title": "switch文",
+      "summary": "値による多分岐をスッキリ書く方法",
+      "estimatedMinutes": 4,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・論理演算子（&&, ||, !）の使い方\n・複数条件を組み合わせた判定\n・**短絡評価**（ショートサーキット）の仕組み\n\n複雑な条件を1つのif文で表現できるようになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "code",
+          "title": "switch文の基本",
+          "body": "値が一致するcaseの処理を実行します。",
+          "code": "// 変数の宣言と初期化\nint day = 3; // 水曜\n\n// 値に応じた分岐処理\nswitch (day) {\n    case 1:\n        System.out.println(\"月曜\");\n        break;\n    case 2:\n        System.out.println(\"火曜\");\n        break;\n    case 3:\n        System.out.println(\"水曜\");\n        break;\n    default:\n        System.out.println(\"その他\");\n        break;\n}\n// 出力: 水曜",
+          "note": "break を忘れると次のcaseまで処理が「落ちて」しまいます（フォールスルー）。注意しましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "rule",
+          "title": "switchで使える型",
+          "body": "switch文の式に使える型:\n・int, byte, short, char\n・String（Java 7以降）\n・enum（列挙型）\n\n使えない型:\n・double, float, long, boolean",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "tip",
+          "title": "短絡評価（ショートサーキット）とは",
+          "body": "Javaでは論理演算の効率化のため、左側の条件だけで結果が確定する場合、右側は評価されません。\n\n| 演算子 | 短絡条件 | 説明 |\n|---|---|---|\n| && | 左側がfalse | 右側を評価しない（結果は必ずfalse） |\n| \\ | \\ | 左側がtrue   右側を評価しない（結果は必ずtrue） |\n\nこの仕組みを利用して、nullチェックを先に行うテクニックがよく使われます。",
+          "code": null,
+          "note": "例: if (name != null && name.length() > 0) → nameがnullの場合、length()は呼ばれない",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・switch文は値による多分岐に向いている\n・各caseの最後にbreakを書くこと\n・defaultはどのcaseにも該当しない場合の処理\n・Stringも使える（Java 7以降）",
+          "code": null,
+          "note": "【実務Tips】実務ではenumやステータスコードなど固定値の分岐にswitch、範囲判定や複雑な条件には**if-else**を使います。Java 14以降の**switch式**を使えばbreak忘れも防げます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_04_q1",
+          "lessonId": "ch03_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int n = 2;\nswitch (n) {\n    case 1:\n        System.out.println(\"A\");\n        break;\n    case 2:\n        System.out.println(\"B\");\n    case 3:\n        System.out.println(\"C\");\n        break;\n}",
+          "explanation": "case 2にbreakがないため、フォールスルーが発生してcase 3も実行されます。結果は\"B\"と\"C\"の両方が出力されます。",
+          "choices": [
+            {
+              "id": "ch03_04_q1_a",
+              "text": "B",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_04_q1_b",
+              "text": "B\\nC",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_04_q1_c",
+              "text": "A\\nB\\nC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_04_q1_d",
+              "text": "C",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "B\nC\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_04_q2",
+          "lessonId": "ch03_04",
+          "type": "fourChoice",
+          "question": "switch文で使えない型はどれですか？",
+          "code": null,
+          "explanation": "double（浮動小数点型）はswitch文では使用できません。int, String, charなどは使用可能です。",
+          "choices": [
+            {
+              "id": "ch03_04_q2_a",
+              "text": "int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_04_q2_b",
+              "text": "String",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_04_q2_c",
+              "text": "char",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_04_q2_d",
+              "text": "double",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_04_q3",
+          "lessonId": "ch03_04",
+          "type": "fourChoice",
+          "question": "breakを書き忘れるとどうなりますか？",
+          "code": null,
+          "explanation": "breakがないと、マッチしたcaseの処理の後、次のcaseの処理も続けて実行されます。これをフォールスルーといいます。",
+          "choices": [
+            {
+              "id": "ch03_04_q3_a",
+              "text": "コンパイルエラーになる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_04_q3_b",
+              "text": "次のcaseも実行される",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_04_q3_c",
+              "text": "プログラムが終了する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_04_q3_d",
+              "text": "defaultが実行される",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch03_05",
+      "courseId": "ch03",
+      "title": "条件分岐の実践",
+      "summary": "三項演算子とネストを使いこなす",
+      "estimatedMinutes": 4,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**三項演算子**（条件 ? 値1 : 値2）の構文\n・**if-else**との使い分け\n・三項演算子を使うべき場面と避けるべき場面\n\nシンプルな条件分岐を1行で書ける便利な記法を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "code",
+          "title": "三項演算子",
+          "body": "シンプルな条件分岐を1行で書ける省略記法です。",
+          "code": "// 変数の宣言と初期化\nint age = 20;\nString result = (age >= 18) ? \"成人\" : \"未成年\";\nSystem.out.println(result);  // 成人\n\n// if文で書くと:\nString result2;\n// 条件分岐\nif (age >= 18) {\n    result2 = \"成人\";\n} else {\n    result2 = \"未成年\";\n}",
+          "note": "**三項演算子**は簡潔ですが、複雑な条件には向きません。可読性を優先しましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "tip",
+          "title": "三項演算子は使いすぎに注意",
+          "body": "**三項演算子**（条件 ? 値1 : 値2）は便利ですが、ネスト（入れ子）にすると読みにくくなります。\n\n・良い例: String msg = score >= 60 ? \"合格\" : \"不合格\";\n・悪い例: String msg = a > b ? (b > c ? \"A\" : \"B\") : (a > c ? \"C\" : \"D\");\n\n単純な2択の場合は三項演算子、複雑な条件は**if-else**文を使いましょう。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "code",
+          "title": "if文のネスト",
+          "body": "if文の中にif文を書くことをネスト（入れ子）といいます。",
+          "code": "// 変数の宣言と初期化\nint score = 85;\nboolean isPresent = true;\n\n// 条件分岐\nif (isPresent) {\n    if (score >= 80) {\n        System.out.println(\"出席かつ高得点！\");\n    } else {\n        System.out.println(\"出席しています\");\n    }\n} else {\n    System.out.println(\"欠席です\");\n}",
+          "note": "ネストが深くなるとコードが読みにくくなります。&&で条件をまとめたり、早期リターンで対処しましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**三項演算子**: 条件 ? 真の値 : 偽の値\n・シンプルな2択に向いている\n・ネストは深くなりすぎないよう注意\n・可読性を最優先にすること",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_05_q1",
+          "lessonId": "ch03_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 7;\nString s = (x % 2 == 0) ? \"偶数\" : \"奇数\";\nSystem.out.println(s);",
+          "explanation": "7 % 2 = 1 で 0 ではないためfalse。三項演算子で偽の値「奇数」が選ばれます。",
+          "choices": [
+            {
+              "id": "ch03_05_q1_a",
+              "text": "偶数",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_05_q1_b",
+              "text": "奇数",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_05_q1_c",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_05_q1_d",
+              "text": "7",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "奇数\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_05_q2",
+          "lessonId": "ch03_05",
+          "type": "fillBlank",
+          "question": "三項演算子を使って、ageが20以上なら\"大人\"、未満なら\"子供\"を返す式を完成させてください。\nString type = (age >= 20) _____ \"大人\" : \"子供\";",
+          "code": null,
+          "explanation": "三項演算子は 条件 ? 真の値 : 偽の値 の形で書きます。?が条件の直後に来ます。",
+          "choices": [
+            {
+              "id": "ch03_05_q2_a",
+              "text": "?",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_05_q2_b",
+              "text": ":",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_05_q2_c",
+              "text": "&&",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_05_q2_d",
+              "text": "then",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_05_q3",
+          "lessonId": "ch03_05",
+          "type": "fourChoice",
+          "question": "ネストが深くなりすぎたとき、コードを読みやすくする方法はどれですか？",
+          "code": null,
+          "explanation": "条件を&&でまとめることでネストを浅くし、コードの可読性を向上させることができます。",
+          "choices": [
+            {
+              "id": "ch03_05_q3_a",
+              "text": "変数名を長くする",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_05_q3_b",
+              "text": "コメントをたくさん書く",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_05_q3_c",
+              "text": "条件を&&でまとめる",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch03_05_q3_d",
+              "text": "switch文に書き換える",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

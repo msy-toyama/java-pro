@@ -1,0 +1,619 @@
+{
+  "courseId": "ch17",
+  "lessons": [
+    {
+      "id": "ch17_01",
+      "courseId": "ch17",
+      "title": "モジュールシステムの概要",
+      "summary": "Java 9で導入されたモジュールシステムの背景と基本概念を学びます。クラスパスの問題点からmodule-info.javaの役割まで理解しましょう。",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "overview",
+          "title": "モジュールシステムが生まれた背景",
+          "body": "このレッスンでは以下を学びます:\n\n・モジュールシステム（JPMS）が導入された理由\n・モジュールの基本概念（依存関係の明示化）\n・クラスパスの問題とモジュールパスの違い\n\nJava 9で導入された大きな変革を理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "rule",
+          "title": "module-info.javaの役割",
+          "body": "モジュールを定義するには、ソースツリーのルートに**module-info.java**ファイルを配置します。\nこのファイルにはモジュール名、公開するパッケージ、依存するモジュールなどを宣言します。\nモジュール名は通常、パッケージ名と同様にドット区切りの逆ドメイン形式を使用します。\nmodule-info.javaはコンパイルされてmodule-info.classとなり、JARのルートに格納されます。\nこのファイルが存在しないJARは「無名モジュール（Unnamed Module）」として扱われます。",
+          "code": "// module-info.java の基本構造\nmodule com.example.myapp {\n    requires java.sql;\n    exports com.example.myapp.api;\n}",
+          "note": "**module-info.java** はモジュールのルートディレクトリに配置します。パッケージの中には入れません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "code",
+          "title": "exportsとrequiresの基本",
+          "body": "exportsディレクティブは、モジュール外部に公開するパッケージを指定します。\nexportsで指定されていないパッケージは、モジュール外部からアクセスできません。\nrequiresディレクティブは、このモジュールが依存する他のモジュールを宣言します。\nrequiresで宣言していないモジュールのパッケージは使用できません。\nこの仕組みにより、依存関係が明確になり、不要なクラスへのアクセスを防げます。",
+          "code": "// モジュール定義の例\nmodule com.example.app {\n    // java.sqlモジュールに依存\n    requires java.sql;\n    // java.loggingモジュールに依存\n    requires java.logging;\n\n    // apiパッケージを外部に公開\n    exports com.example.app.api;\n    // internalパッケージは公開しない（外部からアクセス不可）\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "point",
+          "title": "モジュールシステムの利点",
+          "body": "モジュールシステムの主な利点は以下の通りです。\n1つ目は「強力なカプセル化」です。exports宣言していないパッケージは外部から完全に隠蔽されます。\n2つ目は「明示的な依存関係」です。requires宣言により、必要なモジュールがコンパイル時に検証されます。\n3つ目は「信頼性の向上」です。起動時にモジュールグラフが解決され、依存関係の欠落を早期に検出できます。\n4つ目は「カスタムランタイム」です。jlinkツールで必要なモジュールだけのランタイムを作成できます。",
+          "code": null,
+          "note": "モジュールシステムを使用することで、publicクラスであってもexportsされていなければ外部からアクセスできません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "tip",
+          "title": "試験対策ポイント",
+          "body": "認定試験では、**module-info.java**の基本構文が出題されます。\n特にexportsとrequiresの違いを正確に理解しておくことが重要です。\nexportsは「自分のパッケージを外部に公開する」宣言です。\nrequiresは「他のモジュールに依存する」宣言です。\nこの2つを混同しないように注意しましょう。\nまた、java.baseモジュールは暗黙的にrequiresされる特別なモジュールであることも覚えておきましょう。",
+          "code": null,
+          "note": "【実務Tips】実際の業務開発ではMavenやGradleで依存管理するためモジュールシステムを明示的に使わないプロジェクトも多いですが、JDK内部APIへのアクセス制限など間接的に影響を受ける場面があります。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch17_01_q1",
+          "lessonId": "ch17_01",
+          "type": "fourChoice",
+          "question": "Java モジュールシステムが導入されたバージョンとして正しいものはどれですか？",
+          "code": "module com.example.app {\n    requires java.sql;\n    exports com.example.api;\n}",
+          "explanation": "モジュールシステム（Project Jigsaw）はJava 9で導入されました。これにより、パッケージレベルのカプセル化と明示的な依存関係の管理が可能になりました。",
+          "choices": [
+            {
+              "id": "ch17_01_q1_a",
+              "text": "Java 7",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_01_q1_b",
+              "text": "Java 8",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_01_q1_c",
+              "text": "Java 9",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch17_01_q1_d",
+              "text": "Java 11",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch17_01_q2",
+          "lessonId": "ch17_01",
+          "type": "fourChoice",
+          "question": "モジュール定義において、外部に公開するパッケージを指定するディレクティブはどれですか？",
+          "code": "module com.example.service {\n    requires transitive com.example.model;\n    exports com.example.service;\n}",
+          "explanation": "exportsディレクティブはモジュールのパッケージを外部に公開するために使用します。requiresは依存モジュールの宣言、opensはリフレクション用の公開、providesはサービスプロバイダの宣言に使用します。",
+          "choices": [
+            {
+              "id": "ch17_01_q2_a",
+              "text": "requires",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_01_q2_b",
+              "text": "exports",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_01_q2_c",
+              "text": "opens",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_01_q2_d",
+              "text": "provides",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_01_q3",
+          "lessonId": "ch17_01",
+          "type": "fillBlank",
+          "question": "モジュールを定義するためのファイル名は ______ です。",
+          "code": "module com.example.app {\n    requires java.logging;\n    opens com.example.internal\n        to com.google.gson;\n}",
+          "explanation": "モジュールの定義はmodule-info.javaファイルに記述します。このファイルはモジュールのソースツリーのルートディレクトリに配置し、モジュール名や公開パッケージ、依存関係を宣言します。",
+          "choices": [
+            {
+              "id": "ch17_01_q3_a",
+              "text": "module-info.java",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch17_01_q3_b",
+              "text": "module.java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_01_q3_c",
+              "text": "module-config.java",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_01_q3_d",
+              "text": "module-descriptor.java",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch17_02",
+      "courseId": "ch17",
+      "title": "モジュールの定義と利用",
+      "summary": "module-info.javaの詳細な構文と、requires transitive・exports...toなどの高度なディレクティブを学びます。",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "overview",
+          "title": "モジュール定義の全体像",
+          "body": "このレッスンでは以下を学びます:\n\n・**module-info.java**の構文と配置場所\n・requires（依存宣言）とexports（公開宣言）\n・modulesコマンドでの操作方法\n\nモジュール定義の実践的な書き方を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "code",
+          "title": "requiresとrequires transitive",
+          "body": "requiresは直接依存するモジュールを宣言します。\nrequires transitiveを使うと、そのモジュールに依存する側にも依存関係が伝播します。\n例えば、モジュールAがrequires transitive Bを宣言した場合、Aに依存するモジュールCもBを利用できます。\nこれにより、モジュールCはBを明示的にrequiresしなくても、Bの公開パッケージにアクセスできます。\ntransitiveは推移的依存と呼ばれ、ライブラリ開発で特に役立ちます。",
+          "code": "// モジュールA: java.sqlへの推移的依存を宣言\nmodule com.example.moduleA {\n    requires transitive java.sql;\n    exports com.example.moduleA.api;\n}\n\n// モジュールB: moduleAに依存\nmodule com.example.moduleB {\n    requires com.example.moduleA;\n    // java.sqlもrequiresなしで使える（transitive効果）\n}",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "tip",
+          "title": "module-info.javaの主要ディレクティブ",
+          "body": "| ディレクティブ | 意味 | 例 |\n|---|---|---|\n| requires | 依存するモジュールを宣言 | requires java.sql; |\n| exports | 外部に公開するパッケージ | exports com.example.api; |\n| requires transitive | 推移的な依存関係 | requires transitive java.logging; |\n| opens | リフレクションアクセスを許可 | opens com.example.model; |\n| provides...with | サービスプロバイダを宣言 | provides MyService with MyImpl; |\n\njava.baseモジュールは自動的にrequiresされるため、明示不要です。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "code",
+          "title": "exports...toによる限定公開",
+          "body": "通常のexportsはすべてのモジュールにパッケージを公開しますが、exports...toを使うと特定のモジュールだけに公開できます。\nこれにより、内部APIを特定のモジュールだけに公開し、その他のモジュールからはアクセスを禁止できます。\ntoの後に複数のモジュールをカンマで区切って指定することも可能です。\nこの仕組みは「限定エクスポート（Qualified Export）」と呼ばれます。",
+          "code": "module com.example.library {\n    // すべてのモジュールに公開\n    exports com.example.library.api;\n\n    // 特定のモジュールだけに公開\n    exports com.example.library.internal\n        to com.example.app, com.example.test;\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "rule",
+          "title": "opensディレクティブ",
+          "body": "opensディレクティブは、実行時のリフレクションアクセスを許可するために使用します。\nexportsがコンパイル時と実行時の両方でアクセスを許可するのに対し、opensは実行時のリフレクションのみを許可します。\nフレームワーク（JPA、Spring等）がリフレクションでクラスにアクセスする場合に必要になります。\nopen moduleとして宣言すると、モジュール全体をリフレクションに公開できます。\nただし、通常はopens宣言を使い、必要なパッケージのみを公開することが推奨されます。",
+          "code": "// パッケージ単位でリフレクションを許可\nmodule com.example.app {\n    opens com.example.app.model;\n    opens com.example.app.entity to hibernate.core;\n}\n\n// モジュール全体をリフレクションに公開\nopen module com.example.app {\n    exports com.example.app.api;\n}",
+          "note": "exportsはコンパイル時+実行時のアクセス許可、opensは実行時のリフレクションアクセスのみを許可します。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "point",
+          "title": "モジュール間の依存関係とコンパイル",
+          "body": "モジュール間の依存関係はコンパイル時に検証されます。\nrequiresで宣言していないモジュールの型を使用すると、コンパイルエラーになります。\n循環依存（モジュールAがBに依存し、BがAに依存する）は許可されません。\nまた、同じパッケージが複数のモジュールに存在する「スプリットパッケージ」もエラーになります。\nこれらの制約により、モジュール間の依存関係が明確に管理されます。",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch17_02_q1",
+          "lessonId": "ch17_02",
+          "type": "fillBlank",
+          "question": "モジュールAの依存関係を、Aに依存するモジュールにも伝播させるには requires ______ を使用します。",
+          "code": "module com.example.provider {\n    provides com.example.spi.Service\n        with com.example.impl.ServiceImpl;\n}",
+          "explanation": "requires transitiveを使用すると、推移的依存（transitive dependency）が宣言されます。モジュールAがrequires transitive Bを宣言すると、Aに依存するモジュールもBの公開パッケージにアクセスできるようになります。",
+          "choices": [
+            {
+              "id": "ch17_02_q1_a",
+              "text": "transitive",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch17_02_q1_b",
+              "text": "static",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_02_q1_c",
+              "text": "public",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_02_q1_d",
+              "text": "shared",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch17_02_q2",
+          "lessonId": "ch17_02",
+          "type": "fourChoice",
+          "question": "exports...toディレクティブの説明として正しいものはどれですか？",
+          "code": "module com.example.lib {\n    exports com.example.lib.internal\n        to com.example.app;\n}",
+          "explanation": "exports...toは限定エクスポート（Qualified Export）と呼ばれ、指定したモジュールだけにパッケージを公開します。この例では、com.example.lib.internalパッケージはcom.example.appモジュールだけがアクセスでき、他のモジュールからはアクセスできません。",
+          "choices": [
+            {
+              "id": "ch17_02_q2_a",
+              "text": "すべてのモジュールにinternalパッケージを公開する",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_02_q2_b",
+              "text": "com.example.appモジュールだけにinternalパッケージを公開する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_02_q2_c",
+              "text": "com.example.appモジュールからのリフレクションアクセスを許可する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_02_q2_d",
+              "text": "com.example.appモジュールへの依存関係を宣言する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_02_q3",
+          "lessonId": "ch17_02",
+          "type": "outputPredict",
+          "question": "以下のモジュール構成でcom.example.appをコンパイルした場合、どのような結果になりますか？",
+          "code": "// com.example.lib の module-info.java\nmodule com.example.lib {\n    exports com.example.lib.api;\n    // com.example.lib.internal は exports されていない\n}\n\n// com.example.app の module-info.java\nmodule com.example.app {\n    requires com.example.lib;\n}\n\n// com.example.app 内のコード\nimport com.example.lib.internal.Helper; // internalパッケージを使用\npublic class Main {\n    Helper h = new Helper();\n}",
+          "explanation": "com.example.lib.internalパッケージはexportsされていないため、他のモジュールからアクセスできません。com.example.appがこのパッケージのクラスを使用しようとすると、コンパイルエラーが発生します。exportsで公開されたcom.example.lib.apiパッケージのみがアクセス可能です。",
+          "choices": [
+            {
+              "id": "ch17_02_q3_a",
+              "text": "正常にコンパイルされる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_02_q3_b",
+              "text": "コンパイルエラーが発生する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_02_q3_c",
+              "text": "実行時にエラーが発生する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_02_q3_d",
+              "text": "警告は出るがコンパイルは成功する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch17_02_q4",
+          "lessonId": "ch17_02",
+          "type": "codeComplete",
+          "question": "module-info.javaでモジュールを定義するコードを完成させてください。",
+          "code": "module com.example.app {\n    requires java.sql;\n    exports com.example.api;\n}",
+          "explanation": "moduleキーワードでモジュールを宣言し、requiresで依存モジュールを指定します。Java 9以降のモジュールシステムの基本です。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ com.example.app {\n    __BLANK_2__ com.example.utils;\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①モジュール宣言",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "module",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "package",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "import",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②依存",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "requires",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "imports",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "uses",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_02_q5",
+          "lessonId": "ch17_02",
+          "type": "multiChoice",
+          "question": "module-info.javaで使用できるディレクティブをすべて選んでください。",
+          "code": "module com.example.service {\n    requires transitive com.example.model;\n    exports com.example.service;\n}",
+          "explanation": "module-info.javaではrequires, exports, opens, provides, usesが使えます。importsはモジュールディレクティブではありません。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "requires",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "exports",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "opens",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "imports",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "provides",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch17_03",
+      "courseId": "ch17",
+      "title": "JDKの主要モジュール",
+      "summary": "java.baseをはじめとするJDK標準モジュールの構成と、jlinkによるカスタムランタイムの作成方法を学びます。",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "overview",
+          "title": "JDKモジュール構成の全体像",
+          "body": "このレッスンでは以下を学びます:\n\n・java.baseモジュール（自動依存）\n・java.sql, java.logging等の主要モジュール\n・JDKモジュール間の依存関係\n\nJDK自体のモジュール構成を把握しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "rule",
+          "title": "java.baseモジュール",
+          "body": "java.baseはJavaプラットフォームの最も基本的なモジュールです。\nすべてのモジュールはjava.baseに暗黙的に依存するため、requires java.baseと書く必要はありません。\njava.baseに含まれる主なパッケージは以下の通りです。\njava.lang（String, Object, System等）、java.util（List, Map等）、java.io（File, InputStream等）が含まれます。\njava.math、java.net、java.nio、java.time等も含まれています。\nこれらのパッケージはrequires宣言なしで常に使用可能です。",
+          "code": "// java.baseは自動的にrequiresされるため\n// 以下の2つは同じ意味\nmodule com.example.app {\n    // requires java.base; // 書かなくてよい（暗黙的）\n    requires java.sql;\n}\n\n// java.lang, java.util, java.io は\n// java.base に含まれるので常に使用可能\nimport java.util.List;      // OK\nimport java.io.IOException; // OK",
+          "note": "java.baseはすべてのモジュールから暗黙的にrequiresされます。明示的に書いても構いませんが、冗長です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "code",
+          "title": "主要なJDKモジュール",
+          "body": "JDKには用途別にモジュールが用意されています。\njava.sqlはJDBC（データベースアクセス）関連のクラスを提供します。\njava.loggingはJavaの標準ロギングAPIを提供します。\njava.desktopはSwing/AWTなどのGUI関連クラスを含みます。\njava.netはHTTP Clientなどのネットワーク関連APIを提供します。\nこれらのモジュールを使用するには、**module-info.java**で明示的にrequiresを宣言する必要があります。",
+          "code": "module com.example.app {\n    // データベースアクセスに必要\n    requires java.sql;\n    // ロギング機能に必要\n    requires java.logging;\n    // GUI開発に必要\n    requires java.desktop;\n\n    exports com.example.app.api;\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "code",
+          "title": "jlinkによるカスタムランタイム",
+          "body": "jlinkはJava 9で導入されたツールで、必要なモジュールだけを含むカスタムランタイムイメージを作成できます。\n通常のJDKは数百MBのサイズがありますが、jlinkを使えば必要最小限のランタイムを生成できます。\nこれにより、アプリケーションの配布サイズを大幅に削減できます。\nコンテナ環境やIoTデバイスなど、リソースが限られた環境で特に有用です。\njlinkが正常に動作するには、アプリケーションがモジュール化されている必要があります。",
+          "code": "# カスタムランタイムの作成例\njlink \\\n  --module-path $JAVA_HOME/jmods:mods \\\n  --add-modules com.example.app \\\n  --output custom-runtime\n\n# 作成したランタイムでアプリを実行\ncustom-runtime/bin/java \\\n  -m com.example.app/com.example.app.Main\n\n# ランタイムのサイズを確認\ndu -sh custom-runtime/",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "tip",
+          "title": "モジュール関連の試験対策",
+          "body": "認定試験ではJDKモジュールに関する基本知識が問われます。\nまず、java.baseが暗黙的にrequiresされることを確実に覚えましょう。\njava.baseに含まれるパッケージ（java.lang, java.util, java.io等）は頻出です。\njava.sqlやjava.loggingなどのモジュールは明示的なrequiresが必要であることも重要です。\nまた、コマンドラインオプションも問われることがあります。\n--module-pathや-m（--module）、--add-modulesなどのオプションを整理しておきましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch17_03_q1",
+          "lessonId": "ch17_03",
+          "type": "fourChoice",
+          "question": "java.baseモジュールについて正しい説明はどれですか？",
+          "code": "module com.example.app {\n    requires java.logging;\n    opens com.example.internal\n        to com.google.gson;\n}",
+          "explanation": "java.baseモジュールはすべてのモジュールから暗黙的にrequiresされる特別なモジュールです。java.lang、java.util、java.ioなどの基本パッケージを含んでおり、明示的にrequires宣言をする必要はありません。",
+          "choices": [
+            {
+              "id": "ch17_03_q1_a",
+              "text": "使用するには明示的にrequires宣言が必要である",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_03_q1_b",
+              "text": "すべてのモジュールから暗黙的にrequiresされる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_03_q1_c",
+              "text": "java.sqlパッケージを含んでいる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_03_q1_d",
+              "text": "Java 11で追加されたモジュールである",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch17_03_q2",
+          "lessonId": "ch17_03",
+          "type": "fourChoice",
+          "question": "JDBCを使用するアプリケーションのmodule-info.javaとして正しいものはどれですか？",
+          "code": "module com.example.provider {\n    provides com.example.spi.Service\n        with com.example.impl.ServiceImpl;\n}",
+          "explanation": "JDBCのクラス（java.sql.Connection, java.sql.DriverManager等）はjava.sqlモジュールに含まれています。java.baseと異なり、明示的にrequires java.sqlを宣言する必要があります。java.jdbcやjava.databaseというモジュールは存在しません。",
+          "choices": [
+            {
+              "id": "ch17_03_q2_a",
+              "text": "module app { requires java.jdbc; }",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_03_q2_b",
+              "text": "module app { requires java.sql; }",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_03_q2_c",
+              "text": "module app { requires java.database; }",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_03_q2_d",
+              "text": "module app { exports java.sql; }",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_03_q3",
+          "lessonId": "ch17_03",
+          "type": "fillBlank",
+          "question": "必要なモジュールだけを含むカスタムランタイムイメージを作成するJDKツールは ______ です。",
+          "code": null,
+          "explanation": "jlinkはJava 9で導入されたツールで、指定したモジュールとその依存モジュールだけを含む最小限のランタイムイメージを作成できます。これによりアプリケーションの配布サイズを削減できます。",
+          "choices": [
+            {
+              "id": "ch17_03_q3_a",
+              "text": "jlink",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch17_03_q3_b",
+              "text": "jmod",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_03_q3_c",
+              "text": "jpackage",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_03_q3_d",
+              "text": "jdeps",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

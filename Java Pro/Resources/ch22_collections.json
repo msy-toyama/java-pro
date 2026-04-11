@@ -1,0 +1,1126 @@
+{
+  "courseId": "ch22",
+  "lessons": [
+    {
+      "id": "ch22_01",
+      "courseId": "ch22",
+      "title": "コレクションの全体像",
+      "summary": "Javaコレクションフレームワークの全体像を把握し、主要なインターフェースの階層構造とIteratorの仕組みを学びます。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "overview",
+          "title": "コレクションフレームワークとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**コレクション**フレームワークの全体構成\n・List, Set, Map, Queueの役割の違い\n・各インターフェースの実装クラスの選び方\n\n適切なコレクションを選ぶことがパフォーマンスと可読性に直結します。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "rule",
+          "title": "インターフェースの階層構造",
+          "body": "**コレクション**フレームワークの最上位にはIterableインターフェースがあり、その下にCollectionインターフェースがあります。\nCollectionを継承するのはList、Set、Queueの3つです。Mapは独立した階層です。\n\n| インターフェース | 特徴 |\n|---|---|\n| List | 順序を持ち、重複を許可します。 |\n| Set | 重複を許可しません。 |\n| Queue | 先入れ先出し（FIFO）の構造を持ちます。 |\n| Map | キーと値のペアを管理し、キーの重複は許可されません。Collectionを継承しません。 |\n\nこの階層構造を正確に理解することが、Gold試験攻略の第一歩です。",
+          "code": "// コレクションフレームワークの階層（概念図）\n// Iterable<E>\n//   └── Collection<E>\n//         ├── List<E>      ... ArrayList, LinkedList\n//         ├── Set<E>       ... HashSet, TreeSet, LinkedHashSet\n//         └── Queue<E>     ... ArrayDeque, PriorityQueue\n//               └── Deque<E> ... ArrayDeque\n//\n// Map<K,V>（独立）   ... HashMap, TreeMap, LinkedHashMap\n\nCollection<String> col = new ArrayList<>();\ncol.add(\"A\");\ncol.add(\"B\");\nSystem.out.println(col.size());  // 2",
+          "note": "MapはCollectionインターフェースを継承していません。試験で問われるポイントです。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "code",
+          "title": "IterableとIterator",
+          "body": "Iterableインターフェースを実装するクラスはfor-each文で使用できます。\n\n| インターフェース | 説明 |\n|---|---|\n| Iterable<E> | 拡張for文で走査可能にするインターフェース。iterator()メソッドを提供します。 |\n| Iterator<E> | hasNext()で次の要素の有無を確認し、next()で取得します。remove()で安全に要素を削除できます。 |\n\nIteratorを使えば、反復処理中に安全に要素を削除できます。\nfor-each文の中で**コレクション**の要素を直接削除するとConcurrentModificationExceptionが発生します。",
+          "code": "List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\n\n// for-each文（内部的にIteratorを使用）\nfor (String s : list) {\n    System.out.println(s);\n}\n\n// Iteratorを使った安全な削除\nIterator<String> it = list.iterator();\nwhile (it.hasNext()) {\n    String s = it.next();\n    if (s.equals(\"B\")) {\n        it.remove();  // 安全に削除できる\n    }\n}\nSystem.out.println(list);  // [A, C]\n\n// 注意: for-each中のremoveはNG\n// for (String s : list) {\n//     list.remove(s);  // ConcurrentModificationException!\n// }",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "point",
+          "title": "Collectionインターフェースの主要メソッド",
+          "body": "Collectionインターフェースは、すべての**コレクション**（Map除く）に共通するメソッドを定義しています。\n\n| メソッド | 説明 |\n|---|---|\n| add(E e) | 要素を追加します。 |\n| remove(Object o) | 指定要素を削除します。 |\n| contains(Object o) | 指定要素が含まれているか判定します。 |\n| size() | 要素数を返します。 |\n| isEmpty() | コレクションが空かどうかを判定します。 |\n| clear() | すべての要素を削除します。 |\n\naddAll()、removeAll()、retainAll()などのバルク操作メソッドも用意されています。\ntoArray()メソッドでコレクションを配列に変換できます。",
+          "code": "Collection<String> c = new ArrayList<>();\nc.add(\"X\");\nc.add(\"Y\");\nc.add(\"Z\");\n\nSystem.out.println(c.contains(\"Y\"));  // true\nSystem.out.println(c.size());          // 3\nSystem.out.println(c.isEmpty());       // false\n\nc.remove(\"Y\");\nSystem.out.println(c);  // [X, Z]\n\n// バルク操作\nCollection<String> other = List.of(\"Z\", \"W\");\nc.addAll(other);       // [X, Z, Z, W]\nc.retainAll(other);    // [Z, Z, W]（otherに含まれる要素だけ残す）",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "tip",
+          "title": "for-eachとforEachメソッドの違い",
+          "body": "Java 8以降、IterableにforEach(Consumer)メソッドが追加されました。\nfor-each文は拡張for文とも呼ばれ、内部的にIteratorを使用します。\nforEach()メソッドはラムダ式やメソッド参照と組み合わせて使用できます。\nどちらも要素の走査に使えますが、forEach()メソッド内ではcontinueやbreakが使えない点に注意してください。\n試験では両者の違いや制約が問われることがあります。",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"C\");\n\n// for-each文\nfor (String s : list) {\n    System.out.println(s);\n}\n\n// forEachメソッド（ラムダ式）\nlist.forEach(s -> System.out.println(s));\n\n// forEachメソッド（メソッド参照）\nlist.forEach(System.out::println);",
+          "note": "forEach()メソッド内でbreakやcontinueは使えません。途中で処理を中断したい場合はfor-each文を使いましょう。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_01_q1",
+          "lessonId": "ch22_01",
+          "type": "fourChoice",
+          "question": "Javaコレクションフレームワークのインターフェース階層について、正しい記述はどれですか？",
+          "code": null,
+          "explanation": "MapインターフェースはCollectionインターフェースを継承していません。Mapはキーと値のペアを管理する独立した階層です。List、Set、QueueはすべてCollectionを継承しています。IterableはCollectionの上位インターフェースです。",
+          "choices": [
+            {
+              "id": "ch22_01_q1_a",
+              "text": "MapはCollectionインターフェースを継承していない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_01_q1_b",
+              "text": "ListはMapインターフェースを継承している",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_01_q1_c",
+              "text": "SetはQueueインターフェースを継承している",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_01_q1_d",
+              "text": "CollectionはIterableを継承していない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_01_q2",
+          "lessonId": "ch22_01",
+          "type": "fourChoice",
+          "question": "for-each文でコレクションの要素を反復処理中に、コレクションの要素を直接削除した場合、何が起きますか？",
+          "code": "List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\nfor (String s : list) {\n    if (s.equals(\"B\")) {\n        list.remove(s);\n    }\n}",
+          "explanation": "for-each文の内部ではIteratorが使用されています。Iteratorによる反復処理中にコレクション自体のremove()メソッドで要素を削除すると、ConcurrentModificationExceptionがスローされます。安全に削除するにはIteratorのremove()メソッドを使用してください。",
+          "choices": [
+            {
+              "id": "ch22_01_q2_a",
+              "text": "ConcurrentModificationExceptionがスローされる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_01_q2_b",
+              "text": "正常に\"B\"が削除され[A, C]になる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_01_q2_c",
+              "text": "コンパイルエラーになる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_01_q2_d",
+              "text": "NullPointerExceptionがスローされる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_01_q3",
+          "lessonId": "ch22_01",
+          "type": "fillBlank",
+          "question": "Iteratorを使ってコレクションの要素を安全に削除するために呼び出すメソッドは何ですか？\n\nIterator<String> it = list.iterator();\nwhile (it.hasNext()) {\n    String s = it.next();\n    if (s.equals(\"B\")) {\n        it.___();\n    }\n}",
+          "code": null,
+          "explanation": "Iteratorのremove()メソッドは、next()で最後に返された要素をコレクションから安全に削除します。for-each文の中でコレクション自体のremove()を呼ぶとConcurrentModificationExceptionが発生しますが、Iteratorのremove()は安全に要素を削除できます。",
+          "choices": [
+            {
+              "id": "ch22_01_q3_a",
+              "text": "remove",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_01_q3_b",
+              "text": "delete",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_01_q3_c",
+              "text": "clear",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_01_q3_d",
+              "text": "discard",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch22_02",
+      "courseId": "ch22",
+      "title": "List — ArrayList と LinkedList",
+      "summary": "ListインターフェースとArrayList・LinkedListの特徴、不変リストの作成方法、ListIteratorの使い方を学びます。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "overview",
+          "title": "Listインターフェースの特徴",
+          "body": "このレッスンでは以下を学びます:\n\n・ArrayListとLinkedListの性能差\n・インデックスアクセス vs 挿入/削除の効率\n・用途に応じた適切なListの選択\n\n内部構造の違いを理解して、正しく使い分けましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "rule",
+          "title": "ArrayListとLinkedListのパフォーマンス比較",
+          "body": "ArrayListは内部配列を使用するため、インデックスによるランダムアクセスがO(1)で高速です。\nただし、中間への挿入や削除は要素のシフトが必要なためO(n)になります。\nLinkedListは双方向連結リストのため、先頭・末尾への追加削除がO(1)で高速です。\nLinkedListのインデックスアクセスはリストを辿る必要があるためO(n)になります。\n一般的に、ほとんどのケースではArrayListが推奨されます。\nLinkedListはQueueやDequeとしても使用できますが、ArrayDequeの方が効率的です。",
+          "code": "// ArrayList — ランダムアクセスが高速\nList<String> arrayList = new ArrayList<>();\narrayList.add(\"A\");\narrayList.add(\"B\");\narrayList.add(\"C\");\nString item = arrayList.get(1);  // O(1)で高速\n\n// LinkedList — 先頭・末尾の操作が高速\nLinkedList<String> linkedList = new LinkedList<>();\nlinkedList.addFirst(\"X\");  // O(1)\nlinkedList.addLast(\"Y\");   // O(1)\nlinkedList.add(1, \"Z\");    // 中間への挿入\nSystem.out.println(linkedList);  // [X, Z, Y]",
+          "note": "迷ったらArrayListを使いましょう。LinkedListが有利なのは、頻繁に先頭から追加・削除する場合に限られます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "code",
+          "title": "不変リスト — List.of()とList.copyOf()",
+          "body": "Java 9以降、List.of()で不変（イミュータブル）リストを簡潔に作成できます。\nList.of()で作成したリストに対してadd()やremove()を呼ぶとUnsupportedOperationExceptionがスローされます。\nList.copyOf()は既存の**コレクション**から不変リストのコピーを作成します。\nList.of()にはnull要素を含めることができず、nullを渡すとNullPointerExceptionが発生します。\nCollections.unmodifiableList()も不変リストを作成しますが、元のリストへの変更が反映される点が異なります。",
+          "code": "// List.of() — 不変リストの作成\nList<String> immutable = List.of(\"A\", \"B\", \"C\");\n// immutable.add(\"D\");  // UnsupportedOperationException\n// immutable.set(0, \"X\");  // UnsupportedOperationException\n\n// List.copyOf() — 既存コレクションから不変リストを作成\nList<String> original = new ArrayList<>(List.of(\"X\", \"Y\"));\nList<String> copy = List.copyOf(original);\noriginal.add(\"Z\");  // originalは変更可能\nSystem.out.println(copy);  // [X, Y]（コピーは影響を受けない）\n\n// null要素は許可されない\n// List.of(\"A\", null);  // NullPointerException",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "point",
+          "title": "ListIteratorによる双方向走査",
+          "body": "ListIteratorはIteratorを拡張し、リストの双方向走査と要素の追加・変更をサポートします。\nhasPrevious()とprevious()で逆方向に走査でき、nextIndex()とpreviousIndex()で現在位置のインデックスを取得できます。\nset(E)メソッドで最後にnext()またはprevious()で返された要素を置き換えることができます。\nadd(E)メソッドで現在位置に新しい要素を挿入できます。\nListIteratorはListインターフェース固有の機能であり、SetやQueueでは使用できません。",
+          "code": "List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\nListIterator<String> li = list.listIterator();\n\n// 前方向への走査\nwhile (li.hasNext()) {\n    int idx = li.nextIndex();\n    String s = li.next();\n    System.out.println(idx + \": \" + s);  // 0: A, 1: B, 2: C\n}\n\n// 逆方向への走査\nwhile (li.hasPrevious()) {\n    String s = li.previous();\n    System.out.println(s);  // C, B, A\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "tip",
+          "title": "Arrays.asList()の注意点",
+          "body": "Arrays.asList()は配列をListに変換しますが、返されるListは固定サイズです。\n要素の変更（set）は可能ですが、追加（add）や削除（remove）はUnsupportedOperationExceptionになります。\nまた、Arrays.asList()で作成したリストは元の配列と連動しており、一方の変更がもう一方に反映されます。\n可変のリストが必要な場合は、new ArrayList<>(Arrays.asList(...))やList.of()を使います。\n試験では、Arrays.asList()の制約に関する問題がよく出題されます。",
+          "code": "String[] array = {\"A\", \"B\", \"C\"};\nList<String> list = Arrays.asList(array);\n\nlist.set(0, \"X\");  // OK: 要素の変更は可能\n// list.add(\"D\");  // UnsupportedOperationException\n// list.remove(0); // UnsupportedOperationException\n\n// 元の配列と連動する\nSystem.out.println(array[0]);  // X（リストの変更が配列に反映）\n\n// 可変リストにするには\nList<String> mutable = new ArrayList<>(Arrays.asList(\"A\", \"B\", \"C\"));\nmutable.add(\"D\");  // OK",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_02_q1",
+          "lessonId": "ch22_02",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\n        list.add(1, \"X\");\n        list.remove(2);\n        System.out.println(list);\n    }\n}",
+          "explanation": "最初のリストは[A, B, C]です。add(1, \"X\")でインデックス1に\"X\"を挿入すると[A, X, B, C]になります。次にremove(2)でインデックス2の要素\"B\"を削除すると[A, X, C]になります。",
+          "choices": [
+            {
+              "id": "ch22_02_q1_a",
+              "text": "[A, X, C]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_02_q1_b",
+              "text": "[A, X, B]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_02_q1_c",
+              "text": "[X, B, C]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_02_q1_d",
+              "text": "[A, B, X]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_02_q2",
+          "lessonId": "ch22_02",
+          "type": "fourChoice",
+          "question": "List.of()で作成した不変リストに対して行える操作はどれですか？",
+          "code": null,
+          "explanation": "List.of()で作成した不変リストは要素の取得（get）やサイズの確認（size）は可能ですが、add()、remove()、set()などの変更操作はすべてUnsupportedOperationExceptionをスローします。contains()による検索も可能です。",
+          "choices": [
+            {
+              "id": "ch22_02_q2_a",
+              "text": "get()による要素の取得",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_02_q2_b",
+              "text": "add()による要素の追加",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_02_q2_c",
+              "text": "set()による要素の変更",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_02_q2_d",
+              "text": "remove()による要素の削除",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_02_q3",
+          "lessonId": "ch22_02",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。エラーの原因として正しいものはどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = List.of(\"A\", \"B\", null);\n        System.out.println(list);\n    }\n}",
+          "explanation": "List.of()はnull要素を許可しません。null要素を含めようとすると、NullPointerExceptionがスローされます。これはList.of()の仕様であり、不変コレクションファクトリメソッド（List.of、Set.of、Map.of）に共通する制約です。",
+          "choices": [
+            {
+              "id": "ch22_02_q3_a",
+              "text": "List.of()にnullを含めることはできずNullPointerExceptionがスローされる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_02_q3_b",
+              "text": "List.of()は引数を2つまでしか受け取れない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_02_q3_c",
+              "text": "List.of()の戻り値型はListではなくCollectionである",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_02_q3_d",
+              "text": "コンパイルエラーが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch22_02_q4",
+          "lessonId": "ch22_02",
+          "type": "codeComplete",
+          "question": "HashMap を使ってキーと値を格納・取得するコードを完成させてください。",
+          "code": null,
+          "explanation": "HashMap<K,V> でキーの型と値の型を指定します。put() でエントリを追加し、get() でキーに対応する値を取得します。Mapインターフェースの基本操作として必ず覚えましょう。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Map<String, Integer> scores = new __BLANK_1__<>();\nscores.__BLANK_2__(\"Alice\", 95);\nSystem.out.println(scores.__BLANK_3__(\"Alice\"));",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①実装クラス",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "HashMap",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "HashSet",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "ArrayList",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②値の追加",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "put",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "add",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "set",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_3",
+              "label": "③値の取得",
+              "choices": [
+                {
+                  "id": "b3_c1",
+                  "text": "get",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b3_c2",
+                  "text": "find",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b3_c3",
+                  "text": "fetch",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch22_03",
+      "courseId": "ch22",
+      "title": "Set — HashSet, TreeSet, LinkedHashSet",
+      "summary": "Setインターフェースの特徴と3つの主要な実装クラスの違い、equals()とhashCode()の契約を学びます。",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "overview",
+          "title": "Setインターフェースの特徴",
+          "body": "このレッスンでは以下を学びます:\n\n・HashSetの高速検索の仕組み（ハッシュテーブル）\n・TreeSetによるソート済みセット\n・LinkedHashSetで挿入順序を保持\n\n要件に合ったSet実装を選ぶ基準を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "rule",
+          "title": "HashSet — 順序なし・高速",
+          "body": "HashSetはハッシュテーブルを使用した実装で、要素の追加・削除・検索がO(1)で高速です。\n要素の順序は保証されず、反復処理の順番は予測できません。\n内部的にはHashMapを利用しており、要素がキーとして格納されます。\nnull要素を1つだけ格納できます。\n最も一般的に使われるSet実装であり、順序が不要な場合に推奨されます。",
+          "code": "Set<String> hashSet = new HashSet<>();\nhashSet.add(\"Banana\");\nhashSet.add(\"Apple\");\nhashSet.add(\"Cherry\");\nhashSet.add(\"Apple\");  // 重複 → 追加されない（falseを返す）\n\nSystem.out.println(hashSet.size());  // 3\nSystem.out.println(hashSet);  // 順序は不定（例: [Cherry, Apple, Banana]）\n\n// null要素も格納可能\nhashSet.add(null);\nSystem.out.println(hashSet.contains(null));  // true",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "code",
+          "title": "TreeSetとLinkedHashSet",
+          "body": "| クラス | 特徴 |\n|---|---|\n| HashSet | 最速だが順序不定。最も一般的に使用されます。 |\n| TreeSet | 要素をソート順に自動的に並べます。要素はComparableを実装するか、Comparatorを指定する必要があります。 |\n| LinkedHashSet | 挿入順序を保持します。HashSetの高速性と順序保持を両立します。 |",
+          "code": "// TreeSet — ソート順で保持\nSet<String> treeSet = new TreeSet<>();\ntreeSet.add(\"Banana\");\ntreeSet.add(\"Apple\");\ntreeSet.add(\"Cherry\");\nSystem.out.println(treeSet);  // [Apple, Banana, Cherry]（自然順序）\n\nTreeSet<Integer> nums = new TreeSet<>(Set.of(5, 2, 8, 1, 9));\nSystem.out.println(nums.first());    // 1\nSystem.out.println(nums.last());     // 9\nSystem.out.println(nums.floor(6));   // 5（6以下で最大）\nSystem.out.println(nums.ceiling(6)); // 8（6以上で最小）\n\n// LinkedHashSet — 挿入順序を保持\nSet<String> linkedSet = new LinkedHashSet<>();\nlinkedSet.add(\"Banana\");\nlinkedSet.add(\"Apple\");\nlinkedSet.add(\"Cherry\");\nSystem.out.println(linkedSet);  // [Banana, Apple, Cherry]（挿入順）",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "point",
+          "title": "equals()とhashCode()の契約",
+          "body": "HashSetやHashMapで正しく動作するには、equals()とhashCode()の契約を守る必要があります。\nequals()がtrueを返す2つのオブジェクトは、同じhashCode()を返さなければなりません。\nこの契約を破ると、HashSetに重複した要素が格納されたり、要素を検索できなくなったりします。\nhashCode()が同じでもequals()がfalseになることは許容されます（ハッシュ衝突）。\nGold試験では、equals()とhashCode()の不整合による予期しない動作が問われます。",
+          "code": "public class Student {\n    private String name;\n    private int id;\n\n    // equals()をオーバーライドしたらhashCode()もオーバーライドする\n    @Override\n    public boolean equals(Object o) {\n        if (this == o) return true;\n        if (!(o instanceof Student)) return false;\n        Student s = (Student) o;\n        return id == s.id && Objects.equals(name, s.name);\n    }\n\n    @Override\n    public int hashCode() {\n        return Objects.hash(name, id);\n    }\n}\n\n// 正しく実装すればHashSetで重複が排除される\nSet<Student> set = new HashSet<>();\nset.add(new Student(\"Taro\", 1));\nset.add(new Student(\"Taro\", 1));  // equals()がtrueなので追加されない\nSystem.out.println(set.size());  // 1",
+          "note": "equals()をオーバーライドしたら必ずhashCode()もオーバーライドしてください。これはJavaの鉄則です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "tip",
+          "title": "Set.of()による不変Set",
+          "body": "Java 9以降、Set.of()で不変のSetを簡潔に作成できます。\nSet.of()は重複する要素を渡すとIllegalArgumentExceptionをスローします。\nList.of()と同様にnull要素は許可されません。\nSet.copyOf()で既存の**コレクション**から不変Setを作成することもできます。\n不変Setは変更操作（add、removeなど）を行うとUnsupportedOperationExceptionをスローします。",
+          "code": "// Set.of() — 不変Setの作成\nSet<String> immutableSet = Set.of(\"A\", \"B\", \"C\");\n// immutableSet.add(\"D\");  // UnsupportedOperationException\n\n// 重複要素を渡すとIllegalArgumentException\n// Set.of(\"A\", \"B\", \"A\");  // IllegalArgumentException\n\n// Set.copyOf()\nList<String> list = List.of(\"X\", \"Y\", \"X\");\nSet<String> copySet = Set.copyOf(list);  // 重複は除去される\nSystem.out.println(copySet.size());  // 2",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_03_q1",
+          "lessonId": "ch22_03",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Set<String> set = new TreeSet<>();\n        set.add(\"Banana\");\n        set.add(\"Apple\");\n        set.add(\"Cherry\");\n        set.add(\"Apple\");\n        System.out.println(set);\n    }\n}",
+          "explanation": "TreeSetは要素をソート順で保持し、重複を許可しません。\"Apple\"を2回追加しても1つだけ保持されます。自然順序（アルファベット順）でソートされるため、出力は[Apple, Banana, Cherry]になります。",
+          "choices": [
+            {
+              "id": "ch22_03_q1_a",
+              "text": "[Apple, Banana, Cherry]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_03_q1_b",
+              "text": "[Banana, Apple, Cherry, Apple]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_03_q1_c",
+              "text": "[Banana, Apple, Cherry]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_03_q1_d",
+              "text": "[Cherry, Banana, Apple]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_03_q2",
+          "lessonId": "ch22_03",
+          "type": "fourChoice",
+          "question": "equals()とhashCode()の契約について、正しい記述はどれですか？",
+          "code": null,
+          "explanation": "equals()がtrueを返す2つのオブジェクトは、必ず同じhashCode()を返さなければなりません。これはJavaの契約であり、HashSetやHashMapが正しく動作するために必須です。逆にhashCode()が同じでもequals()がfalseになることは許容されます（ハッシュ衝突）。",
+          "choices": [
+            {
+              "id": "ch22_03_q2_a",
+              "text": "equals()がtrueなら、hashCode()も同じ値を返さなければならない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_03_q2_b",
+              "text": "hashCode()が同じなら、equals()も必ずtrueを返す",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_03_q2_c",
+              "text": "equals()だけオーバーライドすればHashSetは正しく動作する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_03_q2_d",
+              "text": "hashCode()だけオーバーライドすればHashSetは正しく動作する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_03_q3",
+          "lessonId": "ch22_03",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        TreeSet<Integer> set = new TreeSet<>(Set.of(10, 3, 7, 15, 1));\n        System.out.println(set.floor(8));\n    }\n}",
+          "explanation": "TreeSetのfloor(E)メソッドは、指定した値以下で最大の要素を返します。セットの要素は{1, 3, 7, 10, 15}で、8以下で最大の要素は7です。なお、ceiling(8)なら8以上で最小の10を返します。",
+          "choices": [
+            {
+              "id": "ch22_03_q3_a",
+              "text": "7",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_03_q3_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_03_q3_c",
+              "text": "3",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_03_q3_d",
+              "text": "8",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch22_04",
+      "courseId": "ch22",
+      "title": "Map — HashMap, TreeMap",
+      "summary": "Mapインターフェースの基本操作とHashMap・TreeMapの違い、不変Mapの作成方法を学びます。",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "overview",
+          "title": "Mapインターフェースとは",
+          "body": "このレッスンでは以下を学びます:\n\n・HashMapの高速なキーアクセスの仕組み\n・TreeMapでキーをソート順に管理\n・Map.Entry、keySet()、values()の活用\n\nキーと値のペアを効率的に管理する方法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "code",
+          "title": "HashMapの基本操作",
+          "body": "HashMapはハッシュテーブルに基づくMap実装で、キーと値のペアの追加・取得・削除がO(1)で高速です。\nput(K, V)でエントリを追加し、get(K)でキーに対応する値を取得します。\ncontainsKey(K)でキーの存在を確認し、containsValue(V)で値の存在を確認できます。\ngetOrDefault(K, V)はキーが存在しない場合にデフォルト値を返す便利なメソッドです。\nputIfAbsent(K, V)はキーが存在しない場合のみ値を設定します。",
+          "code": "Map<String, Integer> map = new HashMap<>();\nmap.put(\"Alice\", 90);\nmap.put(\"Bob\", 85);\nmap.put(\"Carol\", 92);\n\nSystem.out.println(map.get(\"Bob\"));        // 85\nSystem.out.println(map.get(\"Dave\"));       // null\nSystem.out.println(map.getOrDefault(\"Dave\", 0));  // 0\n\nmap.put(\"Alice\", 95);  // 既存キーの値を上書き\nSystem.out.println(map.get(\"Alice\"));  // 95\n\nmap.putIfAbsent(\"Alice\", 100);  // 既にキーが存在するので変更なし\nSystem.out.println(map.get(\"Alice\"));  // 95\n\nSystem.out.println(map.containsKey(\"Bob\"));    // true\nSystem.out.println(map.containsValue(85));     // true\nSystem.out.println(map.size());                // 3",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "rule",
+          "title": "Mapの走査方法",
+          "body": "Mapを走査するには3つの方法があります。\n| メソッド | 説明 |\n|---|---|\n| keySet() | キーのSetを返し、キーを基にループできます。 |\n| values() | 値のCollectionを返し、値だけをループできます。 |\n| entrySet() | Map.Entry<K,V>のSetを返し、キーと値のペアを同時に取得できます。 |\nentrySet()を使う方法が最も効率的で、キーと値の両方が必要な場合に推奨されます。\nJava 8以降はforEach(BiConsumer)メソッドも使用できます。",
+          "code": "Map<String, Integer> map = new HashMap<>();\nmap.put(\"Alice\", 90);\nmap.put(\"Bob\", 85);\nmap.put(\"Carol\", 92);\n\n// keySet()でキーを走査\nfor (String key : map.keySet()) {\n    System.out.println(key + \": \" + map.get(key));\n}\n\n// entrySet()でキーと値を同時に走査（推奨）\nfor (Map.Entry<String, Integer> entry : map.entrySet()) {\n    System.out.println(entry.getKey() + \": \" + entry.getValue());\n}\n\n// forEach()メソッド（Java 8以降）\nmap.forEach((key, value) -> System.out.println(key + \": \" + value));",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "point",
+          "title": "TreeMapとキーの順序",
+          "body": "TreeMapはキーを自然順序（**Comparable**）またはComparatorで指定した順序でソートして保持します。\nTreeMapはNavigableMapインターフェースを実装しており、floorKey()、ceilingKey()、higherKey()、lowerKey()などのナビゲーションメソッドが使えます。\nfirstKey()とlastKey()で最小・最大のキーを取得できます。\nsubMap()、headMap()、tailMap()でキーの範囲を指定した部分Mapを取得できます。\nTreeMapではキーにnullを使用できません（NullPointerExceptionが発生）。",
+          "code": "TreeMap<String, Integer> treeMap = new TreeMap<>();\ntreeMap.put(\"Charlie\", 70);\ntreeMap.put(\"Alice\", 90);\ntreeMap.put(\"Bob\", 85);\n\nSystem.out.println(treeMap);  // {Alice=90, Bob=85, Charlie=70}\nSystem.out.println(treeMap.firstKey());      // Alice\nSystem.out.println(treeMap.lastKey());       // Charlie\nSystem.out.println(treeMap.floorKey(\"Bob\")); // Bob\nSystem.out.println(treeMap.higherKey(\"Bob\")); // Charlie\n\n// 部分Map\nSystem.out.println(treeMap.subMap(\"Alice\", \"Charlie\"));  // {Alice=90, Bob=85}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "tip",
+          "title": "Map.of()とMap.entry()",
+          "body": "Java 9以降、Map.of()で不変のMapを簡潔に作成できます。\nMap.of()はキーと値を交互に引数で指定し、最大10エントリまで対応しています。\n11エントリ以上の場合はMap.ofEntries()とMap.entry()を組み合わせて使います。\nMap.of()はキーの重複やnullのキー・値を許可せず、違反するとIllegalArgumentExceptionまたはNullPointerExceptionがスローされます。\nMap.copyOf()で既存のMapから不変Mapを作成することもできます。",
+          "code": "// Map.of() — 不変Mapの作成\nMap<String, Integer> map = Map.of(\"A\", 1, \"B\", 2, \"C\", 3);\n// map.put(\"D\", 4);  // UnsupportedOperationException\n\n// Map.ofEntries() — 11エントリ以上の場合\nMap<String, Integer> large = Map.ofEntries(\n    Map.entry(\"A\", 1),\n    Map.entry(\"B\", 2),\n    Map.entry(\"C\", 3)\n);\n\n// キーの重複はIllegalArgumentException\n// Map.of(\"A\", 1, \"A\", 2);  // IllegalArgumentException\n\n// Map.copyOf()\nMap<String, Integer> original = new HashMap<>();\noriginal.put(\"X\", 10);\nMap<String, Integer> copy = Map.copyOf(original);\n// copy.put(\"Y\", 20);  // UnsupportedOperationException",
+          "note": "Map.of()は最大10組のキー・値ペアまでです。それ以上はMap.ofEntries()を使いましょう。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_04_q1",
+          "lessonId": "ch22_04",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Integer> map = new HashMap<>();\n        map.put(\"A\", 1);\n        map.put(\"B\", 2);\n        map.put(\"A\", 3);\n        map.putIfAbsent(\"B\", 4);\n        System.out.println(map.get(\"A\") + \", \" + map.get(\"B\"));\n    }\n}",
+          "explanation": "最初にput(\"A\", 1)で{A=1}、put(\"B\", 2)で{A=1, B=2}になります。put(\"A\", 3)でキー\"A\"の値が3に上書きされ{A=3, B=2}になります。putIfAbsent(\"B\", 4)はキー\"B\"が既に存在するので値は変更されません。結果、get(\"A\")は3、get(\"B\")は2を返します。",
+          "choices": [
+            {
+              "id": "ch22_04_q1_a",
+              "text": "3, 2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q1_b",
+              "text": "1, 2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q1_c",
+              "text": "3, 4",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q1_d",
+              "text": "1, 4",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_04_q2",
+          "lessonId": "ch22_04",
+          "type": "fillBlank",
+          "question": "Mapのキーと値のペアを同時に走査するために使用するメソッドはどれですか？\n\nfor (Map.Entry<String, Integer> entry : map.___()) {\n    System.out.println(entry.getKey() + \": \" + entry.getValue());\n}",
+          "code": null,
+          "explanation": "entrySet()メソッドはMapのすべてのキーと値のペアをMap.Entry<K,V>のSetとして返します。キーと値の両方が必要な場合はentrySet()が最も効率的な走査方法です。keySet()はキーのみ、values()は値のみを返します。",
+          "choices": [
+            {
+              "id": "ch22_04_q2_a",
+              "text": "entrySet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q2_b",
+              "text": "keySet",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q2_c",
+              "text": "values",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q2_d",
+              "text": "entries",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_04_q3",
+          "lessonId": "ch22_04",
+          "type": "fourChoice",
+          "question": "TreeMapについて正しい記述はどれですか？",
+          "code": null,
+          "explanation": "TreeMapはキーを自然順序（Comparable）またはコンストラクタで指定したComparatorの順序でソートして保持します。NavigableMapインターフェースを実装しており、floorKey()やceilingKey()などのナビゲーションメソッドが使えます。HashMapは順序を保証せず、LinkedHashMapは挿入順序を保持します。",
+          "choices": [
+            {
+              "id": "ch22_04_q3_a",
+              "text": "キーがソート順で保持される",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q3_b",
+              "text": "キーにnullを使用できる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q3_c",
+              "text": "挿入順序が保持される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q3_d",
+              "text": "HashMapよりも高速にアクセスできる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch22_04_q4",
+          "lessonId": "ch22_04",
+          "type": "multiChoice",
+          "question": "HashMapについて正しい説明をすべて選んでください。",
+          "code": null,
+          "explanation": "HashMapはキーにnullを1つ使用でき、値にはnullを複数使用できます。順序は保証されません（順序保証にはLinkedHashMapを使用）。キーの重複は許可されず、同じキーでputすると上書きされます。スレッドセーフではないため、マルチスレッド環境ではConcurrentHashMapを使用します。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch22_04_q4_a",
+              "text": "キーにnullを1つ使用できる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q4_b",
+              "text": "格納順序が保証される",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q4_c",
+              "text": "キーが重複する場合は値が上書きされる",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q4_d",
+              "text": "スレッドセーフではない",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch22_05",
+      "courseId": "ch22",
+      "title": "Queue と Deque",
+      "summary": "QueueとDequeインターフェースの操作メソッド、ArrayDequeとPriorityQueueの使い方を学びます。",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "overview",
+          "title": "Queueインターフェースとは",
+          "body": "このレッスンでは以下を学びます:\n\n・Queue（FIFO：先入れ先出し）の基本操作\n・Deque（両端キュー）でスタック/キューを実現\n・offer/poll/peek vs add/remove/element の違い\n\nデータ構造の基本であるキューの活用法を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "rule",
+          "title": "Queue操作メソッドの2つのグループ",
+          "body": "Queueのメソッドは操作に失敗した場合の挙動により2つのグループに分かれます。\n| メソッド | 説明 |\n|---|---|\n| add() | キューが満杯の場合にIllegalStateExceptionをスローしますが、offer()はfalseを返します。 |\n| remove() | キューが空の場合にNoSuchElementExceptionをスローしますが、poll()はnullを返します。 |\n| element() | キューが空の場合にNoSuchElementExceptionをスローしますが、peek()はnullを返します。 |\n容量制限のないキューではadd()とoffer()の違いはほぼありませんが、poll()とpeek()のnull返却は覚えておくべきです。",
+          "code": "Queue<String> queue = new ArrayDeque<>();\n\n// 要素の追加\nqueue.offer(\"A\");\nqueue.offer(\"B\");\nqueue.offer(\"C\");\nSystem.out.println(queue);  // [A, B, C]\n\n// 先頭要素の参照（削除しない）\nSystem.out.println(queue.peek());  // A\nSystem.out.println(queue.size());  // 3\n\n// 先頭要素の取り出し（削除する）\nSystem.out.println(queue.poll());  // A\nSystem.out.println(queue.poll());  // B\nSystem.out.println(queue);         // [C]\n\n// 空のキューに対する操作\nqueue.clear();\nSystem.out.println(queue.poll());     // null\nSystem.out.println(queue.peek());     // null\n// queue.remove();  // NoSuchElementException\n// queue.element(); // NoSuchElementException",
+          "note": "poll()とpeek()はキューが空のときnullを返しますが、remove()とelement()は例外をスローします。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "code",
+          "title": "ArrayDeque — スタックとキュー",
+          "body": "| インターフェース | 説明 |\n|---|---|\n| Deque | 両端キュー。先頭と末尾の両方から追加・削除が可能なインターフェースです。 |\n| ArrayDeque | Dequeの配列ベース実装。スタックとしてもキューとしても使えます。 |\n\nStackクラスよりもArrayDequeの使用が推奨されています（StackはVectorベースでパフォーマンスが劣る）。\nnull要素は格納できません（NullPointerExceptionが発生）。",
+          "code": "// キューとしての使用（FIFO）\nDeque<String> queue = new ArrayDeque<>();\nqueue.offerLast(\"A\");   // 末尾に追加\nqueue.offerLast(\"B\");\nqueue.offerLast(\"C\");\nSystem.out.println(queue.pollFirst());  // A（先頭から取り出し）\nSystem.out.println(queue.pollFirst());  // B\n\n// スタックとしての使用（LIFO）\nDeque<String> stack = new ArrayDeque<>();\nstack.push(\"X\");  // 先頭に追加（= offerFirst）\nstack.push(\"Y\");\nstack.push(\"Z\");\nSystem.out.println(stack.pop());  // Z（先頭から取り出し = pollFirst）\nSystem.out.println(stack.pop());  // Y\nSystem.out.println(stack.peek()); // X（参照のみ = peekFirst）",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "point",
+          "title": "PriorityQueue — 優先度付きキュー",
+          "body": "PriorityQueueは要素を優先度順（自然順序またはComparator指定）で取り出すキューです。\n内部ではヒープ（Heap）データ構造を使用しており、常に最小値（自然順序の場合）が先頭になります。\npoll()やpeek()で取り出される要素は常に優先度が最も高い（最小の）要素です。\nただし、イテレータ（for-each文）での走査順序はソート順が保証されない点に注意が必要です。\nnull要素は格納できません。",
+          "code": "// 自然順序（昇順）のPriorityQueue\nPriorityQueue<Integer> pq = new PriorityQueue<>();\npq.offer(30);\npq.offer(10);\npq.offer(20);\n\nSystem.out.println(pq.peek());  // 10（最小値）\nSystem.out.println(pq.poll());  // 10\nSystem.out.println(pq.poll());  // 20\nSystem.out.println(pq.poll());  // 30\n\n// 降順のPriorityQueue（Comparator指定）\nPriorityQueue<Integer> descPq = new PriorityQueue<>(Comparator.reverseOrder());\ndescPq.offer(30);\ndescPq.offer(10);\ndescPq.offer(20);\nSystem.out.println(descPq.poll());  // 30（最大値）",
+          "note": "PriorityQueueのfor-each文による走査順序はソート順になりません。ソート順で取り出したい場合はpoll()を繰り返し呼んでください。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "tip",
+          "title": "Dequeメソッドの対応表",
+          "body": "Dequeには先頭（First）と末尾（Last）の両方に対するメソッドが用意されています。\n| 操作 | メソッド |\n|---|---|\n| 追加 | offerFirst()/offerLast()（例外をスロー: addFirst()/addLast()） |\n| 削除 | pollFirst()/pollLast()（例外をスロー: removeFirst()/removeLast()） |\n| 参照 | peekFirst()/peekLast()（例外をスロー: getFirst()/getLast()） |\nキューとして使う場合はofferLast+pollFirst、スタックとして使う場合はpush(=offerFirst)+pop(=pollFirst)と覚えましょう。\n試験ではDequeをキューとスタックの両方で使うコードが出題されます。",
+          "code": null,
+          "note": "push()はofferFirst()と同じ、pop()はremoveFirst()と同じです。Dequeをスタックとして使うときのメソッド対応を覚えましょう。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_05_q1",
+          "lessonId": "ch22_05",
+          "type": "fourChoice",
+          "question": "空のQueueに対してpoll()メソッドを呼び出した場合の挙動はどれですか？",
+          "code": null,
+          "explanation": "poll()メソッドはキューが空の場合にnullを返します。一方、remove()メソッドはキューが空の場合にNoSuchElementExceptionをスローします。この2つのメソッドの違いはJava Gold試験の頻出ポイントです。",
+          "choices": [
+            {
+              "id": "ch22_05_q1_a",
+              "text": "nullを返す",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_05_q1_b",
+              "text": "NoSuchElementExceptionがスローされる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_05_q1_c",
+              "text": "IllegalStateExceptionがスローされる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_05_q1_d",
+              "text": "NullPointerExceptionがスローされる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_05_q2",
+          "lessonId": "ch22_05",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> stack = new ArrayDeque<>();\n        stack.push(\"A\");\n        stack.push(\"B\");\n        stack.push(\"C\");\n        System.out.println(stack.pop());\n        System.out.println(stack.peek());\n    }\n}",
+          "explanation": "push()はスタックの先頭（Dequeの先頭）に要素を追加します。push(\"A\")→push(\"B\")→push(\"C\")の順に追加すると、スタックの先頭はCになります。pop()で先頭のCを取り出して出力します。peek()で現在の先頭Bを参照（削除せず）して出力します。",
+          "choices": [
+            {
+              "id": "ch22_05_q2_a",
+              "text": "C\nB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_05_q2_b",
+              "text": "A\nB",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_05_q2_c",
+              "text": "C\nA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_05_q2_d",
+              "text": "A\nA",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_05_q3",
+          "lessonId": "ch22_05",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。エラーの原因として正しいものはどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> deque = new ArrayDeque<>();\n        deque.offer(\"A\");\n        deque.offer(null);\n        deque.offer(\"C\");\n        System.out.println(deque);\n    }\n}",
+          "explanation": "ArrayDequeはnull要素を格納できません。null要素をoffer()やadd()で追加しようとすると、NullPointerExceptionがスローされます。これはArrayDequeの内部実装でnullを「要素なし」の判定に使用しているためです。null要素を格納したい場合はLinkedListを使用してください。",
+          "choices": [
+            {
+              "id": "ch22_05_q3_a",
+              "text": "ArrayDequeにnull要素を追加できずNullPointerExceptionがスローされる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_05_q3_b",
+              "text": "offer()メソッドはDequeインターフェースに存在しない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_05_q3_c",
+              "text": "ArrayDequeは3つ以上の要素を格納できない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_05_q3_d",
+              "text": "コンパイルエラーが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch22_06",
+      "courseId": "ch22",
+      "title": "Collections ユーティリティ",
+      "summary": "Collectionsクラスのユーティリティメソッドと、ComparableとComparatorによるソートの仕組みを学びます。",
+      "estimatedMinutes": 6,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "overview",
+          "title": "Collectionsクラスとは",
+          "body": "このレッスンでは以下を学びます:\n\n・Collections.sort()、Collections.unmodifiableList()の使い方\n・Comparableインターフェースによる自然順序の定義\n・Comparatorによるカスタムソート\n\n**コレクション**操作の便利ツール群を活用しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "code",
+          "title": "Collectionsクラスの主要メソッド",
+          "body": "| メソッド | 説明 |\n|---|---|\n| sort() | リストを自然順序でソート |\n| reverse() | 要素の順序を逆にする |\n| shuffle() | 要素をランダムに並べ替え |\n| frequency() | 指定した要素の出現回数を返す |\n| unmodifiableList() | 変更不可能なリストのビューを返す |",
+          "code": "List<String> list = new ArrayList<>(List.of(\"C\", \"A\", \"B\", \"A\"));\n\n// ソート\nCollections.sort(list);\nSystem.out.println(list);  // [A, A, B, C]\n\n// 逆順\nCollections.reverse(list);\nSystem.out.println(list);  // [C, B, A, A]\n\n// 出現回数\nint count = Collections.frequency(list, \"A\");\nSystem.out.println(count);  // 2\n\n// 最大値・最小値\nSystem.out.println(Collections.max(list));  // C\nSystem.out.println(Collections.min(list));  // A\n\n// 変更不可能なリスト\nList<String> unmod = Collections.unmodifiableList(list);\n// unmod.add(\"D\");  // UnsupportedOperationException\nlist.add(\"D\");       // 元のリストは変更可能\nSystem.out.println(unmod.size());  // 5（元のリストの変更が反映される）",
+          "note": "Collections.unmodifiableList()は元のリストのビューを返すため、元のリストの変更が反映されます。List.copyOf()は独立したコピーを作成します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "rule",
+          "title": "ComparableとComparator",
+          "body": "Comparableインターフェースは自然順序を定義するために使われ、compareTo(T)メソッドを実装します。\nString、Integer、Doubleなどの標準クラスはすでにComparableを実装しています。\n\n| インターフェース | 説明 |\n|---|---|\n| Comparable<T> | 自然順序を定義します。compareTo(T o)メソッドを実装します。 |\n| Comparator<T> | カスタム順序を定義します。compare(T o1, T o2)メソッドを実装します。 |\n\nComparableは1つの自然順序を持たせ、Comparatorは複数の異なるソート順を提供できます。\nCollections.sort()にComparatorを渡すことで、カスタム順序でソートできます。",
+          "code": "// Comparable — 自然順序の定義\npublic class Student implements Comparable<Student> {\n    String name;\n    int score;\n\n    public Student(String name, int score) {\n        this.name = name;\n        this.score = score;\n    }\n\n    @Override\n    public int compareTo(Student other) {\n        return Integer.compare(this.score, other.score);  // スコア昇順\n    }\n}\n\n// Comparator — カスタム順序\nComparator<Student> byName = (s1, s2) -> s1.name.compareTo(s2.name);\nComparator<Student> byScoreDesc = (s1, s2) -> Integer.compare(s2.score, s1.score);\n\nList<Student> students = new ArrayList<>();\nCollections.sort(students);         // Comparableの順序（スコア昇順）\nCollections.sort(students, byName); // Comparatorの順序（名前順）",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "point",
+          "title": "Comparator.comparing()とthenComparing()",
+          "body": "Java 8以降、Comparatorのファクトリメソッドを使って簡潔にComparatorを作成できます。\n**Comparator**.comparing()はキー抽出関数を受け取り、そのキーに基づくComparatorを作成します。\nthenComparing()をチェーンすることで、複数条件でのソートを実現できます。\nreversed()メソッドで逆順のComparatorを取得できます。\nComparator.naturalOrder()とComparator.reverseOrder()で自然順序とその逆を簡潔に取得できます。",
+          "code": "// Comparator.comparing()を使った簡潔な記述\nComparator<Student> byName = Comparator.comparing(s -> s.name);\nComparator<Student> byScore = Comparator.comparingInt(s -> s.score);\n\n// 複数条件でのソート（スコア降順 → 名前昇順）\nComparator<Student> comp = Comparator\n    .comparingInt((Student s) -> s.score).reversed()\n    .thenComparing(s -> s.name);\n\nList<Student> students = new ArrayList<>();\nstudents.add(new Student(\"Taro\", 85));\nstudents.add(new Student(\"Hanako\", 92));\nstudents.add(new Student(\"Jiro\", 85));\nstudents.sort(comp);\n// 結果: Hanako(92), Jiro(85), Taro(85)",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "tip",
+          "title": "List.sort()とComparatorの使い分け",
+          "body": "Java 8以降、Listインターフェースにもデフォルトメソッドとしてsort(**Comparator**)が追加されました。\nlist.sort(comp)はCollections.sort(list, comp)と同等ですが、より簡潔に記述できます。\n自然順序でソートするにはlist.sort(Comparator.naturalOrder())またはCollections.sort(list)を使います。\nnullを含むリストのソートにはComparator.nullsFirst()やComparator.nullsLast()が便利です。\nこれらのメソッドを組み合わせることで、複雑なソート要件にも対応できます。",
+          "code": "List<String> list = new ArrayList<>(List.of(\"C\", \"A\", \"B\"));\n\n// List.sort()で自然順序ソート\nlist.sort(Comparator.naturalOrder());\nSystem.out.println(list);  // [A, B, C]\n\n// 逆順ソート\nlist.sort(Comparator.reverseOrder());\nSystem.out.println(list);  // [C, B, A]\n\n// nullを含むリストのソート\nList<String> withNull = new ArrayList<>(Arrays.asList(\"B\", null, \"A\"));\nwithNull.sort(Comparator.nullsFirst(Comparator.naturalOrder()));\nSystem.out.println(withNull);  // [null, A, B]\n\nwithNull.sort(Comparator.nullsLast(Comparator.naturalOrder()));\nSystem.out.println(withNull);  // [A, B, null]",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_06_q1",
+          "lessonId": "ch22_06",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>(List.of(\"Banana\", \"Apple\", \"Cherry\"));\n        list.sort(Comparator.comparingInt(String::length));\n        System.out.println(list);\n    }\n}",
+          "explanation": "Comparator.comparingInt(String::length)は文字列の長さで比較するComparatorを作成します。\"Apple\"は5文字、\"Banana\"は6文字、\"Cherry\"は6文字です。長さが同じ場合、元の順序が保持されます（安定ソート）。そのため結果は[Apple, Banana, Cherry]になります。",
+          "choices": [
+            {
+              "id": "ch22_06_q1_a",
+              "text": "[Apple, Banana, Cherry]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_06_q1_b",
+              "text": "[Apple, Cherry, Banana]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_06_q1_c",
+              "text": "[Banana, Apple, Cherry]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_06_q1_d",
+              "text": "[Cherry, Banana, Apple]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_06_q2",
+          "lessonId": "ch22_06",
+          "type": "fourChoice",
+          "question": "ComparableとComparatorの違いについて、正しい記述はどれですか？",
+          "code": null,
+          "explanation": "Comparableインターフェースを実装するクラスは、自身の自然順序を定義します。compareTo(T)メソッドを実装し、クラスに1つの順序を持たせます。一方、Comparatorは外部から比較ロジックを提供するインターフェースで、compare(T, T)メソッドを実装し、同じクラスに対して複数の異なるソート順を定義できます。",
+          "choices": [
+            {
+              "id": "ch22_06_q2_a",
+              "text": "Comparableはクラス自体に自然順序を定義し、Comparatorは外部から比較ロジックを提供する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_06_q2_b",
+              "text": "ComparableはJava 8で廃止され、Comparatorに統一された",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_06_q2_c",
+              "text": "Comparatorはラムダ式で記述できないが、Comparableはできる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_06_q2_d",
+              "text": "ComparableはCollectionインターフェースを継承している",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_06_q3",
+          "lessonId": "ch22_06",
+          "type": "reorder",
+          "question": "Comparator.comparing()を使って、名前の長さの昇順でソートするコードを正しい順序に並べ替えてください。",
+          "code": null,
+          "explanation": "Comparator.comparing()にキー抽出関数を渡してComparatorを作成し、list.sort()でソートします。正しい順序は: ①List<String> list = ... → ②Comparator<String> comp = ... → ③Comparator.comparing(... → ④s -> s.length()); → ⑤list.sort(comp);",
+          "choices": [
+            {
+              "id": "ch22_06_q3_a",
+              "text": "List<String> list = new ArrayList<>(List.of(\"Bob\", \"Alice\", \"Jo\"));",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_06_q3_b",
+              "text": "Comparator<String> comp =",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch22_06_q3_c",
+              "text": "Comparator.comparing(",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch22_06_q3_d",
+              "text": "s -> s.length());",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "ch22_06_q3_e",
+              "text": "list.sort(comp);",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "ch22_06_q3_a",
+            "ch22_06_q3_b",
+            "ch22_06_q3_c",
+            "ch22_06_q3_d",
+            "ch22_06_q3_e"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

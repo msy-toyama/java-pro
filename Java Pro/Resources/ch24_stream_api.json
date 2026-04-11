@@ -1,0 +1,1114 @@
+{
+  "courseId": "ch24",
+  "lessons": [
+    {
+      "id": "ch24_01",
+      "courseId": "ch24",
+      "title": "Streamとは",
+      "summary": "Stream APIの基本概念を学びます。Streamはコレクションではなくデータの流れであり、遅延評価で動作します。ソース→中間操作→終端操作のパイプライン構造と、Streamの生成方法を理解します。",
+      "estimatedMinutes": 7,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "overview",
+          "title": "Stream APIとは",
+          "body": "このレッスンでは以下を学びます:\n\n・Streamとは何か（データの処理**パイプライン**）\n・Streamの生成方法（collection.stream(), Stream.of()等）\n・Streamは「一度きり」しか使えないルール\n\n宣言的なデータ処理の新しいパラダイムを学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "rule",
+          "title": "Streamパイプラインの構造",
+          "body": "Streamの処理は「ソース（生成）→ **中間操作** → **終端操作**」の3段階で構成されます。\nソースはStreamの元となるデータで、コレクション、配列、ファイルなどから生成します。\n中間操作はStreamを変換する処理で、filter()やmap()などがあり、新しいStreamを返します。\n終端操作はStreamの処理を実行して結果を返す処理で、forEach()やcollect()などがあります。\n中間操作は**遅延評価**されるため、終端操作が呼ばれるまで実際の処理は実行されません。\nStreamは一度消費すると再利用できないため、同じStreamに対して終端操作を2回呼ぶとIllegalStateExceptionが発生します。",
+          "code": "import java.util.List;\nimport java.util.stream.Stream;\n\nList<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"David\");\n\n// ソース → 中間操作 → 終端操作\nnames.stream()              // ソース：Listからstream生成\n     .filter(s -> s.length() > 3)  // 中間操作：長さ4以上\n     .map(String::toUpperCase)     // 中間操作：大文字変換\n     .forEach(System.out::println); // 終端操作：出力\n// 出力: ALICE, CHARLIE, DAVID",
+          "note": "Stream**パイプライン**は「何を処理するか」を宣言的に記述するスタイルです。従来のfor文は「どう処理するか」を記述する命令的スタイルです。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "code",
+          "title": "Streamの生成方法",
+          "body": "Streamを生成する方法は複数あります。\n| メソッド | 説明 |\n|---|---|\n| Collection.stream() | コレクションからStreamを生成（最も一般的） |\n| Stream.of() | 指定した要素からStreamを生成 |\n| Arrays.stream() | 配列からStreamを生成 |\n| Stream.empty() | 空のStreamを生成 |\nStream.generate()やStream.iterate()で無限Streamを生成することもできます。\nFiles.lines()でファイルの各行をStreamとして取得することもできます。",
+          "code": "import java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Stream;\n\n// 1. コレクションから\nList<String> list = List.of(\"A\", \"B\", \"C\");\nStream<String> s1 = list.stream();\n\n// 2. Stream.of()で直接指定\nStream<String> s2 = Stream.of(\"X\", \"Y\", \"Z\");\n\n// 3. 配列から\nString[] arr = {\"a\", \"b\", \"c\"};\nStream<String> s3 = Arrays.stream(arr);\n\n// 4. 空のStream\nStream<String> s4 = Stream.empty();\n\n// 5. 無限Stream（limitで制限）\nStream<Integer> s5 = Stream.iterate(0, n -> n + 2).limit(5);\ns5.forEach(System.out::println); // 0, 2, 4, 6, 8\n\n// 6. generateで生成\nStream<Double> s6 = Stream.generate(Math::random).limit(3);",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "point",
+          "title": "Streamの特徴と注意点",
+          "body": "Streamはデータを保持しません。**パイプライン**を通じてデータを処理するだけです。\nStreamは一度しか使えません。**終端操作**を実行した後に再度操作すると例外が発生します。\n**中間操作**は**遅延評価**されます。終端操作が呼ばれて初めて中間操作が実行されます。\nparallelStream()を使えば並列処理が可能ですが、スレッドセーフでない操作には注意が必要です。\nStreamはソースのデータを変更しません（非破壊的）。",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"C\");\nStream<String> stream = list.stream();\n\n// 終端操作を実行\nstream.forEach(System.out::println);\n\n// 同じStreamを再利用しようとすると例外\ntry {\n    stream.forEach(System.out::println);\n} catch (IllegalStateException e) {\n    System.out.println(\"Streamは再利用できません\");\n    // 出力: Streamは再利用できません\n}",
+          "note": "Streamを複数回使いたい場合は、そのたびに新しいStreamを生成する必要があります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "tip",
+          "title": "試験対策：Streamの基本",
+          "body": "Gold試験では、Streamの生成・**中間操作**・**終端操作**の区別が問われます。\nStream.of()にnullを渡した場合の動作や、Stream.of(配列)とArrays.stream(配列)の違いに注意しましょう。\nStream.of(配列)は配列全体を1つの要素として扱い、Arrays.stream(配列)は配列の各要素をStreamの要素とします。\nStream.iterate()は第3引数にPredicateを取るオーバーロード（Java 9以降）もあります。\n**遅延評価**を確認する問題では、peek()を使ったStreamの処理順序が頻出です。",
+          "code": "// Stream.of(配列) vs Arrays.stream(配列)\nString[] arr = {\"A\", \"B\", \"C\"};\n\nStream<String[]> s1 = Stream.of(arr);   // Stream<String[]>：要素数1\nStream<String> s2 = Arrays.stream(arr); // Stream<String>：要素数3\n\nSystem.out.println(Stream.of(arr).count());    // 1\nSystem.out.println(Arrays.stream(arr).count()); // 3\n\n// Java 9以降のiterate\nStream.iterate(1, n -> n <= 10, n -> n * 2)\n      .forEach(System.out::println); // 1, 2, 4, 8",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_01_q1",
+          "lessonId": "ch24_01",
+          "type": "fourChoice",
+          "question": "Streamに関する説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "Streamは一度終端操作を実行すると再利用できません。再度使おうとするとIllegalStateExceptionが発生します。Streamはデータを保持するコレクションではなく、中間操作は遅延評価されるため終端操作がないと実行されません。",
+          "choices": [
+            {
+              "id": "ch24_01_q1_a",
+              "text": "Streamは一度終端操作を実行すると再利用できない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_01_q1_b",
+              "text": "Streamはデータを内部に保持するコレクションである",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_01_q1_c",
+              "text": "中間操作は即座に実行される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_01_q1_d",
+              "text": "終端操作がなくても中間操作は実行される",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_01_q2",
+          "lessonId": "ch24_01",
+          "type": "fourChoice",
+          "question": "次のコードの出力はどれですか？",
+          "code": "int[] arr = {1, 2, 3};\nSystem.out.println(Stream.of(arr).count());\nSystem.out.println(Arrays.stream(arr).count());",
+          "explanation": "int[]はプリミティブ配列のため、Stream.of(int[])はint配列自体を1つの要素としてStream<int[]>に格納し、count()は1を返します。一方Arrays.stream(int[])は専用のオーバーロードがあり、各要素をIntStreamの要素として展開するため3を返します。なおString[]のような参照型配列では、Stream.of()もvarargs展開するため両方とも3になります。",
+          "choices": [
+            {
+              "id": "ch24_01_q2_a",
+              "text": "1\n3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_01_q2_b",
+              "text": "3\n3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_01_q2_c",
+              "text": "1\n1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_01_q2_d",
+              "text": "3\n1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_01_q3",
+          "lessonId": "ch24_01",
+          "type": "fillBlank",
+          "question": "コレクションからStreamを生成するには、コレクションの___()メソッドを呼び出します。",
+          "code": "List<String> list = List.of(\"A\", \"B\");\nStream<String> s = list.___();",
+          "explanation": "Collection.stream()メソッドを呼び出すことで、コレクションの要素を持つ順次Streamを生成できます。並列Streamを生成する場合はparallelStream()を使います。",
+          "choices": [
+            {
+              "id": "ch24_01_q3_a",
+              "text": "stream",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_01_q3_b",
+              "text": "toStream",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_01_q3_c",
+              "text": "getStream",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_01_q3_d",
+              "text": "createStream",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch24_02",
+      "courseId": "ch24",
+      "title": "中間操作",
+      "summary": "Streamの中間操作であるfilter()、map()、flatMap()、distinct()、sorted()、peek()を学びます。中間操作は遅延評価され、終端操作が呼ばれるまで実行されない点を理解します。",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "overview",
+          "title": "中間操作の概要",
+          "body": "このレッスンでは以下を学びます:\n\n・filter()で条件に合う要素を絞り込む\n・map()で要素を変換する\n・sorted()、distinct()、limit()、skip()の活用\n\n**中間操作**は「**遅延評価**」で、**終端操作**まで実行されません。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "code",
+          "title": "filter()とmap()",
+          "body": "filter(Predicate<T>)は条件に一致する要素だけを通す**中間操作**です。\nPredicateのtest()がtrueを返す要素だけが残ります。\nmap(Function<T,R>)は各要素を別の値に変換する中間操作です。\nFunctionのapply()で変換され、変換後の型のStreamが返されます。\nfilter()とmap()はStream処理で最も頻繁に使われる中間操作です。\n組み合わせる順序によって処理効率が変わるため、filterを先にmap後にするのが一般的です。",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eve\");\n\n// filter: 条件に一致する要素だけ残す\nnames.stream()\n     .filter(s -> s.length() >= 4)\n     .forEach(System.out::println);\n// 出力: Alice, Charlie, David\n\n// map: 各要素を変換する\nnames.stream()\n     .map(String::toUpperCase)\n     .forEach(System.out::println);\n// 出力: ALICE, BOB, CHARLIE, DAVID, EVE\n\n// filter + map の組み合わせ\nnames.stream()\n     .filter(s -> s.startsWith(\"C\"))\n     .map(String::toLowerCase)\n     .forEach(System.out::println);\n// 出力: charlie",
+          "note": "filter()を先に適用してデータを絞り込んでからmap()で変換するほうが効率的です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "code",
+          "title": "flatMap()",
+          "body": "flatMap(Function<T, Stream<R>>)は各要素をStreamに変換し、それらを1つのStreamに平坦化します。\nネストされた構造（リストのリストなど）を扱う場合に非常に有用です。\nmap()が1対1の変換であるのに対し、flatMap()は1対多の変換になります。\nflatMap()に渡す関数はStreamを返す必要があります。\n空のStreamを返すことで要素をフィルタリングすることも可能です。",
+          "code": "// リストのリストを平坦化\nList<List<String>> nested = List.of(\n    List.of(\"A\", \"B\"),\n    List.of(\"C\", \"D\"),\n    List.of(\"E\")\n);\n\nnested.stream()\n      .flatMap(List::stream)\n      .forEach(System.out::println);\n// 出力: A, B, C, D, E\n\n// 文字列を文字のStreamに変換\nList<String> words = List.of(\"Hello\", \"World\");\nwords.stream()\n     .flatMap(s -> s.chars().mapToObj(c -> (char) c))\n     .forEach(System.out::print);\n// 出力: HelloWorld",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "rule",
+          "title": "distinct()、sorted()、peek()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| distinct() | 重複する要素を除去する中間操作です。equals()メソッドで等価性を判断します。 |\n| sorted() | 要素を自然順序でソートします。Comparatorを引数に取るオーバーロードもあります。 |\n| peek(Consumer<T>) | 各要素に対して副作用のある操作を行いますが、要素自体は変更せずに次へ渡します。デバッグ目的で使われることが多く、本番コードでの副作用のある処理には推奨されません。 |\ndistinct()とsorted()はステートフルな中間操作であり、内部で状態を保持します。",
+          "code": "List<Integer> nums = List.of(3, 1, 4, 1, 5, 9, 2, 6, 5, 3);\n\n// distinct: 重複除去\nnums.stream()\n    .distinct()\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 3 1 4 5 9 2 6\n\nSystem.out.println();\n\n// sorted: ソート\nnums.stream()\n    .sorted()\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 1 1 2 3 3 4 5 5 6 9\n\nSystem.out.println();\n\n// peek: デバッグ用\nnums.stream()\n    .filter(n -> n > 3)\n    .peek(n -> System.out.println(\"filtered: \" + n))\n    .map(n -> n * 10)\n    .forEach(n -> System.out.println(\"result: \" + n));\n// filtered: 4 → result: 40, filtered: 5 → result: 50, ...",
+          "note": "sorted()にComparator.reverseOrder()を渡すと降順にソートできます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "tip",
+          "title": "遅延評価の仕組み",
+          "body": "**中間操作**は**遅延評価**されるため、**終端操作**が呼ばれるまで一切処理が行われません。\nこの仕組みにより、不要な計算を省略してパフォーマンスを最適化できます。\npeek()を使うと遅延評価の動作を確認できます。終端操作がない場合、peek()も実行されません。\nまた、要素は1つずつ**パイプライン**を通過します（要素ごとに全中間操作を実行）。\nこれは「ループフュージョン」と呼ばれ、中間バッファを作らないため効率的です。\n短絡終端操作（findFirst等）と組み合わせると、必要な要素だけ処理して残りはスキップされます。",
+          "code": "// 遅延評価の確認\nStream<String> stream = List.of(\"A\", \"B\", \"C\").stream()\n    .peek(s -> System.out.println(\"peek: \" + s))\n    .filter(s -> s.equals(\"B\"));\n\nSystem.out.println(\"終端操作の前\");\n// ここまでpeekは実行されない\n\nstream.forEach(System.out::println);\n// 出力:\n// 終端操作の前\n// peek: A\n// peek: B\n// B\n// peek: C",
+          "note": "**終端操作**なしではStream**パイプライン**は何も処理しないという点は試験でよく問われます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_02_q1",
+          "lessonId": "ch24_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "List<String> list = List.of(\"apple\", \"banana\", \"avocado\", \"cherry\");\nlist.stream()\n    .filter(s -> s.startsWith(\"a\"))\n    .map(String::toUpperCase)\n    .forEach(System.out::println);",
+          "explanation": "filter()でaで始まる要素(\"apple\", \"avocado\")が残り、map()でそれぞれ大文字に変換されます。forEach()で各要素が出力されるため、APPLEとAVOCADOが出力されます。",
+          "choices": [
+            {
+              "id": "ch24_02_q1_a",
+              "text": "APPLE\nAVOCADO",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_02_q1_b",
+              "text": "apple\navocado",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_02_q1_c",
+              "text": "APPLE\nBANANA\nAVOCADO\nCHERRY",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_02_q1_d",
+              "text": "AVOCADO\nAPPLE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_02_q2",
+          "lessonId": "ch24_02",
+          "type": "fourChoice",
+          "question": "flatMap()の説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "flatMap()は各要素をStreamに変換し、その複数のStreamを1つのStreamに結合（平坦化）します。map()が1対1の変換なのに対し、flatMap()は1対多の変換を行い、ネストされた構造をフラットにします。",
+          "choices": [
+            {
+              "id": "ch24_02_q2_a",
+              "text": "各要素をStreamに変換し、それらを1つのStreamに平坦化する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_02_q2_b",
+              "text": "各要素を1対1で変換する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_02_q2_c",
+              "text": "Streamの要素をフィルタリングする",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_02_q2_d",
+              "text": "Streamの要素をソートする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_02_q3",
+          "lessonId": "ch24_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "List<Integer> nums = List.of(3, 1, 2, 3, 1, 4);\nnums.stream()\n    .distinct()\n    .sorted()\n    .forEach(n -> System.out.print(n + \" \"));",
+          "explanation": "distinct()で重複を除去すると[3, 1, 2, 4]になります（出現順を保持）。sorted()で自然順序にソートすると[1, 2, 3, 4]になります。forEach()で各要素がスペース区切りで出力されます。",
+          "choices": [
+            {
+              "id": "ch24_02_q3_a",
+              "text": "1 2 3 4 ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_02_q3_b",
+              "text": "3 1 2 4 ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_02_q3_c",
+              "text": "1 1 2 3 3 4 ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_02_q3_d",
+              "text": "3 1 2 3 1 4 ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch24_03",
+      "courseId": "ch24",
+      "title": "終端操作",
+      "summary": "Streamの終端操作であるforEach()、count()、collect()、findFirst()、findAny()、anyMatch()、allMatch()、noneMatch()、reduce()を学びます。終端操作で実際にStreamパイプラインが実行されます。",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "overview",
+          "title": "終端操作の概要",
+          "body": "このレッスンでは以下を学びます:\n\n・forEach()で各要素に処理を実行\n・collect()で結果をコレクションに変換\n・count(), min(), max(), reduce()で集約\n\n**終端操作**がStream**パイプライン**の「トリガー」になります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "code",
+          "title": "forEach()、count()、collect()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| forEach(Consumer<T>) | 各要素に対してアクションを実行する終端操作で、戻り値はvoidです。 |\n| count() | Streamの要素数をlong型で返します。 |\n| collect(Collector) | Streamの要素をコレクションなどにまとめる最も汎用的な終端操作です。Collectorsクラスの各種メソッドと組み合わせて使います。 |\n| collect(Supplier, BiConsumer, BiConsumer) | 3引数版のcollect。可変コンテナへの蓄積を細かく制御します。 |\ntoArray()でStream要素を配列に変換することもできます。",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// forEach: 各要素に対してアクション実行\nnames.stream().forEach(System.out::println);\n// 出力: Alice, Bob, Charlie\n\n// count: 要素数を返す\nlong count = names.stream()\n                  .filter(s -> s.length() > 3)\n                  .count();\nSystem.out.println(count); // 2\n\n// collect: リストに収集\nList<String> upper = names.stream()\n                          .map(String::toUpperCase)\n                          .collect(Collectors.toList());\nSystem.out.println(upper); // [ALICE, BOB, CHARLIE]\n\n// toArray: 配列に変換\nString[] arr = names.stream().toArray(String[]::new);\nSystem.out.println(Arrays.toString(arr)); // [Alice, Bob, Charlie]",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "code",
+          "title": "findFirst()、findAny()、マッチ操作",
+          "body": "| メソッド | 説明 |\n|---|---|\n| findFirst() | Streamの最初の要素をOptionalで返します。要素がなければOptional.empty()です。 |\n| findAny() | Streamのいずれかの要素を返します。並列Streamでは最初の要素とは限りません。 |\n| anyMatch(Predicate) | 条件に一致する要素が1つでもあればtrueを返します。 |\n| allMatch(Predicate) | 全要素が条件に一致すればtrueを返します。空Streamの場合はtrueです。 |\n| noneMatch(Predicate) | どの要素も条件に一致しなければtrueを返します。空Streamの場合はtrueです。 |\nこれらは全て短絡**終端操作**であり、結果が確定した時点で残りの要素の処理を打ち切ります。",
+          "code": "List<Integer> nums = List.of(1, 2, 3, 4, 5);\n\n// findFirst: 最初の要素を取得\nOptional<Integer> first = nums.stream()\n    .filter(n -> n > 3)\n    .findFirst();\nSystem.out.println(first.get()); // 4\n\n// anyMatch: いずれかが条件を満たすか\nboolean any = nums.stream().anyMatch(n -> n > 4);\nSystem.out.println(any); // true\n\n// allMatch: 全てが条件を満たすか\nboolean all = nums.stream().allMatch(n -> n > 0);\nSystem.out.println(all); // true\n\n// noneMatch: どれも条件を満たさないか\nboolean none = nums.stream().noneMatch(n -> n > 10);\nSystem.out.println(none); // true",
+          "note": "空のStreamに対してallMatch()とnoneMatch()はtrueを返します。これは「空虚な真（vacuous truth）」と呼ばれ、試験で出題されやすいポイントです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "rule",
+          "title": "reduce()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| reduce() | Streamの要素を1つの結果に集約する終端操作です。 |\n| reduce(BinaryOperator<T>) | 要素を順に結合し、結果をOptional<T>で返します。 |\n| reduce(T identity, BinaryOperator<T>) | 初期値を指定でき、結果はT型で返されます。 |\n初期値ありの場合、Streamが空でも初期値が返されるためOptionalにはなりません。\n3引数のreduce(identity, BiFunction, BinaryOperator)は並列処理用で、combinerを指定します。\nreduce()はsum()やmax()などの特殊な終端操作の基盤となる汎用的な操作です。",
+          "code": "List<Integer> nums = List.of(1, 2, 3, 4, 5);\n\n// 初期値なし: Optional<Integer>を返す\nOptional<Integer> sum1 = nums.stream()\n    .reduce((a, b) -> a + b);\nSystem.out.println(sum1.get()); // 15\n\n// 初期値あり: int型を返す\nint sum2 = nums.stream()\n    .reduce(0, Integer::sum);\nSystem.out.println(sum2); // 15\n\n// 最大値\nOptional<Integer> max = nums.stream()\n    .reduce(Integer::max);\nSystem.out.println(max.get()); // 5\n\n// 文字列の結合\nString joined = List.of(\"A\", \"B\", \"C\").stream()\n    .reduce(\"\", (a, b) -> a + b);\nSystem.out.println(joined); // ABC",
+          "note": "初期値ありのreduce()で空Streamを処理すると初期値がそのまま返されます。初期値なしの場合はOptional.empty()が返されます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "tip",
+          "title": "試験対策：終端操作の戻り値",
+          "body": "**終端操作**の戻り値の型は試験で頻出です。以下を正確に覚えましょう。\n| メソッド | 戻り値の型 |\n|---|---|\n| forEach() | void |\n| count() | long |\n| findFirst() / findAny() | Optional<T> |\n| anyMatch() / allMatch() / noneMatch() | boolean |\n| reduce(BinaryOperator) | Optional<T> |\n| reduce(identity, BinaryOperator) | T |\n| collect() | Collectorに応じた型 |",
+          "code": null,
+          "note": "forEach()の戻り値がvoidであることから、forEach()を**パイプライン**の途中に書くとコンパイルエラーになります。**中間操作**ではなく**終端操作**です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_03_q1",
+          "lessonId": "ch24_03",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "List<Integer> nums = List.of(5, 3, 8, 1, 9);\nint result = nums.stream()\n    .filter(n -> n > 4)\n    .reduce(0, Integer::sum);\nSystem.out.println(result);",
+          "explanation": "filter()でn>4の要素(5, 8, 9)が残ります。reduce(0, Integer::sum)で初期値0に対して順に加算していきます。0+5=5, 5+8=13, 13+9=22。結果は22です。",
+          "choices": [
+            {
+              "id": "ch24_03_q1_a",
+              "text": "22",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_03_q1_b",
+              "text": "26",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_03_q1_c",
+              "text": "17",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_03_q1_d",
+              "text": "9",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_03_q2",
+          "lessonId": "ch24_03",
+          "type": "fourChoice",
+          "question": "空のStreamに対してallMatch(n -> n > 0)を呼び出した場合の戻り値はどれですか？",
+          "code": "boolean result = Stream.<Integer>empty().allMatch(n -> n > 0);",
+          "explanation": "空のStreamに対するallMatch()はtrueを返します。これは「空虚な真（vacuous truth）」と呼ばれる概念で、条件に違反する要素が存在しないためtrueとなります。同様にnoneMatch()も空Streamに対してtrueを返します。anyMatch()は空Streamに対してfalseを返します。",
+          "choices": [
+            {
+              "id": "ch24_03_q2_a",
+              "text": "true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_03_q2_b",
+              "text": "false",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_03_q2_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_03_q2_d",
+              "text": "NoSuchElementExceptionが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_03_q3",
+          "lessonId": "ch24_03",
+          "type": "fillBlank",
+          "question": "Streamの要素数をlong型で取得するには___()メソッドを使います。",
+          "code": "long n = List.of(1, 2, 3).stream().___()\n;",
+          "explanation": "count()はStreamの要素数をlong型で返す終端操作です。戻り値の型がlongであることに注意しましょう。int型ではなくlong型です。",
+          "choices": [
+            {
+              "id": "ch24_03_q3_a",
+              "text": "count",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_03_q3_b",
+              "text": "size",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_03_q3_c",
+              "text": "length",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_03_q3_d",
+              "text": "total",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch24_03_q4",
+          "lessonId": "ch24_03",
+          "type": "codeComplete",
+          "question": "Stream APIを使って文字列リストから3文字以上の要素だけを抽出し、大文字に変換して出力するコードを完成させてください。",
+          "code": null,
+          "explanation": "Stream の中間操作 filter() で条件に合う要素を絞り込み、map() で変換します。終端操作 forEach() で各要素を処理します。メソッド参照 (::) は System.out::println のように使います。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "List<String> words = List.of(\"hi\", \"java\", \"ok\", \"stream\");\nwords.stream()\n    .__BLANK_1__(s -> s.length() >= 3)\n    .__BLANK_2__(String::toUpperCase)\n    .__BLANK_3__(System.out::println);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①フィルタリング",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "filter",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "select",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "where",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②変換",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "map",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "flatMap",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "mapToInt",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_3",
+              "label": "③終端操作",
+              "choices": [
+                {
+                  "id": "b3_c1",
+                  "text": "forEach",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b3_c2",
+                  "text": "collect",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b3_c3",
+                  "text": "reduce",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch24_04",
+      "courseId": "ch24",
+      "title": "Collectors",
+      "summary": "Collectorsクラスの主要メソッドを学びます。toList()、toSet()、toMap()によるコレクション変換、joining()による文字列結合、groupingBy()・partitioningBy()によるグループ化を理解します。",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "overview",
+          "title": "Collectorsクラスの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・Collectors.toList(), toSet(), toMap()の使い方\n・Collectors.groupingBy()でグルーピング\n・Collectors.joining()で文字列結合\n\ncollect()の引数に渡すCollectorの使い方を網羅します。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "code",
+          "title": "toList()、toSet()、toMap()",
+          "body": "Collectors.toList()はStreamの要素をListに変換します。\nCollectors.toSet()はStreamの要素をSetに変換します（重複は自動的に除去されます）。\nCollectors.toMap(keyMapper, valueMapper)はStreamの要素をMapに変換します。\ntoMap()でキーが重複するとIllegalStateExceptionが発生します。\n重複キーの処理にはmergeFunction（第3引数）を指定します。\nCollectors.toUnmodifiableList()等で不変コレクションを生成することもできます（Java 10以降）。",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// toList()\nList<String> list = names.stream()\n    .filter(s -> s.length() > 3)\n    .collect(Collectors.toList());\nSystem.out.println(list); // [Alice, Charlie]\n\n// toSet()\nSet<Integer> lengths = names.stream()\n    .map(String::length)\n    .collect(Collectors.toSet());\nSystem.out.println(lengths); // [3, 5, 7]\n\n// toMap()\nMap<String, Integer> nameLength = names.stream()\n    .collect(Collectors.toMap(\n        s -> s,           // keyMapper\n        String::length    // valueMapper\n    ));\nSystem.out.println(nameLength);\n// {Alice=5, Bob=3, Charlie=7}\n\n// toMap() 重複キーの処理\nList<String> words = List.of(\"AA\", \"BB\", \"AB\");\nMap<Character, String> map = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0),       // キー\n        s -> s,                 // 値\n        (v1, v2) -> v1 + \",\" + v2  // 重複時のマージ\n    ));\nSystem.out.println(map); // {A=AA,AB, B=BB}",
+          "note": "Java 16以降では、Stream.toList()メソッドが追加され、collect(Collectors.toList())の代わりにstream().toList()と書けるようになりました。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "code",
+          "title": "joining()",
+          "body": "Collectors.joining()はStreamの文字列要素を連結します。\n引数なしの場合は区切り文字なしで連結されます。\n1引数の場合は指定した区切り文字で連結されます。\n3引数の場合は区切り文字に加えて、接頭辞と接尾辞を指定できます。\nCharSequenceのStreamに対して使用する必要があり、他の型の場合はmap()で変換が必要です。",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// 区切り文字なし\nString s1 = names.stream().collect(Collectors.joining());\nSystem.out.println(s1); // AliceBobCharlie\n\n// カンマ区切り\nString s2 = names.stream().collect(Collectors.joining(\", \"));\nSystem.out.println(s2); // Alice, Bob, Charlie\n\n// 区切り文字 + 接頭辞 + 接尾辞\nString s3 = names.stream()\n    .collect(Collectors.joining(\", \", \"[\", \"]\"));\nSystem.out.println(s3); // [Alice, Bob, Charlie]\n\n// 数値のStreamを文字列に変換してjoin\nString s4 = List.of(1, 2, 3).stream()\n    .map(String::valueOf)\n    .collect(Collectors.joining(\"-\"));\nSystem.out.println(s4); // 1-2-3",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "rule",
+          "title": "groupingBy()とpartitioningBy()",
+          "body": "Collectors.groupingBy(Function)は指定したキーに基づいて要素をグループ化し、Map<K, List<T>>を返します。\n第2引数にダウンストリームCollectorを指定して、グループ内の集計処理をカスタマイズできます。\nCollectors.partitioningBy(Predicate)は条件の真偽で要素を2グループに分け、Map<Boolean, List<T>>を返します。\npartitioningBy()のキーは必ずtrueとfalseの2つです（要素がなくても空リストが入ります）。\ngroupingBy()にCounting()やsumming()を組み合わせることで、グループごとの集計が可能です。",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"Anna\", \"Brian\");\n\n// groupingBy: 頭文字でグループ化\nMap<Character, List<String>> grouped = names.stream()\n    .collect(Collectors.groupingBy(s -> s.charAt(0)));\nSystem.out.println(grouped);\n// {A=[Alice, Anna], B=[Bob, Brian], C=[Charlie]}\n\n// groupingBy + counting: グループごとの件数\nMap<Character, Long> counts = names.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()\n    ));\nSystem.out.println(counts); // {A=2, B=2, C=1}\n\n// partitioningBy: 条件で二分\nMap<Boolean, List<String>> partitioned = names.stream()\n    .collect(Collectors.partitioningBy(s -> s.length() > 3));\nSystem.out.println(partitioned);\n// {false=[Bob], true=[Alice, Charlie, Anna, Brian]}",
+          "note": "groupingBy()は3引数版もあり、生成されるMapの型（TreeMapなど）を指定できます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "tip",
+          "title": "counting()とsummarizingInt()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| counting() | グループ内の要素数をLong型でカウント |\n| summingInt(ToIntFunction) | 整数に変換して合計 |\n| averagingInt() | 平均を計算 |\n| summarizingInt(ToIntFunction) | count/sum/min/average/maxをまとめたIntSummaryStatisticsを返す |\n| maxBy() / minBy() | グループ内の最大・最小を取得 |\nこれらはgroupingBy()のダウンストリームとして組み合わせて使うのが一般的です。",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"Anna\");\n\n// summarizingInt: 統計情報\nIntSummaryStatistics stats = names.stream()\n    .collect(Collectors.summarizingInt(String::length));\nSystem.out.println(\"Count: \" + stats.getCount());     // 4\nSystem.out.println(\"Sum: \" + stats.getSum());         // 20\nSystem.out.println(\"Min: \" + stats.getMin());         // 3\nSystem.out.println(\"Max: \" + stats.getMax());         // 7\nSystem.out.println(\"Avg: \" + stats.getAverage());     // 5.0\n\n// groupingBy + summingInt\nMap<Character, Integer> sumByInitial = names.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.summingInt(String::length)\n    ));\nSystem.out.println(sumByInitial); // {A=9, B=3, C=7}",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_04_q1",
+          "lessonId": "ch24_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"C\", \"D\");\nString result = list.stream()\n    .collect(Collectors.joining(\"-\", \"{\", \"}\"));\nSystem.out.println(result);",
+          "explanation": "Collectors.joining(delimiter, prefix, suffix)は要素を区切り文字で連結し、接頭辞と接尾辞を付けます。区切り文字\"-\"で連結すると\"A-B-C-D\"、接頭辞\"{\"と接尾辞\"}\"を付けて\"{A-B-C-D}\"が出力されます。",
+          "choices": [
+            {
+              "id": "ch24_04_q1_a",
+              "text": "{A-B-C-D}",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q1_b",
+              "text": "{A, B, C, D}",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q1_c",
+              "text": "A-B-C-D",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q1_d",
+              "text": "{ABCD}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_04_q2",
+          "lessonId": "ch24_04",
+          "type": "fourChoice",
+          "question": "Collectors.toMap()でキーが重複した場合にデフォルトで何が起こりますか？",
+          "code": null,
+          "explanation": "Collectors.toMap()でキーが重複すると、デフォルトではIllegalStateExceptionがスローされます。重複キーを許容するには第3引数にmergeFunction（(v1, v2) -> ...）を指定して、重複時の値の結合ルールを定義する必要があります。",
+          "choices": [
+            {
+              "id": "ch24_04_q2_a",
+              "text": "IllegalStateExceptionがスローされる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q2_b",
+              "text": "後の値で上書きされる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q2_c",
+              "text": "先の値が保持される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q2_d",
+              "text": "nullが設定される",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_04_q3",
+          "lessonId": "ch24_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "List<String> list = List.of(\"cat\", \"car\", \"dog\", \"deer\");\nMap<Character, Long> result = list.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()\n    ));\nSystem.out.println(result);",
+          "explanation": "groupingBy()で頭文字ごとにグループ化します。'c'グループには\"cat\"と\"car\"の2要素、'd'グループには\"dog\"と\"deer\"の2要素があります。Collectors.counting()で各グループの要素数をカウントするため、{c=2, d=2}が出力されます。",
+          "choices": [
+            {
+              "id": "ch24_04_q3_a",
+              "text": "{c=2, d=2}",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q3_b",
+              "text": "{c=[cat, car], d=[dog, deer]}",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q3_c",
+              "text": "{cat=1, car=1, dog=1, deer=1}",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q3_d",
+              "text": "{c=2, d=2, a=0}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch24_04_q4",
+          "lessonId": "ch24_04",
+          "type": "multiChoice",
+          "question": "Stream APIの終端操作として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "collect()、reduce()、forEach()、count()、findFirst()は終端操作です。filter()とmap()は中間操作であり、終端操作ではありません。中間操作は遅延評価され、終端操作が呼ばれて初めて実行されます。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch24_04_q4_a",
+              "text": "collect()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q4_b",
+              "text": "filter()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q4_c",
+              "text": "reduce()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q4_d",
+              "text": "forEach()",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch24_05",
+      "courseId": "ch24",
+      "title": "Optional",
+      "summary": "Optionalクラスの生成・判定・値取得・変換メソッドを学びます。of()、ofNullable()、empty()による生成、isPresent()、orElse()による値取得、map()やflatMap()によるOptionalの変換を理解します。",
+      "estimatedMinutes": 7,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "overview",
+          "title": "Optionalとは",
+          "body": "このレッスンでは以下を学びます:\n\n・Optional<T>でnull安全なコードを書く\n・isPresent(), ifPresent(), orElse(), orElseGet()の使い分け\n・map(), flatMap()によるOptionalの変換\n\nnullチェックの代わりにOptionalを使って安全なコードを書きましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "code",
+          "title": "Optionalの生成メソッド",
+          "body": "Optional.of(value)は非nullの値を持つOptionalを生成します。nullを渡すとNullPointerExceptionが発生します。\nOptional.ofNullable(value)はnullかもしれない値からOptionalを生成します。nullの場合はempty()と同じです。\nOptional.empty()は空のOptionalを生成します。\nof()はnullが来ないことが確実な場合に使い、不確実な場合はofNullable()を使います。\n適切な生成メソッドの選択が、安全なOptionalの使用の第一歩です。",
+          "code": "// of(): 非nullの値を指定\nOptional<String> opt1 = Optional.of(\"Hello\");\nSystem.out.println(opt1); // Optional[Hello]\n\n// of()にnullを渡すとNPE\ntry {\n    Optional<String> opt2 = Optional.of(null);\n} catch (NullPointerException e) {\n    System.out.println(\"NPE発生\"); // NPE発生\n}\n\n// ofNullable(): nullかもしれない値を指定\nOptional<String> opt3 = Optional.ofNullable(\"World\");\nSystem.out.println(opt3); // Optional[World]\n\nOptional<String> opt4 = Optional.ofNullable(null);\nSystem.out.println(opt4); // Optional.empty\n\n// empty(): 空のOptional\nOptional<String> opt5 = Optional.empty();\nSystem.out.println(opt5); // Optional.empty",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "rule",
+          "title": "isPresent()、ifPresent()、get()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| isPresent() | 値が存在すればtrue、空ならfalseを返します。 |\n| isEmpty() | Java 11で追加された、isPresent()の逆を返すメソッドです。 |\n| ifPresent(Consumer) | 値が存在する場合のみConsumerを実行します。 |\n| get() | 値を取得しますが、空のOptionalに対して呼ぶとNoSuchElementExceptionが発生します。 |\nget()を使う前にisPresent()で確認するか、orElse系メソッドを使うのが安全です。\nifPresentOrElse(Consumer, Runnable)はJava 9で追加された、値の有無に応じて処理を分岐するメソッドです。",
+          "code": "Optional<String> opt = Optional.of(\"Java\");\nOptional<String> empty = Optional.empty();\n\n// isPresent()\nSystem.out.println(opt.isPresent());   // true\nSystem.out.println(empty.isPresent()); // false\n\n// ifPresent(): 値がある場合のみ実行\nopt.ifPresent(s -> System.out.println(\"値: \" + s));\n// 出力: 値: Java\n\nempty.ifPresent(s -> System.out.println(\"値: \" + s));\n// 何も出力されない\n\n// get(): 値を取得\nSystem.out.println(opt.get()); // Java\n\ntry {\n    empty.get();\n} catch (NoSuchElementException e) {\n    System.out.println(\"値なし\"); // 値なし\n}",
+          "note": "get()は空Optionalに対して例外をスローするため、orElse()やorElseGet()の使用が推奨されます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "code",
+          "title": "orElse()、orElseGet()、orElseThrow()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| orElse(T other) | 値が存在すればその値を、なければ引数のデフォルト値を返します。 |\n| orElseGet(Supplier<T>) | 値が存在すればその値を、なければSupplierの結果を返します。 |\n| orElseThrow() | 値が存在すればその値を、なければNoSuchElementExceptionをスローします。 |\norElseThrow(Supplier<Exception>)で例外の種類をカスタマイズできます。\norElse()とorElseGet()の違いは、orElse()はデフォルト値を常に評価し、orElseGet()はOptionalが空の時だけ評価する点です。\nor(Supplier<Optional>)はJava 9で追加された、空の場合に別のOptionalを返すメソッドです。",
+          "code": "Optional<String> opt = Optional.of(\"Java\");\nOptional<String> empty = Optional.empty();\n\n// orElse(): デフォルト値を指定\nSystem.out.println(opt.orElse(\"default\"));   // Java\nSystem.out.println(empty.orElse(\"default\")); // default\n\n// orElseGet(): Supplierでデフォルト値を生成\nSystem.out.println(empty.orElseGet(() -> \"generated\"));\n// 出力: generated\n\n// orElseThrow(): 値がなければ例外\nSystem.out.println(opt.orElseThrow()); // Java\ntry {\n    empty.orElseThrow(() -> new IllegalArgumentException(\"値なし\"));\n} catch (IllegalArgumentException e) {\n    System.out.println(e.getMessage()); // 値なし\n}\n\n// orElse vs orElseGet の違い\n// ※ heavyMethod() は時間のかかる処理を表す仮のメソッドです\nOptional<String> present = Optional.of(\"A\");\npresent.orElse(heavyMethod());      // heavyMethodは常に実行される\npresent.orElseGet(() -> heavyMethod()); // heavyMethodは実行されない",
+          "note": "パフォーマンスが重要な場合やデフォルト値の生成にコストがかかる場合は、orElseGet()を使いましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "tip",
+          "title": "Optionalのmap()とflatMap()",
+          "body": "Optional.map(Function)は値が存在すれば関数を適用し、結果をOptionalでラップして返します。\n空のOptionalに対してmap()を呼ぶと、何もせずOptional.empty()を返します。\nOptional.flatMap(Function)はmap()と似ていますが、関数がOptionalを返す場合に二重ラップを防ぎます。\nmap()の関数はT→Rを返し、flatMap()の関数はT→Optional<R>を返します。\nstream()メソッド（Java 9以降）で、Optionalを0個または1個の要素を持つStreamに変換できます。",
+          "code": "Optional<String> opt = Optional.of(\"Hello\");\n\n// map: 値を変換\nOptional<Integer> len = opt.map(String::length);\nSystem.out.println(len); // Optional[5]\n\n// 空のOptionalにmap\nOptional<Integer> empty = Optional.<String>empty()\n    .map(String::length);\nSystem.out.println(empty); // Optional.empty\n\n// flatMap: Optionalを返す関数に使用\nOptional<String> result = opt.flatMap(\n    s -> s.length() > 3 ? Optional.of(s.toUpperCase()) : Optional.empty()\n);\nSystem.out.println(result); // Optional[HELLO]\n\n// mapだと二重ラップされる\nOptional<Optional<String>> doubled = opt.map(\n    s -> Optional.of(s.toUpperCase())\n);\nSystem.out.println(doubled); // Optional[Optional[HELLO]]",
+          "note": "flatMap()はOptionalを返す関数を使う場合に必要です。map()を使うとOptional<Optional<T>>になってしまいます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_05_q1",
+          "lessonId": "ch24_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "Optional<String> opt = Optional.ofNullable(null);\nSystem.out.println(opt.map(String::length).orElse(-1));",
+          "explanation": "Optional.ofNullable(null)はOptional.empty()を生成します。空のOptionalに対してmap()を呼ぶとOptional.empty()がそのまま返されます。orElse(-1)でデフォルト値-1が返されるため、-1が出力されます。",
+          "choices": [
+            {
+              "id": "ch24_05_q1_a",
+              "text": "-1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_05_q1_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_05_q1_c",
+              "text": "NullPointerExceptionが発生する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_05_q1_d",
+              "text": "NoSuchElementExceptionが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_05_q2",
+          "lessonId": "ch24_05",
+          "type": "fourChoice",
+          "question": "Optional.of(null)を実行した場合、何が起こりますか？",
+          "code": null,
+          "explanation": "Optional.of()は非nullの値を受け取ることを前提としています。nullを渡すとNullPointerExceptionがスローされます。nullかもしれない値にはOptional.ofNullable()を使用する必要があります。",
+          "choices": [
+            {
+              "id": "ch24_05_q2_a",
+              "text": "NullPointerExceptionがスローされる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_05_q2_b",
+              "text": "Optional.empty()が返される",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_05_q2_c",
+              "text": "nullを含むOptionalが生成される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_05_q2_d",
+              "text": "コンパイルエラーが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_05_q3",
+          "lessonId": "ch24_05",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。どの行がエラーの原因ですか？",
+          "code": "Optional<String> opt = Optional.empty();\nString value = opt.get();\nSystem.out.println(value.toUpperCase());",
+          "explanation": "Optional.empty()で空のOptionalを生成しています。空のOptionalに対してget()を呼ぶと、NoSuchElementExceptionが実行時にスローされます。get()の代わりにorElse()やorElseThrow()を使って安全に値を取得するべきです。2行目のopt.get()がエラーの原因です。",
+          "choices": [
+            {
+              "id": "ch24_05_q3_a",
+              "text": "2行目: opt.get()で空のOptionalから値を取得しようとしている",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_05_q3_b",
+              "text": "1行目: Optional.empty()の型パラメータが不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_05_q3_c",
+              "text": "3行目: toUpperCase()がnullに対して呼ばれる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_05_q3_d",
+              "text": "1行目: Optional.empty()はコンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch24_06",
+      "courseId": "ch24",
+      "title": "プリミティブStream",
+      "summary": "IntStream、LongStream、DoubleStreamといったプリミティブ特殊化Streamを学びます。range()、rangeClosed()による範囲指定、sum()・average()・max()・min()による集計、mapToInt()やboxed()による変換を理解します。",
+      "estimatedMinutes": 7,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "overview",
+          "title": "プリミティブStreamとは",
+          "body": "このレッスンでは以下を学びます:\n\n・IntStream, LongStream, DoubleStreamの生成方法\n・range(), rangeClosed()で連番のストリーム生成\n・sum(), average(), max()などの集約操作\n\nオートボクシングのオーバーヘッドを避けた効率的な数値処理です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "code",
+          "title": "IntStream.range()とrangeClosed()",
+          "body": "IntStream.range(start, end)はstartからend-1までの連続した整数のStreamを生成します（endは含まない）。\nIntStream.rangeClosed(start, end)はstartからendまでの連続した整数のStreamを生成します（endを含む）。\nLongStream.range()とLongStream.rangeClosed()も同様に使えます。\nDoubleStreamにはrange()メソッドはありません。\nこれらはfor文のループに相当する処理を**Stream API**で記述する際に便利です。",
+          "code": "import java.util.stream.IntStream;\n\n// range: 1から4まで（5は含まない）\nIntStream.range(1, 5)\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 1 2 3 4\n\nSystem.out.println();\n\n// rangeClosed: 1から5まで（5を含む）\nIntStream.rangeClosed(1, 5)\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 1 2 3 4 5\n\nSystem.out.println();\n\n// range()で要素がゼロのケース\nSystem.out.println(IntStream.range(5, 5).count()); // 0\n\n// rangeClosed()で要素が1つのケース\nSystem.out.println(IntStream.rangeClosed(5, 5).count()); // 1",
+          "note": "range(5, 5)は空のStreamですが、rangeClosed(5, 5)は要素5を1つ持つStreamです。この違いは試験でよく問われます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "rule",
+          "title": "sum()、average()、max()、min()",
+          "body": "| メソッド | 戻り値の型 | 説明 |\n|---|---|---|\n| sum() | int / long / double | 全要素の合計 |\n| average() | OptionalDouble | 全要素の平均。空Streamの場合はempty() |\n| max() / min() | OptionalInt等 | 最大値・最小値 |\n| count() | long | 要素数 |\n| summaryStatistics() | IntSummaryStatistics等 | count・sum・min・average・maxを一度に取得 |",
+          "code": "IntStream nums = IntStream.of(10, 20, 30, 40, 50);\n\n// 注意: Streamは1回しか使えないのでそれぞれ新しく生成\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).sum());\n// 出力: 150\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).average());\n// 出力: OptionalDouble[30.0]\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).max());\n// 出力: OptionalInt[50]\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).min());\n// 出力: OptionalInt[10]\n\n// summaryStatistics: まとめて取得\nIntSummaryStatistics stats = IntStream.of(10, 20, 30, 40, 50)\n    .summaryStatistics();\nSystem.out.println(\"Count: \" + stats.getCount());   // 5\nSystem.out.println(\"Sum: \" + stats.getSum());       // 150\nSystem.out.println(\"Average: \" + stats.getAverage()); // 30.0",
+          "note": "sum()はプリミティブ値を直接返しますが、average()・max()・min()はOptional型で返す点に注意しましょう。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "code",
+          "title": "mapToInt()とboxed()",
+          "body": "Stream<T>からプリミティブStreamへの変換にはmapToInt()、mapToLong()、mapToDouble()を使います。\n逆にプリミティブStreamからStream<T>への変換にはboxed()を使います。\nmapToObj()はプリミティブStreamから任意のオブジェクトStreamに変換します。\nasLongStream()やasDoubleStream()でプリミティブStream間の変換も可能です。\nboxed()はcollect(Collectors.toList())を使いたい場合などに必要になります。",
+          "code": "// Stream<String> → IntStream\nList<String> words = List.of(\"Java\", \"Go\", \"Python\");\nIntStream lengths = words.stream().mapToInt(String::length);\nSystem.out.println(lengths.sum()); // 12\n\n// IntStream → Stream<Integer> (boxed)\nList<Integer> boxed = IntStream.rangeClosed(1, 5)\n    .boxed()\n    .collect(Collectors.toList());\nSystem.out.println(boxed); // [1, 2, 3, 4, 5]\n\n// IntStream → Stream<String> (mapToObj)\nList<String> strs = IntStream.range(1, 4)\n    .mapToObj(n -> \"Item\" + n)\n    .collect(Collectors.toList());\nSystem.out.println(strs); // [Item1, Item2, Item3]\n\n// IntStream → LongStream → DoubleStream\nIntStream.range(1, 4)\n    .asDoubleStream()\n    .forEach(d -> System.out.print(d + \" \"));\n// 出力: 1.0 2.0 3.0",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "tip",
+          "title": "試験対策：プリミティブStreamの注意点",
+          "body": "IntStreamのcollect()はStream<T>のcollect()とは異なり、Collectorを直接受け取れません。\nIntStreamでCollectors.toList()を使うには、先にboxed()でStream<Integer>に変換する必要があります。\nIntStream.of()で個別の値を指定してプリミティブStreamを生成できます。\naverage()の戻り値はdoubleではなくOptionalDoubleであることに注意しましょう。\nOptionalIntのget()はgetAsInt()という名前です（Optional<T>のget()とは異なります）。\nStream<Integer>のsum()は直接呼べません。mapToInt(Integer::intValue)でIntStreamに変換する必要があります。",
+          "code": "// IntStreamではCollectors.toList()を直接使えない\n// IntStream.range(1, 4).collect(Collectors.toList()); // コンパイルエラー\n\n// boxed()で変換してから使う\nList<Integer> list = IntStream.range(1, 4)\n    .boxed()\n    .collect(Collectors.toList());\n\n// OptionalIntのget系メソッド\nOptionalInt max = IntStream.of(3, 1, 4).max();\nSystem.out.println(max.getAsInt()); // 4（getではなくgetAsInt）\n\n// Stream<Integer> → IntStream\nList<Integer> nums = List.of(10, 20, 30);\nint sum = nums.stream()\n    .mapToInt(Integer::intValue)\n    .sum();\nSystem.out.println(sum); // 60",
+          "note": "OptionalIntはgetAsInt()、OptionalLongはgetAsLong()、OptionalDoubleはgetAsDouble()です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_06_q1",
+          "lessonId": "ch24_06",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "int result = IntStream.rangeClosed(1, 5).sum();\nSystem.out.println(result);",
+          "explanation": "IntStream.rangeClosed(1, 5)は1から5までの整数（1,2,3,4,5）のStreamを生成します。sum()でこれらの合計を計算すると1+2+3+4+5=15になります。",
+          "choices": [
+            {
+              "id": "ch24_06_q1_a",
+              "text": "15",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_06_q1_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_06_q1_c",
+              "text": "14",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_06_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_06_q2",
+          "lessonId": "ch24_06",
+          "type": "fillBlank",
+          "question": "IntStreamをStream<Integer>に変換するには___()メソッドを呼び出します。",
+          "code": "Stream<Integer> stream = IntStream.range(1, 5).___();",
+          "explanation": "IntStreamからStream<Integer>への変換にはboxed()メソッドを使います。boxed()はプリミティブ値をラッパークラスにボクシングしたStreamを返します。これにより、Collectors.toList()などのStream<T>用のCollectorが使えるようになります。",
+          "choices": [
+            {
+              "id": "ch24_06_q2_a",
+              "text": "boxed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_06_q2_b",
+              "text": "toObject",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_06_q2_c",
+              "text": "mapToObj",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_06_q2_d",
+              "text": "wrap",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_06_q3",
+          "lessonId": "ch24_06",
+          "type": "fourChoice",
+          "question": "IntStream.range(3, 3).count()の結果はどれですか？",
+          "code": null,
+          "explanation": "IntStream.range(start, end)はstartからend-1までのStreamを生成します。range(3, 3)はstartとendが同じなので要素が0個のStreamになり、count()は0を返します。rangeClosed(3, 3)であれば要素3が1つだけのStreamになり、count()は1を返します。",
+          "choices": [
+            {
+              "id": "ch24_06_q3_a",
+              "text": "0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_06_q3_b",
+              "text": "1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_06_q3_c",
+              "text": "3",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_06_q3_d",
+              "text": "IllegalArgumentExceptionが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

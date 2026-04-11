@@ -1,0 +1,2974 @@
+[
+  {
+    "id": "se17s2_q001",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaの識別子に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaの識別子はアルファベット、アンダースコア(_)、ドル記号($)で始めることができますが、数字で始めることはできません。また、Javaの予約語（class、int、ifなど）は識別子として使用できません。アンダースコア単体(_)はJava 9以降、予約語となりました。",
+    "choices": [
+      {
+        "id": "se17s2_q001_a",
+        "text": "識別子は数字で始めることができる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q001_b",
+        "text": "アンダースコア単体(_)は識別子として使用できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q001_c",
+        "text": "ドル記号($)で始まる識別子は有効である",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q001_d",
+        "text": "ハイフン(-)を識別子に含めることができる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q002",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "javacコマンドとjavaコマンドに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "javacコマンドはJavaソースファイル(.java)をバイトコード(.class)にコンパイルします。javaコマンドはJVM上でバイトコードを実行します。Java SE 11以降、javaコマンドは単一のソースファイルを直接実行する機能も持ちますが、javacコマンドは廃止されていません。",
+    "choices": [
+      {
+        "id": "se17s2_q002_a",
+        "text": "javacコマンドはバイトコードを実行するコマンドである",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q002_b",
+        "text": "javaコマンドは.javaファイルをコンパイルするコマンドである",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q002_c",
+        "text": "javacコマンドで生成されるファイルの拡張子は.classである",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q002_d",
+        "text": "javacコマンドなしではJavaプログラムを実行する方法はない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q003",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Calculator {\n    public static void main(String[] args) {\n        System.out.println(5 + 3 + \" items\");\n        System.out.println(\"Total: \" + 5 + 3);\n    }\n}",
+    "explanation": "1行目では5+3=8が先に計算され、\"8 items\"が出力されます。2行目では\"Total: \"が文字列のため、以降の+はすべて文字列結合となり、\"Total: 53\"が出力されます。文字列と数値の+演算では、左から右へ評価される順序が重要です。",
+    "choices": [
+      {
+        "id": "se17s2_q003_a",
+        "text": "8 items\nTotal: 8",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q003_b",
+        "text": "8 items\nTotal: 53",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q003_c",
+        "text": "53 items\nTotal: 53",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q003_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q004",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class Greeting {\n    public static void main(String[] args) {\n        System.out.println(\"Hello\");\n    }\n}\n\npublic class Farewell {\n    public static void main(String[] args) {\n        System.out.println(\"Goodbye\");\n    }\n}",
+    "explanation": "1つのソースファイルにpublicクラスは1つしか定義できません。Greeting.javaというファイルにpublic class Greetingとpublic class Farewellの2つのpublicクラスを定義するとコンパイルエラーになります。publicでないクラスであれば同一ファイルに複数定義できます。",
+    "choices": [
+      {
+        "id": "se17s2_q004_a",
+        "text": "mainメソッドが2つ定義されているため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q004_b",
+        "text": "1つのソースファイルにpublicクラスが2つあるため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q004_c",
+        "text": "クラス名が異なるため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q004_d",
+        "text": "System.out.printlnの引数が異なるため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q005",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄を埋めて、パッケージcom.sampleに属するクラスを正しく定義してください。\n\n___ com.sample;\n\npublic class Utility {\n    // ...\n}",
+    "code": null,
+    "explanation": "package宣言にはpackageキーワードを使用します。package宣言はソースファイルの先頭（コメントを除く）に記述し、そのクラスが属するパッケージを指定します。パッケージ名は慣習的に逆ドメイン名を使用します。",
+    "choices": [
+      {
+        "id": "se17s2_q005_a",
+        "text": "package",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q005_b",
+        "text": "import",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q005_c",
+        "text": "module",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q005_d",
+        "text": "namespace",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q006",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaのプリミティブ型に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaのプリミティブ型は8種類あります。byte(8bit), short(16bit), int(32bit), long(64bit), float(32bit), double(64bit), char(16bit), booleanです。charは符号なし16ビット整数でUnicode文字を表現します。shortは16ビットの符号付き整数型です。",
+    "choices": [
+      {
+        "id": "se17s2_q006_a",
+        "text": "charは8ビットの符号付き整数型である",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q006_b",
+        "text": "longは32ビットの整数型である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q006_c",
+        "text": "floatは64ビットの浮動小数点型である",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q006_d",
+        "text": "shortは16ビットの符号付き整数型である",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q007",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class TypeDemo {\n    public static void main(String[] args) {\n        byte b = 127;\n        b++;\n        System.out.println(b);\n    }\n}",
+    "explanation": "byteの最大値は127です。b++で128になるはずですが、byteの範囲(-128〜127)を超えるためオーバーフローが発生し、-128になります。Javaではプリミティブ型の整数オーバーフローは例外を発生させず、ビット表現がラップアラウンドします。",
+    "choices": [
+      {
+        "id": "se17s2_q007_a",
+        "text": "128",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q007_b",
+        "text": "-128",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q007_c",
+        "text": "0",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q007_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q008",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class VarTest {\n    public static void main(String[] args) {\n        var price;\n        price = 1500;\n        System.out.println(price);\n    }\n}",
+    "explanation": "var（ローカル変数型推論）を使用する場合、宣言時に初期化子が必要です。コンパイラは初期化子から型を推論するため、var price;のように初期化なしで宣言するとコンパイルエラーになります。var price = 1500;と記述すれば正しくint型として推論されます。",
+    "choices": [
+      {
+        "id": "se17s2_q008_a",
+        "text": "varはJava SE 17では使用できないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q008_b",
+        "text": "varで宣言する変数には初期化子が必要だが、省略されているため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q008_c",
+        "text": "priceという変数名が予約語であるため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q008_d",
+        "text": "varはint型として推論できないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q009",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄を埋めて、long型の変数を正しく宣言してください。\n\nlong population = 8000000000___;",
+    "code": null,
+    "explanation": "long型のリテラルにはサフィックスとしてLまたはlを付ける必要があります。8000000000はint型の範囲(-2147483648〜2147483647)を超えるため、Lを付けないとコンパイルエラーになります。可読性のため大文字のLを使うことが推奨されます。",
+    "choices": [
+      {
+        "id": "se17s2_q009_a",
+        "text": "L",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q009_b",
+        "text": "D",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q009_c",
+        "text": "F",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q009_d",
+        "text": "何も不要",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q010",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaの型変換に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaでは小さい型から大きい型への変換（拡大変換）は暗黙的に行われます。例えばint→longは自動変換されます。一方、大きい型から小さい型への変換（縮小変換）は明示的なキャストが必要です。boolean型と他のプリミティブ型の間の変換は不可能です。",
+    "choices": [
+      {
+        "id": "se17s2_q010_a",
+        "text": "int型からdouble型への変換にはキャストが必要である",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q010_b",
+        "text": "double型からint型への変換は暗黙的に行われる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q010_c",
+        "text": "long型からint型への変換にはキャストが必要である",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q010_d",
+        "text": "boolean型からint型への変換が可能である",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q011",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のコードの変数resultの値として正しいものはどれですか？",
+    "code": "int a = 17;\nint b = 5;\nint result = a % b;",
+    "explanation": "% は剰余演算子で、aをbで割った余りを返します。17 ÷ 5 = 3 余り 2 なので、17 % 5 は 2 になります。剰余演算子は整数型および浮動小数点型で使用でき、被除数の符号が結果の符号になります。",
+    "choices": [
+      {
+        "id": "se17s2_q011_a",
+        "text": "3",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q011_b",
+        "text": "2",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q011_c",
+        "text": "3.4",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q011_d",
+        "text": "12",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q012",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class OpDemo {\n    public static void main(String[] args) {\n        int x = 10;\n        int y = x++ + ++x;\n        System.out.println(\"x=\" + x + \", y=\" + y);\n    }\n}",
+    "explanation": "x++は後置インクリメントで、式では現在の値10を使い、その後xが11になります。++xは前置インクリメントで、xが12になりその値12を使います。よってy = 10 + 12 = 22となります。最終的にxは12、yは22です。",
+    "choices": [
+      {
+        "id": "se17s2_q012_a",
+        "text": "x=12, y=22",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q012_b",
+        "text": "x=12, y=21",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q012_c",
+        "text": "x=11, y=22",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q012_d",
+        "text": "x=12, y=24",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q013",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class BitOp {\n    public static void main(String[] args) {\n        boolean flag = true;\n        int result = flag & 1;\n        System.out.println(result);\n    }\n}",
+    "explanation": "boolean型とint型の間でビットAND演算子(&)を使用することはできません。&演算子はboolean同士またはint同士で使用できますが、型が異なる場合はコンパイルエラーになります。boolean & booleanやint & intは有効です。",
+    "choices": [
+      {
+        "id": "se17s2_q013_a",
+        "text": "&演算子はJavaでは使えないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q013_b",
+        "text": "boolean型とint型で&演算子を使用しているため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q013_c",
+        "text": "flagがfinalで宣言されていないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q013_d",
+        "text": "resultをint型で受けているため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q014",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "Javaの演算子に関する説明として正しいものをすべて選んでください。（2つ選択）",
+    "code": null,
+    "explanation": "&&は短絡評価（ショートサーキット）の論理AND演算子で、左辺がfalseの場合は右辺を評価しません。三項演算子（条件 ? 値1 : 値2）は条件式の結果に応じて値を返す唯一の三項演算子です。&演算子は非短絡評価で両辺を常に評価し、ビット演算にも使用されます。",
+    "choices": [
+      {
+        "id": "se17s2_q014_a",
+        "text": "&&演算子は左辺がfalseの場合、右辺を評価しない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q014_b",
+        "text": "||演算子は左辺がtrueでも右辺を評価する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q014_c",
+        "text": "三項演算子は値を返すことができる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q014_d",
+        "text": "==演算子はStringの内容を比較する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "normal",
+    "requiredSelections": 2
+  },
+  {
+    "id": "se17s2_q015",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のコードの出力として正しいものはどれですか？",
+    "code": "public class ShortCircuit {\n    public static void main(String[] args) {\n        int num = 0;\n        boolean check = (num != 0) && (10 / num > 1);\n        System.out.println(check);\n    }\n}",
+    "explanation": "&&は短絡評価を行います。num != 0がfalseなので、右辺の10 / numは評価されません。もし&（非短絡）を使っていたら、0での除算でArithmeticExceptionが発生しますが、&&では左辺がfalseなら右辺を評価しないため、例外は発生せずfalseが出力されます。",
+    "choices": [
+      {
+        "id": "se17s2_q015_a",
+        "text": "true",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q015_b",
+        "text": "false",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q015_c",
+        "text": "ArithmeticExceptionが発生する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q015_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q016",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Java SE 17のswitch式に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "switch式ではすべての可能な値を網羅する必要があり、網羅されていない場合はdefaultが必要です。また、switch式で複数文を実行する場合はブロック({})を使い、yieldキーワードで値を返します。アロー構文(->)ではフォールスルーは発生しません。",
+    "choices": [
+      {
+        "id": "se17s2_q016_a",
+        "text": "switch式ではdefault節は常に省略できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q016_b",
+        "text": "switch式のアロー構文(->)でもフォールスルーが発生する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q016_c",
+        "text": "switch式でブロック内から値を返すにはyieldキーワードを使う",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q016_d",
+        "text": "switch式では文字列型は使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q017",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class IfElseDemo {\n    public static void main(String[] args) {\n        int temperature = 25;\n        if (temperature > 30)\n            System.out.println(\"暑い\");\n            System.out.println(\"水分補給\");\n    }\n}",
+    "explanation": "if文に波括弧がない場合、直後の1文のみがif文の本体になります。System.out.println(\"水分補給\")はif文とは関係なく常に実行されます。temperature > 30はfalseなので\"暑い\"は出力されませんが、\"水分補給\"は必ず出力されます。インデントはJavaのコンパイラに影響しません。",
+    "choices": [
+      {
+        "id": "se17s2_q017_a",
+        "text": "暑い\n水分補給",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q017_b",
+        "text": "水分補給",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q017_c",
+        "text": "何も出力されない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q017_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q018",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class SwitchError {\n    public static void main(String[] args) {\n        long value = 100L;\n        switch (value) {\n            case 100:\n                System.out.println(\"百\");\n                break;\n            default:\n                System.out.println(\"その他\");\n        }\n    }\n}",
+    "explanation": "switch文の引数にはlong型は使用できません。switch文で使用可能な型は、byte, short, char, int（およびそれらのラッパー型）、String、enum型です。long型やfloat型、double型、boolean型は使用できません。",
+    "choices": [
+      {
+        "id": "se17s2_q018_a",
+        "text": "case 100のコロンがセミコロンでないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q018_b",
+        "text": "long型はswitch文で使用できないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q018_c",
+        "text": "break文がdefaultブロックにないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q018_d",
+        "text": "case値にLサフィックスがないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q019",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄を埋めて、switch式でブロック内から値を正しく返すようにしてください。\n\nString result = switch (status) {\n    case \"OK\" -> {\n        System.out.println(\"成功\");\n        ___ \"処理完了\";\n    }\n    default -> \"不明\";\n};",
+    "code": null,
+    "explanation": "switch式のアロー構文でブロック({})を使用する場合、値を返すにはyieldキーワードを使います。returnではなくyieldを使う点に注意してください。yieldはJava SE 14で導入されたキーワードで、switch式専用の値返却手段です。",
+    "choices": [
+      {
+        "id": "se17s2_q019_a",
+        "text": "yield",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q019_b",
+        "text": "return",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q019_c",
+        "text": "break",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q019_d",
+        "text": "output",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q020",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のswitch式の記述として正しいものはどれですか？",
+    "code": null,
+    "explanation": "switch式のアロー構文(->)では、1つのcaseに複数のラベルをカンマで区切って指定できます（例：case 1, 2, 3 -> \"値\"）。また、switch式ではすべてのケースを網羅するか、defaultケースを含める必要があります。アロー構文とコロン構文を同一switch内で混在させることはできません。",
+    "choices": [
+      {
+        "id": "se17s2_q020_a",
+        "text": "case 1, 2, 3 -> \"値\"; は有効な記述である",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q020_b",
+        "text": "switch式ではnullをcase値に指定できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q020_c",
+        "text": "アロー構文(->)とコロン構文(:)は混在可能である",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q020_d",
+        "text": "switch式はvoid型のメソッドの戻り値として使える",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q021",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "for文の構文として正しいものはどれですか？",
+    "code": null,
+    "explanation": "for文の初期化部、条件部、更新部はすべて省略可能です。for(;;)は無限ループになります。初期化部では複数の同じ型の変数をカンマ区切りで宣言でき、更新部でも複数の式をカンマ区切りで記述できます。ただし、初期化部で異なる型の変数を宣言することはできません。",
+    "choices": [
+      {
+        "id": "se17s2_q021_a",
+        "text": "for(int i=0, long j=0; i<10; i++) {}",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q021_b",
+        "text": "for(;;) {}",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q021_c",
+        "text": "for(int i=0; i<10) {}",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q021_d",
+        "text": "for(i=0; i<10; i++) {}（iが未宣言）",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q022",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class ForLoop {\n    public static void main(String[] args) {\n        for (int i = 0; i < 5; i++) {\n            if (i == 3) continue;\n            System.out.print(i + \" \");\n        }\n    }\n}",
+    "explanation": "for文で0から4まで繰り返しますが、i == 3の時にcontinue文が実行され、その回のループの残りの処理がスキップされます。そのため3は出力されず、0, 1, 2, 4がスペース区切りで出力されます。continueはループの次のイテレーションに進みます。",
+    "choices": [
+      {
+        "id": "se17s2_q022_a",
+        "text": "0 1 2 3 4 ",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q022_b",
+        "text": "0 1 2 ",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q022_c",
+        "text": "0 1 2 4 ",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q022_d",
+        "text": "1 2 4 ",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q023",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class DoWhile {\n    public static void main(String[] args) {\n        int count = 10;\n        do {\n            System.out.print(count + \" \");\n            count++;\n        } while (count < 10);\n    }\n}",
+    "explanation": "do-while文は条件を後で評価するため、ループ本体が最低1回は実行されます。count=10でループ本体が実行され\"10 \"が出力されます。その後count++でcountが11になり、while条件count < 10がfalseなのでループを抜けます。",
+    "choices": [
+      {
+        "id": "se17s2_q023_a",
+        "text": "何も出力されない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q023_b",
+        "text": "10 ",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q023_c",
+        "text": "10 11 ",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q023_d",
+        "text": "無限ループになる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q024",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class LabelLoop {\n    public static void main(String[] args) {\n        outer:\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 3; j++) {\n                if (j == 1) break inner;\n                System.out.println(i + \",\" + j);\n            }\n        }\n    }\n}",
+    "explanation": "break inner;で参照されているラベルinnerが定義されていません。ラベルを使用するには、対象のループにラベルを付ける必要があります。この例では内側のforループにinner:ラベルを付けるか、break文のラベルを定義済みのouterに変更する必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q024_a",
+        "text": "ラベルouterが使われていないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q024_b",
+        "text": "ラベルinnerが定義されていないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q024_c",
+        "text": "ネストされたfor文ではbreak文は使えないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q024_d",
+        "text": "ラベルにコロンが必要ないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q025",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "while文とdo-while文の違いに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "while文は最初に条件を評価するため、条件がfalseの場合は一度もループ本体が実行されません。一方、do-while文は最初にループ本体を実行してから条件を評価するため、少なくとも1回はループ本体が実行されます。また、do-while文の末尾にはセミコロンが必要です。",
+    "choices": [
+      {
+        "id": "se17s2_q025_a",
+        "text": "while文は少なくとも1回ループ本体を実行する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q025_b",
+        "text": "do-while文は条件がfalseでも最低1回は実行される",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q025_c",
+        "text": "while文とdo-while文は完全に同じ動作をする",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q025_d",
+        "text": "do-while文ではbreak文を使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q026",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のコードの配列宣言として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaでは配列を宣言する方法は複数あります。int[] arrとint arr[]はどちらも有効ですが、int[] arrが推奨されます。配列リテラルの初期化({1,2,3})はnewを使わない形式では宣言と同時にのみ使用できます。new int[]{}のようにサイズを指定せず初期値を書く形も有効です。",
+    "choices": [
+      {
+        "id": "se17s2_q026_a",
+        "text": "int[] arr = new int[];",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q026_b",
+        "text": "int arr[] = {1, 2, 3};",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q026_c",
+        "text": "int[] arr = new int[3]{1, 2, 3};",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q026_d",
+        "text": "int[3] arr = {1, 2, 3};",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q027",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "import java.util.Arrays;\n\npublic class ArrayCopy {\n    public static void main(String[] args) {\n        int[] original = {1, 2, 3, 4, 5};\n        int[] copy = Arrays.copyOf(original, 3);\n        System.out.println(Arrays.toString(copy));\n    }\n}",
+    "explanation": "Arrays.copyOfは元の配列から指定した長さの新しい配列を作成します。第2引数で3を指定しているので、元の配列の先頭から3要素がコピーされます。元の配列より短い長さを指定すると切り詰められ、長い長さを指定するとデフォルト値(intの場合0)で埋められます。",
+    "choices": [
+      {
+        "id": "se17s2_q027_a",
+        "text": "[1, 2, 3]",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q027_b",
+        "text": "[1, 2, 3, 4, 5]",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q027_c",
+        "text": "[1, 2, 3, 0, 0]",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q027_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q028",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のコードを実行するとどうなりますか？",
+    "code": "public class ArrayError {\n    public static void main(String[] args) {\n        int[] data = new int[3];\n        data[0] = 10;\n        data[1] = 20;\n        data[2] = 30;\n        data[3] = 40;\n    }\n}",
+    "explanation": "配列のサイズは3（インデックス0〜2）ですが、data[3]はインデックス範囲外です。このコードはコンパイルは成功しますが、実行時にArrayIndexOutOfBoundsExceptionがスローされます。配列のインデックスは0からlength-1までです。",
+    "choices": [
+      {
+        "id": "se17s2_q028_a",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q028_b",
+        "text": "実行時にArrayIndexOutOfBoundsExceptionが発生する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q028_c",
+        "text": "data[3]に0が代入される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q028_d",
+        "text": "配列が自動的に拡張される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q029",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "配列に関する説明として正しいものをすべて選んでください。（2つ選択）",
+    "code": null,
+    "explanation": "配列はオブジェクトであり、ヒープメモリに格納されます。配列のサイズは作成後に変更できません。Javaの配列は固定長であり、可変長の配列が必要な場合はArrayListなどのコレクションクラスを使用します。配列はjava.lang.Objectクラスを継承しています。",
+    "choices": [
+      {
+        "id": "se17s2_q029_a",
+        "text": "配列のサイズは作成後に変更できない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q029_b",
+        "text": "配列はプリミティブ型である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q029_c",
+        "text": "配列はObjectクラスを継承している",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q029_d",
+        "text": "配列の要素は異なる型を混在させることができる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal",
+    "requiredSelections": 2
+  },
+  {
+    "id": "se17s2_q030",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "多次元配列に関する説明として正しいものはどれですか？",
+    "code": "int[][] matrix = new int[3][];",
+    "explanation": "Javaの多次元配列はジャグ配列（不揃い配列）をサポートします。int[][] matrix = new int[3][];は1次元目のサイズが3で、2次元目のサイズは未指定の配列を作成します。各行の配列は個別に異なるサイズで初期化できます。matrix[0]は初期化前なのでnullです。",
+    "choices": [
+      {
+        "id": "se17s2_q030_a",
+        "text": "このコードはコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q030_b",
+        "text": "matrix[0]はnullである",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q030_c",
+        "text": "matrix[0]は空の配列(長さ0)である",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q030_d",
+        "text": "すべてのサイズを同時に指定する必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q031",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "メソッドの可変長引数（varargs）に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "可変長引数は型名の後に...を記述します（例：int... numbers）。可変長引数はメソッドのパラメータリストの最後に1つだけ指定できます。メソッド内では配列として扱われます。引数を0個渡すことも可能です。",
+    "choices": [
+      {
+        "id": "se17s2_q031_a",
+        "text": "可変長引数はパラメータリストのどの位置にでも配置できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q031_b",
+        "text": "1つのメソッドに複数の可変長引数を持てる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q031_c",
+        "text": "可変長引数はパラメータリストの最後に1つだけ指定できる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q031_d",
+        "text": "可変長引数には最低1つの引数を渡す必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q032",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class PassByValue {\n    public static void modify(int[] arr, int val) {\n        arr[0] = 99;\n        val = 99;\n    }\n\n    public static void main(String[] args) {\n        int[] numbers = {1, 2, 3};\n        int x = 10;\n        modify(numbers, x);\n        System.out.println(numbers[0] + \", \" + x);\n    }\n}",
+    "explanation": "Javaはすべて値渡しです。配列は参照型なので、参照のコピーが渡されます。arr[0] = 99により元の配列の要素が変更されます。一方、valはプリミティブ型intのコピーなので、val = 99としても呼び出し元のxには影響しません。結果は99, 10です。",
+    "choices": [
+      {
+        "id": "se17s2_q032_a",
+        "text": "99, 99",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q032_b",
+        "text": "1, 10",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q032_c",
+        "text": "99, 10",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q032_d",
+        "text": "1, 99",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q033",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class Overload {\n    public static int calc(int a, int b) {\n        return a + b;\n    }\n\n    public static double calc(int a, int b) {\n        return (double)(a + b);\n    }\n\n    public static void main(String[] args) {\n        System.out.println(calc(3, 5));\n    }\n}",
+    "explanation": "メソッドのオーバーロードは引数の型、数、または順序が異なる必要があります。戻り値の型だけが異なるメソッドはオーバーロードとして認められず、コンパイルエラーになります。この例では両方のcalcメソッドが(int, int)の引数を取っており、戻り値型のみ異なります。",
+    "choices": [
+      {
+        "id": "se17s2_q033_a",
+        "text": "staticメソッドはオーバーロードできないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q033_b",
+        "text": "戻り値の型だけが異なるメソッドはオーバーロードにならないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q033_c",
+        "text": "メソッド名calcが予約語であるため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q033_d",
+        "text": "mainメソッドから呼び出す際に型を指定していないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q034",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "メソッドの引数の渡し方に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaでは引数はすべて値渡し(pass by value)です。プリミティブ型では値のコピーが渡され、参照型ではオブジェクトへの参照のコピーが渡されます。参照のコピーなので参照先のオブジェクトの内容は変更できますが、参照自体を別のオブジェクトに差し替えても呼び出し元には影響しません。",
+    "choices": [
+      {
+        "id": "se17s2_q034_a",
+        "text": "プリミティブ型は参照渡し、オブジェクト型は値渡しである",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q034_b",
+        "text": "すべての引数は値渡しである",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q034_c",
+        "text": "オブジェクト型は参照渡しである",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q034_d",
+        "text": "finalパラメータは参照渡しになる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q035",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のメソッドの宣言を完成させてください。このメソッドは任意の個数のdouble値を受け取り、その合計を返します。\n\npublic static double sum(double___ values) {\n    double total = 0;\n    for (double v : values) total += v;\n    return total;\n}",
+    "code": null,
+    "explanation": "可変長引数を宣言するには型名の後に...(ドット3つ)を記述します。double... valuesとすることで0個以上のdouble値を配列として受け取れます。メソッド内ではvaluesはdouble[]として扱われます。",
+    "choices": [
+      {
+        "id": "se17s2_q035_a",
+        "text": "...",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q035_b",
+        "text": "[]",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q035_c",
+        "text": "*",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q035_d",
+        "text": "+",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q036",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "StringBuilderに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "StringBuilderはミュータブル（可変）な文字列クラスです。Stringと異なり、文字列の追加や変更を行っても新しいオブジェクトは作成されません。StringBuilderはスレッドセーフではありませんが、単一スレッドでの文字列操作はStringBufferより高速です。",
+    "choices": [
+      {
+        "id": "se17s2_q036_a",
+        "text": "StringBuilderはイミュータブルである",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q036_b",
+        "text": "StringBuilderはスレッドセーフである",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q036_c",
+        "text": "StringBuilderのappendメソッドは新しいオブジェクトを返す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q036_d",
+        "text": "StringBuilderは文字列の変更を同一オブジェクト上で行う",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q037",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class StringMethod {\n    public static void main(String[] args) {\n        String text = \"Java Programming\";\n        System.out.println(text.substring(5, 8));\n        System.out.println(text.indexOf('a'));\n    }\n}",
+    "explanation": "substring(5, 8)はインデックス5から7まで（8は含まない）の部分文字列を返します。\"Java Programming\"のインデックス5は'P'、6は'r'、7は'o'なので\"Pro\"が返されます。indexOf('a')は最初に見つかった'a'のインデックスを返し、インデックス1の'a'が最初です。",
+    "choices": [
+      {
+        "id": "se17s2_q037_a",
+        "text": "Pro\n1",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q037_b",
+        "text": "Prog\n1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q037_c",
+        "text": "Pro\n3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q037_d",
+        "text": "rog\n1",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q038",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class TextBlockDemo {\n    public static void main(String[] args) {\n        String json = \"\"\"\n                {\n                    \"name\": \"Java\"\n                }\n                \"\"\";\n        System.out.println(json.contains(\"Java\"));\n        System.out.println(json.strip().startsWith(\"{\"));\n    }\n}",
+    "explanation": "テキストブロック(\"\"\")はJava SE 15で導入されました。テキストブロック内の文字列にcontainsで\"Java\"を検索するとtrueが返されます。テキストブロックは付随的な空白を除去し、strip()で前後の空白を取り除くと\"{\"で始まるためstartsWith(\"{\")もtrueです。",
+    "choices": [
+      {
+        "id": "se17s2_q038_a",
+        "text": "true\ntrue",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q038_b",
+        "text": "true\nfalse",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q038_c",
+        "text": "false\ntrue",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q038_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q039",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "テキストブロック（\"\"\")の構文に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "テキストブロックの開始区切り文字(\"\"\")の後には改行が必要です。開始\"\"\"と同じ行にコンテンツを書くことはできません。終了\"\"\"はコンテンツと同じ行に書くことができます。テキストブロック内では改行がそのまま含まれ、付随的な空白はコンパイラが除去します。",
+    "choices": [
+      {
+        "id": "se17s2_q039_a",
+        "text": "開始\"\"\"の直後にコンテンツを記述できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q039_b",
+        "text": "開始\"\"\"の後には改行が必要である",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q039_c",
+        "text": "終了\"\"\"は必ず独立した行に書く必要がある",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q039_d",
+        "text": "テキストブロック内で改行は\\nと記述する必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q040",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Stringクラスのメソッドに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Stringはイミュータブル（不変）なクラスです。replace、toUpperCase、trimなどのメソッドは元の文字列を変更せず、新しいStringオブジェクトを返します。String.strip()はJava SE 11で追加され、Unicode対応の前後空白除去を行います。trim()はASCII空白のみを除去します。",
+    "choices": [
+      {
+        "id": "se17s2_q040_a",
+        "text": "replaceメソッドは元のStringオブジェクトを変更する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q040_b",
+        "text": "Stringオブジェクトは作成後に内容を変更できない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q040_c",
+        "text": "trim()とstrip()は完全に同じ動作をする",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q040_d",
+        "text": "lengthはメソッドではなくフィールドである",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q041",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaのrecordに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "recordクラスは暗黙的にfinalであり、他のクラスを継承することはできません（java.lang.Recordは暗黙的に継承）。ただし、インターフェースを実装することは可能です。recordのフィールドはすべてfinalで、セッターは生成されません。カスタムメソッドやstaticメソッドを追加することは可能です。",
+    "choices": [
+      {
+        "id": "se17s2_q041_a",
+        "text": "recordは他のクラスを継承できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q041_b",
+        "text": "recordのフィールドは変更可能である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q041_c",
+        "text": "recordはインターフェースを実装できる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q041_d",
+        "text": "recordにはカスタムメソッドを追加できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q042",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class RecordDemo {\n    record Product(String name, int price) {}\n\n    public static void main(String[] args) {\n        Product p = new Product(\"Coffee\", 350);\n        System.out.println(p.name());\n        System.out.println(p.price());\n    }\n}",
+    "explanation": "recordはJava SE 16で導入されたイミュータブルなデータクラスです。recordは自動的にコンストラクタ、アクセサメソッド（フィールド名と同名のメソッド）、equals、hashCode、toStringを生成します。アクセサメソッドはgetXxx()ではなくフィールド名そのもの（name(), price()）です。",
+    "choices": [
+      {
+        "id": "se17s2_q042_a",
+        "text": "Coffee\n350",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q042_b",
+        "text": "Product[name=Coffee, price=350]",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q042_c",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q042_d",
+        "text": "null\n0",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q043",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class Employee {\n    private String name;\n    private int age;\n\n    public Employee(String name) {\n        this.name = name;\n    }\n\n    public Employee(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n}\n\nclass Main {\n    public static void main(String[] args) {\n        Employee e = new Employee();\n    }\n}",
+    "explanation": "Employeeクラスには引数ありのコンストラクタが定義されているため、デフォルトコンストラクタ（引数なし）はコンパイラによって自動生成されません。new Employee()のように引数なしでインスタンス化しようとするとコンパイルエラーになります。引数なしコンストラクタも必要な場合は明示的に定義する必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q043_a",
+        "text": "コンストラクタが2つ定義されているため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q043_b",
+        "text": "引数なしのコンストラクタが存在しないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q043_c",
+        "text": "Mainクラスがpublicでないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q043_d",
+        "text": "thisキーワードの使い方が間違っているため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q044",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "recordに関する説明として正しいものをすべて選んでください。（2つ選択）",
+    "code": null,
+    "explanation": "recordは暗黙的にfinalクラスであり、extends句で他のクラスを継承できません。recordのコンパクトコンストラクタでは、引数のバリデーションなどを行うことができます。recordには静的メソッドやインスタンスメソッドを追加定義できます。recordは自動的にtoString, equals, hashCodeメソッドを生成します。",
+    "choices": [
+      {
+        "id": "se17s2_q044_a",
+        "text": "recordは暗黙的にfinalである",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q044_b",
+        "text": "recordはabstractにできる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q044_c",
+        "text": "recordはtoStringメソッドを自動生成する",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q044_d",
+        "text": "recordのフィールドはpublicである",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "hard",
+    "requiredSelections": 2
+  },
+  {
+    "id": "se17s2_q045",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaのコンストラクタに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "コンストラクタにはvoidを含む戻り値型を指定しません。戻り値型を記述するとコンストラクタではなく通常のメソッドとして扱われます。コンストラクタ名はクラス名と同一でなければなりません。デフォルトコンストラクタは、コンストラクタが1つも定義されていない場合にのみコンパイラが自動生成します。",
+    "choices": [
+      {
+        "id": "se17s2_q045_a",
+        "text": "コンストラクタにはvoid型の戻り値を指定する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q045_b",
+        "text": "コンストラクタを定義してもデフォルトコンストラクタは自動生成される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q045_c",
+        "text": "コンストラクタ名はクラス名と同じでなければならない",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q045_d",
+        "text": "コンストラクタはstaticメソッドとして定義される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q046",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "アクセス修飾子に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaのアクセス修飾子はpublic（すべてのクラスからアクセス可能）、protected（同一パッケージおよびサブクラスからアクセス可能）、デフォルト（package-private、同一パッケージのみ）、private（同一クラスのみ）の4種類です。アクセス範囲が広い順にpublic > protected > デフォルト > privateです。",
+    "choices": [
+      {
+        "id": "se17s2_q046_a",
+        "text": "protected修飾子を付けたメンバーは同一パッケージからのみアクセスできる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q046_b",
+        "text": "アクセス修飾子を省略するとpublicと同じになる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q046_c",
+        "text": "privateメンバーは同一クラス内からのみアクセスできる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q046_d",
+        "text": "publicメンバーはサブクラスからのみアクセスできる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q047",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "class Counter {\n    private int count = 0;\n    public void increment() { count++; }\n    public int getCount() { return count; }\n}\n\npublic class EncapDemo {\n    public static void main(String[] args) {\n        Counter c = new Counter();\n        c.increment();\n        c.increment();\n        c.increment();\n        System.out.println(c.getCount());\n    }\n}",
+    "explanation": "Counterクラスはカプセルされたcountフィールドをprivateで宣言し、publicなincrement()とgetCount()メソッドを提供しています。increment()を3回呼び出すとcountは3になります。getCount()でその値を取得して出力するので3が出力されます。",
+    "choices": [
+      {
+        "id": "se17s2_q047_a",
+        "text": "0",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q047_b",
+        "text": "1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q047_c",
+        "text": "3",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q047_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q048",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "class Account {\n    private double balance;\n\n    public Account(double balance) {\n        this.balance = balance;\n    }\n}\n\nclass BankApp {\n    public static void main(String[] args) {\n        Account acc = new Account(1000.0);\n        System.out.println(acc.balance);\n    }\n}",
+    "explanation": "balanceフィールドはprivateで宣言されているため、Accountクラス外部から直接アクセスすることはできません。BankAppクラスからacc.balanceにアクセスしようとするとコンパイルエラーになります。publicなゲッターメソッドを追加してアクセスする必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q048_a",
+        "text": "Accountクラスにゲッターメソッドがないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q048_b",
+        "text": "privateフィールドにクラス外部からアクセスしているため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q048_c",
+        "text": "Accountクラスがpublicでないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q048_d",
+        "text": "double型のフィールドにはprotectedが必要なため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q049",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "カプセル化を正しく適用したクラス設計として最も適切なものはどれですか？",
+    "code": null,
+    "explanation": "カプセル化では、フィールドをprivateで宣言し、publicなゲッター/セッターメソッドを通じてアクセスさせます。これにより、フィールドの値に対するバリデーションや制御が可能になります。privateにすることで外部クラスからの直接アクセスを防ぎます。",
+    "choices": [
+      {
+        "id": "se17s2_q049_a",
+        "text": "フィールドをprivateにし、publicなゲッター/セッターを提供する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q049_b",
+        "text": "フィールドをpublicにし、直接アクセスさせる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q049_c",
+        "text": "フィールドをprotectedにし、同一パッケージからアクセスさせる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q049_d",
+        "text": "フィールドをstaticにし、クラス名でアクセスさせる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q050",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "不変（イミュータブル）クラスを作成するための条件として正しくないものはどれですか？",
+    "code": null,
+    "explanation": "イミュータブルクラスを作成するには、クラスをfinalにし、フィールドをprivate finalにし、セッターを提供せず、ミュータブルなオブジェクトへの参照は防御的コピーを行います。protectedフィールドにするとサブクラスからアクセスでき、不変性が損なわれます。",
+    "choices": [
+      {
+        "id": "se17s2_q050_a",
+        "text": "クラスをfinalにする",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q050_b",
+        "text": "フィールドをprivate finalにする",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q050_c",
+        "text": "セッターメソッドを提供しない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q050_d",
+        "text": "フィールドをprotectedにする",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q051",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaの継承に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Javaではクラスの多重継承は許可されていません。1つのクラスはextends句で1つのクラスのみを継承できます。ただし、インターフェースの多重実装（implements句で複数のインターフェースを実装）は許可されています。finalクラスはサブクラスを作成できません。",
+    "choices": [
+      {
+        "id": "se17s2_q051_a",
+        "text": "クラスは複数のクラスを同時に継承できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q051_b",
+        "text": "finalクラスはサブクラスを作成できない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q051_c",
+        "text": "サブクラスは親クラスのprivateメンバーに直接アクセスできる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q051_d",
+        "text": "Javaにはクラスの継承機能はない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q052",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "class Parent {\n    Parent() {\n        System.out.print(\"P \");\n    }\n}\n\nclass Child extends Parent {\n    Child() {\n        System.out.print(\"C \");\n    }\n}\n\npublic class InitOrder {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "explanation": "サブクラスのコンストラクタが呼ばれると、まず暗黙的にsuper()が呼ばれて親クラスのコンストラクタが実行されます。そのため\"P \"が先に出力され、その後Childのコンストラクタの残りが実行されて\"C \"が出力されます。",
+    "choices": [
+      {
+        "id": "se17s2_q052_a",
+        "text": "C P ",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q052_b",
+        "text": "P C ",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q052_c",
+        "text": "P ",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q052_d",
+        "text": "C ",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q053",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "sealed class Vehicle permits Car, Truck {}\n\nclass Car extends Vehicle {}\n\nfinal class Truck extends Vehicle {}",
+    "explanation": "sealedクラスのサブクラスはfinal、sealed、またはnon-sealedのいずれかの修飾子を指定する必要があります。Carクラスにはこれらの修飾子が指定されていないため、コンパイルエラーになります。class Carはfinal class Car、sealed class Car、またはnon-sealed class Carに変更する必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q053_a",
+        "text": "sealedキーワードの位置が間違っているため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q053_b",
+        "text": "Carクラスにfinal、sealed、non-sealedの修飾子がないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q053_c",
+        "text": "permitsで2つしかクラスを指定していないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q053_d",
+        "text": "Truckクラスがfinalなのでextends Vehicleできないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q054",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "sealed classに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "sealed classはJava SE 17で正式に導入されました。sealedクラスはpermits句で許可されたクラスのみがサブクラスとして継承できます。許可されたサブクラスはfinal、sealed、またはnon-sealedのいずれかで宣言する必要があります。sealedクラスはabstractにすることも可能です。",
+    "choices": [
+      {
+        "id": "se17s2_q054_a",
+        "text": "sealedクラスはサブクラスを持つことができない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q054_b",
+        "text": "sealedクラスのサブクラスはfinal、sealed、non-sealedのいずれかでなければならない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q054_c",
+        "text": "sealedクラスはインターフェースを実装できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q054_d",
+        "text": "sealedクラスはabstractにできない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q055",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄を埋めて、親クラスのコンストラクタを呼び出すようにしてください。\n\nclass Base {\n    String label;\n    Base(String label) {\n        this.label = label;\n    }\n}\n\nclass Derived extends Base {\n    Derived(String label) {\n        ___(label);\n    }\n}",
+    "code": null,
+    "explanation": "サブクラスのコンストラクタから親クラスのコンストラクタを呼び出すにはsuper()を使用します。super(label)とすることで親クラスBaseの引数付きコンストラクタが呼ばれます。super()はコンストラクタの最初の文でなければなりません。",
+    "choices": [
+      {
+        "id": "se17s2_q055_a",
+        "text": "super",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q055_b",
+        "text": "this",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q055_c",
+        "text": "base",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q055_d",
+        "text": "parent",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q056",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のコードでキャストが正しく行われるものはどれですか？",
+    "code": "class Fruit {}\nclass Apple extends Fruit {}\nclass Orange extends Fruit {}",
+    "explanation": "ダウンキャストは親クラス型から子クラス型への変換で、明示的なキャストが必要です。Fruit型の変数が実際にAppleオブジェクトを参照している場合、(Apple)でキャストできます。しかし、実際にはOrangeオブジェクトをAppleにキャストしようとするとClassCastExceptionが発生します。",
+    "choices": [
+      {
+        "id": "se17s2_q056_a",
+        "text": "Fruit f = new Apple(); Apple a = (Apple) f;",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q056_b",
+        "text": "Fruit f = new Orange(); Apple a = (Apple) f;",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q056_c",
+        "text": "Apple a = new Apple(); Orange o = (Orange) a;",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q056_d",
+        "text": "Object o = new Fruit(); String s = (String) o;",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q057",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class PatternMatch {\n    public static void main(String[] args) {\n        Object obj = \"Hello Java 17\";\n        if (obj instanceof String msg && msg.length() > 5) {\n            System.out.println(msg.toUpperCase());\n        } else {\n            System.out.println(\"短い\");\n        }\n    }\n}",
+    "explanation": "Java SE 16で導入されたパターンマッチングfor instanceofを使用しています。obj instanceof String msgでobjがString型かチェックし、true ならばmsg変数にキャストされた値が代入されます。\"Hello Java 17\"は長さ13で5より大きいので、msg.toUpperCase()が実行され\"HELLO JAVA 17\"が出力されます。",
+    "choices": [
+      {
+        "id": "se17s2_q057_a",
+        "text": "HELLO JAVA 17",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q057_b",
+        "text": "Hello Java 17",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q057_c",
+        "text": "短い",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q057_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q058",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "class Printer {\n    void print(String msg) {\n        System.out.println(msg);\n    }\n}\n\nclass ColorPrinter extends Printer {\n    @Override\n    int print(String msg) {\n        System.out.println(\"[COLOR] \" + msg);\n        return 1;\n    }\n}",
+    "explanation": "メソッドのオーバーライドでは、戻り値の型は同一型または共変戻り値型（サブタイプ）でなければなりません。親クラスの戻り値がvoidなのに、サブクラスでintに変更することはできません。voidはプリミティブ型ではないため、共変戻り値型も適用されません。",
+    "choices": [
+      {
+        "id": "se17s2_q058_a",
+        "text": "@Overrideアノテーションが間違っているため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q058_b",
+        "text": "オーバーライドで戻り値の型をvoidからintに変更しているため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q058_c",
+        "text": "メソッド名printが予約語であるため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q058_d",
+        "text": "System.out.printlnの後にreturn文があるため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q059",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "ポリモーフィズムに関する説明として正しいものをすべて選んでください。（2つ選択）",
+    "code": null,
+    "explanation": "ポリモーフィズム（多態性）では、親クラス型の変数でサブクラスのオブジェクトを参照できます。オーバーライドされたメソッドの呼び出しは実行時にオブジェクトの実際の型に基づいて解決されます（動的バインディング）。ただし、staticメソッドは動的バインディングされず、宣言された型に基づいて呼び出されます。",
+    "choices": [
+      {
+        "id": "se17s2_q059_a",
+        "text": "親クラス型の変数にサブクラスのインスタンスを代入できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q059_b",
+        "text": "staticメソッドもオーバーライドで動的バインディングされる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q059_c",
+        "text": "オーバーライドされたメソッドは実行時に実際のオブジェクトの型で呼ばれる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q059_d",
+        "text": "サブクラス型の変数に親クラスのインスタンスを直接代入できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal",
+    "requiredSelections": 2
+  },
+  {
+    "id": "se17s2_q060",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "pattern matching for instanceofに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "パターンマッチングfor instanceofでは、型チェックと変数への代入を1つの式で行えます。パターン変数のスコープは、その変数が確実に型チェックを通過した箇所でのみ有効です。例えば、if文の条件でinstanceof Stringで宣言した変数は、thenブロック内で使用可能です。",
+    "choices": [
+      {
+        "id": "se17s2_q060_a",
+        "text": "パターン変数はif文の外でも常に使用できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q060_b",
+        "text": "instanceof演算子で宣言したパターン変数にキャスト不要でアクセスできる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q060_c",
+        "text": "パターンマッチングはswitch式でのみ使用できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q060_d",
+        "text": "パターン変数はfinalで宣言する必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q061",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "インターフェースのdefaultメソッドに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Java SE 8からインターフェースにdefaultメソッドを定義できるようになりました。defaultメソッドは本体を持ち、実装クラスでオーバーライドしなくてもコンパイルエラーになりません。複数のインターフェースが同名のdefaultメソッドを持つ場合、実装クラスでオーバーライドして解決する必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q061_a",
+        "text": "defaultメソッドは実装クラスで必ずオーバーライドしなければならない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q061_b",
+        "text": "defaultメソッドは本体を持つことができる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q061_c",
+        "text": "インターフェースにはdefaultメソッドを1つしか定義できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q061_d",
+        "text": "defaultメソッドはprivateにすることができる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q062",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "interface Greetable {\n    default String greet() {\n        return \"Hello\";\n    }\n}\n\nclass JapaneseGreeter implements Greetable {\n    @Override\n    public String greet() {\n        return \"こんにちは\";\n    }\n}\n\npublic class InterfaceDemo {\n    public static void main(String[] args) {\n        Greetable g = new JapaneseGreeter();\n        System.out.println(g.greet());\n    }\n}",
+    "explanation": "JapaneseGreeterクラスはGreetableインターフェースのdefaultメソッドgreet()をオーバーライドしています。変数gはGreetable型ですが、実際のオブジェクトはJapaneseGreeterなので、オーバーライドされた\"こんにちは\"が出力されます。defaultメソッドは実装クラスでオーバーライドできます。",
+    "choices": [
+      {
+        "id": "se17s2_q062_a",
+        "text": "Hello",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q062_b",
+        "text": "こんにちは",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q062_c",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q062_d",
+        "text": "null",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q063",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "sealed interface Drawable permits Circle, Square {}\n\nclass Circle implements Drawable {\n    public void draw() { System.out.println(\"Circle\"); }\n}\n\nfinal class Square implements Drawable {\n    public void draw() { System.out.println(\"Square\"); }\n}",
+    "explanation": "sealed interfaceのサブタイプ（実装クラスまたはサブインターフェース）はfinal、sealed、またはnon-sealedのいずれかでなければなりません。CircleクラスにはこれらのModifierがないため、コンパイルエラーになります。final class Circleまたはnon-sealed class Circleに変更する必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q063_a",
+        "text": "interfaceにsealedを適用できないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q063_b",
+        "text": "Circleクラスにfinal、sealed、non-sealedの修飾子がないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q063_c",
+        "text": "Squareクラスにdrawメソッドの定義があるため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q063_d",
+        "text": "permitsで指定されたクラスが少なすぎるため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q064",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "インターフェースに定義できるメンバーとして正しいものをすべて選んでください。（3つ選択）",
+    "code": null,
+    "explanation": "Java SE 8以降のインターフェースには、抽象メソッド、defaultメソッド、staticメソッドを定義できます。Java SE 9からはprivateメソッドも定義可能です。インスタンスフィールドは定義できません（定数のみ：public static final）。コンストラクタもインターフェースには定義できません。",
+    "choices": [
+      {
+        "id": "se17s2_q064_a",
+        "text": "抽象メソッド",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q064_b",
+        "text": "defaultメソッド",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q064_c",
+        "text": "インスタンスフィールド",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q064_d",
+        "text": "staticメソッド",
+        "isCorrect": true,
+        "order": 4
+      },
+      {
+        "id": "se17s2_q064_e",
+        "text": "コンストラクタ",
+        "isCorrect": false,
+        "order": 5
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal",
+    "requiredSelections": 3
+  },
+  {
+    "id": "se17s2_q065",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "インターフェースの変数に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "インターフェースで宣言されたフィールドは暗黙的にpublic static finalになります。修飾子を省略しても自動的にこれらの修飾子が付加されます。そのため、インターフェースのフィールドは定数であり、初期化が必須です。",
+    "choices": [
+      {
+        "id": "se17s2_q065_a",
+        "text": "インターフェースのフィールドはprivateにできる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q065_b",
+        "text": "インターフェースのフィールドはインスタンス変数である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q065_c",
+        "text": "インターフェースのフィールドは暗黙的にpublic static finalである",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q065_d",
+        "text": "インターフェースにはフィールドを宣言できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q066",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "checked例外とunchecked例外に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "checked例外はException（RuntimeExceptionを除く）のサブクラスで、コンパイル時にチェックされます。メソッド内でchecked例外をスローする可能性がある場合、try-catchで処理するかthrows句で宣言する必要があります。unchecked例外はRuntimeExceptionのサブクラスで、コンパイル時のチェックは行われません。",
+    "choices": [
+      {
+        "id": "se17s2_q066_a",
+        "text": "NullPointerExceptionはchecked例外である",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q066_b",
+        "text": "IOExceptionはunchecked例外である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q066_c",
+        "text": "checked例外はcatchまたはthrowsで処理する必要がある",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q066_d",
+        "text": "すべての例外はキャッチする必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q067",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class FinallyDemo {\n    public static void main(String[] args) {\n        try {\n            System.out.print(\"A \");\n            int result = 10 / 0;\n            System.out.print(\"B \");\n        } catch (ArithmeticException e) {\n            System.out.print(\"C \");\n        } finally {\n            System.out.print(\"D \");\n        }\n    }\n}",
+    "explanation": "tryブロックで\"A \"が出力された後、10/0でArithmeticExceptionが発生します。\"B \"は実行されません。catchブロックで\"C \"が出力され、finallyブロックは例外の有無にかかわらず必ず実行されるため\"D \"が出力されます。結果は\"A C D \"です。",
+    "choices": [
+      {
+        "id": "se17s2_q067_a",
+        "text": "A B C D ",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q067_b",
+        "text": "A C D ",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q067_c",
+        "text": "A C ",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q067_d",
+        "text": "A D ",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q068",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class MultiCatch {\n    public static void main(String[] args) {\n        try {\n            String s = null;\n            s.length();\n        } catch (NullPointerException | RuntimeException e) {\n            System.out.println(\"エラー: \" + e.getMessage());\n        }\n    }\n}",
+    "explanation": "マルチキャッチ(multi-catch)では、指定する例外クラス間に継承関係があってはいけません。NullPointerExceptionはRuntimeExceptionのサブクラスなので、同じcatch句に記述するとコンパイルエラーになります。サブクラスの例外は親クラスの例外で既にキャッチされるため、冗長な指定となります。",
+    "choices": [
+      {
+        "id": "se17s2_q068_a",
+        "text": "マルチキャッチは2つ以上の例外を指定できないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q068_b",
+        "text": "NullPointerExceptionとRuntimeExceptionに継承関係があるため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q068_c",
+        "text": "変数eがfinalでないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q068_d",
+        "text": "NullPointerExceptionはキャッチできないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q069",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "try-with-resources文に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "try-with-resources文はAutoCloseableインターフェースを実装したリソースを自動的にcloseします。tryブロックの実行後、catchやfinallyの前にリソースのclose()メソッドが呼ばれます。複数のリソースをセミコロンで区切って宣言でき、宣言と逆の順序でクローズされます。",
+    "choices": [
+      {
+        "id": "se17s2_q069_a",
+        "text": "リソースはfinallyブロックの後にクローズされる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q069_b",
+        "text": "try-with-resourcesで使用するリソースはCloseableのみ実装すればよい",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q069_c",
+        "text": "リソースは宣言と逆の順序でクローズされる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q069_d",
+        "text": "try-with-resources文ではcatch句は使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q070",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄を埋めて、カスタム例外クラスを正しく定義してください。\n\npublic class InvalidAgeException ___ Exception {\n    public InvalidAgeException(String message) {\n        super(message);\n    }\n}",
+    "code": null,
+    "explanation": "カスタム例外クラスを作成するには、Exceptionクラス（checked例外の場合）またはRuntimeExceptionクラス（unchecked例外の場合）をextendsで継承します。extendsキーワードを使ってクラスの継承関係を定義します。",
+    "choices": [
+      {
+        "id": "se17s2_q070_a",
+        "text": "extends",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q070_b",
+        "text": "implements",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q070_c",
+        "text": "throws",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q070_d",
+        "text": "catches",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q071",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "varに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "varはJava SE 10で導入されたローカル変数型推論の仕組みです。varはローカル変数の宣言でのみ使用可能で、フィールド、メソッドの引数、戻り値型には使えません。varは予約語ではなく「予約された型名」なので、変数名やメソッド名としては使用できます。",
+    "choices": [
+      {
+        "id": "se17s2_q071_a",
+        "text": "varはフィールドの型宣言に使用できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q071_b",
+        "text": "varはローカル変数の宣言でのみ使用できる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q071_c",
+        "text": "varはメソッドの戻り値型として使用できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q071_d",
+        "text": "varはJava SE 17で廃止された",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q072",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class VarDemo {\n    public static void main(String[] args) {\n        var list = java.util.List.of(1, 2, 3);\n        var size = list.size();\n        System.out.println(size);\n    }\n}",
+    "explanation": "varを使用すると、コンパイラが右辺の式から型を推論します。List.of(1, 2, 3)は不変のListを返すのでlistはList<Integer>型と推論されます。list.size()は3を返し、sizeはint型と推論されます。出力は3です。",
+    "choices": [
+      {
+        "id": "se17s2_q072_a",
+        "text": "3",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q072_b",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q072_c",
+        "text": "0",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q072_d",
+        "text": "実行時にClassCastExceptionが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q073",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class VarError {\n    var instanceField = 10;\n\n    public static void main(String[] args) {\n        System.out.println(new VarError().instanceField);\n    }\n}",
+    "explanation": "varはローカル変数の型推論にのみ使用できます。インスタンスフィールド、staticフィールド、メソッドの引数、戻り値型にはvarを使用できません。この例ではインスタンスフィールドにvarを使用しているため、コンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se17s2_q073_a",
+        "text": "varで初期値10を代入できないため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q073_b",
+        "text": "varはインスタンスフィールドには使用できないため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q073_c",
+        "text": "mainメソッドからフィールドにアクセスできないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q073_d",
+        "text": "varはJava SE 17では廃止されたため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q074",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "次のvarの使用例のうち、コンパイルエラーにならないものはどれですか？",
+    "code": null,
+    "explanation": "var message = \"Hello\";はローカル変数の宣言と初期化が同時に行われており、コンパイラがString型を推論できるため有効です。var x;は初期化子がないためエラー、var arr = {1,2,3};は配列初期化子からは型推論できないためエラー、var n = null;はnullから型を推論できないためエラーになります。",
+    "choices": [
+      {
+        "id": "se17s2_q074_a",
+        "text": "var x;",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q074_b",
+        "text": "var message = \"Hello\";",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q074_c",
+        "text": "var arr = {1, 2, 3};",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q074_d",
+        "text": "var n = null;",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q075",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "ローカル変数型推論を使って、次のコードの空欄を埋めて変数を宣言してください。このコードはfor-each文でリストの要素を出力します。\n\nvar items = java.util.List.of(\"A\", \"B\", \"C\");\nfor (___ item : items) {\n    System.out.println(item);\n}",
+    "code": null,
+    "explanation": "Java SE 10以降（JEP 286）、for-each文のループ変数にもvarを使用できます。コンパイラはitemsの型(List<String>)からitemの型をStringと推論します。varをfor-each文で使うことで、型名の記述を省略できます。",
+    "choices": [
+      {
+        "id": "se17s2_q075_a",
+        "text": "var",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q075_b",
+        "text": "auto",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q075_c",
+        "text": "Object",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q075_d",
+        "text": "def",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q076",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "switch式のアロー構文(->)に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "switch式のアロー構文ではフォールスルーが発生しません。各caseアームは独立しており、break文は不要です。1つのcaseに複数のラベルをカンマで区切って指定できます（例：case 1, 2, 3 ->）。ブロック({})を使用する場合はyieldで値を返します。アロー構文はswitch文でも使用可能です。",
+    "choices": [
+      {
+        "id": "se17s2_q076_a",
+        "text": "アロー構文でもbreak文が必要である",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q076_b",
+        "text": "アロー構文ではフォールスルーが発生しない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q076_c",
+        "text": "アロー構文では1つのcaseに1つのラベルしか指定できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q076_d",
+        "text": "アロー構文はswitch文では使えずswitch式のみで使える",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q077",
+    "lessonId": "exam_se17_silver_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class SwitchYield {\n    public static void main(String[] args) {\n        String season = \"SUMMER\";\n        int numDays = switch (season) {\n            case \"SPRING\", \"FALL\" -> 90;\n            case \"SUMMER\" -> {\n                System.out.print(\"暑い！ \");\n                yield 92;\n            }\n            case \"WINTER\" -> 89;\n            default -> 0;\n        };\n        System.out.println(numDays);\n    }\n}",
+    "explanation": "switch式でseasonが\"SUMMER\"にマッチします。アロー構文のブロック内でSystem.out.print(\"暑い！ \")が実行されてから、yield 92;で値92が返されます。その後System.out.println(numDays)で92が出力されます。結果は\"暑い！ 92\"となります。",
+    "choices": [
+      {
+        "id": "se17s2_q077_a",
+        "text": "92",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q077_b",
+        "text": "暑い！ 92",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q077_c",
+        "text": "暑い！ \n92",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q077_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q078",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class SwitchMix {\n    public static void main(String[] args) {\n        int val = 2;\n        int result = switch (val) {\n            case 1 -> 10;\n            case 2:\n                yield 20;\n            case 3 -> 30;\n            default -> 0;\n        };\n        System.out.println(result);\n    }\n}",
+    "explanation": "switch式（またはswitch文）の中で、アロー構文(->)とコロン構文(:)を混在させることはできません。case 1はアロー構文を使用し、case 2はコロン構文を使用しているため、コンパイルエラーになります。すべてのcaseで同じ構文を使う必要があります。",
+    "choices": [
+      {
+        "id": "se17s2_q078_a",
+        "text": "yieldキーワードの使い方が間違っているため",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q078_b",
+        "text": "アロー構文(->)とコロン構文(:)を混在させているため",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q078_c",
+        "text": "defaultケースの値が0であるため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q078_d",
+        "text": "switch式でint型を返すことはできないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q079",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "switch式に関する説明として正しいものをすべて選んでください。（2つ選択）",
+    "code": null,
+    "explanation": "switch式はJava SE 14で正式導入されました。switch式は値を返すため、変数に代入したり引数として使用できます。switch式では、すべてのケースが値を返す必要があり、網羅的である必要があります。アロー構文(->)ではフォールスルーはありません。enum型のすべての値を網羅すればdefaultは省略できます。",
+    "choices": [
+      {
+        "id": "se17s2_q079_a",
+        "text": "switch式は変数に代入可能な値を返すことができる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q079_b",
+        "text": "switch式ではenum型は使用できない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q079_c",
+        "text": "switch式のアロー構文ではフォールスルーが発生しない",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q079_d",
+        "text": "switch式では必ずdefaultケースが必要である",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "hard",
+    "requiredSelections": 2
+  },
+  {
+    "id": "se17s2_q080",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fillBlank",
+    "question": "次のswitch式の空欄を埋めて、正しいコードを完成させてください。\n\nString rank = switch (score / 10) {\n    case 10, 9 ___ \"S\";\n    case 8 ___ \"A\";\n    case 7 ___ \"B\";\n    default ___ \"C\";\n};",
+    "code": null,
+    "explanation": "switch式のアロー構文では、caseラベルの後に->を使って値を指定します。アロー構文はJava SE 14で導入され、フォールスルーのないシンプルな記法を提供します。各caseの->の右辺が直接switch式の値となります。",
+    "choices": [
+      {
+        "id": "se17s2_q080_a",
+        "text": "->",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q080_b",
+        "text": ":",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q080_c",
+        "text": "=>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q080_d",
+        "text": "==",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "easy"
+  }
+]

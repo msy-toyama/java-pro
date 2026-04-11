@@ -1,0 +1,1313 @@
+{
+  "courseId": "ch27",
+  "lessons": [
+    {
+      "id": "ch27_01",
+      "courseId": "ch27",
+      "title": "スレッドの基本",
+      "summary": "Javaのマルチスレッドの基本を学びます。Threadクラスの継承とRunnableインターフェースの実装によるスレッド作成、start()によるスレッド起動、スレッドのライフサイクルを理解します。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "overview",
+          "title": "マルチスレッドとは",
+          "body": "このレッスンでは以下を学びます:\n\n・スレッドとは何か（プログラムの並行実行単位）\n・Threadクラスの継承とRunnableインターフェースの実装\n・start()とrun()メソッドの違い\n\n**並行処理**の基礎となるスレッドの概念を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "rule",
+          "title": "Threadクラスの継承とRunnableインターフェース",
+          "body": "スレッドを作成する方法は主に2つあります。\n方法1：Threadクラスを継承してrun()メソッドをオーバーライドします。\n方法2：Runnableインターフェースを実装してrun()メソッドを定義し、Threadのコンストラクタに渡します。\nRunnableはSAM（Single Abstract Method）インターフェースなので、ラムダ式でも記述できます。\n一般的にはRunnableの実装が推奨されます（Javaは単一継承のため、Threadを継承すると他のクラスを継承できなくなる）。\nstart()を呼ぶとrun()が別スレッドで実行されます。run()を直接呼ぶと現在のスレッドで同期的に実行されるだけです。",
+          "code": "// 方法1：Threadクラスの継承\nclass MyThread extends Thread {\n    @Override\n    public void run() {\n        System.out.println(\"Thread: \" + getName());\n    }\n}\n\n// 方法2：Runnableインターフェース\nclass MyRunnable implements Runnable {\n    @Override\n    public void run() {\n        System.out.println(\"Runnable thread\");\n    }\n}\n\n// 起動\nMyThread t1 = new MyThread();\nt1.start();  // 別スレッドでrun()が実行される\n\nThread t2 = new Thread(new MyRunnable());\nt2.start();\n\n// ラムダ式\nThread t3 = new Thread(() -> System.out.println(\"Lambda thread\"));\nt3.start();\n\n// 注意：run()を直接呼ぶと同じスレッドで実行される\nt1.run(); // 別スレッドにはならない",
+          "note": "start()とrun()の違いは試験で頻出です。start()は新しいスレッドを起動し、run()は現在のスレッドで実行します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "code",
+          "title": "スレッドの起動と注意点",
+          "body": "start()メソッドは一度しか呼べません。同じスレッドに対して2回start()を呼ぶとIllegalThreadStateExceptionが発生します。\nスレッドの実行順序は保証されません。どのスレッドが先に実行されるかはJVMとOSのスケジューリングに依存します。\nThread.currentThread()で現在実行中のスレッドの参照を取得できます。\nsetName()でスレッドに名前を設定し、getName()で取得できます。",
+          "code": "Thread t = new Thread(() -> {\n    System.out.println(\"Name: \" + Thread.currentThread().getName());\n});\nt.setName(\"Worker-1\");\nt.start();\n// 出力: Name: Worker-1\n\n// 2回start()を呼ぶとエラー\nThread t2 = new Thread(() -> System.out.println(\"run\"));\nt2.start();\ntry {\n    t2.start(); // 2回目のstart()\n} catch (IllegalThreadStateException e) {\n    System.out.println(\"Error: \" + e.getMessage());\n}\n\n// 実行順序は保証されない\nfor (int i = 0; i < 3; i++) {\n    final int num = i;\n    new Thread(() -> System.out.println(\"Thread-\" + num)).start();\n}\n// 出力順は実行ごとに変わる可能性がある",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "point",
+          "title": "スレッドのライフサイクル",
+          "body": "スレッドには以下の状態があります（Thread.State列挙型）。\n| 状態 | 説明 |\n|---|---|\n| NEW | スレッドが生成されたがstart()が呼ばれていない状態。 |\n| RUNNABLE | 実行可能な状態（実行中または実行待ち）。 |\n| BLOCKED | モニターロックの取得を待っている状態。 |\n| WAITING | 待機中の状態（Object.wait()、Thread.join()、LockSupport.park()で遷移）。 |\n| TIMED_WAITING | 指定時間の待機中（Thread.sleep()、wait(timeout)で遷移）。 |\n| TERMINATED | run()の実行が完了した状態。 |",
+          "code": "Thread t = new Thread(() -> {\n    try {\n        Thread.sleep(1000);\n    } catch (InterruptedException e) {\n        e.printStackTrace();\n    }\n});\n\nSystem.out.println(t.getState()); // NEW\nt.start();\nSystem.out.println(t.getState()); // RUNNABLE（またはTIMED_WAITING）\n\ntry {\n    Thread.sleep(100); // 少し待つ\n    System.out.println(t.getState()); // TIMED_WAITING\n    t.join(); // スレッドの完了を待つ\n    System.out.println(t.getState()); // TERMINATED\n} catch (InterruptedException e) {\n    e.printStackTrace();\n}",
+          "note": "getState()で取得できる状態は6種類です。RUNNABLE状態には実行中と実行待ちの両方が含まれます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "tip",
+          "title": "試験対策：スレッドの基本",
+          "body": "Gold試験では、start()とrun()の違いが問われます。run()を直接呼んでも新しいスレッドは起動しません。\n同じスレッドに対するstart()の2回呼び出しはIllegalThreadStateExceptionです。\nスレッドの実行順序は不定であり、出力順序が確定しないコードの挙動を理解することが重要です。\nThread.State列挙型の6つの状態とその遷移条件を覚えましょう。\nRunnableがラムダ式で書けることも基本知識として必要です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_01_q1",
+          "lessonId": "ch27_01",
+          "type": "fourChoice",
+          "question": "Threadクラスについて正しい説明はどれですか？",
+          "code": "ExecutorService es = Executors.newFixedThreadPool(4);\nFuture<String> future = es.submit(() -> {\n    Thread.sleep(1000);\n    return \"完了\";\n});\nString result = future.get();",
+          "explanation": "start()メソッドは一度しか呼べません。同じスレッドに対して2回start()を呼ぶとIllegalThreadStateExceptionが発生します。run()を直接呼んでも新しいスレッドは起動せず、現在のスレッドで同期的に実行されます。",
+          "choices": [
+            {
+              "id": "ch27_01_q1_a",
+              "text": "同じスレッドに対してstart()を2回呼ぶとIllegalThreadStateExceptionが発生する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_01_q1_b",
+              "text": "run()を直接呼ぶと新しいスレッドで実行される",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_01_q1_c",
+              "text": "start()は何度でも呼ぶことができる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_01_q1_d",
+              "text": "Threadクラスを継承しないとスレッドは作れない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_01_q2",
+          "lessonId": "ch27_01",
+          "type": "fourChoice",
+          "question": "スレッドの状態（Thread.State）に含まれないものはどれですか？",
+          "code": "synchronized (lock) {\n    while (queue.isEmpty()) {\n        lock.wait();\n    }\n    return queue.poll();\n}",
+          "explanation": "Thread.Stateの値はNEW、RUNNABLE、BLOCKED、WAITING、TIMED_WAITING、TERMINATEDの6つです。RUNNINGという状態は定義されていません。実行中の状態はRUNNABLEに含まれます。",
+          "choices": [
+            {
+              "id": "ch27_01_q2_a",
+              "text": "RUNNING",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_01_q2_b",
+              "text": "BLOCKED",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_01_q2_c",
+              "text": "WAITING",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_01_q2_d",
+              "text": "TIMED_WAITING",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_01_q3",
+          "lessonId": "ch27_01",
+          "type": "fillBlank",
+          "question": "Runnableインターフェースを実装したオブジェクトからスレッドを作成するには、new Thread(___) の形式で生成する。",
+          "code": "AtomicInteger counter = new AtomicInteger(0);\nint newVal = counter.incrementAndGet();\nboolean ok = counter.compareAndSet(1, 2);",
+          "explanation": "Runnableインターフェースを実装したオブジェクトをThreadのコンストラクタに渡すことで、そのrun()メソッドを別スレッドで実行できます。Runnableは関数型インターフェースなので、ラムダ式も渡せます。",
+          "choices": [
+            {
+              "id": "ch27_01_q3_a",
+              "text": "Runnableオブジェクト",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_01_q3_b",
+              "text": "Threadオブジェクト",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_01_q3_c",
+              "text": "Callableオブジェクト",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_01_q3_d",
+              "text": "Executorオブジェクト",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch27_02",
+      "courseId": "ch27",
+      "title": "スレッドの制御",
+      "summary": "スレッドの制御メソッド（sleep、join、yield）、スレッドの優先度、デーモンスレッドについて学びます。スレッド間の協調的な動作を理解します。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "overview",
+          "title": "スレッド制御の概要",
+          "body": "このレッスンでは以下を学びます:\n\n・sleep()、join()、yield()によるスレッド制御\n・スレッドの状態遷移（NEW→RUNNABLE→TERMINATED等）\n・割り込み（interrupt()）の仕組み\n\nスレッドのライフサイクルを理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "rule",
+          "title": "sleep()とjoin()",
+          "body": "Thread.sleep(long millis)は現在のスレッドを指定ミリ秒間停止させます。staticメソッドです。\nsleep()中にinterrupt()が呼ばれるとInterruptedExceptionが発生します。\njoin()は呼び出されたスレッドの終了を待機します。インスタンスメソッドです。\njoin(long millis)でタイムアウト付きの待機もできます。\njoin()もInterruptedExceptionをスローする可能性があります。\nsleep()は現在のスレッドに対する操作であり、他のスレッドを停止させることはできません。",
+          "code": "// sleep()の使用\nThread t = new Thread(() -> {\n    try {\n        System.out.println(\"Start\");\n        Thread.sleep(2000); // 2秒停止\n        System.out.println(\"End\");\n    } catch (InterruptedException e) {\n        System.out.println(\"Interrupted!\");\n    }\n});\nt.start();\n\n// join()の使用\nThread worker = new Thread(() -> {\n    System.out.println(\"Working...\");\n    try { Thread.sleep(1000); } catch (InterruptedException e) {}\n    System.out.println(\"Done\");\n});\nworker.start();\ntry {\n    worker.join(); // workerスレッドの完了を待機\n} catch (InterruptedException e) {}\nSystem.out.println(\"Worker finished\"); // Doneの後に出力される",
+          "note": "sleep()はstaticメソッドで現在のスレッドを停止させます。join()はインスタンスメソッドで対象スレッドの終了を待ちます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "code",
+          "title": "スレッドの優先度とyield()",
+          "body": "Thread.yield()は現在のスレッドの実行を一時的に中断し、他のスレッドに実行機会を譲ります。\nただし、yield()はスケジューラへのヒントであり、実際に他のスレッドに切り替わる保証はありません。\nスレッドの優先度はsetPriority()で1〜10の整数で設定します。\nThread.MIN_PRIORITY = 1、Thread.NORM_PRIORITY = 5、Thread.MAX_PRIORITY = 10です。\n優先度はスケジューラへのヒントであり、実行順序を保証するものではありません。",
+          "code": "// yield()の使用\nThread t1 = new Thread(() -> {\n    // 繰り返し処理（for文）\n    for (int i = 0; i < 5; i++) {\n        System.out.println(\"T1: \" + i);\n        Thread.yield(); // 他のスレッドに機会を譲る\n    }\n});\n\nThread t2 = new Thread(() -> {\n    // 繰り返し処理（for文）\n    for (int i = 0; i < 5; i++) {\n        System.out.println(\"T2: \" + i);\n    }\n});\n\nt1.start();\nt2.start();\n// 出力順は不定\n\n// 優先度の設定\nThread high = new Thread(() -> System.out.println(\"High\"));\nThread low = new Thread(() -> System.out.println(\"Low\"));\nhigh.setPriority(Thread.MAX_PRIORITY);  // 10\nlow.setPriority(Thread.MIN_PRIORITY);   // 1\nhigh.start();\nlow.start();\n// 優先度が高いスレッドが先に実行される傾向があるが保証はない",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "point",
+          "title": "デーモンスレッド",
+          "body": "デーモンスレッドはバックグラウンドで動作するスレッドで、ガベージコレクタなどがその例です。\nsetDaemon(true)でデーモンスレッドに設定します。start()の前に設定する必要があります。\nすべてのユーザー（非デーモン）スレッドが終了すると、デーモンスレッドは強制的に停止しJVMが終了します。\nstart()後にsetDaemon()を呼ぶとIllegalThreadStateExceptionが発生します。\nデーモンスレッドから作成されたスレッドもデフォルトでデーモンスレッドになります。",
+          "code": "Thread daemon = new Thread(() -> {\n    while (true) {\n        System.out.println(\"Daemon running\");\n        try { Thread.sleep(500); } catch (InterruptedException e) {}\n    }\n});\ndaemon.setDaemon(true); // start()の前に設定\ndaemon.start();\n\n// メインスレッドが終了するとデーモンスレッドも終了\nSystem.out.println(\"Main done\");\n// デーモンスレッドはメインスレッド終了後に停止する\n\n// isDaemon()で確認\nSystem.out.println(daemon.isDaemon()); // true",
+          "note": "デーモンスレッドではfinallyブロックの実行も保証されません。重要なクリーンアップ処理には使わないようにしましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "tip",
+          "title": "試験対策：スレッドの制御",
+          "body": "sleep()がstaticメソッドであり、常に現在のスレッドを停止させることを覚えましょう。\njoin()はインスタンスメソッドで、対象スレッドの終了を待つことに注意しましょう。\nsetDaemon()はstart()の前に呼ぶ必要があり、start()後に呼ぶと例外が発生します。\nyield()と優先度はスケジューラへのヒントであり、動作を保証するものではありません。\nInterruptedExceptionはchecked例外であり、sleep()やjoin()で必ず処理が必要です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_02_q1",
+          "lessonId": "ch27_02",
+          "type": "fourChoice",
+          "question": "Thread.sleep()メソッドに関する説明として正しいものはどれですか？",
+          "code": "ReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n    // クリティカルセクション\n    sharedResource.update();\n} finally {\n    lock.unlock();\n}",
+          "explanation": "Thread.sleep()はstaticメソッドであり、現在実行中のスレッドを指定時間停止させます。他のスレッドを停止させることはできません。InterruptedExceptionはchecked例外なので処理が必要です。",
+          "choices": [
+            {
+              "id": "ch27_02_q1_a",
+              "text": "staticメソッドであり、現在のスレッドを停止させる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_02_q1_b",
+              "text": "インスタンスメソッドであり、対象スレッドを停止させる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_02_q1_c",
+              "text": "InterruptedExceptionはunchecked例外である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_02_q1_d",
+              "text": "sleep()中のスレッドはBLOCKED状態になる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_02_q2",
+          "lessonId": "ch27_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "public class Main {\n    public static void main(String[] args) throws InterruptedException {\n        Thread t = new Thread(() -> System.out.println(\"Hello\"));\n        t.start();\n        t.join();\n        System.out.println(\"World\");\n    }\n}",
+          "explanation": "join()メソッドにより、mainスレッドはtスレッドの実行完了を待機します。そのため、tスレッドの「Hello」が必ず先に出力され、その後に「World」が出力されます。join()がなければ出力順序は不定です。",
+          "choices": [
+            {
+              "id": "ch27_02_q2_a",
+              "text": "Hello → World（この順序が保証される）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_02_q2_b",
+              "text": "World → Hello（この順序が保証される）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_02_q2_c",
+              "text": "出力順序は不定",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_02_q2_d",
+              "text": "InterruptedException が発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_02_q3",
+          "lessonId": "ch27_02",
+          "type": "errorFind",
+          "question": "次のコードに含まれるエラーを選んでください。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        Thread t = new Thread(() -> System.out.println(\"Run\"));\n        t.start();\n        t.setDaemon(true);\n    }\n}",
+          "explanation": "setDaemon()はstart()の前に呼ぶ必要があります。start()後にsetDaemon()を呼ぶとIllegalThreadStateExceptionが発生します。デーモン設定はスレッド起動前に行わなければなりません。",
+          "choices": [
+            {
+              "id": "ch27_02_q3_a",
+              "text": "start()の後にsetDaemon()を呼んでいる（start前に設定が必要）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_02_q3_b",
+              "text": "ラムダ式の記述が不正である",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_02_q3_c",
+              "text": "setDaemon()にはint型の引数が必要である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_02_q3_d",
+              "text": "mainメソッドにthrows宣言が必要である",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch27_02_q4",
+          "lessonId": "ch27_02",
+          "type": "codeComplete",
+          "question": "ExecutorServiceでタスクを実行するコードを完成させてください。",
+          "code": "CompletableFuture.supplyAsync(() -> fetchData())\n    .thenApply(data -> process(data))\n    .thenAccept(result -> save(result))\n    .exceptionally(ex -> {\n        log.error(ex); return null;\n    });",
+          "explanation": "Executors.newFixedThreadPool()で固定サイズのスレッドプールを作成し、submit()でタスクを送信します。execute()も正しいが、submit()はFutureを返します。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "ExecutorService exec = Executors.__BLANK_1__(4);\nexec.__BLANK_2__(() -> System.out.println(\"Task\"));\nexec.shutdown();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①スレッドプール",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "newFixedThreadPool",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "newThreadPool",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "createPool",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②タスク送信",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "submit",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "execute",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "run",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch27_03",
+      "courseId": "ch27",
+      "title": "同期化",
+      "summary": "マルチスレッド環境でのデータ整合性を保つための同期化を学びます。synchronizedキーワード、モニターロック、レースコンディションの概念を理解します。",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "overview",
+          "title": "同期化の必要性",
+          "body": "このレッスンでは以下を学びます:\n\n・synchronizedによる排他制御\n・**競合状態**（Race Condition）とその防止\n・wait(), notify(), notifyAll() によるスレッド間通信\n\n複数スレッドが安全にデータを共有する方法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "rule",
+          "title": "synchronizedメソッドとブロック",
+          "body": "synchronizedメソッドは、メソッド全体をロックの対象にします。\nインスタンスメソッドの場合、そのインスタンス（this）がロック対象になります。\nstaticメソッドの場合、そのクラスのClassオブジェクトがロック対象になります。\nsynchronizedブロックは、任意のオブジェクトをロック対象として指定できます。\nロックはブロックの開始時に取得され、ブロックの終了時（例外含む）に自動的に解放されます。\n同じロックを持つsynchronized領域には、同時に1つのスレッドだけがアクセスできます。",
+          "code": "class Counter {\n    private int count = 0;\n\n    // synchronizedメソッド（thisでロック）\n    public synchronized void increment() {\n        count++;\n    }\n\n    // synchronizedブロック\n    public void decrement() {\n        synchronized (this) {\n            count--;\n        }\n    }\n\n    // staticメソッドのsynchronized（Classオブジェクトでロック）\n    private static int total = 0;\n    public static synchronized void addTotal(int n) {\n        total += n;\n    }\n\n    // 任意のオブジェクトでロック\n    private final Object lock = new Object();\n    public void safeOp() {\n        synchronized (lock) {\n            // lockオブジェクトでロック\n            count++;\n        }\n    }\n}",
+          "note": "synchronizedメソッドはメソッド全体がロック対象です。synchronizedブロックはより細かい範囲をロックできます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "code",
+          "title": "レースコンディションの例",
+          "body": "レースコンディションは、複数のスレッドが同時にデータを読み書きすることで発生します。\ncount++のような操作は実は「読み取り→加算→書き込み」の3ステップであり、アトミック（不可分）ではありません。\n同期化なしでは、2つのスレッドが同じ値を読み取って加算し、結果が期待と異なることがあります。\nsynchronizedを使うことで、この問題を防ぐことができます。",
+          "code": "// UnsafeCounterクラスの定義\nclass UnsafeCounter {\n    private int count = 0;\n    // incrementメソッドの定義\n    public void increment() { count++; } // 同期化なし！\n    // getCountメソッドの定義\n    public int getCount() { return count; }\n}\n\n// SafeCounterクラスの定義\nclass SafeCounter {\n    private int count = 0;\n    public synchronized void increment() { count++; } // 同期化あり\n    public synchronized int getCount() { return count; }\n}\n\n// テスト\nUnsafeCounter unsafe = new UnsafeCounter();\n// 繰り返し処理（for文）\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> unsafe.increment()).start();\n}\nThread.sleep(2000);\nSystem.out.println(unsafe.getCount()); // 1000未満の可能性あり\n\nSafeCounter safe = new SafeCounter();\n// 繰り返し処理（for文）\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> safe.increment()).start();\n}\nThread.sleep(2000);\nSystem.out.println(safe.getCount()); // 常に1000",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "point",
+          "title": "モニターロックと再入可能性",
+          "body": "Javaのsynchronizedで使われるロックはモニターロック（固有ロック/intrinsic lock）と呼ばれます。\nすべてのJavaオブジェクトはモニターを持っています。\nモニターロックは再入可能（reentrant）です。同じスレッドが既にロックを保持している場合、同じロックを再取得できます。\nこのため、synchronizedメソッドから同じオブジェクトの別のsynchronizedメソッドを呼ぶことができます。\n再入可能でなければ、自分自身のロックで**デッドロック**してしまいます。",
+          "code": "class Reentrant {\n    public synchronized void methodA() {\n        System.out.println(\"A\");\n        methodB(); // 同じオブジェクトのsynchronizedメソッドを呼べる\n    }\n\n    public synchronized void methodB() {\n        System.out.println(\"B\");\n    }\n}\n\n// methodA()を呼ぶと、thisのロックを取得\n// methodA()内でmethodB()を呼ぶ際、既にロックを保持しているので再取得可能\nReentrant r = new Reentrant();\nnew Thread(() -> r.methodA()).start();\n// 出力: A B",
+          "note": "再入可能性（reentrancy）はJavaのロックの重要な特性です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "tip",
+          "title": "試験対策：同期化",
+          "body": "インスタンスメソッドのsynchronizedはthisでロック、staticメソッドのsynchronizedはClassオブジェクトでロックすることを区別しましょう。\n異なるインスタンスのsynchronizedメソッドは、異なるロック対象なので同時実行できます。\nsynchronizedブロックのロック対象にnullを指定するとNullPointerExceptionが発生します。\nvolatileキーワードは可視性を保証しますが、アトミック性は保証しません。\nGold試験では、レースコンディションが発生するかどうかを判断する問題が出ます。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_03_q1",
+          "lessonId": "ch27_03",
+          "type": "outputPredict",
+          "question": "次のコードについて、出力の説明として正しいものはどれですか？",
+          "code": "class Counter {\n    private int c = 0;\n    public void inc() { c++; }\n    public int get() { return c; }\n}\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Counter counter = new Counter();\n        Thread t1 = new Thread(() -> { for (int i = 0; i < 1000; i++) counter.inc(); });\n        Thread t2 = new Thread(() -> { for (int i = 0; i < 1000; i++) counter.inc(); });\n        t1.start(); t2.start();\n        t1.join(); t2.join();\n        System.out.println(counter.get());\n    }\n}",
+          "explanation": "inc()メソッドにsynchronizedが付いていないため、レースコンディションが発生します。c++は「読み取り→加算→書き込み」の3操作であり、アトミックではありません。そのため、結果は2000以下の不定の値になる可能性があります。",
+          "choices": [
+            {
+              "id": "ch27_03_q1_a",
+              "text": "同期化されていないため、2000以下の不定の値になる可能性がある",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_03_q1_b",
+              "text": "常に2000が出力される",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_03_q1_c",
+              "text": "常に1000が出力される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_03_q1_d",
+              "text": "コンパイルエラーが発生する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_03_q2",
+          "lessonId": "ch27_03",
+          "type": "fourChoice",
+          "question": "synchronizedメソッドのロック対象について正しい組み合わせはどれですか？",
+          "code": "ExecutorService es = Executors.newFixedThreadPool(4);\nFuture<String> future = es.submit(() -> {\n    Thread.sleep(1000);\n    return \"完了\";\n});\nString result = future.get();",
+          "explanation": "インスタンスのsynchronizedメソッドはそのインスタンス（this）をロック対象とし、staticなsynchronizedメソッドはそのクラスのClassオブジェクトをロック対象とします。この違いは試験で頻出です。",
+          "choices": [
+            {
+              "id": "ch27_03_q2_a",
+              "text": "インスタンスメソッド=thisでロック、staticメソッド=Classオブジェクトでロック",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_03_q2_b",
+              "text": "インスタンスメソッド=Classオブジェクトでロック、staticメソッド=thisでロック",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_03_q2_c",
+              "text": "どちらもthisオブジェクトでロックする",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_03_q2_d",
+              "text": "どちらもClassオブジェクトでロックする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_03_q3",
+          "lessonId": "ch27_03",
+          "type": "fourChoice",
+          "question": "Javaのモニターロックについて正しい説明はどれですか？",
+          "code": "synchronized (lock) {\n    while (queue.isEmpty()) {\n        lock.wait();\n    }\n    return queue.poll();\n}",
+          "explanation": "Javaのモニターロックは再入可能（reentrant）です。同じスレッドが既にロックを保持している場合、同じオブジェクトのロックを再度取得できます。これにより、synchronizedメソッドから同じオブジェクトの別のsynchronizedメソッドを安全に呼び出すことができます。",
+          "choices": [
+            {
+              "id": "ch27_03_q3_a",
+              "text": "同一スレッドは同じロックを再取得できる（再入可能）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_03_q3_b",
+              "text": "同一スレッドでも同じロックを再取得するとデッドロックする",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_03_q3_c",
+              "text": "モニターロックを持つのはsynchronizedブロック内のオブジェクトだけである",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_03_q3_d",
+              "text": "モニターロックは明示的にlock()メソッドで取得する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch27_03_q4",
+          "lessonId": "ch27_03",
+          "type": "reorder",
+          "question": "スレッドのライフサイクルを正しい順序に並べてください。",
+          "code": "AtomicInteger counter = new AtomicInteger(0);\nint newVal = counter.incrementAndGet();\nboolean ok = counter.compareAndSet(1, 2);",
+          "explanation": "スレッドは生成→start()で開始→run()が実行→join()で完了待ちの順です。start()を呼ばずにrun()を直接呼ぶと同一スレッドで実行されます。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Thread t = new Thread(task);",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "t.start();",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "// run()が実行される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "t.join();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch27_04",
+      "courseId": "ch27",
+      "title": "並行コレクション",
+      "summary": "マルチスレッド環境で安全に使えるコレクション（ConcurrentHashMap、CopyOnWriteArrayList、BlockingQueue）を学びます。従来のコレクションとの違いを理解します。",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "overview",
+          "title": "並行コレクションの必要性",
+          "body": "このレッスンでは以下を学びます:\n\n・ConcurrentHashMap、CopyOnWriteArrayList等の並行コレクション\n・通常のコレクションとの違い\n・ConcurrentModificationExceptionの回避\n\n**スレッドセーフ**なコレクションで安全な**並行処理**を実現します。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "rule",
+          "title": "ConcurrentHashMap",
+          "body": "ConcurrentHashMapは**スレッドセーフ**なHashMapの実装です。\n内部的なロック機構の最適化（バケット単位の細粒度ロックやCAS操作）により、高い並行性を実現しています。\nread操作はロックなしで実行され、write操作はバケット（ビン）単位でロックされます。\nnullキー・null値を許可しません（HashMapとの違い）。\nputIfAbsent()、replace()、compute()などのアトミック操作メソッドが用意されています。\nイテレータは弱一貫性（weakly consistent）であり、ConcurrentModificationExceptionをスローしません。",
+          "code": "import java.util.concurrent.ConcurrentHashMap;\n\nConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\n\n// アトミック操作\nmap.putIfAbsent(\"C\", 3);  // キーCが存在しない場合のみ追加\nmap.replace(\"A\", 1, 10);  // 値が1の場合のみ10に置き換え\nmap.compute(\"B\", (k, v) -> v + 100); // アトミックに計算して更新\n\nSystem.out.println(map); // {A=10, B=102, C=3}\n\n// nullは許可されない\ntry {\n    map.put(\"D\", null); // NullPointerException\n} catch (NullPointerException e) {\n    System.out.println(\"null not allowed\");\n}\n\n// イテレーション中の変更も安全\nmap.forEach((k, v) -> {\n    if (v > 50) map.remove(k); // ConcurrentModificationExceptionは発生しない\n});",
+          "note": "ConcurrentHashMapではnullキー・null値が禁止されています。HashMapとの違いに注意しましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "code",
+          "title": "CopyOnWriteArrayList",
+          "body": "CopyOnWriteArrayListは書き込み時に内部配列のコピーを作成する**スレッドセーフ**なListです。\n読み取り操作はロックなしで高速に行えます。\n書き込み操作（add、set、remove）のたびに内部配列全体のコピーが作成されるため、書き込みが少ない場面に適しています。\nイテレータは作成時のスナップショットを参照するため、イテレーション中の変更は反映されません。\nイテレータのremove()はUnsupportedOperationExceptionをスローします。",
+          "code": "import java.util.concurrent.CopyOnWriteArrayList;\nimport java.util.Iterator;\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"A\");\nlist.add(\"B\");\nlist.add(\"C\");\n\n// イテレーション中の変更\nIterator<String> it = list.iterator();\nlist.add(\"D\"); // イテレータ作成後に追加\n// 条件が成り立つ間、繰り返す\nwhile (it.hasNext()) {\n    System.out.print(it.next() + \" \"); // A B C（Dは含まれない）\n}\nSystem.out.println();\nSystem.out.println(list); // [A, B, C, D]（リスト自体にはDがある）\n\n// イテレータのremove()は使えない\nIterator<String> it2 = list.iterator();\nit2.next();\n// 例外が発生する可能性がある処理\ntry {\n    it2.remove(); // UnsupportedOperationException\n} catch (UnsupportedOperationException e) {\n    System.out.println(\"Iterator remove not supported\");\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "point",
+          "title": "BlockingQueue",
+          "body": "BlockingQueueはスレッド間のデータ受け渡しに使うキューです。\nキューが空のとき、take()はデータが追加されるまでブロック（待機）します。\nキューが満杯のとき、put()はスペースが空くまでブロックします。\n主な実装にArrayBlockingQueue（固定サイズ）とLinkedBlockingQueue（可変サイズ）があります。\nプロデューサー・コンシューマーパターンの実装に最適です。\noffer()とpoll()はブロックしない代替メソッドです（タイムアウト指定も可能）。",
+          "code": "import java.util.concurrent.ArrayBlockingQueue;\nimport java.util.concurrent.BlockingQueue;\n\n// 容量3のBlockingQueue\nBlockingQueue<String> queue = new ArrayBlockingQueue<>(3);\n\n// プロデューサースレッド\nThread producer = new Thread(() -> {\n    try {\n        queue.put(\"Item1\");\n        queue.put(\"Item2\");\n        queue.put(\"Item3\");\n        System.out.println(\"Producer: 3 items added\");\n        queue.put(\"Item4\"); // キューが満杯なのでブロック\n        System.out.println(\"Producer: Item4 added\");\n    } catch (InterruptedException e) {}\n});\n\n// コンシューマースレッド\nThread consumer = new Thread(() -> {\n    try {\n        Thread.sleep(1000);\n        System.out.println(\"Consumer: \" + queue.take()); // Item1\n    } catch (InterruptedException e) {}\n});\n\nproducer.start();\nconsumer.start();",
+          "note": "BlockingQueueはプロデューサー・コンシューマーパターンの基盤です。試験ではput/takeのブロック動作が問われます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "tip",
+          "title": "試験対策：並行コレクション",
+          "body": "ConcurrentHashMapではnullが禁止、CopyOnWriteArrayListのイテレータはスナップショット、BlockingQueueのput/takeはブロックする──これらの特徴を確実に覚えましょう。\nCollections.synchronizedList()は手動でラップしますが、イテレーション時には外部同期が必要です。\nCopyOnWriteArrayListは読み取りが多く書き込みが少ない場面に適しています。\nConcurrentHashMapのcompute()系メソッドの動作も試験で問われることがあります。\n並行コレクションのイテレータはConcurrentModificationExceptionをスローしないことも重要なポイントです。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_04_q1",
+          "lessonId": "ch27_04",
+          "type": "fourChoice",
+          "question": "ConcurrentHashMapに関する説明として正しいものはどれですか？",
+          "code": "ReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n    // クリティカルセクション\n    sharedResource.update();\n} finally {\n    lock.unlock();\n}",
+          "explanation": "ConcurrentHashMapはnullキーもnull値も許可しません。これはHashMap（nullキー・null値ともに許可）との重要な違いです。NullPointerExceptionがスローされます。",
+          "choices": [
+            {
+              "id": "ch27_04_q1_a",
+              "text": "nullキーもnull値も許可しない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_04_q1_b",
+              "text": "nullキーは許可するがnull値は許可しない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_04_q1_c",
+              "text": "HashMapと同様にnullキー・null値を許可する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_04_q1_d",
+              "text": "イテレーション中にConcurrentModificationExceptionをスローする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_04_q2",
+          "lessonId": "ch27_04",
+          "type": "fourChoice",
+          "question": "CopyOnWriteArrayListのイテレータに関する説明として正しいものはどれですか？",
+          "code": "CompletableFuture.supplyAsync(() -> fetchData())\n    .thenApply(data -> process(data))\n    .thenAccept(result -> save(result))\n    .exceptionally(ex -> {\n        log.error(ex); return null;\n    });",
+          "explanation": "CopyOnWriteArrayListのイテレータは作成時の配列のスナップショットを参照します。イテレータ作成後にリストに変更を加えても、イテレータには反映されません。またイテレータのremove()はUnsupportedOperationExceptionをスローします。",
+          "choices": [
+            {
+              "id": "ch27_04_q2_a",
+              "text": "作成時のスナップショットを参照し、その後の変更は反映されない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_04_q2_b",
+              "text": "リストへの変更がリアルタイムに反映される",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_04_q2_c",
+              "text": "イテレータのremove()でリストから要素を削除できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_04_q2_d",
+              "text": "変更があるとConcurrentModificationExceptionをスローする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_04_q3",
+          "lessonId": "ch27_04",
+          "type": "errorFind",
+          "question": "次のコードに含まれるエラーを選んでください。",
+          "code": "import java.util.concurrent.ConcurrentHashMap;\npublic class Main {\n    public static void main(String[] args) {\n        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();\n        map.put(\"key1\", \"value1\");\n        map.put(\"key2\", null);\n        System.out.println(map);\n    }\n}",
+          "explanation": "ConcurrentHashMapではnull値を格納することはできません。put(\"key2\", null)を実行するとNullPointerExceptionが発生します。HashMapではnullキー・null値が許可されますが、ConcurrentHashMapでは禁止されています。",
+          "choices": [
+            {
+              "id": "ch27_04_q3_a",
+              "text": "ConcurrentHashMapにnull値を格納しようとしている",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_04_q3_b",
+              "text": "ConcurrentHashMapのコンストラクタに容量指定が必要",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_04_q3_c",
+              "text": "put()の代わりにadd()メソッドを使う必要がある",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_04_q3_d",
+              "text": "ConcurrentHashMapのimport文が間違っている",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch27_05",
+      "courseId": "ch27",
+      "title": "ExecutorService",
+      "summary": "スレッドプールを管理するExecutorServiceフレームワークを学びます。Executorsファクトリメソッド、submit()とexecute()の違い、Future・Callable、シャットダウン方法を理解します。",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "overview",
+          "title": "ExecutorServiceの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・ExecutorServiceによるスレッドプール管理\n・Future<T>で非同期処理の結果を取得\n・スレッドプールの種類（fixed, cached, single等）\n\nスレッドを直接管理するよりも安全で効率的な方法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "rule",
+          "title": "Executorsファクトリメソッド",
+          "body": "| メソッド | 説明 |\n|---|---|\n| newSingleThreadExecutor() | 1スレッドでタスクを順次実行 |\n| newFixedThreadPool(n) | n個のスレッドの固定サイズプール |\n| newCachedThreadPool() | 必要に応じてスレッド生成、アイドル時は再利用 |\n| newScheduledThreadPool(n) | 遅延実行・定期実行が可能 |\nいずれもExecutorServiceインターフェースを返します。\n使い終わったら必ずshutdown()を呼んでリソースを解放する必要があります。",
+          "code": "import java.util.concurrent.*;\n\n// 固定サイズのスレッドプール\nExecutorService pool = Executors.newFixedThreadPool(3);\n\n// タスクの投入\npool.execute(() -> System.out.println(\"Task 1: \" + Thread.currentThread().getName()));\npool.execute(() -> System.out.println(\"Task 2: \" + Thread.currentThread().getName()));\npool.execute(() -> System.out.println(\"Task 3: \" + Thread.currentThread().getName()));\npool.execute(() -> System.out.println(\"Task 4: \" + Thread.currentThread().getName()));\n// 3スレッドなので、4つ目のタスクはスレッドが空くまで待機\n\n// シングルスレッドプール\nExecutorService single = Executors.newSingleThreadExecutor();\nsingle.execute(() -> System.out.println(\"Sequential 1\"));\nsingle.execute(() -> System.out.println(\"Sequential 2\"));\n// 常に1つずつ順に実行\n\npool.shutdown();\nsingle.shutdown();",
+          "note": "プール内のスレッド数を超えるタスクが投入された場合、空きスレッドができるまでキューで待機します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "code",
+          "title": "submit()とCallable/Future",
+          "body": "execute()はRunnable（戻り値なし）を受け取り、戻り値を返しません。\nsubmit()はRunnableまたはCallableを受け取り、Future<T>を返します。\nCallable<T>はcall()メソッドを持ち、結果を返すことができる関数型インターフェースです。\nFuture.get()で結果を取得できます。結果が出るまでブロックします。\nFuture.get(long timeout, TimeUnit unit)でタイムアウト付きの取得もできます。\nCallableのcall()はチェック例外をスローでき、ExecutionExceptionとしてラップされます。",
+          "code": "import java.util.concurrent.*;\n\nExecutorService pool = Executors.newFixedThreadPool(2);\n\n// Callable：結果を返すタスク\nCallable<Integer> task = () -> {\n    Thread.sleep(1000);\n    return 42;\n};\n\nFuture<Integer> future = pool.submit(task);\nSystem.out.println(\"Task submitted\");\n\n// 例外が発生する可能性がある処理\ntry {\n    // get()は結果が出るまでブロック\n    Integer result = future.get();\n    System.out.println(\"Result: \" + result); // Result: 42\n} catch (InterruptedException | ExecutionException e) {\n    e.printStackTrace();\n}\n\n// isDone()で完了確認\nFuture<String> f2 = pool.submit(() -> \"Hello\");\n// 条件が成り立つ間、繰り返す\nwhile (!f2.isDone()) {\n    System.out.println(\"Waiting...\");\n}\nSystem.out.println(f2.get()); // Hello\n\npool.shutdown();",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "point",
+          "title": "shutdown()とshutdownNow()",
+          "body": "| メソッド | 説明 |\n|---|---|\n| shutdown() | 新タスク受付停止。投入済みタスクは完了まで実行 |\n| shutdownNow() | 実行中タスクの中断を試み、待機中タスクのリストを返す |\n| awaitTermination() | プールの終了を指定時間待機 |\n| isShutdown() | shutdown()が呼ばれたかどうかを返す |\n| isTerminated() | すべてのタスクが完了したかどうかを返す |\nshutdown()後にタスクを投入するとRejectedExecutionExceptionが発生します。",
+          "code": "import java.util.concurrent.*;\n\nExecutorService pool = Executors.newFixedThreadPool(2);\npool.submit(() -> {\n    try { Thread.sleep(5000); } catch (InterruptedException e) {}\n    System.out.println(\"Task done\");\n});\n\npool.shutdown(); // 新しいタスクの受付停止\nSystem.out.println(pool.isShutdown()); // true\n\n// shutdown後のタスク投入はエラー\ntry {\n    pool.submit(() -> System.out.println(\"New task\"));\n} catch (RejectedExecutionException e) {\n    System.out.println(\"Rejected!\");\n}\n\n// 終了を待機\ntry {\n    boolean done = pool.awaitTermination(10, TimeUnit.SECONDS);\n    System.out.println(\"All done: \" + done);\n} catch (InterruptedException e) {}\n\nSystem.out.println(pool.isTerminated()); // true",
+          "note": "shutdown()を忘れるとプログラムが終了しません。try-finallyで確実にshutdown()を呼びましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "tip",
+          "title": "試験対策：ExecutorService",
+          "body": "execute()とsubmit()の違い（戻り値の有無、受け取る型）を確実に覚えましょう。\nCallable<T>のcall()はチェック例外をスローできますが、Runnableのrun()はできません。\nFuture.get()はブロックするメソッドであり、InterruptedExceptionとExecutionExceptionを処理する必要があります。\nshutdown()とshutdownNow()の違い（graceful vs forceful）を理解しましょう。\nExecutorServiceを使い終わったら必ずshutdown()を呼ぶことが重要です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_05_q1",
+          "lessonId": "ch27_05",
+          "type": "fourChoice",
+          "question": "execute()とsubmit()の違いについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "submit()はFutureを返すことでタスクの結果や完了状態を取得できます。execute()は戻り値がなく、Runnableのみを受け取ります。submit()はRunnableとCallableの両方を受け取れます。",
+          "choices": [
+            {
+              "id": "ch27_05_q1_a",
+              "text": "submit()はFutureを返すが、execute()は戻り値がない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q1_b",
+              "text": "execute()はFutureを返すが、submit()は戻り値がない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q1_c",
+              "text": "どちらもFutureを返す",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q1_d",
+              "text": "submit()はCallableのみ受け取り、execute()はRunnableのみ受け取る",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_05_q2",
+          "lessonId": "ch27_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力を予測してください。",
+          "code": "import java.util.concurrent.*;\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService es = Executors.newSingleThreadExecutor();\n        Future<String> f1 = es.submit(() -> \"A\");\n        Future<String> f2 = es.submit(() -> \"B\");\n        es.shutdown();\n        System.out.println(f1.get() + f2.get());\n    }\n}",
+          "explanation": "newSingleThreadExecutor()は1つのスレッドでタスクを順次実行します。submit()でタスクを投入し、shutdown()で新しいタスクの受付を停止しますが、投入済みのタスクは実行されます。f1.get()は\"A\"、f2.get()は\"B\"を返すため、出力は\"AB\"になります。",
+          "choices": [
+            {
+              "id": "ch27_05_q2_a",
+              "text": "AB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q2_b",
+              "text": "RejectedExecutionException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q2_c",
+              "text": "BA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q2_d",
+              "text": "出力順は不定",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_05_q3",
+          "lessonId": "ch27_05",
+          "type": "fillBlank",
+          "question": "ExecutorServiceで結果を返すタスクを実行するには、___インターフェースを使用する。",
+          "code": null,
+          "explanation": "Callable<T>はcall()メソッドを持つ関数型インターフェースで、戻り値を返すことができます。ExecutorServiceのsubmit(Callable)でタスクを投入し、Future<T>で結果を受け取ります。Runnableと違い、チェック例外もスローできます。",
+          "choices": [
+            {
+              "id": "ch27_05_q3_a",
+              "text": "Callable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q3_b",
+              "text": "Runnable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q3_c",
+              "text": "Supplier",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q3_d",
+              "text": "Executor",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch27_05_q4",
+          "lessonId": "ch27_05",
+          "type": "multiChoice",
+          "question": "スレッドセーフな実装方法として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "synchronizedブロック、AtomicInteger等のAtomic型、ConcurrentHashMap、不変オブジェクト（イミュータブル）はスレッドセーフな実装方法です。ArrayListはスレッドセーフではなく、同期が必要な場合はCollections.synchronizedList()やCopyOnWriteArrayListを使用します。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch27_05_q4_a",
+              "text": "synchronizedブロック",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q4_b",
+              "text": "AtomicIntegerの使用",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q4_c",
+              "text": "ArrayListの使用",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q4_d",
+              "text": "ConcurrentHashMapの使用",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch27_06",
+      "courseId": "ch27",
+      "title": "アトミック操作とデッドロック",
+      "summary": "アトミック変数（AtomicInteger、AtomicReference）によるロック不要の同期化と、デッドロックの発生条件・防止方法、wait()/notify()による通信を学びます。",
+      "estimatedMinutes": 6,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "overview",
+          "title": "アトミック操作とデッドロック",
+          "body": "このレッスンでは以下を学びます:\n\n・AtomicInteger等のアトミック操作クラス\n・CAS（Compare And Swap）の仕組み\n・**デッドロック**の発生条件と回避策\n\n高度な**並行処理**の問題と解決策を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "rule",
+          "title": "AtomicIntegerとAtomicReference",
+          "body": "AtomicIntegerはint値をアトミック（不可分）に操作できるクラスです。\nget()、set()、incrementAndGet()、decrementAndGet()、compareAndSet()などのメソッドがあります。\ncompareAndSet(expected, newValue)は現在の値がexpectedと一致する場合のみnewValueに更新します（CAS操作）。\nAtomicReference<T>は参照型をアトミックに操作できるクラスです。\nこれらはsynchronizedを使わずに**スレッドセーフ**な操作を実現できます。\nアトミック変数は単一の変数に対する操作をスレッドセーフにしますが、複合的な操作の原子性は保証しません。",
+          "code": "import java.util.concurrent.atomic.AtomicInteger;\nimport java.util.concurrent.atomic.AtomicReference;\n\n// AtomicInteger\nAtomicInteger counter = new AtomicInteger(0);\ncounter.incrementAndGet(); // 1（++counterに相当）\ncounter.getAndIncrement(); // 1を返し、値は2に（counter++に相当）\ncounter.addAndGet(10);     // 12\ncounter.compareAndSet(12, 20); // true（12→20に更新）\nSystem.out.println(counter.get()); // 20\n\n// AtomicReference\nAtomicReference<String> ref = new AtomicReference<>(\"Hello\");\nref.set(\"World\");\nSystem.out.println(ref.get()); // World\nref.compareAndSet(\"World\", \"Java\"); // true\nSystem.out.println(ref.get()); // Java\n\n// スレッドセーフなカウンター（synchronizedなし）\nAtomicInteger safeCount = new AtomicInteger(0);\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> safeCount.incrementAndGet()).start();\n}",
+          "note": "AtomicIntegerはsynchronizedよりも軽量で、単純なカウンターには最適です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "code",
+          "title": "デッドロック",
+          "body": "**デッドロック**は、2つ以上のスレッドが互いのロック解放を永遠に待ち続ける状態です。\nデッドロックの発生条件は4つあります：相互排他、保持と待機、横取り不可、循環待機。\n4つの条件がすべて揃うとデッドロックが発生する可能性があります。\n防止策として、ロックの取得順序を統一する方法が最も一般的です。\nデッドロックが発生するとプログラムはハングし、自動的には回復しません。",
+          "code": "// デッドロックの例\nObject lockA = new Object();\nObject lockB = new Object();\n\nThread t1 = new Thread(() -> {\n    synchronized (lockA) {\n        System.out.println(\"T1: lockA acquired\");\n        // 例外が発生する可能性がある処理\n        try { Thread.sleep(100); } catch (InterruptedException e) {}\n        synchronized (lockB) { // lockBを待つ\n            System.out.println(\"T1: lockB acquired\");\n        }\n    }\n});\n\nThread t2 = new Thread(() -> {\n    synchronized (lockB) {\n        System.out.println(\"T2: lockB acquired\");\n        // 例外が発生する可能性がある処理\n        try { Thread.sleep(100); } catch (InterruptedException e) {}\n        synchronized (lockA) { // lockAを待つ\n            System.out.println(\"T2: lockA acquired\");\n        }\n    }\n});\n\nt1.start();\nt2.start();\n// T1はlockB待ち、T2はlockA待ち → デッドロック！\n\n// 防止策：ロック順序を統一する\n// 両方のスレッドで lockA → lockB の順に取得する",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "point",
+          "title": "wait()、notify()、notifyAll()",
+          "body": "wait()、notify()、notifyAll()はObjectクラスのメソッドで、スレッド間の通信に使います。\nこれらはsynchronizedブロック内でのみ呼び出せます。synchronizedブロック外で呼ぶとIllegalMonitorStateExceptionが発生します。\n| メソッド | 説明 |\n|---|---|\n| wait() | 現在のスレッドを待機状態にし、ロックを解放します。 |\n| notify() | 待機中のスレッドの1つを起こします（どれが起きるかは不定）。 |\n| notifyAll() | すべての待機中のスレッドを起こします。 |\nwait()から復帰した後、ロックを再取得する必要があります。",
+          "code": "class SharedData {\n    private boolean ready = false;\n    \n    public synchronized void waitForReady() throws InterruptedException {\n        while (!ready) {  // whileループでの条件チェックが重要\n            wait();  // readyになるまで待機\n        }\n        System.out.println(\"Data is ready!\");\n    }\n    \n    public synchronized void setReady() {\n        ready = true;\n        notifyAll();  // 待機中のスレッドをすべて起こす\n    }\n}\n\nSharedData data = new SharedData();\n\nThread waiter = new Thread(() -> {\n    try { data.waitForReady(); }\n    catch (InterruptedException e) {}\n});\n\nThread setter = new Thread(() -> {\n    try { Thread.sleep(1000); } catch (InterruptedException e) {}\n    data.setReady();\n});\n\nwaiter.start();\nsetter.start();",
+          "note": "wait()はwhileループ内で条件をチェックして呼ぶのがベストプラクティスです。spurious wakeup（偽りの目覚め）に対処するためです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "tip",
+          "title": "試験対策：アトミック操作とデッドロック",
+          "body": "AtomicIntegerのincrementAndGet()とgetAndIncrement()の違い（前置++と後置++に相当）を覚えましょう。\ncompareAndSet()はCAS操作であり、期待値と一致する場合のみ更新されることを理解しましょう。\n**デッドロック**の防止策として、ロック取得順序の統一が最も基本的な方法です。\nwait()/notify()はsynchronizedブロック内でのみ使用可能であることは試験で頻出です。\nwait()のwhileループによる条件チェックの重要性も理解しておきましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_06_q1",
+          "lessonId": "ch27_06",
+          "type": "fourChoice",
+          "question": "AtomicInteger の compareAndSet(10, 20)メソッドの動作として正しい説明はどれですか？",
+          "code": null,
+          "explanation": "compareAndSet(expected, newValue)は現在の値がexpected（10）と一致する場合のみ、値をnewValue（20）に更新してtrueを返します。一致しない場合は何も変更せずfalseを返します。これがCAS（Compare-And-Swap）操作です。",
+          "choices": [
+            {
+              "id": "ch27_06_q1_a",
+              "text": "現在の値が10の場合のみ20に更新し、trueを返す",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_06_q1_b",
+              "text": "値を無条件に10から20に変更する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_06_q1_c",
+              "text": "現在の値に10を加算して20を設定する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_06_q1_d",
+              "text": "10と20の大きい方を設定する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_06_q2",
+          "lessonId": "ch27_06",
+          "type": "fourChoice",
+          "question": "wait()、notify()、notifyAll()の使用に関する正しい説明はどれですか？",
+          "code": null,
+          "explanation": "wait()、notify()、notifyAll()はsynchronizedブロック（またはメソッド）内でのみ呼び出せます。synchronizedブロック外で呼ぶとIllegalMonitorStateExceptionが発生します。これは、これらのメソッドがモニターロックの操作に関わるためです。",
+          "choices": [
+            {
+              "id": "ch27_06_q2_a",
+              "text": "synchronizedブロック内でのみ呼び出せる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_06_q2_b",
+              "text": "どこからでも自由に呼び出せる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_06_q2_c",
+              "text": "Threadクラスのメソッドである",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_06_q2_d",
+              "text": "staticメソッドとして呼び出す",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_06_q3",
+          "lessonId": "ch27_06",
+          "type": "errorFind",
+          "question": "次のコードに含まれるエラーを選んでください。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        Object lock = new Object();\n        try {\n            lock.wait();\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        }\n    }\n}",
+          "explanation": "wait()はsynchronizedブロック内でのみ呼び出せます。このコードではsynchronizedブロック外でwait()を呼んでいるため、実行時にIllegalMonitorStateExceptionが発生します。synchronized (lock) { lock.wait(); } のようにする必要があります。",
+          "choices": [
+            {
+              "id": "ch27_06_q3_a",
+              "text": "synchronizedブロック外でwait()を呼んでいる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_06_q3_b",
+              "text": "wait()にタイムアウトの引数が必要である",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_06_q3_c",
+              "text": "InterruptedExceptionのcatchが不要である",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_06_q3_d",
+              "text": "lockオブジェクトの型がObjectではいけない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch27_07",
+      "courseId": "ch27",
+      "title": "CompletableFuture",
+      "summary": "Java 8で導入されたCompletableFutureによる非同期プログラミングを学びます。supplyAsync、thenApply、thenCompose、allOf/anyOfなど、宣言的な非同期処理の書き方とGold試験での出題ポイントを押さえます。",
+      "estimatedMinutes": 7,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "overview",
+          "title": "CompletableFutureとは",
+          "body": "このレッスンでは以下を学びます:\n\n・CompletableFutureによる非同期処理チェーン\n・thenApply(), thenAccept(), thenCompose()の使い方\n・例外処理との組み合わせ（exceptionally, handle）\n\nモダンJavaの非同期プログラミングの標準的な方法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "rule",
+          "title": "非同期処理の生成",
+          "body": "CompletableFutureの生成方法は主に3つあります。\n| メソッド | 説明 |\n|---|---|\n| supplyAsync | 戻り値ありの非同期処理を開始します。ForkJoinPool.commonPool()でデフォルト実行されます。 |\n| runAsync | 戻り値なし（Runnable）の非同期処理を開始します。 |\n| completedFuture | 既に完了した値をラップしてCompletableFutureを作ります（テストなどで便利）。 |\nsupplyAsyncとrunAsyncには、第2引数にExecutorを指定して実行スレッドプールを変更できます。",
+          "code": "import java.util.concurrent.CompletableFuture;\n\n// supplyAsync：戻り値あり\nCompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> {\n    // 別スレッドで実行される\n    return \"Hello from \" + Thread.currentThread().getName();\n});\nSystem.out.println(cf1.get()); // Hello from ForkJoinPool.commonPool-worker-1\n\n// runAsync：戻り値なし\nCompletableFuture<Void> cf2 = CompletableFuture.runAsync(() -> {\n    System.out.println(\"Running in: \" + Thread.currentThread().getName());\n});\ncf2.get(); // 完了を待つ\n\n// completedFuture：即座に完了した値\nCompletableFuture<Integer> cf3 = CompletableFuture.completedFuture(42);\nSystem.out.println(cf3.get()); // 42（ブロックしない）",
+          "note": "supplyAsync = Supplier（戻り値あり）、runAsync = Runnable（戻り値なし）と覚えましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "code",
+          "title": "処理の連鎖（thenApply / thenAccept / thenRun）",
+          "body": "CompletableFutureの最大の特徴は、処理を連鎖できることです。\n| メソッド | 説明 |\n|---|---|\n| thenApply | 前の結果を受け取り、変換して新しい値を返します（mapに相当）。 |\n| thenAccept | 前の結果を受け取り、消費します（戻り値なし）。 |\n| thenRun | 前の結果を使わず、別の処理を実行します（戻り値なし）。 |\n| thenCompose | 前の結果を受け取り、新しいCompletableFutureを返します（flatMapに相当）。 |\n各メソッドにはAsync版（thenApplyAsyncなど）があり、別スレッドで実行させることもできます。",
+          "code": "CompletableFuture<String> result = CompletableFuture\n    .supplyAsync(() -> \"java\")\n    .thenApply(s -> s.toUpperCase())       // \"JAVA\"\n    .thenApply(s -> s + \" Programming\");  // \"JAVA Programming\"\nSystem.out.println(result.get()); // JAVA Programming\n\n// thenAccept：結果を消費（戻り値なし）\nCompletableFuture.supplyAsync(() -> 100)\n    .thenAccept(n -> System.out.println(\"Result: \" + n)); // Result: 100\n\n// thenCompose：CompletableFutureを返す処理の連鎖\nCompletableFuture<String> composed = CompletableFuture\n    .supplyAsync(() -> 1)\n    .thenCompose(id -> CompletableFuture.supplyAsync(\n        () -> \"User-\" + id  // idを使って別の非同期処理\n    ));\nSystem.out.println(composed.get()); // User-1",
+          "note": "thenApplyはStream.map()、thenComposeはStream.flatMap()に対応すると覚えると理解しやすいです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "tip",
+          "title": "CompletableFutureの合成メソッド一覧",
+          "body": "| メソッド | 入力 | 出力 | 用途 |\n|---|---|---|---|\n| thenApply() | 前の結果 | 変換後の値 | 結果を変換 |\n| thenAccept() | 前の結果 | void | 結果を消費 |\n| thenRun() | なし | void | 後続処理を実行 |\n| thenCompose() | 前の結果 | CompletableFuture | 非同期処理の連結 |\n| exceptionally() | 例外 | 代替値 | エラー処理 |\n\nthenApply = map、thenCompose = flatMap と考えるとStream APIとの類似性が見えます。",
+          "code": null,
+          "note": "Async付きのメソッド（thenApplyAsyncなど）は別スレッドで実行されます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "code",
+          "title": "複数の非同期処理の合成",
+          "body": "複数のCompletableFutureを組み合わせる方法もあります。\n| メソッド | 説明 |\n|---|---|\n| allOf | すべてのCompletableFutureが完了するのを待ちます。戻り値はCompletableFuture<Void>です。 |\n| anyOf | いずれかが完了したら結果を返します。戻り値はCompletableFuture<Object>です。 |\n| thenCombine | 2つのCompletableFutureの結果を組み合わせて新しい値を返します。 |",
+          "code": "// allOf：全ての完了を待つ\nCompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> \"Hello\");\nCompletableFuture<String> cf2 = CompletableFuture.supplyAsync(() -> \"World\");\nCompletableFuture<String> cf3 = CompletableFuture.supplyAsync(() -> \"!\");\n\nCompletableFuture<Void> all = CompletableFuture.allOf(cf1, cf2, cf3);\nall.get(); // 全て完了するまで待つ\n// 個々の結果はget()で取得\nSystem.out.println(cf1.get() + \" \" + cf2.get() + cf3.get()); // Hello World!\n\n// thenCombine：2つの結果を合成\nCompletableFuture<String> combined = CompletableFuture\n    .supplyAsync(() -> \"Java\")\n    .thenCombine(\n        CompletableFuture.supplyAsync(() -> 17),\n        (lang, ver) -> lang + \" SE \" + ver  // 2つの結果を組み合わせ\n    );\nSystem.out.println(combined.get()); // Java SE 17\n\n// anyOf：最初に完了したものを取得\nCompletableFuture<Object> any = CompletableFuture.anyOf(cf1, cf2);\nSystem.out.println(any.get()); // HelloかWorldのどちらか",
+          "note": "allOfの戻り値はVoidなので、個々の結果は元のCompletableFutureからget()で取得する必要があります。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "point",
+          "title": "例外処理と試験ポイント",
+          "body": "CompletableFutureの例外処理にはexceptionallyとhandleを使います。\n| メソッド | 説明 |\n|---|---|\n| exceptionally | 例外が発生した場合のみ代替値を返します。正常完了時は呼ばれません。 |\n| handle | 正常・異常両方のケースを処理します。第1引数が結果、第2引数が例外（nullの場合あり）です。 |\n| whenComplete | 結果・例外を受け取って副作用を実行しますが、値を変換しません。 |\n\n【Gold試験ポイント】\n• supplyAsync vs runAsync の戻り値型の違い\n• thenApply vs thenCompose の違い（Function vs Functionの戻り値がCF）\n• allOf の戻り値が **CompletableFuture**<Void> であること\n• get() は ExecutionException をスローすること（InterruptedExceptionも）\n• getNow(defaultValue) はブロックせずデフォルト値を返す",
+          "code": "CompletableFuture<String> cf = CompletableFuture\n    .supplyAsync(() -> {\n        if (true) throw new RuntimeException(\"Error!\");\n        return \"OK\";\n    })\n    .exceptionally(ex -> \"Recovered: \" + ex.getMessage());\nSystem.out.println(cf.get()); // Recovered: java.lang.RuntimeException: Error!\n\n// handle：正常/異常どちらも処理\nCompletableFuture<String> handled = CompletableFuture\n    .supplyAsync(() -> \"Data\")\n    .handle((result, ex) -> {\n        if (ex != null) return \"Error\";\n        return \"Success: \" + result;\n    });\nSystem.out.println(handled.get()); // Success: Data\n\n// getNow：ブロックせずにデフォルト値\nCompletableFuture<String> slow = CompletableFuture.supplyAsync(() -> {\n    try { Thread.sleep(5000); } catch (InterruptedException e) {}\n    return \"Done\";\n});\nSystem.out.println(slow.getNow(\"Not ready\")); // Not ready",
+          "note": "exceptionallyの引数は元の例外ではなく、CompletionExceptionでラップされている場合があります。getMessage()にはネストした例外名も含まれます。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_07_q1",
+          "lessonId": "ch27_07",
+          "type": "fourChoice",
+          "question": "CompletableFuture.supplyAsync(() -> \"Hello\") の戻り値の型は何ですか？",
+          "explanation": "supplyAsyncはSupplier<T>を受け取り、CompletableFuture<T>を返します。ラムダ式が\"Hello\"（String）を返しているので、戻り値型はCompletableFuture<String>です。runAsyncの場合はCompletableFuture<Void>を返します。",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch27_07_q1_a",
+              "text": "CompletableFuture<String>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_07_q1_b",
+              "text": "Future<String>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_07_q1_c",
+              "text": "CompletableFuture<Void>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_07_q1_d",
+              "text": "CompletableFuture<Object>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch27_07_q2",
+          "lessonId": "ch27_07",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果を予測してください。",
+          "code": "CompletableFuture<String> cf = CompletableFuture\n    .supplyAsync(() -> \"hello\")\n    .thenApply(s -> s.toUpperCase())\n    .thenApply(s -> s + \"!\");\nSystem.out.println(cf.get());",
+          "explanation": "supplyAsyncで\"hello\"を非同期生成 → thenApplyで\"HELLO\"に変換 → thenApplyで\"HELLO!\"に変換。get()で最終結果を取得するので、出力は \"HELLO!\" です。thenApplyはStreamのmap()と同様に値を変換します。",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch27_07_q2_a",
+              "text": "HELLO!",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_07_q2_b",
+              "text": "hello!",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_07_q2_c",
+              "text": "HELLO",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_07_q2_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch27_07_q3",
+          "lessonId": "ch27_07",
+          "type": "fourChoice",
+          "question": "CompletableFuture.allOf(cf1, cf2, cf3) の戻り値の型として正しいものはどれですか？",
+          "explanation": "allOf()の戻り値はCompletableFuture<Void>です。allOfは渡されたすべてのCompletableFutureが完了するのを待ちますが、個々の結果を集約しません。各結果を取得するには元のCompletableFutureのget()を個別に呼びます。anyOf()の場合はCompletableFuture<Object>を返します。",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch27_07_q3_a",
+              "text": "CompletableFuture<Void>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_07_q3_b",
+              "text": "CompletableFuture<Object>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_07_q3_c",
+              "text": "CompletableFuture<List<Object>>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_07_q3_d",
+              "text": "void",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        }
+      ]
+    }
+  ]
+}

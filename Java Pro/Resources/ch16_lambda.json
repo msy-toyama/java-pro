@@ -1,0 +1,1005 @@
+{
+  "courseId": "ch16",
+  "lessons": [
+    {
+      "id": "ch16_01",
+      "courseId": "ch16",
+      "title": "ラムダ式とは",
+      "summary": "Java 8で導入されたラムダ式の基本概念と構文を学びます。匿名内部クラスからラムダ式への変換方法を理解しましょう。",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "overview",
+          "title": "ラムダ式が生まれた背景",
+          "body": "このレッスンでは以下を学びます:\n\n・**ラムダ式**の基本構文：(引数) -> { 処理 }\n・匿名内部クラスとラムダ式の比較\n・なぜラムダ式が導入されたのか\n\nJava 8最大の新機能であるラムダ式の基本を理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "code",
+          "title": "匿名内部クラスからラムダ式へ",
+          "body": "匿名内部クラスを使った従来の書き方と、**ラムダ式**を使った書き方を比較してみましょう。\nRunnable インターフェースを例にすると、匿名内部クラスでは5行以上かかっていたコードが、ラムダ式では1行で書けます。\nラムダ式は匿名内部クラスの「簡略表記」と考えることができます。\nただし、完全に同じものではなく、thisの参照先などに違いがある点に注意してください。",
+          "code": "// 匿名内部クラス（従来の書き方）\nRunnable r1 = new Runnable() {\n    @Override\n    public void run() {\n        System.out.println(\"Hello\");\n    }\n};\n\n// ラムダ式（Java 8以降）\nRunnable r2 = () -> System.out.println(\"Hello\");",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "tip",
+          "title": "ラムダ式の構文パターン一覧",
+          "body": "**ラムダ式**の書き方を整理しておきましょう。\n\n| パターン | 例 |\n|---|---|\n| 基本形 | (a, b) -> { return a + b; } |\n| 1文なら{}不要 | (a, b) -> a + b |\n| 引数1つなら()不要 | a -> a * 2 |\n| 引数なし | () -> System.out.println(\"hello\") |\n| 型明示 | (int a, int b) -> a + b |\n\nラムダ式は「**関数型インターフェース**のインスタンス」を生成しています。",
+          "code": null,
+          "note": "**ラムダ式**は匿名内部クラスの短縮記法ですが、thisの扱いなど細かい違いがあります。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "rule",
+          "title": "ラムダ式の基本構文",
+          "body": "**ラムダ式**の基本構文は「(引数) -> 式または文ブロック」です。\n矢印演算子（->）の左側にパラメータを、右側に処理内容を記述します。\n引数が1つの場合は括弧を省略でき、処理が1つの式の場合は中括弧とreturnを省略できます。\n複数の文を記述する場合は中括弧 {} で囲み、戻り値がある場合はreturn文を明記します。\nラムダ式は変数に代入したり、メソッドの引数として渡したりできます。",
+          "code": "// 基本構文\n(引数1, 引数2) -> { 処理; }\n\n// 具体例\n(int a, int b) -> { return a + b; }\n(String s) -> { System.out.println(s); }\n() -> { return 42; }",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "code",
+          "title": "Comparatorでの活用例",
+          "body": "**ラムダ式**の代表的な活用例として、Comparatorインターフェースがあります。\nリストのソート処理を匿名内部クラスで書くと冗長になりますが、ラムダ式なら簡潔に記述できます。\nComparatorは抽象メソッドが1つ（compareメソッド）なので、ラムダ式で実装できます。\nこのように抽象メソッドが1つだけのインターフェースを「**関数型インターフェース**」と呼びます。",
+          "code": "List<String> names = Arrays.asList(\"Tanaka\", \"Suzuki\", \"Sato\");\n\n// 匿名内部クラス\nCollections.sort(names, new Comparator<String>() {\n    @Override\n    public int compare(String a, String b) {\n        return a.compareTo(b);\n    }\n});\n\n// ラムダ式\nCollections.sort(names, (a, b) -> a.compareTo(b));",
+          "note": "【実務Tips】現場ではStream APIのfilter/map/forEachやSpring FrameworkのBean定義などで**ラムダ式**を日常的に使います。モダンJava開発ではラムダ式なしのコードはほぼありません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "point",
+          "title": "ラムダ式の注意点",
+          "body": "**ラムダ式**はすべてのインターフェースに使えるわけではありません。\n抽象メソッドが1つだけの「**関数型インターフェース**」に対してのみ使用できます。\n抽象メソッドが2つ以上あるインターフェースにはラムダ式を使えません。\nまた、ラムダ式内から外部のローカル変数を参照する場合、その変数は実質的にfinalである必要があります。\nこの制約は「実質的final（effectively final）」と呼ばれ、変数が再代入されていないことを意味します。",
+          "code": null,
+          "note": "**ラムダ式**は**関数型インターフェース**（抽象メソッドが1つだけ）に対してのみ使用可能です。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_01_q1",
+          "lessonId": "ch16_01",
+          "type": "fourChoice",
+          "question": "ラムダ式が導入されたJavaのバージョンとして正しいものはどれですか？",
+          "code": null,
+          "explanation": "ラムダ式はJava 8（2014年リリース）で導入されました。Java 8では他にもStream API、Optional、新しい日時APIなどが追加されています。",
+          "choices": [
+            {
+              "id": "ch16_01_q1_a",
+              "text": "Java 7",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch16_01_q1_b",
+              "text": "Java 8",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch16_01_q1_c",
+              "text": "Java 9",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_01_q1_d",
+              "text": "Java 11",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_01_q2",
+          "lessonId": "ch16_01",
+          "type": "fourChoice",
+          "question": "次の匿名内部クラスをラムダ式に変換したものとして正しいものはどれですか？",
+          "code": "Comparator<Integer> comp = new Comparator<Integer>() {\n    @Override\n    public int compare(Integer a, Integer b) {\n        return a - b;\n    }\n};",
+          "explanation": "Comparatorのcompareメソッドは2つの引数を受け取りint値を返します。ラムダ式では (a, b) -> a - b と簡潔に書けます。型推論により引数の型を省略でき、単一の式の場合は中括弧とreturnも省略できます。",
+          "choices": [
+            {
+              "id": "ch16_01_q2_a",
+              "text": "Comparator<Integer> comp = (a, b) -> a - b;",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_01_q2_b",
+              "text": "Comparator<Integer> comp = a, b -> a - b;",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_01_q2_c",
+              "text": "Comparator<Integer> comp = (a, b) => a - b;",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_01_q2_d",
+              "text": "Comparator<Integer> comp = lambda(a, b) { a - b };",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_01_q3",
+          "lessonId": "ch16_01",
+          "type": "fillBlank",
+          "question": "次のラムダ式の空欄を埋めて、Runnableを完成させてください。\nRunnable r = ___ System.out.println(\"Hello\");",
+          "code": null,
+          "explanation": "Runnableインターフェースのrunメソッドは引数なし・戻り値なしです。引数がない場合は空の括弧 () を記述し、矢印演算子 -> で処理を繋げます。正解は () -> です。",
+          "choices": [
+            {
+              "id": "ch16_01_q3_a",
+              "text": "() ->",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_01_q3_b",
+              "text": "() =>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_01_q3_c",
+              "text": "void ->",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_01_q3_d",
+              "text": "_ ->",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch16_02",
+      "courseId": "ch16",
+      "title": "関数型インターフェース",
+      "summary": "@FunctionalInterfaceアノテーションと主要な組み込み関数型インターフェースについて学びます。",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "overview",
+          "title": "関数型インターフェースとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**関数型インターフェース**（SAMインターフェース）の定義\n・**@FunctionalInterface**アノテーションの役割\n・Predicate, Function, Consumer, Supplierの4大関数型インターフェース\n\n**ラムダ式**を使いこなすための土台となる知識です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "rule",
+          "title": "@FunctionalInterfaceアノテーション",
+          "body": "**@FunctionalInterface** アノテーションを付けることで、そのインターフェースが**関数型インターフェース**であることを明示できます。\nこのアノテーションを付けたインターフェースに抽象メソッドが2つ以上あると、コンパイルエラーになります。\nアノテーションは省略可能ですが、付けておくことで意図が明確になり、誤って抽象メソッドを追加してしまうことを防げます。\n既存のComparator、Runnable、Callableなどのインターフェースにも@FunctionalInterfaceが付いています。",
+          "code": "@FunctionalInterface\npublic interface MyFunction {\n    int apply(int x);  // 抽象メソッド（1つだけ）\n\n    // defaultメソッドは何個あってもOK\n    default void printInfo() {\n        System.out.println(\"MyFunction\");\n    }\n}",
+          "note": "**@FunctionalInterface**を付けなくても、抽象メソッドが1つなら**ラムダ式**で使用できます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "code",
+          "title": "Predicate<T>とFunction<T,R>",
+          "body": "java.util.functionパッケージには、よく使われる**関数型インターフェース**が用意されています。\nPredicate<T>は引数を1つ受け取り、boolean値を返す関数型インターフェースです。フィルタリング処理などに使います。\nFunction<T,R>は引数を1つ受け取り、別の型の値を返す関数型インターフェースです。変換処理などに使います。\nこれらを活用することで、自分でインターフェースを定義する手間が省けます。",
+          "code": "import java.util.function.*;\n\n// Predicate<T>: T -> boolean\nPredicate<String> isEmpty = s -> s.isEmpty();\nSystem.out.println(isEmpty.test(\"\"));     // true\nSystem.out.println(isEmpty.test(\"abc\")); // false\n\n// Function<T, R>: T -> R\nFunction<String, Integer> toLength = s -> s.length();\nSystem.out.println(toLength.apply(\"Java\")); // 4",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "code",
+          "title": "Consumer<T>とSupplier<T>",
+          "body": "Consumer<T>は引数を1つ受け取り、戻り値のない処理を行う**関数型インターフェース**です。出力処理などに使います。\nSupplier<T>は引数を受け取らず、値を返す関数型インターフェースです。値の生成処理などに使います。\nそれぞれの抽象メソッド名は、Consumer はaccept、Supplier はgetです。\nこの4つ（Predicate、Function、Consumer、Supplier）は認定試験で頻出なので、確実に覚えましょう。",
+          "code": "import java.util.function.*;\n\n// Consumer<T>: T -> void\nConsumer<String> printer = s -> System.out.println(s);\nprinter.accept(\"Hello\"); // Hello\n\n// Supplier<T>: () -> T\nSupplier<String> greeting = () -> \"こんにちは\";\nSystem.out.println(greeting.get()); // こんにちは",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "tip",
+          "title": "関数型インターフェースの覚え方",
+          "body": "4つの主要な**関数型インターフェース**は、引数と戻り値の有無で整理すると覚えやすくなります。\n| 項目 | 説明 |\n|---|---|\n| Supplier：引数なし | 戻り値あり（供給する） |\n| Consumer：引数あり | 戻り値なし（消費する） |\n| Function：引数あり | 戻り値あり（変換する） |\n| Predicate：引数あり | boolean（判定する） |\n名前の意味を考えると理解しやすいです。Supplierは「供給者」、Consumerは「消費者」です。",
+          "code": null,
+          "note": "試験では各インターフェースの抽象メソッド名（test, apply, accept, get）も出題されます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_02_q1",
+          "lessonId": "ch16_02",
+          "type": "fourChoice",
+          "question": "次のうち、関数型インターフェースの条件として正しいものはどれですか？",
+          "code": null,
+          "explanation": "関数型インターフェースは抽象メソッドを1つだけ持つインターフェースです。defaultメソッドやstaticメソッドはいくつあっても問題ありません。@FunctionalInterfaceアノテーションは必須ではありません。",
+          "choices": [
+            {
+              "id": "ch16_02_q1_a",
+              "text": "抽象メソッドを1つだけ持つ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_02_q1_b",
+              "text": "メソッドを1つだけ持つ（defaultメソッド含む）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_02_q1_c",
+              "text": "@FunctionalInterfaceアノテーションが必須",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_02_q1_d",
+              "text": "抽象メソッドが2つ以下である",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_02_q2",
+          "lessonId": "ch16_02",
+          "type": "outputPredict",
+          "question": "次のコードの実行結果として正しいものはどれですか？",
+          "code": "import java.util.function.Predicate;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> check = s -> s.length() > 3;\n        System.out.println(check.test(\"Java\"));\n        System.out.println(check.test(\"Go\"));\n    }\n}",
+          "explanation": "Predicate<String>のtestメソッドに文字列を渡しています。\"Java\"の長さは4で3より大きいのでtrue、\"Go\"の長さは2で3より大きくないのでfalseが出力されます。",
+          "choices": [
+            {
+              "id": "ch16_02_q2_a",
+              "text": "true\nfalse",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_02_q2_b",
+              "text": "false\ntrue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_02_q2_c",
+              "text": "true\ntrue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_02_q2_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_02_q3",
+          "lessonId": "ch16_02",
+          "type": "fillBlank",
+          "question": "引数を受け取らず値を返す関数型インターフェースの名前は ____<T> で、その抽象メソッド名は ____ です。",
+          "code": null,
+          "explanation": "Supplier<T>は引数を受け取らず、T型の値を返す関数型インターフェースです。抽象メソッド名はget()です。Supplier（供給者）という名前の通り、値を生成・供給する役割を持ちます。",
+          "choices": [
+            {
+              "id": "ch16_02_q3_a",
+              "text": "Supplier / get",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_02_q3_b",
+              "text": "Provider / provide",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_02_q3_c",
+              "text": "Consumer / accept",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_02_q3_d",
+              "text": "Function / apply",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch16_02_q4",
+          "lessonId": "ch16_02",
+          "type": "codeComplete",
+          "question": "Predicate<String> を使って文字列が空でないかを判定するラムダ式を完成させてください。",
+          "code": null,
+          "explanation": "Predicate<T> は引数1つを受け取り boolean を返す関数型インターフェースです。test() メソッドで評価します。ラムダ式では -> の左側に引数、右側に式を記述します。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__<String> isNotEmpty = s __BLANK_2__ !s.isEmpty();\nSystem.out.println(isNotEmpty.test(\"Hello\"));",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①関数型インターフェース",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Predicate",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Function",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Consumer",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②アロー演算子",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "->",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "=>",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "::",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch16_03",
+      "courseId": "ch16",
+      "title": "ラムダ式の省略記法",
+      "summary": "型推論、括弧の省略、中括弧の省略など、ラムダ式のさまざまな省略記法を学びます。",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "overview",
+          "title": "ラムダ式の省略ルール",
+          "body": "このレッスンでは以下を学びます:\n\n・型推論による引数の型省略\n・引数が1つのときの括弧省略\n・本体が1文のときの中括弧・return・セミコロン省略\n\n省略ルールを覚えて**ラムダ式**をさらに簡潔に書きましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "rule",
+          "title": "パラメータ型の省略（型推論）",
+          "body": "**ラムダ式**のパラメータの型は、コンパイラが文脈から推論できるため省略可能です。\nこれを「ターゲット型推論」と呼びます。代入先の**関数型インターフェース**からパラメータの型が決まります。\nただし、型を省略する場合はすべてのパラメータの型を省略する必要があります。\n一部だけ型を書いて一部を省略することはできません（コンパイルエラーになります）。",
+          "code": "// 型を明示\nBiFunction<String, String, String> f1 = (String a, String b) -> a + b;\n\n// 型を省略（型推論）\nBiFunction<String, String, String> f2 = (a, b) -> a + b;\n\n// コンパイルエラー：一部だけ型を書くことはできない\n// BiFunction<String, String, String> f3 = (String a, b) -> a + b;",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "rule",
+          "title": "括弧と中括弧の省略",
+          "body": "パラメータが1つだけの場合、パラメータの括弧を省略できます。\nただし、型を明示する場合や、パラメータが0個または2個以上の場合は括弧を省略できません。\n**ラムダ式**の本体が1つの式だけの場合、中括弧 {} とreturn文、セミコロンを省略できます。\n複数の文がある場合は中括弧が必須で、戻り値がある場合はreturn文も必要です。\n中括弧を省略した場合は、式の値が自動的に戻り値になります。",
+          "code": "// 括弧の省略（パラメータが1つ）\nFunction<String, Integer> f1 = s -> s.length();\n\n// 括弧を省略できない例（型を明示する場合）\nFunction<String, Integer> f2 = (String s) -> s.length();\n\n// 中括弧の省略（式が1つ）\nFunction<Integer, Integer> f3 = x -> x * 2;\n\n// 中括弧が必要な例（複数の文）\nFunction<Integer, Integer> f4 = x -> {\n    int result = x * 2;\n    return result;\n};",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "code",
+          "title": "省略パターンのまとめ",
+          "body": "さまざまな省略パターンを一覧で確認しましょう。\n正しい書き方と誤った書き方を見比べることで、省略ルールの理解が深まります。\nポイントは「型はすべて省略かすべて明示」「括弧省略は引数1つかつ型省略時のみ」「中括弧省略は式1つのみ」の3つです。",
+          "code": "// ✅ 正しいラムダ式の例\nRunnable r = () -> System.out.println(\"OK\");\nConsumer<String> c = s -> System.out.println(s);\nComparator<Integer> comp = (a, b) -> a - b;\nFunction<String, String> f = (String s) -> { return s.toUpperCase(); };\n\n// ❌ コンパイルエラーの例\n// Consumer<String> c = String s -> System.out.println(s);  // 型ありで括弧なし\n// Comparator<Integer> comp = (int a, b) -> a - b;          // 型の混在\n// Function<Integer, Integer> f = x -> { x * 2 };           // 中括弧ありでreturnなし",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "tip",
+          "title": "省略ルールの落とし穴",
+          "body": "省略できるのに余計なものを書いたり、省略できないのに省略したりすると、コンパイルエラーになります。\n\n・型を書くなら全引数に書く必要がある: (int a, b) はNG\n・引数が0個または2個以上なら()は省略不可\n・{}を省略したらreturnとセミコロンも省略しなければならない\n・void戻り値のラムダで{}を省略した場合、式の値は捨てられる",
+          "code": null,
+          "note": "試験では「コンパイルが通る**ラムダ式**を選べ」という問題が頻出です。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "point",
+          "title": "省略記法の試験対策ポイント",
+          "body": "試験では、コンパイルエラーになる**ラムダ式**を選ぶ問題が頻出です。\n特に注意すべきパターンは以下の3つです。\n1つ目：型を一部だけ省略する（(String a, b) -> ...）。\n2つ目：型を書いたまま括弧を省略する（String s -> ...）。\n3つ目：中括弧を書いたのにreturnを省略する（x -> { x * 2 }）。\nこれらはすべてコンパイルエラーになるので、選択肢から見分けられるようにしましょう。",
+          "code": null,
+          "note": "中括弧を書いた場合は必ずセミコロンとreturn文（戻り値がある場合）が必要です。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_03_q1",
+          "lessonId": "ch16_03",
+          "type": "outputPredict",
+          "question": "次のコードの実行結果として正しいものはどれですか？",
+          "code": "import java.util.function.Function;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, String> toUpper = s -> s.toUpperCase();\n        Function<String, Integer> length = s -> s.length();\n        System.out.println(toUpper.apply(\"hello\"));\n        System.out.println(length.apply(\"hello\"));\n    }\n}",
+          "explanation": "toUpperはString型を受け取りtoUpperCase()で大文字に変換して返します。\"hello\"は\"HELLO\"になります。lengthはString型を受け取りlength()で文字数を返します。\"hello\"の文字数は5です。",
+          "choices": [
+            {
+              "id": "ch16_03_q1_a",
+              "text": "HELLO\n5",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_03_q1_b",
+              "text": "hello\n5",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_03_q1_c",
+              "text": "HELLO\nhello",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_03_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_03_q2",
+          "lessonId": "ch16_03",
+          "type": "fourChoice",
+          "question": "次のラムダ式のうち、コンパイルエラーになるものはどれですか？",
+          "code": null,
+          "explanation": "型を明示する場合は括弧が必須です。「String s -> s.length()」は型を書いているのに括弧がないためコンパイルエラーになります。正しくは「(String s) -> s.length()」と書きます。括弧を省略できるのは、型を省略した引数1つのときのみです。",
+          "choices": [
+            {
+              "id": "ch16_03_q2_a",
+              "text": "Function<String, Integer> f = s -> s.length();",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch16_03_q2_b",
+              "text": "Function<String, Integer> f = (String s) -> s.length();",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_03_q2_c",
+              "text": "Function<String, Integer> f = String s -> s.length();",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch16_03_q2_d",
+              "text": "Function<String, Integer> f = (s) -> s.length();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_03_q3",
+          "lessonId": "ch16_03",
+          "type": "errorFind",
+          "question": "次のコードにはコンパイルエラーがあります。エラーの原因として正しいものはどれですか？",
+          "code": "import java.util.function.Function;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<Integer, Integer> doubleIt = x -> { x * 2 };\n        System.out.println(doubleIt.apply(5));\n    }\n}",
+          "explanation": "中括弧 {} を使う場合、戻り値がある処理にはreturn文とセミコロンが必要です。正しくは「x -> { return x * 2; }」と書くか、中括弧を省略して「x -> x * 2」と書きます。「x -> { x * 2 }」は文として不完全なためコンパイルエラーです。",
+          "choices": [
+            {
+              "id": "ch16_03_q3_a",
+              "text": "中括弧内にreturn文がない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_03_q3_b",
+              "text": "パラメータxに型が指定されていない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_03_q3_c",
+              "text": "Function<Integer, Integer>は使用できない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_03_q3_d",
+              "text": "applyメソッドの引数の型が違う",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch16_03_q4",
+          "lessonId": "ch16_03",
+          "type": "reorder",
+          "question": "ラムダ式を使ったリストソートの手順を正しい順序に並べてください。",
+          "code": null,
+          "explanation": "リストを生成→sort()でラムダ比較→forEach()で出力という流れです。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "List<String> names = new ArrayList<>(List.of(\"Charlie\", \"Alice\", \"Bob\"));",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "names.sort((a, b) -> a.compareTo(b));",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "names.forEach(name -> System.out.println(name));",
+              "isCorrect": false,
+              "order": 3
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch16_04",
+      "courseId": "ch16",
+      "title": "メソッド参照",
+      "summary": "ラムダ式をさらに簡潔にするメソッド参照（静的メソッド参照、インスタンスメソッド参照、コンストラクタ参照）を学びます。",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "overview",
+          "title": "メソッド参照とは",
+          "body": "このレッスンでは以下を学びます:\n\n・**メソッド参照**の4つの形式\n・**ラムダ式**をメソッド参照に書き換える方法\n・コンストラクタ参照（Class::new）\n\nラムダ式が単なるメソッド呼出しなら、メソッド参照でさらに簡潔に書けます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "code",
+          "title": "静的メソッド参照",
+          "body": "静的**メソッド参照**は「クラス名::静的メソッド名」の形式で記述します。\n**ラムダ式**の引数がそのまま静的メソッドの引数として渡される場合に使えます。\nInteger.parseIntやMath.absなどの静的メソッドが代表例です。\n型推論により、メソッドの引数と戻り値の型が自動的に決定されます。",
+          "code": "import java.util.function.Function;\nimport java.util.function.UnaryOperator;\n\n// ラムダ式\nFunction<String, Integer> f1 = s -> Integer.parseInt(s);\n\n// 静的メソッド参照\nFunction<String, Integer> f2 = Integer::parseInt;\n\nSystem.out.println(f2.apply(\"123\")); // 123\n\n// Math.absの例\nUnaryOperator<Integer> abs1 = x -> Math.abs(x);  // ラムダ式\nUnaryOperator<Integer> abs2 = Math::abs;          // メソッド参照",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "tip",
+          "title": "メソッド参照の4つの形式",
+          "body": "| 形式 | 構文 | 等価なラムダ式 |\n|---|---|---|\n| staticメソッド参照 | Math::abs | x -> Math.abs(x) |\n| インスタンスメソッド参照（特定） | str::length | () -> str.length() |\n| インスタンスメソッド参照（任意） | String::length | s -> s.length() |\n| コンストラクタ参照 | ArrayList::new | () -> new ArrayList<>() |\n\nメソッド参照は引数が「暗黙的」に渡される点がポイントです。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "code",
+          "title": "インスタンスメソッド参照",
+          "body": "インスタンス**メソッド参照**には2つのパターンがあります。\n1つ目は「特定のインスタンス::メソッド名」で、特定のオブジェクトのメソッドを参照します。\n2つ目は「クラス名::インスタンスメソッド名」で、**ラムダ式**の第1引数をレシーバにします。\n2つ目のパターンはやや直感的でないので、試験でも間違えやすいポイントです。",
+          "code": "import java.util.function.*;\n\n// パターン1: 特定のインスタンスのメソッド参照\nString greeting = \"Hello\";\nSupplier<String> s1 = () -> greeting.toUpperCase();  // ラムダ式\nSupplier<String> s2 = greeting::toUpperCase;          // メソッド参照\nSystem.out.println(s2.get()); // HELLO\n\n// パターン2: 任意のインスタンスのメソッド参照\nFunction<String, String> f1 = s -> s.toUpperCase();  // ラムダ式\nFunction<String, String> f2 = String::toUpperCase;   // メソッド参照\nSystem.out.println(f2.apply(\"java\")); // JAVA",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "code",
+          "title": "コンストラクタ参照",
+          "body": "コンストラクタ参照は「クラス名::new」の形式で記述します。\n**ラムダ式**がオブジェクトの生成だけを行う場合に使えます。\nどのコンストラクタが呼ばれるかは、**関数型インターフェース**の型から推論されます。\n引数なしのコンストラクタはSupplier、引数1つのコンストラクタはFunctionに対応します。",
+          "code": "import java.util.function.*;\nimport java.util.ArrayList;\nimport java.util.List;\n\n// コンストラクタ参照（引数なし）\nSupplier<List<String>> s1 = () -> new ArrayList<>();  // ラムダ式\nSupplier<List<String>> s2 = ArrayList::new;            // コンストラクタ参照\n\nList<String> list = s2.get();\nlist.add(\"Java\");\nSystem.out.println(list); // [Java]\n\n// コンストラクタ参照（引数あり）\nFunction<String, StringBuilder> f1 = s -> new StringBuilder(s);  // ラムダ式\nFunction<String, StringBuilder> f2 = StringBuilder::new;        // コンストラクタ参照\nSystem.out.println(f2.apply(\"Hello\")); // Hello",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "point",
+          "title": "メソッド参照の使い分けポイント",
+          "body": "**メソッド参照**は**ラムダ式**をさらに簡潔にする記法ですが、すべてのラムダ式をメソッド参照に変換できるわけではありません。\nラムダ式の処理が「1つのメソッド呼び出しだけ」で、引数をそのまま渡す場合に限りメソッド参照が使えます。\n引数に加工を加えたり、複数のメソッドを呼び出したりする場合はラムダ式のまま記述します。\n試験では「ラムダ式とメソッド参照の正しい変換」を問う問題が出題されるので、各パターンの対応関係を整理しておきましょう。\n可読性の観点では、メソッド参照の方が何をしているかが明確になる場合に使うのが良いとされています。",
+          "code": null,
+          "note": "**メソッド参照**は「既存のメソッドをそのまま渡す」場合にのみ使えます。加工が必要なら**ラムダ式**を使いましょう。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_04_q1",
+          "lessonId": "ch16_04",
+          "type": "outputPredict",
+          "question": "次のコードの実行結果として正しいものはどれですか？",
+          "code": "import java.util.function.Function;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> words = Arrays.asList(\"java\", \"python\", \"go\");\n        List<String> result = words.stream()\n            .map(String::toUpperCase)\n            .collect(Collectors.toList());\n        System.out.println(result);\n    }\n}",
+          "explanation": "String::toUpperCaseは「任意のStringインスタンスのtoUpperCase()を呼び出す」メソッド参照です。mapにより各要素が大文字に変換されます。\"java\"→\"JAVA\"、\"python\"→\"PYTHON\"、\"go\"→\"GO\"となり、リストとして出力されます。",
+          "choices": [
+            {
+              "id": "ch16_04_q1_a",
+              "text": "[JAVA, PYTHON, GO]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q1_b",
+              "text": "[java, python, go]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q1_c",
+              "text": "[Java, Python, Go]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_04_q2",
+          "lessonId": "ch16_04",
+          "type": "fillBlank",
+          "question": "次のラムダ式をメソッド参照に書き換えてください。\nFunction<String, Integer> f = s -> Integer.parseInt(s);\n→ Function<String, Integer> f = ____::____;",
+          "code": null,
+          "explanation": "Integer.parseIntは静的メソッドなので、メソッド参照は「Integer::parseInt」となります。ラムダ式の引数sがそのままparseIntの引数として渡されるため、メソッド参照に変換可能です。",
+          "choices": [
+            {
+              "id": "ch16_04_q2_a",
+              "text": "Integer::parseInt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q2_b",
+              "text": "Integer::parse",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q2_c",
+              "text": "int::parseInt",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q2_d",
+              "text": "Integer::new",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_04_q3",
+          "lessonId": "ch16_04",
+          "type": "fourChoice",
+          "question": "コンストラクタ参照の正しい記述方法はどれですか？",
+          "code": "Supplier<ArrayList<String>> supplier = /* ここに入るコード */;",
+          "explanation": "コンストラクタ参照は「クラス名::new」の形式です。ArrayList::newと書くことで、引数なしのコンストラクタが呼ばれ、新しいArrayListインスタンスが生成されます。Supplierの型パラメータからArrayList<String>型であることが推論されます。",
+          "choices": [
+            {
+              "id": "ch16_04_q3_a",
+              "text": "ArrayList::new",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q3_b",
+              "text": "ArrayList::create",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q3_c",
+              "text": "new::ArrayList",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q3_d",
+              "text": "ArrayList::constructor",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch16_04_q4",
+          "lessonId": "ch16_04",
+          "type": "multiChoice",
+          "question": "ラムダ式から参照できる変数の条件として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "ラムダ式からはfinalまたはeffectively final（実質的にfinal）なローカル変数のみ参照できます。インスタンス変数とクラス変数（static）は自由に参照できます。ラムダ式内でローカル変数の値を変更することはできません。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch16_04_q4_a",
+              "text": "finalなローカル変数",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q4_b",
+              "text": "effectively finalなローカル変数",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q4_c",
+              "text": "値が変更されるローカル変数",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q4_d",
+              "text": "インスタンス変数とクラス変数",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch16_05",
+      "courseId": "ch16",
+      "title": "変数キャプチャとeffectively final",
+      "summary": "ラムダ式やローカルクラスから外部の変数を参照するルール（effectively final制約）を学びます。認定試験頻出トピックです。",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "overview",
+          "title": "変数キャプチャとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**ラムダ式**からローカル変数を参照する仕組み\n・effectively final（事実上final）の条件\n・なぜfinalでない変数はキャプチャできないのか\n\nラムダ式の制約を理解して正しく使いましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "code",
+          "title": "effectively finalの具体例",
+          "body": "**ラムダ式**から参照するローカル変数は、宣言後に値が変わらなければfinalキーワードなしでも参照できます。\n一方、一度でも値を再代入した変数はeffectively finalではなくなり、ラムダ式から参照するとコンパイルエラーになります。\nこのルールは匿名クラスやローカルクラスにも同様に適用されます。",
+          "code": "public class CaptureExample {\n    public static void main(String[] args) {\n        String name = \"Java\"; // effectively final（再代入なし）\n        int count = 3;        // effectively final\n\n        // OK: effectively finalな変数を参照\n        Runnable r1 = () -> {\n            System.out.println(name + \" x \" + count);\n        };\n        r1.run(); // Java x 3\n\n        int num = 10;\n        num = 20; // 再代入 → effectively finalではなくなる\n\n        // コンパイルエラー！numはeffectively finalではない\n        // Runnable r2 = () -> System.out.println(num);\n    }\n}",
+          "note": "effectively finalの判定は「変数が宣言されてから、その変数のスコープ全体で一度も再代入されない」ことが条件です。**ラムダ式**の前で再代入がなくても、ラムダ式の後に再代入があるとeffectively finalではなくなります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "tip",
+          "title": "effectively finalとは",
+          "body": "**ラムダ式**の外のローカル変数をキャプチャするには、その変数が「effectively final」である必要があります。\n\neffectively finalの条件:\n・finalキーワードは付けていないが、実際に一度も再代入されていない変数\n・「finalを付けてもコンパイルが通る」状態\n\nなぜこの制約があるのか: ラムダ式は別スレッドで実行される可能性があり、変数の変更がスレッド間で同期されないため。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "rule",
+          "title": "キャプチャのルール整理",
+          "body": "【キャプチャできるもの】\n・finalまたはeffectively finalなローカル変数\n・インスタンス変数（this.fieldは常にOK）\n・static変数（常にOK）\n\n【キャプチャできないもの】\n・再代入されたローカル変数\n\n【注意点】\n・**ラムダ式**の引数と同じ名前のローカル変数があるとコンパイルエラー（シャドーイング禁止）\n・ラムダ式内でキャプチャした変数に再代入するのもコンパイルエラー\n・インスタンス変数やstatic変数はキャプチャ制約なし（ヒープ上にあるため）",
+          "code": "public class CaptureRules {\n    int instanceVar = 100; // インスタンス変数\n    static int staticVar = 200; // static変数\n\n    void demo() {\n        final int a = 1;     // final → OK\n        int b = 2;          // effectively final → OK\n        int c = 3;\n        c = 4;              // 再代入あり → NG\n\n        Runnable r = () -> {\n            System.out.println(a);           // OK\n            System.out.println(b);           // OK\n            // System.out.println(c);        // コンパイルエラー\n            System.out.println(instanceVar); // OK（インスタンス変数）\n            System.out.println(staticVar);   // OK（static変数）\n            instanceVar = 999;               // OK（インスタンス変数は変更可能）\n        };\n    }\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "code",
+          "title": "シャドーイングの禁止",
+          "body": "Java 8以降、**ラムダ式**のパラメータ名が外側のスコープのローカル変数と同じ名前の場合、コンパイルエラーになります。\nこれはラムダ式のスコープが外側のメソッドと同じスコープを共有するためです。\n匿名クラスでは別のスコープが作られるため、同名の変数を宣言できます。この違いも認定試験で問われます。",
+          "code": "public class ShadowingExample {\n    public static void main(String[] args) {\n        int x = 10;\n\n        // ラムダ式：シャドーイング不可\n        // Consumer<Integer> c = (x) -> {};  // コンパイルエラー！\n        // xはすでに外側のスコープで宣言されている\n\n        // 匿名クラス：シャドーイングOK（スコープが別）\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                int x = 20; // OK（匿名クラスは別スコープ）\n                System.out.println(x); // 20\n            }\n        };\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "point",
+          "title": "認定試験の出題ポイント",
+          "body": "試験ではeffectively finalの理解を問う問題が頻出します。ポイントを整理しておきましょう。\n\n1. **ラムダ式**の前後どちらで再代入してもeffectively finalではなくなる\n2. ラムダ式内でキャプチャした変数への代入もコンパイルエラー\n3. forループの変数はループごとに新しいスコープなのでeffectively final\n4. 拡張forループの変数もeffectively final\n5. インスタンス変数・static変数にはeffectively final制約は適用されない\n6. ラムダ式のパラメータ名は外側のローカル変数と重複できない",
+          "code": "// forループの変数キャプチャ\nList<Runnable> tasks = new ArrayList<>();\nfor (int i = 0; i < 3; i++) {\n    int num = i; // ループごとに新しい変数（effectively final）\n    tasks.add(() -> System.out.println(num)); // OK\n    // tasks.add(() -> System.out.println(i)); // コンパイルエラー！iは再代入される\n}\ntasks.forEach(Runnable::run); // 0, 1, 2",
+          "note": "拡張forの変数はループごとにスコープが作られるため、effectively finalになります。for(String s : list) { Runnable r = () -> System.out.println(s); } はOKです。",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_05_q1",
+          "lessonId": "ch16_05",
+          "type": "errorFind",
+          "question": "以下のコードにはコンパイルエラーがあります。エラーの原因を選んでください。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        List<String> names = List.of(\"A\", \"B\", \"C\");\n        names.forEach(name -> {\n            count++;\n            System.out.println(count + \": \" + name);\n        });\n    }\n}",
+          "explanation": "ラムダ式内でローカル変数countを変更（count++）しようとしているため、コンパイルエラーになります。ラムダ式からキャプチャするローカル変数はfinalまたはeffectively finalでなければなりません。代わりにAtomicIntegerを使うか、int[]配列で回避できます。",
+          "choices": [
+            {
+              "id": "ch16_05_q1_a",
+              "text": "ラムダ式内でローカル変数countを変更しているため",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_05_q1_b",
+              "text": "List.ofで作成したリストは変更不可のため",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_05_q1_c",
+              "text": "forEachの引数にラムダ式を渡せないため",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_05_q1_d",
+              "text": "名前nameがすでに使われているため",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_05_q2",
+          "lessonId": "ch16_05",
+          "type": "fourChoice",
+          "question": "effectively finalについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "effectively finalとは、finalキーワードが付いていなくても、宣言後に値が一度も再代入されない変数のことです。ラムダ式や匿名クラスからキャプチャするローカル変数は、finalまたはeffectively finalである必要があります。メソッドの引数も再代入しなければeffectively finalです。",
+          "choices": [
+            {
+              "id": "ch16_05_q2_a",
+              "text": "finalキーワードを付けなくても、値が再代入されない変数はeffectively finalである",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_05_q2_b",
+              "text": "finalキーワードを付けた変数だけがeffectively finalである",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_05_q2_c",
+              "text": "インスタンス変数もeffectively final制約の対象になる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_05_q2_d",
+              "text": "effectively finalな変数はラムダ式内で値を変更できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_05_q3",
+          "lessonId": "ch16_05",
+          "type": "outputPredict",
+          "question": "次のコードの結果はどれですか？",
+          "code": "int x = 10;\nRunnable r = () -> System.out.println(x);\nx = 20;\nr.run();",
+          "explanation": "変数xはラムダ式の後で再代入（x = 20）されているため、effectively finalではありません。ラムダ式内でxを参照しているため、コンパイルエラーになります。ラムダ式の前後どちらで再代入しても、effectively finalではなくなることに注意しましょう。",
+          "choices": [
+            {
+              "id": "ch16_05_q3_a",
+              "text": "コンパイルエラー",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_05_q3_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_05_q3_c",
+              "text": "20",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_05_q3_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

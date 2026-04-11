@@ -1,0 +1,775 @@
+{
+  "courseId": "ch29",
+  "lessons": [
+    {
+      "id": "ch29_01",
+      "courseId": "ch29",
+      "title": "JDBCの基本",
+      "summary": "JDBCのアーキテクチャとドライバの種類、DriverManager.getConnection()による接続、Connection・Statement・ResultSetの基本的な使い方を学びます。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "overview",
+          "title": "JDBCとは",
+          "body": "このレッスンでは以下を学びます:\n\n・JDBCのアーキテクチャ（ドライバ→接続→SQL実行→結果取得）\n・DriverManagerでDB接続を取得する方法\n・接続URLの構成と意味\n\nJavaからデータベースにアクセスする標準APIの基礎です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "rule",
+          "title": "JDBCアーキテクチャとドライバ",
+          "body": "JDBCアーキテクチャは4つの層で構成されます：アプリケーション、JDBCドライバマネージャ、JDBCドライバ、データベース。\n**JDBC** URLはデータベースへの接続先を指定する文字列で、形式は jdbc:サブプロトコル:サブネーム です。\n例：jdbc:mysql://localhost:3306/mydb、jdbc:postgresql://localhost/testdb\nDriverManagerクラスがドライバの管理と接続の確立を担当します。\nJDBC 4.0以降、META-INF/services配下のサービスプロバイダ設定により自動的にドライバが検出されます。\nClass.forName()による明示的なドライバのロードは不要ですが、試験では知識として問われることがあります。",
+          "code": null,
+          "note": "**JDBC** URLの形式はデータベースベンダーごとに異なります。試験ではURLの基本形式が問われます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "code",
+          "title": "データベースへの接続",
+          "body": "DriverManager.getConnection()でデータベースに接続します。\n引数にJDBC URL、ユーザー名、パスワードを指定します。\n戻り値はConnectionオブジェクトで、データベースへの接続を表します。\nConnectionはAutoCloseableを実装しているため、try-with-resourcesで使えます。\n接続が失敗するとSQLExceptionがスローされます。",
+          "code": "import java.sql.*;\n\n// 基本的な接続\n// 変数の宣言と初期化\nString url = \"jdbc:mysql://localhost:3306/mydb\";\nString user = \"root\";\nString password = \"password\";\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(\n        url, user, password)) {\n    System.out.println(\"接続成功\");\n    System.out.println(\"DB: \" + conn.getMetaData()\n        .getDatabaseProductName());\n} catch (SQLException e) {\n    System.err.println(\"接続失敗: \" + e.getMessage());\n}\n\n// Propertiesを使った接続\nimport java.util.Properties;\nProperties props = new Properties();\nprops.setProperty(\"user\", \"root\");\nprops.setProperty(\"password\", \"password\");\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(\n        url, props)) {\n    // 接続処理\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "code",
+          "title": "Statement と ResultSet",
+          "body": "StatementはSQLを実行するためのオブジェクトで、Connection.createStatement()で取得します。\nexecuteQuery()はSELECT文を実行し、ResultSetを返します。\nexecuteUpdate()はINSERT、UPDATE、DELETEを実行し、影響を受けた行数を返します。\nResultSetは検索結果のカーソルで、next()で次の行に移動します。\nnext()がfalseを返すと結果がありません。getString()、getInt()などで列の値を取得します。",
+          "code": "import java.sql.*;\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // SELECT文の実行\n    ResultSet rs = stmt.executeQuery(\n        \"SELECT id, name, age FROM users\");\n    // 条件が成り立つ間、繰り返す\n    while (rs.next()) {\n        // 変数の宣言と初期化\n        int id = rs.getInt(\"id\");         // 列名で取得\n        String name = rs.getString(\"name\");\n        int age = rs.getInt(2);           // 列番号で取得（1始まり）\n        System.out.println(id + \": \" + name + \" (\" + age + \")\");\n    }\n\n    // INSERT文の実行\n    int rows = stmt.executeUpdate(\n        \"INSERT INTO users (name, age) VALUES ('Taro', 25)\");\n    System.out.println(rows + \"行挿入\"); // 1行挿入\n}",
+          "note": "ResultSetの列番号は1始まりです。0を指定するとSQLExceptionが発生します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "tip",
+          "title": "試験対策：JDBCの基本",
+          "body": "**JDBC** URLの基本形式（jdbc:サブプロトコル:サブネーム）を覚えましょう。\nConnection、Statement、ResultSetはすべてAutoCloseableを実装しています。\nexecuteQuery()はResultSetを返し、executeUpdate()はintを返します。\nResultSetの列番号は1始まりで、列名でも列番号でも値を取得できます。\nリソースのクローズ順序はResultSet → Statement → Connectionです。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_01_q1",
+          "lessonId": "ch29_01",
+          "type": "fourChoice",
+          "question": "JDBC URLの基本形式として正しいものはどれですか？",
+          "code": "Connection conn = DriverManager.getConnection(\n    \"jdbc:mysql://localhost:3306/mydb\",\n    \"user\", \"pass\");\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(\n    \"SELECT * FROM users\");",
+          "explanation": "JDBC URLの基本形式は jdbc:サブプロトコル:サブネーム です。サブプロトコルにはデータベースの種類（mysql、postgresqlなど）が入り、サブネームには接続先の詳細情報が入ります。",
+          "choices": [
+            {
+              "id": "ch29_01_q1_a",
+              "text": "jdbc:サブプロトコル:サブネーム",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_01_q1_b",
+              "text": "jdbc://ホスト名:ポート/データベース名",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_01_q1_c",
+              "text": "database:jdbc:接続文字列",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_01_q1_d",
+              "text": "sql:jdbc:ドライバ名:データベース名",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_01_q2",
+          "lessonId": "ch29_01",
+          "type": "fourChoice",
+          "question": "Statement.executeQuery()メソッドの戻り値の型はどれですか？",
+          "code": "String sql = \"SELECT * FROM users WHERE id = ?\";\ntry (PreparedStatement ps = conn.prepareStatement(sql)) {\n    ps.setInt(1, userId);\n    ResultSet rs = ps.executeQuery();\n    while (rs.next()) {\n        String name = rs.getString(\"name\");\n    }\n}",
+          "explanation": "executeQuery()はSELECT文を実行し、検索結果をResultSetとして返します。executeUpdate()はINSERT/UPDATE/DELETE文を実行し、影響を受けた行数をintとして返します。",
+          "choices": [
+            {
+              "id": "ch29_01_q2_a",
+              "text": "ResultSet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_01_q2_b",
+              "text": "int",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_01_q2_c",
+              "text": "boolean",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_01_q2_d",
+              "text": "List<String>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_01_q3",
+          "lessonId": "ch29_01",
+          "type": "fillBlank",
+          "question": "ResultSetの列番号は___始まりで、0を指定するとSQLExceptionが発生する。",
+          "code": "try {\n    conn.setAutoCommit(false);\n    stmt.executeUpdate(sql1);\n    stmt.executeUpdate(sql2);\n    conn.commit();\n} catch (SQLException e) {\n    conn.rollback();\n}",
+          "explanation": "ResultSetの列番号は1始まり（1-based）です。getString(1)は最初の列の値を取得します。0を指定するとSQLExceptionがスローされます。配列のインデックスが0始まりなのとは異なるため注意が必要です。",
+          "choices": [
+            {
+              "id": "ch29_01_q3_a",
+              "text": "1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_01_q3_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_01_q3_c",
+              "text": "2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_01_q3_d",
+              "text": "-1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch29_02",
+      "courseId": "ch29",
+      "title": "SQLの実行",
+      "summary": "StatementによるSELECT文の実行とResultSetでの結果取得、INSERT/UPDATE/DELETE文の実行、ResultSetのナビゲーションメソッドを詳しく学びます。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "overview",
+          "title": "SQL実行の全体像",
+          "body": "このレッスンでは以下を学びます:\n\n・Statement でSQLを実行する方法\n・executeQuery()（SELECT）とexecuteUpdate()（INSERT/UPDATE/DELETE）の使い分け\n・ResultSetから結果を取得する方法\n\nSQL実行の基本的な流れを学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "code",
+          "title": "executeQuery()によるSELECT",
+          "body": "executeQuery()はSELECT文を実行し、ResultSetを返します。\nResultSetのnext()メソッドでカーソルを次の行に移動します。\nデータがあればtrue、なければfalseを返すため、whileループで全行を処理できます。\ngetString()、getInt()、getDouble()など型別の取得メソッドがあります。\n列名または列番号（1始まり）でカラムの値を取得します。",
+          "code": "import java.sql.*;\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // SELECT文の実行\n    // 変数の宣言と初期化\n    String sql = \"SELECT id, name, price FROM products \" +\n                 \"WHERE price > 1000 ORDER BY price\";\n    ResultSet rs = stmt.executeQuery(sql);\n\n    // 結果の処理\n    // 条件が成り立つ間、繰り返す\n    while (rs.next()) {\n        int id = rs.getInt(\"id\");\n        String name = rs.getString(\"name\");\n        double price = rs.getDouble(\"price\");\n        System.out.printf(\"ID=%d, 商品名=%s, 価格=%.0f%n\",\n            id, name, price);\n    }\n\n    // 結果がない場合\n    rs = stmt.executeQuery(\n        \"SELECT * FROM products WHERE id = -1\");\n    // 条件分岐\n    if (!rs.next()) {\n        System.out.println(\"データなし\");\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "code",
+          "title": "executeUpdate()によるDML操作",
+          "body": "executeUpdate()はINSERT、UPDATE、DELETE文を実行し、影響を受けた行数を返します。\nDDL（CREATE TABLE、DROP TABLEなど）にも使用でき、その場合は0を返します。\nexecute()メソッドはすべてのSQL文に対応し、結果がResultSetならtrue、更新件数ならfalseを返します。\ngetResultSet()やgetUpdateCount()で結果を取得します。",
+          "code": "import java.sql.*;\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // INSERT\n    // 変数の宣言と初期化\n    int inserted = stmt.executeUpdate(\n        \"INSERT INTO products (name, price) \" +\n        \"VALUES ('Java Book', 3000)\");\n    System.out.println(inserted + \"行挿入\"); // 1行挿入\n\n    // UPDATE\n    int updated = stmt.executeUpdate(\n        \"UPDATE products SET price = 3500 \" +\n        \"WHERE name = 'Java Book'\");\n    System.out.println(updated + \"行更新\");\n\n    // DELETE\n    int deleted = stmt.executeUpdate(\n        \"DELETE FROM products WHERE price < 500\");\n    System.out.println(deleted + \"行削除\");\n\n    // execute()メソッド\n    boolean hasResultSet = stmt.execute(\n        \"SELECT * FROM products\");\n    // 条件分岐\n    if (hasResultSet) {\n        ResultSet rs = stmt.getResultSet();\n        // 条件が成り立つ間、繰り返す\n        while (rs.next()) {\n            System.out.println(rs.getString(\"name\"));\n        }\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "rule",
+          "title": "ResultSetのナビゲーション",
+          "body": "デフォルトのResultSetはTYPE_FORWARD_ONLYで、前方向にのみ移動できます。\nスクロール可能なResultSetを作成するにはcreateStatement()に引数を指定します。\n| 定数 | 説明 |\n|---|---|\n| TYPE_SCROLL_INSENSITIVE | 前後に移動可能だが、データベースの変更を反映しない |\n| TYPE_SCROLL_SENSITIVE | 前後に移動可能で、データベースの変更を反映する |\n| CONCUR_READ_ONLY | 読み取り専用。CONCUR_UPDATABLEは更新可能 |",
+          "code": "import java.sql.*;\n\n// スクロール可能なResultSetの作成\nStatement stmt = conn.createStatement(\n    ResultSet.TYPE_SCROLL_INSENSITIVE,\n    ResultSet.CONCUR_READ_ONLY);\n\nResultSet rs = stmt.executeQuery(\n    \"SELECT * FROM products\");\n\n// 最初の行に移動\nrs.first();\nSystem.out.println(rs.getString(\"name\"));\n\n// 最後の行に移動\nrs.last();\nSystem.out.println(rs.getString(\"name\"));\n\n// 前の行に戻る\nrs.previous();\n\n// 特定の行に移動（1始まり）\nrs.absolute(3); // 3行目\n\n// 相対移動\nrs.relative(-1); // 1行前に戻る\nrs.relative(2);  // 2行先に進む",
+          "note": "TYPE_FORWARD_ONLYのResultSetでfirst()やprevious()を呼ぶとSQLExceptionが発生します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "tip",
+          "title": "試験対策：SQL実行",
+          "body": "executeQuery()にSELECT以外を渡すとSQLExceptionになります。\nexecuteUpdate()にSELECT文を渡してもSQLExceptionになります。\nexecute()はすべてのSQL文に使え、結果の種類をbooleanで判定します。\nResultSetのカーソルは最初「先頭行の前」に位置しています。\nスクロール可能なResultSetのTYPEとCONCURの組み合わせを覚えましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_02_q1",
+          "lessonId": "ch29_02",
+          "type": "fourChoice",
+          "question": "Statement.execute()メソッドについて正しい説明はどれですか？",
+          "code": "try (Connection conn = dataSource.getConnection();\n     PreparedStatement ps = conn.prepareStatement(\n         \"INSERT INTO logs (msg) VALUES (?)\")) {\n    ps.setString(1, message);\n    int rows = ps.executeUpdate();\n}",
+          "explanation": "execute()メソッドはすべての種類のSQL文を実行できます。結果がResultSet（SELECT文の場合）ならtrueを返し、更新件数（INSERT/UPDATE/DELETE/DDLの場合）ならfalseを返します。",
+          "choices": [
+            {
+              "id": "ch29_02_q1_a",
+              "text": "すべてのSQL文を実行でき、結果がResultSetならtrue、更新件数ならfalseを返す",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_02_q1_b",
+              "text": "SELECT文のみ実行でき、ResultSetを返す",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_02_q1_c",
+              "text": "UPDATE文のみ実行でき、更新件数を返す",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_02_q1_d",
+              "text": "すべてのSQL文を実行でき、常にResultSetを返す",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_02_q2",
+          "lessonId": "ch29_02",
+          "type": "outputPredict",
+          "question": "productsテーブルに{id=1, name=\"Pen\", price=100}、{id=2, name=\"Book\", price=500}の2行がある場合、次のコードの出力はどれですか？",
+          "code": "Statement stmt = conn.createStatement();\nint count = stmt.executeUpdate(\n    \"UPDATE products SET price = price * 2 WHERE price < 300\");\nSystem.out.println(count);",
+          "explanation": "UPDATE文はprice < 300の条件に一致する行を更新します。price=100のPenが条件に一致し、price=500のBookは一致しません。よって1行が更新され、executeUpdate()は1を返します。",
+          "choices": [
+            {
+              "id": "ch29_02_q2_a",
+              "text": "1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_02_q2_b",
+              "text": "2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_02_q2_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_02_q2_d",
+              "text": "200",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_02_q3",
+          "lessonId": "ch29_02",
+          "type": "fillBlank",
+          "question": "デフォルトのResultSetのタイプはTYPE___ONLYで、前方向にしかカーソルを移動できない。",
+          "code": "Connection conn = DriverManager.getConnection(\n    \"jdbc:mysql://localhost:3306/mydb\",\n    \"user\", \"pass\");\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(\n    \"SELECT * FROM users\");",
+          "explanation": "デフォルトのResultSetのタイプはTYPE_FORWARD_ONLYです。このタイプではnext()で前方向にのみカーソルを移動でき、previous()やfirst()などの逆方向操作はSQLExceptionをスローします。",
+          "choices": [
+            {
+              "id": "ch29_02_q3_a",
+              "text": "_FORWARD_",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_02_q3_b",
+              "text": "_SCROLL_",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_02_q3_c",
+              "text": "_READ_",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_02_q3_d",
+              "text": "_CURSOR_",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch29_02_q4",
+          "lessonId": "ch29_02",
+          "type": "codeComplete",
+          "question": "PreparedStatementでパラメータを設定するコードを完成させてください。",
+          "code": "String sql = \"SELECT * FROM users WHERE id = ?\";\ntry (PreparedStatement ps = conn.prepareStatement(sql)) {\n    ps.setInt(1, userId);\n    ResultSet rs = ps.executeQuery();\n    while (rs.next()) {\n        String name = rs.getString(\"name\");\n    }\n}",
+          "explanation": "prepareStatement()でSQLを準備し、setInt()でプレースホルダー(?)に値を設定します。SQLインジェクションを防止できます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "PreparedStatement ps = conn.__BLANK_1__(\"SELECT * FROM users WHERE id = ?\");\nps.__BLANK_2__(1, userId);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①準備",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "prepareStatement",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "createStatement",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "prepare",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②パラメータ設定",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "setInt",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "setParameter",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "bind",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch29_03",
+      "courseId": "ch29",
+      "title": "PreparedStatement",
+      "summary": "PreparedStatementによるパラメータ化クエリの使い方、setString()やsetInt()によるパラメータ設定、SQLインジェクション防止の仕組みを学びます。",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "overview",
+          "title": "PreparedStatementとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**PreparedStatement**（プリペアドステートメント）の利点\n・パラメータプレースホルダ（?）の使い方\n・**SQLインジェクション**攻撃の防止\n\nセキュリティと性能の両面で優れたSQL実行方法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "code",
+          "title": "パラメータ化クエリの使い方",
+          "body": "PreparedStatementではSQL文中の?がプレースホルダとなります。\nsetString()、setInt()、setDouble()、setDate()などでパラメータに値をバインドします。\nパラメータのインデックスは1始まりです。\nバインドした後、executeQuery()またはexecuteUpdate()で実行します。\n同じPreparedStatementオブジェクトを再利用して異なるパラメータで実行できます。",
+          "code": "import java.sql.*;\n\n// PreparedStatementの作成と使用\nString sql = \"SELECT * FROM users WHERE age >= ? AND city = ?\";\ntry (PreparedStatement pstmt = conn.prepareStatement(sql)) {\n    // パラメータのバインド（1始まり）\n    pstmt.setInt(1, 20);           // 1番目の?\n    pstmt.setString(2, \"Tokyo\");   // 2番目の?\n\n    ResultSet rs = pstmt.executeQuery();\n    while (rs.next()) {\n        System.out.println(rs.getString(\"name\"));\n    }\n}\n\n// INSERT文でのPreparedStatement\nString insertSql = \"INSERT INTO users (name, age) VALUES (?, ?)\";\ntry (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {\n    // 1件目\n    pstmt.setString(1, \"Taro\");\n    pstmt.setInt(2, 25);\n    pstmt.executeUpdate();\n\n    // 2件目（パラメータを再設定して再利用）\n    pstmt.setString(1, \"Hanako\");\n    pstmt.setInt(2, 30);\n    pstmt.executeUpdate();\n}",
+          "note": "パラメータのインデックスは1始まりです。0を指定するとSQLExceptionが発生します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "rule",
+          "title": "各種setメソッド",
+          "body": "PreparedStatementには型に応じたsetメソッドが用意されています。\n| メソッド | 説明 |\n|---|---|\n| setString(int, String) | 文字列型のパラメータを設定します。 |\n| setInt(int, int) | 整数型のパラメータを設定します。 |\n| setDouble(int, double) | 浮動小数点型のパラメータを設定します。 |\n| setDate(int, java.sql.Date) | 日付型のパラメータを設定します。 |\n| setNull(int, int) | NULL値を設定します。第2引数はjava.sql.Typesの定数です。 |\n| setObject(int, Object) | 汎用的にオブジェクトを設定できます。 |",
+          "code": "import java.sql.*;\n\nString sql = \"INSERT INTO orders \" +\n    \"(product, quantity, price, order_date, memo) \" +\n    \"VALUES (?, ?, ?, ?, ?)\";\n\ntry (PreparedStatement pstmt = conn.prepareStatement(sql)) {\n    pstmt.setString(1, \"Java教科書\");         // VARCHAR\n    pstmt.setInt(2, 3);                        // INTEGER\n    pstmt.setDouble(3, 2980.0);                // DOUBLE\n    pstmt.setDate(4, java.sql.Date.valueOf(\n        \"2024-04-01\"));                        // DATE\n    pstmt.setNull(5, java.sql.Types.VARCHAR);  // NULL\n    pstmt.executeUpdate();\n}\n\n// setObject()による汎用設定\ntry (PreparedStatement pstmt = conn.prepareStatement(\n        \"SELECT * FROM users WHERE id = ?\")) {\n    pstmt.setObject(1, 42);  // 型を自動判定\n    ResultSet rs = pstmt.executeQuery();\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "point",
+          "title": "SQLインジェクション防止",
+          "body": "**SQLインジェクション**は、悪意のある入力によってSQL文を改ざんする攻撃手法です。\nStatementで文字列連結を使うと、入力値にSQL構文が含まれた場合に危険です。\nPreparedStatementはパラメータの値をSQL構文として解釈しないため、SQLインジェクションを防止できます。\n?プレースホルダを使うことで、渡された値は常にデータとして扱われます。\nセキュリティの観点から、ユーザー入力を含むSQLは必ずPreparedStatementを使うべきです。",
+          "code": "import java.sql.*;\n\n// ★ 危険な例：文字列連結（SQLインジェクションの脆弱性）\nString userInput = \"'; DROP TABLE users; --\";\nString dangerousSql = \"SELECT * FROM users WHERE name = '\" \n    + userInput + \"'\"; \n// → SELECT * FROM users WHERE name = ''; DROP TABLE users; --'\n// テーブルが削除される可能性がある！\n\n// ★ 安全な例：PreparedStatement\nString safeSql = \"SELECT * FROM users WHERE name = ?\";\ntry (PreparedStatement pstmt = conn.prepareStatement(safeSql)) {\n    pstmt.setString(1, userInput);\n    // → 入力値はデータとして扱われ、SQLとして解釈されない\n    ResultSet rs = pstmt.executeQuery();\n    // 安全に実行される\n}",
+          "note": "文字列連結でSQLを組み立ててはいけません。常にPreparedStatementのプレースホルダを使いましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "tip",
+          "title": "試験対策：PreparedStatement",
+          "body": "PreparedStatementのパラメータインデックスは1始まりです。\nsetXxx()で設定するパラメータの型とデータベースの列型の対応を覚えましょう。\nPreparedStatementは再利用でき、パラメータを再設定して何度でも実行できます。\nexecuteQuery()にSQL文字列を渡すとSQLExceptionになります（Statementから継承したメソッドではなく、引数なしを使う）。\n**SQLインジェクション**防止の仕組みが問われることがあります。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_03_q1",
+          "lessonId": "ch29_03",
+          "type": "fourChoice",
+          "question": "PreparedStatementを使う主な利点として正しくないものはどれですか？",
+          "code": "try {\n    conn.setAutoCommit(false);\n    stmt.executeUpdate(sql1);\n    stmt.executeUpdate(sql2);\n    conn.commit();\n} catch (SQLException e) {\n    conn.rollback();\n}",
+          "explanation": "PreparedStatementの利点はSQLインジェクション防止とパフォーマンス向上です。自動的にトランザクションを管理する機能はありません。トランザクション管理はConnectionオブジェクトで行います。",
+          "choices": [
+            {
+              "id": "ch29_03_q1_a",
+              "text": "自動的にトランザクションが管理される",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_03_q1_b",
+              "text": "SQLインジェクション攻撃を防止できる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_03_q1_c",
+              "text": "SQLがプリコンパイルされるためパフォーマンスが向上する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_03_q1_d",
+              "text": "パラメータをバインドして安全にSQL文を実行できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_03_q2",
+          "lessonId": "ch29_03",
+          "type": "fillBlank",
+          "question": "PreparedStatementのSQL文で、パラメータの位置を示す記号は___である。",
+          "code": "try (Connection conn = dataSource.getConnection();\n     PreparedStatement ps = conn.prepareStatement(\n         \"INSERT INTO logs (msg) VALUES (?)\")) {\n    ps.setString(1, message);\n    int rows = ps.executeUpdate();\n}",
+          "explanation": "PreparedStatementではSQL文中の?（クエスチョンマーク）がプレースホルダとして機能します。setString()やsetInt()などのメソッドで、?の位置に値をバインドします。",
+          "choices": [
+            {
+              "id": "ch29_03_q2_a",
+              "text": "?（クエスチョンマーク）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_03_q2_b",
+              "text": ":（コロン）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_03_q2_c",
+              "text": "#（シャープ）",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_03_q2_d",
+              "text": "$（ドル記号）",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_03_q3",
+          "lessonId": "ch29_03",
+          "type": "errorFind",
+          "question": "次のコードにはエラーがあります。問題のある箇所はどれですか？",
+          "code": "import java.sql.*;\n\npublic class Main {\n    public static void main(String[] args) throws SQLException {\n        Connection conn = DriverManager.getConnection(url, user, pw);\n        String sql = \"SELECT * FROM users WHERE id = ?\";\n        PreparedStatement pstmt = conn.prepareStatement(sql);\n        pstmt.setInt(0, 42); // ★\n        ResultSet rs = pstmt.executeQuery();\n    }\n}",
+          "explanation": "PreparedStatementのパラメータインデックスは1始まりです。setInt(0, 42)は不正なインデックス0を指定しているため、SQLExceptionが発生します。正しくはsetInt(1, 42)です。",
+          "choices": [
+            {
+              "id": "ch29_03_q3_a",
+              "text": "setInt()のインデックスが0になっている（1始まりが正しい）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_03_q3_b",
+              "text": "prepareStatement()のSQL文が不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_03_q3_c",
+              "text": "executeQuery()に引数が必要",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_03_q3_d",
+              "text": "ConnectionのgetConnection()の引数が不足",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch29_03_q4",
+          "lessonId": "ch29_03",
+          "type": "multiChoice",
+          "question": "JDBCの主要インターフェースをすべて選んでください。",
+          "code": null,
+          "explanation": "JDBCの主要インターフェースはConnection, Statement, ResultSet, DataSourceです。Databaseというインターフェースは存在しません。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Connection",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "Statement",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "ResultSet",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "DataSource",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "Database",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch29_04",
+      "courseId": "ch29",
+      "title": "トランザクション",
+      "summary": "JDBCのトランザクション管理を学びます。setAutoCommit(false)によるトランザクション開始、commit()とrollback()、Savepointの使い方、DataSourceの概要を理解します。",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "overview",
+          "title": "トランザクション管理の概要",
+          "body": "このレッスンでは以下を学びます:\n\n・**トランザクション**の概念（ACID特性）\n・setAutoCommit(false)、commit()、rollback()の使い方\n・トランザクションとtry-with-resourcesの組み合わせ\n\nデータの整合性を保つための重要な仕組みです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "code",
+          "title": "commit()とrollback()",
+          "body": "手動**トランザクション**管理では、まずsetAutoCommit(false)を呼びます。\n一連のSQL操作が成功したらcommit()で確定、失敗したらrollback()で取り消します。\nrollback()を呼ぶと、最後のcommit()以降のすべての変更が取り消されます。\ntry-catch-finallyパターンを使ってエラー時に確実にrollback()するのが一般的です。\n処理完了後はsetAutoCommit(true)に戻すことが推奨されます。",
+          "code": "import java.sql.*;\n\ntry (Connection conn = DriverManager.getConnection(url, user, pw)) {\n    // 自動コミットを無効化\n    conn.setAutoCommit(false);\n\n    try (Statement stmt = conn.createStatement()) {\n        // 送金処理：Aから引き出し\n        stmt.executeUpdate(\n            \"UPDATE accounts SET balance = balance - 10000 \" +\n            \"WHERE name = 'A'\");\n\n        // 送金処理：Bに入金\n        stmt.executeUpdate(\n            \"UPDATE accounts SET balance = balance + 10000 \" +\n            \"WHERE name = 'B'\");\n\n        // すべて成功したらコミット\n        conn.commit();\n        System.out.println(\"送金完了\");\n\n    } catch (SQLException e) {\n        // エラー時はロールバック\n        conn.rollback();\n        System.err.println(\"送金失敗、ロールバック実行\");\n        throw e;\n    }\n}",
+          "note": "setAutoCommit(false)を呼ばないと、各SQL文が個別に自動コミットされます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "rule",
+          "title": "Savepoint",
+          "body": "Savepointは**トランザクション**内に設定できる中間地点です。\nConnection.setSavepoint()でSavepointを作成します。\nrollback(Savepoint)で指定したSavepointまで部分的にロールバックできます。\nSavepointまでロールバックしても、トランザクション自体は終了しません。\nreleaseSavepoint()でSavepointを解放できます。\n名前付きSavepointはsetSavepoint(String name)で作成します。",
+          "code": "import java.sql.*;\n\ntry (Connection conn = DriverManager.getConnection(url, user, pw)) {\n    conn.setAutoCommit(false);\n    Statement stmt = conn.createStatement();\n\n    // 操作1\n    stmt.executeUpdate(\n        \"INSERT INTO logs (msg) VALUES ('操作1')\");\n\n    // Savepointを設定\n    Savepoint sp = conn.setSavepoint(\"after_op1\");\n\n    try {\n        // 操作2（失敗する可能性あり）\n        stmt.executeUpdate(\n            \"INSERT INTO logs (msg) VALUES ('操作2')\");\n        // エラー発生！\n        throw new SQLException(\"操作2でエラー\");\n    } catch (SQLException e) {\n        // Savepointまでロールバック（操作1は保持される）\n        conn.rollback(sp);\n        System.out.println(\"操作2のみロールバック\");\n    }\n\n    // 操作1のみコミット\n    conn.commit();\n}",
+          "note": "Savepointまでrollback()した後も**トランザクション**は継続します。最終的にcommit()またはrollback()が必要です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "point",
+          "title": "DataSourceの概要",
+          "body": "DataSourceはJDBC接続を取得するための代替手段で、javax.sql.DataSourceインターフェースで定義されます。\nDriverManagerと比べて、コネクションプーリング（接続の再利用）をサポートする点が大きな利点です。\nコネクションプーリングにより、接続の作成・破棄のオーバーヘッドが削減されます。\n実際のアプリケーションではDataSourceの使用が推奨されます。\nJNDI（Java Naming and Directory Interface）を通じてDataSourceを取得することが一般的です。\n試験ではDataSourceの概念と利点が問われます。",
+          "code": "import javax.sql.DataSource;\nimport java.sql.*;\n\n// DataSourceの使用例（概念的なコード）\n// 実際にはアプリケーションサーバやフレームワークが\n// DataSourceを提供します\n\n// DataSourceから接続を取得\n// DataSource ds = ... （JNDIやDI等で取得）\n// try (Connection conn = ds.getConnection()) {\n//     // 接続はプールから取得される\n//     Statement stmt = conn.createStatement();\n//     ResultSet rs = stmt.executeQuery(\"SELECT * FROM users\");\n//     while (rs.next()) {\n//         System.out.println(rs.getString(\"name\"));\n//     }\n// } // close()するとプールに返却される\n\n// DriverManagerとの比較\n// DriverManager: 毎回新しい接続を作成\n// DataSource: プールから接続を借りて使い終わったら返す\nSystem.out.println(\"DataSourceはコネクションプーリングをサポート\");",
+          "note": "DataSourceのclose()は接続を物理的に切断するのではなく、プールに返却します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "tip",
+          "title": "試験対策：トランザクション",
+          "body": "デフォルトはAutoCommitモード（true）で、各SQL文が自動的にコミットされます。\nsetAutoCommit(false)にしないとcommit()/rollback()は意味がありません。\nSavepointまでのrollback()は**トランザクション**を終了しない点が重要です。\nコネクションプーリングはDataSourceの主要な機能です。\nACID特性の4つの要素（Atomicity、Consistency、Isolation、Durability）を覚えましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_04_q1",
+          "lessonId": "ch29_04",
+          "type": "fourChoice",
+          "question": "JDBCのデフォルトのトランザクション動作について正しい説明はどれですか？",
+          "code": null,
+          "explanation": "JDBCのデフォルトではAutoCommitモードが有効（true）です。各SQL文が実行されるたびに自動的にコミットされます。手動でトランザクションを管理するにはsetAutoCommit(false)を呼ぶ必要があります。",
+          "choices": [
+            {
+              "id": "ch29_04_q1_a",
+              "text": "AutoCommitが有効で、各SQL文が自動的にコミットされる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_04_q1_b",
+              "text": "AutoCommitが無効で、明示的にcommit()を呼ぶ必要がある",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_04_q1_c",
+              "text": "トランザクションは常にSavepointで管理される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_04_q1_d",
+              "text": "接続時にトランザクションモードを選択する必要がある",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_04_q2",
+          "lessonId": "ch29_04",
+          "type": "fourChoice",
+          "question": "Savepointについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "rollback(Savepoint)を呼ぶと、指定したSavepointまでの変更が取り消されます。ただし、トランザクション自体は終了しません。引き続きSQL操作を行い、最終的にcommit()またはrollback()でトランザクションを終了する必要があります。",
+          "choices": [
+            {
+              "id": "ch29_04_q2_a",
+              "text": "Savepointまでrollback()してもトランザクションは終了しない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_04_q2_b",
+              "text": "Savepointまでrollback()するとトランザクションが自動的にcommitされる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_04_q2_c",
+              "text": "Savepointはトランザクションの外でも設定できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_04_q2_d",
+              "text": "1つのトランザクションにSavepointは1つしか設定できない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_04_q3",
+          "lessonId": "ch29_04",
+          "type": "outputPredict",
+          "question": "次のコードの実行結果として正しいものはどれですか？",
+          "code": "Connection conn = DriverManager.getConnection(url, user, pw);\nSystem.out.println(\"A: \" + conn.getAutoCommit());\nconn.setAutoCommit(false);\nSystem.out.println(\"B: \" + conn.getAutoCommit());\nconn.close();",
+          "explanation": "JDBCの接続はデフォルトでAutoCommitがtrueです。getAutoCommit()はtrueを返します。setAutoCommit(false)で無効化した後はfalseを返します。",
+          "choices": [
+            {
+              "id": "ch29_04_q3_a",
+              "text": "A: true\nB: false",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_04_q3_b",
+              "text": "A: false\nB: true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_04_q3_c",
+              "text": "A: true\nB: true",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_04_q3_d",
+              "text": "A: false\nB: false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

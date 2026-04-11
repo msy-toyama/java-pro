@@ -1,0 +1,1315 @@
+{
+  "courseId": "ch07",
+  "lessons": [
+    {
+      "id": "ch07_01",
+      "courseId": "ch07",
+      "title": "クラスとオブジェクト",
+      "summary": "設計図からモノを作る仕組み",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・クラス（設計図）とオブジェクト（実体）の関係\n・フィールド（データ）とメソッド（動作）の定義\n・new演算子でオブジェクトを生成する方法\n\nオブジェクト指向の最も重要な基礎概念です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "code",
+          "title": "クラスの定義とインスタンス化",
+          "body": "クラスを定義し、newキーワードで**インスタンス**を作ります。",
+          "code": "// クラスの定義（設計図）\nclass Car {\n    // フィールド（データ）\n    String name;\n    int speed;\n\n    // メソッド（動作）\n    void accelerate() {\n        speed += 10;\n        System.out.println(name + \"が加速: \" + speed + \"km/h\");\n    }\n}\n\n// インスタンスの作成（実体を作る）\nCar car1 = new Car();\ncar1.name = \"プリウス\";\ncar1.speed = 0;\ncar1.accelerate(); // プリウスが加速: 10km/h\ncar1.accelerate(); // プリウスが加速: 20km/h\n\n// 同じ設計図から複数の実体を作れる\nCar car2 = new Car();\ncar2.name = \"フェラーリ\";\ncar2.speed = 100;\ncar2.accelerate(); // フェラーリが加速: 110km/h\n\n// car1とcar2は別のオブジェクト（独立したデータを持つ）",
+          "note": "1つのクラスから何個でも**インスタンス**を作れます。各インスタンスは独立したフィールド値を持ちます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "rule",
+          "title": "クラスの構成要素",
+          "body": "クラスを構成する4つの要素:\n\n1. フィールド（Field）: データを保持する変数\n・**インスタンス**変数: 各オブジェクトが持つ値\n・クラス変数（static）: クラス全体で共有する値\n\n2. メソッド（Method）: 処理・動作を定義\n・インスタンスメソッド: オブジェクトに対する操作\n・クラスメソッド（static）: クラスに対する操作\n\n3. **コンストラクタ**（Constructor）: 初期化処理\n   ・new時に自動的に呼ばれる\n\n4. ネストクラス: クラスの中に定義するクラス（上級）\n\nフィールドのデフォルト値:\n| 型 | デフォルト値 |\n|---|---|\n| int, long | 0 |\n| double, float | 0.0 |\n| boolean | false |\n| 参照型 | null |\n※ローカル変数にはデフォルト値がないので注意！",
+          "code": null,
+          "note": "フィールドは宣言するだけでデフォルト値が入りますが、ローカル変数は初期化しないとコンパイルエラーになります。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "tip",
+          "title": "クラスとオブジェクトの関係をイメージする",
+          "body": "「たい焼きの型」と「たい焼き」で考えましょう。\n\n| 概念 | 例え | プログラム |\n|---|---|---|\n| クラス | たい焼きの「型」 | 設計図（1つだけ） |\n| オブジェクト | 焼かれた「たい焼き」 | 実体（何個でも作れる） |\n| フィールド | あんこの種類、大きさ | データ |\n| メソッド | 食べる、温める | 動作・処理 |\n\n1つの型（クラス）から何個でもたい焼き（オブジェクト）を作れます。",
+          "code": null,
+          "note": "new Car() と書くたびに、新しいCarオブジェクトが1つ作られます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・クラス = 設計図、**インスタンス** = 実体\n・newキーワードでインスタンスを作成\n・フィールド: データ、メソッド: 動作\n・フィールドにはデフォルト値がある（ローカル変数にはない）\n・1つのクラスから複数のインスタンスを作れる",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_01_q1",
+          "lessonId": "ch07_01",
+          "type": "fourChoice",
+          "question": "クラスからインスタンスを作成するキーワードはどれですか？",
+          "code": null,
+          "explanation": "Javaではnewキーワードでクラスのインスタンスを作成します。new Car()のように書くと、Carクラスの設計図に基づいてメモリ上にオブジェクトが作られます。",
+          "choices": [
+            {
+              "id": "ch07_01_q1_a",
+              "text": "create",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_01_q1_b",
+              "text": "new",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_01_q1_c",
+              "text": "make",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_01_q1_d",
+              "text": "init",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_01_q2",
+          "lessonId": "ch07_01",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class Counter {\n    int count;\n}\nCounter c = new Counter();\nSystem.out.println(c.count);",
+          "explanation": "intフィールドのデフォルト値は0です。Counterのcountフィールドは初期化していませんが、フィールドなのでデフォルト値の0が入ります。",
+          "choices": [
+            {
+              "id": "ch07_01_q2_a",
+              "text": "0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_01_q2_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_01_q2_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_01_q2_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_01_q3",
+          "lessonId": "ch07_01",
+          "type": "fillBlank",
+          "question": "クラスのインスタンスを作る構文の空欄を埋めてください。\nDog d = _____ Dog();",
+          "code": null,
+          "explanation": "new Dog()でDogクラスのインスタンスを作成します。newキーワードはヒープメモリにオブジェクトを確保し、コンストラクタを呼び出します。",
+          "choices": [
+            {
+              "id": "ch07_01_q3_a",
+              "text": "new",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_01_q3_b",
+              "text": "create",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_01_q3_c",
+              "text": "this",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_01_q3_d",
+              "text": "super",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch07_02",
+      "courseId": "ch07",
+      "title": "thisキーワードとフィールド操作",
+      "summary": "自分自身のインスタンスを参照する",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・thisキーワードで「自分自身のオブジェクト」を参照\n・フィールドとローカル変数の名前が同じときの区別方法\n・フィールドの初期化と操作\n\nthisを使いこなすことで、コードの意図が明確になります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "code",
+          "title": "thisの使い方",
+          "body": "thisを使ってフィールドとローカル変数を区別します。",
+          "code": "// Studentクラスの定義\nclass Student {\n    String name;\n    int age;\n\n    // 引数名とフィールド名が同じ場合、thisで区別\n    // setInfoメソッドの定義\n    void setInfo(String name, int age) {\n        this.name = name; // this.name = フィールド、name = 引数\n        this.age = age;\n    }\n\n    // thisを使わない場合の問題\n    // badSetNameメソッドの定義\n    void badSetName(String name) {\n        name = name; // 引数に引数を代入しているだけ！\n        // フィールドは変わらない\n    }\n\n    // thisは「自分自身」を返すこともできる\n    Student withName(String name) {\n        this.name = name;\n        return this; // メソッドチェーンに使える\n    }\n\n    void display() {\n        System.out.println(name + \"(\" + age + \"歳)\");\n    }\n}\n\nStudent s = new Student();\ns.setInfo(\"太郎\", 20);\ns.display(); // 太郎(20歳)\n\n// メソッドチェーン\nnew Student().withName(\"花子\").display(); // 花子(0歳)",
+          "note": "this.フィールド名は「このオブジェクト自身のフィールド」を意味します。引数とフィールドが同名でなければthisは省略可能です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "tip",
+          "title": "thisの2つの使い方",
+          "body": "thisキーワードには主に2つの使い方があります。\n\n| 使い方 | 構文 | 目的 |\n|---|---|---|\n| フィールド参照 | this.name = name | 同名のローカル変数と区別 |\n| コンストラクタ呼出し | this(引数) | 同じクラスの別コンストラクタを呼ぶ |\n\nthis()はコンストラクタの最初の行に書く必要があります。",
+          "code": null,
+          "note": "this()とsuper()は同時に使えません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "code",
+          "title": "フィールドの初期化とnull",
+          "body": "参照型フィールドの扱いとNullPointerExceptionの防止。",
+          "code": "// Profileクラスの定義\nclass Profile {\n    String name;    // デフォルト: null\n    int score;      // デフォルト: 0\n    boolean active; // デフォルト: false\n\n    // showNameメソッドの定義\n    void showName() {\n        // ⚠️ nameがnullの場合、length()でNullPointerException！\n        // System.out.println(name.length()); // 危険！\n\n        // 安全なnullチェック\n        // 条件分岐\n        if (name != null) {\n            System.out.println(name.length());\n        } else {\n            System.out.println(\"名前未設定\");\n        }\n    }\n}\n\nProfile p = new Profile();\nSystem.out.println(p.name);    // null\nSystem.out.println(p.score);   // 0\nSystem.out.println(p.active);  // false\np.showName();                  // 名前未設定\n\n// フィールドの初期値を宣言時に設定\n// Configクラスの定義\nclass Config {\n    // 変数の宣言と初期化\n    String lang = \"ja\";      // デフォルト値を指定\n    int maxRetry = 3;\n    boolean debug = false;\n}",
+          "note": "フィールドは宣言時に初期値を指定できます。**コンストラクタ**で上書きすることも可能です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・this = 自分自身の**インスタンス**への参照\n・this.フィールド名でフィールドと引数を区別\n・thisなしだと引数（ローカル変数）が優先される\n・参照型フィールドのデフォルトはnull\n・null参照でメソッド呼び出し → NullPointerException\n・フィールドは宣言時に初期値を設定可能",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_02_q1",
+          "lessonId": "ch07_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class Box {\n    int value;\n    void set(int value) {\n        value = value;\n    }\n}\nBox b = new Box();\nb.set(42);\nSystem.out.println(b.value);",
+          "explanation": "set()メソッド内で value = value は引数のvalueに引数のvalueを代入しているだけで、フィールドは変わりません。this.value = value と書く必要があります。フィールドのデフォルト値は0のままです。",
+          "choices": [
+            {
+              "id": "ch07_02_q1_a",
+              "text": "0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_02_q1_b",
+              "text": "42",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_02_q1_c",
+              "text": "null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_02_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_02_q2",
+          "lessonId": "ch07_02",
+          "type": "fourChoice",
+          "question": "thisキーワードの説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "thisは自分自身のインスタンスへの参照です。主にフィールドとローカル変数（引数）が同名の場合に区別するために使います。staticメソッド内ではインスタンスが存在しないためthisは使えません。",
+          "choices": [
+            {
+              "id": "ch07_02_q2_a",
+              "text": "親クラスのインスタンスを参照する",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_02_q2_b",
+              "text": "自分自身のインスタンスを参照する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_02_q2_c",
+              "text": "staticメソッド内で使える",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_02_q2_d",
+              "text": "新しいインスタンスを作成する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_02_q3",
+          "lessonId": "ch07_02",
+          "type": "fourChoice",
+          "question": "String型フィールドを初期化せずにアクセスした場合の値はどれですか？",
+          "code": null,
+          "explanation": "参照型のフィールドは初期化しない場合、デフォルト値としてnullが入ります。これはインスタンス変数（フィールド）の場合のみで、ローカル変数は初期化しないとコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch07_02_q3_a",
+              "text": "\"\"（空文字）",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_02_q3_b",
+              "text": "null",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_02_q3_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_02_q3_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch07_03",
+      "courseId": "ch07",
+      "title": "コンストラクタ",
+      "summary": "オブジェクト生成時の初期化処理",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**コンストラクタ**の定義と呼び出しタイミング\n・引数付きコンストラクタでオブジェクトの初期化\n・コンストラクタのオーバーロードとthis()呼び出し\n\nコンストラクタで「オブジェクト作成時に必ず初期化する」仕組みを学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "code",
+          "title": "コンストラクタの定義",
+          "body": "クラス名と同じ名前で、戻り値の型を書きません。",
+          "code": "class Person {\n    String name;\n    int age;\n\n    // コンストラクタ（クラス名と同じ、戻り値なし）\n    Person(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n\n    void display() {\n        System.out.println(name + \"(\" + age + \"歳)\");\n    }\n}\n\n// new時にコンストラクタが呼ばれる\nPerson p = new Person(\"太郎\", 25);\np.display(); // 太郎(25歳)\n\n// Person p2 = new Person(); // コンパイルエラー！\n// → 引数ありコンストラクタを定義すると、\n//   デフォルトコンストラクタは自動生成されない",
+          "note": "**コンストラクタ**を1つも定義しない場合、Javaが引数なしのデフォルトコンストラクタを自動生成します。1つでも定義すると自動生成されません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "code",
+          "title": "コンストラクタオーバーロードとthis()",
+          "body": "引数の異なる**コンストラクタ**を複数定義し、this()で別のコンストラクタを呼びます。",
+          "code": "class Product {\n    String name;\n    int price;\n    String category;\n\n    // フルコンストラクタ\n    Product(String name, int price, String category) {\n        this.name = name;\n        this.price = price;\n        this.category = category;\n    }\n\n    // 2引数版: this()で3引数版を呼ぶ\n    Product(String name, int price) {\n        this(name, price, \"一般\"); // 先頭行で別コンストラクタを呼ぶ\n    }\n\n    // 1引数版: this()で2引数版を呼ぶ\n    Product(String name) {\n        this(name, 0); // チェーン: → 2引数 → 3引数\n    }\n\n    void show() {\n        System.out.println(name + \" ¥\" + price + \" [\" + category + \"]\");\n    }\n}\n\nnew Product(\"Java入門\", 2980, \"書籍\").show();\n// Java入門 ¥2980 [書籍]\n\nnew Product(\"ノート\", 200).show();\n// ノート ¥200 [一般]\n\nnew Product(\"サンプル\").show();\n// サンプル ¥0 [一般]",
+          "note": "this()は**コンストラクタ**の先頭行でしか使えません。super()との同時使用もできません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "tip",
+          "title": "コンストラクタの特殊ルール",
+          "body": "**コンストラクタ**には通常のメソッドと異なるルールがあります。\n\n| ルール | 説明 |\n|---|---|\n| 名前はクラス名と同じ | Car クラスなら Car() |\n| 戻り値の型を書かない | void も書かない |\n| newの時だけ呼ばれる | 直接呼び出せない |\n| 書かなければ自動生成 | 引数なしのデフォルトコンストラクタ |\n\n注意: 引数付きコンストラクタを書くと、デフォルトコンストラクタは自動生成されなくなります。",
+          "code": null,
+          "note": "試験では「デフォルト**コンストラクタ**が自動生成される/されない条件」が頻出です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**コンストラクタ** = クラス名と同じ名前、戻り値型なし\n・new時に自動的に呼ばれ、オブジェクトを初期化\n・未定義の場合、デフォルトコンストラクタが自動生成\n・1つでも定義するとデフォルトコンストラクタは消える\n・オーバーロードで引数違いの複数コンストラクタ定義可能\n・this()で同クラスの別コンストラクタを呼ぶ（先頭行のみ）",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_03_q1",
+          "lessonId": "ch07_03",
+          "type": "fourChoice",
+          "question": "コンストラクタの特徴として正しいものはどれですか？",
+          "code": null,
+          "explanation": "コンストラクタはクラス名と同じ名前を持ち、戻り値の型を指定しません（voidも書きません）。newでインスタンスを作成する際に自動的に実行され、オブジェクトの初期化を行います。",
+          "choices": [
+            {
+              "id": "ch07_03_q1_a",
+              "text": "戻り値の型にvoidを指定する",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_03_q1_b",
+              "text": "クラス名と同じ名前で戻り値型を書かない",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_03_q1_c",
+              "text": "任意のタイミングで呼び出せる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_03_q1_d",
+              "text": "staticキーワードが必要",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_03_q2",
+          "lessonId": "ch07_03",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class Msg {\n    String text;\n    Msg() { this(\"default\"); }\n    Msg(String text) { this.text = text; }\n}\nSystem.out.println(new Msg().text);",
+          "explanation": "new Msg()で引数なしコンストラクタが呼ばれ、this(\"default\")により引数ありコンストラクタが呼ばれます。this.text = \"default\"が設定されるため、\"default\"が出力されます。",
+          "choices": [
+            {
+              "id": "ch07_03_q2_a",
+              "text": "default",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_03_q2_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_03_q2_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_03_q2_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_03_q3",
+          "lessonId": "ch07_03",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "class Item {\n    String name;\n    Item(String name) {\n        this.name = name;\n    }\n}\nItem i = new Item();",
+          "explanation": "Itemクラスには引数ありのコンストラクタItem(String)を定義しているため、デフォルトコンストラクタItem()は自動生成されません。7行目のnew Item()は引数なしコンストラクタを呼ぼうとしますが、存在しないためコンパイルエラーです。",
+          "choices": [
+            {
+              "id": "ch07_03_q3_a",
+              "text": "3行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_03_q3_b",
+              "text": "4行目",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_03_q3_c",
+              "text": "7行目",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_03_q3_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch07_03_q4",
+          "lessonId": "ch07_03",
+          "type": "codeComplete",
+          "question": "Studentクラスのコンストラクタを完成させ、name フィールドを初期化してください。",
+          "code": null,
+          "explanation": "コンストラクタではthisキーワードで自クラスのフィールドを参照し、引数の値を代入して初期化します。コンストラクタ名はクラス名と同一で、戻り値の型は記述しません。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class Student {\n    private String name;\n\n    public __BLANK_1__(String name) {\n        __BLANK_2__.name = name;\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①コンストラクタ名",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Student",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "void Student",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "new Student",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②自身の参照",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "this",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "self",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "super",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch07_04",
+      "courseId": "ch07",
+      "title": "カプセル化とアクセス修飾子",
+      "summary": "データを守り、安全に操作する",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**カプセル化**：データを外部から隠す設計手法\n・**アクセス修飾子**（public, private, protected, デフォルト）の違い\n・getter/setterメソッドによる安全なデータアクセス\n\nカプセル化は「バグを防ぎ、変更に強いコードを作る」ための重要な技術です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "code",
+          "title": "privateとgetter/setter",
+          "body": "フィールドをprivateにし、publicメソッドでアクセスを制御します。",
+          "code": "// BankAccountクラスの定義\nclass BankAccount {\n    private String owner;\n    private int balance;\n\n    public BankAccount(String owner, int initialBalance) {\n        this.owner = owner;\n        this.balance = Math.max(0, initialBalance);\n    }\n\n    // getter（読み取り専用アクセス）\n    // getOwnerメソッドの定義\n    public String getOwner() {\n        return owner;\n    }\n\n    // getBalanceメソッドの定義\n    public int getBalance() {\n        return balance;\n    }\n\n    // setter（バリデーション付き書き込み）\n    public void deposit(int amount) {\n        // 条件分岐\n        if (amount <= 0) {\n            System.out.println(\"不正な金額\");\n            return;\n        }\n        balance += amount;\n    }\n\n    public boolean withdraw(int amount) {\n        if (amount <= 0 || amount > balance) {\n            System.out.println(\"引き出し不可\");\n            return false;\n        }\n        balance -= amount;\n        return true;\n    }\n}\nBankAccount acc = new BankAccount(\"太郎\", 1000);\n// acc.balance = -999; // コンパイルエラー！ private\nacc.deposit(500);\nSystem.out.println(acc.getBalance()); // 1500\nacc.withdraw(2000); // 引き出し不可",
+          "note": "balanceフィールドをprivateにすることで、マイナス残高になることを完全に防止できます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "rule",
+          "title": "4つのアクセス修飾子",
+          "body": "Javaには4段階の**アクセス修飾子**があります:\n\n| 修飾子 | 同クラス | 同パッケージ | 子クラス | 他パッケージ |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (なし)パッケージ | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\n使い分けの目安:\n\n| 対象 | 推奨レベル |\n|---|---|\n| フィールド | private（カプセル化） |\n| getter/setter | public |\n| 内部処理用メソッド | private |\n| 継承で使わせたいメソッド | protected |\n| API公開メソッド | public |\n\n原則: 最小限のアクセスレベルを選ぶ（情報隠蔽の原則）",
+          "code": null,
+          "note": "トップレベルクラスに使えるのはpublicと(なし)のみです。privateやprotectedはネストクラスでのみ使えます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "tip",
+          "title": "アクセス修飾子の使い分け",
+          "body": "4種類の**アクセス修飾子**を一覧で把握しましょう。\n\n| 修飾子 | 同じクラス | 同じパッケージ | 子クラス | どこからでも |\n|---|---|---|---|---|\n| private | ○ | × | × | × |\n| (なし) | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\n基本方針: フィールドはprivate、メソッドは必要な範囲で最も狭い修飾子を選ぶ。",
+          "code": null,
+          "note": "「(なし)」はデフォルトアクセスまたはパッケージプライベートと呼ばれます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**カプセル化**: フィールドをprivate + getter/setterで保護\n・setterにバリデーション（値の検証）を入れる\n・4段階: private < (なし) < protected < public\n・原則: 最小限のアクセスレベルを選択\n・フィールドは基本private、メソッドは目的に応じて選択",
+          "code": null,
+          "note": "【実務Tips】実務ではDTO（データ転送オブジェクト）やEntity（データベース対応クラス）の設計で**カプセル化**が必須です。LombokライブラリでGetter/Setterを自動生成するのが現場の主流です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_04_q1",
+          "lessonId": "ch07_04",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "class Secret {\n    private int code = 42;\n}\nclass Main {\n    public static void main(String[] args) {\n        Secret s = new Secret();\n        System.out.println(s.code);\n    }\n}",
+          "explanation": "codeフィールドはprivateなので、Secretクラスの外部からアクセスできません。7行目のs.codeがコンパイルエラーになります。アクセスするにはgetterメソッドを用意する必要があります。",
+          "choices": [
+            {
+              "id": "ch07_04_q1_a",
+              "text": "2行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_04_q1_b",
+              "text": "6行目",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_04_q1_c",
+              "text": "7行目",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_04_q1_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_04_q2",
+          "lessonId": "ch07_04",
+          "type": "fourChoice",
+          "question": "カプセル化の利点として正しいものはどれですか？",
+          "code": null,
+          "explanation": "カプセル化によりフィールドへの直接アクセスを制限し、setterでバリデーション（値の検証）を行うことで、不正な値の設定を防止できます。内部実装を変更しても外部への影響を最小限に抑えられます。",
+          "choices": [
+            {
+              "id": "ch07_04_q2_a",
+              "text": "プログラムの実行速度が向上する",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_04_q2_b",
+              "text": "不正な値の設定を防止できる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_04_q2_c",
+              "text": "メモリ使用量が減少する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_04_q2_d",
+              "text": "コンパイル時間が短縮する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_04_q3",
+          "lessonId": "ch07_04",
+          "type": "fourChoice",
+          "question": "同パッケージ内とサブクラスからアクセスできるアクセス修飾子はどれですか？",
+          "code": null,
+          "explanation": "protectedは同パッケージ内のクラスと、異なるパッケージでもサブクラスからアクセス可能です。privateは同クラスのみ、パッケージプライベート（修飾子なし）は同パッケージのみ、publicはすべてからアクセス可能です。",
+          "choices": [
+            {
+              "id": "ch07_04_q3_a",
+              "text": "private",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_04_q3_b",
+              "text": "protected",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_04_q3_c",
+              "text": "public",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_04_q3_d",
+              "text": "修飾子なし（パッケージプライベート）",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch07_04_q4",
+          "lessonId": "ch07_04",
+          "type": "reorder",
+          "question": "オブジェクトの生成からメソッド呼び出しまでを正しい順序に並べてください。",
+          "code": null,
+          "explanation": "オブジェクトはませnewで生成し、setterで値を設定、メソッドで操作、getterで結果を取得します。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Car car = new Car(\"Toyota\");",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "car.setSpeed(60);",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "car.accelerate();",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "System.out.println(car.getSpeed());",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch07_05",
+      "courseId": "ch07",
+      "title": "staticメンバ",
+      "summary": "クラス全体で共有するデータと処理",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・staticフィールド：全**インスタンス**で共有される変数\n・staticメソッド：インスタンス不要で呼べるメソッド\n・staticの使いどころと注意点\n\nMath.random() や Integer.parseInt() もstaticメソッドです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "code",
+          "title": "staticフィールドとメソッド",
+          "body": "staticメンバはクラス全体で1つだけ存在します。",
+          "code": "// Employeeクラスの定義\nclass Employee {\n    // staticフィールド（クラス変数）: 全インスタンスで共有\n    static int totalCount = 0;\n    static String company = \"テック株式会社\";\n\n    // インスタンスフィールド: 各オブジェクトごとに独立\n    String name;\n    int id;\n\n    Employee(String name) {\n        this.name = name;\n        totalCount++;  // インスタンス生成のたびにカウント\n        this.id = totalCount;\n    }\n\n    // staticメソッド: オブジェクトなしで呼べる\n    // getTotalメソッドの定義\n    static int getTotal() {\n        // this.name; // コンパイルエラー！staticからインスタンスメンバは不可\n        return totalCount;\n    }\n\n    // インスタンスメソッド: staticメンバにもアクセスできる\n    // showメソッドの定義\n    void show() {\n        System.out.println(company + \" \" + name + \" (ID:\" + id + \")\");\n    }\n}\n\nEmployee e1 = new Employee(\"太郎\");\nEmployee e2 = new Employee(\"花子\");\ne1.show(); // テック株式会社 太郎 (ID:1)\ne2.show(); // テック株式会社 花子 (ID:2)\nSystem.out.println(Employee.getTotal()); // 2",
+          "note": "staticフィールドはクラスがロードされた時点で1度だけ作られます。JVMが終了するまでメモリに残ります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "rule",
+          "title": "staticの制約と使い分け",
+          "body": "staticメンバの制約:\n\n1. staticメソッドから**インスタンス**メンバに直接アクセスできない\n   → オブジェクトを作ってからアクセスする\n\n2. staticメソッドでthisは使えない\n   → thisは「自分のインスタンス」を指すため\n\n3. インスタンスメソッドからstaticメンバにはアクセスできる\n\nstaticの適切な使い方:\n| 用途 | 説明 |\n|---|---|\n| 定数 | static final double PI = 3.14159; |\n| ユーティリティメソッド | Math.max(), Integer.parseInt() |\n| カウンター | インスタンス数の管理 |\n| ファクトリメソッド | インスタンス生成方法の提供 |\n\n避けるべき使い方:\n・状態の多いstaticフィールド（テストやマルチスレッドで問題に）\n・なんでもstaticにする（オブジェクト指向の利点を失う）",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "tip",
+          "title": "staticメソッドからインスタンスメンバにアクセスできない",
+          "body": "staticメソッドは「クラスに属する」ため、特定の**インスタンス**の情報にアクセスできません。\n\n・staticメソッド内でthisは使えない\n・staticメソッドからインスタンスフィールドを直接参照できない\n・staticメソッドからインスタンスメソッドを直接呼べない\n\n逆に、インスタンスメソッドからstaticメンバにはアクセスできます。",
+          "code": null,
+          "note": "mainメソッドもstaticなので、mainから直接**インスタンス**メソッドを呼べないのはこのルールのためです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・static = クラスに属する（**インスタンス**不要）\n・staticフィールド: 全インスタンスで共有される値\n・staticメソッド: クラス名.メソッド名()で呼ぶ\n・staticからインスタンスメンバへの直接アクセス不可\n・インスタンスからstaticへのアクセスは可能\n・static final は定数定義に使う",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_05_q1",
+          "lessonId": "ch07_05",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "class Counter {\n    static int count = 0;\n    Counter() { count++; }\n}\nnew Counter();\nnew Counter();\nnew Counter();\nSystem.out.println(Counter.count);",
+          "explanation": "staticフィールドcountは全インスタンスで共有されます。new Counter()を3回呼ぶと、コンストラクタ内のcount++が3回実行されるため、countは3になります。",
+          "choices": [
+            {
+              "id": "ch07_05_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q1_b",
+              "text": "1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q1_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_05_q2",
+          "lessonId": "ch07_05",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "class Sample {\n    int value = 10;\n    static void show() {\n        System.out.println(value);\n    }\n}",
+          "explanation": "staticメソッドshow()からインスタンスフィールドvalueに直接アクセスしようとしています。staticメソッドはインスタンスに属しないため、インスタンスメンバへの直接アクセスはコンパイルエラーです。4行目でエラーが発生します。",
+          "choices": [
+            {
+              "id": "ch07_05_q2_a",
+              "text": "2行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q2_b",
+              "text": "3行目",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q2_c",
+              "text": "4行目",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q2_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_05_q3",
+          "lessonId": "ch07_05",
+          "type": "fourChoice",
+          "question": "static finalの組み合わせはどのような用途に使われますか？",
+          "code": null,
+          "explanation": "static finalはクラスレベルの定数を定義するために使います。staticでクラスに属し、finalで変更不可にします。Math.PIやInteger.MAX_VALUEなどが代表例です。命名規則は大文字+アンダースコア（MAX_VALUE）です。",
+          "choices": [
+            {
+              "id": "ch07_05_q3_a",
+              "text": "インスタンス変数の定義",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q3_b",
+              "text": "定数の定義",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q3_c",
+              "text": "ローカル変数の定義",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q3_d",
+              "text": "抽象メソッドの定義",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch07_05_q4",
+          "lessonId": "ch07_05",
+          "type": "multiChoice",
+          "question": "カプセル化のメリットとして正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "カプセル化のメリットは「内部実装を隠蔽し変更に強くなる」「不正な値の設定を防止できる」「クラスの利用者に必要なインターフェースだけを公開する」です。処理速度の向上はカプセル化の直接的なメリットではありません。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch07_05_q4_a",
+              "text": "内部実装の変更が外部に影響しにくい",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q4_b",
+              "text": "不正な値の設定を防止できる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q4_c",
+              "text": "プログラムの処理速度が向上する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q4_d",
+              "text": "必要なインターフェースだけを公開できる",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch07_06",
+      "courseId": "ch07",
+      "title": "Objectクラスのメソッド",
+      "summary": "toString, equals, hashCodeの実装",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・toString()：オブジェクトの文字列表現をカスタマイズ\n・equals()：論理的な等価比較を定義\n・hashCode()：ハッシュベースのコレクションで必要\n\nすべてのクラスが暗黙的に持つObjectクラスのメソッドを適切にオーバーライドしましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "code",
+          "title": "toString()のオーバーライド",
+          "body": "オブジェクトの文字列表現をカスタマイズします。",
+          "code": "class Book {\n    String title;\n    int price;\n\n    Book(String title, int price) {\n        this.title = title;\n        this.price = price;\n    }\n\n    // toString()をオーバーライドしない場合:\n    // System.out.println(book); → Book@1a2b3c4d（クラス名@ハッシュ値）\n\n    @Override\n    public String toString() {\n        return \"Book{title='\" + title + \"', price=\" + price + \"}\";\n    }\n}\n\nBook b = new Book(\"Java入門\", 2980);\n\n// println は自動的にtoString()を呼ぶ\nSystem.out.println(b); // Book{title='Java入門', price=2980}\n\n// 文字列結合でも自動的にtoString()が呼ばれる\nString msg = \"購入: \" + b; // \"購入: Book{title='Java入門', price=2980}\"\nSystem.out.println(msg);",
+          "note": "toString()はデバッグやログ出力で非常に有用です。すべてのクラスでオーバーライドする習慣をつけましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "code",
+          "title": "equals()とhashCode()",
+          "body": "オブジェクトの等価性を正しく判定するための実装です。",
+          "code": "// Pointクラスの定義\nclass Point {\n    int x, y;\n\n    Point(int x, int y) {\n        this.x = x;\n        this.y = y;\n    }\n    @Override\n    // equalsメソッドの定義\n    public boolean equals(Object obj) {\n        // 1. 同一オブジェクトチェック\n        // 条件分岐\n        if (this == obj) return true;\n        // 2. null & 型チェック\n        if (!(obj instanceof Point)) return false;\n        // 3. フィールド比較\n        Point other = (Point) obj;\n        return this.x == other.x && this.y == other.y;\n    }\n    @Override\n    // hashCodeメソッドの定義\n    public int hashCode() {\n        // equalsがtrueなら同じhashCodeを返す必要あり\n        return 31 * x + y;\n    }\n    @Override\n    public String toString() {\n        return \"(\" + x + \", \" + y + \")\";\n    }\n}\nPoint p1 = new Point(3, 4);\nPoint p2 = new Point(3, 4);\nPoint p3 = new Point(1, 2);\n\nSystem.out.println(p1 == p2);      // false（参照が異なる）\nSystem.out.println(p1.equals(p2)); // true（値が同じ）\nSystem.out.println(p1.equals(p3)); // false",
+          "note": "equals()をオーバーライドしたらhashCode()も必ずオーバーライドします。HashMap/HashSetで正しく動くために、equalsがtrueなら同じhashCodeを返す契約があります。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "rule",
+          "title": "==とequals()の違い",
+          "body": "・== 演算子\n  → プリミティブ型: 値の比較\n  → 参照型: 参照（メモリ上のアドレス）の比較\n  → 同じオブジェクトかどうかを判定\n\n・equals() メソッド\n  → 参照型のみ使用可能\n  → オーバーライドしなければ==と同じ動作\n  → オーバーライドすると「論理的な等価性」を判定\n  → Stringクラスはequals()をオーバーライド済み\n\n注意: Stringの比較\n  String s1 = \"hello\";\n  String s2 = \"hello\";\n  s1 == s2;      // true（文字列プールにより同じ参照）\n  \n  String s3 = new String(\"hello\");\n  s1 == s3;      // false（異なるオブジェクト）\n  s1.equals(s3); // true（内容が同じ）\n  \n→ 文字列比較は常にequals()を使うべき",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "tip",
+          "title": "equalsをオーバーライドしたらhashCodeも必ずオーバーライド",
+          "body": "Javaの重要な契約（コントラクト）:\n\n・equals()がtrueの2つのオブジェクト → hashCode()は同じ値を返すこと\n・hashCode()が異なる → equals()は必ずfalse\n\nこの契約を破ると、HashSetやHashMapで正しく動作しなくなります。",
+          "code": null,
+          "note": "IDEの自動生成機能を使えば、equals()とhashCode()を正しくセットで生成できます。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・すべてのクラスはObjectを暗黙的に継承\n| メソッド | 説明 |\n|---|---|\n| toString() | 文字列表現、printlnで自動呼び出し |\n| equals() | 論理的等価性の判定 |\n| hashCode() | equals()と一緒にオーバーライド |\n・== は参照比較、equals() は内容比較\n・文字列比較は必ずequals()を使う",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_06_q1",
+          "lessonId": "ch07_06",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "String a = new String(\"Java\");\nString b = new String(\"Java\");\nSystem.out.print(a == b);\nSystem.out.print(\",\");\nSystem.out.print(a.equals(b));",
+          "explanation": "new String()で作成した文字列は別のオブジェクトなので、a == bはfalse（参照が異なる）。a.equals(b)は内容を比較するためtrue（どちらも\"Java\"）。",
+          "choices": [
+            {
+              "id": "ch07_06_q1_a",
+              "text": "false,true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_06_q1_b",
+              "text": "true,true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_06_q1_c",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_06_q1_d",
+              "text": "true,false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_06_q2",
+          "lessonId": "ch07_06",
+          "type": "fourChoice",
+          "question": "equals()をオーバーライドする際に同時にオーバーライドすべきメソッドはどれですか？",
+          "code": null,
+          "explanation": "Objectクラスの契約により、equals()がtrueを返す2つのオブジェクトは同じhashCode()を返す必要があります。HashMapやHashSetが正しく動作するためです。equals()だけオーバーライドしてhashCode()をオーバーライドしないと、コレクションで予期しない動作を引き起こします。",
+          "choices": [
+            {
+              "id": "ch07_06_q2_a",
+              "text": "toString()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_06_q2_b",
+              "text": "hashCode()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_06_q2_c",
+              "text": "compareTo()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_06_q2_d",
+              "text": "clone()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_06_q3",
+          "lessonId": "ch07_06",
+          "type": "fourChoice",
+          "question": "toString()をオーバーライドしていないクラスのオブジェクトをprintlnした場合、何が表示されますか？",
+          "code": null,
+          "explanation": "ObjectクラスのデフォルトのtoString()は「クラス名@ハッシュコードの16進数表現」を返します。例えばMyClass@1a2b3c4dのような文字列です。有意義な情報を表示するにはtoString()のオーバーライドが必要です。",
+          "choices": [
+            {
+              "id": "ch07_06_q3_a",
+              "text": "null",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_06_q3_b",
+              "text": "クラス名@ハッシュコード",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_06_q3_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_06_q3_d",
+              "text": "空文字",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch07_07",
+      "courseId": "ch07",
+      "title": "パッケージとfinal",
+      "summary": "コードの整理と変更禁止の仕組み",
+      "estimatedMinutes": 8,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・パッケージでクラスを整理・名前の衝突を回避\n・import文の書き方と注意点\n・finalキーワードの3つの使い方（変数・メソッド・クラス）\n\nプロジェクトが大きくなったときに必須の知識です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "code",
+          "title": "パッケージとimport",
+          "body": "パッケージでクラスを分類し、importで他パッケージのクラスを使います。",
+          "code": "// パッケージ宣言（ファイルの先頭に記述）\npackage com.example.model;\n\n// import文（他のパッケージのクラスを使う）\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.time.LocalDate; // 個別import\n// import java.util.*;      // ワイルドカードimport（全クラス）\n\npublic class User {\n    private String name;\n    private List<String> roles = new ArrayList<>();\n    private LocalDate createdAt = LocalDate.now();\n}\n\n// パッケージの命名規則:\n// ドメイン名を逆にした形式が慣例\n// com.example.app\n// jp.co.company.project\n\n// java.lang パッケージのクラスはimport不要\n// String, Integer, System, Math 等\n\n// 完全修飾名（import不要だがコードが長くなる）\njava.util.ArrayList<String> list = new java.util.ArrayList<>();",
+          "note": "java.langパッケージ（String, Math, Integer等）は自動的にimportされます。import文を書く必要はありません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "tip",
+          "title": "finalの3つの使い方",
+          "body": "finalキーワードは場所によって意味が異なります。\n\n| 対象 | 意味 | 効果 |\n|---|---|---|\n| final変数 | 再代入禁止 | 値を一度だけ設定 |\n| finalメソッド | オーバーライド禁止 | 子クラスで上書きできない |\n| finalクラス | 継承禁止 | 子クラスを作れない（例: String） |\n\nStringクラスがfinalである理由: セキュリティと不変性を保証するためです。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "code",
+          "title": "finalキーワード",
+          "body": "finalは「変更禁止」を意味する修飾子です。",
+          "code": "// 1. final変数: 再代入不可\nfinal int MAX = 100;\n// MAX = 200; // コンパイルエラー！\n\n// final参照型: 参照の再代入は不可、中身の変更はOK\nfinal List<String> list = new ArrayList<>();\nlist.add(\"OK\");          // OK! 中身の変更は可能\n// list = new ArrayList<>(); // コンパイルエラー！ 参照の再代入不可\n\n// 2. finalメソッド: オーバーライド不可\nclass Parent {\n    final void important() {\n        System.out.println(\"変更禁止のメソッド\");\n    }\n}\nclass Child extends Parent {\n    // @Override\n    // void important() {} // コンパイルエラー！\n}\n\n// 3. finalクラス: 継承不可\nfinal class Immutable {\n    private final int value;\n    Immutable(int value) {\n        this.value = value;\n    }\n    int getValue() { return value; }\n}\n// class Sub extends Immutable {} // コンパイルエラー！\n\n// 代表的なfinalクラス: String, Integer, LocalDate",
+          "note": "Stringクラスがfinalなのは、セキュリティと不変性を保証するためです。サブクラスで equals() や hashCode() を変更されると問題になります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・package: クラスの分類整理（フォルダ構造に対応）\n・import: 他パッケージのクラスを使う宣言\n・java.langは自動import（String, Mathなど）\n| 対象 | 説明 |\n|---|---|\n| final変数 | 再代入不可（参照型は中身の変更は可能） |\n| finalメソッド | オーバーライド不可 |\n| finalクラス | 継承不可（String, Integer等） |",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_07_q1",
+          "lessonId": "ch07_07",
+          "type": "fourChoice",
+          "question": "import文なしで使えるクラスはどれですか？",
+          "code": null,
+          "explanation": "java.langパッケージのクラスは自動的にimportされるため、明示的なimport文は不要です。String, Math, System, Integer, ObjectなどはすべてJava.langに属しています。ArrayListはjava.utilパッケージなのでimportが必要です。",
+          "choices": [
+            {
+              "id": "ch07_07_q1_a",
+              "text": "ArrayList",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_07_q1_b",
+              "text": "Scanner",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_07_q1_c",
+              "text": "String",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_07_q1_d",
+              "text": "LocalDate",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_07_q2",
+          "lessonId": "ch07_07",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "final int x = 10;\nfinal List<String> list = new ArrayList<>();\nlist.add(\"hello\");\nx = 20;",
+          "explanation": "xはfinal変数なので再代入できません。4行目のx = 20がコンパイルエラーです。一方、3行目のlist.add(\"hello\")はリストの中身の変更であり、参照の再代入ではないのでOKです。",
+          "choices": [
+            {
+              "id": "ch07_07_q2_a",
+              "text": "1行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_07_q2_b",
+              "text": "3行目",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_07_q2_c",
+              "text": "4行目",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_07_q2_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_07_q3",
+          "lessonId": "ch07_07",
+          "type": "fourChoice",
+          "question": "finalクラスの特徴として正しいものはどれですか？",
+          "code": null,
+          "explanation": "finalクラスは他のクラスから継承（extends）できません。Stringクラスがfinalなのは、不変性とセキュリティを保証するためです。finalクラスのメソッドは暗黙的にfinalです。",
+          "choices": [
+            {
+              "id": "ch07_07_q3_a",
+              "text": "インスタンスを作成できない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_07_q3_b",
+              "text": "他のクラスから継承できない",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_07_q3_c",
+              "text": "メソッドを持てない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_07_q3_d",
+              "text": "フィールドを持てない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

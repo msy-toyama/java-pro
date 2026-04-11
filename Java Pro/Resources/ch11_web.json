@@ -1,0 +1,1129 @@
+{
+  "courseId": "ch11",
+  "lessons": [
+    {
+      "id": "ch11_01",
+      "courseId": "ch11",
+      "title": "HTTP通信の基本",
+      "summary": "Web通信の仕組みを理解する",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・HTTP通信の仕組み（リクエストとレスポンス）\n・HTTPメソッド（GET, POST, PUT, DELETE）の違い\n・**ステータスコード**（200, 404, 500等）の意味\n\nWeb開発の土台となるHTTP通信の基礎を理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "rule",
+          "title": "Webアプリケーションの仕組み",
+          "body": "Webの通信は次の流れで行われます。\n\n1. クライアント（ブラウザ）がサーバーにリクエストを送る\n2. サーバーがリクエストを処理する\n3. サーバーがレスポンスを返す\n4. ブラウザがレスポンスを表示する\n\nこの通信プロトコルがHTTP（HyperText Transfer Protocol）です。\n\nURLの構造:\n  https://example.com:8080/api/users?name=taro\n  ├─ プロトコル (https)\n  ├─ ホスト名 (example.com)\n  ├─ ポート番号 (8080)\n  ├─ パス (/api/users)\n  └─ クエリパラメータ (name=taro)",
+          "code": null,
+          "note": "HTTPはステートレス（状態を保持しない）プロトコルです。リクエストとレスポンスは1回ずつで完結し、前回の通信内容を覚えていません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "rule",
+          "title": "HTTPメソッド",
+          "body": "HTTPリクエストには「何をしたいか」を示すメソッドがあります。\n\n| メソッド | 用途 | 備考 |\n|---|---|---|\n| GET | データの取得 | パラメータはURLに含まれる（?name=taro&age=25） |\n| POST | データの送信（フォーム送信、ログイン） | パラメータはリクエストボディに含まれる。大量データ送信可 |\n| PUT | データの更新（既存リソースの書き換え） | REST APIで使用 |\n| DELETE | データの削除 | REST APIで使用 |\n| PATCH | データの部分更新 | REST APIで使用 |\n\nGETとPOSTがWebアプリの基本。PUT/DELETE/PATCHはREST APIで使います。\n\nGET vs POST の使い分け:\n・GET: 取得系。ブックマーク可能。履歴に残る\n・POST: 送信系。パスワードなど機密データはPOSTで送る",
+          "code": null,
+          "note": "GETリクエストのパラメータはURLに露出するので、パスワード等の機密情報は絶対にGETで送らないでください。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "rule",
+          "title": "HTTPステータスコード",
+          "body": "サーバーからのレスポンスには「処理結果」を示す**ステータスコード**が含まれます。\n\n【2xx 成功】\n| コード | 説明 |\n|---|---|\n| 200 OK | 正常に処理完了 |\n| 201 Created | 新規リソース作成成功 |\n| 204 No Content | 処理成功（返すデータなし） |\n\n【3xx リダイレクト】\n| コード | 説明 |\n|---|---|\n| 301 Moved Permanently | 恒久的な移転 |\n| 302 Found | 一時的なリダイレクト |\n\n【4xx クライアントエラー】\n| コード | 説明 |\n|---|---|\n| 400 Bad Request | リクエストが不正 |\n| 401 Unauthorized | 認証が必要 |\n| 403 Forbidden | アクセス禁止 |\n| 404 Not Found | リソースが見つからない |\n| 405 Method Not Allowed | 許可されていないHTTPメソッド |\n\n【5xx サーバーエラー】\n| コード | 説明 |\n|---|---|\n| 500 Internal Server Error | サーバー内部エラー |\n| 503 Service Unavailable | サービス一時停止 |",
+          "code": null,
+          "note": "404は「ページが見つからない」、500は「サーバーのバグ」と覚えましょう。開発中に500エラーが出たらサーバーのログを確認します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "code",
+          "title": "JavaでHTTP通信（HttpClient）",
+          "body": "Java 11以降、標準ライブラリのHttpClientでHTTP通信ができます。",
+          "code": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\n// GETリクエスト\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://api.example.com/users\"))\n    .GET()\n    .build();\n\nHttpResponse<String> response =\n    client.send(request, HttpResponse.BodyHandlers.ofString());\n\nSystem.out.println(\"ステータス: \" + response.statusCode());\nSystem.out.println(\"ボディ: \" + response.body());\n\n// POSTリクエスト\nHttpRequest postReq = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://api.example.com/users\"))\n    .header(\"Content-Type\", \"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(\n        \"{\\\"name\\\": \\\"太郎\\\", \\\"age\\\": 25}\"))\n    .build();\n\nHttpResponse<String> postRes =\n    client.send(postReq, HttpResponse.BodyHandlers.ofString());",
+          "note": "HttpClientはJava 11で正式導入されました。それ以前はHttpURLConnectionやApache HttpClientが使われていました。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "tip",
+          "title": "HTTPメソッドとCRUDの対応関係",
+          "body": "HTTPメソッドは「何をしたいか」を表します。\n\n| HTTPメソッド | 目的 | CRUD | 例 |\n|---|---|---|---|\n| GET | 取得する | Read | ユーザー情報を取得 |\n| POST | 作成する | Create | 新規ユーザー登録 |\n| PUT | 更新する | Update | プロフィール更新 |\n| DELETE | 削除する | Delete | アカウント削除 |\n\nGETはURL欄に直接入力してもアクセスできますが、POSTはフォーム送信やAPIから使います。",
+          "code": null,
+          "note": "**ステータスコード** 2xx=成功、3xx=リダイレクト、4xx=クライアントエラー、5xx=サーバーエラー",
+          "order": 6
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・Web通信はリクエスト→レスポンスの1往復が基本\n・HTTPメソッド: GET(取得), POST(送信), PUT(更新), DELETE(削除)\n・GETのパラメータはURLに露出、POSTはボディに格納\n・**ステータスコード**: 2xx=成功, 4xx=クライアントエラー, 5xx=サーバーエラー\n・Java 11のHttpClientで標準ライブラリだけでHTTP通信可能\n・HTTPはステートレス（状態を保持しない）プロトコル",
+          "code": null,
+          "note": null,
+          "order": 7
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_01_q1",
+          "lessonId": "ch11_01",
+          "type": "fourChoice",
+          "question": "ユーザーのログインフォームでパスワードを送信する場合、適切なHTTPメソッドはどれですか？",
+          "code": "@WebServlet(\"/hello\")\npublic class HelloServlet extends HttpServlet {\n    protected void doGet(HttpServletRequest req,\n            HttpServletResponse resp) {\n        resp.getWriter().println(\"Hello!\");\n    }\n}",
+          "explanation": "パスワードなどの機密情報はPOSTメソッドで送信します。GETメソッドではパラメータがURLに含まれるため、ブラウザの履歴やサーバーログにパスワードが残ってしまう危険があります。POSTではデータがリクエストボディに格納されるため、URLには表示されません。",
+          "choices": [
+            {
+              "id": "ch11_01_q1_a",
+              "text": "GET",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_01_q1_b",
+              "text": "POST",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_01_q1_c",
+              "text": "PUT",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_01_q1_d",
+              "text": "DELETE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_01_q2",
+          "lessonId": "ch11_01",
+          "type": "fourChoice",
+          "question": "HTTPステータスコード 404 の意味はどれですか？",
+          "code": "HttpSession session = request.getSession();\nsession.setAttribute(\"user\", userName);\nString user = (String) session.getAttribute(\"user\");",
+          "explanation": "404 Not Foundは、リクエストされたリソース（ページやAPI）がサーバーに存在しないことを示します。URLの入力ミスや、削除されたページにアクセスした場合に返されます。500はサーバー内部エラー、401は認証エラー、301はリダイレクトです。",
+          "choices": [
+            {
+              "id": "ch11_01_q2_a",
+              "text": "サーバー内部エラー",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_01_q2_b",
+              "text": "認証が必要",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_01_q2_c",
+              "text": "リソースが見つからない",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_01_q2_d",
+              "text": "リクエストが不正",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_01_q3",
+          "lessonId": "ch11_01",
+          "type": "reorder",
+          "question": "Web通信の流れを正しい順番に並べ替えてください。",
+          "code": "<%@ page contentType=\"text/html\" %>\n<html>\n<body>\n  <h1><%= request.getParameter(\"name\") %></h1>\n</body>\n</html>",
+          "explanation": "Web通信はクライアント（ブラウザ）がリクエストを送信し、サーバーが受信・処理し、レスポンスを返し、最後にブラウザが表示するという流れです。HTTPはこの1往復で完結するステートレスなプロトコルです。",
+          "choices": [
+            {
+              "id": "ch11_01_q3_a",
+              "text": "ブラウザがHTTPリクエストを送信",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_01_q3_b",
+              "text": "サーバーがリクエストを処理",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_01_q3_c",
+              "text": "サーバーがHTTPレスポンスを返す",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_01_q3_d",
+              "text": "ブラウザがレスポンスを表示",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch11_01_q3_a",
+            "ch11_01_q3_b",
+            "ch11_01_q3_c",
+            "ch11_01_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_02",
+      "courseId": "ch11",
+      "title": "サーブレットの基礎",
+      "summary": "JavaでWebリクエストを処理する",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**サーブレット**の基本構造（HttpServlet）\n・doGet()とdoPost()メソッドの実装\n・リクエストパラメータの取得方法\n\nサーブレットはJava Webアプリケーションの基盤技術です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "rule",
+          "title": "サーブレットの仕組み",
+          "body": "**サーブレット**の動作フロー:\n\n1. クライアントがHTTPリクエストを送信\n2. Webコンテナ（Tomcat等）がリクエストを受信\n3. 適切なサーブレットクラスのメソッドを呼び出し\n   → GETリクエスト → doGet() メソッド\n   → POSTリクエスト → doPost() メソッド\n4. サーブレットが処理を行い、レスポンスを生成\n5. Webコンテナがレスポンスをクライアントに送信\n\n主要な構成要素:\n| 項目 | 説明 |\n|---|---|\n| HttpServlet | サーブレットの基底クラス。これを継承する |\n| HttpServletRequest | リクエスト情報（パラメータ、ヘッダー等） |\n| HttpServletResponse | レスポンス生成（HTML出力、ステータスコード等） |\n| Webコンテナ | サーブレットの実行環境（Apache Tomcat, Jetty等） |",
+          "code": null,
+          "note": "Webコンテナ（**サーブレット**コンテナ）はサーブレットのライフサイクル管理、スレッド管理、リクエストのルーティングを行います。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "code",
+          "title": "サーブレットの基本実装",
+          "body": "HttpServletを継承し、doGet/doPostメソッドをオーバーライドします。",
+          "code": "import jakarta.servlet.*;\nimport jakarta.servlet.http.*;\nimport jakarta.servlet.annotation.WebServlet;\nimport java.io.*;\n\n@WebServlet(\"/hello\")  // URLパターンの指定\n// HelloServletクラスの定義\npublic class HelloServlet extends HttpServlet {\n\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // レスポンスの設定\n        resp.setContentType(\"text/html; charset=UTF-8\");\n\n        // リクエストパラメータの取得\n        // 変数の宣言と初期化\n        String name = req.getParameter(\"name\");\n        // 条件分岐\n        if (name == null) name = \"ゲスト\";\n\n        // HTML出力\n        PrintWriter out = resp.getWriter();\n        out.println(\"<html><body>\");\n        out.println(\"<h1>こんにちは、\" + name + \"さん！</h1>\");\n        out.println(\"</body></html>\");\n    }\n}\n// アクセス: http://localhost:8080/app/hello?name=太郎",
+          "note": "@WebServletアノテーションでURLパターンを指定します。以前はweb.xmlに記述していましたが、Java EE 6以降はアノテーションが主流です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "tip",
+          "title": "サーブレットのライフサイクル",
+          "body": "**サーブレット**の生存期間を理解しましょう。\n\n| タイミング | 呼ばれるメソッド | 回数 |\n|---|---|---|\n| サーブレット初期化時 | init() | 1回だけ |\n| リクエストのたび | doGet()/doPost() | 毎回 |\n| サーブレット破棄時 | destroy() | 1回だけ |\n\nサーブレットのインスタンスは通常1つだけ作られ、複数リクエストで共有されます。",
+          "code": null,
+          "note": "そのため、**サーブレット**のフィールドにリクエスト固有のデータを保存してはいけません（スレッドセーフでない）。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "code",
+          "title": "フォームデータの処理",
+          "body": "HTMLフォームから送信されたデータを**サーブレット**で受け取る例です。",
+          "code": "// HTMLフォーム（login.html）\n// <form action=\"/app/login\" method=\"POST\">\n//   <input type=\"text\" name=\"username\" />\n//   <input type=\"password\" name=\"password\" />\n//   <button type=\"submit\">ログイン</button>\n// </form>\n\n@WebServlet(\"/login\")\npublic class LoginServlet extends HttpServlet {\n\n    @Override\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        req.setCharacterEncoding(\"UTF-8\");\n\n        String username = req.getParameter(\"username\");\n        String password = req.getParameter(\"password\");\n\n        resp.setContentType(\"text/html; charset=UTF-8\");\n        PrintWriter out = resp.getWriter();\n\n        if (\"admin\".equals(username) && \"pass123\".equals(password)) {\n            out.println(\"<h1>ログイン成功</h1>\");\n        } else {\n            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);\n            out.println(\"<h1>ログイン失敗</h1>\");\n        }\n    }\n}",
+          "note": "日本語の文字化けを防ぐために、req.setCharacterEncoding(\"UTF-8\") を最初に呼び出します。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**サーブレット**はHttpServletを継承して作成する\n・doGet()でGETリクエスト、doPost()でPOSTリクエストを処理\n・@WebServletアノテーションでURLパターンを指定\n・getParameter()でリクエストパラメータを取得\n・setContentType()でレスポンスのMIMEタイプを設定\n・Webコンテナ（Tomcat等）がサーブレットの実行環境を提供",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_02_q1",
+          "lessonId": "ch11_02",
+          "type": "errorFind",
+          "question": "以下のサーブレットコードのエラーを見つけてください。\nこのコードにはコンパイルエラーがあります。原因はどれですか？",
+          "code": "public class HelloServlet extends HttpServlet {\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse res) {\n        String name = req.getParameter(\"name\");\n        res.setContentType(\"text/html; charset=UTF-8\");\n        PrintWriter out = res.getWriter();\n        out.println(\"Hello, \" + name);\n    }\n}",
+          "explanation": "res.getWriter()はIOExceptionをスローする可能性がありますが、throws宣言やtry-catchがありません。正しくは `protected void doPost(...) throws ServletException, IOException` と宣言する必要があります。これはHttpServletのdoPostメソッドのシグネチャと一致させるのにも必要です。",
+          "choices": [
+            {
+              "id": "ch11_02_q1_a",
+              "text": "throws IOExceptionがなく、getWriter()の例外処理がない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_02_q1_b",
+              "text": "getParameterの引数が間違っている",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_02_q1_c",
+              "text": "setContentTypeの形式が間違っている",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_02_q1_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_02_q2",
+          "lessonId": "ch11_02",
+          "type": "fillBlank",
+          "question": "リクエストパラメータ「name」の値を取得するコードの空欄を埋めてください。\nString name = req._____(\"name\");",
+          "code": "RequestDispatcher rd = request\n    .getRequestDispatcher(\"/result.jsp\");\nrd.forward(request, response);",
+          "explanation": "getParameter()メソッドでリクエストパラメータを取得します。GETの場合はURLのクエリ文字列から、POSTの場合はリクエストボディから値を取得します。パラメータが存在しない場合はnullが返されます。",
+          "choices": [
+            {
+              "id": "ch11_02_q2_a",
+              "text": "getParameter",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_02_q2_b",
+              "text": "getAttribute",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_02_q2_c",
+              "text": "getValue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_02_q2_d",
+              "text": "getInput",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_02_q3",
+          "lessonId": "ch11_02",
+          "type": "fourChoice",
+          "question": "サーブレットの実行環境を提供するソフトウェアはどれですか？",
+          "code": "response.sendRedirect(\"/login\");",
+          "explanation": "Apache Tomcat はJavaのWebコンテナ（サーブレットコンテナ）で、サーブレットの実行環境を提供します。サーブレットのライフサイクル管理、リクエストのルーティング、スレッド管理などを行います。MySQLはDB、Mavenはビルドツール、Gitはバージョン管理です。",
+          "choices": [
+            {
+              "id": "ch11_02_q3_a",
+              "text": "MySQL",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_02_q3_b",
+              "text": "Apache Tomcat",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_02_q3_c",
+              "text": "Maven",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_02_q3_d",
+              "text": "Git",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_03",
+      "courseId": "ch11",
+      "title": "セッション管理とCookie",
+      "summary": "ステートレスなHTTPで状態を保持する",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・HTTPのステートレス性とセッションの必要性\n・HttpSessionでログイン状態を管理する方法\n・Cookieの仕組みと使い方\n\nユーザーを識別し状態を保持する仕組みを学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "rule",
+          "title": "CookieとSessionの違い",
+          "body": "| 項目 | Cookie | Session |\n|---|---|---|\n| 保存場所 | クライアント側（ブラウザ） | サーバー側 |\n| データ量 | 約4KBまで | 大きなデータも可 |\n| セキュリティ | ユーザーが削除・無効化できる | データがクライアントに渡らない |\n| 有効期限 | 設定による | タイムアウトで自動削除 |\n| 識別方法 | − | セッションIDをCookieで送受信 |\n\n仕組み:\n  1. 初回アクセス時、サーバーがセッションIDを発行\n  2. セッションIDをCookieでブラウザに送る\n  3. 次回アクセス時、ブラウザがセッションIDを送り返す\n  4. サーバーがセッションIDで該当ユーザーのデータを取得",
+          "code": null,
+          "note": "セッションの本体はサーバー上にあり、CookieにはセッションIDだけが保存されます。これが「HTTPセッション」の仕組みです。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "code",
+          "title": "HttpSessionの使い方",
+          "body": "**サーブレット**でセッションを使ってログイン状態を管理する例です。",
+          "code": "@WebServlet(\"/login\")\n// LoginServletクラスの定義\npublic class LoginServlet extends HttpServlet {\n    @Override\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // 変数の宣言と初期化\n        String user = req.getParameter(\"username\");\n        String pass = req.getParameter(\"password\");\n\n        // 条件分岐\n        if (authenticate(user, pass)) {\n            // セッションを取得（なければ新規作成）\n            HttpSession session = req.getSession();\n            session.setAttribute(\"loginUser\", user);\n            session.setMaxInactiveInterval(1800); // 30分\n            resp.sendRedirect(\"/app/mypage\");\n        } else {\n            resp.sendRedirect(\"/app/login?error=true\");\n        }\n    }\n}\n@WebServlet(\"/mypage\")\n// MyPageServletクラスの定義\npublic class MyPageServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        HttpSession session = req.getSession(false); // 既存セッションのみ\n        if (session == null || session.getAttribute(\"loginUser\") == null) {\n            resp.sendRedirect(\"/app/login\"); // 未ログイン→リダイレクト\n            return;\n        }\n\n        String user = (String) session.getAttribute(\"loginUser\");\n        resp.setContentType(\"text/html; charset=UTF-8\");\n        resp.getWriter().println(\"<h1>ようこそ、\" + user + \"さん</h1>\");\n    }\n}",
+          "note": "getSession(false) は既存セッションがある場合のみ返します。getSession() または getSession(true) はセッションがなければ新規作成します。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "tip",
+          "title": "セッションとCookieの違い",
+          "body": "どちらも状態管理に使いますが、保存場所と用途が異なります。\n\n| 項目 | セッション | Cookie |\n|---|---|---|\n| 保存場所 | サーバー側 | ブラウザ側 |\n| データ量 | 制限なし | 約4KB |\n| セキュリティ | 安全 | クライアント側で改ざん可能 |\n| 有効期限 | サーバー設定 | 期限を自由に設定 |\n\nログイン状態はセッション、「次回ログインを省略」はCookieがよく使われます。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "code",
+          "title": "Cookieの操作",
+          "body": "Cookieを**サーブレット**から直接操作する方法です。",
+          "code": "// Cookieの設定\nCookie cookie = new Cookie(\"theme\", \"dark\");\ncookie.setMaxAge(60 * 60 * 24 * 30); // 30日間有効\ncookie.setPath(\"/\");                  // 全パスで有効\ncookie.setHttpOnly(true);              // JavaScriptからアクセス不可\nresp.addCookie(cookie);\n\n// Cookieの取得\nCookie[] cookies = req.getCookies();\n// 条件分岐\nif (cookies != null) {\n    // 拡張for文（コレクションの全要素を順番に処理）\n    for (Cookie c : cookies) {\n        if (\"theme\".equals(c.getName())) {\n            // 変数の宣言と初期化\n            String theme = c.getValue(); // \"dark\"\n        }\n    }\n}\n\n// Cookieの削除（MaxAge=0で即時削除）\nCookie del = new Cookie(\"theme\", \"\");\ndel.setMaxAge(0);\nresp.addCookie(del);",
+          "note": "setHttpOnly(true)はXSS攻撃対策に重要です。JavaScriptからCookieを読み取れなくなり、セキュリティが向上します。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・HTTPはステートレス → Session/Cookieで状態を保持\n・Cookie: クライアント側に小さなデータを保存（4KB制限）\n・Session: サーバー側にデータを保存（セキュリティが高い）\n・セッションIDがCookieに保存され、サーバーのデータと紐づく\n・getSession() でセッション取得、setAttribute/getAttributeでデータ操作\n・setHttpOnly(true) でXSS対策\n・セッションタイムアウトで自動的に無効化される",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_03_q1",
+          "lessonId": "ch11_03",
+          "type": "fourChoice",
+          "question": "HttpSessionのデータが保存される場所はどこですか？",
+          "code": "Cookie cookie = new Cookie(\"lang\", \"ja\");\ncookie.setMaxAge(3600);\nresponse.addCookie(cookie);",
+          "explanation": "HttpSessionのデータはサーバーのメモリ上に保存されます。クライアント（ブラウザ）にはセッションを識別するためのセッションIDだけがCookieとして送られます。これによりセキュリティが確保され、パスワードや個人情報などの機密データがクライアントに渡ることがありません。",
+          "choices": [
+            {
+              "id": "ch11_03_q1_a",
+              "text": "ブラウザのCookie",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_03_q1_b",
+              "text": "サーバーのメモリ",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_03_q1_c",
+              "text": "データベース",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_03_q1_d",
+              "text": "ブラウザのローカルストレージ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_03_q2",
+          "lessonId": "ch11_03",
+          "type": "outputPredict",
+          "question": "以下のサーブレットコードで、初回アクセス時にブラウザに表示される内容を予測してください。",
+          "code": "protected void doGet(HttpServletRequest req,\n        HttpServletResponse res) throws ... {\n    HttpSession session = req.getSession(false);\n    String msg;\n    if (session == null) {\n        msg = \"Guest\";\n    } else {\n        msg = (String) session.getAttribute(\"user\");\n    }\n    res.getWriter().println(msg);\n}",
+          "explanation": "getSession(false)は既存セッションがある場合のみ返し、なければnullを返します。初回アクセス時はセッションが存在しないためsession==nullとなり、\"Guest\"が表示されます。getSession(true)やgetSession()との違いを理解しましょう。",
+          "choices": [
+            {
+              "id": "ch11_03_q2_a",
+              "text": "Guest",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_03_q2_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_03_q2_c",
+              "text": "NullPointerExceptionが発生",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_03_q2_d",
+              "text": "空白が表示される",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_03_q3",
+          "lessonId": "ch11_03",
+          "type": "fourChoice",
+          "question": "CookieのsetHttpOnly(true)の効果として正しいものはどれですか？",
+          "code": "String name = request.getParameter(\"name\");\nif (name == null || name.isEmpty()) {\n    response.sendError(400, \"名前は必須です\");\n}",
+          "explanation": "setHttpOnly(true) を設定すると、JavaScriptからそのCookieにアクセスできなくなります。これはXSS（クロスサイトスクリプティング）攻撃対策として重要です。攻撃者がJavaScriptで document.cookie を読み取ってセッションIDを盗むことを防ぎます。",
+          "choices": [
+            {
+              "id": "ch11_03_q3_a",
+              "text": "HTTPS通信でのみCookieが送信される",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_03_q3_b",
+              "text": "JavaScriptからCookieにアクセスできなくなる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_03_q3_c",
+              "text": "Cookieが暗号化される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_03_q3_d",
+              "text": "Cookieの有効期限が無限になる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch11_03_q4",
+          "lessonId": "ch11_03",
+          "type": "codeComplete",
+          "question": "HttpServletのGETリクエスト処理を完成させてください。",
+          "code": "@WebServlet(\"/hello\")\npublic class HelloServlet extends HttpServlet {\n    protected void doGet(HttpServletRequest req,\n            HttpServletResponse resp) {\n        resp.getWriter().println(\"Hello!\");\n    }\n}",
+          "explanation": "HttpServletをextendsで継承し、doGet()をオーバーライドしてGETリクエストを処理します。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class MyServlet __BLANK_1__ HttpServlet {\n    @Override\n    protected void __BLANK_2__(HttpServletRequest req, HttpServletResponse resp) {\n        resp.getWriter().println(\"Hello\");\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①継承",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "extends",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "implements",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "abstract",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②メソッド",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "doGet",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "doPost",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "service",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch11_04",
+      "courseId": "ch11",
+      "title": "JSPとMVCパターン",
+      "summary": "画面表示の分離とアーキテクチャ",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・JSP（JavaServer Pages）でHTMLに動的な値を埋め込む\n・MVCパターン（Model-View-Controller）の概念\n・**サーブレット**とJSPの役割分担\n\n保守性の高いWebアプリケーションの設計パターンです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "code",
+          "title": "JSPの基本構文",
+          "body": "JSPファイル（.jsp）はHTML内にJavaコードを埋め込めるテンプレートエンジンです。",
+          "code": "<%-- userList.jsp --%>\n<%@ page contentType=\"text/html; charset=UTF-8\" %>\n<%@ page import=\"java.util.List\" %>\n<html>\n<body>\n  <h1>ユーザー一覧</h1>\n\n  <%-- スクリプトレット: Javaコードの埋め込み --%>\n  <% List<String> users = (List<String>) request.getAttribute(\"users\"); %>\n\n  <table border=\"1\">\n    <tr><th>名前</th></tr>\n    <% for (String user : users) { %>\n      <tr>\n        <%-- 式（Expression）: 値の出力 --%>\n        <td><%= user %></td>\n      </tr>\n    <% } %>\n  </table>\n\n  <%-- EL式（Expression Language）: より簡潔な記法 --%>\n  <p>ユーザー数: ${users.size()}</p>\n  <p>リクエストパラメータ: ${param.name}</p>\n</body>\n</html>",
+          "note": "現在のJSP開発ではスクリプトレット(<% %>)は推奨されず、EL式(${...})とJSTLタグライブラリの使用が推奨されています。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "tip",
+          "title": "MVCパターンの役割分担",
+          "body": "MVCはWebアプリの基本的な設計パターンです。\n\n| 要素 | 役割 | Java Webでの実装 |\n|---|---|---|\n| Model（M） | データと業務ロジック | JavaBeans, Service |\n| View（V） | 画面表示 | JSP |\n| Controller（C） | リクエスト受付・処理の振り分け | Servlet |\n\n責任を分離することで、画面だけの変更・ロジックだけの変更が容易になります。",
+          "code": null,
+          "note": "Spring MVCではこのパターンがさらに発展した形で使われます（Chapter 38参照）。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "rule",
+          "title": "MVCパターン",
+          "body": "MVC（Model-View-Controller）はWebアプリケーションの設計パターンです。\n\n| 要素 | 役割 | Java実装例 |\n|---|---|---|\n| Model | データとビジネスロジック | POJO、DAO、Service（UserDAO, OrderService） |\n| View | 画面表示 | JSP、Thymeleaf、HTMLテンプレート |\n| Controller | リクエスト処理の制御 | サーブレット、@Controller |\n\nMVCの利点:\n1. 責務の分離: 画面・ロジック・制御が独立\n2. 保守性: 画面変更がロジックに影響しない\n3. テスタビリティ: Modelを単体テスト可能\n4. チーム開発: フロント担当とバック担当で並行作業",
+          "code": null,
+          "note": "Spring BootではMVCパターンが標準的に適用されます。@Controllerが**サーブレット**の役割を担い、Thymeleaf等がJSPの代わりにVの役割を果たします。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "code",
+          "title": "サーブレット+JSPによるMVC実装",
+          "body": "**サーブレット**（Controller）からJSP（View）にデータを渡すパターンです。",
+          "code": "// Controller: UserListServlet.java\n@WebServlet(\"/users\")\npublic class UserListServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // Model: データの取得\n        List<String> users = List.of(\"山田太郎\", \"佐藤花子\", \"鈴木一郎\");\n\n        // ModelデータをRequestスコープにセット\n        req.setAttribute(\"users\", users);\n        req.setAttribute(\"title\", \"ユーザー一覧\");\n\n        // View（JSP）にフォワード\n        RequestDispatcher rd =\n            req.getRequestDispatcher(\"/WEB-INF/views/userList.jsp\");\n        rd.forward(req, resp);\n    }\n}\n// フォワード: サーバー内部でJSPに処理を委譲（URLは変わらない）\n// リダイレクト: クライアントに別URLへの再リクエストを指示（URLが変わる）",
+          "note": "JSPファイルは /WEB-INF/ 配下に置くのがベストプラクティスです。WEB-INF はブラウザから直接アクセスできないため、必ず**サーブレット**を経由することを強制できます。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・JSPはHTML内にJavaコードを埋め込めるテンプレート\n・EL式（${...}）でスクリプトレットを置き換えるのが現在の推奨\n・MVCパターン: Model(データ) + View(画面) + Controller(制御)\n・**サーブレット**(C)からJSP(V)へはForwardでデータ転送\n・JSPはWEB-INF配下に配置して直接アクセスを防ぐ\n・フォワードとリダイレクトの違いを理解する",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_04_q1",
+          "lessonId": "ch11_04",
+          "type": "fourChoice",
+          "question": "MVCパターンにおいて、サーブレットが担当する役割はどれですか？",
+          "code": "HttpSession session = request.getSession();\nsession.setAttribute(\"user\", userName);\nString user = (String) session.getAttribute(\"user\");",
+          "explanation": "サーブレットはMVCのController（コントローラ）を担当します。リクエストの受付、ビジネスロジック（Model）の呼び出し、画面（View=JSP）への転送を制御します。ModelはPOJOやDAO、ViewはJSPやテンプレートが担当します。",
+          "choices": [
+            {
+              "id": "ch11_04_q1_a",
+              "text": "Model（データ管理）",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_04_q1_b",
+              "text": "View（画面表示）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_04_q1_c",
+              "text": "Controller（制御）",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_04_q1_d",
+              "text": "Router（ルーティング）",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_04_q2",
+          "lessonId": "ch11_04",
+          "type": "fourChoice",
+          "question": "フォワードとリダイレクトの違いとして正しいものはどれですか？",
+          "code": "<%@ page contentType=\"text/html\" %>\n<html>\n<body>\n  <h1><%= request.getParameter(\"name\") %></h1>\n</body>\n</html>",
+          "explanation": "フォワードはサーバー内部で別のリソース（JSP等）に処理を委譲するため、ブラウザのURLは変わりません。リダイレクトはブラウザに「別のURLにアクセスし直せ」と指示するため、URLが変化します。フォワードではrequestのAttributeを引き継げますが、リダイレクトでは引き継げません。",
+          "choices": [
+            {
+              "id": "ch11_04_q2_a",
+              "text": "フォワードはURLが変わり、リダイレクトは変わらない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_04_q2_b",
+              "text": "フォワードはURLが変わらず、リダイレクトはURLが変わる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_04_q2_c",
+              "text": "フォワードとリダイレクトに違いはない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_04_q2_d",
+              "text": "リダイレクトではPOSTデータを引き継げる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_04_q3",
+          "lessonId": "ch11_04",
+          "type": "fillBlank",
+          "question": "JSPのEL式（Expression Language）で、リクエストの属性「title」の値を表示する記法の空欄を埋めてください。\n_____",
+          "code": "RequestDispatcher rd = request\n    .getRequestDispatcher(\"/result.jsp\");\nrd.forward(request, response);",
+          "explanation": "EL式（Expression Language）では ${属性名} でリクエストスコープの属性値を出力できます。${title} と書くとrequest.getAttribute(\"title\")の値が表示されます。スクリプトレット(<%= ... %>)より簡潔で安全な記法です。",
+          "choices": [
+            {
+              "id": "ch11_04_q3_a",
+              "text": "${title}",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_04_q3_b",
+              "text": "<%= title %>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_04_q3_c",
+              "text": "#{title}",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_04_q3_d",
+              "text": "{{title}}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_05",
+      "courseId": "ch11",
+      "title": "REST APIの基本",
+      "summary": "JSON通信とRESTful設計の概念",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**REST API** の設計原則（リソース指向）\n・JSONフォーマットでのデータ交換\n・CRUDとHTTPメソッドの対応関係\n\n現代のWebアプリの主流であるAPI開発の基本を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "rule",
+          "title": "RESTful設計の原則",
+          "body": "REST（Representational State Transfer）はAPIの設計スタイルです。以下の原則に従います。\n\n1. リソース指向: URLはリソース（名詞）を表す\n   ○ /api/users（ユーザー一覧）\n   ○ /api/users/1（ID:1のユーザー）\n   × /api/getUser?id=1（動詞はNG）\n\n2. HTTPメソッドで操作を表す:\n| HTTPメソッド + パス | 操作 |\n|---|---|\n| GET /api/users | ユーザー一覧取得 |\n| GET /api/users/1 | ID:1のユーザー取得 |\n| POST /api/users | ユーザー新規作成 |\n| PUT /api/users/1 | ID:1のユーザー更新 |\n| DELETE /api/users/1 | ID:1のユーザー削除 |\n\n3. ステートレス: サーバーはセッション状態を保持しない\n   → 認証はトークン（JWT等）をリクエストに含める\n\n4. 適切な**ステータスコード**: 200, 201, 404, 500等を正しく返す",
+          "code": null,
+          "note": "**REST API**はDBのCRUD操作とHTTPメソッドが自然に対応します。POST=Create, GET=Read, PUT=Update, DELETE=Delete。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "code",
+          "title": "JSONの読み書き（Gson/Jackson）",
+          "body": "Javaオブジェクト ↔ JSON の変換は専用ライブラリを使います。",
+          "code": "// User クラス\npublic class User {\n    private int id;\n    private String name;\n    private String email;\n    // getter/setter 省略\n}\n\n// --- Gsonの場合 ---\nimport com.google.gson.Gson;\n\nGson gson = new Gson();\n\n// Java → JSON（シリアライズ）\nUser user = new User(1, \"太郎\", \"taro@example.com\");\nString json = gson.toJson(user);\n// {\"id\":1,\"name\":\"太郎\",\"email\":\"taro@example.com\"}\n\n// JSON → Java（デシリアライズ）\nString jsonStr = \"{\\\"id\\\":2,\\\"name\\\":\\\"花子\\\"}\";\nUser u = gson.fromJson(jsonStr, User.class);\nSystem.out.println(u.getName()); // 花子\n\n// --- Jacksonの場合 ---\nimport com.fasterxml.jackson.databind.ObjectMapper;\n\nObjectMapper mapper = new ObjectMapper();\nString jacksonJson = mapper.writeValueAsString(user); // Java→JSON\nUser u2 = mapper.readValue(jsonStr, User.class);       // JSON→Java",
+          "note": "GsonはGoogleが、JacksonはFasterXMLが開発したJSON変換ライブラリです。Spring BootではJacksonがデフォルトで組み込まれています。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "tip",
+          "title": "RESTful APIの設計ルール",
+          "body": "良い**REST API**の設計には一定のルールがあります。\n\n・URLはリソース（名詞）で表す: /users, /orders\n・動詞はHTTPメソッドで表す: GET /users（一覧取得）、POST /users（新規作成）\n・IDで特定のリソースを指定: GET /users/123\n・レスポンスはJSON形式が主流\n\n「/getUser」「/deleteUser」のようなURLは避けましょう。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "code",
+          "title": "サーブレットでREST API実装",
+          "body": "**サーブレット**でJSON形式の**REST API**を実装する例です。",
+          "code": "@WebServlet(\"/api/users/*\")\n// UserApiServletクラスの定義\npublic class UserApiServlet extends HttpServlet {\n\n    private final Gson gson = new Gson();\n\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        resp.setContentType(\"application/json; charset=UTF-8\");\n\n        // パスからIDを抽出\n        // 変数の宣言と初期化\n        String pathInfo = req.getPathInfo();\n        // 条件分岐\n        if (pathInfo == null || pathInfo.equals(\"/\")) {\n            // GET /api/users → 一覧\n            List<User> users = UserService.findAll();\n            resp.getWriter().write(gson.toJson(users));\n        } else {\n            // GET /api/users/1 → 個別取得\n            int id = Integer.parseInt(pathInfo.substring(1));\n            User user = UserService.findById(id);\n            if (user != null) {\n                resp.getWriter().write(gson.toJson(user));\n            } else {\n                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n                resp.getWriter().write(\"{\\\"error\\\": \\\"User not found\\\"}\");\n            }\n        }\n    }\n    @Override\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse resp)\n            throws ServletException, IOException {\n        User user = gson.fromJson(req.getReader(), User.class);\n        UserService.save(user);\n        resp.setStatus(HttpServletResponse.SC_CREATED); // 201\n        resp.setContentType(\"application/json; charset=UTF-8\");\n        resp.getWriter().write(gson.toJson(user));\n    }\n}",
+          "note": "Spring Bootでは@RestControllerを使うとこのようなコードが大幅に簡略化できます。ch38で学習します。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**REST API**はJSONでデータをやり取りするWeb APIの設計スタイル\n・URLはリソース（名詞）、HTTPメソッドで操作を表現\n・GET=取得, POST=作成, PUT=更新, DELETE=削除\n・Content-Type: application/json でJSON通信\n・Gson / Jackson でJava ↔ JSON 変換\n・適切な**ステータスコード**（200, 201, 404等）を返す\n・Spring Bootではこのパターンをより簡潔に書ける",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_05_q1",
+          "lessonId": "ch11_05",
+          "type": "fourChoice",
+          "question": "RESTful API設計で「ID:5のユーザーを削除する」場合の正しいリクエストはどれですか？",
+          "code": "response.sendRedirect(\"/login\");",
+          "explanation": "REST APIではURLでリソースを指定し、HTTPメソッドで操作を表現します。「/api/users/5」でリソースを特定し、DELETEメソッドで削除を表現します。URLに動詞（deleteUser等）を含めるのはRESTful設計に反します。",
+          "choices": [
+            {
+              "id": "ch11_05_q1_a",
+              "text": "GET /api/deleteUser?id=5",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_05_q1_b",
+              "text": "POST /api/users/5/delete",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_05_q1_c",
+              "text": "DELETE /api/users/5",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_05_q1_d",
+              "text": "GET /api/users/5?action=delete",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_05_q2",
+          "lessonId": "ch11_05",
+          "type": "fourChoice",
+          "question": "新しいリソースの作成に成功した場合、REST APIが返すべきHTTPステータスコードはどれですか？",
+          "code": "Cookie cookie = new Cookie(\"lang\", \"ja\");\ncookie.setMaxAge(3600);\nresponse.addCookie(cookie);",
+          "explanation": "201 Created は新しいリソースが正常に作成されたことを示すステータスコードです。POST /api/users でユーザーを新規作成した場合に返します。200 OKは一般的な成功、204 No Contentはレスポンスボディなしの成功に使います。",
+          "choices": [
+            {
+              "id": "ch11_05_q2_a",
+              "text": "200 OK",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_05_q2_b",
+              "text": "201 Created",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_05_q2_c",
+              "text": "301 Moved Permanently",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_05_q2_d",
+              "text": "204 No Content",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_05_q3",
+          "lessonId": "ch11_05",
+          "type": "outputPredict",
+          "question": "以下のREST APIに GET /api/items?category=book をリクエストしたとき、レスポンスのHTTPステータスコードは何ですか？\n※ service.findByCategory(\"book\")は空のListを返すものとします。",
+          "code": "@GetMapping(\"/api/items\")\npublic ResponseEntity<List<Item>> getItems(\n        @RequestParam String category) {\n    List<Item> items = service.findByCategory(category);\n    if (items.isEmpty()) {\n        return ResponseEntity.noContent().build();\n    }\n    return ResponseEntity.ok(items);\n}",
+          "explanation": "findByCategory(\"book\")が空のListを返すため、items.isEmpty()はtrueとなり、ResponseEntity.noContent().build()が実行されます。noContent()はHTTPステータスコード**204 No Content**を返します。200は成功時、201は作成時、404は未検出時に使います。",
+          "choices": [
+            {
+              "id": "ch11_05_q3_a",
+              "text": "204 No Content",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_05_q3_b",
+              "text": "200 OK",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_05_q3_c",
+              "text": "404 Not Found",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_05_q3_d",
+              "text": "500 Internal Server Error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_06",
+      "courseId": "ch11",
+      "title": "フィルタとWeb設計の実践",
+      "summary": "共通処理の実装とWebアプリの全体設計",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・フィルタ（Filter）で共通処理を一元化\n・リスナー（Listener）でイベント駆動処理\n・Web開発の実践的な設計パターン\n\n規模が大きくなっても保守しやすい設計のコツを学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "code",
+          "title": "Filterの実装",
+          "body": "Filterはリクエストが**サーブレット**に到達する前後に処理を挟む仕組みです。",
+          "code": "import jakarta.servlet.*;\nimport jakarta.servlet.annotation.WebFilter;\nimport jakarta.servlet.http.*;\nimport java.io.IOException;\n\n// 全リクエストに適用するフィルタ\n@WebFilter(\"/*\")\n// EncodingFilterクラスの定義\npublic class EncodingFilter implements Filter {\n\n    @Override\n    public void doFilter(ServletRequest req, ServletResponse resp,\n                         FilterChain chain)\n            throws IOException, ServletException {\n\n        // 前処理: 文字コード設定\n        req.setCharacterEncoding(\"UTF-8\");\n        resp.setCharacterEncoding(\"UTF-8\");\n\n        // 処理時間計測（ログ用）\n        // 変数の宣言と初期化\n        long start = System.currentTimeMillis();\n\n        // 次のフィルタ or サーブレットに処理を委譲\n        chain.doFilter(req, resp);\n\n        // 後処理: 処理時間ログ\n        long elapsed = System.currentTimeMillis() - start;\n        System.out.printf(\"[%s] %s (%dms)%n\",\n            ((HttpServletRequest) req).getMethod(),\n            ((HttpServletRequest) req).getRequestURI(),\n            elapsed);\n    }\n}",
+          "note": "chain.doFilter() を呼ばないとリクエストが**サーブレット**に到達しません。認証フィルタでは、未認証時にchain.doFilter()を呼ばずにリダイレクトすることで、アクセス制御を実現します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "tip",
+          "title": "フィルタの実行順序はweb.xmlの記述順",
+          "body": "複数のフィルタを定義した場合、web.xmlに記述した順番（上から下）に実行されます。\n\nリクエスト: フィルタA → フィルタB → **サーブレット**\nレスポンス: サーブレット → フィルタB → フィルタA\n\nフィルタは「前処理」と「後処理」の両方を実装でき、chain.doFilter()の前後に処理を書きます。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "code",
+          "title": "認証フィルタの実装",
+          "body": "ログイン済みかどうかをフィルタでチェックする例です。",
+          "code": "@WebFilter(\"/app/*\")  // /app/ 配下のパスに適用\n// AuthFilterクラスの定義\npublic class AuthFilter implements Filter {\n\n    // フィルタ不要のパス\n    private static final Set<String> EXCLUDED = Set.of(\n        \"/app/login\", \"/app/register\", \"/app/public\"\n    );\n\n    @Override\n    public void doFilter(ServletRequest req, ServletResponse resp,\n                         FilterChain chain)\n            throws IOException, ServletException {\n\n        HttpServletRequest httpReq = (HttpServletRequest) req;\n        HttpServletResponse httpResp = (HttpServletResponse) resp;\n\n        // 変数の宣言と初期化\n        String path = httpReq.getRequestURI();\n\n        // 除外パスはスキップ\n        // 条件分岐\n        if (EXCLUDED.contains(path)) {\n            chain.doFilter(req, resp);\n            return;\n        }\n\n        // セッションチェック\n        HttpSession session = httpReq.getSession(false);\n        if (session != null && session.getAttribute(\"loginUser\") != null) {\n            chain.doFilter(req, resp); // ログイン済み→通過\n        } else {\n            httpResp.sendRedirect(\"/app/login\"); // 未ログイン→ログイン画面\n        }\n    }\n}",
+          "note": "フィルタは複数定義でき、chain.doFilter()で次のフィルタに処理を渡します。@WebFilterの順序は保証されないため、順序制御が必要な場合はweb.xmlで定義します。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "rule",
+          "title": "Webアプリのプロジェクト構成",
+          "body": "Java Webアプリの標準的なディレクトリ構成（Maven）:\n\nsrc/main/\n├── java/com/example/\n│   ├── servlet/        ← Controller（**サーブレット**）\n│   │   ├── UserListServlet.java\n│   │   └── LoginServlet.java\n│   ├── service/        ← ビジネスロジック\n│   │   └── UserService.java\n│   ├── dao/            ← データアクセス（DB操作）\n│   │   └── UserDAO.java\n│   ├── model/          ← データモデル（POJO）\n│   │   └── User.java\n│   └── filter/         ← フィルタ\n│       └── AuthFilter.java\n├── resources/          ← 設定ファイル\n└── webapp/\n    ├── WEB-INF/\n    │   ├── web.xml     ← デプロイメント記述子\n    │   └── views/      ← JSPファイル\n    └── css/js/images/  ← 静的リソース\n\nこの構成により、MVCパターンに沿った整理ができます。",
+          "code": null,
+          "note": "Spring Bootでは従来のweb.xmlは不要で、WebアプリのセットアップがAutoConfigurationにより自動化されます。ただし、概念理解のためにServlet仕様を知っておくことは非常に重要です。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・Filter はリクエスト/レスポンスの前後に共通処理を挟む仕組み\n・@WebFilter でURLパターンを指定してフィルタを適用\n・chain.doFilter() で次のフィルタまたは**サーブレット**に処理を渡す\n・認証チェック、ログ出力、文字コード設定など横断的な処理に使う\n・chain.doFilter() を呼ばなければリクエストを遮断できる\n・MVC + Filter で保守しやすいWebアプリが構築できる\n・Spring Bootは内部でServlet/Filter技術を使っている",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_06_q1",
+          "lessonId": "ch11_06",
+          "type": "errorFind",
+          "question": "以下の認証フィルタのコードで、認証済みユーザーのリクエストがサーブレットに到達しない問題を見つけてください。",
+          "code": "public class AuthFilter implements Filter {\n    @Override\n    public void doFilter(ServletRequest req,\n            ServletResponse res, FilterChain chain)\n            throws IOException, ServletException {\n        HttpSession session = ((HttpServletRequest) req).getSession(false);\n        if (session != null && session.getAttribute(\"user\") != null) {\n            // 認証済み\n            System.out.println(\"認証 OK\");\n        } else {\n            ((HttpServletResponse) res).sendRedirect(\"/login\");\n        }\n    }\n}",
+          "explanation": "認証済みの場合でも**chain.doFilter(req, res)が呼ばれていない**ため、リクエストがサーブレットに到達しません。chain.doFilter()は次のフィルタやサーブレットにリクエストを渡すメソッドで、呼び忘れるとリクエストが止まります。",
+          "choices": [
+            {
+              "id": "ch11_06_q1_a",
+              "text": "認証済みの分岐でchain.doFilter()が呼ばれていない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_06_q1_b",
+              "text": "sendRedirectの引数が間違っている",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_06_q1_c",
+              "text": "getSession(false)ではなくgetSession(true)が必要",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_06_q1_d",
+              "text": "エラーはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_06_q2",
+          "lessonId": "ch11_06",
+          "type": "fourChoice",
+          "question": "Webアプリのどの層がデータベースアクセスを担当しますか？",
+          "code": "String name = request.getParameter(\"name\");\nif (name == null || name.isEmpty()) {\n    response.sendError(400, \"名前は必須です\");\n}",
+          "explanation": "DAO（Data Access Object）層がデータベースへのアクセスを担当します。SQLの実行、結果の取得、データモデルへの変換などを行います。Service層はビジネスロジック、Controller（サーブレット）はリクエスト処理、View（JSP）は画面表示を担当します。",
+          "choices": [
+            {
+              "id": "ch11_06_q2_a",
+              "text": "Controller（サーブレット）",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_06_q2_b",
+              "text": "View（JSP）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_06_q2_c",
+              "text": "DAO（Data Access Object）",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_06_q2_d",
+              "text": "Filter",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_06_q3",
+          "lessonId": "ch11_06",
+          "type": "reorder",
+          "question": "Webアプリケーションでリクエストが処理される順序を正しく並べ替えてください。",
+          "code": null,
+          "explanation": "リクエストはまずWebコンテナ（Tomcat等）が受信し、次にFilter（認証/ログ等の共通処理）を通過し、サーブレット（Controller）で処理され、JSP（View）で画面が生成されます。この流れがMVC + Filter パターンの基本です。",
+          "choices": [
+            {
+              "id": "ch11_06_q3_a",
+              "text": "Webコンテナがリクエストを受信",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_06_q3_b",
+              "text": "Filterで共通処理（認証等）",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_06_q3_c",
+              "text": "サーブレットでリクエスト処理",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_06_q3_d",
+              "text": "JSPで画面生成・レスポンス返却",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch11_06_q3_a",
+            "ch11_06_q3_b",
+            "ch11_06_q3_c",
+            "ch11_06_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

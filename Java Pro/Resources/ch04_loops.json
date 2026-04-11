@@ -1,0 +1,1051 @@
+{
+  "courseId": "ch04",
+  "lessons": [
+    {
+      "id": "ch04_01",
+      "courseId": "ch04",
+      "title": "for文の基本",
+      "summary": "指定回数の繰り返し処理を書く",
+      "estimatedMinutes": 4,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch04_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・for文の基本構文（初期化; 条件; 更新）\n・ループ変数（カウンタ）の使い方\n・指定回数の繰り返し処理\n\nループはプログラムに「繰り返し」の力を与えます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch04_01",
+          "sectionType": "code",
+          "title": "for文の書き方",
+          "body": "for (初期化; 条件; 更新) { 処理 } の形で書きます。",
+          "code": "for (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}\n// 出力: 0 1 2 3 4（各行）",
+          "note": "i は繰り返し回数を数える「カウンタ変数」。慣例として i, j, k を使います。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch04_01",
+          "sectionType": "tip",
+          "title": "for文の3つのパーツを理解する",
+          "body": "for文は3つのパーツで構成されます。\n\nfor (①初期化; ②条件; ③更新)\n\n| パーツ | 役割 | 例 |\n|---|---|---|\n| ①初期化 | ループ変数を用意する | int i = 0 |\n| ②条件 | 繰り返す条件を設定 | i < 10 |\n| ③更新 | 毎回ループ後に実行 | i++ |\n\n実行順: ① → ② → 処理 → ③ → ② → 処理 → ③ → ... → ②がfalseで終了",
+          "code": null,
+          "note": "i++ は「iの値を1増やす」という意味です。i = i + 1 と同じです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch04_01",
+          "sectionType": "rule",
+          "title": "for文の動作順序",
+          "body": "| 項目 | 説明 |\n|---|---|\n| ① 初期化（int i = 0） | 最初に1回だけ |\n| ② 条件判定（i < 5） | trueなら本体を実行 |\n| ③ 本体実行 | { } 内の処理 |\n| ④ 更新（i++） | カウンタを進める |\n| ⑤ ②に戻る | falseになるまで繰り返す |",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch04_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・for文は回数がわかっている繰り返しに最適\n・カウンタは0から始めるのが慣例\n・条件がfalseになったらループ終了\n・i++ はループ1回ごとに実行される",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch04_01_q1",
+          "lessonId": "ch04_01",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "for (int i = 1; i <= 3; i++) {\n    System.out.print(i + \" \");\n}",
+          "explanation": "i=1から始まり、i<=3の間ループ。1 2 3と表示されます。printは改行なしです。",
+          "choices": [
+            {
+              "id": "ch04_01_q1_a",
+              "text": "1 2 3 ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch04_01_q1_b",
+              "text": "0 1 2 3 ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_01_q1_c",
+              "text": "1 2 ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_01_q1_d",
+              "text": "0 1 2 ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "1 2 3 ",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch04_01_q2",
+          "lessonId": "ch04_01",
+          "type": "fourChoice",
+          "question": "for文の3つの要素を正しい順に並べたものはどれですか？",
+          "code": null,
+          "explanation": "for文は for (初期化; 条件; 更新) の順番です。セミコロンで区切ります。",
+          "choices": [
+            {
+              "id": "ch04_01_q2_a",
+              "text": "条件; 初期化; 更新",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_01_q2_b",
+              "text": "初期化; 条件; 更新",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_01_q2_c",
+              "text": "更新; 条件; 初期化",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_01_q2_d",
+              "text": "初期化; 更新; 条件",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_01_q3",
+          "lessonId": "ch04_01",
+          "type": "outputPredict",
+          "question": "次のコードは何回ループしますか？",
+          "code": "for (int i = 0; i < 10; i += 2) {\n    System.out.println(i);\n}",
+          "explanation": "i=0,2,4,6,8 の5回ループします。i+=2で2ずつ増加するため、0,2,4,6,8が出力されます。",
+          "choices": [
+            {
+              "id": "ch04_01_q3_a",
+              "text": "10回",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_01_q3_b",
+              "text": "5回",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_01_q3_c",
+              "text": "4回",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_01_q3_d",
+              "text": "6回",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "0\n2\n4\n6\n8\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch04_02",
+      "courseId": "ch04",
+      "title": "while文",
+      "summary": "条件が真の間ずっと繰り返す",
+      "estimatedMinutes": 3,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch04_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・while文の構文と使いどころ\n・do-while文との違い\n・**無限ループ**とその回避方法\n\n繰り返し回数が事前にわからない場合にwhile文を使います。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch04_02",
+          "sectionType": "code",
+          "title": "while文の書き方",
+          "body": "while (条件) { 処理 } の形で書きます。",
+          "code": "int count = 0;\nwhile (count < 3) {\n    System.out.println(\"count = \" + count);\n    count++;\n}\n// 出力:\n// count = 0\n// count = 1\n// count = 2",
+          "note": "ループ内で条件が変わらないと**無限ループ**になります。必ず終了条件に近づく処理を入れましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch04_02",
+          "sectionType": "code",
+          "title": "無限ループとbreakパターン",
+          "body": "意図的に**無限ループ**を作り、条件を満たしたらbreakで抜けるパターンは実務でよく使われます。\nwhile(true) と書くことで、ループ本体の中で終了条件を柔軟に制御できます。",
+          "code": "// 入力待ちループの代表例\nimport java.util.Scanner;\n\nScanner sc = new Scanner(System.in);\n// 条件が成り立つ間、繰り返す\nwhile (true) {\n    System.out.print(\"コマンドを入力（quitで終了）: \");\n    // 変数の宣言と初期化\n    String cmd = sc.nextLine();\n    // 条件分岐\n    if (cmd.equals(\"quit\")) {\n        break; // ループを抜ける\n    }\n    System.out.println(\"実行: \" + cmd);\n}\nSystem.out.println(\"終了しました\");",
+          "note": "while(true)は「**無限ループ**」を意図的に作る定形表現です。必ずbreakで抜ける条件を用意しましょう。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch04_02",
+          "sectionType": "tip",
+          "title": "無限ループに注意",
+          "body": "while文の条件がいつまでもtrueのままだと、プログラムが永遠に終わりません。\n\nよくあるミス:\n・条件に使う変数を更新し忘れる\n・条件式の比較演算子を間違える（< を <= にするなど）\n\n万が一**無限ループ**になったら、IDEの停止ボタンやCtrl+Cで強制終了できます。",
+          "code": null,
+          "note": "意図的な**無限ループ** while(true) は、break文と組み合わせて使うことがあります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch04_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・while文は条件がtrueの間ずっと繰り返す\n・回数が事前にわからない場合に適している\n・**無限ループ**に注意：必ず終了条件を満たす更新を入れる\n・while(true) + **break** は意図的な無限ループの定番\n・for文との使い分け：回数がわかるならfor、わからないならwhile",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch04_02_q1",
+          "lessonId": "ch04_02",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int n = 10;\nwhile (n > 0) {\n    n -= 3;\n}\nSystem.out.println(n);",
+          "explanation": "n=10→7→4→1→-2。n>0がfalseになったとき(-2)にループ終了し、-2が出力されます。",
+          "choices": [
+            {
+              "id": "ch04_02_q1_a",
+              "text": "1",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_02_q1_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_02_q1_c",
+              "text": "-2",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch04_02_q1_d",
+              "text": "-3",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "-2\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch04_02_q2",
+          "lessonId": "ch04_02",
+          "type": "fourChoice",
+          "question": "while文で無限ループが起きる原因はどれですか？",
+          "code": null,
+          "explanation": "ループ内で条件を変化させる処理がないと、条件が永遠にtrueのままとなり無限ループになります。",
+          "choices": [
+            {
+              "id": "ch04_02_q2_a",
+              "text": "条件がfalseのとき",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_02_q2_b",
+              "text": "条件が変化しないとき",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_02_q2_c",
+              "text": "breakを書いたとき",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_02_q2_d",
+              "text": "変数を使ったとき",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_02_q3",
+          "lessonId": "ch04_02",
+          "type": "fourChoice",
+          "question": "while文が最も適しているのはどれですか？",
+          "code": null,
+          "explanation": "while文は繰り返し回数が事前にわからない場合に適しています。ユーザー入力を待つような処理が典型例です。",
+          "choices": [
+            {
+              "id": "ch04_02_q3_a",
+              "text": "正確に10回繰り返す",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_02_q3_b",
+              "text": "配列の全要素を処理する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_02_q3_c",
+              "text": "ユーザーが終了と入力するまで繰り返す",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch04_02_q3_d",
+              "text": "1から100まで足し合わせる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_02_q4",
+          "lessonId": "ch04_02",
+          "type": "codeComplete",
+          "question": "1から5までの合計を求めるforループを完成させてください。",
+          "code": null,
+          "explanation": "forループは(初期化; 条件; 更新)の3要素で構成されます。1から5まで含むには <= を使います。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "int sum = 0;\n__BLANK_1__ (int i = 1; i __BLANK_2__ 5; i++) {\n    sum += i;\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①ループ",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "for",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "while",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "do",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②比較",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "<=",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "<",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "==",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch04_03",
+      "courseId": "ch04",
+      "title": "do-while文",
+      "summary": "必ず1回は実行するループ",
+      "estimatedMinutes": 3,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch04_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**拡張for文**（for-each文）の構文\n・配列やコレクションの全要素を順番に処理する方法\n・通常のfor文との使い分け\n\n拡張for文を使うとコードがシンプルになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch04_03",
+          "sectionType": "code",
+          "title": "do-while文の書き方",
+          "body": "do { 処理 } while (条件); の形で書きます。末尾のセミコロンに注意！",
+          "code": "int count = 5;\ndo {\n    System.out.println(\"count = \" + count);\n    count++;\n} while (count < 3);\n// 出力: count = 5\n// countは5で条件count<3はfalseだが、1回は実行される",
+          "note": "while文との最大の違いは「条件判定のタイミング」。while=先判定、do-while=後判定。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch04_03",
+          "sectionType": "tip",
+          "title": "do-whileは「最低1回は実行」がポイント",
+          "body": "while文とdo-while文の最大の違いは「条件チェックのタイミング」です。\n\n| ループ | 条件チェック | 最低実行回数 |\n|---|---|---|\n| while | 先にチェック（前判定） | 0回（条件がfalseなら実行されない） |\n| do-while | 後でチェック（後判定） | 1回（必ず1回は実行される） |\n\ndo-while文は「とりあえず1回実行してから条件を確認する」場面（メニュー表示・入力受付等）で使います。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch04_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・do-while は「必ず1回は実行される」\n・条件判定がループ末尾（後判定）\n・while (条件); のセミコロンを忘れないこと\n・メニュー表示の繰り返しなどで有用",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch04_03",
+          "sectionType": "rule",
+          "title": "for / while / do-while の使い分け",
+          "body": "3つのループ文は場面に応じて使い分けます。\n\n| ループ | 特徴 | 使う場面 |\n|------|------|--------|\n| for | 回数が明確 | 「10回繰り返す」「配列の全要素」 |\n| while | 回数不明・先判定 | 「条件を満たすまで」 |\n| do-while | 回数不明・後判定 | 「必ず1回は実行したい」 |",
+          "code": "// for: 1から5まで表示（回数が明確）\nfor (int i = 1; i <= 5; i++) {\n    System.out.println(i);\n}\n\n// while: 条件を満たすまで（回数不明）\nint num = 1;\nwhile (num < 1000) {\n    num *= 2; // 2倍ずつ増やす\n}\nSystem.out.println(num); // 1024\n\n// do-while: メニュー表示（必ず1回表示）\nint choice;\ndo {\n    System.out.println(\"1:開始 2:設定 0:終了\");\n    choice = 1; // 仮の値\n} while (choice != 0);",
+          "note": "迷ったらfor文を使いましょう。Javaで最もよく使われるループ文です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch04_03_q1",
+          "lessonId": "ch04_03",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "int x = 100;\ndo {\n    System.out.println(x);\n} while (x < 10);",
+          "explanation": "do-whileは先に本体を実行するため、xが100でもまず表示されます。条件x<10はfalseなのでループは1回で終了。",
+          "choices": [
+            {
+              "id": "ch04_03_q1_a",
+              "text": "何も表示されない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_03_q1_b",
+              "text": "100",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_03_q1_c",
+              "text": "10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_03_q1_d",
+              "text": "エラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "100\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch04_03_q2",
+          "lessonId": "ch04_03",
+          "type": "fourChoice",
+          "question": "do-while文とwhile文の最大の違いはどれですか？",
+          "code": null,
+          "explanation": "do-while文は条件がfalseでも必ず1回は本体を実行します（後判定）。while文は先に条件を確認する（前判定）ため、最初から実行されない場合があります。",
+          "choices": [
+            {
+              "id": "ch04_03_q2_a",
+              "text": "ループの速度が違う",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_03_q2_b",
+              "text": "必ず1回は実行される",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_03_q2_c",
+              "text": "使える変数の型が違う",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_03_q2_d",
+              "text": "breakが使えない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_03_q3",
+          "lessonId": "ch04_03",
+          "type": "errorFind",
+          "question": "次のdo-while文がコンパイルエラーになる理由はどれですか？",
+          "code": "do {\n    System.out.println(\"Hello\");\n} while (true)",
+          "explanation": "do-while文の末尾にはセミコロン(;)が必要です。} while (true); と書かなければなりません。",
+          "choices": [
+            {
+              "id": "ch04_03_q3_a",
+              "text": "末尾にセミコロンがない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch04_03_q3_b",
+              "text": "条件がtrueだから",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_03_q3_c",
+              "text": "doの後に{がない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_03_q3_d",
+              "text": "printlnの使い方が間違い",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:4: error: ';' expected\n    } while (true)\n                  ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "Hello\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_03_q4",
+          "lessonId": "ch04_03",
+          "type": "multiChoice",
+          "question": "Javaのループ構文として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "Javaのfor, while, do-while, 拡張for(いわゆるfor-each)が4種のループ構文です。foreachというキーワードは存在しません。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "for文",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "while文",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "do-while文",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "foreach文",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "拡張for文",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch04_04",
+      "courseId": "ch04",
+      "title": "ループの制御",
+      "summary": "breakとcontinueでループを操る",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch04_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・break文でループを途中で抜ける方法\n・continue文で次の回にスキップする方法\n・ラベル付きbreak/continueでネストしたループを制御\n\nループの流れをコントロールする重要なテクニックです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch04_04",
+          "sectionType": "code",
+          "title": "breakとcontinue",
+          "body": "ループの流れを制御する2つのキーワードです。",
+          "code": "// break: ループを即座に抜ける\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) break;\n    System.out.print(i + \" \");\n}\n// 出力: 0 1 2 3 4\n\n// continue: 今回のループをスキップして次の回へ\nfor (int i = 0; i < 5; i++) {\n    if (i == 2) continue;\n    System.out.print(i + \" \");\n}\n// 出力: 0 1 3 4",
+          "note": "breakはswitch文でも使えます。switch文のcase内でbreakを省略すると、次のcaseに「フォールスルー」します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch04_04",
+          "sectionType": "tip",
+          "title": "breakとcontinueの違い",
+          "body": "混同しやすいのでしっかり区別しましょう。\n\n| キーワード | 動作 | イメージ |\n|---|---|---|\n| break | ループを完全に終了する | 「もうやめた！」 |\n| continue | 今の回をスキップして次の回へ | 「これは飛ばして次！」 |\n\nbreak はループの「外」に出て、continue はループの「先頭」に戻ります。",
+          "code": null,
+          "note": "多用するとコードが読みにくくなるため、必要最低限にしましょう。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch04_04",
+          "sectionType": "code",
+          "title": "ラベル付きbreak・continue",
+          "body": "多重ループで外側のループまで制御するにはラベルを使います。",
+          "code": "// ラベル付きbreak: 外側のループごと抜ける\nouter:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (i == 1 && j == 1) {\n            break outer; // 外側ループごと脱出！\n        }\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// 出力: (0,0) (0,1) (0,2) (1,0)\n// → (1,1)でouter全体を抜けた\n\nSystem.out.println();\n\n// ラベル付きcontinue: 外側ループの次の回へ\nouter:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) {\n            continue outer; // 外側ループの次の回へ！\n        }\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// 出力: (0,0) (1,0) (2,0)\n// → j==1で外側のiの次の回に進むため、j=1,2はスキップ\n\n// ラベルなしのbreakは最も内側のループだけ抜ける\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) break; // 内側のjループだけ抜ける\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// 出力: (0,0) (1,0) (2,0)",
+          "note": "ラベル名は任意の識別子を使えます（outer, loop1など）。慣例としてouter:やrow:のようにループの役割を表す名前を付けます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch04_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "| キーワード | 動作 |\n|---|---|\n| break | ループ全体を抜ける |\n| continue | 今の回だけスキップして次の回へ |\n| ラベル付きbreak | 多重ループの外側まで脱出 |\n| ラベル付きcontinue | 外側ループの次の回へスキップ |\n・ラベルなしのbreak/continueは最も内側のループに作用\n・ラベルの書式: ラベル名: の直後にfor/while文を置く",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch04_04_q1",
+          "lessonId": "ch04_04",
+          "type": "fillBlank",
+          "question": "ループ内で現在の回の残りの処理をスキップして次の回に進む文は____です。",
+          "code": null,
+          "explanation": "continue文はループの現在の回の残りの処理をスキップし、次の反復に進みます。break文はループ自体を終了させます。",
+          "choices": [
+            {
+              "id": "ch04_04_q1_a",
+              "text": "continue",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch04_04_q1_b",
+              "text": "break",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_04_q1_c",
+              "text": "return",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_04_q1_d",
+              "text": "skip",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch04_04_q2",
+          "lessonId": "ch04_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "outer:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) continue outer;\n        System.out.print(i + \"\" + j + \" \");\n    }\n}",
+          "explanation": "continue outerにより、j==1のとき外側のiループの次の回に進みます。各iの回でj=0のみ実行されるため、00 10 20 が出力されます。",
+          "choices": [
+            {
+              "id": "ch04_04_q2_a",
+              "text": "00 10 20 ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch04_04_q2_b",
+              "text": "00 01 02 10 11 12 20 21 22 ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_04_q2_c",
+              "text": "00 ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_04_q2_d",
+              "text": "00 02 10 12 20 22 ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_04_q3",
+          "lessonId": "ch04_04",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "for (int i = 0; i < 5; i++) {\n    if (i == 3) break;\n    if (i == 1) continue;\n    System.out.print(i + \" \");\n}",
+          "explanation": "i=0→表示。i=1→continueでスキップ。i=2→表示。i=3→breakでループ終了。結果は0 2です。",
+          "choices": [
+            {
+              "id": "ch04_04_q3_a",
+              "text": "0 2 ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch04_04_q3_b",
+              "text": "0 1 2 ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch04_04_q3_c",
+              "text": "0 2 4 ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_04_q3_d",
+              "text": "0 ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "0 2 ",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_04_q4",
+          "lessonId": "ch04_04",
+          "type": "reorder",
+          "question": "do-whileループの構成要素を正しい順序に並べてください。",
+          "code": null,
+          "explanation": "do-whileは先にdoブロックを実行し、後からwhileで条件を判定します。最低1回は実行されます。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "int i = 0;",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "do {",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "    i++;",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "} while (i < 5);",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch04_05",
+      "courseId": "ch04",
+      "title": "ネストしたループ",
+      "summary": "ループの中にループを書く方法",
+      "estimatedMinutes": 4,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch04_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・ネストしたループ（二重ループ）の構造\n・二重ループの実行順序\n・九九の表や座標処理など、実践的な使い方\n\nループの中にループを入れることで、複雑な繰り返しを表現できます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch04_05",
+          "sectionType": "code",
+          "title": "二重ループ",
+          "body": "外側のループ1回に対し、内側のループが最初から最後まで実行されます。",
+          "code": "for (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= 3; j++) {\n        System.out.print(i * j + \" \");\n    }\n    System.out.println(); // 改行\n}\n// 出力:\n// 1 2 3\n// 2 4 6\n// 3 6 9",
+          "note": "外側のループが i=1 のとき、内側は j=1,2,3 と全て実行されます。次に i=2 になり、また j=1,2,3 と実行されます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch04_05",
+          "sectionType": "tip",
+          "title": "二重ループの実行回数に注意",
+          "body": "外側ループがN回、内側ループがM回の場合、内側の処理はN×M回実行されます。\n\n・外側5回 × 内側10回 = 合計50回\n・外側100回 × 内側100回 = 合計10,000回\n\n二重ループは処理量が急増するため、不必要にネストを深くしないよう注意しましょう。",
+          "code": null,
+          "note": "三重以上のループはコードの可読性が大幅に低下します。メソッドに分割することを検討しましょう。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch04_05",
+          "sectionType": "code",
+          "title": "三角形パターン — 外側の変数を内側で使う",
+          "body": "内側のループ回数を外側の変数で変えることで、行ごとに出力数が変わるパターンが作れます。",
+          "code": "for (int i = 1; i <= 4; i++) {\n    for (int j = 0; j < i; j++) {\n        System.out.print(\"* \");\n    }\n    System.out.println();\n}\n// 出力:\n// * \n// * * \n// * * * \n// * * * * ",
+          "note": "内側のループ条件が j < i なので、i が増えるほど * の数も増えます。ネストしたループの応用パターンとして頻出です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch04_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・外側ループ1回に対し、内側ループが全回実行される\n・実行回数は掛け算（外×内）\n・九九、座標、表形式のデータ処理で使う\n・内側の条件に外側の変数を使えば三角形パターンなども作れる\n・3重以上のネストは可読性が下がるため避ける",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch04_05_q1",
+          "lessonId": "ch04_05",
+          "type": "outputPredict",
+          "question": "次のコードで * は何回表示されますか？",
+          "code": "for (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 4; j++) {\n        System.out.print(\"*\");\n    }\n}",
+          "explanation": "外側3回 × 内側4回 = 12回。*が12個表示されます。",
+          "choices": [
+            {
+              "id": "ch04_05_q1_a",
+              "text": "7回",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_05_q1_b",
+              "text": "12回",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_05_q1_c",
+              "text": "4回",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_05_q1_d",
+              "text": "3回",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "************",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch04_05_q2",
+          "lessonId": "ch04_05",
+          "type": "fourChoice",
+          "question": "二重ループの合計実行回数はどう計算しますか？",
+          "code": null,
+          "explanation": "二重ループでは外側のループ回数 × 内側のループ回数が合計実行回数になります。",
+          "choices": [
+            {
+              "id": "ch04_05_q2_a",
+              "text": "外＋内",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_05_q2_b",
+              "text": "外×内",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_05_q2_c",
+              "text": "外−内",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_05_q2_d",
+              "text": "外÷内",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch04_05_q3",
+          "lessonId": "ch04_05",
+          "type": "outputPredict",
+          "question": "次のコードの出力結果はどれですか？",
+          "code": "for (int i = 0; i < 2; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) break;\n        System.out.print(i + \"\" + j + \" \");\n    }\n}",
+          "explanation": "外i=0: 内j=0→表示\"00\"、j=1→break。外i=1: 内j=0→表示\"10\"、j=1→break。結果は00 10。",
+          "choices": [
+            {
+              "id": "ch04_05_q3_a",
+              "text": "00 01 02 10 11 12 ",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch04_05_q3_b",
+              "text": "00 10 ",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch04_05_q3_c",
+              "text": "00 ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch04_05_q3_d",
+              "text": "00 01 10 11 ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "00 10 ",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

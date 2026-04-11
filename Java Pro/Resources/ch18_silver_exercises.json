@@ -1,0 +1,714 @@
+{
+  "courseId": "ch18",
+  "lessons": [
+    {
+      "id": "ch18_01",
+      "courseId": "ch18",
+      "title": "基本文法の総復習",
+      "summary": "変数、演算子、制御フローの重要ポイントを総復習します。Silver試験で頻出の演算子優先順位、短絡評価、switch/ifのひっかけパターンを徹底攻略しましょう。",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "overview",
+          "title": "基本文法の落とし穴を総点検",
+          "body": "このレッスンでは以下を学びます:\n\n・演算子の優先順位と結合方向の再確認\n・暗黙的/明示的な型変換のルール\n・for文・while文・switch文の落とし穴\n\nSilver試験で頻出する文法問題の総復習です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "rule",
+          "title": "演算子優先順位と短絡評価",
+          "body": "演算子の優先順位は試験で非常によく狙われるテーマです。\n後置インクリメント(i++)は値を返してから加算、前置インクリメント(++i)は加算してから値を返します。\n論理演算子&&と||は短絡評価（ショートサーキット）を行います。\n&&の左辺がfalseなら右辺は評価されず、||の左辺がtrueなら右辺は評価されません。\n一方、&と|は常に両辺を評価するビット演算子（boolean型では非短絡論理演算子）です。\n代入演算子=と比較演算子==の混同にも注意が必要です。",
+          "code": "int a = 5;\nint b = a++ + ++a;  // a++(5を返しaは6) + ++a(7を返しaは7) → b = 12\n\nboolean x = false;\nint c = 0;\nif (x && (++c > 0)) { }  // 短絡評価: xがfalseなのでcは加算されない\nSystem.out.println(c);    // 0",
+          "note": "後置・前置インクリメントの違いは、式の中で使われたときに顕著になります。単独の文（i++;）ではどちらも同じ結果です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "code",
+          "title": "switch文のfall-throughとパターン",
+          "body": "switch文ではbreak文を忘れると次のcaseに「fall-through（貫通）」します。\nこれは試験で非常に頻出のひっかけパターンです。\nswitch式で使用できる型は、byte, short, char, int, String, enumおよびそれらのラッパー型です。\nlongやdouble、booleanはswitch式に使用できないことを覚えておきましょう。\ndefaultラベルはどの位置にあっても構いませんが、fall-throughの影響を受けます。\ncaseラベルにはコンパイル時定数（リテラルまたはfinal変数）のみ使用できます。",
+          "code": "// 変数の宣言と初期化\nint val = 2;\nString result = \"\";\n// 値に応じた分岐処理\nswitch (val) {\n    case 1: result += \"A\";\n    case 2: result += \"B\";\n    case 3: result += \"C\";\n    default: result += \"D\";\n}\nSystem.out.println(result);  // \"BCD\"（breakがないためfall-through）",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "point",
+          "title": "型変換と変数スコープの注意点",
+          "body": "暗黙の型変換（拡大変換）は小さい型から大きい型へ自動的に行われます。\nint → long → float → double の順に拡大変換が可能です。\nただし、int → floatやlong → doubleでは精度が失われる場合があります。\n縮小変換（大きい型から小さい型）には明示的なキャストが必要です。\nfor文のループ変数はfor文のブロック内でのみ有効です。\nif文の条件式にはboolean型のみ使用でき、C言語のように整数値は使えません。",
+          "code": "// コンパイルエラーの例\n// int x = 3.14;           // double → int は暗黙変換不可\n// if (1) { }              // intはboolean型ではないのでエラー\n\nfor (int i = 0; i < 3; i++) {\n    // iはこのブロック内でのみ有効\n}\n// System.out.println(i);  // コンパイルエラー: iは未定義",
+          "note": "byte + byte の結果はint型になります。byte b = 1 + 2; はコンパイル時定数なのでOKですが、byte b1 = 1; byte b2 = 2; byte b3 = b1 + b2; はエラーです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "tip",
+          "title": "試験攻略：基本文法の頻出パターン",
+          "body": "基本文法の問題は確実に得点したい範囲です。以下のパターンを押さえましょう。\n| ポイント |\n| --- |\n| 後置/前置インクリメントが式の中で使われるパターン |\n| 短絡評価で副作用のある式が評価されない/されるパターン |\n| switch文でbreakの有無によるfall-throughパターン |\n| 暗黙の型変換と明示的キャストが必要な場面 |\n| 変数のスコープ境界（for文、if文、ブロック） |\n迷ったら「コンパイラの気持ち」になって、一行ずつ丁寧にトレースすることが大切です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_01_q1",
+          "lessonId": "ch18_01",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、出力される値はどれですか？",
+          "code": "int x = 3;\nint y = x++ * --x;\nSystem.out.println(y);",
+          "explanation": "x++は後置インクリメントなので、まずxの現在の値3を返し、その後xは4になります。次に--xは前置デクリメントなので、xを4から3に減らしてから値3を返します。したがって y = 3 * 3 = 9 となります。",
+          "choices": [
+            {
+              "id": "ch18_01_q1_a",
+              "text": "6",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_01_q1_b",
+              "text": "9",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_01_q1_c",
+              "text": "12",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_01_q1_d",
+              "text": "16",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_01_q2",
+          "lessonId": "ch18_01",
+          "type": "errorFind",
+          "question": "次のコードにはコンパイルエラーがあります。エラーの原因として正しいものはどれですか？",
+          "code": "int count = 0;\nfor (int i = 0; i < 5; i++)\n    count++;\n    System.out.println(i + \": \" + count);",
+          "explanation": "for文に波括弧{}がないため、for文の本体はcount++;の一文だけです。System.out.println(i + \": \" + count);はfor文の外にあるため、変数iのスコープ外となりコンパイルエラーになります。インデントに惑わされないよう注意しましょう。",
+          "choices": [
+            {
+              "id": "ch18_01_q2_a",
+              "text": "countが初期化されていない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_01_q2_b",
+              "text": "for文の条件式が不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_01_q2_c",
+              "text": "変数iがスコープ外で参照されている",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_01_q2_d",
+              "text": "count++の後にセミコロンがない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_01_q3",
+          "lessonId": "ch18_01",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、何が出力されますか？",
+          "code": "int num = 5;\nString result = \"\";\nswitch (num) {\n    default: result += \"X\";\n    case 1:  result += \"A\"; break;\n    case 5:  result += \"B\";\n    case 10: result += \"C\"; break;\n}  \nSystem.out.println(result);",
+          "explanation": "numは5なのでcase 5に一致し、result += \"B\"が実行されます。breakがないのでcase 10にfall-throughし、result += \"C\"が実行されます。case 10にはbreakがあるのでswitch文を抜けます。defaultやcase 1は実行されません。結果は\"BC\"です。",
+          "choices": [
+            {
+              "id": "ch18_01_q3_a",
+              "text": "B",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_01_q3_b",
+              "text": "BC",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_01_q3_c",
+              "text": "BCA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_01_q3_d",
+              "text": "XABC",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch18_02",
+      "courseId": "ch18",
+      "title": "OOPの総復習",
+      "summary": "クラス、継承、ポリモーフィズム、抽象クラス、インターフェースの重要概念を総復習します。メソッドのオーバーライドとオーバーロードの違い、アクセス修飾子の挙動を整理しましょう。",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "overview",
+          "title": "オブジェクト指向を正確に理解する",
+          "body": "このレッスンでは以下を学びます:\n\n・継承とコンストラクタチェーンの動作\n・オーバーライドのルール（アクセス修飾子・戻り値型）\n・ポリモーフィズムの型判定（コンパイル時 vs 実行時）\n\nOOP分野はSilver試験の配点が最も高い領域です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "rule",
+          "title": "オーバーライドの成立条件",
+          "body": "メソッドのオーバーライドが成立するには、いくつかの厳密な条件があります。\nメソッド名と引数リスト（型・数・順序）が完全に一致しなければなりません。\n戻り値の型は同一型、または共変戻り値型（サブクラス型）でなければなりません。\nアクセス修飾子は同じかより広い範囲でなければなりません（例：protectedをpublicに変更は可）。\nチェック例外は、親クラスと同じか、そのサブクラスの例外のみスローできます。\nstatic/privateメソッドはオーバーライドできません（staticの場合は「隠蔽」と呼びます）。",
+          "code": "class Animal {\n    protected String speak() throws Exception {\n        return \"...\";\n    }\n}\nclass Dog extends Animal {\n    @Override\n    public String speak() throws RuntimeException {  // OK: より広いアクセス修飾子、より狭い例外\n        return \"Woof\";\n    }\n}",
+          "note": "@Overrideアノテーションを付けると、オーバーライド条件を満たさない場合にコンパイルエラーとなり、ミスを防げます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "code",
+          "title": "ポリモーフィズムとメソッド呼び出し",
+          "body": "ポリモーフィズムの核心は「変数の型」と「実際のオブジェクトの型」の区別です。\nインスタンスメソッドは実際のオブジェクトの型に基づいて呼び出されます（動的バインディング）。\nインスタンス変数とstaticメソッドは変数の型（参照型）に基づいてアクセスされます（静的バインディング）。\nこの違いが試験で最もよく狙われるポイントです。\nキャストなしでは、親クラス型の変数から子クラス固有のメソッドは呼び出せません。",
+          "code": "// Parentクラスの定義\nclass Parent {\n    // 変数の宣言と初期化\n    String name = \"Parent\";\n    // greetメソッドの定義\n    String greet() { return \"Hello from Parent\"; }\n}\n// Childクラスの定義\nclass Child extends Parent {\n    String name = \"Child\";\n    // greetメソッドの定義\n    String greet() { return \"Hello from Child\"; }\n}\n\nParent obj = new Child();\nSystem.out.println(obj.greet());  // \"Hello from Child\"（動的バインディング）\nSystem.out.println(obj.name);     // \"Parent\"（フィールドは静的バインディング）",
+          "note": "フィールドはオーバーライドされず「隠蔽」されます。参照型に応じてどちらのフィールドが見えるかが決まります。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "point",
+          "title": "抽象クラスとインターフェースの違い",
+          "body": "抽象クラスはコンストラクタを持つことができ、インスタンス変数やconcreteメソッドも定義できます。\nインターフェースのフィールドは暗黙的にpublic static finalとなります。\nJava 8以降、インターフェースにはdefaultメソッドとstaticメソッドを定義できます。\nクラスの多重継承はできませんが、インターフェースは複数実装（implements）が可能です。\n抽象クラスを継承したクラスは、すべての抽象メソッドを実装するか、自身も抽象クラスにする必要があります。\nインターフェースのdefaultメソッドが競合した場合は、実装クラスで明示的にオーバーライドが必要です。",
+          "code": null,
+          "note": "抽象クラスはnewでインスタンス化できませんが、コンストラクタは子クラスのsuper()経由で呼ばれます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "tip",
+          "title": "試験攻略：OOP頻出ひっかけ",
+          "body": "OOP問題では以下のひっかけに注意しましょう。\n| ポイント |\n| --- |\n| フィールドの隠蔽とメソッドのオーバーライドの挙動の違い |\n| オーバーロード（引数が異なる）とオーバーライド（引数が同じ）の混同 |\n| 親クラスのコンストラクタ呼び出し順序（super()は暗黙的に先頭で呼ばれる） |\n| abstractクラスの具象メソッドも継承されること |\n| インターフェースのdefaultメソッドの競合解決 |\nコードを読むときは「宣言型（参照型）」と「実行時の型」を常に意識してトレースしましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_02_q1",
+          "lessonId": "ch18_02",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、何が出力されますか？",
+          "code": "class Base {\n    int val = 10;\n    int getVal() { return val; }\n}\nclass Sub extends Base {\n    int val = 20;\n    int getVal() { return val; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base obj = new Sub();\n        System.out.println(obj.val + \",\" + obj.getVal());\n    }\n}",
+          "explanation": "obj.valはフィールドアクセスなので参照型Baseのvalが参照され10が返ります。obj.getVal()はインスタンスメソッドなので実際のオブジェクトSubのgetVal()が呼ばれ20が返ります。フィールドは静的バインディング、メソッドは動的バインディングです。",
+          "choices": [
+            {
+              "id": "ch18_02_q1_a",
+              "text": "10,10",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_02_q1_b",
+              "text": "10,20",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_02_q1_c",
+              "text": "20,20",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_02_q1_d",
+              "text": "20,10",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_02_q2",
+          "lessonId": "ch18_02",
+          "type": "fourChoice",
+          "question": "メソッドのオーバーライドに関する説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "オーバーライドではアクセス修飾子を親クラスと同じか、より広い範囲に変更することが可能です。狭くすることはできません（例：publicをprotectedにはできない）。戻り値型はサブクラス型（共変戻り値型）に変更できます。引数を変更するとオーバーロードになります。",
+          "choices": [
+            {
+              "id": "ch18_02_q2_a",
+              "text": "アクセス修飾子はより狭い範囲に変更できる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_02_q2_b",
+              "text": "戻り値の型をスーパークラス型に変更できる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_02_q2_c",
+              "text": "アクセス修飾子はより広い範囲に変更できる",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_02_q2_d",
+              "text": "引数の型を変更してもオーバーライドになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_02_q3",
+          "lessonId": "ch18_02",
+          "type": "errorFind",
+          "question": "次のコードにはコンパイルエラーがあります。エラーの原因として正しいものはどれですか？",
+          "code": "interface Flyable {\n    void fly();\n}\ninterface Swimmable {\n    void swim();\n}\nabstract class Bird implements Flyable {\n    // fly()を実装しない\n}\nclass Duck extends Bird implements Swimmable {\n    public void swim() {\n        System.out.println(\"swimming\");\n    }\n}",
+          "explanation": "Birdクラスはabstractなので、Flyableのfly()を実装しなくても問題ありません。しかしDuckクラスはBirdを継承した具象クラスなので、fly()メソッドの実装が必要です。Duckクラスにfly()がないためコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch18_02_q3_a",
+              "text": "Birdクラスでfly()が実装されていない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_02_q3_b",
+              "text": "Duckクラスでfly()が実装されていない",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_02_q3_c",
+              "text": "abstractクラスはインターフェースを実装できない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_02_q3_d",
+              "text": "Duckクラスは2つのインターフェースを実装できない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch18_02_q4",
+          "lessonId": "ch18_02",
+          "type": "multiChoice",
+          "question": "Javaのアクセス修飾子として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "Javaのアクセス修飾子はpublic, protected, private, デフォルト (package-private) の4つです。internalはKotlinやC#のキーワードです。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "protected",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "private",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "internal",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "デフォルト（修飾子なし）",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch18_03",
+      "courseId": "ch18",
+      "title": "例外とAPIの総復習",
+      "summary": "例外処理の階層構造、try-catch-finallyのフロー、String/StringBuilderの挙動、ArrayListの操作について、試験で狙われるポイントを総復習します。",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "overview",
+          "title": "例外とAPIの得点源を固める",
+          "body": "このレッスンでは以下を学びます:\n\n・例外の階層構造とcatch順序ルール\n・try-with-resourcesの動作順序\n・String/StringBuilder/ArrayListの主要メソッドの動作\n\n試験で問われる細部を確認しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "rule",
+          "title": "try-catch-finallyの実行フロー",
+          "body": "try-catch-finallyにおいて、finallyブロックは例外の有無に関わらず必ず実行されます。\ntryブロック内でreturn文があっても、finallyブロックが先に実行されます。\nfinallyブロック内でreturnすると、tryやcatchのreturn値を上書きします。\ncatchブロックは上から順に評価され、最初に一致したcatchブロックだけが実行されます。\n親クラスの例外型を先に書くと、子クラスのcatchに到達不能となりコンパイルエラーになります。\ntry-with-resourcesでは、リソースのclose()がfinallyの前に呼ばれます。",
+          "code": "public static int test() {\n    try {\n        System.out.println(\"try\");\n        return 1;\n    } catch (Exception e) {\n        System.out.println(\"catch\");\n        return 2;\n    } finally {\n        System.out.println(\"finally\");\n        // ここでreturnすると1や2を上書きしてしまう\n    }\n}\n// 出力: try → finally → 戻り値: 1",
+          "note": "finallyでreturnするのは非推奨ですが、試験ではよく出題されます。finallyのreturnがtry/catchのreturnを上書きすることを覚えておきましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "code",
+          "title": "Stringの不変性とStringBuilderの操作",
+          "body": "Stringオブジェクトは不変（immutable）です。文字列操作メソッドは新しいStringを返します。\n元のStringオブジェクトは変更されないため、戻り値を変数に代入しないと変更が反映されません。\nStringBuilderは可変（mutable）で、append, insert, delete, reverseなどが自身を変更します。\nStringBuilderのメソッドチェーンが可能なのは、メソッドがthis（自分自身）を返すからです。\nString.concat()やsubstring()もよく試験に出題されます。\nsubstring(start, end)はstartを含みendを含まない（半開区間）ことに注意しましょう。",
+          "code": "// 変数の宣言と初期化\nString s = \"Hello\";\ns.concat(\" World\");       // 戻り値を使っていない！\nSystem.out.println(s);     // \"Hello\"（元のStringは不変）\n\nStringBuilder sb = new StringBuilder(\"Hello\");\nsb.append(\" World\");       // sb自身が変更される\nSystem.out.println(sb);    // \"Hello World\"\n\nString t = \"abcdef\";\nSystem.out.println(t.substring(1, 4));  // \"bcd\"（index 1～3）",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "point",
+          "title": "ArrayListの操作と注意点",
+          "body": "ArrayList<Integer>のremoveメソッドには2つのオーバーロードがあります。\nremove(int index)はインデックス指定で要素を削除し、remove(Object o)は値指定で削除します。\nadd(int index, E element)は指定位置に挿入し、既存要素は右にシフトされます。\nfor-eachループ中にリストを変更するとConcurrentModificationExceptionが発生します。\nArrayListのインデックスは0始まりで、範囲外アクセスはIndexOutOfBoundsExceptionになります。\nAutoboxingにより、list.remove(2)はインデックス2の要素削除となり、値2の削除ではありません。",
+          "code": "ArrayList<String> list = new ArrayList<>();\nlist.add(\"A\"); list.add(\"B\"); list.add(\"C\");\nlist.add(1, \"X\");          // index 1に\"X\"を挿入 → [A, X, B, C]\nlist.remove(2);             // index 2の要素を削除 → [A, X, C]\nlist.set(0, \"Z\");           // index 0を\"Z\"に置換 → [Z, X, C]\nSystem.out.println(list);   // [Z, X, C]",
+          "note": "ArrayList<Integer>でremove(Integer.valueOf(2))とすると値2の要素を削除します。remove(2)はインデックス2の削除です。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "tip",
+          "title": "試験攻略：例外とAPI問題のコツ",
+          "body": "例外とAPI問題では、以下のポイントを意識して解きましょう。\n| ポイント |\n| --- |\n| 例外の階層図を頭に入れておく（チェック例外と非チェック例外の区別） |\n| try-catch-finallyの実行順序を正確にトレースする |\n| Stringメソッドの戻り値を代入しているかを確認する |\n| StringBuilderのメソッドチェーンで何が返るかを把握する |\n| ArrayListのremoveがインデックス指定か値指定かを見極める |\nこれらの知識は単独で出ることもあれば、複合問題として出題されることもあります。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_03_q1",
+          "lessonId": "ch18_03",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、何が出力されますか？",
+          "code": "String s1 = \"Java\";\nString s2 = s1.concat(\" SE\");\ns1.toUpperCase();\nSystem.out.println(s1 + \",\" + s2);",
+          "explanation": "s1.concat(\" SE\")は新しいString \"Java SE\"を返し、s2に代入されます。s1自体は変更されず\"Java\"のままです。s1.toUpperCase()は\"JAVA\"を返しますが、戻り値をどの変数にも代入していないため効果がありません。したがって出力は\"Java,Java SE\"です。",
+          "choices": [
+            {
+              "id": "ch18_03_q1_a",
+              "text": "JAVA,Java SE",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_03_q1_b",
+              "text": "Java,Java SE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_03_q1_c",
+              "text": "JAVA,JAVA SE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_03_q1_d",
+              "text": "Java SE,JAVA",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_03_q2",
+          "lessonId": "ch18_03",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、何が出力されますか？",
+          "code": "StringBuilder sb = new StringBuilder(\"ABCDE\");\nsb.delete(1, 3).insert(2, \"XY\");\nSystem.out.println(sb);",
+          "explanation": "sb.delete(1, 3)はインデックス1から3の手前（インデックス1と2）を削除します。\"ABCDE\"→\"ADE\"となります。次にinsert(2, \"XY\")でインデックス2の位置に\"XY\"を挿入します。\"ADE\"→\"ADXYE\"となります。StringBuilderは可変なのでメソッドチェーンで連続操作できます。",
+          "choices": [
+            {
+              "id": "ch18_03_q2_a",
+              "text": "ADXYE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch18_03_q2_b",
+              "text": "AXYDC",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_03_q2_c",
+              "text": "AXYDE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_03_q2_d",
+              "text": "ADXY",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_03_q3",
+          "lessonId": "ch18_03",
+          "type": "fourChoice",
+          "question": "try-catch-finallyに関する説明として正しいものはどれですか？",
+          "code": null,
+          "explanation": "finallyブロックは、例外が発生してもしなくても必ず実行されます。tryブロック内でreturn文が実行されても、その前にfinallyブロックが実行されます。catchブロックで例外を再スローしても、finallyは実行されます。ただしSystem.exit()が呼ばれた場合はfinallyは実行されません。",
+          "choices": [
+            {
+              "id": "ch18_03_q3_a",
+              "text": "finallyブロックは例外が発生した場合のみ実行される",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_03_q3_b",
+              "text": "tryブロックでreturnすると、finallyは実行されない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_03_q3_c",
+              "text": "finallyブロックはSystem.exit()が呼ばれても必ず実行される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_03_q3_d",
+              "text": "tryブロックでreturnしても、finallyブロックは実行される",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch18_04",
+      "courseId": "ch18",
+      "title": "実践問題チャレンジ",
+      "summary": "継承・例外・ポリモーフィズムを組み合わせた本番レベルの複合問題に挑戦します。コードトレースの技術と試験の時間管理術を身につけましょう。",
+      "estimatedMinutes": 10,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "overview",
+          "title": "本番レベルの複合問題に挑む",
+          "body": "このレッスンでは以下を学びます:\n\n・複数トピックが組み合わさった複合問題の解き方\n・コードトレースのテクニック\n・本番で焦らないための時間配分戦略\n\n実践問題で本番の感覚をつかみましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "code",
+          "title": "継承と例外の複合パターン",
+          "body": "継承関係と例外処理が組み合わさった問題では、以下の点に注目します。\nコンストラクタチェーン（super()の暗黙呼び出し）と例外の伝播を追いかけます。\nオーバーライドされたメソッドがスローできる例外の制約も重要です。\nサブクラスのオーバーライドメソッドは、スーパークラスより広い範囲の例外をスローできません。\nただし、RuntimeException（非チェック例外）はこの制約を受けません。\nfinallyブロックの実行タイミングと、例外の再スローの組み合わせも要注意です。",
+          "code": "// Aクラスの定義\nclass A {\n    A() { System.out.print(\"A\"); }\n    // execメソッドの定義\n    void exec() throws Exception {\n        System.out.print(\"a\");\n        // 例外を投げる\n        throw new Exception();\n    }\n}\n// Bクラスの定義\nclass B extends A {\n    B() { System.out.print(\"B\"); }\n    // execメソッドの定義\n    void exec() throws Exception {\n        System.out.print(\"b\");\n        super.exec();\n    }\n}\n// new B().exec() → 出力: \"ABba\" + Exception発生",
+          "note": "コンストラクタは親→子の順で実行され、メソッドはオーバーライドにより子クラスのものが呼ばれます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "code",
+          "title": "複合コードトレース演習",
+          "body": "複合問題のコードトレースでは、段階的に値を追いかけることが大切です。\nまず変数宣言と初期化を確認し、次にメソッド呼び出しの流れを追います。\nポリモーフィズムがある場合は、変数の宣言型と実際の型を常に意識します。\nループ内での状態変化は、反復ごとの変数値を書き出すと正確に追えます。\n分岐（if/switch）では、条件式の評価結果を正確に判定しましょう。",
+          "code": "// Shapeクラスの定義\nclass Shape {\n    // areaメソッドの定義\n    double area() { return 0; }\n    // toStringメソッドの定義\n    public String toString() { return \"Shape:\" + area(); }\n}\n// Circleクラスの定義\nclass Circle extends Shape {\n    double r;\n    Circle(double r) { this.r = r; }\n    double area() { return 3.14 * r * r; }\n}\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Circle(5);\n        System.out.println(s);  // \"Shape:78.5\"（toStringがarea()を呼び、動的バインディングでCircleのareaが実行）\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "point",
+          "title": "試験の時間管理戦略",
+          "body": "Java Silver試験は80問を180分で解きます。1問あたり約2分15秒が目安です。\nまず全問題をざっと眺め、簡単な問題と難しい問題を把握しましょう。\n知識問題（APIの仕様など）は知っていれば30秒で解けますので先に片付けます。\nコードトレース問題は時間がかかるので後回しにしてもよいでしょう。\n難問に5分以上かけるのは危険です。フラグを付けて後で戻る戦略が有効です。\n見直し時間を15-20分確保し、マークミスや読み落としがないか確認しましょう。",
+          "code": null,
+          "note": "試験では「明らかに違う選択肢」を消去法で排除すると、正答率が上がります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "tip",
+          "title": "合格のための最終チェックリスト",
+          "body": "試験前に以下の項目を確認しましょう。\n| 確認事項 |\n| --- |\n| 基本データ型の範囲とデフォルト値（int配列の初期値は0、boolean配列はfalse） |\n| 演算子の優先順位と短絡評価の挙動 |\n| オーバーライドの5つの条件（名前・引数・戻り値・アクセス修飾子・例外） |\n| Stringの不変性とStringBuilderの可変性 |\n| 例外の階層構造（チェック例外 vs 非チェック例外） |\n| ArrayListの主要メソッドの挙動（add, remove, set, get, size） |\n| 抽象クラスとインターフェースの違い |\n苦手分野を重点的に復習し、自信を持って試験に臨みましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_04_q1",
+          "lessonId": "ch18_04",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、何が出力されますか？",
+          "code": "class X {\n    X() { System.out.print(\"X\"); }\n    void show() { System.out.print(\"x\"); }\n}\nclass Y extends X {\n    Y() { System.out.print(\"Y\"); }\n    void show() { System.out.print(\"y\"); }\n}\nclass Z extends Y {\n    Z() { System.out.print(\"Z\"); }\n    void show() { System.out.print(\"z\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        X obj = new Z();\n        obj.show();\n    }\n}",
+          "explanation": "new Z()のコンストラクタチェーンにより、X→Y→Zの順でコンストラクタが実行され、\"XYZ\"が出力されます。obj.show()はポリモーフィズムにより実際の型Zのshow()が呼ばれ、\"z\"が出力されます。合計出力は\"XYZz\"です。",
+          "choices": [
+            {
+              "id": "ch18_04_q1_a",
+              "text": "XYZx",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_04_q1_b",
+              "text": "Zz",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_04_q1_c",
+              "text": "XYZz",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_04_q1_d",
+              "text": "ZYXz",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_04_q2",
+          "lessonId": "ch18_04",
+          "type": "errorFind",
+          "question": "次のコードにはコンパイルエラーがあります。エラーの原因として正しいものはどれですか？",
+          "code": "class Animal {\n    void speak() throws Exception {\n        System.out.println(\"...\");\n    }\n}\nclass Cat extends Animal {\n    void speak() throws Exception {\n        System.out.println(\"Meow\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Cat();\n        a.speak();\n    }\n}",
+          "explanation": "a.speak()はチェック例外Exceptionをスローする可能性があると宣言されています。mainメソッドではこのチェック例外を処理するtry-catchもthrows宣言もありません。そのため「未処理のチェック例外」としてコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch18_04_q2_a",
+              "text": "Catクラスのspeak()でExceptionをスローできない",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_04_q2_b",
+              "text": "Animal型の変数でCatのメソッドを呼べない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_04_q2_c",
+              "text": "mainメソッドでチェック例外が処理されていない",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_04_q2_d",
+              "text": "Cat型はAnimal型にキャストできない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_04_q3",
+          "lessonId": "ch18_04",
+          "type": "outputPredict",
+          "question": "次のコードを実行した場合、何が出力されますか？",
+          "code": "public class Main {\n    static String process() {\n        String result = \"\";\n        try {\n            result += \"T\";\n            int[] arr = new int[3];\n            arr[5] = 10;\n            result += \"U\";\n        } catch (ArrayIndexOutOfBoundsException e) {\n            result += \"C\";\n        } finally {\n            result += \"F\";\n        }\n        result += \"E\";\n        return result;\n    }\n    public static void main(String[] args) {\n        System.out.println(process());\n    }\n}",
+          "explanation": "tryブロックでresult += \"T\"が実行されます。arr[5] = 10でArrayIndexOutOfBoundsExceptionが発生し、result += \"U\"はスキップされます。catchブロックでresult += \"C\"が実行されます。finallyブロックでresult += \"F\"が実行されます。例外はcatchで処理済みなので、result += \"E\"も実行されます。結果は\"TCFE\"です。",
+          "choices": [
+            {
+              "id": "ch18_04_q3_a",
+              "text": "TCF",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_04_q3_b",
+              "text": "TCFE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_04_q3_c",
+              "text": "TUCFE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_04_q3_d",
+              "text": "TF",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

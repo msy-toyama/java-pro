@@ -1,0 +1,1012 @@
+{
+  "courseId": "ch15",
+  "lessons": [
+    {
+      "id": "ch15_01",
+      "courseId": "ch15",
+      "title": "Wrapperクラス",
+      "summary": "基本データ型に対応するラッパークラスとAutoboxing・Unboxingの仕組みを理解する",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**ラッパークラス**（Integer, Double等）の役割\n・valueOf()とparseXxx()メソッドの違い\n・**オートボクシング**と**アンボクシング**の動作\n\n基本型とオブジェクト型を橋渡しする重要なクラスです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "rule",
+          "title": "基本データ型とラッパークラスの対応",
+          "body": "Javaの8つの基本データ型には、それぞれ対応する**ラッパークラス**があります。\n\n| プリミティブ型 | ラッパークラス |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\n注意すべきは、intに対応するのがIntegerであり、charに対応するのがCharacterである点です。\nそれ以外は基本データ型の頭文字を大文字にしたものがラッパークラス名になります。\nラッパークラスはすべてjava.langパッケージに属しており、importなしで使用できます。",
+          "code": null,
+          "note": "Integer（intではなくInteger）とCharacter（charではなくCharacter）のスペルに注意しましょう。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "code",
+          "title": "AutoboxingとUnboxingの動作",
+          "body": "Autoboxingとは基本データ型から**ラッパークラス**への自動変換のことです。\n逆にUnboxingはラッパークラスから基本データ型への自動変換です。\nJava 5以降では、これらの変換をコンパイラが自動的に行ってくれます。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // Autoboxing: int → Integer\n        Integer num1 = 100;  // 自動的にInteger.valueOf(100)が呼ばれる\n\n        // Unboxing: Integer → int\n        int num2 = num1;  // 自動的にnum1.intValue()が呼ばれる\n\n        // ArrayListでのAutoboxing\n        java.util.ArrayList<Integer> list = new java.util.ArrayList<>();\n        list.add(42);  // int 42がAutoboxingされてInteger(42)として追加\n        int val = list.get(0);  // Unboxingされてintとしてvalに代入\n\n        System.out.println(num1);  // 100\n        System.out.println(num2);  // 100\n        System.out.println(val);   // 42\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "tip",
+          "title": "valueOf()とparseXxx()の違いに注意",
+          "body": "紛らわしいので表で整理しましょう。\n\n| メソッド | 戻り値の型 | 例 |\n|---|---|---|\n| Integer.valueOf(\"123\") | Integer（ラッパー型） | オブジェクトが返る |\n| Integer.parseInt(\"123\") | int（基本型） | プリミティブが返る |\n\nどちらも文字列を数値に変換しますが、戻り値の型が異なります。\n\n数値に変換できない文字列を渡すとNumberFormatExceptionが発生します。",
+          "code": null,
+          "note": "試験ではInteger.valueOf()が-128〜127のキャッシュを使うことも問われます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "code",
+          "title": "parseメソッドとvalueOfメソッド",
+          "body": "**ラッパークラス**には文字列を数値に変換するparseメソッドと、ラッパーオブジェクトを返すvalueOfメソッドがあります。\nInteger.parseIntは文字列をint（基本データ型）に変換します。\nInteger.valueOfは文字列をInteger（ラッパーオブジェクト）に変換します。\n数値に変換できない文字列を渡すとNumberFormatExceptionがスローされます。\n各ラッパークラスに同様のメソッドが用意されています。",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // 文字列 → 基本データ型\n        int a = Integer.parseInt(\"123\");\n        double b = Double.parseDouble(\"3.14\");\n        boolean c = Boolean.parseBoolean(\"true\");\n\n        // 文字列 → ラッパーオブジェクト\n        Integer d = Integer.valueOf(\"456\");\n        Double e = Double.valueOf(\"2.71\");\n\n        System.out.println(a);  // 123\n        System.out.println(b);  // 3.14\n        System.out.println(c);  // true\n        System.out.println(d);  // 456\n        System.out.println(e);  // 2.71\n\n        // NumberFormatException発生例\n        // int f = Integer.parseInt(\"abc\");  // 実行時エラー\n    }\n}",
+          "note": "Boolean.parseBooleanは\"true\"（大文字小文字無関係）の場合のみtrueを返し、それ以外はすべてfalseを返します。例外はスローされません。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・基本データ型ごとに対応する**ラッパークラス**がある（int→Integer、char→Character）\n・Autoboxingは基本型→ラッパーへの自動変換、Unboxingはその逆\n・Integer.parseIntは文字列をintに、Integer.valueOfは文字列をIntegerに変換する\n・変換不可能な文字列を渡すとNumberFormatExceptionが発生する\n・Boolean.parseBooleanは例外をスローせず、\"true\"以外はすべてfalseになる",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_01_q1",
+          "lessonId": "ch15_01",
+          "type": "fourChoice",
+          "question": "intに対応するラッパークラスはどれですか？",
+          "code": null,
+          "explanation": "intに対応するラッパークラスはIntegerです。IntはJavaには存在しないクラスです。byte→Byte、short→Short、long→Longのようにそのまま先頭を大文字にするパターンと異なり、int→Integerとchar→Characterは特殊な名前になっています。",
+          "choices": [
+            {
+              "id": "ch15_01_q1_a",
+              "text": "Int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_01_q1_b",
+              "text": "Integer",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_01_q1_c",
+              "text": "IntWrapper",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_01_q1_d",
+              "text": "Number",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_01_q2",
+          "lessonId": "ch15_01",
+          "type": "outputPredict",
+          "question": "以下のコードを実行した場合、出力結果はどれですか？",
+          "code": "Integer a = 10;\nint b = a + 20;\nSystem.out.println(b);",
+          "explanation": "Integer a = 10 ではAutoboxingによりint値10がInteger型に変換されます。a + 20 ではaがUnboxingされてint値に戻り、10 + 20 = 30が計算されます。結果としてbには30が代入され、30が出力されます。",
+          "choices": [
+            {
+              "id": "ch15_01_q2_a",
+              "text": "30",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_01_q2_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_01_q2_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_01_q2_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_01_q3",
+          "lessonId": "ch15_01",
+          "type": "fillBlank",
+          "question": "文字列\"100\"をint型に変換するコードを完成させてください。\nint num = Integer.______(\"100\");",
+          "code": null,
+          "explanation": "Integer.parseInt()は文字列を基本データ型のintに変換する静的メソッドです。引数に渡された文字列を10進数として解析し、int値を返します。数値として解析できない文字列を渡すとNumberFormatExceptionがスローされます。",
+          "choices": [
+            {
+              "id": "ch15_01_q3_a",
+              "text": "parseInt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_01_q3_b",
+              "text": "valueOf",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_01_q3_c",
+              "text": "toInt",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_01_q3_d",
+              "text": "parse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch15_02",
+      "courseId": "ch15",
+      "title": "Stringクラスの主要メソッド",
+      "summary": "Stringクラスの頻出メソッドと不変性（immutability）の概念を理解する",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・Stringの不変性（**イミュータブル**）の意味\n・charAt, substring, indexOf, replace等の主要メソッド\n・文字列比較（equals vs ==）の正しい使い方\n\n試験でも実務でも最も頻出するAPI群です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "code",
+          "title": "基本的なStringメソッド",
+          "body": "Stringクラスには多くの便利なメソッドがあります。\nlength()は文字列の長さ、charAt()は指定位置の文字を返します。\nsubstring()は部分文字列を取得し、indexOf()は文字の位置を検索します。\nこれらのメソッドでは、インデックスが0から始まることに注意しましょう。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 変数の宣言と初期化\n        String s = \"Hello Java\";\n\n        System.out.println(s.length());       // 10\n        System.out.println(s.charAt(0));       // H\n        System.out.println(s.charAt(6));       // J\n        System.out.println(s.indexOf('J'));    // 6\n        System.out.println(s.indexOf(\"Java\")); // 6\n        System.out.println(s.indexOf('Z'));    // -1（見つからない場合）\n\n        // substring(beginIndex) - beginIndexから末尾まで\n        System.out.println(s.substring(6));    // Java\n        // substring(beginIndex, endIndex) - beginIndexからendIndex未満\n        System.out.println(s.substring(0, 5)); // Hello\n    }\n}",
+          "note": "substring(beginIndex, endIndex)のendIndexは「含まない」点に注意。s.substring(0, 5)は0〜4番目の文字を返します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "tip",
+          "title": "Stringの不変性を理解する",
+          "body": "Stringオブジェクトは一度作成されると、中身を変更できません。\n\n・str.toUpperCase() → 新しいStringを返す（元のstrは変わらない）\n・str.replace(\"a\", \"b\") → 新しいStringを返す（元のstrは変わらない）\n・str + \"追加\" → 新しいStringを返す（元のstrは変わらない）\n\n戻り値を変数に再代入しないと、操作結果が失われます。",
+          "code": null,
+          "note": "試験でString str = \"hello\"; str.toUpperCase(); の後にstrの値を聞く問題が頻出（答え: \"hello\"のまま）。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "rule",
+          "title": "equals()と==の違い",
+          "body": "Stringの比較では、equals()と==の違いを正確に理解する必要があります。\n==演算子はオブジェクトの「参照」が同じかどうかを比較します。\nequals()メソッドは文字列の「内容」が同じかどうかを比較します。\nリテラルで作成した文字列は文字列プールに格納されるため==でもtrueになることがありますが、\nnew String()で作成した場合は異なる参照になるため==はfalseになります。\n文字列の内容を比較する場合は常にequals()を使うのが正しい方法です。\ncompareToメソッドは辞書順で比較し、等しければ0、小さければ負、大きければ正の値を返します。",
+          "code": null,
+          "note": "試験では==とequals()の違いを問う問題が頻出です。文字列比較は必ずequals()を使いましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "code",
+          "title": "Stringの不変性（immutability）",
+          "body": "Stringオブジェクトは一度作成されると内容を変更できません。\ntoUpperCase()やreplace()などのメソッドを呼んでも元の文字列は変わらず、新しいStringオブジェクトが返されます。\nこの性質を「不変（immutable）」と呼びます。\n変更後の文字列を使いたい場合は、戻り値を変数に代入する必要があります。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 変数の宣言と初期化\n        String s = \"Hello\";\n        s.toUpperCase();  // 新しい文字列が作られるが、sは変わらない\n        System.out.println(s);  // Hello（元のまま）\n\n        String upper = s.toUpperCase();  // 戻り値を受け取る\n        System.out.println(upper);  // HELLO\n\n        String s2 = s.replace('l', 'r');\n        System.out.println(s);   // Hello（元のまま）\n        System.out.println(s2);  // Herro\n\n        String s3 = s.concat(\" World\");\n        System.out.println(s);   // Hello（元のまま）\n        System.out.println(s3);  // Hello World\n    }\n}",
+          "note": "【実務Tips】業務アプリではStringの不変性を活かしてHashMapのキーやスレッド間共有に安全に使えます。大量の文字列連結にはStringBuilderを使い、パフォーマンスを意識するのが現場の基本です。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "| メソッド | 説明 |\n|---|---|\n| length() | 文字列の長さ、charAt(i)はi番目の文字を返す（0始まり） |\n| substring(begin, end) | beginからend未満の部分文字列を返す |\n| indexOf() | 文字・文字列の位置を返し、見つからなければ-1を返す |\n・==は参照比較、equals()は内容比較。文字列比較にはequals()を使う\n・Stringは不変（immutable）であり、メソッド呼び出しで元の文字列は変わらない",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_02_q1",
+          "lessonId": "ch15_02",
+          "type": "outputPredict",
+          "question": "以下のコードを実行した場合、出力結果はどれですか？",
+          "code": "String s = \"JavaSilver\";\nSystem.out.println(s.substring(4, 10));",
+          "explanation": "substring(4, 10)はインデックス4から9までの文字を抽出します。\"JavaSilver\"のインデックス4は'S'、インデックス9は'r'なので、\"Silver\"が出力されます。endIndexの10は含まれない点がポイントです。",
+          "choices": [
+            {
+              "id": "ch15_02_q1_a",
+              "text": "Silver",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_02_q1_b",
+              "text": "aSilve",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_02_q1_c",
+              "text": "Silve",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_02_q1_d",
+              "text": "StringIndexOutOfBoundsException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_02_q2",
+          "lessonId": "ch15_02",
+          "type": "fourChoice",
+          "question": "Stringの不変性（immutability）について正しい説明はどれですか？",
+          "code": null,
+          "explanation": "Stringオブジェクトは不変（immutable）であり、toUpperCase()やreplace()などのメソッドを呼び出しても元の文字列は変更されません。メソッドは新しいStringオブジェクトを作成して返します。元の文字列を変えたい場合は戻り値を変数に再代入する必要があります。",
+          "choices": [
+            {
+              "id": "ch15_02_q2_a",
+              "text": "toUpperCase()を呼ぶと元の文字列が大文字に変わる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_02_q2_b",
+              "text": "Stringのメソッドは新しいStringオブジェクトを返し、元は変更されない",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_02_q2_c",
+              "text": "Stringはfinalクラスなので継承できないが、内容は変更できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_02_q2_d",
+              "text": "concat()を呼ぶと元の文字列の末尾に文字列が追加される",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_02_q3",
+          "lessonId": "ch15_02",
+          "type": "outputPredict",
+          "question": "以下のコードを実行した場合、出力結果はどれですか？",
+          "code": "String s1 = \"Hello\";\nString s2 = new String(\"Hello\");\nSystem.out.println(s1 == s2);\nSystem.out.println(s1.equals(s2));",
+          "explanation": "s1はリテラルで作成されて文字列プールに格納されます。s2はnew演算子で作成されるため、プールとは別のヒープ上にオブジェクトが作られます。==は参照を比較するため、異なるオブジェクトなのでfalseです。equals()は内容を比較するため、どちらも\"Hello\"なのでtrueです。",
+          "choices": [
+            {
+              "id": "ch15_02_q3_a",
+              "text": "true\ntrue",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_02_q3_b",
+              "text": "false\ntrue",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_02_q3_c",
+              "text": "false\nfalse",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_02_q3_d",
+              "text": "true\nfalse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch15_02_q4",
+          "lessonId": "ch15_02",
+          "type": "codeComplete",
+          "question": "Stringの部分文字列取得と変換のコードを完成させてください。",
+          "code": null,
+          "explanation": "substring(start, end)で部分文字列を取得し、toUpperCase()で大文字に変換します。Stringは不変なので新しいインスタンスが返ります。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "String s = \"Hello World\";\nString sub = s.__BLANK_1__(0, 5);\nString upper = sub.__BLANK_2__();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①部分文字列",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "substring",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "slice",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "substr",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②大文字化",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "toUpperCase",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "upper",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "capitalize",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch15_03",
+      "courseId": "ch15",
+      "title": "StringBuilder",
+      "summary": "可変な文字列操作を行うStringBuilderクラスの使い方とStringとの違いを理解する",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・StringBuilderの役割（可変な文字列操作）\n・append, insert, delete, reverseメソッド\n・Stringとの使い分けの判断基準\n\n大量の文字列連結ではStringBuilderが圧倒的に高速です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "code",
+          "title": "StringBuilderの基本操作",
+          "body": "StringBuilderの主要メソッドを確認しましょう。\n| メソッド | 説明 |\n|---|---|\n| append() | 末尾に文字列を追加します。 |\n| insert() | 指定位置に文字列を挿入します。 |\n| delete() | 指定範囲の文字を削除します。 |\n| reverse() | 文字列全体を反転します。 |",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        StringBuilder sb = new StringBuilder(\"Hello\");\n\n        // append: 末尾に追加\n        sb.append(\" World\");\n        System.out.println(sb);  // Hello World\n\n        // insert: 指定位置に挿入\n        sb.insert(5, \",\");\n        System.out.println(sb);  // Hello, World\n\n        // delete: 指定範囲を削除 (beginIndex, endIndex)\n        sb.delete(5, 6);\n        System.out.println(sb);  // Hello World\n\n        // reverse: 反転\n        StringBuilder sb2 = new StringBuilder(\"Java\");\n        sb2.reverse();\n        System.out.println(sb2);  // avaJ\n\n        // length: 長さ\n        System.out.println(sb.length());  // 11\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "code",
+          "title": "メソッドチェーン",
+          "body": "StringBuilderのappend()やinsert()などのメソッドはStringBuilder自身の参照を返します。\nこのため、複数のメソッド呼び出しを「.」でつなげて記述できます。\nこれを「メソッドチェーン」と呼び、コードを簡潔に書けるのが利点です。",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // メソッドチェーンで連続して操作\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"Java\").append(\" \").append(\"Silver\").insert(0, \"★\");\n        System.out.println(sb);  // ★Java Silver\n\n        // これは以下と同じ意味\n        StringBuilder sb2 = new StringBuilder();\n        sb2.append(\"Java\");\n        sb2.append(\" \");\n        sb2.append(\"Silver\");\n        sb2.insert(0, \"★\");\n        System.out.println(sb2);  // ★Java Silver\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "tip",
+          "title": "StringとStringBuilderの使い分け",
+          "body": "StringとStringBuilderは場面によって使い分ける必要があります。\n\n【Stringが適している場面】\n・文字列をほとんど変更しない場合\n・スレッドセーフが必要な場合（Stringは不変なのでスレッドセーフ）\n・少数の文字列連結で済む場合\n\n【StringBuilderが適している場面】\n・ループ内で文字列を繰り返し連結する場合\n・文字列を頻繁に挿入・削除する場合\n・パフォーマンスが重要な場面\n\nなお、StringBufferというクラスもあります。StringBuilderと同じ機能ですがスレッドセーフです。\n認定試験ではStringBuilderの方が出題されやすいです。",
+          "code": null,
+          "note": "StringBuilderはスレッドセーフではありません。マルチスレッド環境ではStringBufferを使います。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・StringBuilderは可変（mutable）で、元のオブジェクトが直接変更される\n・append()は末尾追加、insert()は指定位置挿入、delete()は範囲削除、reverse()は反転\n・メソッドチェーンにより複数操作を1行で記述できる\n・ループ内での文字列結合にはStringよりStringBuilderが効率的\n・StringBuilderはスレッドセーフではない点に注意（スレッドセーフはStringBuffer）",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_03_q1",
+          "lessonId": "ch15_03",
+          "type": "outputPredict",
+          "question": "以下のコードを実行した場合、出力結果はどれですか？",
+          "code": "StringBuilder sb = new StringBuilder(\"ABCDE\");\nsb.delete(1, 3);\nSystem.out.println(sb);",
+          "explanation": "delete(1, 3)はインデックス1からインデックス3未満（つまりインデックス1と2）の文字を削除します。\"ABCDE\"のインデックス1は'B'、インデックス2は'C'なので、これらが削除されて\"ADE\"が残ります。",
+          "choices": [
+            {
+              "id": "ch15_03_q1_a",
+              "text": "ADE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q1_b",
+              "text": "ACE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q1_c",
+              "text": "ABDE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q1_d",
+              "text": "AE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_03_q2",
+          "lessonId": "ch15_03",
+          "type": "fourChoice",
+          "question": "StringBuilderとStringの違いについて正しい説明はどれですか？",
+          "code": null,
+          "explanation": "Stringは不変（immutable）なので、文字列操作のたびに新しいオブジェクトが作成されます。一方、StringBuilderは可変（mutable）で、内部のバッファを直接変更するため、繰り返し文字列を変更する場合に効率的です。StringBuilderはスレッドセーフではありません。",
+          "choices": [
+            {
+              "id": "ch15_03_q2_a",
+              "text": "StringBuilderは不変（immutable）であり、Stringは可変（mutable）である",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q2_b",
+              "text": "StringBuilderは可変（mutable）であり、元のオブジェクトが直接変更される",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q2_c",
+              "text": "StringBuilderはスレッドセーフであり、マルチスレッド環境で推奨される",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q2_d",
+              "text": "StringBuilderのメソッドは常にvoidを返すためチェーンできない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_03_q3",
+          "lessonId": "ch15_03",
+          "type": "fillBlank",
+          "question": "StringBuilderの文字列を反転させるメソッド名を答えてください。\nsb.______();",
+          "code": null,
+          "explanation": "reverse()はStringBuilderの内容を反転させるメソッドです。例えば\"Java\"にreverse()を適用すると\"avaJ\"になります。このメソッドはStringBuilder自身を返すため、メソッドチェーンにも使用できます。",
+          "choices": [
+            {
+              "id": "ch15_03_q3_a",
+              "text": "reverse",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q3_b",
+              "text": "flip",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q3_c",
+              "text": "invert",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q3_d",
+              "text": "swap",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch15_03_q4",
+          "lessonId": "ch15_03",
+          "type": "multiChoice",
+          "question": "Stringクラスの特徴として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "Stringはイミュータブル（不変）で、一度作成されると変更できません。文字列リテラルはString Poolで共有され、同じリテラルは同じオブジェクトを参照します。+演算子で連結するたびに新しいオブジェクトが生成されるため、ループ内での連結にはStringBuilderが推奨されます。Stringはfinalクラスなので継承できません。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch15_03_q4_a",
+              "text": "イミュータブル（不変）である",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q4_b",
+              "text": "文字列リテラルはString Poolで共有される",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q4_c",
+              "text": "サブクラスを作成して機能を拡張できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q4_d",
+              "text": "finalクラスとして定義されている",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_03_q5",
+          "lessonId": "ch15_03",
+          "type": "reorder",
+          "question": "StringBuilderで文字列を組み立てる手順を正しい順序に並べてください。",
+          "code": null,
+          "explanation": "StringBuilderは生成→appendで追加→toString()でStringに変換する流れです。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "StringBuilder sb = new StringBuilder();",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "sb.append(\"Hello\");",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "sb.append(\" World\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "String result = sb.toString();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch15_04",
+      "courseId": "ch15",
+      "title": "ArrayListの主要操作",
+      "summary": "ArrayListの基本操作とジェネリクス、拡張for文を使った要素の処理を理解する",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・ArrayListの主要操作（add, get, set, remove）\n・Iteratorによる安全な要素削除\n・for-each文で反復処理中に要素を削除する危険性\n\nArrayListは実務で最も使うコレクションです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "code",
+          "title": "ArrayListの基本操作",
+          "body": "ArrayListの生成と基本的なメソッドを確認します。\nadd()で要素を追加し、get()でインデックス指定で取得します。\nset()は指定位置の要素を置換し、remove()は要素を削除します。\nsize()は現在の要素数を返します。",
+          "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> list = new ArrayList<>();\n\n        // add: 要素の追加\n        list.add(\"Java\");\n        list.add(\"Python\");\n        list.add(\"C++\");\n        System.out.println(list);  // [Java, Python, C++]\n\n        // get: インデックスで取得\n        System.out.println(list.get(0));  // Java\n\n        // set: 指定位置の要素を置換\n        list.set(1, \"Ruby\");\n        System.out.println(list);  // [Java, Ruby, C++]\n\n        // remove: 要素の削除（インデックス指定）\n        list.remove(2);\n        System.out.println(list);  // [Java, Ruby]\n\n        // size: 要素数\n        System.out.println(list.size());  // 2\n    }\n}",
+          "note": "remove()にint値を渡すとインデックス指定、オブジェクトを渡すと値指定での削除になります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "tip",
+          "title": "for-each文の中でremoveしてはいけない",
+          "body": "以下のコードはConcurrentModificationExceptionを引き起こします。\n\nfor (String s : list) { if (条件) list.remove(s); }\n\n安全な削除方法:\n・Iteratorのremove()メソッドを使う\n・list.removeIf(条件) を使う（Java 8+、最も推奨）\n・逆順のインデックスループで削除する\n\nremoveIf() はラムダ式で条件を指定でき、最も簡潔です。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "code",
+          "title": "拡張for文（for-each）でのArrayList操作",
+          "body": "拡張for文を使うと、ArrayListの全要素を簡潔に反復処理できます。\nインデックスを意識せずに各要素にアクセスでき、コードが読みやすくなります。\nただし、反復中にリストを変更する（要素の追加・削除）とConcurrentModificationExceptionが発生します。\n通常のfor文ならインデックスを使った柔軟な操作が可能です。",
+          "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> fruits = new ArrayList<>();\n        fruits.add(\"Apple\");\n        fruits.add(\"Banana\");\n        fruits.add(\"Cherry\");\n\n        // 拡張for文\n        for (String fruit : fruits) {\n            System.out.println(fruit);\n        }\n        // Apple\n        // Banana\n        // Cherry\n\n        // 通常のfor文（インデックスあり）\n        for (int i = 0; i < fruits.size(); i++) {\n            System.out.println(i + \": \" + fruits.get(i));\n        }\n        // 0: Apple\n        // 1: Banana\n        // 2: Cherry\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "rule",
+          "title": "ジェネリクスの基本",
+          "body": "ArrayListにはジェネリクス（型パラメータ）を指定して、格納する要素の型を制限できます。\nArrayList<String>と宣言すると、String型の要素だけを格納できます。\n型パラメータには基本データ型（intやdoubleなど）は指定できません。\n代わりに**ラッパークラス**（IntegerやDoubleなど）を使用します。\nジェネリクスを指定することで、コンパイル時に型の安全性が保証され、取得時にキャストが不要になります。\nダイヤモンド演算子<>を使うと、右辺の型パラメータを省略できます。",
+          "code": null,
+          "note": "ArrayList<int>はコンパイルエラーです。ArrayList<Integer>と書く必要があります。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・ArrayListは可変長のリストで、要素の追加・削除に応じてサイズが変化する\n・add()で追加、get()で取得、set()で置換、remove()で削除、size()で要素数\n・ジェネリクスで型を指定する。基本データ型は使えず**ラッパークラス**が必要\n・拡張for文で全要素を簡潔に反復処理できる\n・拡張for文中にリストを変更するとConcurrentModificationExceptionが発生する",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_04_q1",
+          "lessonId": "ch15_04",
+          "type": "outputPredict",
+          "question": "以下のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> list = new ArrayList<>();\n        list.add(\"A\");\n        list.add(\"B\");\n        list.add(\"C\");\n        list.remove(1);\n        System.out.println(list.get(1));\n    }\n}",
+          "explanation": "まずlist = [A, B, C]となります。remove(1)でインデックス1の\"B\"が削除され、list = [A, C]になります。その後get(1)でインデックス1の\"C\"が取得されます。remove後に要素が詰められる点がポイントです。",
+          "choices": [
+            {
+              "id": "ch15_04_q1_a",
+              "text": "B",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_04_q1_b",
+              "text": "C",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_04_q1_c",
+              "text": "A",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_04_q1_d",
+              "text": "IndexOutOfBoundsException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_04_q2",
+          "lessonId": "ch15_04",
+          "type": "errorFind",
+          "question": "以下のコードにはエラーがあります。エラーの原因はどれですか？",
+          "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<int> numbers = new ArrayList<>();\n        numbers.add(10);\n        numbers.add(20);\n        System.out.println(numbers.get(0));\n    }\n}",
+          "explanation": "ArrayListのジェネリクス型パラメータにはプリミティブ型（int、doubleなど）を指定できません。ArrayList<int>はコンパイルエラーです。代わりにArrayList<Integer>と記述する必要があります。ラッパークラスを使えばAutoboxingにより、int値をそのままadd()に渡すことができます。",
+          "choices": [
+            {
+              "id": "ch15_04_q2_a",
+              "text": "ArrayList<int>にプリミティブ型は指定できない。ArrayList<Integer>にする必要がある",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_04_q2_b",
+              "text": "ArrayListのimport文が不足している",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_04_q2_c",
+              "text": "add()メソッドにint値を直接渡すことはできない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_04_q2_d",
+              "text": "get(0)の戻り値をint型で受け取っていないためエラーになる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_04_q3",
+          "lessonId": "ch15_04",
+          "type": "fourChoice",
+          "question": "ArrayListの要素数を取得するメソッドはどれですか？",
+          "code": null,
+          "explanation": "ArrayListの要素数を取得するにはsize()メソッドを使います。配列ではlengthフィールド（arr.length）、Stringではlength()メソッドを使う点と混同しないように注意しましょう。count()やgetSize()というメソッドはArrayListには存在しません。",
+          "choices": [
+            {
+              "id": "ch15_04_q3_a",
+              "text": "length()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_04_q3_b",
+              "text": "count()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_04_q3_c",
+              "text": "size()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch15_04_q3_d",
+              "text": "getSize()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch15_05",
+      "courseId": "ch15",
+      "title": "LocalDate / LocalDateTime",
+      "summary": "java.timeパッケージのLocalDate・LocalDateTimeを使った日時操作とフォーマットを理解する",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・LocalDate（日付のみ）、LocalTime（時刻のみ）、LocalDateTime（両方）\n・日時の生成・加算・比較・フォーマットの方法\n・DateTimeFormatterによる表示形式の変換\n\nJava 8以降の新しい日時APIの基本を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "code",
+          "title": "LocalDateの生成と主要メソッド",
+          "body": "LocalDateは年月日を表すクラスです。\nnow()で現在の日付、of()で任意の日付を作成できます。\ngetYear()、getMonthValue()、getDayOfMonth()で各値を取得できます。\nplusDays()やminusMonths()で日付の加減算が可能です。\nStringと同様に不変（immutable）なため、操作の結果は新しいオブジェクトとして返されます。",
+          "code": "import java.time.LocalDate;\n\npublic class Main {\n    public static void main(String[] args) {\n        // 現在の日付\n        LocalDate today = LocalDate.now();\n        System.out.println(today);  // 例: 2026-04-07\n\n        // 任意の日付を指定\n        LocalDate date = LocalDate.of(2025, 1, 15);\n        System.out.println(date);  // 2025-01-15\n\n        // 各値の取得\n        System.out.println(date.getYear());        // 2025\n        System.out.println(date.getMonthValue());  // 1\n        System.out.println(date.getDayOfMonth());  // 15\n\n        // 日付の加減算（元のオブジェクトは変わらない）\n        LocalDate nextWeek = date.plusDays(7);\n        System.out.println(nextWeek);  // 2025-01-22\n\n        LocalDate lastMonth = date.minusMonths(1);\n        System.out.println(lastMonth);  // 2024-12-15\n    }\n}",
+          "note": "LocalDate.of()の月は1〜12の数値で指定します（0始まりではありません）。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "tip",
+          "title": "LocalDateは不変（immutable）で設計されている",
+          "body": "Stringと同様に、LocalDateのメソッドは元のオブジェクトを変更しません。\n\n・date.plusDays(1) → 新しいLocalDateを返す\n・date.withMonth(12) → 新しいLocalDateを返す\n\n戻り値を受け取らないと、操作結果が失われる点に注意しましょう。\n\nまた、コンストラクタは使えず、of()やnow()で生成します。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "code",
+          "title": "LocalDateTimeの操作",
+          "body": "LocalDateTimeは日付と時刻の両方を持つクラスです。\nof()メソッドで年・月・日・時・分・秒を指定してインスタンスを生成します。\nplusHours()やminusMinutes()で時刻の加減算もできます。\nLocalDateと同様に不変（immutable）です。",
+          "code": "import java.time.LocalDateTime;\n\npublic class Main {\n    public static void main(String[] args) {\n        // 現在の日時\n        LocalDateTime now = LocalDateTime.now();\n        System.out.println(now);  // 例: 2026-04-07T14:30:15.123\n\n        // 任意の日時を指定\n        LocalDateTime dt = LocalDateTime.of(2025, 6, 15, 10, 30, 0);\n        System.out.println(dt);  // 2025-06-15T10:30\n\n        // 日時の加減算\n        LocalDateTime later = dt.plusHours(3);\n        System.out.println(later);  // 2025-06-15T13:30\n\n        LocalDateTime earlier = dt.minusDays(2).minusMinutes(15);\n        System.out.println(earlier);  // 2025-06-13T10:15\n\n        // LocalDateTimeは不変\n        dt.plusYears(1);  // 新しいオブジェクトが返されるがdtは変わらない\n        System.out.println(dt);  // 2025-06-15T10:30\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "rule",
+          "title": "DateTimeFormatterによるフォーマット",
+          "body": "DateTimeFormatterを使うと、日時をカスタム形式の文字列に変換できます。\nofPatternメソッドにパターン文字列を渡してフォーマッタを作成します。\n主なパターン文字は以下の通りです。\n\nyyyy: 年（4桁）\nMM: 月（2桁）\ndd: 日（2桁）\nHH: 時（24時間制、2桁）\nmm: 分（2桁）\nss: 秒（2桁）\n\nformat()メソッドでLocalDateやLocalDateTimeを文字列に変換します。\n逆にparse()メソッドで文字列からLocalDateを生成することもできます。",
+          "code": null,
+          "note": "月のMは大文字、分のmは小文字です。混同しないように注意しましょう。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・LocalDateは日付のみ、LocalDateTimeは日付と時刻を扱うクラス\n・new演算子ではなくnow()やof()で作成する（ファクトリメソッド）\n・plusDays()、minusHours()などで加減算でき、結果は新しいオブジェクトとして返される\n・LocalDate/LocalDateTimeは不変（immutable）で、元のオブジェクトは変更されない\n・DateTimeFormatter.ofPattern()でカスタム形式の文字列変換が可能",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_05_q1",
+          "lessonId": "ch15_05",
+          "type": "fourChoice",
+          "question": "LocalDateのインスタンスを生成する正しい方法はどれですか？",
+          "code": null,
+          "explanation": "LocalDateはnew演算子では生成できません。ファクトリメソッドであるLocalDate.of()やLocalDate.now()を使用します。LocalDate.of(2025, 1, 15)は2025年1月15日を表すLocalDateオブジェクトを返します。コンストラクタはprivateになっているため、new LocalDate()はコンパイルエラーです。",
+          "choices": [
+            {
+              "id": "ch15_05_q1_a",
+              "text": "new LocalDate(2025, 1, 15)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_05_q1_b",
+              "text": "LocalDate.of(2025, 1, 15)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_05_q1_c",
+              "text": "LocalDate.create(2025, 1, 15)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_05_q1_d",
+              "text": "LocalDate.parse(2025, 1, 15)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_05_q2",
+          "lessonId": "ch15_05",
+          "type": "outputPredict",
+          "question": "以下のコードを実行した場合、出力結果はどれですか？",
+          "code": "import java.time.LocalDate;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate date = LocalDate.of(2025, 3, 20);\n        date.plusDays(10);\n        System.out.println(date.getDayOfMonth());\n    }\n}",
+          "explanation": "LocalDateは不変（immutable）です。date.plusDays(10)は新しいLocalDateオブジェクトを返しますが、戻り値を変数に代入していないため、元のdateは変わりません。したがってdate.getDayOfMonth()は元の値である20を返します。",
+          "choices": [
+            {
+              "id": "ch15_05_q2_a",
+              "text": "30",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_05_q2_b",
+              "text": "20",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_05_q2_c",
+              "text": "10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_05_q2_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_05_q3",
+          "lessonId": "ch15_05",
+          "type": "fillBlank",
+          "question": "DateTimeFormatterで「年-月-日」形式（例: 2025-06-15）のパターンを指定してください。\nDateTimeFormatter fmt = DateTimeFormatter.ofPattern(\"______\");",
+          "code": null,
+          "explanation": "DateTimeFormatterのパターンで、yyyyは4桁の年、MMは2桁の月、ddは2桁の日を表します。yyyy-MM-ddとすることで\"2025-06-15\"のような形式で出力できます。月のMは大文字であることに注意してください（小文字のmmは「分」を意味します）。",
+          "choices": [
+            {
+              "id": "ch15_05_q3_a",
+              "text": "yyyy-MM-dd",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_05_q3_b",
+              "text": "YYYY-mm-DD",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_05_q3_c",
+              "text": "yyyy/mm/dd",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_05_q3_d",
+              "text": "yy-MM-dd",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

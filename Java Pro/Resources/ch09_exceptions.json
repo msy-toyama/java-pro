@@ -1,0 +1,963 @@
+{
+  "courseId": "ch09",
+  "lessons": [
+    {
+      "id": "ch09_01",
+      "courseId": "ch09",
+      "title": "例外処理の基本",
+      "summary": "try-catch-finallyで安全なプログラムを書く",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch09_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・例外（Exception）とは何か\n・try-catch文でエラーを捕捉・処理する方法\n・finally句で必ず実行される処理を書く方法\n\n例外処理はプログラムの「安全装置」です。エラーに備えることで堅牢なプログラムになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch09_01",
+          "sectionType": "rule",
+          "title": "例外の継承階層",
+          "body": "Javaの例外クラスは以下の階層構造になっています。\n\nThrowable（全例外の親）\n├── Error（深刻なエラー。catchしない）\n│   ├── OutOfMemoryError\n│   └── StackOverflowError\n└── Exception（プログラムで対処すべき例外）\n    ├── **チェック例外**（検査例外）\n    │   ├── IOException\n    │   ├── SQLException\n    │   └── FileNotFoundException\n    └── **RuntimeException**（**非チェック例外**）\n        ├── **NullPointerException**\n        ├── ArrayIndexOutOfBoundsException\n        ├── NumberFormatException\n        ├── IllegalArgumentException\n        └── ClassCastException\n\n| 種類 | 説明 |\n|---|---|\n| チェック例外 | コンパイラが処理を強制する（try-catchまたはthrows必須） |\n| 非チェック例外 | 処理を強制されない（プログラムのバグが原因のことが多い） |\n| Error | JVM自体の問題。通常catchしない |",
+          "code": null,
+          "note": "「**チェック例外**」は「コンパイラがチェック（強制）する例外」の意味です。Exception直下がチェック例外、RuntimeException配下が**非チェック例外**です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch09_01",
+          "sectionType": "code",
+          "title": "try-catch-finally文",
+          "body": "例外が発生する可能性のあるコードをtryブロックで囲み、catchで例外を処理します。",
+          "code": "try {\n    // 例外が発生する可能性のあるコード\n    int[] nums = {1, 2, 3};\n    System.out.println(nums[5]); // ArrayIndexOutOfBoundsException\n    System.out.println(\"ここは実行されない\");\n} catch (ArrayIndexOutOfBoundsException e) {\n    // 例外発生時の処理\n    System.out.println(\"配列の範囲外: \" + e.getMessage());\n} finally {\n    // 例外の有無に関わらず必ず実行\n    System.out.println(\"後処理完了\");\n}\nSystem.out.println(\"プログラム続行\");\n\n// 出力:\n// 配列の範囲外: Index 5 out of bounds for length 3\n// 後処理完了\n// プログラム続行\n\n// 複数の例外をcatch\ntry {\n    String s = \"abc\";\n    int num = Integer.parseInt(s);\n} catch (NumberFormatException e) {\n    System.out.println(\"数値変換エラー: \" + e.getMessage());\n} catch (Exception e) {\n    System.out.println(\"その他のエラー: \" + e.getMessage());\n}\n// ※サブクラスのcatchを先に書く。逆順だとコンパイルエラー",
+          "note": "catchブロックは複数書けますが、サブクラスの例外を先に書く必要があります。ExceptionをNumberFormatExceptionより先に書くとコンパイルエラーになります。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch09_01",
+          "sectionType": "tip",
+          "title": "チェック例外と非チェック例外の違い",
+          "body": "Javaの例外は大きく2種類に分けられます。\n\n| 種類 | 親クラス | catchの義務 | 例 |\n|---|---|---|---|\n| チェック例外 | Exception | 必須 | IOException, SQLException |\n| 非チェック例外 | RuntimeException | 任意 | NullPointerException, ArrayIndexOutOfBoundsException |\n\nチェック例外は「予測可能なエラー」、非チェック例外は「プログラムのバグ」に使います。",
+          "code": null,
+          "note": "Error（OutOfMemoryError等）は通常catchしません。回復不可能なシステムエラーです。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch09_01",
+          "sectionType": "code",
+          "title": "throwとthrows",
+          "body": "throwで例外を投げ、throwsでメソッドが例外を投げる可能性を宣言します。",
+          "code": "// throw: 例外を明示的に投げる\npublic static int divide(int a, int b) {\n    if (b == 0) {\n        throw new IllegalArgumentException(\"0で割ることはできません\");\n    }\n    return a / b;\n}\n\n// throws: チェック例外をメソッドシグネチャで宣言\n// 「このメソッドはIOExceptionを投げる可能性がある」\npublic static String readFile(String path) throws IOException {\n    BufferedReader br = new BufferedReader(new FileReader(path));\n    return br.readLine();\n}\n\n// 呼び出し側で処理が必要\ntry {\n    String line = readFile(\"data.txt\");\n} catch (IOException e) {\n    System.out.println(\"読み取りエラー: \" + e.getMessage());\n}\n\n// throwとthrowsの違い:\n// throw  → 例外オブジェクトを投げる（メソッド内部で使う）\n// throws → メソッドが例外を投げる可能性を宣言する",
+          "note": "**RuntimeException**（**非チェック例外**）はthrows宣言不要です。チェック例外はtry-catchで処理するかthrowsで呼び出し元に伝播させる必要があります。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch09_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・Throwable → Error / Exception → **RuntimeException** の階層\n| 種類 | 説明 |\n|---|---|\n| チェック例外 | コンパイラが処理を強制（IOException等） |\n| 非チェック例外 | 処理は任意（NullPointerException等） |\n・catchは複数書ける（サブクラスを先に記述）\n・throw: 例外を投げる、throws: メソッドの例外宣言",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch09_01_q1",
+          "lessonId": "ch09_01",
+          "type": "reorder",
+          "question": "例外処理のブロックを実行される順番に並べ替えてください（例外が発生した場合）。",
+          "code": "try {\n    int result = 10 / 0;\n} catch (ArithmeticException e) {\n    System.out.println(e.getMessage());\n}",
+          "explanation": "例外が発生した場合の実行順序は、(1) tryブロックで例外発生時点まで実行 → (2) 該当するcatchブロックで例外処理 → (3) finallyブロックが必ず実行 → (4) try-catch-finally後のコードが実行されます。",
+          "choices": [
+            {
+              "id": "ch09_01_q1_a",
+              "text": "tryブロック（例外発生まで）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch09_01_q1_b",
+              "text": "catchブロック",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_01_q1_c",
+              "text": "finallyブロック",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch09_01_q1_d",
+              "text": "try-catch文の後のコード",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch09_01_q1_a",
+            "ch09_01_q1_b",
+            "ch09_01_q1_c",
+            "ch09_01_q1_d"
+          ],
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch09_01_q2",
+          "lessonId": "ch09_01",
+          "type": "fourChoice",
+          "question": "チェック例外（検査例外）に該当するものはどれですか？",
+          "code": "public void readFile() throws IOException {\n    FileReader fr = new FileReader(\"test.txt\");\n    // ...\n    fr.close();\n}",
+          "explanation": "IOExceptionはチェック例外です。Exceptionの直接のサブクラスで、RuntimeExceptionのサブクラスではありません。NullPointerException, NumberFormatExceptionはRuntimeException（非チェック例外）、OutOfMemoryErrorはErrorです。",
+          "choices": [
+            {
+              "id": "ch09_01_q2_a",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_01_q2_b",
+              "text": "IOException",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_01_q2_c",
+              "text": "NumberFormatException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_01_q2_d",
+              "text": "OutOfMemoryError",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch09_01_q3",
+          "lessonId": "ch09_01",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "try {\n    System.out.print(\"A\");\n    int x = 10 / 0;\n    System.out.print(\"B\");\n} catch (ArithmeticException e) {\n    System.out.print(\"C\");\n} finally {\n    System.out.print(\"D\");\n}\nSystem.out.print(\"E\");",
+          "explanation": "tryで\"A\"を出力後、10/0でArithmeticExceptionが発生し\"B\"はスキップ。catchで\"C\"を出力。finallyで\"D\"を出力。try-catch後に\"E\"を出力。結果は\"ACDE\"です。",
+          "choices": [
+            {
+              "id": "ch09_01_q3_a",
+              "text": "ACDE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch09_01_q3_b",
+              "text": "ABCDE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_01_q3_c",
+              "text": "ACD",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_01_q3_d",
+              "text": "ACE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch09_02",
+      "courseId": "ch09",
+      "title": "try-with-resourcesとマルチキャッチ",
+      "summary": "リソース自動解放とモダンな例外処理",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch09_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・try-with-resources：リソースを自動的に閉じる構文\n・マルチキャッチ：複数の例外を1つのcatchで処理\n・Java 7以降の便利な例外処理機能\n\n実務でリソース管理のミスを防ぐ重要なテクニックです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch09_02",
+          "sectionType": "code",
+          "title": "try-with-resources文",
+          "body": "AutoCloseableインターフェースを実装したリソースは自動的にcloseされます。",
+          "code": "// 従来の書き方（finallyで閉じる必要がある）\nBufferedReader br = null;\n// 例外が発生する可能性がある処理\ntry {\n    br = new BufferedReader(new FileReader(\"data.txt\"));\n    // 変数の宣言と初期化\n    String line = br.readLine();\n    System.out.println(line);\n} catch (IOException e) {\n    e.printStackTrace();\n} finally {\n    // 条件分岐\n    if (br != null) {\n        // 例外が発生する可能性がある処理\n        try { br.close(); } catch (IOException e) { /* 無視 */ }\n    }\n}\n\n// try-with-resources（Java 7+）: 自動close\n// 例外が発生する可能性がある処理\ntry (BufferedReader br2 = new BufferedReader(new FileReader(\"data.txt\"))) {\n    String line = br2.readLine();\n    System.out.println(line);\n} catch (IOException e) {\n    e.printStackTrace();\n}\n// br2は自動的にclose される（finallyブロック不要）\n\n// 複数リソースの場合\n// 例外が発生する可能性がある処理\ntry (FileInputStream fis = new FileInputStream(\"in.txt\");\n     FileOutputStream fos = new FileOutputStream(\"out.txt\")) {\n    int data;\n    // 条件が成り立つ間、繰り返す\n    while ((data = fis.read()) != -1) {\n        fos.write(data);\n    }\n} // fis, fos 両方とも自動close（宣言と逆順で閉じられる）",
+          "note": "try-with-resourcesで利用するクラスは AutoCloseable または Closeable インターフェースを実装している必要があります。InputStream, OutputStream, Reader, Writer, Connection等が該当します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch09_02",
+          "sectionType": "tip",
+          "title": "try-with-resourcesを使わないとどうなるか",
+          "body": "旧来のtry-finally方式では、以下の問題がありました:\n\n・close()の書き忘れでリソースリーク\n・close()自体が例外を投げる可能性\n・コードが冗長で読みにくい\n\ntry-with-resources を使えば、AutoCloseable を実装したリソースが自動的にcloseされます。",
+          "code": null,
+          "note": "Java 9以降、tryの外で宣言した変数もtry-with-resourcesで使えます（事実上finalな場合）。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch09_02",
+          "sectionType": "code",
+          "title": "マルチキャッチ（Java 7+）",
+          "body": "複数の例外を1つのcatchブロックでまとめて処理できます。",
+          "code": "// 従来: catchブロックを複数記述\ntry {\n    // ...\n} catch (NumberFormatException e) {\n    System.out.println(\"エラー: \" + e.getMessage());\n} catch (ArrayIndexOutOfBoundsException e) {\n    System.out.println(\"エラー: \" + e.getMessage()); // 同じ処理\n}\n\n// マルチキャッチ: | で複数の例外をまとめる\ntry {\n    String s = \"abc\";\n    int num = Integer.parseInt(s);\n    int[] arr = {1, 2};\n    System.out.println(arr[5]);\n} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {\n    // 1つのcatchで複数の例外型を処理\n    System.out.println(\"エラー: \" + e.getMessage());\n}\n\n// ⚠️ 注意: 親子関係の例外はまとめられない\n// catch (Exception | IOException e)  // コンパイルエラー！\n// → IOExceptionはExceptionのサブクラスだから\n\n// マルチキャッチの変数は暗黙的にfinal\n// catch (A | B e) {\n//     e = new A(); // コンパイルエラー！\n// }",
+          "note": "マルチキャッチの変数eは暗黙的にfinalです。catchブロック内でeに再代入することはできません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch09_02",
+          "sectionType": "rule",
+          "title": "finallyとreturnの関係",
+          "body": "finallyは例外の有無に関係なく必ず実行されますが、returnとの関係に注意が必要です。\n\n・tryやcatchでreturnしても、finallyは実行される\n・finally内のreturnはtry/catchのreturnを上書きする（非推奨）\n・finally内で例外が発生した場合、try/catchの例外は失われる\n\n典型的な試験問題:\n  try { return 1; }\n  finally { return 2; }\n  → 戻り値は 2（finallyが上書き）\n\nベストプラクティス:\n・finallyではreturnを書かない\n・finallyではリソースのクローズなど後処理のみ行う\n・リソース管理はtry-with-resourcesで行う",
+          "code": null,
+          "note": "finally内のreturnは、tryまたはcatchで投げられた例外も握りつぶしてしまいます。finally内にreturnを書くとコンパイラ警告が出るIDEもあります。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch09_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・try-with-resources: AutoCloseableリソースを自動close\n・リソースは宣言と逆順でcloseされる\n・マルチキャッチ: catch (A | B e) で複数例外をまとめる\n・親子関係の例外はマルチキャッチできない\n・マルチキャッチの変数eは暗黙的にfinal\n・finally内のreturnはtry/catchのreturnを上書き（非推奨）\n・try-with-resourcesはfinally手動closeの完全な代替",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch09_02_q1",
+          "lessonId": "ch09_02",
+          "type": "fourChoice",
+          "question": "try-with-resourcesで自動closeされるために、クラスが実装すべきインターフェースはどれですか？",
+          "code": "try {\n    String s = null;\n    s.length();\n} catch (NullPointerException e) {\n    System.out.println(\"Null!\");\n} finally {\n    System.out.println(\"Finally\");\n}",
+          "explanation": "try-with-resourcesでは、AutoCloseableインターフェースを実装したクラスのインスタンスが自動的にcloseされます。CloseableはAutoCloseableのサブインターフェースで、IOExceptionのみをスローします。どちらを実装していてもtry-with-resourcesで使えます。",
+          "choices": [
+            {
+              "id": "ch09_02_q1_a",
+              "text": "Serializable",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_02_q1_b",
+              "text": "AutoCloseable",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_02_q1_c",
+              "text": "Iterable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_02_q1_d",
+              "text": "Comparable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch09_02_q2",
+          "lessonId": "ch09_02",
+          "type": "outputPredict",
+          "question": "以下のコードの戻り値は何ですか？",
+          "code": "public static int test() {\n    try {\n        return 1;\n    } finally {\n        return 2;\n    }\n}",
+          "explanation": "tryでreturn 1が実行されますが、finallyは必ず実行されるため、finally内のreturn 2がtryのreturn 1を上書きします。結果として2が返されます。finally内でのreturnは非推奨です。",
+          "choices": [
+            {
+              "id": "ch09_02_q2_a",
+              "text": "1",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_02_q2_b",
+              "text": "2",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_02_q2_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_02_q2_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch09_02_q3",
+          "lessonId": "ch09_02",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "try {\n    String s = \"abc\";\n    int n = Integer.parseInt(s);\n} catch (Exception | NumberFormatException e) {\n    System.out.println(e.getMessage());\n}",
+          "explanation": "4行目でコンパイルエラーが発生します。マルチキャッチでは親子関係の例外をまとめることはできません。NumberFormatExceptionはExceptionのサブクラスなので、catch (Exception | NumberFormatException e) は不正です。Exceptionだけ、またはNumberFormatExceptionだけにする必要があります。",
+          "choices": [
+            {
+              "id": "ch09_02_q3_a",
+              "text": "1行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_02_q3_b",
+              "text": "3行目",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_02_q3_c",
+              "text": "4行目",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch09_02_q3_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch09_02_q4",
+          "lessonId": "ch09_02",
+          "type": "codeComplete",
+          "question": "ファイル読み込み処理の例外処理を完成させてください。IOExceptionをキャッチし、finallyで処理完了メッセージを表示します。",
+          "code": "public class CustomException extends Exception {\n    public CustomException(String msg) {\n        super(msg);\n    }\n}",
+          "explanation": "try-catch-finally の基本構文です。tryブロック内で例外が発生する可能性のあるコードを記述し、catchで特定の例外型をキャッチします。finallyブロックは例外の有無に関わらず必ず実行されます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ {\n    reader = new FileReader(\"data.txt\");\n} __BLANK_2__ (IOException e) {\n    System.out.println(e.getMessage());\n} __BLANK_3__ {\n    System.out.println(\"処理完了\");\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "try",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "do",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "begin",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "catch",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "except",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "rescue",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_3",
+              "label": "③",
+              "choices": [
+                {
+                  "id": "b3_c1",
+                  "text": "finally",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b3_c2",
+                  "text": "ensure",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b3_c3",
+                  "text": "always",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch09_03",
+      "courseId": "ch09",
+      "title": "カスタム例外の作成",
+      "summary": "独自の例外クラスを定義する",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch09_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・独自の例外クラスを作成する方法\n・**チェック例外**と**非チェック例外**の選び方\n・例外チェーン（cause）で原因を伝搬する方法\n\nビジネスロジックに合わせた例外を定義できるようになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch09_03",
+          "sectionType": "code",
+          "title": "カスタムチェック例外",
+          "body": "Exceptionを継承して**チェック例外**を作成します。",
+          "code": "// カスタムチェック例外\n// InsufficientBalanceExceptionクラスの定義\npublic class InsufficientBalanceException extends Exception {\n\n    private final int balance;\n    private final int amount;\n\n    public InsufficientBalanceException(int balance, int amount) {\n        super(\"残高不足です。残高: \" + balance + \"円, 要求: \" + amount + \"円\");\n        this.balance = balance;\n        this.amount = amount;\n    }\n\n    // getBalanceメソッドの定義\n    public int getBalance() { return balance; }\n    // getAmountメソッドの定義\n    public int getAmount()  { return amount; }\n}\n\n// 使用例\n// BankAccountクラスの定義\npublic class BankAccount {\n    private int balance;\n\n    public void withdraw(int amount) throws InsufficientBalanceException {\n        // 条件分岐\n        if (amount > balance) {\n            // 例外を投げる\n            throw new InsufficientBalanceException(balance, amount);\n        }\n        balance -= amount;\n    }\n}\n\n// 呼び出し側\n// 例外が発生する可能性がある処理\ntry {\n    account.withdraw(10000);\n} catch (InsufficientBalanceException e) {\n    System.out.println(e.getMessage());\n    System.out.println(\"不足額: \" + (e.getAmount() - e.getBalance()) + \"円\");\n}",
+          "note": "カスタム例外にはエラーの詳細情報をフィールドとして持たせると、catchした側で有用な情報を取得できます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch09_03",
+          "sectionType": "tip",
+          "title": "カスタム例外を作るときの命名規則",
+          "body": "・例外クラス名は必ず「〜Exception」で終わること\n・**チェック例外**を作る場合: Exceptionを継承\n・**非チェック例外**を作る場合: RuntimeExceptionを継承\n・メッセージ引数付きのコンストラクタを用意すること\n\n例: InsufficientBalanceException, UserNotFoundExceptionなど",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch09_03",
+          "sectionType": "code",
+          "title": "カスタム非チェック例外",
+          "body": "RuntimeExceptionを継承して**非チェック例外**を作成します。",
+          "code": "// カスタム非チェック例外\npublic class UserNotFoundException extends RuntimeException {\n\n    private final String userId;\n\n    public UserNotFoundException(String userId) {\n        super(\"ユーザーが見つかりません: \" + userId);\n        this.userId = userId;\n    }\n\n    public String getUserId() { return userId; }\n}\n\n// 使用例（throwsの宣言は不要）\npublic User findUser(String id) {\n    User user = userMap.get(id);\n    if (user == null) {\n        throw new UserNotFoundException(id);\n    }\n    return user;\n}\n\n// チェック例外 vs 非チェック例外の使い分け:\n//\n// チェック例外（extends Exception）:\n//  → 呼び出し側で必ず処理してほしい場合\n//  → 例: ファイル不在、ネットワークエラー、残高不足\n//\n// 非チェック例外（extends RuntimeException）:\n//  → プログラムのバグや不正な引数を示す場合\n//  → 例: 存在しないID指定、不正な状態遷移",
+          "note": "近年のJavaでは**非チェック例外**（**RuntimeException**）が好まれる傾向があります。Spring FrameworkもカスタムRuntimeExceptionを多用しています。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch09_03",
+          "sectionType": "code",
+          "title": "例外チェーン（Exception Chaining）",
+          "body": "別の例外の原因（cause）として元の例外を包んで送る仕組みです。",
+          "code": "// 例外チェーン: 低レベル例外を高レベル例外でラップ\npublic class DataAccessException extends RuntimeException {\n    public DataAccessException(String message, Throwable cause) {\n        super(message, cause);\n    }\n}\n\n// DBの低レベル例外をアプリ固有の例外に変換\npublic User findUser(int id) {\n    try {\n        // DB操作\n        return userDao.findById(id);\n    } catch (SQLException e) {\n        // SQLExceptionをDataAccessExceptionでラップ\n        throw new DataAccessException(\"ユーザー取得エラー: ID=\" + id, e);\n    }\n}\n\n// 呼び出し側\ntry {\n    User user = findUser(1);\n} catch (DataAccessException e) {\n    System.out.println(e.getMessage());       // \"ユーザー取得エラー: ID=1\"\n    System.out.println(e.getCause());          // java.sql.SQLException: ...\n    e.printStackTrace(); // 両方のスタックトレースが表示される\n}",
+          "note": "例外チェーンは「レイヤー間の例外変換」に使います。DAOのSQLExceptionをServiceのDataAccessExceptionに変換し、各レイヤーが適切な抽象度の例外を扱えるようにします。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch09_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・カスタム**チェック例外**: extends Exception（処理強制）\n・カスタム**非チェック例外**: extends **RuntimeException**（処理任意）\n・super(message) でエラーメッセージを親クラスに渡す\n・独自フィールドでエラーの詳細情報を保持可能\n・例外チェーン: new MyException(msg, cause) で原因例外を保持\n・getCause() で元の例外を取得\n・レイヤー間の例外変換に例外チェーンを使う",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch09_03_q1",
+          "lessonId": "ch09_03",
+          "type": "fillBlank",
+          "question": "チェック例外を作成する場合、何を継承しますか？\npublic class MyException extends _____ {",
+          "code": "try (BufferedReader br = new BufferedReader(\n        new FileReader(\"data.txt\"))) {\n    String line = br.readLine();\n} catch (IOException e) {\n    e.printStackTrace();\n}",
+          "explanation": "チェック例外を作成するにはExceptionクラスを継承します。RuntimeExceptionを継承すると非チェック例外になります。チェック例外は呼び出し側でのtry-catchまたはthrows宣言が必須になります。",
+          "choices": [
+            {
+              "id": "ch09_03_q1_a",
+              "text": "Exception",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch09_03_q1_b",
+              "text": "RuntimeException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_03_q1_c",
+              "text": "Throwable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_03_q1_d",
+              "text": "Error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch09_03_q2",
+          "lessonId": "ch09_03",
+          "type": "fourChoice",
+          "question": "例外チェーンで原因（cause）の例外を取得するメソッドはどれですか？",
+          "code": "class MyApp {\n    void process() {\n        try {\n            riskyMethod();\n        } catch (Exception e) {\n            throw new RuntimeException(e);\n        }\n    }\n}",
+          "explanation": "getCause()メソッドで例外の原因（元の例外）を取得します。例外チェーンでは new MyException(\"msg\", cause) のようにコンストラクタで原因例外を渡し、getCause()で取得します。これはThrowableクラスで定義されているため、すべての例外で利用できます。",
+          "choices": [
+            {
+              "id": "ch09_03_q2_a",
+              "text": "getReason()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_03_q2_b",
+              "text": "getOrigin()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_03_q2_c",
+              "text": "getCause()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch09_03_q2_d",
+              "text": "getSource()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch09_03_q3",
+          "lessonId": "ch09_03",
+          "type": "fourChoice",
+          "question": "非チェック例外として適切なのはどのケースですか？",
+          "code": "try {\n    int result = 10 / 0;\n} catch (ArithmeticException e) {\n    System.out.println(e.getMessage());\n}",
+          "explanation": "非チェック例外（RuntimeException）はプログラムのバグや不正な状態を示す場合に使います。nullや範囲外のIDを渡すのはプログラムの誤りです。ファイルが見つからない・ネットワーク切断は外部要因なのでチェック例外が適切です。",
+          "choices": [
+            {
+              "id": "ch09_03_q3_a",
+              "text": "ファイルが見つからない場合",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_03_q3_b",
+              "text": "ネットワーク接続が切断された場合",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_03_q3_c",
+              "text": "メソッドにnullが渡された場合",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch09_03_q3_d",
+              "text": "データベースが停止している場合",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch09_04",
+      "courseId": "ch09",
+      "title": "例外処理のベストプラクティス",
+      "summary": "やるべきこと・やってはいけないこと",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch09_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・避けるべきアンチパターン（空のcatch、Exceptionの乱用）\n・適切な例外処理の設計原則\n・ログ出力と例外処理の組み合わせ方\n\n「動くコード」から「良いコード」へレベルアップするために必要な知識です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch09_04",
+          "sectionType": "code",
+          "title": "アンチパターン（やってはいけないこと）",
+          "body": "以下のコードは実務で避けるべきパターンです。",
+          "code": "// NG1: 例外の握りつぶし（最も危険）\ntry {\n    riskyOperation();\n} catch (Exception e) {\n    // 何もしない → 何が起きたか分からない！\n}\n\n// NG2: Exceptionでまとめてキャッチ\ntry {\n    int n = Integer.parseInt(input);\n    File f = new File(path);\n} catch (Exception e) {\n    // どの例外が発生したか区別できない\n    System.out.println(\"エラー\");\n}\n\n// NG3: catchしてprintStackTraceだけ\ntry {\n    readFile(\"data.txt\");\n} catch (IOException e) {\n    e.printStackTrace(); // ログは出るが処理が何も行われない\n}\n\n// NG4: 制御フローとして例外を使う\ntry {\n    while (true) {\n        array[i++] = 0; // 範囲外で例外発生→ループ終了\n    }\n} catch (ArrayIndexOutOfBoundsException e) {\n    // これは for文で書くべき！\n}\n\n// NG5: finally内でreturn\ntry {\n    return computeValue();\n} finally {\n    return defaultValue; // tryの戻り値を上書きしてしまう\n}",
+          "note": "「例外の握りつぶし」は最も深刻なアンチパターンです。本番環境でのバグ調査が極めて困難になります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch09_04",
+          "sectionType": "tip",
+          "title": "やってはいけない例外処理パターン",
+          "body": "実務で絶対に避けるべきパターン:\n\n・空のcatchブロック: エラーを握りつぶしてしまう\n・catch(Exception e): すべての例外をまとめて捕捉してしまう\n・例外をreturn nullで置き換える: 呼び出し元でNullPointerExceptionの原因になる\n・制御フローに例外を使う: 正常系の分岐に例外を使わない\n\n例外は「異常系」の処理です。正常な分岐にはif文を使いましょう。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch09_04",
+          "sectionType": "code",
+          "title": "ベストプラクティス（正しい例外処理）",
+          "body": "実務で推奨される例外処理のパターンです。",
+          "code": "// OK1: 具体的な例外をキャッチし、適切に処理\n// 例外が発生する可能性がある処理\ntry {\n    // 変数の宣言と初期化\n    int num = Integer.parseInt(input);\n} catch (NumberFormatException e) {\n    System.out.println(\"数値を入力してください: \" + input);\n    num = 0; // デフォルト値で継続\n}\n\n// OK2: ログに記録してから再スロー\n// 例外が発生する可能性がある処理\ntry {\n    connection = getConnection();\n} catch (SQLException e) {\n    logger.error(\"DB接続エラー\", e); // ログに詳細を記録\n    // 例外を投げる\n    throw new DataAccessException(\"DB接続に失敗\", e); // 例外チェーンで再スロー\n}\n\n// OK3: try-with-resourcesでリソース管理\n// 例外が発生する可能性がある処理\ntry (var reader = new BufferedReader(new FileReader(path))) {\n    return reader.readLine();\n} // 自動close\n\n// OK4: 事前チェックでNPEを防ぐ\n// setNameメソッドの定義\npublic void setName(String name) {\n    Objects.requireNonNull(name, \"nameはnullにできません\");\n    this.name = name;\n}\n\n// OK5: Optionalで安全なnull処理\n// findUserメソッドの定義\npublic Optional<User> findUser(String id) {\n    User user = userMap.get(id);\n    return Optional.ofNullable(user);\n}",
+          "note": "Objects.requireNonNull()はJava 7で導入された便利メソッドです。引数がnullならNullPointerExceptionを即座にスローし、バグの発見を早めます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch09_04",
+          "sectionType": "rule",
+          "title": "例外処理のチェックリスト",
+          "body": "実務で守るべきルール:\n\n| ルール | 詳細 |\n|---|---|\n| 例外は握りつぶさない | 最低でもログを出力する |\n| 具体的な例外をcatch | Exceptionで広くcatchしない |\n| リソースはtry-with-resources | finally手動closeは避ける |\n| 制御フローに例外を使わない | if文やfor文で対処可能なことに例外を使わない |\n| 例外チェーンを活用 | re-throw時は原因例外を保持する |\n| finally内でreturnしない | try/catchの結果を上書きしてしまう |\n| 適切な例外型を選ぶ | カスタム例外も検討する |\n| エラーメッセージを具体的に | 「エラーです」ではなく「ユーザーID: 123が見つかりません」 |\n| NullPointerException防止 | Optionalやrequire non-nullを活用 |",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch09_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・例外の握りつぶし（空のcatch）は絶対に避ける\n・Exceptionで広くcatchせず具体的な例外型をcatch\n・リソース管理はtry-with-resourcesを使う\n・例外チェーンでre-throw時は原因例外を保持する\n・制御フローに例外を使わない\n・Objects.requireNonNull()でnullチェック\n・finally内でのreturnは禁止",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch09_04_q1",
+          "lessonId": "ch09_04",
+          "type": "fourChoice",
+          "question": "最も深刻な例外処理のアンチパターンはどれですか？",
+          "code": "public void readFile() throws IOException {\n    FileReader fr = new FileReader(\"test.txt\");\n    // ...\n    fr.close();\n}",
+          "explanation": "例外の握りつぶし（空のcatchブロック）は最も深刻なアンチパターンです。エラーが発生しているのに記録も処理もされないため、本番環境でバグの原因特定が極めて困難になります。最低でもログ出力は行うべきです。",
+          "choices": [
+            {
+              "id": "ch09_04_q1_a",
+              "text": "例外の握りつぶし（空のcatch）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch09_04_q1_b",
+              "text": "printStackTraceのみのcatch",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_04_q1_c",
+              "text": "文字列で例外メッセージを構築",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_04_q1_d",
+              "text": "例外をthrowする",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch09_04_q2",
+          "lessonId": "ch09_04",
+          "type": "errorFind",
+          "question": "以下のコードのアンチパターンはどれですか？",
+          "code": "try {\n    String data = readConfig(\"app.json\");\n    int port = Integer.parseInt(data);\n} catch (Exception e) {\n    System.out.println(\"エラー\");\n}",
+          "explanation": "2つのアンチパターンがあります。(1) Exceptionという広すぎる例外をcatchしている。IOException と NumberFormatException を個別にcatchすべきです。(2) エラーメッセージが「エラー」だけで具体的な情報がない。どこで何が起きたか分かりません。",
+          "choices": [
+            {
+              "id": "ch09_04_q2_a",
+              "text": "readConfigの呼び出しが不正",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_04_q2_b",
+              "text": "Exceptionが広すぎる＆メッセージが曖昧",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_04_q2_c",
+              "text": "finallyがない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_04_q2_d",
+              "text": "アンチパターンはない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch09_04_q3",
+          "lessonId": "ch09_04",
+          "type": "fourChoice",
+          "question": "メソッドの引数がnullでないことを確認する推奨方法はどれですか？",
+          "code": "try {\n    String s = null;\n    s.length();\n} catch (NullPointerException e) {\n    System.out.println(\"Null!\");\n} finally {\n    System.out.println(\"Finally\");\n}",
+          "explanation": "Objects.requireNonNull(arg, message) はJava 7で追加された便利メソッドです。引数がnullの場合にNullPointerExceptionを即座にスローします。メソッドの先頭で引数検証として使い、バグの早期発見に役立ちます。",
+          "choices": [
+            {
+              "id": "ch09_04_q3_a",
+              "text": "if (arg == null) return;",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_04_q3_b",
+              "text": "assert arg != null;",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch09_04_q3_c",
+              "text": "Objects.requireNonNull(arg)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch09_04_q3_d",
+              "text": "try-catchでNPEをキャッチ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch09_05",
+      "courseId": "ch09",
+      "title": "例外処理の実践パターン",
+      "summary": "実務でよく使う例外処理のパターン",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch09_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・入力バリデーションでの例外活用\n・リトライ処理（一時的なエラーの再試行）\n・トランザクションと例外処理の組み合わせ\n\n実際の開発現場で使われるパターンを身につけましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch09_05",
+          "sectionType": "code",
+          "title": "入力バリデーションと例外",
+          "body": "ユーザー入力のバリデーションで例外を活用するパターンです。",
+          "code": "// UserValidatorクラスの定義\npublic class UserValidator {\n\n    // validateメソッドの定義\n    public static void validate(String name, int age, String email) {\n        // 個別チェック → 具体的なメッセージ\n        // 条件分岐\n        if (name == null || name.isBlank()) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\"名前は必須です\");\n        }\n        if (name.length() > 50) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\n                \"名前は50文字以内です（入力: \" + name.length() + \"文字）\");\n        }\n        if (age < 0 || age > 150) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\n                \"年齢は0〜150の範囲です（入力: \" + age + \"）\");\n        }\n        if (!email.contains(\"@\")) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\n                \"メール形式が不正です: \" + email);\n        }\n    }\n}\n\n// 呼び出し側\n// 例外が発生する可能性がある処理\ntry {\n    UserValidator.validate(name, age, email);\n    userService.register(name, age, email);\n    System.out.println(\"登録完了\");\n} catch (IllegalArgumentException e) {\n    System.out.println(\"入力エラー: \" + e.getMessage());\n}",
+          "note": "IllegalArgumentExceptionはメソッドに不正な引数が渡された場合に使う標準の**非チェック例外**です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch09_05",
+          "sectionType": "tip",
+          "title": "例外処理の実践的な原則",
+          "body": "実務で使える例外処理の原則:\n\n・可能な限り具体的な例外型をcatchする\n・例外メッセージに原因がわかる情報を含める\n・ログに例外を記録してから処理する\n・リカバリ可能な場合はリトライやデフォルト値で対応\n・リカバリ不可能な場合は適切に上位に伝搬する",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch09_05",
+          "sectionType": "code",
+          "title": "リトライパターン",
+          "body": "ネットワーク通信など、一時的な障害に対してリトライする例外処理です。",
+          "code": "// fetchWithRetryメソッドの定義\npublic static String fetchWithRetry(String url, int maxRetries) {\n    Exception lastException = null;\n\n    // 繰り返し処理（for文）\n    for (int attempt = 1; attempt <= maxRetries; attempt++) {\n        // 例外が発生する可能性がある処理\n        try {\n            HttpClient client = HttpClient.newHttpClient();\n            HttpRequest req = HttpRequest.newBuilder()\n                .uri(URI.create(url)).build();\n            HttpResponse<String> resp = client.send(\n                req, HttpResponse.BodyHandlers.ofString());\n            return resp.body(); // 成功\n        } catch (IOException | InterruptedException e) {\n            lastException = e;\n            System.out.printf(\"リトライ %d/%d: %s%n\",\n                attempt, maxRetries, e.getMessage());\n            // 例外が発生する可能性がある処理\n            try {\n                Thread.sleep(1000L * attempt); // 待機時間を徐々に延長\n            } catch (InterruptedException ie) {\n                Thread.currentThread().interrupt();\n                // 例外を投げる\n                throw new RuntimeException(\"リトライ中断\", ie);\n            }\n        }\n    }\n    // 例外を投げる\n    throw new RuntimeException(\n        maxRetries + \"回リトライしましたが失敗しました\", lastException);\n}",
+          "note": "リトライ間隔を徐々に延ばす（エクスポネンシャルバックオフ）のが実務のベストプラクティスです。即座にリトライするとサーバーに負荷をかけてしまいます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch09_05",
+          "sectionType": "rule",
+          "title": "例外処理まとめ一覧",
+          "body": "例外処理の全体像:\n\n【構文】\n| キーワード | 機能 |\n|---|---|\n| try-catch-finally | 基本の例外処理 |\n| try-with-resources | リソース自動close |\n| マルチキャッチ | catch (A \\ B e) |\n| throw | 例外を投げる |\n| throws | メソッドの例外宣言 |\n\n【例外の種類】\n| 種類 | 説明 |\n|---|---|\n| チェック例外 | IOException, SQLException |\n| 非チェック例外 | NullPointerException, IllegalArgumentException |\n| Error | OutOfMemoryError（catchしない） |\n\n【パターン】\n| 種類 | 説明 |\n|---|---|\n| カスタム例外 | 業務固有のエラーを表現 |\n| 例外チェーン | 原因例外を保持してre-throw |\n| リトライ | 一時障害への対処 |\n| バリデーション | 事前チェックで例外を防ぐ |\n\n【ルール】\n・握りつぶさない、広くcatchしない\n・try-with-resources優先、finally内return禁止",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch09_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "| パターン | 説明 |\n|---|---|\n| 入力バリデーション | IllegalArgumentExceptionで不正な引数を即座に拒否 |\n| リトライパターン | 一時的な障害には待機+再試行 |\n| エクスポネンシャルバックオフ | リトライ間隔を徐々に延長 |\n| Thread.currentThread().interrupt() | InterruptedException後に再設定 |\n・例外は「異常系」のみに使い、正常な制御フローには使わない",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch09_05_q1",
+          "lessonId": "ch09_05",
+          "type": "fourChoice",
+          "question": "メソッドに不正な引数が渡された場合、使用すべき例外クラスはどれですか？",
+          "code": "public class CustomException extends Exception {\n    public CustomException(String msg) {\n        super(msg);\n    }\n}",
+          "explanation": "IllegalArgumentExceptionはメソッドに不正・不適切な引数が渡された場合に使う標準のRuntimeExceptionです。例えば負の値が許されない引数に -1 が渡された場合などに使います。NullPointerExceptionはnull固有、IllegalStateExceptionはオブジェクトの状態が不正な場合に使います。",
+          "choices": [
+            {
+              "id": "ch09_05_q1_a",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_05_q1_b",
+              "text": "IllegalArgumentException",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_05_q1_c",
+              "text": "IllegalStateException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_05_q1_d",
+              "text": "UnsupportedOperationException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch09_05_q2",
+          "lessonId": "ch09_05",
+          "type": "fourChoice",
+          "question": "リトライ処理でリトライ間隔を徐々に延ばす手法を何と呼びますか？",
+          "code": "try (BufferedReader br = new BufferedReader(\n        new FileReader(\"data.txt\"))) {\n    String line = br.readLine();\n} catch (IOException e) {\n    e.printStackTrace();\n}",
+          "explanation": "エクスポネンシャルバックオフ（Exponential Backoff）は、リトライ間隔を指数関数的に延ばす手法です。1秒→2秒→4秒→8秒のように増加させることで、障害中のサーバーに過度な負荷をかけることを防ぎます。クラウドサービスのSDKでも標準的に採用されています。",
+          "choices": [
+            {
+              "id": "ch09_05_q2_a",
+              "text": "ラウンドロビン",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch09_05_q2_b",
+              "text": "エクスポネンシャルバックオフ",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_05_q2_c",
+              "text": "ポーリング",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_05_q2_d",
+              "text": "スロットリング",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch09_05_q3",
+          "lessonId": "ch09_05",
+          "type": "multiChoice",
+          "question": "例外処理のベストプラクティスとして正しいものをすべて選んでください。",
+          "code": "class MyApp {\n    void process() {\n        try {\n            riskyMethod();\n        } catch (Exception e) {\n            throw new RuntimeException(e);\n        }\n    }\n}",
+          "explanation": "「具体的な例外クラスをcatchする」「try-with-resourcesでリソースを管理する」「例外チェーンで原因例外を保持する」がベストプラクティスです。「例外をcatchしたら常にprintStackTrace()する」は不十分で、適切なログフレームワーク（Logger）を使うべきです。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch09_05_q3_a",
+              "text": "具体的な例外クラスをcatchする",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch09_05_q3_b",
+              "text": "try-with-resourcesでリソースを管理する",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch09_05_q3_c",
+              "text": "例外をcatchしたら常にprintStackTrace()する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch09_05_q3_d",
+              "text": "例外チェーンで原因例外を保持する",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

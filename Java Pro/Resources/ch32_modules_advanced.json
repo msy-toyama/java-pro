@@ -1,0 +1,731 @@
+{
+  "courseId": "ch32",
+  "lessons": [
+    {
+      "id": "ch32_01",
+      "courseId": "ch32",
+      "title": "モジュールの種類",
+      "summary": "名前付きモジュール、自動モジュール、無名モジュールの違いとモジュールパスとクラスパスの関係を学びます。",
+      "estimatedMinutes": 7,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "overview",
+          "title": "3種類のモジュール",
+          "body": "このレッスンでは以下を学びます:\n\n・名前付きモジュール、自動モジュール、無名モジュールの違い\n・クラスパスとモジュールパスの関係\n・モジュール種類による公開・アクセスのルール\n\nモジュール間の互換性を理解する重要なトピックです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "rule",
+          "title": "名前付きモジュール",
+          "body": "名前付きモジュールはmodule-info.javaでモジュールの依存関係とエクスポートを明示的に宣言します。\nexportsで公開するパッケージを指定し、requiresで依存するモジュールを宣言します。\nモジュールパス上に配置する必要があります。\n名前付きモジュールは他のモジュールから明示的にアクセスを制御できます。\nこれにより、強力なカプセル化が実現されます。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "code",
+          "title": "自動モジュールと無名モジュール",
+          "body": "自動モジュールはJARファイルのマニフェストまたはファイル名からモジュール名が決定されます。\n自動モジュールはすべてのパッケージをエクスポートし、すべてのモジュールをrequiresします。\n無名モジュールはクラスパス上のすべてのクラスを含みます。",
+          "code": "// module-info.java（名前付きモジュール）\nmodule com.example.app {\n    requires com.example.lib;  // 依存関係\n    exports com.example.app.api; // 公開パッケージ\n}\n\n// 自動モジュール:\n// my-library-1.0.jar をモジュールパスに配置\n// → モジュール名は \"my.library\" になる\n\n// 無名モジュール:\n// クラスパスに配置されたクラス\n// java -cp lib.jar com.example.Main",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "point",
+          "title": "モジュールパスとクラスパスの違い",
+          "body": "モジュールパス（--module-path または -p）はモジュールシステムで管理されるパスです。\nクラスパス（-cp または -classpath）は従来のJavaで使われるパスです。\nモジュールパス上のJARは自動モジュールとして扱われます。\nクラスパス上のクラスは無名モジュールに属します。\n名前付きモジュールから無名モジュールへのrequiresはできません。\nただし、自動モジュールは無名モジュールにアクセスできます。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "tip",
+          "title": "試験でのポイント",
+          "body": "試験では3種類のモジュールの特徴と制約について問われます。\n特に「名前付きモジュールは無名モジュールをrequiresできない」という制約は頻出です。\n自動モジュールが名前付きモジュールと無名モジュールの橋渡し役になれるという点も重要です。\njdepsコマンドでモジュールの依存関係を分析できます。",
+          "code": null,
+          "note": "jdeps --module-path で依存関係を確認できます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_01_q1",
+          "lessonId": "ch32_01",
+          "type": "fourChoice",
+          "question": "module-info.javaを持たず、モジュールパスに配置されたJARファイルはどの種類のモジュールとして扱われますか？",
+          "code": "module com.example.plugin {\n    uses com.example.spi.Plugin;\n}\n// ServiceLoader usage:\nServiceLoader<Plugin> loader =\n    ServiceLoader.load(Plugin.class);\nloader.forEach(Plugin::init);",
+          "explanation": "module-info.javaを持たないJARファイルをモジュールパスに配置すると、自動モジュール（Automatic Module）として扱われます。クラスパスに配置した場合は無名モジュールに属します。",
+          "choices": [
+            {
+              "id": "ch32_01_q1_a",
+              "text": "自動モジュール",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_01_q1_b",
+              "text": "名前付きモジュール",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_01_q1_c",
+              "text": "無名モジュール",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_01_q1_d",
+              "text": "オープンモジュール",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_01_q2",
+          "lessonId": "ch32_01",
+          "type": "reorder",
+          "question": "クラスパス上のライブラリをモジュールシステムに移行するボトムアップ方式の手順を正しく並べてください。",
+          "code": "module com.example.app {\n    requires static com.example.optional;\n    requires transitive com.example.core;\n}",
+          "explanation": "ボトムアップ移行では: (1)依存関係の最下層ライブラリを特定 → (2)そのJARにmodule-info.javaを追加して名前付きモジュール化 → (3)依存元のJARをモジュールパスに移動（自動モジュールとして動作） → (4)順次上位モジュールにmodule-infoを追加して完了、という流れです。",
+          "choices": [
+            {
+              "id": "ch32_01_q2_a",
+              "text": "依存関係の最下層ライブラリを特定する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_01_q2_b",
+              "text": "そのJARにmodule-info.javaを追加し名前付きモジュール化",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch32_01_q2_c",
+              "text": "依存元のJARをモジュールパスに移動（自動モジュール化）",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch32_01_q2_d",
+              "text": "順次上位モジュールにmodule-infoを追加して完了",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch32_01_q2_a",
+            "ch32_01_q2_b",
+            "ch32_01_q2_c",
+            "ch32_01_q2_d"
+          ],
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_01_q3",
+          "lessonId": "ch32_01",
+          "type": "fillBlank",
+          "question": "モジュールパスを指定するコマンドラインオプションの短縮形を答えてください。\njava _____ mods -m com.example.app/com.example.Main",
+          "code": "// jlink: カスタムランタイム作成\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
+          "explanation": "--module-pathの短縮形は-pです。モジュールパスにあるモジュールを指定して実行する際に使用します。",
+          "choices": [
+            {
+              "id": "ch32_01_q3_a",
+              "text": "-p",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_01_q3_b",
+              "text": "-mp",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_01_q3_c",
+              "text": "-m",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_01_q3_d",
+              "text": "-cp",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch32_02",
+      "courseId": "ch32",
+      "title": "サービスプロバイダ",
+      "summary": "モジュールシステムのサービスプロバイダ機構（provides/uses/ServiceLoader）を学びます。",
+      "estimatedMinutes": 7,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "overview",
+          "title": "サービスプロバイダとは",
+          "body": "このレッスンでは以下を学びます:\n\n・provides ... with によるサービスの提供\n・uses によるサービスの利用宣言\n・**ServiceLoader** による実装の動的な取得\n\nモジュール間の疎結合を実現するサービスプロバイダの仕組みです。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "rule",
+          "title": "provides...withとusesディレクティブ",
+          "body": "providesディレクティブは、サービスインターフェースの実装を提供することを宣言します。\n構文は「provides サービスインターフェース with 実装クラス」です。\nusesディレクティブは、サービスを消費することを宣言します。\n構文は「uses サービスインターフェース」です。\nサービスの提供側と消費側は別のモジュールに分離できます。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "code",
+          "title": "サービスプロバイダの実装例",
+          "body": "サービスインターフェースモジュール、プロバイダモジュール、消費者モジュールの3つに分けて実装します。\nServiceLoaderを使ってサービスの実装を動的に取得します。",
+          "code": "// サービスインターフェースモジュール\nmodule com.example.api {\n    exports com.example.api;\n}\n\n// サービスプロバイダモジュール\nmodule com.example.provider {\n    requires com.example.api;\n    provides com.example.api.Logger\n        with com.example.provider.FileLogger;\n}\n\n// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    uses com.example.api.Logger;\n}\n\n// ServiceLoaderでサービスを取得\nServiceLoader<Logger> loader = ServiceLoader.load(Logger.class);\nfor (Logger logger : loader) {\n    logger.log(\"Hello\");\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "point",
+          "title": "ServiceLoaderの動作",
+          "body": "**ServiceLoader**.load()はサービスインターフェースの実装を遅延ロードします。\n複数のプロバイダが存在する場合、すべてのプロバイダが順に返されます。\nfindFirst()で最初のプロバイダだけを取得することもできます。\nプロバイダクラスには引数なしのpublicコンストラクタまたはstatic provider()メソッドが必要です。\nstream()メソッドでプロバイダをストリームとして処理できます。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "tip",
+          "title": "試験でのサービスプロバイダのポイント",
+          "body": "provides...withの実装クラスはエクスポートする必要がありません。\nuses宣言がないモジュールでServiceLoaderを使うとサービスが見つかりません。\nprovidesの実装クラスはサービスインターフェースを実装または継承している必要があります。\n1つのprovidesに対して複数の実装クラスをカンマ区切りで指定できます。",
+          "code": null,
+          "note": "provides...withの実装クラスを公開（exports）する必要がない点は試験で頻出です。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_02_q1",
+          "lessonId": "ch32_02",
+          "type": "errorFind",
+          "question": "以下のmodule-info.javaで、ServiceLoaderでサービスが見つからない問題の原因を見つけてください。",
+          "code": "// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    // ServiceLoader.load(Logger.class) が空を返す\n}",
+          "explanation": "ServiceLoaderでサービスを検索するには、消費者モジュールに `uses com.example.api.Logger;` の宣言が必要です。uses宣言がないと、ServiceLoaderはサービスプロバイダを検出できません。",
+          "choices": [
+            {
+              "id": "ch32_02_q1_a",
+              "text": "usesディレクティブがない（uses com.example.api.Loggerが必要）",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_02_q1_b",
+              "text": "providesディレクティブがない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_02_q1_c",
+              "text": "exportsディレクティブがない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_02_q1_d",
+              "text": "エラーはない（プロバイダが未登録なだけ）",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_02_q2",
+          "lessonId": "ch32_02",
+          "type": "fillBlank",
+          "question": "サービスプロバイダの宣言を完成させてください。\n_____ com.example.api.Logger with com.example.impl.FileLogger;",
+          "code": "module com.example.reflect {\n    opens com.example.model\n        to com.fasterxml.jackson.databind;\n    exports com.example.api;\n}",
+          "explanation": "providesディレクティブは「provides サービスインターフェース with 実装クラス」の形式で、サービスの実装を提供することを宣言します。",
+          "choices": [
+            {
+              "id": "ch32_02_q2_a",
+              "text": "provides",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_02_q2_b",
+              "text": "exports",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_02_q2_c",
+              "text": "uses",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_02_q2_d",
+              "text": "implements",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_02_q3",
+          "lessonId": "ch32_02",
+          "type": "fourChoice",
+          "question": "provides...withで指定する実装クラスについて正しい記述はどれですか？",
+          "code": "module com.example.plugin {\n    uses com.example.spi.Plugin;\n}\n// ServiceLoader usage:\nServiceLoader<Plugin> loader =\n    ServiceLoader.load(Plugin.class);\nloader.forEach(Plugin::init);",
+          "explanation": "provides...withで指定する実装クラスは、モジュールからexportsする必要がありません。モジュールシステムのサービスプロバイダ機構が内部的にアクセスするためです。",
+          "choices": [
+            {
+              "id": "ch32_02_q3_a",
+              "text": "exportsで公開する必要はない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_02_q3_b",
+              "text": "必ずexportsで公開する必要がある",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_02_q3_c",
+              "text": "abstractクラスでもよい",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_02_q3_d",
+              "text": "インターフェースでもよい",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch32_02_q4",
+          "lessonId": "ch32_02",
+          "type": "codeComplete",
+          "question": "モジュールのパッケージ公開設定を完成させてください。",
+          "code": "module com.example.app {\n    requires static com.example.optional;\n    requires transitive com.example.core;\n}",
+          "explanation": "exportsはコンパイル時アクセス、opensはリフレクションアクセスを許可します。toで特定モジュールへの限定公開が可能です。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "module com.app {\n    __BLANK_1__ com.app.api;\n    __BLANK_2__ com.app.internal to com.app.test;\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①公開",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "exports",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "opens",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "provides",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②限定公開",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "opens",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "exports",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "requires",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch32_03",
+      "courseId": "ch32",
+      "title": "opensとリフレクション",
+      "summary": "opensディレクティブによるリフレクションアクセスの制御と深いリフレクションについて学びます。",
+      "estimatedMinutes": 7,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "overview",
+          "title": "リフレクションとモジュールシステム",
+          "body": "このレッスンでは以下を学びます:\n\n・opensディレクティブでリフレクションアクセスを許可\n・exportsとopensの違い\n・フレームワーク（Spring、JPA等）がopensを必要とする理由\n\n実務で重要なリフレクションとモジュールの関係です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "rule",
+          "title": "exportsとopensの違い",
+          "body": "exportsはコンパイル時と実行時のpublicアクセスを許可します。\nopensは実行時のリフレクションアクセス（private含む）を許可します。\nexportsされたパッケージでも、リフレクションでprivateメンバーにはアクセスできません。\nopensされたパッケージでは、setAccessible(true)でprivateメンバーにもアクセスできます。\nexportsとopensは同じパッケージに対して併用できます。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "code",
+          "title": "opensの使い方",
+          "body": "opensにはすべてのモジュールに対して公開する方法と、特定のモジュールにのみ公開する方法があります。\nopens...toで対象モジュールを限定できます。\nopen moduleとしてモジュール全体をオープンにすることもできます。",
+          "code": "// 特定パッケージをすべてのモジュールにopen\nmodule com.example.app {\n    opens com.example.app.model;\n}\n\n// 特定パッケージを特定のモジュールにのみopen\nmodule com.example.app {\n    opens com.example.app.model to com.fasterxml.jackson;\n}\n\n// モジュール全体をopen\nopen module com.example.app {\n    exports com.example.app.api;\n    // 全パッケージがリフレクションアクセス可能\n}\n\n// opensされたクラスへのリフレクション\nClass<?> clazz = Class.forName(\"com.example.app.model.User\");\nField field = clazz.getDeclaredField(\"name\");\nfield.setAccessible(true); // opensされていれば成功",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "point",
+          "title": "深いリフレクションと通常アクセス",
+          "body": "通常のリフレクションはpublicメンバーにのみアクセスできます。\n深いリフレクション（Deep Reflection）はsetAccessible(true)でprivateメンバーにもアクセスします。\nexportsのみの場合、通常のリフレクションは可能ですが深いリフレクションは不可です。\nopensの場合、深いリフレクションも可能になります。\nopensなしで深いリフレクションを行うとIllegalAccessExceptionがスローされます。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "tip",
+          "title": "open moduleの注意点",
+          "body": "open moduleではすべてのパッケージが暗黙的にopensされます。\nopen moduleでもexportsは別途宣言する必要があります。\nopen module内で個別のopens宣言はコンパイルエラーになります。\nフレームワーク依存のアプリケーションではopen moduleが便利ですが、カプセル化は弱くなります。",
+          "code": null,
+          "note": "open moduleでは個別のopensは書けませんが、exportsは書けます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_03_q1",
+          "lessonId": "ch32_03",
+          "type": "fourChoice",
+          "question": "exportsとopensの違いについて正しい記述はどれですか？",
+          "code": "// jlink: カスタムランタイム作成\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
+          "explanation": "exportsはpublicメンバーへのコンパイル時・実行時アクセスを許可しますが、privateメンバーへのリフレクションアクセスは許可しません。opensを使うとsetAccessible(true)でprivateメンバーにもアクセスできます。",
+          "choices": [
+            {
+              "id": "ch32_03_q1_a",
+              "text": "opensはリフレクションでprivateメンバーへのアクセスを許可するが、exportsは許可しない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_03_q1_b",
+              "text": "exportsはリフレクションアクセスも含めてすべてを許可する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_03_q1_c",
+              "text": "opensとexportsは完全に同じ効果を持つ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_03_q1_d",
+              "text": "opensはコンパイル時のアクセスを許可するが、exportsは実行時のみ許可する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_03_q2",
+          "lessonId": "ch32_03",
+          "type": "fourChoice",
+          "question": "open moduleについて正しい記述はどれですか？",
+          "code": "module com.example.reflect {\n    opens com.example.model\n        to com.fasterxml.jackson.databind;\n    exports com.example.api;\n}",
+          "explanation": "open moduleではすべてのパッケージが暗黙的にopensされますが、コンパイル時のpublicアクセスのためにはexportsを別途宣言する必要があります。また、open module内で個別のopens宣言はコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch32_03_q2_a",
+              "text": "open module内では個別のopens宣言はコンパイルエラーになる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_03_q2_b",
+              "text": "open moduleではexportsも自動的に行われる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_03_q2_c",
+              "text": "open module内でもopens宣言を追加できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_03_q2_d",
+              "text": "open moduleはJava 17で廃止された",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_03_q3",
+          "lessonId": "ch32_03",
+          "type": "errorFind",
+          "question": "以下のmodule-info.javaにはエラーがあります。原因はどれですか？",
+          "code": "open module com.example.app {\n    exports com.example.app.api;\n    opens com.example.app.model;\n}",
+          "explanation": "open moduleではすべてのパッケージが暗黙的にopensされるため、個別のopens宣言を書くとコンパイルエラーになります。exportsは記述できます。",
+          "choices": [
+            {
+              "id": "ch32_03_q3_a",
+              "text": "open module内でopens宣言はできない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_03_q3_b",
+              "text": "open module内でexports宣言はできない",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_03_q3_c",
+              "text": "openキーワードの位置が間違っている",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_03_q3_d",
+              "text": "モジュール名にドットは使えない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch32_04",
+      "courseId": "ch32",
+      "title": "モジュールのマイグレーション",
+      "summary": "クラスパスからモジュールシステムへの移行戦略（ボトムアップ・トップダウン）を学びます。",
+      "estimatedMinutes": 7,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "overview",
+          "title": "モジュール移行の必要性",
+          "body": "このレッスンでは以下を学びます:\n\n・既存のクラスパスベースのプロジェクトをモジュール化する手順\n・ボトムアップ方式とトップダウン方式\n・自動モジュールを使った段階的な移行\n\nレガシーコードのモジュール化戦略を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "rule",
+          "title": "ボトムアップ移行",
+          "body": "ボトムアップ移行は、依存関係の最下層にあるライブラリからモジュール化を始めます。\n他のモジュールに依存しないライブラリを最初にmodule-info.javaを追加してモジュール化します。\n次に、そのライブラリに依存するモジュールを順にモジュール化していきます。\nこの方式は自動モジュールへの依存を最小限に抑えられるため、推奨されるアプローチです。\nただし、下位のライブラリが自分の管理下にない場合は適用が難しいことがあります。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "rule",
+          "title": "トップダウン移行",
+          "body": "トップダウン移行は、アプリケーション本体（最上位）からモジュール化を始めます。\n下位のライブラリはモジュールパスに配置して自動モジュールとして扱います。\n自動モジュールは名前付きモジュールからrequiresで参照できます。\nこの方式は、下位ライブラリの変更ができない場合に有効です。\nただし、自動モジュールへの依存が多くなるため、安定性に欠けることがあります。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "code",
+          "title": "自動モジュールの命名",
+          "body": "自動モジュールの名前は2つの方法で決まります。\nJARのMANIFEST.MFにAutomatic-Module-Name属性がある場合はその値が使われます。\nない場合はJARファイル名から自動的に導出されます。",
+          "code": "// MANIFEST.MFで指定する方式（推奨）\n// META-INF/MANIFEST.MF:\n// Automatic-Module-Name: com.example.library\n\n// JARファイル名から導出する方式\n// my-library-1.0.jar → my.library\n// 規則:\n//   1. 拡張子(.jar)を除去\n//   2. バージョン部分(-1.0)を除去\n//   3. ハイフン(-)をドット(.)に置換\n\n// module-info.javaでの参照\nmodule com.example.app {\n    requires my.library; // 自動モジュール名\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "tip",
+          "title": "マイグレーションの注意点",
+          "body": "分割パッケージ（同じパッケージが複数モジュールに存在）はモジュールシステムで禁止されています。\nクラスパスでは問題なく動作していた分割パッケージが、モジュール移行時にエラーになることがあります。\njdepsコマンドで依存関係を事前に分析してから移行を計画しましょう。\n--add-readsや--add-exportsオプションで一時的にアクセスを追加することもできます。",
+          "code": null,
+          "note": "jdeps -s で依存関係のサマリーを表示できます。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_04_q1",
+          "lessonId": "ch32_04",
+          "type": "fourChoice",
+          "question": "ボトムアップ移行で最初にモジュール化するのはどれですか？",
+          "code": null,
+          "explanation": "ボトムアップ移行では、他のモジュールに依存しない最下層のライブラリから先にmodule-info.javaを追加してモジュール化していきます。",
+          "choices": [
+            {
+              "id": "ch32_04_q1_a",
+              "text": "他のライブラリに依存しない最下層のライブラリ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_04_q1_b",
+              "text": "アプリケーション本体（最上位）",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_04_q1_c",
+              "text": "最も多くのクラスを含むライブラリ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_04_q1_d",
+              "text": "任意のライブラリから開始できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_04_q2",
+          "lessonId": "ch32_04",
+          "type": "fourChoice",
+          "question": "自動モジュールの名前を明示的に指定する方法として正しいものはどれですか？",
+          "code": null,
+          "explanation": "JARファイルのMETA-INF/MANIFEST.MFにAutomatic-Module-Name属性を設定することで、自動モジュールの名前を明示的に指定できます。これが推奨される方法です。",
+          "choices": [
+            {
+              "id": "ch32_04_q2_a",
+              "text": "MANIFEST.MFにAutomatic-Module-Name属性を設定する",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_04_q2_b",
+              "text": "module-info.javaを作成する",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_04_q2_c",
+              "text": "JARファイル名を変更する",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_04_q2_d",
+              "text": "コマンドラインオプションで指定する",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_04_q3",
+          "lessonId": "ch32_04",
+          "type": "fillBlank",
+          "question": "モジュールシステムでは、同じパッケージが複数のモジュールに存在する「_____パッケージ」は禁止されています。",
+          "code": null,
+          "explanation": "分割パッケージ（Split Package）は、同じパッケージが複数のモジュールにまたがって存在することです。クラスパスでは許容されていましたが、モジュールシステムではエラーになります。",
+          "choices": [
+            {
+              "id": "ch32_04_q3_a",
+              "text": "分割",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_04_q3_b",
+              "text": "重複",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_04_q3_c",
+              "text": "共有",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_04_q3_d",
+              "text": "衝突",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

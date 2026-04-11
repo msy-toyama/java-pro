@@ -1,0 +1,2968 @@
+[
+  {
+    "id": "se11g1_q001",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "java.util.Optional<T>のof()メソッドにnullを渡した場合、どうなりますか？",
+    "code": null,
+    "explanation": "Optional.of(null)はNullPointerExceptionをスローします。nullを許容する場合はOptional.ofNullable()を使用する必要があります。Optional.empty()は空のOptionalを返します。",
+    "choices": [
+      {
+        "id": "se11g1_q001_a",
+        "text": "空のOptionalが返される",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q001_b",
+        "text": "NullPointerExceptionがスローされる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q001_c",
+        "text": "nullを含むOptionalが返される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q001_d",
+        "text": "コンパイルエラーになる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q002",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Optional.ofNullable(null).orElse(\"default\")の戻り値はどれですか？",
+    "code": null,
+    "explanation": "ofNullable(null)は空のOptionalを返します。orElse()は値が存在しない場合に引数のデフォルト値を返すため、\"default\"が返されます。",
+    "choices": [
+      {
+        "id": "se11g1_q002_a",
+        "text": "null",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q002_b",
+        "text": "\"default\"",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q002_c",
+        "text": "NoSuchElementExceptionがスローされる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q002_d",
+        "text": "空のOptionalが返される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q003",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "java.util.Objects.requireNonNull(obj, \"message\")でobjがnullの場合、どうなりますか？",
+    "code": null,
+    "explanation": "Objects.requireNonNull()は引数がnullの場合NullPointerExceptionをスローします。第2引数のメッセージが例外メッセージとして使用されます。",
+    "choices": [
+      {
+        "id": "se11g1_q003_a",
+        "text": "IllegalArgumentExceptionがスローされる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q003_b",
+        "text": "\"message\"という文字列を持つNullPointerExceptionがスローされる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q003_c",
+        "text": "nullが返される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q003_d",
+        "text": "falseが返される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q004",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "String.strip()とString.trim()の違いについて正しい説明はどれですか？",
+    "code": null,
+    "explanation": "trim()はASCIIの空白文字（U+0020以下）のみを除去します。strip()はUnicodeの空白文字（全角スペース等を含む）も除去します。strip()はJava 11で追加されました。",
+    "choices": [
+      {
+        "id": "se11g1_q004_a",
+        "text": "strip()はUnicodeの空白文字も除去するが、trim()はASCIIの空白のみ除去する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q004_b",
+        "text": "trim()はUnicodeの空白文字も除去するが、strip()はASCIIの空白のみ除去する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q004_c",
+        "text": "両者に違いはない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q004_d",
+        "text": "strip()は先頭の空白のみ除去する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q005",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.Optional;\n\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> opt = Optional.of(\"Hello\");\n        String result = opt.map(s -> s.toUpperCase())\n                           .orElse(\"empty\");\n        System.out.println(result);\n    }\n}",
+    "explanation": "Optional.of(\"Hello\")で値が存在するOptionalを作成し、map()で大文字に変換します。値が存在するためorElse()のデフォルト値は使われず、\"HELLO\"が出力されます。",
+    "choices": [
+      {
+        "id": "se11g1_q005_a",
+        "text": "Hello",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q005_b",
+        "text": "HELLO",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q005_c",
+        "text": "empty",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q005_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q006",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.Optional;\n\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> opt = Optional.empty();\n        opt.ifPresentOrElse(\n            s -> System.out.println(s),\n            () -> System.out.println(\"値なし\")\n        );\n    }\n}",
+    "explanation": "Optional.empty()は値が存在しない空のOptionalです。ifPresentOrElse()は値がない場合に第2引数のRunnableを実行するため、\"値なし\"が出力されます。",
+    "choices": [
+      {
+        "id": "se11g1_q006_a",
+        "text": "null",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q006_b",
+        "text": "値なし",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q006_c",
+        "text": "何も表示されない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q006_d",
+        "text": "NoSuchElementException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q007",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはエラーがあります。エラーの原因はどれですか？",
+    "code": "import java.util.Optional;\n\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> opt = Optional.of(\"test\");\n        String value = opt.get();\n        Optional<String> opt2 = Optional.ofNullable(null);\n        String value2 = opt2.get();\n        System.out.println(value + \" \" + value2);\n    }\n}",
+    "explanation": "opt2はOptional.ofNullable(null)で作成された空のOptionalです。空のOptionalに対してget()を呼ぶとNoSuchElementExceptionがスローされます。isPresent()で確認するか、orElse()を使う必要があります。",
+    "choices": [
+      {
+        "id": "se11g1_q007_a",
+        "text": "Optional.of(\"test\")がコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q007_b",
+        "text": "空のOptionalに対してget()を呼んでいるためNoSuchElementExceptionが発生する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q007_c",
+        "text": "ofNullable(null)がコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q007_d",
+        "text": "文字列結合でNullPointerExceptionが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q008",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "Java 11で追加された、文字列を行ごとに分割してStreamを返すメソッドはどれですか？\nString text = \"A\\nB\\nC\";\ntext._____().forEach(System.out::println);",
+    "code": null,
+    "explanation": "String.lines()はJava 11で追加されたメソッドで、文字列を行区切りで分割してStream<String>を返します。splitとは異なり、Stream APIと直接連携できます。",
+    "choices": [
+      {
+        "id": "se11g1_q008_a",
+        "text": "lines",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q008_b",
+        "text": "split",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q008_c",
+        "text": "chars",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q008_d",
+        "text": "toStream",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q009",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "java.util.function.Predicate<T>の抽象メソッドはどれですか？",
+    "code": null,
+    "explanation": "Predicate<T>は1つの引数を受け取りbooleanを返す関数型インタフェースです。抽象メソッドはtest(T t)で、条件判定に使用されます。",
+    "choices": [
+      {
+        "id": "se11g1_q009_a",
+        "text": "boolean test(T t)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q009_b",
+        "text": "void accept(T t)",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q009_c",
+        "text": "T apply(T t)",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q009_d",
+        "text": "T get()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q010",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "java.util.function.Function<T, R>の抽象メソッドはどれですか？",
+    "code": null,
+    "explanation": "Function<T, R>は型Tの引数を受け取り、型Rの結果を返す関数型インタフェースです。抽象メソッドはR apply(T t)です。",
+    "choices": [
+      {
+        "id": "se11g1_q010_a",
+        "text": "boolean test(T t)",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q010_b",
+        "text": "R apply(T t)",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q010_c",
+        "text": "void accept(T t)",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q010_d",
+        "text": "T get()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q011",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Consumer<T>とSupplier<T>の違いについて正しい説明はどれですか？",
+    "code": null,
+    "explanation": "Consumer<T>はT型の引数を受け取り戻り値なし（void accept(T)）、Supplier<T>は引数なしでT型の値を返す（T get()）インタフェースです。",
+    "choices": [
+      {
+        "id": "se11g1_q011_a",
+        "text": "Consumerは引数を受け取り戻り値なし、Supplierは引数なしで値を返す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q011_b",
+        "text": "Consumerは引数なしで値を返し、Supplierは引数を受け取り戻り値なし",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q011_c",
+        "text": "Consumerはboolean値を返し、SupplierはT型の値を受け取る",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q011_d",
+        "text": "両方とも引数を受け取り値を返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q012",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.function.Function;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, Integer> f = s -> s.length();\n        Function<Integer, String> g = n -> \"Length: \" + n;\n        String result = f.andThen(g).apply(\"Java\");\n        System.out.println(result);\n    }\n}",
+    "explanation": "f.andThen(g)はまずfを適用し、その結果にgを適用します。f.apply(\"Java\")は4を返し、g.apply(4)は\"Length: 4\"を返します。",
+    "choices": [
+      {
+        "id": "se11g1_q012_a",
+        "text": "4",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q012_b",
+        "text": "Length: 4",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q012_c",
+        "text": "Length: Java",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q012_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q013",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.function.Predicate;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> p1 = s -> s.startsWith(\"J\");\n        Predicate<String> p2 = s -> s.length() > 3;\n        System.out.println(p1.and(p2).test(\"Java\"));\n        System.out.println(p1.or(p2).test(\"Go\"));\n    }\n}",
+    "explanation": "p1.and(p2).test(\"Java\"): \"Java\"は\"J\"で始まり(true)、長さ4>3(true)なのでtrue。p1.or(p2).test(\"Go\"): \"Go\"は\"J\"で始まらない(false)、長さ2>3ではない(false)のでfalse。",
+    "choices": [
+      {
+        "id": "se11g1_q013_a",
+        "text": "true\nfalse",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q013_b",
+        "text": "true\ntrue",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q013_c",
+        "text": "false\nfalse",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q013_d",
+        "text": "false\ntrue",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q014",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはエラーがあります。エラーの原因はどれですか？",
+    "code": "import java.util.function.Function;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, Integer> f = (String s) -> {\n            return s.length();\n        };\n        int result = f.apply(100);\n        System.out.println(result);\n    }\n}",
+    "explanation": "Function<String, Integer>のapply()はString型の引数を受け取りますが、int型の100を渡しています。型の不一致によりコンパイルエラーとなります。",
+    "choices": [
+      {
+        "id": "se11g1_q014_a",
+        "text": "ラムダ式の構文が間違っている",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q014_b",
+        "text": "apply()にString型ではなくint型を渡している",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q014_c",
+        "text": "Function<String, Integer>の型パラメータが不正",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q014_d",
+        "text": "戻り値をintで受けているためアンボクシングに失敗する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q015",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "引数を2つ受け取り結果を返す関数型インタフェースはどれですか？\n_____ <String, String, String> concat = (a, b) -> a + b;",
+    "code": null,
+    "explanation": "BiFunction<T, U, R>は2つの引数（T型とU型）を受け取り、R型の結果を返す関数型インタフェースです。Functionは引数1つ、BinaryOperatorは同じ型の2引数で同じ型を返します。",
+    "choices": [
+      {
+        "id": "se11g1_q015_a",
+        "text": "BiFunction",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q015_b",
+        "text": "Function",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q015_c",
+        "text": "BiConsumer",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q015_d",
+        "text": "BinaryOperator",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q016",
+    "lessonId": "exam_se11_gold_1",
+    "type": "multiChoice",
+    "question": "@FunctionalInterfaceアノテーションに関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "@FunctionalInterfaceは抽象メソッドを1つだけ持つインタフェースに付けるアノテーションです。デフォルトメソッドやstaticメソッドは複数あっても問題ありません。このアノテーションがなくてもラムダ式は使用可能です。",
+    "choices": [
+      {
+        "id": "se11g1_q016_a",
+        "text": "抽象メソッドが1つだけであることをコンパイル時に検証する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q016_b",
+        "text": "このアノテーションがないインタフェースにはラムダ式を使えない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q016_c",
+        "text": "デフォルトメソッドやstaticメソッドは複数持てる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q016_d",
+        "text": "クラスにも付けることができる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q017",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "ジェネリクスで「? extends Number」が意味するのはどれですか？",
+    "code": null,
+    "explanation": "? extends NumberはNumber型またはそのサブクラス（Integer, Double等）を表す上限境界ワイルドカードです。読み取りには使えますが、書き込み（add等）には使用できません。",
+    "choices": [
+      {
+        "id": "se11g1_q017_a",
+        "text": "Numberまたはそのサブクラスの型",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q017_b",
+        "text": "Numberまたはそのスーパークラスの型",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q017_c",
+        "text": "Number型のみ",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q017_d",
+        "text": "任意の型",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q018",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "List<? super Integer>に対して行える操作はどれですか？",
+    "code": null,
+    "explanation": "? super Integer（下限境界ワイルドカード）はIntegerまたはそのスーパークラスを表します。Integer値の追加は安全に行えますが、取り出す場合はObject型でしか受け取れません。",
+    "choices": [
+      {
+        "id": "se11g1_q018_a",
+        "text": "Integer値の追加",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q018_b",
+        "text": "Integer型としての値の取得",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q018_c",
+        "text": "Double値の追加",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q018_d",
+        "text": "Number型としての値の取得",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q019",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "型消去（Type Erasure）に関する正しい説明はどれですか？",
+    "code": null,
+    "explanation": "Javaのジェネリクスはコンパイル時に型チェックを行い、コンパイル後はジェネリクスの型情報が消去されます。実行時にはList<String>とList<Integer>は区別できません。",
+    "choices": [
+      {
+        "id": "se11g1_q019_a",
+        "text": "コンパイル後にジェネリクスの型パラメータ情報が消去される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q019_b",
+        "text": "実行時にもジェネリクスの型情報は保持される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q019_c",
+        "text": "型消去はJava 11で廃止された",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q019_d",
+        "text": "型消去はプリミティブ型にのみ適用される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q020",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "ジェネリックメソッドの正しい宣言はどれですか？",
+    "code": null,
+    "explanation": "ジェネリックメソッドは戻り値型の前に型パラメータ<T>を宣言します。<T>は型パラメータのスコープがメソッドに限定されることを示します。",
+    "choices": [
+      {
+        "id": "se11g1_q020_a",
+        "text": "public <T> T getValue(T input) { return input; }",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q020_b",
+        "text": "public T <T> getValue(T input) { return input; }",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q020_c",
+        "text": "public T getValue<T>(T input) { return input; }",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q020_d",
+        "text": "public getValue<T>(T input) { return input; }",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q021",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    static double sum(List<? extends Number> list) {\n        double total = 0;\n        for (Number n : list) {\n            total += n.doubleValue();\n        }\n        return total;\n    }\n    public static void main(String[] args) {\n        List<Integer> nums = List.of(1, 2, 3);\n        System.out.println(sum(nums));\n    }\n}",
+    "explanation": "List<? extends Number>はNumberのサブクラスのListを受け取れます。List<Integer>を渡すと、各要素のdoubleValue()で1.0+2.0+3.0=6.0が返されます。",
+    "choices": [
+      {
+        "id": "se11g1_q021_a",
+        "text": "6.0",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q021_b",
+        "text": "6",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q021_c",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q021_d",
+        "text": "ClassCastException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q022",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<? extends Number> list = new ArrayList<Integer>();\n        list.add(10);\n        System.out.println(list.size());\n    }\n}",
+    "explanation": "上限境界ワイルドカード（? extends Number）のリストに対してadd()はできません。コンパイラはリストの実際の型を判定できないため、安全性のために追加を禁止しています。nullだけは追加可能です。",
+    "choices": [
+      {
+        "id": "se11g1_q022_a",
+        "text": "ArrayList<Integer>()の型パラメータが不正",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q022_b",
+        "text": "上限境界ワイルドカードのリストに要素を追加しようとしている",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q022_c",
+        "text": "List<? extends Number>にArrayList<Integer>を代入できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q022_d",
+        "text": "size()メソッドが使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q023",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "public class Box<T> {\n    private T value;\n    public Box(T value) { this.value = value; }\n    public static T getDefault() {\n        return null;\n    }\n}",
+    "explanation": "staticメソッドではクラスの型パラメータTを使用できません。型パラメータはインスタンスに紐づくものであり、staticコンテキストからはアクセスできません。staticメソッドで型パラメータを使うには、メソッド独自の型パラメータを宣言する必要があります。",
+    "choices": [
+      {
+        "id": "se11g1_q023_a",
+        "text": "コンストラクタの定義が不正",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q023_b",
+        "text": "privateフィールドにジェネリクスは使えない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q023_c",
+        "text": "staticメソッドでクラスの型パラメータTを使用している",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q023_d",
+        "text": "nullを返せない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q024",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "型パラメータTをComparableを実装した型に限定するには、どのように宣言しますか？\npublic class SortedBox<T _____ Comparable<T>> { }",
+    "code": null,
+    "explanation": "型パラメータの上限境界はextendsキーワードで指定します。T extends Comparable<T>とすることで、TはComparable<T>を実装した型に限定されます。interfaceでもextendsを使います。",
+    "choices": [
+      {
+        "id": "se11g1_q024_a",
+        "text": "extends",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q024_b",
+        "text": "implements",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q024_c",
+        "text": "super",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q024_d",
+        "text": "instanceof",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q025",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Map.of()メソッドで作成されたMapの特徴として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Map.of()はJava 9で追加された不変（イミュータブル）Mapを作成するファクトリメソッドです。要素の追加・削除・変更はUnsupportedOperationExceptionをスローします。nullキーや値も許可されません。",
+    "choices": [
+      {
+        "id": "se11g1_q025_a",
+        "text": "変更不可（イミュータブル）なMapが作成される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q025_b",
+        "text": "要素の追加が可能なMapが作成される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q025_c",
+        "text": "nullキーが許容される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q025_d",
+        "text": "TreeMapが返される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q026",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "ArrayDequeをスタック（LIFO）として使う場合、要素を追加・取得するメソッドの組み合わせはどれですか？",
+    "code": null,
+    "explanation": "スタック（LIFO: Last In First Out）として使う場合、push()で先頭に追加し、pop()で先頭から取り出します。peek()は先頭要素を削除せずに参照します。",
+    "choices": [
+      {
+        "id": "se11g1_q026_a",
+        "text": "push()とpop()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q026_b",
+        "text": "add()とremove()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q026_c",
+        "text": "offer()とpoll()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q026_d",
+        "text": "enqueue()とdequeue()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q027",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "TreeMapに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "TreeMapはキーの自然順序（またはComparatorで指定した順序）でソートされます。内部的にはRed-Blackツリーで実装されており、get/put操作はO(log n)です。",
+    "choices": [
+      {
+        "id": "se11g1_q027_a",
+        "text": "キーが自然順序でソートされる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q027_b",
+        "text": "挿入順序が保持される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q027_c",
+        "text": "ハッシュテーブルで実装されている",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q027_d",
+        "text": "重複キーを許容する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q028",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> deque = new ArrayDeque<>();\n        deque.push(\"A\");\n        deque.push(\"B\");\n        deque.push(\"C\");\n        System.out.println(deque.pop());\n        System.out.println(deque.peek());\n        System.out.println(deque.size());\n    }\n}",
+    "explanation": "push()は先頭に追加するので、dequeは[C, B, A]の状態になります。pop()で先頭のCを取り出し、peek()で次の先頭Bを参照（削除しない）、size()は残り2要素です。",
+    "choices": [
+      {
+        "id": "se11g1_q028_a",
+        "text": "C\nB\n2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q028_b",
+        "text": "A\nB\n2",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q028_c",
+        "text": "C\nB\n3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q028_d",
+        "text": "A\nA\n2",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q029",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Integer> map = new HashMap<>();\n        map.put(\"A\", 1);\n        map.put(\"B\", 2);\n        map.put(\"A\", 3);\n        map.putIfAbsent(\"B\", 99);\n        System.out.println(map.get(\"A\") + \" \" + map.get(\"B\"));\n    }\n}",
+    "explanation": "put(\"A\", 3)で既存の値1が3に上書きされます。putIfAbsent(\"B\", 99)はキーBが既に存在するため、値は変更されません（2のまま）。結果は\"3 2\"です。",
+    "choices": [
+      {
+        "id": "se11g1_q029_a",
+        "text": "3 2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q029_b",
+        "text": "1 2",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q029_c",
+        "text": "3 99",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q029_d",
+        "text": "1 99",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q030",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードには実行時エラーがあります。エラーの原因はどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = List.of(\"A\", \"B\", \"C\");\n        list.add(\"D\");\n        System.out.println(list);\n    }\n}",
+    "explanation": "List.of()で作成されたリストは不変（イミュータブル）です。add()を呼ぶとUnsupportedOperationExceptionがスローされます。変更可能なリストが必要な場合はnew ArrayList<>(List.of(...))を使います。",
+    "choices": [
+      {
+        "id": "se11g1_q030_a",
+        "text": "List.of()の引数の数が不正",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q030_b",
+        "text": "不変リストに対してadd()を呼んでいるためUnsupportedOperationExceptionが発生する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q030_c",
+        "text": "printlnでリストを出力できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q030_d",
+        "text": "List.of()はnullを返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q031",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "Map内のキーが存在しない場合にデフォルト値を返すメソッドはどれですか？\nmap._____(\"key\", 0);",
+    "code": null,
+    "explanation": "getOrDefault()はキーが存在する場合はその値を返し、存在しない場合は第2引数のデフォルト値を返します。Java 8で追加されたメソッドです。",
+    "choices": [
+      {
+        "id": "se11g1_q031_a",
+        "text": "getOrDefault",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q031_b",
+        "text": "getDefault",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q031_c",
+        "text": "getIfPresent",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q031_d",
+        "text": "computeIfAbsent",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q032",
+    "lessonId": "exam_se11_gold_1",
+    "type": "multiChoice",
+    "question": "LinkedHashMapの特徴として正しいものはどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "LinkedHashMapはHashMapのサブクラスで、挿入順序を保持します。また、コンストラクタにaccessOrder=trueを指定するとアクセス順序での保持も可能です。",
+    "choices": [
+      {
+        "id": "se11g1_q032_a",
+        "text": "挿入順序が保持される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q032_b",
+        "text": "キーが自然順序でソートされる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q032_c",
+        "text": "HashMapのサブクラスである",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q032_d",
+        "text": "スレッドセーフである",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q033",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Stream APIのfilter()メソッドが受け取る引数の型はどれですか？",
+    "code": null,
+    "explanation": "filter()メソッドはPredicate<T>を引数に取ります。Predicateはboolean値を返す関数型インタフェースで、trueを返す要素のみがストリームに残ります。",
+    "choices": [
+      {
+        "id": "se11g1_q033_a",
+        "text": "Predicate<T>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q033_b",
+        "text": "Function<T, R>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q033_c",
+        "text": "Consumer<T>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q033_d",
+        "text": "Supplier<T>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q034",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Stream.reduce()メソッドに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "reduce()はストリームの要素を集約して単一の結果にする終端操作です。初期値とBinaryOperatorを引数に取る形式と、BinaryOperatorのみでOptionalを返す形式があります。",
+    "choices": [
+      {
+        "id": "se11g1_q034_a",
+        "text": "ストリームの要素を集約して単一の値にする終端操作",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q034_b",
+        "text": "ストリームの要素数を減らす中間操作",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q034_c",
+        "text": "ストリームの要素をフィルタリングする中間操作",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q034_d",
+        "text": "ストリームの要素を変換する中間操作",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q035",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "flatMap()とmap()の違いに関する正しい説明はどれですか？",
+    "code": null,
+    "explanation": "map()は各要素を1対1で変換しますが、flatMap()は各要素をストリームに変換し、それらを1つのストリームにフラット化します。ネストしたコレクションの展開に使用します。",
+    "choices": [
+      {
+        "id": "se11g1_q035_a",
+        "text": "flatMap()は各要素をストリームに変換し、結果をフラット化して1つのストリームにする",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q035_b",
+        "text": "flatMap()はmap()の結果をソートする",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q035_c",
+        "text": "flatMap()は終端操作で、map()は中間操作である",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q035_d",
+        "text": "flatMap()はmap()と全く同じ動作をする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q036",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = List.of(\"Java\", \"Go\", \"Python\", \"C\");\n        long count = list.stream()\n            .filter(s -> s.length() > 2)\n            .count();\n        System.out.println(count);\n    }\n}",
+    "explanation": "filter()で文字列の長さが2より大きい要素を残します。\"Java\"(4), \"Python\"(6)が該当し、\"Go\"(2), \"C\"(1)は除外されます。count()で結果は2です。",
+    "choices": [
+      {
+        "id": "se11g1_q036_a",
+        "text": "2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q036_b",
+        "text": "3",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q036_c",
+        "text": "4",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q036_d",
+        "text": "1",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q037",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        String result = List.of(\"a\", \"b\", \"c\", \"d\")\n            .stream()\n            .reduce(\"\", (a, b) -> a + b);\n        System.out.println(result);\n    }\n}",
+    "explanation": "reduce()は初期値\"\"から開始し、各要素を順に連結します。\"\" + \"a\" = \"a\"、\"a\" + \"b\" = \"ab\"、\"ab\" + \"c\" = \"abc\"、\"abc\" + \"d\" = \"abcd\"。結果は\"abcd\"です。",
+    "choices": [
+      {
+        "id": "se11g1_q037_a",
+        "text": "abcd",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q037_b",
+        "text": "dcba",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q037_c",
+        "text": "a,b,c,d",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q037_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q038",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードには実行時エラーがあります。エラーの原因はどれですか？",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Stream<String> stream = List.of(\"A\", \"B\", \"C\").stream();\n        stream.forEach(System.out::println);\n        stream.forEach(System.out::println);\n    }\n}",
+    "explanation": "ストリームは一度消費すると再利用できません。2回目のforEach()呼び出し時にIllegalStateExceptionがスローされます。再度ストリームが必要な場合はstream()を再度呼ぶ必要があります。",
+    "choices": [
+      {
+        "id": "se11g1_q038_a",
+        "text": "List.of()がストリームをサポートしていない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q038_b",
+        "text": "ストリームを2回消費しようとしているためIllegalStateExceptionが発生する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q038_c",
+        "text": "メソッド参照の書き方が不正",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q038_d",
+        "text": "forEach()は中間操作なので終端操作が必要",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q039",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "Stream要素をカンマ区切りの文字列にまとめるCollectorはどれですか？\nString result = list.stream().collect(Collectors._____(\", \"));",
+    "code": null,
+    "explanation": "Collectors.joining()は文字列ストリームの要素を連結します。引数に区切り文字を指定でき、joining(\", \")でカンマ区切りの文字列を作成します。",
+    "choices": [
+      {
+        "id": "se11g1_q039_a",
+        "text": "joining",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q039_b",
+        "text": "concat",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q039_c",
+        "text": "merge",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q039_d",
+        "text": "reducing",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q040",
+    "lessonId": "exam_se11_gold_1",
+    "type": "multiChoice",
+    "question": "Stream APIの中間操作はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "filter()とsorted()は中間操作（遅延評価される）です。collect()とforEach()は終端操作（ストリームを消費する）です。中間操作は終端操作が呼ばれるまで実行されません。",
+    "choices": [
+      {
+        "id": "se11g1_q040_a",
+        "text": "filter()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q040_b",
+        "text": "collect()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q040_c",
+        "text": "sorted()",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q040_d",
+        "text": "forEach()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q041",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "ExecutorServiceのsubmit()メソッドにCallable<T>を渡した場合の戻り値の型はどれですか？",
+    "code": null,
+    "explanation": "submit(Callable<T>)はFuture<T>を返します。Futureを通じて非同期タスクの結果を取得でき、get()メソッドでタスク完了を待って結果を受け取ります。",
+    "choices": [
+      {
+        "id": "se11g1_q041_a",
+        "text": "Future<T>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q041_b",
+        "text": "T",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q041_c",
+        "text": "CompletableFuture<T>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q041_d",
+        "text": "Thread",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q042",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Executors.newFixedThreadPool(3)で作成されるスレッドプールの特徴はどれですか？",
+    "code": null,
+    "explanation": "newFixedThreadPool(3)は固定サイズ3のスレッドプールを作成します。同時に最大3つのタスクを並行実行でき、それ以上のタスクはキューで待機します。",
+    "choices": [
+      {
+        "id": "se11g1_q042_a",
+        "text": "最大3つのスレッドで同時にタスクを実行し、超過分はキューで待機する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q042_b",
+        "text": "合計3つのタスクしか実行できない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q042_c",
+        "text": "必要に応じてスレッド数が増減する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q042_d",
+        "text": "タスクを順番に1つずつ実行する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q043",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "AtomicIntegerのcompareAndSet(expect, update)メソッドの動作として正しいものはどれですか？",
+    "code": null,
+    "explanation": "compareAndSet()は現在の値がexpectと等しい場合のみupdateに更新し、trueを返します。等しくない場合は何もせずfalseを返します。CAS（Compare-And-Swap）操作としてスレッドセーフです。",
+    "choices": [
+      {
+        "id": "se11g1_q043_a",
+        "text": "現在の値がexpectと等しければupdateに更新してtrueを返す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q043_b",
+        "text": "常にupdateに更新してtrueを返す",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q043_c",
+        "text": "現在の値がexpectと等しくなければupdateに更新する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q043_d",
+        "text": "expectとupdateの差分を加算する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q044",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "CompletableFuture.supplyAsync()に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "supplyAsync()はSupplier<T>を受け取り、別スレッドで非同期に処理を実行してCompletableFuture<T>を返します。ForkJoinPool.commonPool()がデフォルトで使用されます。",
+    "choices": [
+      {
+        "id": "se11g1_q044_a",
+        "text": "Supplierを非同期に実行しCompletableFutureを返す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q044_b",
+        "text": "同期的に処理を実行する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q044_c",
+        "text": "Consumerを受け取り非同期に処理する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q044_d",
+        "text": "結果をOptionalで包んで返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q045",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.concurrent.atomic.AtomicInteger;\n\npublic class Main {\n    public static void main(String[] args) {\n        AtomicInteger ai = new AtomicInteger(5);\n        int prev = ai.getAndAdd(3);\n        int curr = ai.get();\n        System.out.println(prev + \" \" + curr);\n    }\n}",
+    "explanation": "getAndAdd(3)は現在の値5を返してから3を加算します。よってprevは5、加算後のcurrは8になります。",
+    "choices": [
+      {
+        "id": "se11g1_q045_a",
+        "text": "5 8",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q045_b",
+        "text": "8 8",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q045_c",
+        "text": "5 5",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q045_d",
+        "text": "3 8",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q046",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService es = Executors.newSingleThreadExecutor();\n        Future<String> future = es.submit(() -> {\n            return \"Hello from thread\";\n        });\n        System.out.println(future.get());\n        es.shutdown();\n    }\n}",
+    "explanation": "submit()にCallable<String>のラムダ式を渡し、非同期で\"Hello from thread\"を返します。future.get()でタスク完了を待ち、結果を取得します。",
+    "choices": [
+      {
+        "id": "se11g1_q046_a",
+        "text": "Hello from thread",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q046_b",
+        "text": "null",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q046_c",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q046_d",
+        "text": "TimeoutException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q047",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードには問題があります。問題の原因はどれですか？",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ExecutorService es = Executors.newFixedThreadPool(2);\n        es.submit(() -> {\n            System.out.println(\"Task 1\");\n        });\n        es.submit(() -> {\n            System.out.println(\"Task 2\");\n        });\n    }\n}",
+    "explanation": "ExecutorServiceのshutdown()が呼ばれていないため、プログラムが終了しません。submit()後にes.shutdown()を呼んでスレッドプールを適切に終了させる必要があります。",
+    "choices": [
+      {
+        "id": "se11g1_q047_a",
+        "text": "スレッドプールのサイズが足りない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q047_b",
+        "text": "shutdown()が呼ばれていないためプログラムが終了しない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q047_c",
+        "text": "submit()にRunnableを渡せない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q047_d",
+        "text": "ラムダ式がCallableとして解釈されるためエラーになる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q048",
+    "lessonId": "exam_se11_gold_1",
+    "type": "multiChoice",
+    "question": "synchronizedキーワードに関して正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "synchronizedはメソッドまたはブロックに適用でき、同時に1つのスレッドのみがそのコードを実行できるようにします。インスタンスメソッドの場合はthisオブジェクトのモニターロックを取得します。",
+    "choices": [
+      {
+        "id": "se11g1_q048_a",
+        "text": "メソッドまたはブロックに適用できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q048_b",
+        "text": "変数宣言に適用できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q048_c",
+        "text": "同時に1つのスレッドだけがロックされた領域を実行できる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q048_d",
+        "text": "デッドロックが絶対に発生しない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q049",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "NIO.2のPath.resolve()メソッドの動作として正しいものはどれですか？",
+    "code": null,
+    "explanation": "resolve()は2つのパスを結合します。引数が相対パスの場合は呼び出し元のパスに連結し、引数が絶対パスの場合は引数のパスがそのまま返されます。",
+    "choices": [
+      {
+        "id": "se11g1_q049_a",
+        "text": "2つのパスを結合する（引数が絶対パスの場合は引数がそのまま返される）",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q049_b",
+        "text": "パスのシンボリックリンクを解決する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q049_c",
+        "text": "相対パスを返す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q049_d",
+        "text": "ファイルの存在確認をする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q050",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Files.readAllLines()メソッドの戻り値の型はどれですか？",
+    "code": null,
+    "explanation": "Files.readAllLines()はファイルの全行を読み込んでList<String>として返します。各要素が1行に対応します。大きなファイルにはFiles.lines()でStream<String>を使う方が効率的です。",
+    "choices": [
+      {
+        "id": "se11g1_q050_a",
+        "text": "List<String>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q050_b",
+        "text": "String[]",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q050_c",
+        "text": "Stream<String>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q050_d",
+        "text": "String",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q051",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Files.walk()メソッドに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Files.walk()はディレクトリツリーを深さ優先で再帰的に走査し、Stream<Path>を返します。引数にmaxDepthを指定して探索の深さを制限できます。",
+    "choices": [
+      {
+        "id": "se11g1_q051_a",
+        "text": "ディレクトリツリーを再帰的に走査してStream<Path>を返す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q051_b",
+        "text": "ファイルの内容を行ごとにStream<String>として返す",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q051_c",
+        "text": "指定されたパスのファイル属性を返す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q051_d",
+        "text": "ファイルをコピーする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q052",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.nio.file.Path;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p = Path.of(\"/home/user/docs/file.txt\");\n        System.out.println(p.getNameCount());\n        System.out.println(p.getName(1));\n        System.out.println(p.getParent());\n    }\n}",
+    "explanation": "getNameCount()はルートを除くパス要素数で4（home, user, docs, file.txt）。getName(1)は0始まりで2番目の\"user\"。getParent()は\"/home/user/docs\"です。",
+    "choices": [
+      {
+        "id": "se11g1_q052_a",
+        "text": "4\nuser\n/home/user/docs",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q052_b",
+        "text": "5\nhome\n/home/user/docs",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q052_c",
+        "text": "4\nhome\n/home/user",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q052_d",
+        "text": "3\nuser\n/home/user",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q053",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "import java.nio.file.*;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p = Path.of(\"/tmp/test.txt\");\n        String content = Files.readString(p);\n        System.out.println(content);\n    }\n}",
+    "explanation": "Files.readString()はIOExceptionをスローする可能性があるチェック例外です。mainメソッドでthrows IOExceptionを宣言するか、try-catchで囲む必要があります。",
+    "choices": [
+      {
+        "id": "se11g1_q053_a",
+        "text": "Path.of()の使い方が不正",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q053_b",
+        "text": "IOExceptionがキャッチまたはスローされていない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q053_c",
+        "text": "readString()メソッドが存在しない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q053_d",
+        "text": "importが不足している",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q054",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "Path p1とPath p2間の相対パスを取得するメソッドはどれですか？\nPath relative = p1._____(p2);",
+    "code": null,
+    "explanation": "relativize()は呼び出し元のパスから引数のパスへの相対パスを返します。例えば、p1が/a/bでp2が/a/b/c/dの場合、p1.relativize(p2)はc/dを返します。",
+    "choices": [
+      {
+        "id": "se11g1_q054_a",
+        "text": "relativize",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q054_b",
+        "text": "resolve",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q054_c",
+        "text": "normalize",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q054_d",
+        "text": "subpath",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q055",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "JDBCでPreparedStatementを使用する主な利点はどれですか？",
+    "code": null,
+    "explanation": "PreparedStatementはSQL文をプリコンパイルし、パラメータをプレースホルダ(?)で指定します。SQLインジェクション防止、パフォーマンス向上、型安全なパラメータバインドが主な利点です。",
+    "choices": [
+      {
+        "id": "se11g1_q055_a",
+        "text": "SQLインジェクション防止とパフォーマンス向上",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q055_b",
+        "text": "トランザクション管理が自動で行われる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q055_c",
+        "text": "データベース接続が自動で作成される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q055_d",
+        "text": "複数のResultSetを同時に保持できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q056",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "JDBCのConnection.setAutoCommit(false)を呼んだ後、変更を確定するメソッドはどれですか？",
+    "code": null,
+    "explanation": "setAutoCommit(false)でトランザクションを手動管理に設定後、commit()で変更を確定、rollback()で変更を取り消します。commit()を呼ばないと変更はデータベースに反映されません。",
+    "choices": [
+      {
+        "id": "se11g1_q056_a",
+        "text": "commit()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q056_b",
+        "text": "flush()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q056_c",
+        "text": "save()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q056_d",
+        "text": "execute()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q057",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "ResultSetのnext()メソッドに関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "next()はカーソルを次の行に移動し、行が存在する場合はtrueを返します。ResultSetのカーソルは最初は最初の行の前に位置しているため、最初のnext()で最初の行に移動します。",
+    "choices": [
+      {
+        "id": "se11g1_q057_a",
+        "text": "カーソルを次の行に移動し、行が存在すればtrueを返す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q057_b",
+        "text": "次の行のデータをオブジェクトとして返す",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q057_c",
+        "text": "カーソルを先頭に戻す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q057_d",
+        "text": "残りの行数を返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q058",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードのtry-with-resources文について、リソースのclose()が呼ばれるタイミングはいつですか？",
+    "code": "try (Connection conn = DriverManager.getConnection(url);\n     PreparedStatement ps = conn.prepareStatement(sql);\n     ResultSet rs = ps.executeQuery()) {\n    while (rs.next()) {\n        System.out.println(rs.getString(1));\n    }\n} catch (SQLException e) {\n    e.printStackTrace();\n}",
+    "explanation": "try-with-resourcesでは、tryブロック終了後に宣言の逆順（rs→ps→conn）でclose()が自動的に呼ばれます。例外発生時もclose()は呼ばれます。",
+    "choices": [
+      {
+        "id": "se11g1_q058_a",
+        "text": "tryブロック終了後に宣言の逆順（rs→ps→conn）でclose()が呼ばれる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q058_b",
+        "text": "tryブロック終了後に宣言順（conn→ps→rs）でclose()が呼ばれる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q058_c",
+        "text": "catchブロックの後にclose()が呼ばれる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q058_d",
+        "text": "close()は自動で呼ばれず明示的に呼ぶ必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q059",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードには問題があります。問題の原因はどれですか？",
+    "code": "String sql = \"SELECT * FROM users WHERE id = \" + userId + \";\";\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(sql);",
+    "explanation": "ユーザー入力（userId）を直接SQL文に結合しているため、SQLインジェクションの脆弱性があります。PreparedStatementとプレースホルダ(?)を使用すべきです。",
+    "choices": [
+      {
+        "id": "se11g1_q059_a",
+        "text": "executeQuery()の使い方が不正",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q059_b",
+        "text": "SQLインジェクションの脆弱性がある（PreparedStatementを使用すべき）",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q059_c",
+        "text": "SQL文末のセミコロンが不要",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q059_d",
+        "text": "Statementではなく直接Connectionで実行すべき",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q060",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "PreparedStatementでString型のパラメータをセットするメソッドはどれですか？\nps._____(1, \"Tokyo\");",
+    "code": null,
+    "explanation": "setString(int parameterIndex, String x)は指定された位置にString値を設定します。インデックスは1から始まります。int型ならsetInt()、double型ならsetDouble()を使います。",
+    "choices": [
+      {
+        "id": "se11g1_q060_a",
+        "text": "setString",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q060_b",
+        "text": "putString",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q060_c",
+        "text": "setParameter",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q060_d",
+        "text": "bindString",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q061",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "@Overrideアノテーションの役割として正しいものはどれですか？",
+    "code": null,
+    "explanation": "@Overrideはスーパークラスのメソッドをオーバーライドしていることを示します。メソッド名のスペルミスなどでオーバーライドになっていない場合、コンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se11g1_q061_a",
+        "text": "スーパークラスのメソッドをオーバーライドしていることをコンパイラに示し、不正な場合にエラーにする",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q061_b",
+        "text": "メソッドのオーバーロードを許可する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q061_c",
+        "text": "メソッドを動的にオーバーライドする",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q061_d",
+        "text": "実行時にオーバーライドの関係を記録する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q062",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "カスタムアノテーションの@Retention(RetentionPolicy.RUNTIME)が意味するのはどれですか？",
+    "code": null,
+    "explanation": "RetentionPolicy.RUNTIMEはアノテーション情報がクラスファイルに記録され、実行時にリフレクションで取得可能であることを意味します。SOURCEはコンパイル後に破棄、CLASSはクラスファイルに記録されるが実行時は取得不可です。",
+    "choices": [
+      {
+        "id": "se11g1_q062_a",
+        "text": "アノテーション情報が実行時にリフレクションで取得可能",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q062_b",
+        "text": "アノテーションがコンパイル後に破棄される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q062_c",
+        "text": "アノテーションがソースコードにのみ保持される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q062_d",
+        "text": "アノテーションがクラスファイルに記録されるが実行時は取得不可",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q063",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "@Target(ElementType.METHOD)を付けたカスタムアノテーションはどこに付与できますか？",
+    "code": null,
+    "explanation": "@Target(ElementType.METHOD)はアノテーションをメソッドにのみ適用できることを指定します。クラスやフィールドに付けるとコンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se11g1_q063_a",
+        "text": "メソッドにのみ適用できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q063_b",
+        "text": "クラスにのみ適用できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q063_c",
+        "text": "フィールドにのみ適用できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q063_d",
+        "text": "どこにでも適用できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q064",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Info {\n    String value() default \"unknown\";\n}\n\npublic class Main {\n    @Info(\"test\")\n    public static void myMethod() {}\n\n    public static void main(String[] args) throws Exception {\n        Info info = Main.class.getMethod(\"myMethod\").getAnnotation(Info.class);\n        System.out.println(info.value());\n    }\n}",
+    "explanation": "myMethod()に@Info(\"test\")が付与されています。リフレクションでアノテーションを取得し、value()で\"test\"が返されます。RUNTIMEリテンションのため実行時に取得可能です。",
+    "choices": [
+      {
+        "id": "se11g1_q064_a",
+        "text": "test",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q064_b",
+        "text": "unknown",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q064_c",
+        "text": "null",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q064_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q065",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のカスタムアノテーション定義にはエラーがあります。エラーの原因はどれですか？",
+    "code": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Config {\n    String name();\n    List<String> tags();\n}",
+    "explanation": "アノテーションの要素の型はプリミティブ型、String、Class、enum、アノテーション、またはそれらの配列に限定されます。List<String>は許可されません。String[]を使う必要があります。",
+    "choices": [
+      {
+        "id": "se11g1_q065_a",
+        "text": "@Retentionの指定が不正",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q065_b",
+        "text": "アノテーション要素の型にList<String>は使用できない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q065_c",
+        "text": "name()にdefault値がないためエラー",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q065_d",
+        "text": "@TargetをTYPEに設定できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q066",
+    "lessonId": "exam_se11_gold_1",
+    "type": "multiChoice",
+    "question": "@Deprecatedアノテーションに関して正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "@Deprecatedは今後使用すべきでない要素を示します。forRemoval=trueを指定すると将来削除予定であることを示し、使用するとコンパイラが警告を出します。",
+    "choices": [
+      {
+        "id": "se11g1_q066_a",
+        "text": "非推奨の要素を使用するとコンパイラが警告を出す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q066_b",
+        "text": "非推奨の要素を使用するとコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q066_c",
+        "text": "forRemoval属性で将来削除予定であることを示せる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q066_d",
+        "text": "実行時に例外がスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q067",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "Locale.getDefault()で取得されるロケールは何に基づいていますか？",
+    "code": null,
+    "explanation": "Locale.getDefault()はJVM起動時のシステムのデフォルトロケールを返します。OSの言語設定に基づいて決定されますが、Locale.setDefault()で変更することも可能です。",
+    "choices": [
+      {
+        "id": "se11g1_q067_a",
+        "text": "JVM起動時のシステムのデフォルト言語設定",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q067_b",
+        "text": "ソースファイルのエンコーディング",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q067_c",
+        "text": "アプリケーションのコンパイル時の設定",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q067_d",
+        "text": "常にLocale.ENGLISH",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q068",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "ResourceBundleのプロパティファイル検索順序について正しいものはどれですか？（Locale=ja_JP の場合）",
+    "code": null,
+    "explanation": "ResourceBundleは最も具体的なロケールから順に検索します。ja_JP → ja → デフォルトの順でプロパティファイルを探し、最初に見つかったものを使用します。",
+    "choices": [
+      {
+        "id": "se11g1_q068_a",
+        "text": "messages_ja_JP.properties → messages_ja.properties → messages.properties",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q068_b",
+        "text": "messages.properties → messages_ja.properties → messages_ja_JP.properties",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q068_c",
+        "text": "messages_ja.properties → messages_ja_JP.properties → messages.properties",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q068_d",
+        "text": "messages_ja_JP.propertiesのみ検索される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q069",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "DateTimeFormatter.ofPattern(\"yyyy/MM/dd\")で2023年3月5日をフォーマットした結果はどれですか？",
+    "code": null,
+    "explanation": "yyyy は4桁の年、MM は2桁の月（ゼロ埋め）、dd は2桁の日（ゼロ埋め）です。2023年3月5日は \"2023/03/05\" とフォーマットされます。",
+    "choices": [
+      {
+        "id": "se11g1_q069_a",
+        "text": "2023/03/05",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q069_b",
+        "text": "2023/3/5",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q069_c",
+        "text": "23/03/05",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q069_d",
+        "text": "2023-03-05",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q070",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行した場合、出力結果はどれですか？",
+    "code": "import java.util.Locale;\n\npublic class Main {\n    public static void main(String[] args) {\n        Locale locale = new Locale(\"ja\", \"JP\");\n        System.out.println(locale.getLanguage());\n        System.out.println(locale.getCountry());\n        System.out.println(locale.getDisplayLanguage(Locale.ENGLISH));\n    }\n}",
+    "explanation": "getLanguage()は言語コード\"ja\"を返し、getCountry()は国コード\"JP\"を返します。getDisplayLanguage(Locale.ENGLISH)は英語表示での言語名\"Japanese\"を返します。",
+    "choices": [
+      {
+        "id": "se11g1_q070_a",
+        "text": "ja\nJP\nJapanese",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q070_b",
+        "text": "Japanese\nJapan\nja",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q070_c",
+        "text": "ja\nJP\n日本語",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q070_d",
+        "text": "ja_JP\nJapan\nJapanese",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q071",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードには実行時エラーがあります。エラーの原因はどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ResourceBundle rb = ResourceBundle.getBundle(\"messages\", new Locale(\"xx\", \"YY\"));\n        String greeting = rb.getString(\"hello\");\n        System.out.println(greeting);\n    }\n}",
+    "explanation": "存在しないロケール(xx_YY)でもResourceBundle自体は検索を試みますが、対応するプロパティファイルもデフォルトのmessages.propertiesも見つからない場合、MissingResourceExceptionがスローされます。",
+    "choices": [
+      {
+        "id": "se11g1_q071_a",
+        "text": "Locale(\"xx\", \"YY\")がコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q071_b",
+        "text": "対応するプロパティファイルが見つからずMissingResourceExceptionが発生する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q071_c",
+        "text": "getString()の引数が不正",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q071_d",
+        "text": "importが不足している",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q072",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fillBlank",
+    "question": "DateTimeFormatterを使って文字列からLocalDateに変換するメソッドはどれですか？\nLocalDate date = LocalDate._____(\"2023-03-15\", formatter);",
+    "code": null,
+    "explanation": "LocalDate.parse()はDateTimeFormatterを使って文字列からLocalDateオブジェクトを生成します。第1引数が文字列、第2引数がフォーマッターです。",
+    "choices": [
+      {
+        "id": "se11g1_q072_a",
+        "text": "parse",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q072_b",
+        "text": "format",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q072_c",
+        "text": "of",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q072_d",
+        "text": "from",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q073",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "module-info.javaの役割として正しいものはどれですか？",
+    "code": null,
+    "explanation": "module-info.javaはモジュール記述子で、モジュール名、公開パッケージ（exports）、依存モジュール（requires）などを宣言します。モジュールのルートディレクトリに配置します。",
+    "choices": [
+      {
+        "id": "se11g1_q073_a",
+        "text": "モジュール名、公開パッケージ、依存モジュールを宣言する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q073_b",
+        "text": "クラスパスの設定を行う",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q073_c",
+        "text": "ビルドスクリプトとして使用する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q073_d",
+        "text": "テストの設定を行う",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q074",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "モジュールの「exports」ディレクティブの役割として正しいものはどれですか？",
+    "code": null,
+    "explanation": "exportsは指定したパッケージを他のモジュールからアクセス可能にします。exportsされていないパッケージは、たとえpublicクラスであっても他のモジュールからアクセスできません。",
+    "choices": [
+      {
+        "id": "se11g1_q074_a",
+        "text": "指定したパッケージを他のモジュールからアクセス可能にする",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q074_b",
+        "text": "他のモジュールへの依存を宣言する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q074_c",
+        "text": "サービスの実装を登録する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q074_d",
+        "text": "リソースファイルを公開する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g1_q075",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "「requires transitive」ディレクティブの効果はどれですか？",
+    "code": null,
+    "explanation": "requires transitiveは依存モジュールを推移的に公開します。モジュールAがrequires transitive Bを宣言すると、Aに依存するモジュールCも自動的にBにアクセスできます。",
+    "choices": [
+      {
+        "id": "se11g1_q075_a",
+        "text": "依存モジュールを推移的に公開し、自モジュールに依存するモジュールも利用可能にする",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q075_b",
+        "text": "実行時のみ依存モジュールを読み込む",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q075_c",
+        "text": "テスト時のみ依存モジュールを利用可能にする",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q075_d",
+        "text": "循環依存を許可する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q076",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "「exports com.example.api to com.example.client」の意味はどれですか？",
+    "code": null,
+    "explanation": "exports ... to は限定エクスポートで、指定したモジュールに対してのみパッケージを公開します。これにより、APIの公開範囲を細かく制御できます。",
+    "choices": [
+      {
+        "id": "se11g1_q076_a",
+        "text": "com.example.apiパッケージをcom.example.clientモジュールにのみ公開する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q076_b",
+        "text": "com.example.clientのパッケージをcom.example.apiに公開する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q076_c",
+        "text": "すべてのモジュールにcom.example.apiを公開する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q076_d",
+        "text": "com.example.apiをcom.example.clientにコピーする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q077",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "「opens」ディレクティブと「exports」ディレクティブの違いは何ですか？",
+    "code": null,
+    "explanation": "exportsはコンパイル時と実行時にアクセス可能にしますが、opensはリフレクションによるアクセスを実行時に許可します。opensはJPAやJacksonなどのフレームワークで非公開フィールドへのアクセスに使用されます。",
+    "choices": [
+      {
+        "id": "se11g1_q077_a",
+        "text": "opensはリフレクションによる実行時アクセスを許可し、exportsはコンパイル時アクセスを許可する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q077_b",
+        "text": "opensとexportsは全く同じ動作をする",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q077_c",
+        "text": "exportsはリフレクションを許可し、opensは許可しない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q077_d",
+        "text": "opensはインタフェースにのみ適用される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q078",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のmodule-info.javaの内容から、このモジュールの依存関係について正しいものはどれですか？",
+    "code": "module com.example.app {\n    requires java.sql;\n    requires transitive java.logging;\n    exports com.example.app.api;\n}",
+    "explanation": "このモジュールはjava.sqlに直接依存し、java.loggingに推移的に依存します。com.example.app.apiパッケージを公開しています。java.loggingはrequires transitiveなので、com.example.appに依存するモジュールもjava.loggingを使用できます。",
+    "choices": [
+      {
+        "id": "se11g1_q078_a",
+        "text": "java.sqlに依存し、java.loggingを推移的に公開する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q078_b",
+        "text": "java.sqlとjava.loggingの両方を推移的に公開する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q078_c",
+        "text": "java.sqlのみに依存し、java.loggingは使用しない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q078_d",
+        "text": "com.example.app.apiがjava.sqlを直接使用可能にする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q079",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のmodule-info.javaにはエラーがあります。エラーの原因はどれですか？",
+    "code": "module com.example.app {\n    requires java.base;\n    requires java.sql;\n    exports com.example.app.api;\n}",
+    "explanation": "java.baseモジュールはすべてのモジュールが暗黙的に依存しているため、明示的にrequiresする必要はありません。明示すると冗長であり、一部のコンパイラではエラーまたは警告になります。",
+    "choices": [
+      {
+        "id": "se11g1_q079_a",
+        "text": "java.baseは暗黙的に依存されるため明示的にrequiresする必要がない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q079_b",
+        "text": "java.sqlが存在しない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q079_c",
+        "text": "exportsとrequiresを同時に使えない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q079_d",
+        "text": "モジュール名にドットは使えない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q080",
+    "lessonId": "exam_se11_gold_1",
+    "type": "multiChoice",
+    "question": "Javaモジュールシステムの利点として正しいものはどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "モジュールシステムにより、強力なカプセル化（exportsしないパッケージは非公開）と信頼性のある構成（モジュール依存関係の明示的な宣言による起動時の検証）が実現されます。",
+    "choices": [
+      {
+        "id": "se11g1_q080_a",
+        "text": "強力なカプセル化により内部実装を隠蔽できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q080_b",
+        "text": "モジュール内のクラスは自動的にスレッドセーフになる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q080_c",
+        "text": "依存関係を明示的に宣言し起動時に検証できる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q080_d",
+        "text": "ガベージコレクションのパフォーマンスが自動的に向上する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  }
+]

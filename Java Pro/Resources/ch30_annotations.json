@@ -1,0 +1,610 @@
+{
+  "courseId": "ch30",
+  "lessons": [
+    {
+      "id": "ch30_01",
+      "courseId": "ch30",
+      "title": "アノテーションの基本",
+      "summary": "アノテーションの概念と役割を学びます。@Override、@Deprecated、@SuppressWarnings、@FunctionalInterfaceなどの組み込みアノテーションと、@Target、@Retentionなどのメタアノテーションを理解します。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "overview",
+          "title": "アノテーションとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**アノテーション**の役割（メタデータの付与）\n・@Override, @Deprecated, @SuppressWarnings等の標準アノテーション\n・アノテーションの記述位置と効果\n\n「コードに情報を付加する」仕組みを理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "rule",
+          "title": "組み込みアノテーション",
+          "body": "| アノテーション | 説明 |\n|---|---|\n| @Override | メソッドがスーパークラスのメソッドをオーバーライドしていることを示します。オーバーライドでない場合、コンパイルエラーになります。 |\n| @Deprecated | 要素が非推奨であることを示します。使用するとコンパイル時に警告が出ます。 |\n| @SuppressWarnings | コンパイラの警告を抑制します。\"unchecked\"、\"deprecation\"、\"rawtypes\"などの警告カテゴリを指定します。 |\n| @FunctionalInterface | インターフェースが関数型インターフェース（抽象メソッドが1つだけ）であることを示します。 |\n| @SafeVarargs | 可変長引数メソッドでのヒープ汚染に関する警告を抑制します。 |",
+          "code": "// @Override：オーバーライドの明示\nclass Animal {\n    void speak() { System.out.println(\"...\"); }\n}\nclass Dog extends Animal {\n    @Override\n    void speak() { System.out.println(\"ワン\"); }\n}\n\n// @Deprecated：非推奨メソッド\nclass OldApi {\n    @Deprecated(since = \"11\", forRemoval = true)\n    void oldMethod() { }\n}\n\n// @SuppressWarnings：警告の抑制\n@SuppressWarnings(\"unchecked\")\nList rawList = new ArrayList();\n\n// @FunctionalInterface：関数型インターフェース\n@FunctionalInterface\ninterface Calculator {\n    int calculate(int a, int b);\n    // 抽象メソッドが2つあるとコンパイルエラー\n}",
+          "note": "@Deprecated(forRemoval = true)はJava 9以降で使用可能で、将来のバージョンで削除予定であることを示します。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "rule",
+          "title": "メタアノテーション",
+          "body": "**メタアノテーション**は、アノテーションの定義に適用するアノテーションです。\n| アノテーション | 説明 |\n|---|---|\n| @Target | アノテーションを適用できる要素の種類を指定します（ElementType列挙型）。 |\n| @Retention | アノテーション情報の保持範囲を指定します（RetentionPolicy列挙型）。 |\n| @Documented | アノテーションの情報をJavadocに含めることを指定します。 |\n| @Inherited | アノテーションがサブクラスに継承されることを指定します。 |\n| @Repeatable | アノテーションCを同じ要素に複数回適用できることを指定します（Java 8以降）。 |",
+          "code": "import java.lang.annotation.*;\n\n// @Target：適用対象の制限\n// ElementType.TYPE → クラス、インターフェース、列挙型\n// ElementType.METHOD → メソッド\n// ElementType.FIELD → フィールド\n// ElementType.PARAMETER → パラメータ\n// ElementType.CONSTRUCTOR → コンストラクタ\n// ElementType.LOCAL_VARIABLE → ローカル変数\n\n// @Retention：保持ポリシー\n// RetentionPolicy.SOURCE → ソースコードのみ（コンパイル後に破棄）\n// RetentionPolicy.CLASS → クラスファイルに保持（デフォルト）\n// RetentionPolicy.RUNTIME → 実行時にリフレクションで取得可能\n\n@Target(ElementType.METHOD)\n@Retention(RetentionPolicy.RUNTIME)\n@interface MyAnnotation {\n    String value();\n}",
+          "note": "@Retentionを指定しない場合のデフォルトはRetentionPolicy.CLASSです。**リフレクション**で取得するにはRUNTIMEが必要です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "point",
+          "title": "ElementTypeとRetentionPolicy",
+          "body": "ElementTypeは**アノテーション**の適用先を制限する列挙型です。\n複数のElementTypeを指定する場合は配列形式で記述します：@Target({ElementType.TYPE, ElementType.METHOD})。\nRetentionPolicyは3段階あり、SOURCEが最も短く、RUNTIMEが最も長い保持期間です。\n| ポリシー | 説明 |\n|---|---|\n| SOURCE | コンパイラが使用し、クラスファイルには含まれません（例：@Override）。 |\n| CLASS | クラスファイルに含まれますが、実行時にリフレクションで取得できません。 |\n| RUNTIME | 実行時にリフレクションで取得可能です（フレームワークで多用）。 |",
+          "code": null,
+          "note": "@Overrideは@Retention(SOURCE)なので、コンパイル後のクラスファイルには含まれません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "tip",
+          "title": "試験対策：アノテーションの基本",
+          "body": "| アノテーション | 説明 |\n|---|---|\n| @Override | 実際にオーバーライドしていないメソッドに付けるとコンパイルエラーです。 |\n| @FunctionalInterface | 抽象メソッドが1つでないインターフェースに付けるとコンパイルエラーです。 |\n| @SuppressWarningsの値 | 文字列で指定します。複数指定は@SuppressWarnings({\"unchecked\", \"deprecation\"})です。 |\n| @Retentionのデフォルト値 | CLASSであることを覚えましょう。 |\n@Targetを省略すると、ほぼすべての要素にアノテーションを適用できます。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch30_01_q1",
+          "lessonId": "ch30_01",
+          "type": "fourChoice",
+          "question": "@Overrideアノテーションについて正しい説明はどれですか？",
+          "code": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\npublic @interface LogExecution {\n    String value() default \"\";\n}",
+          "explanation": "@Overrideはメソッドがスーパークラスのメソッドをオーバーライドしていることを明示するアノテーションです。実際にオーバーライドしていないメソッドに付けるとコンパイルエラーになります。これにより、メソッド名のタイプミスなどを早期に検出できます。",
+          "choices": [
+            {
+              "id": "ch30_01_q1_a",
+              "text": "オーバーライドしていないメソッドに付けるとコンパイルエラーになる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_01_q1_b",
+              "text": "付けないとオーバーライドが無効になる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_01_q1_c",
+              "text": "フィールドにも適用できる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_01_q1_d",
+              "text": "実行時にリフレクションで取得できる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch30_01_q2",
+          "lessonId": "ch30_01",
+          "type": "fourChoice",
+          "question": "@Retentionを指定しない場合のデフォルトの保持ポリシーはどれですか？",
+          "code": "class Example {\n    @Override\n    public String toString() {\n        return \"Example\";\n    }\n\n    @Deprecated(since = \"2.0\")\n    public void oldMethod() { }\n}",
+          "explanation": "@Retentionを指定しない場合のデフォルトはRetentionPolicy.CLASSです。この場合、アノテーション情報はクラスファイルに含まれますが、実行時にリフレクションでは取得できません。RUNTIMEを指定すると実行時にも取得可能になります。",
+          "choices": [
+            {
+              "id": "ch30_01_q2_a",
+              "text": "RetentionPolicy.CLASS",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_01_q2_b",
+              "text": "RetentionPolicy.RUNTIME",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_01_q2_c",
+              "text": "RetentionPolicy.SOURCE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_01_q2_d",
+              "text": "デフォルトはなく、必ず指定する必要がある",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch30_01_q3",
+          "lessonId": "ch30_01",
+          "type": "fillBlank",
+          "question": "アノテーションの適用対象をメソッドのみに制限するには、@Target(ElementType.___)と指定する。",
+          "code": "@SuppressWarnings(\"unchecked\")\npublic <T> List<T> convert(Object obj) {\n    return (List<T>) obj;\n}",
+          "explanation": "ElementType.METHODはアノテーションの適用対象をメソッドのみに制限します。@Target(ElementType.METHOD)と指定すると、クラスやフィールドにそのアノテーションを付けるとコンパイルエラーになります。",
+          "choices": [
+            {
+              "id": "ch30_01_q3_a",
+              "text": "METHOD",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_01_q3_b",
+              "text": "FUNCTION",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_01_q3_c",
+              "text": "TYPE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_01_q3_d",
+              "text": "FIELD",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch30_02",
+      "courseId": "ch30",
+      "title": "カスタムアノテーション",
+      "summary": "独自のアノテーションの定義方法を学びます。@interface構文、要素のデフォルト値、@Retentionと@Targetの設定、マーカーアノテーションと単一値アノテーションを理解します。",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "overview",
+          "title": "カスタムアノテーションの概要",
+          "body": "このレッスンでは以下を学びます:\n\n・@interface で**カスタムアノテーション**を定義\n・要素（属性）の宣言とデフォルト値\n・@Retention, @Targetなどの**メタアノテーション**\n\n自分だけのアノテーションを設計できるようになります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "code",
+          "title": "@interface構文によるアノテーション定義",
+          "body": "**アノテーション**は@interface キーワードで定義します（interfaceではありません）。\n要素は引数なしメソッドの形式で宣言し、実装本体はありません。\ndefaultキーワードでデフォルト値を指定できます。\n要素のないアノテーションをマーカーアノテーションと呼びます。\n要素が1つでその名前がvalue()の場合、使用時に要素名を省略できます（単一値アノテーション）。",
+          "code": "import java.lang.annotation.*;\n\n// マーカーアノテーション（要素なし）\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Test {}\n\n// 単一値アノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Author {\n    String value();  // 要素名がvalueなら使用時に省略可能\n}\n\n// 複数要素のアノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Todo {\n    String description();\n    String assignee() default \"未定\";\n    int priority() default 3;\n}\n\n// 使用例\n@Author(\"Taro\")  // value()なので要素名省略可\n// MyAppクラスの定義\nclass MyApp {\n    @Test\n    // testMethodメソッドの定義\n    void testMethod() {}\n\n    @Todo(description = \"実装する\", priority = 1)\n    // futureMethodメソッドの定義\n    void futureMethod() {}\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "rule",
+          "title": "アノテーション要素のルール",
+          "body": "**アノテーション**要素の戻り値の型は以下に限定されます。\nプリミティブ型（int、double、boolean等）、String、Class<?>、列挙型、アノテーション型。\nおよびこれらの型の1次元配列。\nArrayListやMapなどのコレクション型は使えません。\nデフォルト値はコンパイル時定数でなければなりません。\nnullはデフォルト値として使えません。\n要素名にJavaの予約語は使えません。",
+          "code": "import java.lang.annotation.*;\n\n// 様々な型の要素\n@Retention(RetentionPolicy.RUNTIME)\n@interface Config {\n    int count() default 10;           // プリミティブ型\n    String name();                     // String\n    Class<?> type() default Object.class; // Class\n    DayOfWeek day() default DayOfWeek.MONDAY; // 列挙型\n    Author author();                   // アノテーション型\n    String[] tags() default {};        // 配列\n}\n\n// 配列要素の使用\n@interface Roles {\n    String[] value();\n}\n\n// 配列が1要素の場合、波括弧を省略可能\n@Roles(\"admin\")\n// @Roles({\"admin\"}) と同じ\nclass AdminService {}\n\n@Roles({\"admin\", \"manager\"})\nclass ManagerService {}\n\n// ★ コンパイルエラーの例\n// @interface Bad {\n//     Object obj();        // Objectは不可\n//     String s() default null; // nullは不可\n// }",
+          "note": "**アノテーション**要素にnullをデフォルト値として指定するとコンパイルエラーになります。空文字列\"\"や空配列{}を代わりに使います。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "code",
+          "title": "@Retentionと@Target の設定",
+          "body": "**カスタムアノテーション**には通常@Retentionと@Targetを指定します。\n**リフレクション**で読み取る場合は@Retention(RetentionPolicy.RUNTIME)が必須です。\n@Targetで適用先を制限することで、意図しない場所での使用を防ぎます。\n複数の適用先を指定する場合は配列形式で書きます。",
+          "code": "import java.lang.annotation.*;\n\n// メソッドとフィールドに適用可能なアノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target({ElementType.METHOD, ElementType.FIELD})\n@interface Validate {\n    int min() default 0;\n    int max() default Integer.MAX_VALUE;\n    String message() default \"検証エラー\";\n}\n\n// Userクラスの定義\nclass User {\n    @Validate(min = 1, max = 50, message = \"名前は1〜50文字\")\n    private String name;\n\n    @Validate(min = 0, max = 150)\n    private int age;\n\n    @Validate(min = 5)\n    // setNameメソッドの定義\n    public void setName(String name) {\n        this.name = name;\n    }\n}\n\n// @Target未指定の場合\n// TYPE_PARAMETER, TYPE_USE以外の\n// ほぼすべての要素に適用可能",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "tip",
+          "title": "試験対策：カスタムアノテーション",
+          "body": "@interfaceはinterfaceとは異なるキーワードです。混同しないようにしましょう。\nvalue()という名前の要素は使用時に要素名を省略して値だけ記述できます。\nただしvalue()以外にデフォルト値のない要素がある場合は省略できません。\n**アノテーション**要素にnullは使えません。デフォルト値にも使えません。\n配列要素が1つの場合は波括弧{}を省略可能です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch30_02_q1",
+          "lessonId": "ch30_02",
+          "type": "fourChoice",
+          "question": "カスタムアノテーションの要素として使えない型はどれですか？",
+          "code": "@Repeatable(Roles.class)\n@interface Role {\n    String value();\n}\n@interface Roles {\n    Role[] value();\n}\n\n@Role(\"admin\")\n@Role(\"user\")\nclass Admin { }",
+          "explanation": "アノテーション要素の型はプリミティブ型、String、Class<?>、列挙型、アノテーション型、およびこれらの1次元配列に限定されます。ArrayList<String>はコレクション型であり、アノテーション要素の型としては使えません。",
+          "choices": [
+            {
+              "id": "ch30_02_q1_a",
+              "text": "ArrayList<String>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_02_q1_b",
+              "text": "String",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_02_q1_c",
+              "text": "int",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_02_q1_d",
+              "text": "String[]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch30_02_q2",
+          "lessonId": "ch30_02",
+          "type": "fillBlank",
+          "question": "カスタムアノテーションを定義するには___キーワードを使用する。",
+          "code": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\npublic @interface LogExecution {\n    String value() default \"\";\n}",
+          "explanation": "カスタムアノテーションは@interfaceキーワードを使って定義します。通常のinterfaceキーワードとは異なり、@が付いている点に注意が必要です。例：@interface MyAnnotation { String value(); }",
+          "choices": [
+            {
+              "id": "ch30_02_q2_a",
+              "text": "@interface",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_02_q2_b",
+              "text": "interface",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_02_q2_c",
+              "text": "@annotation",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_02_q2_d",
+              "text": "annotation",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch30_02_q3",
+          "lessonId": "ch30_02",
+          "type": "errorFind",
+          "question": "次のアノテーション定義にはエラーがあります。問題のある箇所はどれですか？",
+          "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Config {\n    String name();\n    String description() default null; // ★\n    int version() default 1;\n}",
+          "explanation": "アノテーション要素のデフォルト値にnullを指定するとコンパイルエラーになります。nullはアノテーション要素の値として使用できません。代わりに空文字列\"\"などを使用する必要があります。",
+          "choices": [
+            {
+              "id": "ch30_02_q3_a",
+              "text": "default値にnullを指定している",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_02_q3_b",
+              "text": "@Retentionの値が不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_02_q3_c",
+              "text": "name()にdefaultが指定されていない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_02_q3_d",
+              "text": "version()のデフォルト値の型が不正",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch30_02_q4",
+          "lessonId": "ch30_02",
+          "type": "codeComplete",
+          "question": "カスタムアノテーションを定義するコードを完成させてください。",
+          "code": "class Example {\n    @Override\n    public String toString() {\n        return \"Example\";\n    }\n\n    @Deprecated(since = \"2.0\")\n    public void oldMethod() { }\n}",
+          "explanation": "@Retentionでアノテーションの保持期間、@Targetで適用対象を指定します。RUNTIMEを指定するとリフレクションで参照できます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "@__BLANK_1__(RetentionPolicy.RUNTIME)\n@__BLANK_2__(ElementType.METHOD)\npublic @interface MyAnnotation {\n    String value();\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①保持期間",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Retention",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Runtime",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Scope",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②対象",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Target",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "Element",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "Apply",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch30_02_q5",
+          "lessonId": "ch30_02",
+          "type": "multiChoice",
+          "question": "Javaの標準アノテーションをすべて選んでください。",
+          "code": "@SuppressWarnings(\"unchecked\")\npublic <T> List<T> convert(Object obj) {\n    return (List<T>) obj;\n}",
+          "explanation": "@Override, @Deprecated, @SuppressWarnings, @FunctionalInterfaceはJava標準アノテーションです。@AutowiredはSpring Frameworkのアノテーションです。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "@Override",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "@Deprecated",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "@SuppressWarnings",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "@Autowired",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "@FunctionalInterface",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch30_03",
+      "courseId": "ch30",
+      "title": "アノテーションの活用",
+      "summary": "@Repeatableアノテーション、リフレクションによるアノテーション情報の取得、主要なフレームワークでのアノテーション活用例を学びます。",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "overview",
+          "title": "アノテーション活用の概要",
+          "body": "このレッスンでは以下を学びます:\n\n・**リフレクション**で**アノテーション**情報を取得する方法\n・@Repeatable（繰り返しアノテーション）Java 8+\n・フレームワークでのアノテーション活用例\n\nアノテーションが実際に活用される場面を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "code",
+          "title": "@Repeatableアノテーション",
+          "body": "@Repeatableを使うと、同じ**アノテーション**を同じ要素に複数回適用できます。\n@Repeatableには「格納用アノテーション（コンテナアノテーション）」を指定する必要があります。\nコンテナアノテーションにはvalue()要素が必要で、その型は繰り返し対象のアノテーションの配列です。\nコンテナアノテーションの@Retentionと@Targetは、繰り返し対象のアノテーションと合わせる必要があります。",
+          "code": "import java.lang.annotation.*;\n\n// 1. 繰り返し可能なアノテーション\n@Repeatable(Roles.class)  // コンテナを指定\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Role {\n    String value();\n}\n\n// 2. コンテナアノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Roles {\n    Role[] value();  // 繰り返し対象の配列\n}\n\n// 3. 使用例：同じアノテーションを複数回適用\n@Role(\"admin\")\n@Role(\"manager\")\n@Role(\"user\")\n// MultiRoleUserクラスの定義\nclass MultiRoleUser {\n}\n\n// コンテナアノテーションで直接書くことも可能\n@Roles({@Role(\"admin\"), @Role(\"manager\")})\n// AnotherUserクラスの定義\nclass AnotherUser {\n}",
+          "note": "コンテナ**アノテーション**の@Retentionは、繰り返し対象と同じかそれ以上の保持期間が必要です。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "code",
+          "title": "リフレクションによるアノテーション取得",
+          "body": "**リフレクション**APIを使って実行時に**アノテーション**情報を取得できます。\n| メソッド | 説明 |\n|---|---|\n| getAnnotation(Class) | 指定した型のアノテーションを返し、存在しない場合はnullを返します。 |\n| getAnnotations() | すべてのアノテーションを配列で返します。 |\n| isAnnotationPresent(Class) | アノテーションの有無をbooleanで返します。 |\n@Retention(RetentionPolicy.RUNTIME)が設定されたアノテーションのみ取得可能です。",
+          "code": "import java.lang.annotation.*;\nimport java.lang.reflect.Method;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Info {\n    String author();\n    String date();\n}\n\n// Serviceクラスの定義\nclass Service {\n    @Info(author = \"Taro\", date = \"2024-04-01\")\n    // processメソッドの定義\n    public void process() {\n        System.out.println(\"処理実行\");\n    }\n\n    // otherメソッドの定義\n    public void other() {}\n}\n\n// リフレクションでアノテーション取得\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Method method = Service.class.getMethod(\"process\");\n\n        // アノテーションの有無を確認\n        // 条件分岐\n        if (method.isAnnotationPresent(Info.class)) {\n            Info info = method.getAnnotation(Info.class);\n            System.out.println(\"作者: \" + info.author());\n            System.out.println(\"日付: \" + info.date());\n        }\n        // 出力:\n        // 作者: Taro\n        // 日付: 2024-04-01\n\n        // すべてのアノテーションを取得\n        Annotation[] anns = method.getAnnotations();\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Annotation a : anns) {\n            System.out.println(a);\n        }\n    }\n}",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "point",
+          "title": "@Repeatableのリフレクション",
+          "body": "@Repeatable**アノテーション**を**リフレクション**で取得する方法は2つあります。\ngetAnnotationsByType(Class)は@Repeatableアノテーションを直接配列で取得します。\ngetAnnotation(Class)でコンテナアノテーションを取得することもできます。\n@Repeatableを1回だけ適用した場合、コンテナアノテーションは生成されません。\n2回以上適用した場合は、コンテナアノテーションに格納されます。",
+          "code": "import java.lang.annotation.*;\n\n// @Repeatableアノテーションの取得\n// @Role(\"admin\") @Role(\"manager\") が付いた MultiRoleUser\n\nClass<?> clazz = MultiRoleUser.class;\n\n// 方法1：getAnnotationsByType()で直接取得\nRole[] roles = clazz.getAnnotationsByType(Role.class);\nfor (Role r : roles) {\n    System.out.println(r.value());\n}\n// admin\n// manager\n// user\n\n// 方法2：コンテナアノテーション経由\nRoles container = clazz.getAnnotation(Roles.class);\nif (container != null) {\n    for (Role r : container.value()) {\n        System.out.println(r.value());\n    }\n}\n\n// 1回だけの場合\n// @Role(\"admin\") class SingleRoleUser {}\n// getAnnotation(Roles.class) → null\n// getAnnotation(Role.class) → @Role(\"admin\")\n// getAnnotationsByType(Role.class) → {@Role(\"admin\")}",
+          "note": "getAnnotationsByType()はJava 8で追加されたメソッドで、@Repeatableの有無に関係なく使えます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "tip",
+          "title": "試験対策：アノテーションの活用",
+          "body": "@Repeatableにはコンテナ**アノテーション**の定義が必須で、そのvalue()は繰り返し対象の配列型です。\n**リフレクション**でアノテーションを取得するには@Retention(RetentionPolicy.RUNTIME)が必要です。\ngetAnnotation()は指定した型のアノテーション1つを返し、存在しなければnullです。\ngetAnnotationsByType()は@Repeatableアノテーションを配列で取得します。\nフレームワークでのアノテーション活用例（@Test、@Entity、@Autowiredなど）も概念として知っておきましょう。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch30_03_q1",
+          "lessonId": "ch30_03",
+          "type": "fourChoice",
+          "question": "@Repeatableアノテーションを定義する際に必要なものはどれですか？",
+          "code": "@Repeatable(Roles.class)\n@interface Role {\n    String value();\n}\n@interface Roles {\n    Role[] value();\n}\n\n@Role(\"admin\")\n@Role(\"user\")\nclass Admin { }",
+          "explanation": "@Repeatableアノテーションを定義するには、繰り返しのアノテーションを格納するコンテナアノテーションが必要です。コンテナアノテーションにはvalue()要素があり、その型は繰り返し対象のアノテーションの配列（例：Role[] value()）です。",
+          "choices": [
+            {
+              "id": "ch30_03_q1_a",
+              "text": "繰り返し対象のアノテーション配列を持つコンテナアノテーション",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_03_q1_b",
+              "text": "@Overrideアノテーション",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_03_q1_c",
+              "text": "@SuppressWarningsの指定",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_03_q1_d",
+              "text": "Serializableインターフェースの実装",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch30_03_q2",
+          "lessonId": "ch30_03",
+          "type": "fourChoice",
+          "question": "リフレクションでアノテーション情報を取得するために必要な@Retentionの値はどれですか？",
+          "code": null,
+          "explanation": "リフレクションで実行時にアノテーション情報を取得するには、@Retention(RetentionPolicy.RUNTIME)が必要です。SOURCEはコンパイル後に破棄され、CLASSはクラスファイルに含まれますが実行時にリフレクションで取得できません。",
+          "choices": [
+            {
+              "id": "ch30_03_q2_a",
+              "text": "RetentionPolicy.RUNTIME",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_03_q2_b",
+              "text": "RetentionPolicy.CLASS",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_03_q2_c",
+              "text": "RetentionPolicy.SOURCE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_03_q2_d",
+              "text": "どの値でもリフレクションで取得可能",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch30_03_q3",
+          "lessonId": "ch30_03",
+          "type": "outputPredict",
+          "question": "次のコードを実行した結果の出力はどれですか？",
+          "code": "import java.lang.annotation.*;\nimport java.lang.reflect.Method;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Priority {\n    int value() default 5;\n}\n\nclass Task {\n    @Priority(1)\n    public void urgent() {}\n\n    @Priority\n    public void normal() {}\n}\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Method m1 = Task.class.getMethod(\"urgent\");\n        Method m2 = Task.class.getMethod(\"normal\");\n        Priority p1 = m1.getAnnotation(Priority.class);\n        Priority p2 = m2.getAnnotation(Priority.class);\n        System.out.println(p1.value() + \",\" + p2.value());\n    }\n}",
+          "explanation": "urgent()メソッドには@Priority(1)が付いているのでvalue()は1を返します。normal()メソッドには@Priorityが付いていますが値を指定していないため、デフォルト値の5が使われます。よって出力は\"1,5\"です。",
+          "choices": [
+            {
+              "id": "ch30_03_q3_a",
+              "text": "1,5",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_03_q3_b",
+              "text": "1,0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_03_q3_c",
+              "text": "1,null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_03_q3_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

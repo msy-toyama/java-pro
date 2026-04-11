@@ -1,0 +1,1157 @@
+{
+  "courseId": "ch05",
+  "lessons": [
+    {
+      "id": "ch05_01",
+      "courseId": "ch05",
+      "title": "メソッドとは",
+      "summary": "処理に名前を付けて再利用する",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・メソッドとは何か（処理をまとめた部品）\n・メソッドの定義と呼び出しの構文\n・なぜメソッドに分けるのか（コードの再利用性）\n\nメソッドを使うと、同じ処理を何度も書かずに済みます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "code",
+          "title": "メソッドの定義と呼び出し",
+          "body": "メソッドの構文と基本的な使い方です。",
+          "code": "// メソッドの構文\n// アクセス修飾子 static 戻り値の型 メソッド名(引数) {\n//     処理\n//     return 戻り値;\n// }\n\npublic class Main {\n\n    // 戻り値なし（void）のメソッド\n    static void greet() {\n        System.out.println(\"こんにちは！\");\n    }\n\n    // 引数ありのメソッド\n    static void greetPerson(String name) {\n        System.out.println(\"こんにちは、\" + name + \"さん！\");\n    }\n\n    // 戻り値ありのメソッド\n    static int add(int a, int b) {\n        return a + b;\n    }\n\n    public static void main(String[] args) {\n        greet();                     // こんにちは！\n        greetPerson(\"太郎\");         // こんにちは、太郎さん！\n        int result = add(3, 5);      // 8\n        System.out.println(result);\n    }\n}",
+          "note": "mainメソッドもメソッドの一種です。Javaプログラムの実行はmainメソッドから始まります。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "rule",
+          "title": "メソッドを使う理由",
+          "body": "メソッドの利点:\n\n1. 再利用性: 同じ処理を何度でも呼び出せる\n2. 可読性: 処理に名前が付き、コードが読みやすくなる\n3. 保守性: 修正箇所が1か所で済む\n4. テスト容易性: 小さな単位でテストできる\n\nメソッド名の命名規則:\n| 項目 | 説明 |\n|---|---|\n| 動詞で始める | calculateTotal, displayMenu, isValid |\n| キャメルケース | getMaxValue（先頭小文字） |\n| boolean型の戻り値 | is, has, can で始める |\n  例: isEmpty(), hasNext(), canExecute()\n\n戻り値のルール:\n・戻り値は1つだけ返せる\n・voidのメソッドはreturn文を省略できる\n・return文を実行すると、その時点でメソッドを抜ける",
+          "code": null,
+          "note": "複数の値を返したい場合は、配列、List、または独自クラスを使います。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "tip",
+          "title": "メソッドは「料理のレシピ」のようなもの",
+          "body": "メソッドは「名前のついた手順書」です。\n\n・レシピの名前 = メソッド名\n・材料 = 引数（パラメータ）\n・完成品 = 戻り値\n\n一度レシピ（メソッド）を書いておけば、何度でもその手順を呼び出せます。",
+          "code": null,
+          "note": "メソッドは他の言語では「関数」「ファンクション」とも呼ばれます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・メソッド = 処理に名前を付けてまとめたもの\n・void: 戻り値なし、return文は省略可能\n・戻り値あり: 型を指定し、return文で値を返す\n・メソッド名は動詞で始め、キャメルケースで書く\n・メソッドの利点: 再利用/可読性/保守性/テスト容易性",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_01_q1",
+          "lessonId": "ch05_01",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "static int square(int n) {\n    return n * n;\n}\npublic static void main(String[] args) {\n    System.out.println(square(4));\n}",
+          "explanation": "square(4) は n に 4 を受け取り、4 * 4 = 16 を返します。returnで返された値がprintlnで出力されます。",
+          "choices": [
+            {
+              "id": "ch05_01_q1_a",
+              "text": "16",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_01_q1_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_01_q1_c",
+              "text": "8",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_01_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_01_q2",
+          "lessonId": "ch05_01",
+          "type": "fourChoice",
+          "question": "メソッドの戻り値がない場合に使うキーワードはどれですか？",
+          "code": null,
+          "explanation": "戻り値がないメソッドにはvoidキーワードを使います。voidはメソッドが何も返さないことを意味します。return文を省略できますが、メソッドの途中で処理を終了したい場合は return; と記述できます。",
+          "choices": [
+            {
+              "id": "ch05_01_q2_a",
+              "text": "null",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_01_q2_b",
+              "text": "void",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_01_q2_c",
+              "text": "empty",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_01_q2_d",
+              "text": "none",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_01_q3",
+          "lessonId": "ch05_01",
+          "type": "fillBlank",
+          "question": "戻り値を返すために使うキーワードの空欄を埋めてください。\nstatic int getMax(int a, int b) {\n    _____ Math.max(a, b);\n}",
+          "code": null,
+          "explanation": "return キーワードで値をメソッドの呼び出し元に返します。この場合、Math.max(a, b) の結果（2つの引数のうち大きい方）が返されます。",
+          "choices": [
+            {
+              "id": "ch05_01_q3_a",
+              "text": "return",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_01_q3_b",
+              "text": "output",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_01_q3_c",
+              "text": "send",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_01_q3_d",
+              "text": "yield",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch05_02",
+      "courseId": "ch05",
+      "title": "引数と戻り値の詳細",
+      "summary": "データの受け渡しを深く理解する",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・引数（パラメータ）の受け渡し方\n・複数の引数を持つメソッド\n・実引数と仮引数の違い\n\nメソッドにデータを渡す方法を理解しましょう。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "code",
+          "title": "値渡し（Pass by Value）",
+          "body": "Javaではすべての引数が「**値渡し**」です。プリミティブ型と参照型で挙動が異なります。",
+          "code": "// プリミティブ型: 値のコピーが渡される\n// changeValueメソッドの定義\nstatic void changeValue(int x) {\n    x = 100; // コピーを変更しても元に影響なし\n}\n// 変数の宣言と初期化\nint num = 10;\nchangeValue(num);\nSystem.out.println(num); // 10（変わらない）\n\n// 参照型（配列）: 参照のコピーが渡される\n// changeArrayメソッドの定義\nstatic void changeArray(int[] arr) {\n    arr[0] = 999; // 同じ配列を操作→反映される\n}\nint[] data = {1, 2, 3};\nchangeArray(data);\nSystem.out.println(data[0]); // 999（変わる！）\n\n// ただし参照自体の再代入は反映されない\nstatic void replaceArray(int[] arr) {\n    arr = new int[]{10, 20, 30}; // 参照のコピーを差し替えただけ\n}\nint[] original = {1, 2, 3};\nreplaceArray(original);\nSystem.out.println(original[0]); // 1（変わらない！）",
+          "note": "Javaに「参照渡し」はありません。参照型でもあくまで「参照の値（アドレスのコピー）」が渡されます。そのため、参照先のオブジェクトは操作できますが、参照自体の差し替えは元の変数に影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "tip",
+          "title": "Javaは「値渡し」のみ",
+          "body": "Javaのメソッド引数は常に「値のコピー」が渡されます。\n\n| 引数の型 | 渡されるもの | メソッド内での変更 |\n|---|---|---|\n| 基本型（int等） | 値のコピー | 呼び出し元に影響しない |\n| 参照型（配列・オブジェクト） | 参照のコピー | オブジェクトの中身は変わる |\n\n「参照のコピー」が渡されるため、メソッド内でオブジェクトの中身を変更すると呼び出し元にも影響します。",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "code",
+          "title": "複数の戻り値を返すパターン",
+          "body": "Javaのメソッドは戻り値を1つしか返せませんが、工夫次第で複数の値を返せます。",
+          "code": "// パターン1: 配列で返す\nstatic int[] minMax(int[] nums) {\n    // 変数の宣言と初期化\n    int min = Integer.MAX_VALUE;\n    int max = Integer.MIN_VALUE;\n    // 繰り返し処理（for文）\n    for (int i = 0; i < nums.length; i++) {\n        // 条件分岐\n        if (nums[i] < min) min = nums[i];\n        if (nums[i] > max) max = nums[i];\n    }\n    return new int[]{min, max};\n}\nint[] result = minMax(new int[]{5, 2, 8, 1});\nSystem.out.println(\"最小: \" + result[0] + \", 最大: \" + result[1]);\n\n// パターン2: 独自クラスで返す\n// Resultクラスの定義\nclass Result {\n    String name;\n    int score;\n    Result(String name, int score) {\n        this.name = name;\n        this.score = score;\n    }\n}",
+          "note": "Java 14以降のRecordを使うと、パターン2のような値保持クラスをより簡潔に定義できます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・Javaの引数はすべて「**値渡し**」\n・プリミティブ型: 値のコピーが渡される → 元に影響なし\n・参照型: 参照のコピーが渡される → オブジェクト操作は反映される\n・参照自体の再代入（= new ...）は反映されない\n・戻り値は1つだけ → 複数返すには配列やクラスを使う",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_02_q1",
+          "lessonId": "ch05_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "static void modify(int x, int[] arr) {\n    x = 99;\n    arr[0] = 99;\n}\npublic static void main(String[] args) {\n    int n = 10;\n    int[] a = {1, 2, 3};\n    modify(n, a);\n    System.out.println(n + \",\" + a[0]);\n}",
+          "explanation": "int n はプリミティブ型なので値のコピーが渡され、元の n は変わりません（10のまま）。int[] a は参照型なので、arr[0] = 99 はオブジェクトを直接操作しており、a[0] は 99 に変わります。",
+          "choices": [
+            {
+              "id": "ch05_02_q1_a",
+              "text": "10,99",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_02_q1_b",
+              "text": "99,99",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_02_q1_c",
+              "text": "10,1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_02_q1_d",
+              "text": "99,1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_02_q2",
+          "lessonId": "ch05_02",
+          "type": "fourChoice",
+          "question": "Javaの引数の渡し方として正しい説明はどれですか？",
+          "code": null,
+          "explanation": "Javaの引数はすべて「値渡し」です。プリミティブ型は値そのもののコピー、参照型は参照（アドレス）のコピーが渡されます。C++のような「参照渡し」はJavaには存在しません。",
+          "choices": [
+            {
+              "id": "ch05_02_q2_a",
+              "text": "プリミティブ型は値渡し、参照型は参照渡し",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_02_q2_b",
+              "text": "すべて値渡し（参照型は参照の値のコピー）",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_02_q2_c",
+              "text": "すべて参照渡し",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_02_q2_d",
+              "text": "開発者が値渡しと参照渡しを選べる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_02_q3",
+          "lessonId": "ch05_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "static void replace(String s) {\n    s = \"変更後\";\n}\npublic static void main(String[] args) {\n    String text = \"元の値\";\n    replace(text);\n    System.out.println(text);\n}",
+          "explanation": "StringもObject（参照型）ですが、メソッド内で s = \"変更後\" は参照のコピーを新しいStringに差し替えただけです。元のtextの参照には影響しません。さらにStringはイミュータブル（不変）なので、メソッド内から元の文字列を変更する方法はありません。",
+          "choices": [
+            {
+              "id": "ch05_02_q3_a",
+              "text": "元の値",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_02_q3_b",
+              "text": "変更後",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_02_q3_c",
+              "text": "null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_02_q3_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch05_03",
+      "courseId": "ch05",
+      "title": "メソッドのオーバーロード",
+      "summary": "同名メソッドを引数で使い分ける",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・戻り値（return文）の使い方\n・void型メソッドとの違い\n・メソッドの結果を変数に受け取る方法\n\nメソッドから計算結果を返す方法を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "code",
+          "title": "オーバーロードの基本",
+          "body": "同名メソッドを引数の「型」「数」「順序」が異なるように定義できます。",
+          "code": "// 引数の数で区別\nstatic int add(int a, int b) {\n    return a + b;\n}\nstatic int add(int a, int b, int c) {\n    return a + b + c;\n}\n\n// 引数の型で区別\nstatic double add(double a, double b) {\n    return a + b;\n}\n\n// 呼び出し時に引数の型・数で自動判別\nSystem.out.println(add(1, 2));       // int版: 3\nSystem.out.println(add(1, 2, 3));    // 3引数版: 6\nSystem.out.println(add(1.5, 2.5));   // double版: 4.0\n\n// ⚠️ 戻り値の型だけが異なるのはオーバーロードにならない！\n// static int  calc(int a) { return a; }\n// static double calc(int a) { return a; } // コンパイルエラー！\n// → 呼び出し時にどちらか判別できないため",
+          "note": "**オーバーロード**の判定基準は「引数リスト（型・数・順序）」です。戻り値の型やアクセス修飾子は関係ありません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "tip",
+          "title": "voidメソッドとreturnの関係",
+          "body": "メソッドには「値を返すもの」と「返さないもの」があります。\n\n| 戻り値の型 | 意味 | returnの有無 |\n|---|---|---|\n| int, String等 | 値を返す | return 値; が必須 |\n| void | 何も返さない | return; は省略可能 |\n\n「このメソッドは何を返すのか？」を常に意識しましょう。",
+          "code": null,
+          "note": "void は「空（から）」という意味の英語です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "rule",
+          "title": "オーバーロードと型変換の優先順位",
+          "body": "引数の型がぴったり一致しない場合、Javaは以下の優先順位で一致するメソッドを探します。\n\n1. 完全一致: 引数の型がメソッド定義と一致\n2. 型の拡大変換（Widening）: int → long → float → double\n3. オートボクシング: int → Integer\n4. **可変長引数**（varargs）: int...\n\n例:\n  static void test(int n)     { ... }  // A\n  static void test(long n)    { ... }  // B\n  static void test(Integer n) { ... }  // C\n  static void test(int... n)  { ... }  // D\n\n  test(10);\n  // → A（完全一致）が呼ばれる\n  // Aがなければ B（拡大変換）\n  // Bもなければ C（オートボクシング）\n  // Cもなければ D（varargs）",
+          "code": null,
+          "note": "試験では型の拡大変換とオートボクシングの優先順位を問う問題が頻出です。拡大変換が優先されることを覚えましょう。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**オーバーロード**: 同名メソッドを引数の型・数・順序で区別\n・戻り値の型だけの違いではオーバーロードにならない\n・型の優先順位: 完全一致 > 拡大変換 > オートボクシング > varargs\n・printlnはオーバーロードの代表例",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_03_q1",
+          "lessonId": "ch05_03",
+          "type": "fourChoice",
+          "question": "以下のメソッド定義のうち、オーバーロードとして正しいものはどれですか？（既にstatic int calc(int a)が定義済み）",
+          "code": null,
+          "explanation": "オーバーロードは引数の型や数が異なる必要があります。static int calc(int a, int b)は引数の数が異なるため有効です。戻り値だけが異なるstatic double calc(int a)はコンパイルエラーになります。引数名だけ異なるのも不可です。",
+          "choices": [
+            {
+              "id": "ch05_03_q1_a",
+              "text": "static double calc(int a) — 戻り値のみ異なる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_03_q1_b",
+              "text": "static int calc(int b) — 引数名のみ異なる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_03_q1_c",
+              "text": "static int calc(int a, int b) — 引数の数が異なる",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch05_03_q1_d",
+              "text": "int calc(int a) — アクセス修飾子のみ異なる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_03_q2",
+          "lessonId": "ch05_03",
+          "type": "fourChoice",
+          "question": "以下のメソッドがある場合、test(10)で呼ばれるのはどれですか？",
+          "code": "static void test(long n)    { System.out.println(\"long\"); }\nstatic void test(Integer n) { System.out.println(\"Integer\"); }",
+          "explanation": "int型の10を渡した場合、完全一致するメソッドがないため、拡大変換（int→long）が優先されます。オートボクシング（int→Integer）よりも拡大変換が優先順位が高いため、test(long n)が呼ばれます。",
+          "choices": [
+            {
+              "id": "ch05_03_q2_a",
+              "text": "test(long n) が呼ばれ「long」と出力",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_03_q2_b",
+              "text": "test(Integer n) が呼ばれ「Integer」と出力",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_03_q2_c",
+              "text": "コンパイルエラー（曖昧）",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_03_q2_d",
+              "text": "実行時エラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_03_q3",
+          "lessonId": "ch05_03",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "static String greet(String name) {\n    return \"Hello, \" + name;\n}\nstatic String greet(String name, int times) {\n    return name + \" x\" + times;\n}\npublic static void main(String[] args) {\n    System.out.println(greet(\"Java\", 3));\n}",
+          "explanation": "引数が(String, int)の2つなので、greet(String name, int times)が呼ばれます。結果は\"Java x3\"です。引数の数でオーバーロードが判別されます。",
+          "choices": [
+            {
+              "id": "ch05_03_q3_a",
+              "text": "Java x3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_03_q3_b",
+              "text": "Hello, Java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_03_q3_c",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_03_q3_d",
+              "text": "Hello, Java x3",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_03_q4",
+          "lessonId": "ch05_03",
+          "type": "codeComplete",
+          "question": "2つの整数の最大値を返すメソッドを完成させてください。",
+          "code": null,
+          "explanation": "メソッドの戻り値の型は int で、2つの引数のうち大きい方を return で返します。Math.max() を使うか三項演算子を使うパターンが一般的です。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public static __BLANK_1__ getMax(int a, int b) {\n    __BLANK_2__ Math.max(a, b);\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①戻り値の型",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "int",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "void",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "String",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②キーワード",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "return",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "print",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "yield",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch05_04",
+      "courseId": "ch05",
+      "title": "可変長引数とstaticメソッド",
+      "summary": "柔軟な引数とクラスメソッド",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・メソッドの**オーバーロード**（名前が同じで引数が異なるメソッド）\n・コンパイラが呼び出すメソッドを決める仕組み\n・オーバーロードのルールと注意点\n\n同じ名前のメソッドを目的に応じて使い分ける方法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "code",
+          "title": "可変長引数（varargs）",
+          "body": "型名の後に...を付けると、0個以上の引数を受け取れます。",
+          "code": "// 可変長引数: 型... 変数名\nstatic int sum(int... numbers) {\n    int total = 0;\n    for (int n : numbers) {\n        total += n;\n    }\n    return total;\n}\n\n// 引数の数を自由に変えられる\nSystem.out.println(sum());          // 0\nSystem.out.println(sum(1, 2));      // 3\nSystem.out.println(sum(1, 2, 3, 4)); // 10\n\n// 配列を渡すことも可能\nint[] data = {10, 20, 30};\nSystem.out.println(sum(data)); // 60\n\n// ルール:\n// 1. 可変長引数はメソッドの最後の引数のみ\n// 2. 1つのメソッドに可変長引数は1つだけ\n\n// OK: 通常引数 + 可変長引数\nstatic String format(String prefix, String... items) {\n    return prefix + \": \" + String.join(\", \", items);\n}\nSystem.out.println(format(\"果物\", \"りんご\", \"みかん\"));\n// → 果物: りんご, みかん\n\n// NG: 可変長引数が最後でない\n// static void bad(int... a, String b) {} // コンパイルエラー！",
+          "note": "**可変長引数**はコンパイラによって内部的に配列に変換されます。int... は int[] と同じですが、呼び出し側で配列を明示的に作る必要がありません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "code",
+          "title": "staticメソッドとインスタンスメソッド",
+          "body": "staticメソッドはクラスに属し、インスタンスメソッドはオブジェクトに属します。",
+          "code": "public class Calculator {\n    private int memory = 0; // インスタンス変数\n\n    // staticメソッド: クラスに属する\n    // → オブジェクトを作らず呼べる\n    // → インスタンス変数にアクセスできない\n    static int add(int a, int b) {\n        return a + b;\n    }\n\n    // インスタンスメソッド: オブジェクトに属する\n    // → オブジェクトを作って呼ぶ\n    // → インスタンス変数にアクセスできる\n    void addToMemory(int value) {\n        this.memory += value; // インスタンス変数を使用\n    }\n\n    int getMemory() {\n        return memory;\n    }\n}\n\n// staticメソッドの呼び出し（オブジェクト不要）\nint result = Calculator.add(3, 5); // 8\n\n// インスタンスメソッドの呼び出し（オブジェクト必要）\nCalculator calc = new Calculator();\ncalc.addToMemory(10);\nSystem.out.println(calc.getMemory()); // 10\n\n// 代表的なstaticメソッド:\n// Math.max(a, b), Integer.parseInt(\"123\")\n// Arrays.sort(arr), Collections.sort(list)",
+          "note": "mainメソッドがstaticなのは、プログラム開始時にはまだオブジェクトが存在しないためです。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "tip",
+          "title": "オーバーロードの条件",
+          "body": "**オーバーロード**が成立するには「引数リストが異なる」必要があります。\n\n| OK/NG | 例 | 理由 |\n|---|---|---|\n| OK | add(int a) と add(int a, int b) | 引数の数が異なる |\n| OK | add(int a) と add(double a) | 引数の型が異なる |\n| NG | int add(int a) と double add(int a) | 戻り値の型だけ違う |\n\n戻り値の型だけでは区別されない点に注意しましょう。",
+          "code": null,
+          "note": "メソッドの「シグネチャ」は「メソッド名 + 引数リスト」で決まります。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・**可変長引数**: 型... で0個以上の引数を受け取る\n・可変長引数はメソッドの最後の引数のみ、1つだけ\n・内部的には配列に変換される\n・staticメソッド: クラス名.メソッド名() で呼ぶ\n・インスタンスメソッド: オブジェクト.メソッド名() で呼ぶ\n・staticメソッドからインスタンス変数にはアクセス不可",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_04_q1",
+          "lessonId": "ch05_04",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "static int count(String... words) {\n    return words.length;\n}\npublic static void main(String[] args) {\n    System.out.println(count(\"a\", \"b\", \"c\"));\n}",
+          "explanation": "可変長引数String... wordsは内部的にString配列として扱われます。\"a\", \"b\", \"c\"の3つの引数が渡されるので、words.lengthは3です。",
+          "choices": [
+            {
+              "id": "ch05_04_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q1_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q1_c",
+              "text": "1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q1_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_04_q2",
+          "lessonId": "ch05_04",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生するのはどれですか？",
+          "code": "static void m1(int... a, String b) {}\nstatic void m2(String b, int... a) {}\nstatic void m3(int... a) {}",
+          "explanation": "m1でコンパイルエラーが発生します。可変長引数はメソッドの最後の引数でなければなりません。m1では int... a の後に String b があるので不正です。m2とm3は正しい構文です。",
+          "choices": [
+            {
+              "id": "ch05_04_q2_a",
+              "text": "m1のみ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q2_b",
+              "text": "m2のみ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q2_c",
+              "text": "m3のみ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q2_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_04_q3",
+          "lessonId": "ch05_04",
+          "type": "fourChoice",
+          "question": "staticメソッドの特徴として正しいものはどれですか？",
+          "code": null,
+          "explanation": "staticメソッドはクラスに属するため、オブジェクトを作成せずにクラス名.メソッド名()で呼び出せます。ただし、インスタンス変数やインスタンスメソッドには直接アクセスできません。Math.max()やInteger.parseInt()が代表例です。",
+          "choices": [
+            {
+              "id": "ch05_04_q3_a",
+              "text": "インスタンス変数にアクセスできる",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q3_b",
+              "text": "オブジェクトを作成せずに呼び出せる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q3_c",
+              "text": "thisキーワードを使える",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q3_d",
+              "text": "サブクラスでオーバーライドできる",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_04_q4",
+          "lessonId": "ch05_04",
+          "type": "multiChoice",
+          "question": "メソッドのオーバーロードの条件として正しいものをすべて選んでください。",
+          "code": null,
+          "explanation": "オーバーロードは同じメソッド名で引数リスト（型・数・順序）が異なる必要があります。戻り値の型だけが異なる場合はコンパイルエラーになります。アクセス修飾子の違いだけではオーバーロードになりません。",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch05_04_q4_a",
+              "text": "引数の数が異なる",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q4_b",
+              "text": "引数の型が異なる",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q4_c",
+              "text": "戻り値の型だけが異なる",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q4_d",
+              "text": "引数の順序が異なる",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_04_q5",
+          "lessonId": "ch05_04",
+          "type": "reorder",
+          "question": "メソッドの定義要素を正しい順序に並べてください。",
+          "code": null,
+          "explanation": "メソッド定義はアクセス修飾子→static→戻り値型→メソッド名(引数)→メソッド本体の順序です。",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "static",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "int",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "add(int a, int b)",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "{ return a + b; }",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch05_05",
+      "courseId": "ch05",
+      "title": "スコープと再帰",
+      "summary": "変数の有効範囲とメソッドの自己呼び出し",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・変数のスコープ（有効範囲）とは\n・ローカル変数の寿命\n・ブロックスコープの仕組み\n\n変数が使える範囲を理解することで、バグを防げます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "code",
+          "title": "変数のスコープ",
+          "body": "変数が使える範囲はブロック（{}）によって決まります。",
+          "code": "public class ScopeExample {\n    static int classVar = 100; // クラス変数（どこからでも参照可能）\n\n    static void method() {\n        int localVar = 10; // ローカル変数（このメソッド内のみ）\n\n        if (localVar > 5) {\n            int blockVar = 20; // ブロック変数（if内のみ）\n            System.out.println(localVar);  // OK\n            System.out.println(blockVar);  // OK\n        }\n        // System.out.println(blockVar); // コンパイルエラー！\n\n        for (int i = 0; i < 3; i++) {\n            // i はこのforブロック内のみ有効\n        }\n        // System.out.println(i); // コンパイルエラー！\n    }\n\n    static void anotherMethod() {\n        // System.out.println(localVar); // コンパイルエラー！\n        System.out.println(classVar);     // OK\n    }\n}\n\n// スコープの範囲:\n// クラス変数 → クラス全体\n// ローカル変数 → 宣言されたメソッド内\n// ブロック変数 → 宣言されたブロック{} 内\n// for変数 → forブロック内",
+          "note": "ローカル変数はデフォルト値で初期化されません。使う前に必ず値を代入する必要があります（代入しないとコンパイルエラー）。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "tip",
+          "title": "スコープの基本ルール",
+          "body": "変数のスコープ（有効範囲）は、変数が宣言されたブロック {} 内に限られます。\n\n・メソッド内で宣言 → そのメソッド内でのみ有効\n・for文の初期化で宣言 → そのfor文内でのみ有効\n・if文のブロック内で宣言 → そのif文のブロック内でのみ有効\n\nスコープの外から変数にアクセスしようとすると、コンパイルエラーになります。",
+          "code": null,
+          "note": "変数のスコープは必要最小限にするのが良い設計です。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "code",
+          "title": "再帰メソッド",
+          "body": "メソッドが自分自身を呼び出す仕組みが**再帰**です。",
+          "code": "// 階乗: n! = n × (n-1) × ... × 1\nstatic int factorial(int n) {\n    // ベースケース（終了条件）: 必ず必要！\n    if (n <= 1) return 1;\n    // 再帰呼び出し\n    return n * factorial(n - 1);\n}\n// factorial(4) → 4 * factorial(3)\n//              → 4 * 3 * factorial(2)\n//              → 4 * 3 * 2 * factorial(1)\n//              → 4 * 3 * 2 * 1 = 24\n\nSystem.out.println(factorial(5)); // 120\n\n// フィボナッチ数列: 0, 1, 1, 2, 3, 5, 8, 13, ...\nstatic int fibonacci(int n) {\n    if (n <= 0) return 0;\n    if (n == 1) return 1;\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\nSystem.out.println(fibonacci(7)); // 13\n\n// ⚠️ ベースケースがないと無限ループ → StackOverflowError\n// static int bad(int n) {\n//     return n * bad(n - 1); // 終了条件なし！\n// }",
+          "note": "**再帰**には必ず「ベースケース（終了条件）」が必要です。ベースケースがないとStackOverflowErrorが発生します。再帰が深いとメモリを多く消費するため、大きな値にはループの方が適しています。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・スコープ: クラス変数 > ローカル変数 > ブロック変数\n・ローカル変数はデフォルト値なし（初期化必須）\n・**再帰**: メソッドが自分自身を呼び出す\n・再帰には必ずベースケース（終了条件）が必要\n・ベースケースなし → StackOverflowError\n・再帰は深い呼び出しでメモリを消費する",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_05_q1",
+          "lessonId": "ch05_05",
+          "type": "outputPredict",
+          "question": "以下のコードの出力を選んでください。",
+          "code": "static int factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}\npublic static void main(String[] args) {\n    System.out.println(factorial(4));\n}",
+          "explanation": "factorial(4) = 4 × factorial(3) = 4 × 3 × factorial(2) = 4 × 3 × 2 × factorial(1) = 4 × 3 × 2 × 1 = 24 です。n=1でベースケースに到達し再帰が終了します。",
+          "choices": [
+            {
+              "id": "ch05_05_q1_a",
+              "text": "24",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_05_q1_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_05_q1_c",
+              "text": "10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_05_q1_d",
+              "text": "StackOverflowError",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_05_q2",
+          "lessonId": "ch05_05",
+          "type": "fourChoice",
+          "question": "再帰メソッドにベースケース（終了条件）がない場合、何が発生しますか？",
+          "code": null,
+          "explanation": "ベースケースがないとメソッドが無限に自分自身を呼び出し続け、コールスタック（メソッド呼び出しの履歴）がメモリを使い果たしてStackOverflowErrorが発生します。これはErrorクラスなので通常catchしません。",
+          "choices": [
+            {
+              "id": "ch05_05_q2_a",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_05_q2_b",
+              "text": "StackOverflowError",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_05_q2_c",
+              "text": "OutOfMemoryError",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_05_q2_d",
+              "text": "コンパイルエラー",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_05_q3",
+          "lessonId": "ch05_05",
+          "type": "errorFind",
+          "question": "以下のコードでコンパイルエラーが発生する行はどれですか？",
+          "code": "static void test() {\n    int x = 10;\n    if (x > 5) {\n        int y = 20;\n    }\n    System.out.println(y);\n}",
+          "explanation": "6行目でコンパイルエラーが発生します。変数yはifブロック内で宣言されているため、スコープはifブロック{} 内のみです。ブロックの外から参照することはできません。",
+          "choices": [
+            {
+              "id": "ch05_05_q3_a",
+              "text": "2行目",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_05_q3_b",
+              "text": "4行目",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_05_q3_c",
+              "text": "6行目",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch05_05_q3_d",
+              "text": "エラーは発生しない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch05_06",
+      "courseId": "ch05",
+      "title": "メソッド設計のベストプラクティス",
+      "summary": "良いメソッドの書き方を学ぶ",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "overview",
+          "title": "このレッスンで学ぶこと",
+          "body": "このレッスンでは以下を学びます:\n\n・**再帰**（メソッドが自分自身を呼ぶ）の仕組み\n・再帰の終了条件（ベースケース）\n・階乗やフィボナッチ数列の再帰的解法\n\n再帰は難しい概念ですが、特定の問題を美しく解ける強力な手法です。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "rule",
+          "title": "メソッド設計の原則",
+          "body": "良いメソッドの条件:\n\n1. 単一責任: 1つのメソッドは1つの仕事だけ行う\n   ○ calculateTax(int price)\n   × processOrderAndSendEmail()\n\n2. 適切な命名: メソッド名だけで何をするか分かる\n   ○ isAdult(int age)\n   × check(int n)\n\n3. 引数は少なく: 理想は0〜2個、最大でも3個\n   → 多い場合はオブジェクトにまとめる\n\n4. 副作用を避ける: 引数や外部状態を変更しない\n   ○ int add(int a, int b) → 計算結果を返すだけ\n   × void add(int[] arr, int val) → 配列を変更\n\n5. 早期リターン: エラー条件を先にチェックして返す\n   → ネスト（入れ子）が浅くなり読みやすい",
+          "code": null,
+          "note": "「単一責任の原則」はオブジェクト指向設計（SOLID原則）の基本です。クラス設計にも同じ考え方が適用されます。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "code",
+          "title": "良いメソッド vs 悪いメソッド",
+          "body": "同じ処理でも書き方で可読性が大きく変わります。",
+          "code": "// ❌ 悪い例: 1つのメソッドで多くのことをしている\n// processメソッドの定義\nstatic void process(String name, int age, String email) {\n    // 条件分岐\n    if (name != null && !name.isEmpty()) {\n        if (age >= 0 && age <= 150) {\n            if (email.contains(\"@\")) {\n                // 登録処理...\n                System.out.println(\"登録完了\");\n            } else {\n                System.out.println(\"メール不正\");\n            }\n        } else {\n            System.out.println(\"年齢不正\");\n        }\n    } else {\n        System.out.println(\"名前不正\");\n    }\n}\n\n// ✅ 良い例: 早期リターンでネストを浅く\n// registerメソッドの定義\nstatic void register(String name, int age, String email) {\n    if (name == null || name.isEmpty()) {\n        System.out.println(\"名前不正\");\n        return;\n    }\n    if (age < 0 || age > 150) {\n        System.out.println(\"年齢不正\");\n        return;\n    }\n    if (!email.contains(\"@\")) {\n        System.out.println(\"メール不正\");\n        return;\n    }\n    // ここに来た時点で全バリデーション通過\n    System.out.println(\"登録完了\");\n}",
+          "note": "早期リターン（ガード節）を使うとメソッドのネストが浅くなり、正常系の処理に集中できます。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "tip",
+          "title": "再帰の落とし穴 — スタックオーバーフロー",
+          "body": "**再帰**メソッドには必ず「終了条件（ベースケース）」が必要です。\n\n終了条件がないと:\n・メソッドが無限に自分自身を呼び続ける\n・呼び出しスタックが溢れてStackOverflowError\n・プログラムが異常終了\n\n再帰の設計: ①ベースケース（再帰を止める条件）→ ②再帰ケース（自分自身を呼ぶ）の順で考えましょう。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "code",
+          "title": "メソッドの分割",
+          "body": "大きなメソッドを小さなメソッドに分割する例です。",
+          "code": "// ❌ 1つのメソッドに全部入り\n// showReportメソッドの定義\nstatic void showReport(int[] scores) {\n    // 変数の宣言と初期化\n    int sum = 0;\n    // 拡張for文（コレクションの全要素を順番に処理）\n    for (int s : scores) sum += s;\n    double avg = (double) sum / scores.length;\n    int max = Integer.MIN_VALUE;\n    for (int s : scores) if (s > max) max = s;\n    int min = Integer.MAX_VALUE;\n    for (int s : scores) if (s < min) min = s;\n    System.out.println(\"合計: \" + sum);\n    System.out.println(\"平均: \" + avg);\n    System.out.println(\"最高: \" + max);\n    System.out.println(\"最低: \" + min);\n}\n\n// ✅ 責務ごとにメソッド分割\n// calcSumメソッドの定義\nstatic int calcSum(int[] scores) {\n    int sum = 0;\n    for (int s : scores) sum += s;\n    return sum;\n}\nstatic double calcAverage(int[] scores) {\n    return (double) calcSum(scores) / scores.length;\n}\nstatic int findMax(int[] scores) {\n    int max = Integer.MIN_VALUE;\n    for (int s : scores) if (s > max) max = s;\n    return max;\n}\nstatic void showReport(int[] scores) {\n    System.out.println(\"合計: \" + calcSum(scores));\n    System.out.println(\"平均: \" + calcAverage(scores));\n    System.out.println(\"最高: \" + findMax(scores));\n}",
+          "note": "分割されたメソッドは単体テストが容易です。calcSum()やfindMax()をそれぞれ独立してテストできます。",
+          "order": 5
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "point",
+          "title": "ポイント",
+          "body": "・単一責任: 1メソッド1仕事\n・命名: 動詞で始め、処理内容が分かる名前\n・引数は0〜3個以内。多ければオブジェクトにまとめる\n・早期リターン: エラー条件を先にチェックしてreturn\n・副作用を最小化: 外部状態の変更を避ける\n・大きなメソッドは小さなメソッドに分割",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_06_q1",
+          "lessonId": "ch05_06",
+          "type": "fourChoice",
+          "question": "メソッド設計で「単一責任の原則」が意味するものはどれですか？",
+          "code": null,
+          "explanation": "単一責任の原則（Single Responsibility Principle）は、1つのメソッド（やクラス）は1つの仕事だけを行うべきという設計原則です。これにより、メソッドが理解しやすく、テストしやすく、修正の影響範囲が限定されます。",
+          "choices": [
+            {
+              "id": "ch05_06_q1_a",
+              "text": "メソッドは1行で書くべき",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_06_q1_b",
+              "text": "1つのメソッドは1つの仕事だけ行う",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_06_q1_c",
+              "text": "メソッドには引数を1つだけ渡す",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_06_q1_d",
+              "text": "メソッドは1回だけ呼び出す",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_06_q2",
+          "lessonId": "ch05_06",
+          "type": "fourChoice",
+          "question": "メソッド名として最も適切なのはどれですか？（ユーザーが成人かどうかを判定するメソッド）",
+          "code": null,
+          "explanation": "boolean型を返す判定メソッドは is, has, can で始める命名規則があります。isAdult(int age) は「成人かどうか」を明確に表現しています。check()は何をチェックするか不明、process()は判定ではなく処理を連想させます。",
+          "choices": [
+            {
+              "id": "ch05_06_q2_a",
+              "text": "check(int age)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_06_q2_b",
+              "text": "isAdult(int age)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_06_q2_c",
+              "text": "process(int age)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_06_q2_d",
+              "text": "adult(int age)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_06_q3",
+          "lessonId": "ch05_06",
+          "type": "fillBlank",
+          "question": "エラー条件をメソッドの先頭でチェックして早期にreturnする手法を____と呼びます。",
+          "code": "static int divide(int a, int b) {\n    if (b == 0) return -1; // ← このパターン\n    return a / b;\n}",
+          "explanation": "ガード節（早期リターン）は、エラー条件をメソッドの先頭でチェックして早く戻すパターンです。ネストが浅くなり可読性が大幅に向上します。",
+          "choices": [
+            {
+              "id": "ch05_06_q3_a",
+              "text": "ガード節",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_06_q3_b",
+              "text": "デザインパターン",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_06_q3_c",
+              "text": "ポリモーフィズム",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_06_q3_d",
+              "text": "デフォルト値",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

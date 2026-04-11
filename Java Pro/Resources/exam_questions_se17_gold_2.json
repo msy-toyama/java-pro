@@ -1,0 +1,2969 @@
+[
+  {
+    "id": "se17g2_q001",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "BinaryOperator<T>インタフェースの説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "BinaryOperator<T>はBiFunction<T,T,T>を継承しており、同じ型の2つの引数を受け取り、同じ型の結果を返す関数型インタフェースです。minBy()とmaxBy()という静的メソッドを持ち、Comparatorを引数に取ってBinaryOperatorを返します。applyメソッドの引数と戻り値はすべて同じ型Tです。",
+    "choices": [
+      {
+        "id": "se17g2_q001_a",
+        "text": "BiFunction<T,T,T>を継承し、同じ型の2引数を取り同じ型を返す",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q001_b",
+        "text": "Function<T,T>を継承し、1つの引数を受け取り同じ型を返す",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q001_c",
+        "text": "BiConsumer<T,T>を継承し、2つの引数を受け取り結果を返さない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q001_d",
+        "text": "Predicate<T>を継承し、booleanを返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q002",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, Integer> len = String::length;\n        Function<Integer, String> repeat = n -> \"*\".repeat(n);\n        var result = len.andThen(repeat).apply(\"Java\");\n        System.out.println(result);\n    }\n}",
+    "explanation": "len.andThen(repeat)はまずlenを適用し、その結果にrepeatを適用します。len.apply(\"Java\")は4を返し、repeat.apply(4)は\"****\"を返します。andThen()は現在の関数の結果を次の関数の入力として渡すメソッドです。String.repeat()はJava 11で追加されたメソッドで、指定回数文字列を繰り返します。",
+    "choices": [
+      {
+        "id": "se17g2_q002_a",
+        "text": "4",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q002_b",
+        "text": "****",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q002_c",
+        "text": "Java",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q002_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q003",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "次のコードにおいて、コンストラクタ参照として正しいものはどれですか？",
+    "code": "import java.util.function.Supplier;\nimport java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        Supplier<ArrayList<String>> factory = ___;\n        var list = factory.get();\n        list.add(\"hello\");\n        System.out.println(list);\n    }\n}",
+    "explanation": "コンストラクタ参照はクラス名::newの形式で記述します。ArrayList::newは引数なしコンストラクタを参照し、Supplier<ArrayList<String>>として使用できます。() -> new ArrayList<>()と同等ですが、コンストラクタ参照の方が簡潔です。new ArrayList::newやArrayList::constructorは不正な構文です。",
+    "choices": [
+      {
+        "id": "se17g2_q003_a",
+        "text": "ArrayList::new",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q003_b",
+        "text": "new ArrayList::new",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q003_c",
+        "text": "ArrayList::constructor",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q003_d",
+        "text": "ArrayList::create",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q004",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいコードを選択してください。文字列が\"J\"で始まるか長さが5以上であるかを判定します。",
+    "code": "import java.util.function.Predicate;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> startsJ = s -> s.startsWith(\"J\");\n        Predicate<String> longStr = s -> s.length() >= 5;\n        Predicate<String> combined = startsJ._____(longStr);\n        System.out.println(combined.test(\"Hello\")); // true\n        System.out.println(combined.test(\"Java\"));  // true\n        System.out.println(combined.test(\"Go\"));    // false\n    }\n}",
+    "explanation": "Predicate.or()は2つのPredicateの論理和を返します。startsJ.or(longStr)は、文字列が\"J\"で始まるか、長さが5以上の場合にtrueを返します。\"Hello\"は長さ5でtrue、\"Java\"は\"J\"で始まるのでtrue、\"Go\"はどちらの条件も満たさないのでfalseです。and()は論理積、negate()は否定を返します。",
+    "choices": [
+      {
+        "id": "se17g2_q004_a",
+        "text": "and",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q004_b",
+        "text": "or",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q004_c",
+        "text": "negate",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q004_d",
+        "text": "compose",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q005",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードのコンパイルエラーの原因として正しいものはどれですか？",
+    "code": "import java.util.function.Function;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, String> reader = path -> {\n            throw new IOException(\"File not found\");\n        };\n        System.out.println(reader.apply(\"test.txt\"));\n    }\n}",
+    "explanation": "Function<String, String>のapply()メソッドは検査例外をスローするよう宣言されていません。そのためラムダ式内でIOException（検査例外）をスローするコードはコンパイルエラーになります。検査例外をスローするラムダ式を使うには、独自の関数型インタフェースを定義してスロー宣言を追加するか、ラムダ式内でtry-catchで処理する必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q005_a",
+        "text": "Function<String, String>は文字列しか返せない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q005_b",
+        "text": "ラムダ式内で検査例外をスローできないためコンパイルエラー",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q005_c",
+        "text": "IOExceptionはRuntimeExceptionなのでcatchが必要",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q005_d",
+        "text": "ラムダ式はthrow文を含むことができない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q006",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.function.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> notEmpty = Predicate.not(String::isEmpty);\n        Predicate<String> hasDigit = s -> s.chars().anyMatch(Character::isDigit);\n        var combined = notEmpty.and(hasDigit);\n        List.of(\"abc\", \"a1b\", \"\", \"123\", \"xyz\").stream()\n            .filter(combined)\n            .forEach(s -> System.out.print(s + \" \"));\n    }\n}",
+    "explanation": "Predicate.not()はJava 11で追加された静的メソッドで、指定されたPredicateの否定を返します。notEmptyは空文字列でない場合true。hasDigitは数字を含む場合true。combinedはnotEmpty AND hasDigitなので、空でなく数字を含む文字列のみが合致します。\"a1b\"と\"123\"が条件を満たし、\"a1b 123 \"が出力されます。",
+    "choices": [
+      {
+        "id": "se17g2_q006_a",
+        "text": "abc a1b 123 xyz ",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q006_b",
+        "text": "a1b 123 ",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q006_c",
+        "text": "123 ",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q006_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q007",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "メソッド参照の種類に関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "メソッド参照には4種類あります。(1)静的メソッド参照 Integer::parseInt、(2)特定オブジェクトのインスタンスメソッド参照 str::length、(3)任意のオブジェクトのインスタンスメソッド参照 String::toLowerCase、(4)コンストラクタ参照 ArrayList::new。Integer::parseIntは静的メソッド参照でFunction<String, Integer>に代入可能です。System.out::printlnは特定オブジェクト(System.out)のインスタンスメソッド参照でConsumer<T>に代入可能です。",
+    "choices": [
+      {
+        "id": "se17g2_q007_a",
+        "text": "Integer::parseIntは静的メソッド参照でFunction<String, Integer>として使用できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q007_b",
+        "text": "String::toLowerCaseは静的メソッド参照である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q007_c",
+        "text": "System.out::printlnは特定オブジェクトのインスタンスメソッド参照である",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q007_d",
+        "text": "コンストラクタ参照はSupplier以外の関数型インタフェースに代入できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q008",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "次のコードについて正しい説明はどれですか？",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    static <T> T transform(T input, UnaryOperator<T> op) {\n        return op.apply(input);\n    }\n    public static void main(String[] args) {\n        var result = transform(\"Hello\", s -> s.substring(0, 3));\n        System.out.println(result);\n    }\n}",
+    "explanation": "transform()はジェネリックメソッドで、型パラメータTは引数から推論されます。\"Hello\"がString型なのでTはStringに推論され、UnaryOperator<String>としてラムダ式が評価されます。s.substring(0, 3)は\"Hel\"を返します。型推論はコンパイル時に行われ、実行時にはジェネリック型情報は消去されます。",
+    "choices": [
+      {
+        "id": "se17g2_q008_a",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q008_b",
+        "text": "Hel が出力される",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q008_c",
+        "text": "Hello が出力される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q008_d",
+        "text": "ClassCastExceptionが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q009",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        String result = List.of(\"Java\", \"Python\", \"Go\").stream()\n            .collect(Collectors.joining(\", \", \"[\", \"]\"));\n        System.out.println(result);\n    }\n}",
+    "explanation": "Collectors.joining(delimiter, prefix, suffix)は、ストリームの要素を指定された区切り文字、接頭辞、接尾辞で連結します。delimiter=\", \"、prefix=\"[\"、suffix=\"]\"なので、結果は\"[Java, Python, Go]\"になります。1引数版のjoining(delimiter)は接頭辞・接尾辞なしで連結します。",
+    "choices": [
+      {
+        "id": "se17g2_q009_a",
+        "text": "Java, Python, Go",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q009_b",
+        "text": "[Java, Python, Go]",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q009_c",
+        "text": "[Java,Python,Go]",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q009_d",
+        "text": "JavaPythonGo",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q010",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Stream.ofNullable(T t)メソッドの説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Stream.ofNullable()はJava 9で追加されたメソッドです。引数がnullでない場合はその要素だけを含むストリームを返し、nullの場合は空のストリームを返します。NullPointerExceptionはスローされません。これはOptional.stream()と組み合わせてnullを安全に処理するのに便利です。",
+    "choices": [
+      {
+        "id": "se17g2_q010_a",
+        "text": "引数がnullの場合NullPointerExceptionをスローする",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q010_b",
+        "text": "引数がnullの場合nullを含む1要素のストリームを返す",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q010_c",
+        "text": "引数がnullの場合は空のストリームを、非nullの場合は1要素のストリームを返す",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q010_d",
+        "text": "引数がnullの場合はOptional.empty()を返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q011",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードを実行するとどうなりますか？",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> src = List.of(\"a\", \"b\", \"c\");\n        var result = src.stream()\n            .collect(Collectors.toMap(\n                s -> s.toUpperCase(),\n                s -> s.length()\n            ));\n        result.put(\"D\", 1);\n        System.out.println(result);\n    }\n}",
+    "explanation": "List.of()で生成されるリストは不変ですが、Collectors.toMap()はデフォルトでHashMapを生成するため、結果のMapは変更可能です。すべてのキーは異なる（A, B, C）ためキー重複のIllegalStateExceptionは発生しません。result.put(\"D\", 1)も正常に動作し、{A=1, B=1, C=1, D=1}が出力されます（順序は不定）。",
+    "choices": [
+      {
+        "id": "se17g2_q011_a",
+        "text": "UnsupportedOperationExceptionがスローされる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q011_b",
+        "text": "コンパイルエラーになる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q011_c",
+        "text": "正常に実行され、Mapが出力される",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q011_d",
+        "text": "IllegalStateExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q012",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        long count = Stream.of(\"apple\", \"banana\", \"cherry\", \"date\")\n            .peek(s -> System.out.print(s.charAt(0)))\n            .filter(s -> s.length() > 4)\n            .count();\n        System.out.println(count);\n    }\n}",
+    "explanation": "Java 9以降、count()は内部的にストリームのサイズが事前に分かる場合にpeekやfilterをスキップする最適化が行われる可能性があります。しかしfilterがあるため最適化されず、全要素が処理されます。peekで各要素の先頭文字(a,b,c,d)が出力され、filterで\"apple\"(5)、\"banana\"(6)、\"cherry\"(6)が残り、count=3です。出力は\"abcd3\"になります。",
+    "choices": [
+      {
+        "id": "se17g2_q012_a",
+        "text": "abc3",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q012_b",
+        "text": "abcd3",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q012_c",
+        "text": "3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q012_d",
+        "text": "abcd\n3",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q013",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいコードを選択してください。重複キーがある場合は既存の値を保持します。",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var map = Stream.of(\"apple\", \"avocado\", \"banana\", \"blueberry\")\n            .collect(Collectors.toMap(\n                s -> s.charAt(0),\n                s -> s,\n                _____\n            ));\n        System.out.println(map);\n        // {a=apple, b=banana}\n    }\n}",
+    "explanation": "Collectors.toMap()の第3引数はBinaryOperator（マージ関数）で、キーが重複した場合にどちらの値を採用するか決定します。(existing, replacement) -> existingとすると既存の値が保持されます。(e, r) -> rとすると新しい値で置き換えます。マージ関数を省略するとキー重複時にIllegalStateExceptionがスローされます。",
+    "choices": [
+      {
+        "id": "se17g2_q013_a",
+        "text": "(existing, replacement) -> existing",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q013_b",
+        "text": "(existing, replacement) -> replacement",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q013_c",
+        "text": "(existing, replacement) -> existing + replacement",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q013_d",
+        "text": "null",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q014",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "ストリームの遅延評価（lazy evaluation）に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "ストリームの中間操作（filter, map, peek等）は遅延評価されます。終端操作（collect, forEach, count等）が呼ばれるまで、中間操作は実行されません。これにより不要な計算を避け、短絡評価（findFirst, anyMatch等）と組み合わせて効率的な処理が可能です。",
+    "choices": [
+      {
+        "id": "se17g2_q014_a",
+        "text": "すべての操作は即座に実行される",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q014_b",
+        "text": "中間操作は終端操作が呼ばれるまで実行されない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q014_c",
+        "text": "filterのみが遅延評価される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q014_d",
+        "text": "遅延評価は並列ストリームでのみ有効である",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q015",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Collectors.teeing()に関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "Collectors.teeing()はJava 12で追加されたコレクタで、2つの下流コレクタの結果をBiFunctionで合成します。例えばCollectors.teeing(Collectors.counting(), Collectors.summingInt(x->x), (count, sum) -> sum/count)のように使用して平均を計算できます。2つの下流コレクタは独立して並行的に要素を収集し、最後にマージ関数で結合されます。",
+    "choices": [
+      {
+        "id": "se17g2_q015_a",
+        "text": "2つの下流コレクタの結果をBiFunctionで合成する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q015_b",
+        "text": "3つ以上の下流コレクタを組み合わせることができる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q015_c",
+        "text": "各要素は1つの下流コレクタにのみ渡される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q015_d",
+        "text": "各要素は両方の下流コレクタに渡される",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q016",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = List.of(1, 2, 3, 4, 5, 6, 7, 8);\n        var taken = list.stream()\n            .takeWhile(n -> n < 5)\n            .collect(Collectors.toList());\n        var dropped = list.stream()\n            .dropWhile(n -> n < 5)\n            .collect(Collectors.toList());\n        System.out.println(taken + \" \" + dropped);\n    }\n}",
+    "explanation": "takeWhile()は条件がtrueの間要素を取り続け、falseになった時点で停止します。[1,2,3,4]が取得されます。dropWhile()は条件がtrueの間要素をスキップし、falseになった時点から残りの要素をすべて返します。[5,6,7,8]が取得されます。どちらもJava 9で追加されたメソッドで、順序付きストリームで有用です。",
+    "choices": [
+      {
+        "id": "se17g2_q016_a",
+        "text": "[1, 2, 3, 4] [5, 6, 7, 8]",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q016_b",
+        "text": "[1, 2, 3, 4, 5] [6, 7, 8]",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q016_c",
+        "text": "[1, 2, 3, 4] [1, 2, 3, 4, 5, 6, 7, 8]",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q016_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q017",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "PECS（Producer Extends, Consumer Super）原則に基づくと、コレクションからデータを読み取る（produceする）パラメータのワイルドカードとして正しいものはどれですか？",
+    "code": null,
+    "explanation": "PECS原則では、コレクションからデータを取り出す（produce）場合は<? extends T>を使い、コレクションにデータを入れる（consume）場合は<? super T>を使います。<? extends T>を使うとT型またはTのサブクラスとして読み取れますが、nullしか追加できません。<? super T>を使うとT型を安全に追加できますが、読み取り時はObject型でしか取得できません。",
+    "choices": [
+      {
+        "id": "se17g2_q017_a",
+        "text": "<? super T>",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q017_b",
+        "text": "<? extends T>",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q017_c",
+        "text": "<T>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q017_d",
+        "text": "<?>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q018",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードのコンパイルエラーの原因はどれですか？",
+    "code": "public class Util {\n    public static <T extends Comparable<T> & Cloneable> T findMax(T a, T b) {\n        return a.compareTo(b) >= 0 ? a : b;\n    }\n    public static void main(String[] args) {\n        System.out.println(findMax(\"abc\", 123));\n    }\n}",
+    "explanation": "findMax()は型パラメータT に Comparable<T> & Cloneable という複合境界を指定しています。呼び出し時にStringとIntegerが渡されていますが、これらの共通の型はObject & Serializable & Comparable<...>であり、Cloneableを両方が実装しているわけではありません。さらに、Comparable<T>のT が一致しないため型推論が失敗し、コンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se17g2_q018_a",
+        "text": "StringとIntegerの型推論で共通の型パラメータTが見つからない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q018_b",
+        "text": "型パラメータに複数の境界を指定できない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q018_c",
+        "text": "Comparable<T>はインタフェースなのでextendsは使えない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q018_d",
+        "text": "compareTo()メソッドはstaticメソッド内で呼べない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q019",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static <T> List<T> merge(List<? extends T> a, List<? extends T> b) {\n        var result = new ArrayList<T>();\n        result.addAll(a);\n        result.addAll(b);\n        return result;\n    }\n    public static void main(String[] args) {\n        List<Integer> ints = List.of(1, 2);\n        List<Double> doubles = List.of(3.0, 4.0);\n        List<Number> merged = merge(ints, doubles);\n        System.out.println(merged);\n    }\n}",
+    "explanation": "merge()メソッドの型パラメータTはNumberに推論されます。List<? extends Number>はList<Integer>とList<Double>の両方を受け入れます。addAll()で全要素がArrayList<Number>に追加され、[1, 2, 3.0, 4.0]が出力されます。ワイルドカードによりサブタイプの異なるリストを1つに統合できます。",
+    "choices": [
+      {
+        "id": "se17g2_q019_a",
+        "text": "[1, 2, 3.0, 4.0]",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q019_b",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q019_c",
+        "text": "ClassCastException",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q019_d",
+        "text": "[1, 2, 3, 4]",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q020",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "再帰型境界（Recursive Type Bound）を用いた宣言 <T extends Comparable<T>> の目的として正しいものはどれですか？",
+    "code": null,
+    "explanation": "再帰型境界<T extends Comparable<T>>は、型Tが自分自身と比較可能であることを保証します。これによりT型の2つのオブジェクトをcompareTo()で比較できます。Collections.sort()やCollections.max()などで広く使用されるパターンです。型安全に自然順序による比較を行うための重要なジェネリクスの活用方法です。",
+    "choices": [
+      {
+        "id": "se17g2_q020_a",
+        "text": "型Tのインスタンスが不変であることを保証する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q020_b",
+        "text": "型Tが自分自身と比較可能であることを保証する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q020_c",
+        "text": "型Tがシリアライズ可能であることを保証する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q020_d",
+        "text": "型Tの継承階層が最大1段であることを制限する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q021",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のメソッドの空欄に入る正しいワイルドカード型を選択してください。リストの要素を別のリストにコピーするメソッドです。",
+    "code": "public static <T> void copy(List<? super T> dest, List<_____ T> src) {\n    for (T item : src) {\n        dest.add(item);\n    }\n}",
+    "explanation": "PECS原則に従い、srcリストはデータを提供する（Producer）ので<? extends T>を使います。destリストはデータを受け取る（Consumer）ので<? super T>を使います。これはjava.util.Collections.copy()メソッドと同じ設計パターンです。extends を使うことで、TのサブタイプのリストからもT型として要素を読み取れます。",
+    "choices": [
+      {
+        "id": "se17g2_q021_a",
+        "text": "? extends",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q021_b",
+        "text": "? super",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q021_c",
+        "text": "?",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q021_d",
+        "text": "（ワイルドカード不要、Tだけ）",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q022",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "public class Box<T> {\n    private T value;\n    Box(T value) { this.value = value; }\n    T getValue() { return value; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Box<String> sBox = new Box<>(\"Hello\");\n        Box rawBox = sBox;\n        rawBox = new Box<>(123);\n        String s = (String) rawBox.getValue();\n        System.out.println(s);\n    }\n}",
+    "explanation": "rawBoxはraw型のBox参照です。rawBox = new Box<>(123)でInteger値123を持つBoxがrawBoxに代入されます。rawBox.getValue()はObject型を返し、(String)でキャストしようとしますが、実際の値はIntegerなのでClassCastExceptionが実行時にスローされます。raw型を使用すると型安全性が失われます。",
+    "choices": [
+      {
+        "id": "se17g2_q022_a",
+        "text": "Hello",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q022_b",
+        "text": "123",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q022_c",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q022_d",
+        "text": "ClassCastExceptionが実行時にスローされる",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q023",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "型消去（Type Erasure）に関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "型消去により、コンパイル後のバイトコードにはジェネリック型パラメータの情報が残りません。List<String>とList<Integer>は実行時には同じListクラスとして扱われます。境界がある場合（例：T extends Number）、Tは境界型（Number）に置き換えられます。境界がない場合はObjectに置き換えられます。instanceof演算子でジェネリック型を確認することはできません。",
+    "choices": [
+      {
+        "id": "se17g2_q023_a",
+        "text": "List<String>とList<Integer>は実行時には区別できない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q023_b",
+        "text": "リフレクションを使えば実行時にジェネリック型パラメータを常に取得できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q023_c",
+        "text": "境界付き型パラメータ<T extends Number>はコンパイル後Numberに置き換えられる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q023_d",
+        "text": "型消去はJava 17で廃止された",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q024",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "次のコードについて正しい説明はどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> original = new ArrayList<>(List.of(\"a\", \"b\", \"c\"));\n        List<?> wildcard = original;\n        // wildcard.add(\"d\");  // Line A\n        Object obj = wildcard.get(0);  // Line B\n        wildcard.add(null);  // Line C\n        System.out.println(wildcard.size());\n    }\n}",
+    "explanation": "非境界ワイルドカード List<?> では、get()の結果はObject型として取得できます（Line B）。add()はnullのみ受け付けます（Line C）。nullはすべての参照型に代入可能なためコンパイルが通ります。Line Aをコメント解除するとコンパイルエラーになります。Line CのnullのaddとLine BのgetでObject取得は正常なので、サイズ4が出力されます。",
+    "choices": [
+      {
+        "id": "se17g2_q024_a",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q024_b",
+        "text": "4 が出力される",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q024_c",
+        "text": "3 が出力される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q024_d",
+        "text": "NullPointerExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q025",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "NavigableMap<Integer, String>のfloorEntry(5)メソッドの説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "NavigableMap.floorEntry(key)は、指定されたキー以下の最大のキーに関連するエントリを返します。該当するエントリがなければnullを返します。同様にceilingEntry()はキー以上の最小のエントリ、lowerEntry()はキーより小さい最大のエントリ、higherEntry()はキーより大きい最小のエントリを返します。",
+    "choices": [
+      {
+        "id": "se17g2_q025_a",
+        "text": "キー5より大きい最小のエントリを返す",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q025_b",
+        "text": "キー5以下の最大のキーに関連するエントリを返す",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q025_c",
+        "text": "キー5以上の最小のエントリを返す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q025_d",
+        "text": "キー5に完全一致するエントリだけを返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q026",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var original = new ArrayList<>(List.of(\"x\", \"y\", \"z\"));\n        var copy = List.copyOf(original);\n        original.add(\"w\");\n        System.out.println(original.size() + \" \" + copy.size());\n    }\n}",
+    "explanation": "List.copyOf()はJava 10で追加されたメソッドで、元のリストの浅いコピーにより不変リストを作成します。元のリストを変更してもコピーには影響しません。originalに\"w\"を追加するとoriginalは4要素になりますが、copyは3要素のままです。出力は\"4 3\"です。",
+    "choices": [
+      {
+        "id": "se17g2_q026_a",
+        "text": "4 4",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q026_b",
+        "text": "4 3",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q026_c",
+        "text": "3 3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q026_d",
+        "text": "UnsupportedOperationExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q027",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいメソッドを選択してください。Dequeの先頭に要素を追加する操作です。",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> deque = new ArrayDeque<>();\n        deque.add(\"B\");\n        deque._____(\"A\");\n        deque.addLast(\"C\");\n        System.out.println(deque); // [A, B, C]\n    }\n}",
+    "explanation": "Dequeインタフェースでは、addFirst()は先頭に要素を追加し、addLast()は末尾に追加します。offerFirst()/offerLast()も同様ですが、容量制限時の挙動が異なります（offerはfalseを返し、addは例外をスロー）。push()はaddFirst()と同じ動作です。\"A\"を先頭に追加すると[A, B, C]になります。",
+    "choices": [
+      {
+        "id": "se17g2_q027_a",
+        "text": "addFirst",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q027_b",
+        "text": "addLast",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q027_c",
+        "text": "add",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q027_d",
+        "text": "insert",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q028",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードを実行するとどうなりますか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<>(List.of(\"a\", \"b\", \"c\", \"d\"));\n        for (String s : list) {\n            if (s.equals(\"b\")) {\n                list.remove(s);\n            }\n        }\n        System.out.println(list);\n    }\n}",
+    "explanation": "拡張for文（for-each）の反復中にコレクションを直接変更するとConcurrentModificationExceptionがスローされます。for-eachは内部的にIteratorを使用しており、Iterator以外からの構造的変更は不正です。安全に削除するにはIterator.remove()を使うか、list.removeIf(s -> s.equals(\"b\"))を使用します。",
+    "choices": [
+      {
+        "id": "se17g2_q028_a",
+        "text": "[a, c, d] が出力される",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q028_b",
+        "text": "ConcurrentModificationExceptionがスローされる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q028_c",
+        "text": "コンパイルエラーになる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q028_d",
+        "text": "[a, b, c, d] が出力される（何も削除されない）",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q029",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Map.computeIfAbsent(key, mappingFunction)の説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "computeIfAbsent()は指定されたキーに関連する値がnullまたは存在しない場合にのみ、mappingFunctionを実行して値を算出し、マップに登録します。既に値が存在する場合はmappingFunctionは呼ばれず、既存の値がそのまま返されます。パターンとしてはMap<String, List<String>>のようなマルチマップの初期化に便利です。",
+    "choices": [
+      {
+        "id": "se17g2_q029_a",
+        "text": "常にmappingFunctionを実行して値を更新する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q029_b",
+        "text": "キーに値がnullまたは未登録の場合のみmappingFunctionを実行する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q029_c",
+        "text": "キーが存在する場合に値を削除する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q029_d",
+        "text": "mappingFunctionがnullを返すとNullPointerExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q030",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "TreeSetにカスタムComparatorを渡した場合の動作について正しい説明はどれですか？",
+    "code": null,
+    "explanation": "TreeSetにComparatorを渡すと、要素の自然順序（Comparable）ではなく、指定されたComparatorで順序付けと等価判定が行われます。Comparator.compare()が0を返す2つの要素は等しいとみなされ、Setには1つしか格納されません。これはequals()メソッドとは独立した判定です。",
+    "choices": [
+      {
+        "id": "se17g2_q030_a",
+        "text": "Comparatorが0を返す要素は重複として扱われSetに1つだけ格納される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q030_b",
+        "text": "Comparatorが0を返してもequals()でfalseなら両方格納される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q030_c",
+        "text": "TreeSetでは要素がComparableを実装していないとコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q030_d",
+        "text": "Comparatorを渡すと検索のみに使用され、格納順序は挿入順になる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q031",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "不変コレクション（Unmodifiable Collections）に関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "List.of()、Set.of()、Map.of()はJava 9で追加された不変コレクションのファクトリメソッドです。null要素を含めようとするとNullPointerExceptionがスローされます。add()、remove()等の変更操作を呼ぶとUnsupportedOperationExceptionがスローされます。Collections.unmodifiableList()は元のリストのビューを返すだけで、元のリストが変更されるとビューにも影響します。",
+    "choices": [
+      {
+        "id": "se17g2_q031_a",
+        "text": "List.of()で作成されたリストにnull要素を含めるとNullPointerExceptionがスローされる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q031_b",
+        "text": "List.of()で作成されたリストはsubListで部分リストを変更できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q031_c",
+        "text": "Collections.unmodifiableList()はリストの独立したコピーを作成する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q031_d",
+        "text": "List.of()で作成されたリストの変更操作はUnsupportedOperationExceptionをスローする",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q032",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "次のコードの出力として正しいものはどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var map = new HashMap<String, Integer>();\n        map.put(\"a\", 1);\n        map.put(\"b\", 2);\n        map.merge(\"a\", 10, Integer::sum);\n        map.merge(\"c\", 10, Integer::sum);\n        System.out.println(map);\n    }\n}",
+    "explanation": "Map.merge(key, value, remappingFunction)は、キーが存在しない場合はvalueをそのまま登録し、キーが存在する場合は既存の値とvalueにremappingFunctionを適用した結果を登録します。\"a\"は既存値1と10を加算して11に、\"c\"は新規なので10がそのまま登録されます。結果は{a=11, b=2, c=10}です。",
+    "choices": [
+      {
+        "id": "se17g2_q032_a",
+        "text": "{a=10, b=2, c=10}",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q032_b",
+        "text": "{a=11, b=2, c=10}",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q032_c",
+        "text": "{a=1, b=2, c=10}",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q032_d",
+        "text": "NullPointerExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q033",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "CompletableFuture.thenApply()とthenCompose()の違いとして正しいものはどれですか？",
+    "code": null,
+    "explanation": "thenApply()はFunction<T, U>を受け取り、結果をCompletableFuture<U>でラップして返します。thenCompose()はFunction<T, CompletionStage<U>>を受け取り、結果のCompletableFutureを平坦化（フラット化）して返します。thenCompose()はStreamのflatMap()と同様に、ネストしたCompletableFutureを避けるために使用します。",
+    "choices": [
+      {
+        "id": "se17g2_q033_a",
+        "text": "thenApply()は非同期で、thenCompose()は同期で実行される",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q033_b",
+        "text": "thenApply()は値を変換し、thenCompose()はCompletableFutureを平坦化する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q033_c",
+        "text": "thenApply()は例外を処理し、thenCompose()は結果を変換する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q033_d",
+        "text": "機能的に同一で、名前が異なるだけである",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q034",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードの問題点として正しいものはどれですか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    private static int counter = 0;\n    \n    public static void main(String[] args) throws Exception {\n        var list = Collections.synchronizedList(new ArrayList<Integer>());\n        var threads = new ArrayList<Thread>();\n        for (int i = 0; i < 1000; i++) {\n            var t = new Thread(() -> {\n                counter++;\n                list.add(counter);\n            });\n            threads.add(t);\n            t.start();\n        }\n        for (var t : threads) t.join();\n        System.out.println(\"Size: \" + list.size() + \", Counter: \" + counter);\n    }\n}",
+    "explanation": "counter++は原子操作ではなく、読み取り・インクリメント・書き込みの3ステップで構成されます。複数スレッドが同時にcounterを操作するとデータ競合が発生し、counterの値は1000未満になる可能性があります。リストはsynchronizedListで保護されていますが、counter変数は保護されていません。AtomicIntegerやsynchronizedブロックが必要です。",
+    "choices": [
+      {
+        "id": "se17g2_q034_a",
+        "text": "synchronizedListは複数スレッドから安全にアクセスできないため例外が発生する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q034_b",
+        "text": "counter++が原子操作でないためデータ競合が発生しcounterの値が不正になる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q034_c",
+        "text": "list.add()でConcurrentModificationExceptionがスローされる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q034_d",
+        "text": "Thread()のコンストラクタにラムダ式を渡すことはできない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q035",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService es = Executors.newFixedThreadPool(2);\n        Future<String> f1 = es.submit(() -> {\n            Thread.sleep(100);\n            return \"A\";\n        });\n        Future<String> f2 = es.submit(() -> \"B\");\n        System.out.print(f2.get());\n        System.out.print(f1.get());\n        es.shutdown();\n    }\n}",
+    "explanation": "f2のタスクはすぐに完了し\"B\"を返します。f1のタスクは100ミリ秒スリープ後に\"A\"を返します。f2.get()は\"B\"を返し出力、f1.get()はまだ完了していなければ完了まで待機（ブロック）してから\"A\"を返します。get()の呼び出し順序で出力が決まるため、出力は\"BA\"になります。",
+    "choices": [
+      {
+        "id": "se17g2_q035_a",
+        "text": "AB",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q035_b",
+        "text": "BA",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q035_c",
+        "text": "出力順は不定",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q035_d",
+        "text": "TimeoutExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q036",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "ReentrantLockとsynchronizedキーワードの違いとして正しいものはどれですか？",
+    "code": null,
+    "explanation": "ReentrantLockはjava.util.concurrent.locks.Lockインタフェースの実装で、synchronizedよりも柔軟な排他制御を提供します。tryLock()でタイムアウト付きのロック取得が可能、lockInterruptibly()で割り込み可能なロック待機が可能、Conditionオブジェクトで複数の待機条件を管理できます。synchronizedではこれらの機能はありません。",
+    "choices": [
+      {
+        "id": "se17g2_q036_a",
+        "text": "ReentrantLockはsynchronizedより常にパフォーマンスが良い",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q036_b",
+        "text": "ReentrantLockはtryLock()によるタイムアウト付きロック取得が可能",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q036_c",
+        "text": "synchronizedはReentrantLockと違い再入可能ではない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q036_d",
+        "text": "ReentrantLockはJVM管理であり明示的なunlock()は不要",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q037",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいメソッドを選択してください。スレッドセーフにカウンタをインクリメントする処理です。",
+    "code": "import java.util.concurrent.atomic.AtomicInteger;\n\npublic class Counter {\n    private AtomicInteger count = new AtomicInteger(0);\n    \n    public int increment() {\n        return count._____();\n    }\n    \n    public int getCount() {\n        return count.get();\n    }\n}",
+    "explanation": "AtomicInteger.incrementAndGet()はアトミックに値を1増やし、増加後の値を返します。getAndIncrement()は増加前の値を返します。addAndGet(1)も同様の効果がありますが、incrementAndGet()がこの用途に最適です。これらのメソッドはCAS（Compare-And-Swap）操作を使用してスレッドセーフに値を更新します。",
+    "choices": [
+      {
+        "id": "se17g2_q037_a",
+        "text": "incrementAndGet",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q037_b",
+        "text": "increment",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q037_c",
+        "text": "addOne",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q037_d",
+        "text": "plusOne",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q038",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードの問題点はどれですか？",
+    "code": "public class DeadlockExample {\n    private final Object lockA = new Object();\n    private final Object lockB = new Object();\n    \n    public void method1() {\n        synchronized (lockA) {\n            synchronized (lockB) {\n                System.out.println(\"method1\");\n            }\n        }\n    }\n    \n    public void method2() {\n        synchronized (lockB) {\n            synchronized (lockA) {\n                System.out.println(\"method2\");\n            }\n        }\n    }\n}",
+    "explanation": "method1()はlockA→lockBの順でロックを取得し、method2()はlockB→lockAの順でロックを取得します。2つのスレッドがそれぞれmethod1()とmethod2()を同時に呼ぶと、互いに相手が保持するロックを待つデッドロックが発生する可能性があります。解決策はすべてのメソッドで同じ順序（例: lockA→lockB）でロックを取得することです。",
+    "choices": [
+      {
+        "id": "se17g2_q038_a",
+        "text": "synchronizedブロックをネストすることはできないのでコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q038_b",
+        "text": "ロックの取得順序が逆のためデッドロックが発生する可能性がある",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q038_c",
+        "text": "Object型のインスタンスをロック対象にすることはできない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q038_d",
+        "text": "finalフィールドはsynchronizedで使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q039",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "volatile修飾子の効果として正しいものはどれですか？",
+    "code": null,
+    "explanation": "volatileキーワードはフィールドの値がCPUキャッシュではなくメインメモリから直接読み書きされることを保証します。これにより、あるスレッドが書き込んだ値が他のスレッドから即座に見えるようになります（可視性の保証）。ただし、複合操作（例: i++の読み取り・更新・書き込み）の原子性は保証しません。",
+    "choices": [
+      {
+        "id": "se17g2_q039_a",
+        "text": "フィールドの更新がすべてのスレッドから可視になることを保証する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q039_b",
+        "text": "フィールドへのすべてのアクセスを排他的に制御する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q039_c",
+        "text": "フィールドに対する複合操作の原子性を保証する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q039_d",
+        "text": "フィールドをイミュータブルにする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q040",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        var cf = CompletableFuture.supplyAsync(() -> \"Hello\")\n            .thenApply(s -> s + \" World\")\n            .thenApply(String::toUpperCase);\n        System.out.println(cf.get());\n    }\n}",
+    "explanation": "supplyAsync()で\"Hello\"を非同期に生成し、thenApply()で\" World\"を連結して\"Hello World\"、次のthenApply()でtoUpperCase()を適用して\"HELLO WORLD\"になります。thenApply()はチェーン可能で、前の結果を次の操作の入力として渡します。get()は結果が利用可能になるまでブロックします。",
+    "choices": [
+      {
+        "id": "se17g2_q040_a",
+        "text": "Hello World",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q040_b",
+        "text": "HELLO WORLD",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q040_c",
+        "text": "HELLO",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q040_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q041",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Files.walk()とFiles.list()の違いとして正しいものはどれですか？",
+    "code": null,
+    "explanation": "Files.list()は指定ディレクトリの直下のエントリのみを返します（深さ1）。Files.walk()は指定ディレクトリ以下のすべてのエントリを再帰的に返します。Files.walk()は第2引数でmaxDepthを指定できます。どちらもStream<Path>を返し、try-with-resourcesで閉じる必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q041_a",
+        "text": "Files.list()は再帰的にすべてのファイルを返し、Files.walk()は直下のみ返す",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q041_b",
+        "text": "Files.walk()は再帰的にすべての階層を探索し、Files.list()は直下のみ返す",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q041_c",
+        "text": "Files.walk()はList<Path>を返し、Files.list()はStream<Path>を返す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q041_d",
+        "text": "機能は同じだが、Files.walk()はNIO.2でFiles.list()はjava.ioに属する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q042",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p1 = Path.of(\"/home/user/docs\");\n        Path p2 = Path.of(\"/home/user/photos/vacation\");\n        Path relative = p1.relativize(p2);\n        System.out.println(relative);\n    }\n}",
+    "explanation": "Path.relativize()はthisパスから引数のパスへの相対パスを返します。/home/user/docsから/home/user/photos/vacationへ行くには、まずdocsから1つ上に移動し（..）、そこからphotos/vacationに移動します。結果は\"../photos/vacation\"になります。両方のパスが絶対パスまたは両方が相対パスでなければIllegalArgumentExceptionがスローされます。",
+    "choices": [
+      {
+        "id": "se17g2_q042_a",
+        "text": "/home/user/photos/vacation",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q042_b",
+        "text": "../photos/vacation",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q042_c",
+        "text": "photos/vacation",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q042_d",
+        "text": "IllegalArgumentExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q043",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいメソッドを選択してください。ファイルの全行を読み取ってリストで取得する処理です。",
+    "code": "import java.nio.file.*;\nimport java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        List<String> lines = Files._____(Path.of(\"data.txt\"));\n        lines.forEach(System.out::println);\n    }\n}",
+    "explanation": "Files.readAllLines(Path)はファイルのすべての行をList<String>として読み取ります。Files.readString()は内容全体を1つのStringとして返します。Files.lines()はStream<String>を返しますが、ここで求めているのはListです。Files.readAllBytes()はbyte配列を返します。",
+    "choices": [
+      {
+        "id": "se17g2_q043_a",
+        "text": "readAllLines",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q043_b",
+        "text": "readLines",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q043_c",
+        "text": "lines",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q043_d",
+        "text": "readAllBytes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q044",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードの問題点はどれですか？",
+    "code": "import java.io.*;\n\npublic class Employee implements Serializable {\n    private static final long serialVersionUID = 1L;\n    private String name;\n    private transient int salary;\n    private Address address; // Addressクラスはnon-serializable\n\n    public Employee(String name, int salary, Address address) {\n        this.name = name;\n        this.salary = salary;\n        this.address = address;\n    }\n}\n\nclass Address {\n    String city;\n    Address(String city) { this.city = city; }\n}",
+    "explanation": "EmployeeクラスはSerializableを実装していますが、addressフィールドの型AddressがSerializableを実装していません。transient修飾子が付いていないため、Employeeのシリアライズ時にAddressオブジェクトもシリアライズしようとしてNotSerializableExceptionがスローされます。解決策はAddressにSerializableを実装するか、addressフィールドにtransientを付けることです。",
+    "choices": [
+      {
+        "id": "se17g2_q044_a",
+        "text": "serialVersionUIDの値が不正である",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q044_b",
+        "text": "transientフィールドsalaryがSerializableの条件を満たさない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q044_c",
+        "text": "AddressがSerializableを実装していないためNotSerializableExceptionが発生する",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q044_d",
+        "text": "コンストラクタがpublicでないためシリアライズできない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q045",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Files.lines(Path)メソッドの特徴として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Files.lines(Path)はファイルの各行を要素とするStream<String>を返します。遅延評価されるため、大きなファイルでもメモリ効率が良いです。このメソッドが返すストリームはAutoCloseableで、使用後に閉じる必要があります。try-with-resourcesで使用するのが推奨されます。readAllLines()と異なり、全行を一度にメモリに読み込みません。",
+    "choices": [
+      {
+        "id": "se17g2_q045_a",
+        "text": "ファイル全体をメモリに読み込んでからStreamに変換する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q045_b",
+        "text": "遅延評価のStream<String>を返しメモリ効率が良い",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q045_c",
+        "text": "List<String>を返す",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q045_d",
+        "text": "バイナリファイルの読み込みにも使用できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q046",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Files.find(Path, int, BiPredicate)メソッドの説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Files.find()は指定ディレクトリから最大深度まで再帰的にファイルを検索し、BiPredicate<Path, BasicFileAttributes>を満たすパスのStream<Path>を返します。BiPredicateの第1引数はPath、第2引数はBasicFileAttributesで、ファイル属性（サイズ、更新日時、ディレクトリか等）を使ったフィルタリングが可能です。Files.walk()にfilterを追加したのと同様ですが、ファイル属性に効率的にアクセスできます。",
+    "choices": [
+      {
+        "id": "se17g2_q046_a",
+        "text": "ファイル名の正規表現パターンで検索する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q046_b",
+        "text": "ファイル内容のテキスト検索を行う",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q046_c",
+        "text": "PathとBasicFileAttributesのBiPredicateでフィルタリングしStream<Path>を返す",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q046_d",
+        "text": "結果をList<File>として返す",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q047",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "PreparedStatementのパラメータ設定に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "PreparedStatementのパラメータインデックスは1から始まります。setString(1, value)のように1番目のプレースホルダ(?)に値を設定します。0を指定するとSQLExceptionがスローされます。PreparedStatementはSQLインジェクションを防止し、プリコンパイルによりパフォーマンスも向上します。",
+    "choices": [
+      {
+        "id": "se17g2_q047_a",
+        "text": "パラメータインデックスは0から始まる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q047_b",
+        "text": "パラメータインデックスは1から始まる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q047_c",
+        "text": "パラメータはsetParameter()メソッドで設定する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q047_d",
+        "text": "パラメータは名前で指定する（例：:name）",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q048",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードの問題点はどれですか？",
+    "code": "import java.sql.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        try (var conn = DriverManager.getConnection(\"jdbc:h2:mem:test\");\n             var stmt = conn.prepareStatement(\"SELECT * FROM users WHERE id = ?\")) {\n            var rs = stmt.executeQuery();\n            while (rs.next()) {\n                System.out.println(rs.getString(\"name\"));\n            }\n        }\n    }\n}",
+    "explanation": "PreparedStatementにパラメータ(?)が含まれていますが、stmt.setInt()やstmt.setString()でパラメータ値を設定していません。パラメータを設定せずにexecuteQuery()を呼ぶと、SQLExceptionがスローされます。パラメータが設定されていないプレースホルダはSQL実行時にエラーの原因になります。",
+    "choices": [
+      {
+        "id": "se17g2_q048_a",
+        "text": "ResultSetをclose()で明示的に閉じていない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q048_b",
+        "text": "パラメータ(?)に値を設定せずにexecuteQuery()を呼んでいる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q048_c",
+        "text": "try-with-resourcesでPreparedStatementは使用できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q048_d",
+        "text": "executeQuery()ではなくexecute()を使うべきである",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q049",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいメソッドを選択してください。トランザクションを手動で管理する設定です。",
+    "code": "import java.sql.*;\n\npublic class Main {\n    public static void transfer(Connection conn) throws SQLException {\n        conn._____(false);\n        try {\n            // 口座Aから引き落とし\n            // 口座Bに入金\n            conn.commit();\n        } catch (SQLException e) {\n            conn.rollback();\n            throw e;\n        }\n    }\n}",
+    "explanation": "Connection.setAutoCommit(false)を呼ぶと、自動コミットが無効になり手動トランザクション管理が有効になります。デフォルトでは自動コミット(true)が有効で、各SQL文が個別にコミットされます。手動管理により、複数のSQL操作をまとめて1つのトランザクションとして実行でき、エラー時にrollback()で全操作を取り消せます。",
+    "choices": [
+      {
+        "id": "se17g2_q049_a",
+        "text": "setAutoCommit",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q049_b",
+        "text": "setTransaction",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q049_c",
+        "text": "beginTransaction",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q049_d",
+        "text": "setManualCommit",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q050",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行した時、ResultSetのカーソル操作に関する正しい説明はどれですか？",
+    "code": "import java.sql.*;\n\npublic class Main {\n    static void query(Connection conn) throws SQLException {\n        var stmt = conn.prepareStatement(\n            \"SELECT name FROM products\",\n            ResultSet.TYPE_SCROLL_INSENSITIVE,\n            ResultSet.CONCUR_READ_ONLY\n        );\n        var rs = stmt.executeQuery();\n        rs.afterLast();\n        while (rs.previous()) {\n            System.out.print(rs.getString(\"name\") + \" \");\n        }\n    }\n}",
+    "explanation": "TYPE_SCROLL_INSENSITIVEを指定するとスクロール可能なResultSetが作成され、previous()、absolute()、relative()等のカーソル移動メソッドが使用可能です。afterLast()はカーソルを最後の行の後に移動し、previous()で逆順に走査します。結果としてproductsテーブルの名前が逆順に出力されます。TYPE_FORWARD_ONLYの場合はprevious()を呼ぶとSQLExceptionがスローされます。",
+    "choices": [
+      {
+        "id": "se17g2_q050_a",
+        "text": "productsテーブルの名前が逆順で出力される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q050_b",
+        "text": "productsテーブルの名前が正順で出力される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q050_c",
+        "text": "SQLExceptionがスローされる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q050_d",
+        "text": "何も出力されない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q051",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "JDBC接続で使用されるDriverManager.getConnection()の引数として正しい形式はどれですか？",
+    "code": null,
+    "explanation": "JDBC接続URLはjdbc:サブプロトコル:サブネームの形式で指定します。例えばjdbc:mysql://localhost:3306/mydbやjdbc:h2:mem:testなどです。第2引数にユーザー名、第3引数にパスワードを指定するオーバーロードもあります。http://やdbc://ではなくjdbc:で始まる必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q051_a",
+        "text": "http://localhost:3306/mydb",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q051_b",
+        "text": "jdbc:mysql://localhost:3306/mydb",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q051_c",
+        "text": "dbc:mysql:localhost:3306:mydb",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q051_d",
+        "text": "mysql://jdbc@localhost:3306/mydb",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q052",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "JDBCのSavepoint機能の説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Savepointはトランザクション内の特定の地点をマークし、その地点までロールバックすることを可能にします。Connection.setSavepoint()で作成し、Connection.rollback(savepoint)でその地点まで戻れます。トランザクション全体をロールバックするのではなく、一部だけを取り消す場合に有用です。releaseSavepoint()でSavepointを解放できます。",
+    "choices": [
+      {
+        "id": "se17g2_q052_a",
+        "text": "トランザクション内の特定の地点まで部分的にロールバックできる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q052_b",
+        "text": "トランザクションの自動コミットポイントを設定する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q052_c",
+        "text": "データベースのバックアップポイントを作成する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q052_d",
+        "text": "複数のConnection間でトランザクションを共有する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q053",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "module-info.javaにおけるrequires transitiveの効果として正しいものはどれですか？",
+    "code": null,
+    "explanation": "requires transitive moduleXと宣言すると、このモジュールに依存するモジュールもmoduleXに対する読み取りアクセスを自動的に得ます。つまり推移的な依存関係が作られます。通常のrequiresでは直接依存するモジュールだけがアクセスを得ますが、transitiveを付けることで依存の連鎖が伝播します。",
+    "choices": [
+      {
+        "id": "se17g2_q053_a",
+        "text": "このモジュールのすべてのパッケージが自動的にexportされる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q053_b",
+        "text": "このモジュールに依存するモジュールも自動的に指定モジュールへのアクセスを得る",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q053_c",
+        "text": "実行時にのみ依存関係が解決される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q053_d",
+        "text": "モジュール間の循環依存を許可する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q054",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のモジュール構成の問題点はどれですか？",
+    "code": "// module-info.java (module A)\nmodule moduleA {\n    exports com.app.util;\n}\n\n// module-info.java (module B)\nmodule moduleB {\n    exports com.app.util;\n}",
+    "explanation": "Java Platform Module System（JPMS）では、同じパッケージ名を複数のモジュールからexportすることはスプリットパッケージと呼ばれ、禁止されています。com.app.utilパッケージがmoduleAとmoduleBの両方に存在すると、モジュール解決時にエラーが発生します。各パッケージは1つのモジュールにのみ属する必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q054_a",
+        "text": "同じパッケージが複数モジュールに存在するスプリットパッケージエラーが発生する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q054_b",
+        "text": "exportsに同じパッケージ名を使うことは構文的に問題ない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q054_c",
+        "text": "requires宣言がないためコンパイルエラーになる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q054_d",
+        "text": "モジュール名にmoduleプレフィックスは使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q055",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のmodule-info.javaの空欄に入る正しいキーワードを選択してください。サービスプロバイダを登録する宣言です。",
+    "code": "module myapp.provider {\n    requires myapp.api;\n    _____ myapp.api.MessageService with myapp.provider.EmailService;\n}",
+    "explanation": "provides...with構文はServiceLoaderパターンでサービスプロバイダを登録するために使用します。providesの後にサービスインタフェースを指定し、withの後に実装クラスを指定します。サービスを使用する側のモジュールではusesキーワードを使用します。",
+    "choices": [
+      {
+        "id": "se17g2_q055_a",
+        "text": "provides",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q055_b",
+        "text": "exports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q055_c",
+        "text": "uses",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q055_d",
+        "text": "opens",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q056",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "名前なしモジュール（Unnamed Module）の特徴として正しいものはどれですか？",
+    "code": null,
+    "explanation": "名前なしモジュールはクラスパス上に配置されたJARファイルやクラスが属するモジュールです。名前なしモジュールはすべてのモジュール（名前付きモジュールを含む）を読み取ることができますが、名前付きモジュールから名前なしモジュールへのrequiresは宣言できません。これはモジュール移行期の互換性のための仕組みです。",
+    "choices": [
+      {
+        "id": "se17g2_q056_a",
+        "text": "すべてのモジュールを読み取ることができる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q056_b",
+        "text": "他のモジュールから名前で参照して依存できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q056_c",
+        "text": "パッケージのエクスポート宣言が必要である",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q056_d",
+        "text": "module-info.javaファイルを含む必要がある",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q057",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "ServiceLoaderに関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "ServiceLoaderはサービスプロバイダ・インタフェース(SPI)パターンを実装するためのクラスです。モジュール環境ではmodule-info.javaのprovides...with宣言でプロバイダを登録し、uses宣言でサービスを使用することを示します。ServiceLoader.load()でサービスインスタンスを取得できます。プロバイダクラスには引数なしコンストラクタまたはpublic static provider()メソッドが必要です。",
+    "choices": [
+      {
+        "id": "se17g2_q057_a",
+        "text": "uses宣言はサービスを使用するモジュールのmodule-infoに記述する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q057_b",
+        "text": "provides...with宣言はサービスを使用する側のモジュールに記述する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q057_c",
+        "text": "ServiceLoader.load()は指定されたサービスの実装を検索して返す",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q057_d",
+        "text": "サービスプロバイダクラスはabstractでなければならない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q058",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "exports...to（限定エクスポート）の説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "exports package to module1, module2; は、指定されたパッケージを特定のモジュールのみに公開する限定エクスポートです。toで指定されていないモジュールからはそのパッケージの型にアクセスできません。これにより内部APIを特定のフレームワークやテストモジュールにのみ公開できます。opensも同様にto句で限定できます。",
+    "choices": [
+      {
+        "id": "se17g2_q058_a",
+        "text": "指定パッケージをすべてのモジュールに公開する",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q058_b",
+        "text": "指定パッケージを特定のモジュールのみに公開する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q058_c",
+        "text": "特定のクラスだけを公開する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q058_d",
+        "text": "リフレクションアクセスのみを許可する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q059",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "module-info.javaがないJARファイルをモジュールパスに配置した場合の動作として正しいものはどれですか？",
+    "code": null,
+    "explanation": "module-info.javaがないJARファイルをモジュールパスに配置すると自動モジュール（Automatic Module）として扱われます。自動モジュール名はJARファイル名から導出されるか、MANIFEST.MFのAutomatic-Module-Name属性から取得されます。自動モジュールはすべてのパッケージをexportし、すべてのモジュール（名前なしモジュールを含む）を読み取ります。",
+    "choices": [
+      {
+        "id": "se17g2_q059_a",
+        "text": "自動モジュールとして扱われ、すべてのパッケージがexportされる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q059_b",
+        "text": "モジュールとして認識されずエラーになる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q059_c",
+        "text": "名前なしモジュールとして扱われる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q059_d",
+        "text": "空のモジュールとして扱われパッケージは一切公開されない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q060",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "次のmodule-info.javaで、opens宣言の効果として正しいものはどれですか？",
+    "code": "module myapp {\n    exports com.myapp.api;\n    opens com.myapp.internal;\n}",
+    "explanation": "exportsはコンパイル時と実行時のアクセスを許可します。opensはリフレクションによる実行時アクセスを許可しますが、コンパイル時の直接参照は許可しません。com.myapp.internalパッケージはリフレクション（例えばJacksonやHibernateなどのフレームワーク）からアクセス可能ですが、他のモジュールから直接importして使用することはできません。",
+    "choices": [
+      {
+        "id": "se17g2_q060_a",
+        "text": "com.myapp.internalはコンパイル時にも実行時にもアクセスできる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q060_b",
+        "text": "com.myapp.internalはリフレクション経由でのみ実行時にアクセスできる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q060_c",
+        "text": "com.myapp.internalは一切外部からアクセスできない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q060_d",
+        "text": "opensとexportsはまったく同じ効果を持つ",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q061",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "@Repeatableアノテーションを使用するための正しい手順はどれですか？",
+    "code": null,
+    "explanation": "@Repeatableを使用するには、(1)繰り返し可能にするアノテーションに@Repeatable(ContainerAnnotation.class)を付与し、(2)コンテナアノテーションを定義して、繰り返し可能なアノテーションの配列を返すvalue()メソッドを持たせます。コンテナアノテーションは自動的にコンパイラが適用するため、同じアノテーションを同じ要素に複数回付与できます。",
+    "choices": [
+      {
+        "id": "se17g2_q061_a",
+        "text": "@Repeatableアノテーションを付けるだけでコンテナアノテーションは不要",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q061_b",
+        "text": "繰り返し可能アノテーションに@Repeatableを付け、コンテナアノテーションにvalue()メソッドを定義する",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q061_c",
+        "text": "コンテナアノテーションに@Repeatableを付ける",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q061_d",
+        "text": "@Repeatableは同じターゲットの場合のみ使用可能でクラスには付けられない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q062",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードの問題点はどれですか？",
+    "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.SOURCE)\n@interface MyAnnotation {\n    String value();\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        var annot = Main.class.getAnnotation(MyAnnotation.class);\n        System.out.println(annot);\n    }\n}",
+    "explanation": "コード自体はコンパイルエラーにはなりませんが、論理的な問題があります。RetentionPolicy.SOURCEはアノテーション情報がコンパイル後に破棄されることを意味します。そのため実行時にリフレクションでgetAnnotation()を呼んでも常にnullが返されます。実行時にアノテーション情報を取得するにはRetentionPolicy.RUNTIMEを指定する必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q062_a",
+        "text": "RetentionPolicy.SOURCEのアノテーションは実行時に取得できずnullが返される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q062_b",
+        "text": "value()メソッドにdefault値がないためコンパイルエラー",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q062_c",
+        "text": "@interfaceの宣言にpublicが必要",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q062_d",
+        "text": "getAnnotation()はClass以外のオブジェクトにしか使えない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q063",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@interface Config {\n    String name() default \"default\";\n    int version() default 1;\n}\n\n@Config(name = \"MyApp\", version = 3)\npublic class Main {\n    public static void main(String[] args) {\n        Config config = Main.class.getAnnotation(Config.class);\n        System.out.println(config.name() + \" v\" + config.version());\n    }\n}",
+    "explanation": "RetentionPolicy.RUNTIMEが指定されているため、実行時にリフレクションでアノテーション情報を取得できます。@Config(name = \"MyApp\", version = 3)が付与されているので、config.name()は\"MyApp\"、config.version()は3を返します。出力は\"MyApp v3\"になります。",
+    "choices": [
+      {
+        "id": "se17g2_q063_a",
+        "text": "default v1",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q063_b",
+        "text": "MyApp v3",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q063_c",
+        "text": "NullPointerException",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q063_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q064",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "アノテーションの要素型として使用できるものはどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "アノテーションの要素型として使用可能なのは、プリミティブ型、String、Class、enum、アノテーション型、およびこれらの1次元配列です。List<String>のようなジェネリックコレクション型、一般的なオブジェクト型（例: Object）、Map型などは使用できません。",
+    "choices": [
+      {
+        "id": "se17g2_q064_a",
+        "text": "String",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q064_b",
+        "text": "List<String>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q064_c",
+        "text": "enum型",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q064_d",
+        "text": "Object",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q065",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "@Inheritedメタアノテーションの効果として正しいものはどれですか？",
+    "code": null,
+    "explanation": "@Inheritedを付与したアノテーションがクラスに付けられた場合、そのサブクラスにも自動的に継承されます。ただし、@Inheritedはクラスへのアノテーションにのみ効果があり、メソッドやフィールドへのアノテーションには効果がありません。また、インタフェースのアノテーションは実装クラスには継承されません。",
+    "choices": [
+      {
+        "id": "se17g2_q065_a",
+        "text": "クラスに付けられたアノテーションがサブクラスに自動的に継承される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q065_b",
+        "text": "メソッドのアノテーションがオーバーライドしたメソッドに継承される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q065_c",
+        "text": "インタフェースのアノテーションが実装クラスに継承される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q065_d",
+        "text": "すべてのターゲット要素でアノテーションが継承される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q066",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "次のアノテーションの定義で、@Target(ElementType.TYPE_USE)の効果として正しいものはどれですか？",
+    "code": "import java.lang.annotation.*;\n\n@Target(ElementType.TYPE_USE)\n@Retention(RetentionPolicy.RUNTIME)\n@interface NonNull {}",
+    "explanation": "ElementType.TYPE_USEはJava 8で追加されたターゲットで、型が使用されるすべての場所にアノテーションを付与できます。変数宣言、ジェネリック型引数（List<@NonNull String>）、キャスト（(@NonNull String) obj）、instanceof、throws句など広範囲で使用可能です。従来のElementType.TYPEはクラス/インタフェース宣言のみが対象です。",
+    "choices": [
+      {
+        "id": "se17g2_q066_a",
+        "text": "クラス宣言にのみ付与できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q066_b",
+        "text": "型が使用されるすべての箇所（ジェネリック引数、キャスト等）に付与できる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q066_c",
+        "text": "メソッドの戻り値型にのみ付与できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q066_d",
+        "text": "ローカル変数にのみ付与できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q067",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "ResourceBundleの検索順序（フォールバックチェーン）として正しいものはどれですか？ロケールがja_JPの場合、プロパティファイルベースのResourceBundleの検索順序はどうなりますか？",
+    "code": null,
+    "explanation": "ResourceBundleはまず最も具体的なロケールから検索し、見つからない場合はより一般的なロケールにフォールバックします。ja_JPの場合：Messages_ja_JP.properties → Messages_ja.properties → Messages.properties（デフォルト）の順に検索されます。いずれも見つからない場合はMissingResourceExceptionがスローされます。",
+    "choices": [
+      {
+        "id": "se17g2_q067_a",
+        "text": "Messages.properties → Messages_ja.properties → Messages_ja_JP.properties",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q067_b",
+        "text": "Messages_ja_JP.properties → Messages_ja.properties → Messages.properties",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q067_c",
+        "text": "Messages_ja.properties → Messages_ja_JP.properties → Messages.properties",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q067_d",
+        "text": "Messages_ja_JP.properties のみ検索される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q068",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "import java.time.*;\nimport java.time.format.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var dt = LocalDateTime.of(2024, 3, 15, 14, 30, 0);\n        var fmt = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\n        System.out.println(dt.format(fmt));\n    }\n}",
+    "explanation": "DateTimeFormatter.ofPattern()でカスタムパターンを指定してフォーマットします。yyyyは4桁年、MMは2桁月、ddは2桁日、HHは24時間制の時、mmは分を表します。LocalDateTime.of(2024, 3, 15, 14, 30, 0)は2024年3月15日14時30分0秒なので、\"2024/03/15 14:30\"が出力されます。",
+    "choices": [
+      {
+        "id": "se17g2_q068_a",
+        "text": "2024-03-15 14:30",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q068_b",
+        "text": "2024/03/15 14:30",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q068_c",
+        "text": "2024/3/15 2:30",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q068_d",
+        "text": "15/03/2024 14:30",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q069",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "次のコードの空欄に入る正しいコードを選択してください。日本のロケールで通貨形式にフォーマットします。",
+    "code": "import java.text.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        double price = 1500.0;\n        NumberFormat nf = NumberFormat._____(Locale.JAPAN);\n        System.out.println(nf.format(price)); // ￥1,500\n    }\n}",
+    "explanation": "NumberFormat.getCurrencyInstance(Locale)は指定されたロケールの通貨フォーマットを返します。Locale.JAPANを指定すると日本円の形式（￥1,500）でフォーマットされます。getInstance()は汎用的な数値フォーマット、getPercentInstance()はパーセント形式を返します。",
+    "choices": [
+      {
+        "id": "se17g2_q069_a",
+        "text": "getCurrencyInstance",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q069_b",
+        "text": "getInstance",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q069_c",
+        "text": "getNumberInstance",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q069_d",
+        "text": "getMoneyInstance",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q070",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Locale.Builder の説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "Locale.Builderはビルダーパターンを使用してLocaleオブジェクトを構築します。setLanguage()、setRegion()、setVariant()、setScript()等を連鎖的に呼んでbuild()で完成させます。new Locale()コンストラクタは旧APIで、BCP47タグの完全なサポートにはBuilderが推奨されます。不正な値が設定されるとbuild()時にIllFormedLocaleExceptionがスローされます。",
+    "choices": [
+      {
+        "id": "se17g2_q070_a",
+        "text": "setLanguage()やsetRegion()を使用してLocaleを構築できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q070_b",
+        "text": "Locale.Builderは静的メソッドのみを持つユーティリティクラスである",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q070_c",
+        "text": "build()を呼ばなくても部分的なLocaleオブジェクトが取得される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q070_d",
+        "text": "Java 17で非推奨となりLocale.of()に置き換えられた",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q071",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードを実行するとどうなりますか？",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ResourceBundle rb = ResourceBundle.getBundle(\"Messages\", Locale.JAPAN);\n        String greeting = rb.getString(\"nonexistent.key\");\n        System.out.println(greeting);\n    }\n}",
+    "explanation": "ResourceBundle.getString()は指定されたキーに対応する文字列を返しますが、キーが存在しない場合はjava.util.MissingResourceExceptionをスローします。nullを返すのではなく例外がスローされることに注意が必要です。キーが存在するかどうかをcontainsKey()で事前に確認することが推奨されます。",
+    "choices": [
+      {
+        "id": "se17g2_q071_a",
+        "text": "nullが出力される",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q071_b",
+        "text": "空文字列が出力される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q071_c",
+        "text": "MissingResourceExceptionがスローされる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q071_d",
+        "text": "\"nonexistent.key\"がそのまま出力される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q072",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)にLocale.JAPANを指定した場合のフォーマットとして最も近いものはどれですか？",
+    "code": null,
+    "explanation": "FormatStyle.FULLは最も詳細な日付フォーマットです。日本語ロケールの場合、\"2024年3月15日金曜日\"のように年月日と曜日が漢字で表示されます。FormatStyle.SHORTは\"2024/03/15\"、MEDIUMは\"2024/03/15\"、LONGは\"2024年3月15日\"のような形式です。ロケールによりフォーマットが自動的に適切な形式に変わります。",
+    "choices": [
+      {
+        "id": "se17g2_q072_a",
+        "text": "2024/03/15",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q072_b",
+        "text": "2024年3月15日金曜日",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q072_c",
+        "text": "March 15, 2024",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q072_d",
+        "text": "15-Mar-2024",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q073",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "sealed クラスの permits 句に関する説明として正しいものはどれですか？",
+    "code": null,
+    "explanation": "sealedクラスのpermits句は継承を許可するサブクラスを明示的に列挙します。permits句を省略できるのは、許可されるサブクラスがすべて同じコンパイル単位（同じファイル）内に定義されている場合です。permitsで指定された各サブクラスは、final、sealed、またはnon-sealedのいずれかの修飾子を付ける必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q073_a",
+        "text": "permits句はabstractクラスにのみ使用できる",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q073_b",
+        "text": "permitsで指定されたサブクラスはfinal、sealed、non-sealedのいずれかでなければならない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q073_c",
+        "text": "permits句は省略できず、必ず明示的にサブクラスを列挙しなければならない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q073_d",
+        "text": "permitsで指定されたサブクラスは別のパッケージに定義できる（Java 17）",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q074",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    sealed interface Shape permits Circle, Rectangle {}\n    record Circle(double radius) implements Shape {}\n    record Rectangle(double width, double height) implements Shape {}\n\n    static double area(Shape shape) {\n        if (shape instanceof Circle c) {\n            return Math.PI * c.radius() * c.radius();\n        } else if (shape instanceof Rectangle r) {\n            return r.width() * r.height();\n        }\n        throw new IllegalArgumentException();\n    }\n\n    public static void main(String[] args) {\n        System.out.printf(\"%.1f%n\", area(new Rectangle(3, 4)));\n    }\n}",
+    "explanation": "Rectangleレコードは自動的にwidth()とheight()アクセサメソッドを持ちます。area()メソッドでshapeがRectangleのインスタンスかチェックし、パターン変数rにキャストします。r.width() * r.height()は3 * 4 = 12.0です。printf(\"%.1f%n\", 12.0)は小数点以下1桁で\"12.0\"を出力します。recordはsealedインタフェースのpermitsに暗黙的にfinalとして参加できます。",
+    "choices": [
+      {
+        "id": "se17g2_q074_a",
+        "text": "12.0",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q074_b",
+        "text": "12",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q074_c",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q074_d",
+        "text": "IllegalArgumentException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q075",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "次のコードにおけるnon-sealed修飾子の効果として正しいものはどれですか？",
+    "code": "sealed class Vehicle permits Car, Truck {}\nfinal class Car extends Vehicle {}\nnon-sealed class Truck extends Vehicle {}",
+    "explanation": "non-sealed修飾子はsealedクラスのサブクラスに付けることで、そのサブクラスからの継承制限を解除します。Truckクラスはnon-sealedなので、任意のクラスがTruckを自由に継承できます。一方、CarはfinalなのでCarを継承するクラスは作成できません。non-sealedによりsealed階層の一部で開放的な継承が可能になります。",
+    "choices": [
+      {
+        "id": "se17g2_q075_a",
+        "text": "Truckクラスを継承するクラスは作成できない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q075_b",
+        "text": "任意のクラスがTruckを自由に継承できるようになる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q075_c",
+        "text": "Truckクラスはインスタンス化できなくなる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q075_d",
+        "text": "VehicleのsealedがTruckの子階層にも引き継がれる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q076",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "sealedインタフェースに関する正しい説明はどれですか？（2つ選択）",
+    "code": null,
+    "explanation": "sealedインタフェースはクラスと同様にpermits句で実装を許可する型を制限できます。permits句で指定された型はクラス、レコード、インタフェース（sealed/non-sealed）のいずれかです。レコードは暗黙的にfinalであるため、sealedインタフェースの直接の実装型として使用できます。enumはsealedインタフェースを実装できますが、permits句に列挙する必要があります。",
+    "choices": [
+      {
+        "id": "se17g2_q076_a",
+        "text": "recordはsealedインタフェースの許可された実装型として使用できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q076_b",
+        "text": "sealedインタフェースはabstractメソッドを持つことができない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q076_c",
+        "text": "permits句に指定されたインタフェースはsealed、non-sealed、finalのいずれかでなければならない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q076_d",
+        "text": "sealedインタフェースのpermits句にはクラスとレコードと別のインタフェースを混在させられる",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q077",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Java 17のswitch式でのパターンマッチング（プレビュー機能）に関する正しい説明はどれですか？",
+    "code": null,
+    "explanation": "Java 17ではswitch式でのパターンマッチングがプレビュー機能として導入されました。caseラベルに型パターン（case Integer i）を使用でき、instanceof check とキャストを同時に行えます。ガード条件（when句）は後のバージョンで追加されましたが、Java 17プレビューでは&&を使った条件付きパターンがサポートされていました。sealedクラスとの組み合わせで網羅性チェックも可能です。",
+    "choices": [
+      {
+        "id": "se17g2_q077_a",
+        "text": "caseラベルに型パターンを使用してinstanceofとキャストを同時に行える",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q077_b",
+        "text": "switch式でのパターンマッチングはJava 17で正式機能として確定した",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q077_c",
+        "text": "nullケースをswitchで扱うことはできない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q077_d",
+        "text": "パターンマッチングはswitch文では使えずswitch式でのみ使用可能",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q078",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードの問題点はどれですか？",
+    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat {}\n    final class Dog implements Animal {\n        String name() { return \"Dog\"; }\n    }\n    final class Cat implements Animal {\n        String name() { return \"Cat\"; }\n    }\n\n    static String identify(Animal animal) {\n        if (animal instanceof Dog d) {\n            return d.name();\n        }\n        // Cat の場合の処理がない\n        return \"Unknown\";\n    }\n}",
+    "explanation": "コード自体はコンパイルエラーにはなりません。しかし論理的な問題があります。AnimalはsealedインタフェースでDogとCatのみが許可されています。identifyメソッドではDogのケースのみを処理し、Catの場合は\"Unknown\"を返します。コンパイラは通常のif-elseではsealedの網羅性チェックを行いません（switch式のパターンマッチングでは行われます）。このコードは\"Unknown\"を返すため正常に動作しますが、Catに対する適切な処理が欠落しています。",
+    "choices": [
+      {
+        "id": "se17g2_q078_a",
+        "text": "sealedインタフェースの全サブタイプを処理していないためコンパイルエラー",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q078_b",
+        "text": "コンパイルは通るがCatケースが処理されず\"Unknown\"が返される論理エラー",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q078_c",
+        "text": "instanceof パターンマッチングはsealedインタフェースで使用できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q078_d",
+        "text": "finalクラスにはinstanceofを使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q079",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Java 16で正式化されたinstanceofパターンマッチングで定義されたパターン変数のスコープに関する正しい説明はどれですか？",
+    "code": null,
+    "explanation": "instanceofパターンマッチングのパターン変数はフロースコープ（flow scoping）を持ちます。変数は、instanceofがtrueになることが確実な場所でのみスコープ内にあります。例えば if (obj instanceof String s) のブロック内ではsが使えますが、elseブロックでは使えません。また if (!(obj instanceof String s)) return; の後ではsが使えます。",
+    "choices": [
+      {
+        "id": "se17g2_q079_a",
+        "text": "パターン変数はメソッド全体でスコープを持つ",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q079_b",
+        "text": "パターン変数はinstanceofがtrueと確定するフロー内でのみ有効",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q079_c",
+        "text": "パターン変数はif文のブロック外でも常に使用可能",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q079_d",
+        "text": "パターン変数は宣言されたif文が終わった直後に無効になる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q080",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "このコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object obj = \"Hello, Java 17!\";\n        if (obj instanceof String s && s.length() > 5) {\n            System.out.println(s.toUpperCase());\n        } else {\n            System.out.println(\"short\");\n        }\n    }\n}",
+    "explanation": "objはString型の\"Hello, Java 17!\"です。instanceof String sでパターンマッチングが行われ、sに\"Hello, Java 17!\"がバインドされます。&&の右辺でs.length() > 5を評価し、文字列の長さは15なので条件はtrueです。s.toUpperCase()で\"HELLO, JAVA 17!\"が出力されます。&&演算子の短絡評価により、instanceofがfalseの場合はs.length()は評価されません。",
+    "choices": [
+      {
+        "id": "se17g2_q080_a",
+        "text": "Hello, Java 17!",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q080_b",
+        "text": "HELLO, JAVA 17!",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q080_c",
+        "text": "short",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q080_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "hard"
+  }
+]

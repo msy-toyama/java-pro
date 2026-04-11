@@ -1,0 +1,561 @@
+{
+  "courseId": "ch31",
+  "lessons": [
+    {
+      "id": "ch31_01",
+      "courseId": "ch31",
+      "title": "Locale",
+      "summary": "java.util.Localeクラスの基本的な使い方とLocale定数、Locale.Builderについて学習します。",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "overview",
+          "title": "Localeとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**Locale** クラスの役割（言語・地域の設定）\n・Locale の生成方法（コンストラクタ、定数、ビルダー）\n・Locale.getDefault() とシステムロケール\n\n**国際化**対応の第一歩はロケールの理解から始まります。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "rule",
+          "title": "Locale定数",
+          "body": "Localeクラスには、よく使う地域を表す定数が用意されています。\n**Locale**.JAPANは日本（言語: ja, 国: JP）を表します。\nLocale.USはアメリカ（言語: en, 国: US）を表します。\nLocale.JAPANESEは日本語という言語のみを表し、国情報は含みません。\nLocale.ENGLISHも同様に英語という言語のみを表します。\n言語のみのLocaleと言語+国のLocaleの違いを理解することが重要です。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "code",
+          "title": "Localeの生成方法",
+          "body": "Localeオブジェクトの生成にはいくつかの方法があります。\n定数を使う方法が最もシンプルです。\nコンストラクタを使う方法もありますが、非推奨になりつつあります。\n**Locale**.Builderを使う方法が推奨されています。",
+          "code": "// 定数を使用\nLocale japan = Locale.JAPAN;\nLocale us = Locale.US;\n\n// コンストラクタ（非推奨になりつつある）\nLocale france = new Locale(\"fr\", \"FR\");\n\n// Locale.Builder（推奨）\nLocale germany = new Locale.Builder()\n    .setLanguage(\"de\")\n    .setRegion(\"DE\")\n    .build();\n\nSystem.out.println(japan); // ja_JP\nSystem.out.println(germany); // de_DE",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "point",
+          "title": "Locale.Builderの特徴",
+          "body": "**Locale**.Builderはビルダーパターンで安全にLocaleを生成できます。\nsetLanguage()で言語コード（ISO 639）を、setRegion()で国コード（ISO 3166）を設定します。\n不正な値を設定するとIllFormedLocaleExceptionがスローされます。\nbuild()メソッドで最終的なLocaleオブジェクトが生成されます。\nLocale.Builderはメソッドチェーンで記述でき、可読性が高いのが特徴です。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "tip",
+          "title": "デフォルトLocaleの取得と設定",
+          "body": "**Locale**.getDefault()で現在のデフォルトLocaleを取得できます。\nLocale.setDefault(Locale)でデフォルトLocaleを変更できます。\nデフォルトLocaleの変更はJVM全体に影響するため、注意が必要です。\n試験では、デフォルトLocaleの変更が他の処理にどう影響するかが問われることがあります。",
+          "code": null,
+          "note": "**Locale**.setDefault()はstaticメソッドであり、JVM全体に影響します。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch31_01_q1",
+          "lessonId": "ch31_01",
+          "type": "fourChoice",
+          "question": "Locale.JAPANが表す言語コードと国コードの組み合わせとして正しいものはどれですか？",
+          "code": "Locale locale = Locale.of(\"ja\", \"JP\");\nResourceBundle rb = ResourceBundle.getBundle(\n    \"messages\", locale);\nString greeting = rb.getString(\"hello\");",
+          "explanation": "Locale.JAPANは言語コード\"ja\"と国コード\"JP\"の組み合わせです。Locale.JAPANESEは言語コード\"ja\"のみで国コードを持ちません。",
+          "choices": [
+            {
+              "id": "ch31_01_q1_a",
+              "text": "言語: ja, 国: JP",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_01_q1_b",
+              "text": "言語: jp, 国: JA",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_01_q1_c",
+              "text": "言語: ja, 国: なし",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_01_q1_d",
+              "text": "言語: japan, 国: JAPAN",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch31_01_q2",
+          "lessonId": "ch31_01",
+          "type": "fourChoice",
+          "question": "Locale.Builderで不正な言語コードを設定した場合にスローされる例外はどれですか？",
+          "code": "NumberFormat nf = NumberFormat\n    .getCurrencyInstance(Locale.JAPAN);\nString price = nf.format(1500);\n// ¥1,500",
+          "explanation": "Locale.Builderに不正な値を設定するとIllFormedLocaleExceptionがスローされます。これはLocaleを安全に構築するための仕組みです。",
+          "choices": [
+            {
+              "id": "ch31_01_q2_a",
+              "text": "IllFormedLocaleException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_01_q2_b",
+              "text": "IllegalArgumentException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_01_q2_c",
+              "text": "LocaleException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_01_q2_d",
+              "text": "UnsupportedLocaleException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch31_01_q3",
+          "lessonId": "ch31_01",
+          "type": "fillBlank",
+          "question": "JVM全体のデフォルトLocaleを日本に設定するコードを完成させてください。\nLocale._____(Locale.JAPAN);",
+          "code": "DateTimeFormatter dtf = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nString date = LocalDate.now().format(dtf);",
+          "explanation": "Locale.setDefault()はstaticメソッドで、JVM全体のデフォルトLocaleを変更します。引数にLocaleオブジェクトを渡します。",
+          "choices": [
+            {
+              "id": "ch31_01_q3_a",
+              "text": "setDefault",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_01_q3_b",
+              "text": "setLocale",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_01_q3_c",
+              "text": "changeDefault",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_01_q3_d",
+              "text": "applyLocale",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch31_02",
+      "courseId": "ch31",
+      "title": "ResourceBundle",
+      "summary": "プロパティファイルを使った国際化とResourceBundleの仕組み、フォールバックチェーンを学びます。",
+      "estimatedMinutes": 7,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "overview",
+          "title": "ResourceBundleとは",
+          "body": "このレッスンでは以下を学びます:\n\n・**ResourceBundle** でロケールごとのメッセージを管理\n・プロパティファイルの命名規則（basename_ja_JP.properties）\n・ResourceBundleの探索順序\n\n多言語対応の実装方法を学びます。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "rule",
+          "title": "プロパティファイルの命名規則",
+          "body": "プロパティファイルはベース名_言語コード_国コード.propertiesの形式で命名します。\n例えば、messages.propertiesがデフォルト、messages_ja.propertiesが日本語用です。\nmessages_ja_JP.propertiesは日本語（日本）用のファイルです。\nファイルはクラスパス上に配置する必要があります。\nベース名のみのファイル（messages.properties）はデフォルトバンドルとして機能します。",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "code",
+          "title": "ResourceBundleの使い方",
+          "body": "**ResourceBundle**.getBundle()でバンドルを取得し、getString()でキーに対応する値を取得します。\ngetBundle()にはベース名とLocaleを渡します。\nLocaleを省略するとデフォルトLocaleが使用されます。",
+          "code": "// messages_ja.properties:\n// greeting=こんにちは\n// farewell=さようなら\n\n// messages_en.properties:\n// greeting=Hello\n// farewell=Goodbye\n\nLocale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nString greeting = bundle.getString(\"greeting\");\nSystem.out.println(greeting); // こんにちは\n\nResourceBundle enBundle = ResourceBundle.getBundle(\"messages\", Locale.US);\nSystem.out.println(enBundle.getString(\"greeting\")); // Hello",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "point",
+          "title": "フォールバックチェーン",
+          "body": "ResourceBundleは指定されたロケールに完全一致するファイルがない場合、フォールバックします。\n例えばLocale(\"fr\", \"CA\")の場合、以下の順序で検索されます。\n1. messages_fr_CA.properties\n2. messages_fr.properties\n3. messages.properties（デフォルトバンドル）\nデフォルトバンドルも見つからない場合、MissingResourceExceptionがスローされます。\nキーが見つからない場合もMissingResourceExceptionがスローされます。",
+          "code": null,
+          "note": "デフォルトLocaleが設定されている場合、フォールバックチェーンにデフォルトLocale用のバンドルも含まれます。",
+          "order": 4
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "tip",
+          "title": "ResourceBundleの便利メソッド",
+          "body": "keySet()でバンドル内のすべてのキーをSet<String>として取得できます。\ncontainsKey()で特定のキーが存在するかを確認できます。\ngetBaseBundleName()でバンドルのベース名を取得できます。\nこれらのメソッドは試験でも頻出です。",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch31_02_q1",
+          "lessonId": "ch31_02",
+          "type": "fourChoice",
+          "question": "ResourceBundle.getBundle(\"app\", new Locale(\"fr\", \"CA\"))を実行した場合、最初に検索されるプロパティファイルはどれですか？",
+          "code": "Locale locale = Locale.of(\"ja\", \"JP\");\nResourceBundle rb = ResourceBundle.getBundle(\n    \"messages\", locale);\nString greeting = rb.getString(\"hello\");",
+          "explanation": "フォールバックチェーンでは、最も具体的なロケール（言語+国）のファイルが最初に検索されます。したがって、app_fr_CA.propertiesが最初に探されます。",
+          "choices": [
+            {
+              "id": "ch31_02_q1_a",
+              "text": "app_fr_CA.properties",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_02_q1_b",
+              "text": "app_fr.properties",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_02_q1_c",
+              "text": "app.properties",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_02_q1_d",
+              "text": "app_CA.properties",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch31_02_q2",
+          "lessonId": "ch31_02",
+          "type": "outputPredict",
+          "question": "以下のコードの出力結果を選んでください。\n\nmessages_ja.propertiesにはgreeting=こんにちはが定義されています。\nmessages.propertiesにはgreeting=Helloとfarewell=Goodbyeが定義されています。",
+          "code": "Locale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nSystem.out.println(bundle.getString(\"farewell\"));",
+          "explanation": "messages_ja.propertiesにfarewellキーがないため、フォールバックしてデフォルトのmessages.propertiesからGoodbyeが取得されます。キーの検索は親バンドルにフォールバックします。",
+          "choices": [
+            {
+              "id": "ch31_02_q2_a",
+              "text": "Goodbye",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_02_q2_b",
+              "text": "MissingResourceExceptionがスローされる",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_02_q2_c",
+              "text": "null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_02_q2_d",
+              "text": "こんにちは",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch31_02_q3",
+          "lessonId": "ch31_02",
+          "type": "fillBlank",
+          "question": "ResourceBundleからキーに対応する文字列を取得するメソッド名を答えてください。\nbundle._____(\"greeting\");",
+          "code": "NumberFormat nf = NumberFormat\n    .getCurrencyInstance(Locale.JAPAN);\nString price = nf.format(1500);\n// ¥1,500",
+          "explanation": "ResourceBundleのgetString()メソッドは、指定されたキーに対応する文字列を返します。キーが存在しない場合はMissingResourceExceptionがスローされます。",
+          "choices": [
+            {
+              "id": "ch31_02_q3_a",
+              "text": "getString",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_02_q3_b",
+              "text": "getValue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_02_q3_c",
+              "text": "get",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_02_q3_d",
+              "text": "getProperty",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch31_02_q4",
+          "lessonId": "ch31_02",
+          "type": "codeComplete",
+          "question": "ResourceBundleでロケール対応するコードを完成させてください。",
+          "code": "DateTimeFormatter dtf = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nString date = LocalDate.now().format(dtf);",
+          "explanation": "Locale.JAPANで日本ロケールを取得し、ResourceBundle.getBundle()でプロパティファイルを読み込みます。",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Locale locale = Locale.__BLANK_1__;\nResourceBundle bundle = ResourceBundle.__BLANK_2__(\"messages\", locale);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①ロケール",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "JAPAN",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "JP",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "JAPANESE",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②取得",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "getBundle",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "load",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "open",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch31_03",
+      "courseId": "ch31",
+      "title": "NumberFormatとDateFormat",
+      "summary": "ロケールに応じた数値や通貨、日付のフォーマット方法を学びます。",
+      "estimatedMinutes": 7,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "overview",
+          "title": "ロケール対応のフォーマット",
+          "body": "このレッスンでは以下を学びます:\n\n・NumberFormat, DecimalFormat で数値をロケール依存でフォーマット\n・DateTimeFormatterのロケール対応\n・通貨フォーマットの**国際化**\n\nロケールに応じた適切な表示形式を実現します。",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "code",
+          "title": "NumberFormatの使い方",
+          "body": "NumberFormat.getInstance()でロケール対応の数値フォーマッタを取得します。\ngetCurrencyInstance()で通貨フォーマッタを取得できます。\nformat()メソッドで数値を文字列に変換し、parse()で文字列を数値に戻します。",
+          "code": "import java.text.NumberFormat;\nimport java.util.Locale;\n\n// 変数の宣言と初期化\ndouble amount = 1234567.89;\n\nNumberFormat nfJP = NumberFormat.getInstance(Locale.JAPAN);\nSystem.out.println(nfJP.format(amount)); // 1,234,567.89\n\nNumberFormat nfDE = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nfDE.format(amount)); // 1.234.567,89\n\nNumberFormat cfJP = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nSystem.out.println(cfJP.format(amount)); // ￥1,234,568\n\nNumberFormat cfUS = NumberFormat.getCurrencyInstance(Locale.US);\nSystem.out.println(cfUS.format(amount)); // $1,234,567.89",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 2
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "code",
+          "title": "DateTimeFormatterとLocale",
+          "body": "DateTimeFormatterのofLocalizedDate()やofLocalizedDateTime()はロケール対応のフォーマッタを生成します。\nwithLocale()メソッドでLocaleを指定します。\nFormatStyleで表示スタイル（FULL, LONG, MEDIUM, SHORT）を指定できます。",
+          "code": "import java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.FormatStyle;\nimport java.util.Locale;\n\nLocalDate date = LocalDate.of(2025, 4, 1);\n\nDateTimeFormatter fmtJP = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nSystem.out.println(date.format(fmtJP));\n// 2025年4月1日火曜日\n\nDateTimeFormatter fmtUS = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.US);\nSystem.out.println(date.format(fmtUS));\n// Tuesday, April 1, 2025",
+          "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
+          "order": 3
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "point",
+          "title": "NumberFormatの注意点",
+          "body": "NumberFormatのparse()メソッドはParseExceptionをスローする可能性があります。\nparse()はチェック例外なので、try-catchまたはthrowsで処理が必要です。\ngetCurrencyInstance()で通貨をフォーマットすると、ロケールに応じた通貨記号が付きます。\n日本円の場合は小数点以下が切り捨てられ、ドルの場合は小数点以下2桁が表示されます。\nNumberFormatはabstractクラスであり、new NumberFormat()ではインスタンスを生成できません。",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "tip",
+          "title": "試験対策のポイント",
+          "body": "試験では、ロケールごとの小数点区切りや桁区切りの違いが問われます。\n日本・アメリカはカンマが桁区切り、ピリオドが小数点です。\nドイツ・フランスはピリオドが桁区切り、カンマが小数点です。\nまた、NumberFormat.getInstance()の引数を省略するとデフォルトLocaleが使われる点も重要です。",
+          "code": null,
+          "note": "CompactNumberFormatはJava 12以降で利用可能です。試験範囲を確認しましょう。",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch31_03_q1",
+          "lessonId": "ch31_03",
+          "type": "outputPredict",
+          "question": "以下のコードの出力結果を選んでください。",
+          "code": "NumberFormat nf = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nf.format(1234.56));",
+          "explanation": "ドイツのロケールでは、桁区切りにピリオド、小数点にカンマを使用します。そのため、1234.56は「1.234,56」と表示されます。",
+          "choices": [
+            {
+              "id": "ch31_03_q1_a",
+              "text": "1.234,56",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_03_q1_b",
+              "text": "1,234.56",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_03_q1_c",
+              "text": "1234.56",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_03_q1_d",
+              "text": "1234,56",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch31_03_q2",
+          "lessonId": "ch31_03",
+          "type": "fourChoice",
+          "question": "NumberFormatのインスタンスを生成する方法として正しいものはどれですか？",
+          "code": null,
+          "explanation": "NumberFormatはabstractクラスなので、newキーワードでインスタンスを生成できません。ファクトリメソッドであるgetInstance()やgetCurrencyInstance()を使用します。",
+          "choices": [
+            {
+              "id": "ch31_03_q2_a",
+              "text": "NumberFormat.getInstance(Locale.US)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_03_q2_b",
+              "text": "new NumberFormat(Locale.US)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_03_q2_c",
+              "text": "NumberFormat.of(Locale.US)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_03_q2_d",
+              "text": "NumberFormat.create(Locale.US)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch31_03_q3",
+          "lessonId": "ch31_03",
+          "type": "errorFind",
+          "question": "以下のコードにはコンパイルエラーがあります。エラーの原因はどれですか？",
+          "code": "NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nString result = nf.format(1000);\nNumber num = nf.parse(result);",
+          "explanation": "NumberFormatのparse()メソッドはチェック例外であるParseExceptionをスローする可能性があります。try-catchで囲むか、メソッドシグネチャにthrows宣言を追加する必要があります。",
+          "choices": [
+            {
+              "id": "ch31_03_q3_a",
+              "text": "parse()のParseExceptionが処理されていない",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_03_q3_b",
+              "text": "getCurrencyInstance()の引数が不正",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_03_q3_c",
+              "text": "format()にint型を渡せない",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_03_q3_d",
+              "text": "parse()の戻り値をNumber型で受け取れない",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}
