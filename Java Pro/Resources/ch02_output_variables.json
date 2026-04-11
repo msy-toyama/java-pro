@@ -922,7 +922,7 @@
           "sectionType": "code",
           "title": "文字列の連結",
           "body": "+ 演算子で文字列を結合できます。",
-          "code": "// 変数の宣言と初期化\nString first = \"Java\";\nString second = \"Pro\";\nString app = first + \" \" + second;\nSystem.out.println(app);  // Java Pro\n\n// 数値と文字列の結合\nint age = 20;\nSystem.out.println(\"年齢は\" + age + \"歳\");  // 年齢は20歳",
+          "code": "// 変数の宣言と初期化\nString first = \"Hello\";\nString second = \"World\";\nString greeting = first + \" \" + second;\nSystem.out.println(greeting);  // Hello World\n\n// 数値と文字列の結合\nint age = 20;\nSystem.out.println(\"年齢は\" + age + \"歳\");  // 年齢は20歳",
           "note": "文字列と数値を + で結合すると、数値が自動的に文字列に変換されます。",
           "order": 2
         },
