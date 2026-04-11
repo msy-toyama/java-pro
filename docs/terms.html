@@ -217,6 +217,65 @@
         a{color:var(--accent);text-decoration:none}
         a:hover{text-decoration:underline}
         strong{color:var(--text-primary)}
+
+        /* ===== iOS 最適化 ===== */
+        html{-webkit-text-size-adjust:100%}
+        @supports(padding:env(safe-area-inset-bottom)){
+            .back-to-top{bottom:calc(24px + env(safe-area-inset-bottom))}
+            body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+        }
+
+        /* ===== タブレット最適化 (iPad) ===== */
+        @media(min-width:769px){
+            .container{padding:40px 32px 100px}
+            .page-header{padding:48px 0 36px}
+            .section{padding:32px}
+            .toc{padding:28px 32px}
+        }
+
+        /* ===== モバイル対応 (≤640px) ===== */
+        @media(max-width:640px){
+            .page-header h1{font-size:1.6rem}
+            .page-header{padding:28px 0 24px}
+            .container{padding:24px 16px 60px}
+            .section{padding:22px 18px}
+            .section h2{font-size:1.05rem;gap:8px}
+            .toc{padding:20px 18px}
+            .unofficial-banner{padding:16px 18px;gap:10px}
+            .navbar-inner{padding:0 16px}
+            .navbar-links a{padding:8px 10px;font-size:.8rem}
+            .navbar-brand{font-size:.92rem;gap:8px}
+            .navbar-brand .logo{width:28px;height:28px;font-size:.68rem;border-radius:7px}
+            .trust-badge{padding:16px 12px}
+            .contact-section{padding:24px 18px}
+            .instagram-link{padding:12px 22px;font-size:.88rem}
+            footer{padding:24px 0}
+            .footer-links{gap:16px}
+            .toc li a{padding:9px 0;font-size:.86rem}
+            .footer-links a{padding:4px 0}
+        }
+
+        /* ===== 超小画面対応 (≤400px: iPhone SE / mini) ===== */
+        @media(max-width:400px){
+            .page-header h1{font-size:1.4rem}
+            .page-header .badge{font-size:.74rem;padding:5px 12px}
+            .container{padding:20px 14px 48px}
+            .section{padding:20px 14px}
+            .section h2{font-size:1rem}
+            .section p,.section li{font-size:.88rem}
+            .toc{padding:18px 14px}
+            .navbar-links a{padding:6px 8px;font-size:.76rem}
+            .navbar-brand span{font-size:.85rem}
+            .unofficial-banner{flex-direction:column;gap:8px}
+            .unofficial-banner .icon{margin-top:0}
+            .back-to-top{width:40px;height:40px;border-radius:10px;font-size:1rem;bottom:calc(16px + env(safe-area-inset-bottom,0px));right:12px}
+        }
+
+        /* ===== 超小画面対応 (≤340px: iPhone SE 1st gen) ===== */
+        @media(max-width:340px){
+            .navbar-brand span{display:none}
+            .page-header h1{font-size:1.25rem}
+        }
     </style>
 </head>
 <body>
