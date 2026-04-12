@@ -10,6 +10,8 @@
 import SwiftUI
 
 struct EnvironmentSetupView: View {
+    private var lang: LanguageManager { LanguageManager.shared }
+
     private var sections: [SetupGuideSection] {
         PracticeService.shared.setupGuide
     }
@@ -29,11 +31,11 @@ struct EnvironmentSetupView: View {
     /// セクションIDに対応するサブタイトル
     private func sectionSubtitle(_ id: String) -> String {
         switch id {
-        case "windows_setup": return "JDK のインストールと環境変数の設定"
-        case "mac_setup":     return "Homebrew を使った JDK セットアップ"
-        case "db_setup":      return "MySQL のインストールと接続準備"
-        case "web_setup":     return "Maven / Spring Boot の開発環境構築"
-        case "eclipse_web_setup": return "Eclipse で Servlet / JSP / Spring Boot"
+        case "windows_setup": return lang.l("env_setup.subtitle.windows")
+        case "mac_setup":     return lang.l("env_setup.subtitle.mac")
+        case "db_setup":      return lang.l("env_setup.subtitle.db")
+        case "web_setup":     return lang.l("env_setup.subtitle.web")
+        case "eclipse_web_setup": return lang.l("env_setup.subtitle.eclipse_web")
         default:              return ""
         }
     }
@@ -55,7 +57,7 @@ struct EnvironmentSetupView: View {
             .padding(AppLayout.paddingMD)
         }
         .background(AppColor.background)
-        .navigationTitle("環境構築ガイド")
+        .navigationTitle(lang.l("env_setup.title"))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -66,11 +68,11 @@ struct EnvironmentSetupView: View {
             Image(systemName: "laptopcomputer.and.arrow.down")
                 .font(.system(size: 40))
                 .foregroundStyle(AppColor.primary)
-            Text("開発環境を準備しよう")
+            Text(lang.l("env_setup.header"))
                 .font(AppFont.title)
                 .foregroundStyle(AppColor.textPrimary)
                 .multilineTextAlignment(.center)
-            Text("必要な環境構築を選んでください。\n各ガイドをステップごとに解説します。")
+            Text(lang.l("env_setup.desc"))
                 .font(AppFont.callout)
                 .foregroundStyle(AppColor.textSecondary)
                 .multilineTextAlignment(.center)
@@ -103,7 +105,7 @@ struct EnvironmentSetupView: View {
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
                     .lineLimit(2)
-                Text("\(section.steps.count) ステップ")
+                Text(lang.l("env_setup.step_count", section.steps.count))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(sectionColor(section.id))
                     .padding(.horizontal, 8)

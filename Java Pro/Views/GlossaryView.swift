@@ -17,6 +17,7 @@ struct GlossaryView: View {
     @State private var searchTask: Task<Void, Never>?
     @State private var appearedEntries: Set<String> = []
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private var filteredEntries: [GlossaryEntry] {
         if debouncedSearchText.isEmpty {
@@ -54,7 +55,7 @@ struct GlossaryView: View {
             .padding(AppLayout.paddingMD)
         }
         .background(AppColor.background)
-        .navigationTitle("用語集")
+        .navigationTitle(lang.l("glossary.nav_title"))
         .sheet(item: $selectedEntry) { entry in
             GlossaryDetailSheet(entry: entry)
         }
@@ -84,10 +85,10 @@ struct GlossaryView: View {
     private var glossaryHeader: some View {
         HStack(spacing: AppLayout.paddingMD) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Java用語辞典")
+                Text(lang.l("glossary.title"))
                     .font(AppFont.title)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("\(entries.count)件の用語を収録")
+                Text(lang.l("glossary.count", entries.count))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -112,7 +113,7 @@ struct GlossaryView: View {
         HStack(spacing: AppLayout.paddingSM) {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(AppColor.textTertiary)
-            TextField("用語を検索...", text: $searchText)
+            TextField(lang.l("glossary.search"), text: $searchText)
                 .font(AppFont.body)
                 .foregroundStyle(AppColor.textPrimary)
                 .submitLabel(.search)
@@ -123,7 +124,7 @@ struct GlossaryView: View {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(AppColor.textTertiary)
                 }
-                .accessibilityLabel("検索をクリア")
+                .accessibilityLabel(lang.l("glossary.clear_search"))
             }
         }
         .padding(AppLayout.paddingSM + 2)
@@ -142,7 +143,7 @@ struct GlossaryView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(AppColor.textTertiary)
                 .symbolEffect(.pulse, options: .repeating)
-            Text("「\(searchText)」に一致する用語が見つかりません")
+            Text(lang.l("glossary.no_results", searchText))
                 .font(AppFont.body)
                 .foregroundStyle(AppColor.textSecondary)
                 .multilineTextAlignment(.center)
@@ -238,8 +239,8 @@ struct GlossaryView: View {
             )
         }
         .buttonStyle(.pressable)
-        .accessibilityLabel("\(entry.term)、\(entry.definition)")
-        .accessibilityHint("詳細を表示します")
+        .accessibilityLabel(lang.l("glossary.entry_accessibility", entry.term, entry.definition))
+        .accessibilityHint(lang.l("common.show_detail_hint"))
     }
 }
 
@@ -249,6 +250,7 @@ private struct GlossaryDetailSheet: View {
     let entry: GlossaryEntry
     @Environment(\.dismiss) private var dismiss
     @State private var appeared = false
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         NavigationStack {
@@ -286,11 +288,11 @@ private struct GlossaryDetailSheet: View {
                 }
                 .padding(AppLayout.paddingLG)
             }
-            .navigationTitle("用語詳細")
+            .navigationTitle(lang.l("glossary.detail_title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("閉じる") { dismiss() }
+                    Button(lang.l("glossary.close")) { dismiss() }
                 }
             }
             .onAppear {
@@ -303,7 +305,7 @@ private struct GlossaryDetailSheet: View {
 
     private var relatedLessonsSection: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("関連レッスン")
+            Text(lang.l("glossary.related_lessons"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textSecondary)
 
@@ -327,7 +329,7 @@ private struct GlossaryDetailSheet: View {
                         .background(AppColor.primaryLight.opacity(0.08), in: RoundedRectangle(cornerRadius: AppLayout.cornerRadiusSmall))
                     }
                     .buttonStyle(.pressable(scale: 0.97))
-                    .accessibilityLabel("\(lesson.title)のレッスンを開く")
+                    .accessibilityLabel(lang.l("glossary.open_lesson", lesson.title))
                 }
             }
         }

@@ -19,6 +19,8 @@ struct QuizView: View {
 
     @State private var vm: QuizViewModel
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     init(quizzes: [QuizData], lessonId: String? = nil, isReviewMode: Bool = false,
          onComplete: (() -> Void)? = nil, onNextLesson: ((String) -> Void)? = nil) {
         _vm = State(initialValue: QuizViewModel(
@@ -32,13 +34,13 @@ struct QuizView: View {
             Group {
                 if vm.quizzes.isEmpty {
                     ContentUnavailableView(
-                        "クイズなし",
+                        lang.l("quiz.no_quiz"),
                         systemImage: "questionmark.circle",
-                        description: Text("このレッスンにはクイズがありません")
+                        description: Text(lang.l("quiz.no_quiz_message"))
                     )
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("閉じる") { dismiss() }
+                            Button(lang.l("quiz.close")) { dismiss() }
                         }
                     }
                 } else if vm.showResult {
@@ -77,7 +79,7 @@ struct QuizView: View {
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                     .lineSpacing(4)
-                    .accessibilityLabel("問\(vm.currentIndex + 1): \(vm.currentQuiz.question)")
+                    .accessibilityLabel(lang.l("quiz.question_accessibility", vm.currentIndex + 1, vm.currentQuiz.question))
 
                 if let code = vm.currentQuiz.code, !code.isEmpty {
                     CodeBlockView(code: code)
@@ -137,7 +139,7 @@ struct QuizView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("閉じる") {
+                Button(lang.l("quiz.close")) {
                     if vm.currentIndex > 0 || vm.isAnswered {
                         vm.showDismissConfirm = true
                     } else {
@@ -146,11 +148,11 @@ struct QuizView: View {
                 }
             }
         }
-        .alert("クイズを中断しますか？", isPresented: $vm.showDismissConfirm) {
-            Button("中断する", role: .destructive) { dismiss() }
-            Button("続ける", role: .cancel) {}
+        .alert(lang.l("quiz.dismiss_confirm_title"), isPresented: $vm.showDismissConfirm) {
+            Button(lang.l("quiz.dismiss_confirm_cancel"), role: .destructive) { dismiss() }
+            Button(lang.l("quiz.dismiss_confirm_continue"), role: .cancel) {}
         } message: {
-            Text("現在の進捗（\(vm.currentIndex + 1)/\(vm.quizzes.count)問）は保存されません。")
+            Text(lang.l("quiz.dismiss_confirm_message", vm.correctCount, vm.quizzes.count))
         }
         .onAppear {
             vm.loadSettings(modelContext: modelContext)
@@ -179,7 +181,7 @@ struct QuizView: View {
             }
         }
         .frame(height: 6)
-        .accessibilityLabel("進捗: \(vm.currentIndex + (vm.isAnswered ? 1 : 0))/\(vm.quizzes.count)")
+        .accessibilityLabel(lang.l("quiz.progress_label", vm.currentIndex + (vm.isAnswered ? 1 : 0), vm.quizzes.count))
     }
 
     // MARK: - クイズ種別バッジ
@@ -227,7 +229,7 @@ struct QuizView: View {
                 .animation(.spring(response: 0.3, dampingFraction: 0.6), value: vm.correctBounce)
                 .animation(.easeInOut(duration: 0.2), value: vm.isAnswered)
                 .accessibilityLabel(choice.text)
-                .accessibilityValue(vm.isAnswered ? (choice.isCorrect ? "正解" : (vm.selectedChoiceId == choice.id ? "不正解" : "")) : (vm.selectedChoiceId == choice.id ? "選択中" : ""))
+                .accessibilityValue(vm.isAnswered ? (choice.isCorrect ? lang.l("quiz.correct_label") : (vm.selectedChoiceId == choice.id ? lang.l("quiz.incorrect_label") : "")) : (vm.selectedChoiceId == choice.id ? lang.l("quiz.selected_label") : ""))
             }
         }
     }
@@ -240,7 +242,7 @@ struct QuizView: View {
                 Image(systemName: vm.isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundStyle(vm.isCorrect ? AppColor.success : AppColor.error)
                     .font(.title3)
-                Text(vm.isCorrect ? "正解！" : "不正解")
+                Text(vm.isCorrect ? lang.l("quiz.correct") : lang.l("quiz.incorrect"))
                     .font(AppFont.headline)
                     .foregroundStyle(vm.isCorrect ? AppColor.success : AppColor.error)
             }
@@ -273,7 +275,7 @@ struct QuizView: View {
         .background(AppColor.xpGold.opacity(0.12), in: Capsule())
         .shimmer(duration: 2.0)
         .transition(.scale.combined(with: .opacity))
-        .accessibilityLabel("+\(xpAmount) XP獲得")
+        .accessibilityLabel(lang.l("quiz.xp_earned_accessibility", xpAmount))
     }
 
     private var nextButton: some View {
@@ -282,7 +284,7 @@ struct QuizView: View {
             else { vm.completeQuizSession(modelContext: modelContext) }
         } label: {
             HStack {
-                Text(vm.currentIndex + 1 < vm.quizzes.count ? "次の問題" : "結果を見る")
+                Text(vm.currentIndex + 1 < vm.quizzes.count ? lang.l("quiz.next") : lang.l("quiz.show_result"))
                     .font(AppFont.headline)
                 if vm.currentIndex + 1 < vm.quizzes.count {
                     Image(systemName: "arrow.right").font(.subheadline)

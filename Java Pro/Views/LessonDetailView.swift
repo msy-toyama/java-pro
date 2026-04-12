@@ -25,6 +25,7 @@ struct LessonDetailView: View {
     @State private var quizButtonScale: CGFloat = 1.0
     @State private var navigateToNextLesson: String?
     @State private var glossaryPopupEntry: GlossaryEntry?
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private var sortedSections: [LessonSection] {
         lesson.contents.sorted { $0.order < $1.order }
@@ -52,11 +53,11 @@ struct LessonDetailView: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "list.bullet")
-                                Text("一覧")
+                                Text(lang.l("lesson_detail.back"))
                                     .font(AppFont.caption)
                             }
                         }
-                        .accessibilityLabel("学習一覧へ戻る")
+                        .accessibilityLabel(lang.l("lesson_detail.back_accessibility"))
                     }
                 }
             }
@@ -92,9 +93,9 @@ struct LessonDetailView: View {
                     LessonDetailView(lesson: nextLesson, navigationPath: navigationPath)
                 } else {
                     ContentUnavailableView(
-                        "レッスンが見つかりません",
+                        lang.l("lesson_detail.not_found"),
                         systemImage: "exclamationmark.triangle",
-                        description: Text("コンテンツの読み込みに失敗しました")
+                        description: Text(lang.l("lesson_detail.load_error"))
                     )
                 }
             }
@@ -186,7 +187,7 @@ struct LessonDetailView: View {
                     Image(systemName: "clock")
                         .font(.caption2)
                         .accessibilityHidden(true)
-                    Text("約\(lesson.estimatedMinutes)分")
+                    Text(lang.l("common.about_minutes", lesson.estimatedMinutes))
                         .font(AppFont.caption)
                 }
                 .foregroundStyle(AppColor.textSecondary)
@@ -198,7 +199,7 @@ struct LessonDetailView: View {
                     Image(systemName: "questionmark.circle")
                         .font(.caption2)
                         .accessibilityHidden(true)
-                    Text("\(lesson.quizzes.count)問")
+                    Text(lang.l("common.quiz_count", lesson.quizzes.count))
                         .font(AppFont.caption)
                 }
                 .foregroundStyle(AppColor.primary)
@@ -212,7 +213,7 @@ struct LessonDetailView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.caption2)
-                        Text("完了")
+                        Text(lang.l("lesson_detail.done"))
                             .font(AppFont.caption)
                     }
                     .foregroundStyle(AppColor.success)
@@ -274,9 +275,9 @@ struct LessonDetailView: View {
                         .accessibilityHidden(true)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("クイズに挑戦")
+                    Text(lang.l("lesson_detail.quiz_challenge"))
                         .font(AppFont.headline)
-                    Text("\(lesson.quizzes.count)問のクイズで理解度をチェック")
+                    Text(lang.l("lesson_detail.quiz_count", lesson.quizzes.count))
                         .font(.system(size: 11))
                         .opacity(0.85)
                 }
@@ -312,9 +313,9 @@ struct LessonDetailView: View {
             Image(systemName: "party.popper.fill")
                 .font(.title3)
             VStack(alignment: .leading, spacing: 2) {
-                Text("レッスン完了！")
+                Text(lang.l("lesson_detail.complete_title"))
                     .font(AppFont.headline)
-                Text("おめでとうございます 🎉")
+                Text(lang.l("lesson_detail.complete_congrats"))
                     .font(AppFont.caption)
                     .opacity(0.9)
             }
@@ -350,10 +351,10 @@ struct LessonDetailView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("関連する実践演習")
+                    Text(lang.l("lesson_detail.related_practice"))
                         .font(AppFont.callout)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text("\(chapter.title) — \(chapter.exercises.count)問の演習")
+                    Text(lang.l("lesson_detail.practice_exercises_count", chapter.title, chapter.exercises.count))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }

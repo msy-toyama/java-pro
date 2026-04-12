@@ -14,6 +14,7 @@ struct PracticeDetailView: View {
     @State private var expandedExercise: String?
     @State private var showSolutionFor: String?
     @State private var generatedFileURLs: [String: URL?] = [:]
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         ScrollView {
@@ -39,7 +40,7 @@ struct PracticeDetailView: View {
                 .font(AppFont.callout)
                 .foregroundStyle(AppColor.textSecondary)
             HStack(spacing: AppLayout.paddingMD) {
-                statBadge(icon: "doc.text", label: "\(chapter.exercises.count)問")
+                statBadge(icon: "doc.text", label: lang.l("common.quiz_count", chapter.exercises.count))
                 statBadge(icon: "chart.bar.fill", label: levelLabel)
             }
         }
@@ -52,7 +53,7 @@ struct PracticeDetailView: View {
 
     private var levelLabel: String {
         switch chapter.certificationLevel {
-        case .beginner: "無料"
+        case .beginner: lang.l("practice_detail.free")
         case .silver: "Silver"
         case .gold: "Gold"
         }
@@ -110,7 +111,7 @@ struct PracticeDetailView: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("\(exercise.title)、\(difficultyLabel(exercise.difficulty))")
-            .accessibilityHint(isExpanded ? "閉じる" : "開く")
+            .accessibilityHint(isExpanded ? lang.l("practice_detail.accessibility_close") : lang.l("practice_detail.accessibility_open"))
 
             // Expanded Content
             if isExpanded {
@@ -119,11 +120,11 @@ struct PracticeDetailView: View {
 
                 VStack(alignment: .leading, spacing: AppLayout.paddingMD) {
                     // 問題文
-                    sectionLabel("問題", icon: "doc.text.fill", color: AppColor.primary)
+                    sectionLabel(lang.l("practice_detail.problem"), icon: "doc.text.fill", color: AppColor.primary)
                     RichBodyView(text: exercise.description)
 
                     // 期待出力（プログラムの出力結果なのでハイライト不要）
-                    sectionLabel("期待される出力", icon: "terminal.fill", color: AppColor.terminalGreen)
+                    sectionLabel(lang.l("practice_detail.expected_output"), icon: "terminal.fill", color: AppColor.terminalGreen)
                     codeBlock(exercise.expectedOutput, background: AppColor.codeBackground, applyHighlight: false)
 
                     // ヒント
@@ -147,9 +148,9 @@ struct PracticeDetailView: View {
 
     private func difficultyLabel(_ level: Int) -> String {
         switch level {
-        case 1: "初級"
-        case 2: "中級"
-        default: "上級"
+        case 1: lang.l("practice.difficulty.beginner")
+        case 2: lang.l("practice.difficulty.intermediate")
+        default: lang.l("practice.difficulty.advanced")
         }
     }
 
@@ -160,9 +161,9 @@ struct PracticeDetailView: View {
         default: AppColor.error
         }
         let label = switch level {
-        case 1: "初級"
-        case 2: "中級"
-        default: "上級"
+        case 1: lang.l("practice.difficulty.beginner")
+        case 2: lang.l("practice.difficulty.intermediate")
+        default: lang.l("practice.difficulty.advanced")
         }
 
         return VStack(spacing: 2) {
@@ -223,7 +224,7 @@ struct PracticeDetailView: View {
                     .font(.caption)
                     .foregroundStyle(AppColor.accent)
                     .accessibilityHidden(true)
-                Text("ヒントを見る")
+                Text(lang.l("practice_detail.show_hint"))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.accent)
             }
@@ -249,7 +250,7 @@ struct PracticeDetailView: View {
                 HStack(spacing: 6) {
                     Image(systemName: showSolution ? "eye.slash.fill" : "eye.fill")
                         .font(.caption)
-                    Text(showSolution ? "解答を隠す" : "解答を見る")
+                    Text(showSolution ? lang.l("practice_detail.hide_solution") : lang.l("practice_detail.show_solution"))
                         .font(AppFont.caption)
                 }
                 .foregroundStyle(AppColor.primary)
@@ -258,10 +259,10 @@ struct PracticeDetailView: View {
                 .background(AppColor.primary.opacity(0.1))
                 .clipShape(Capsule())
             }
-            .accessibilityLabel(showSolution ? "解答を隠す" : "解答を表示")
+            .accessibilityLabel(showSolution ? lang.l("practice_detail.hide_solution") : lang.l("practice_detail.show_solution_accessibility"))
 
             if showSolution {
-                sectionLabel("解答コード", icon: "chevron.left.forwardslash.chevron.right", color: AppColor.primary)
+                sectionLabel(lang.l("practice_detail.solution_code"), icon: "chevron.left.forwardslash.chevron.right", color: AppColor.primary)
                 codeBlock(exercise.solutionCode, background: AppColor.codeBackground)
 
                 // 解答コードの詳細解説
@@ -274,12 +275,12 @@ struct PracticeDetailView: View {
                     ShareLink(
                         item: fileURL,
                         subject: Text(exercise.solutionFileName),
-                        message: Text("プロプロ - \(exercise.title) の解答コード")
+                        message: Text(lang.l("practice_detail.share_message", exercise.title))
                     ) {
                         HStack(spacing: 6) {
                             Image(systemName: "square.and.arrow.down")
                                 .font(.caption)
-                            Text("\(exercise.solutionFileName) をダウンロード")
+                            Text(lang.l("practice_detail.download_file", exercise.solutionFileName))
                                 .font(AppFont.caption)
                         }
                         .foregroundStyle(.white)
@@ -288,7 +289,7 @@ struct PracticeDetailView: View {
                         .background(AppColor.primary)
                         .clipShape(Capsule())
                     }
-                    .accessibilityLabel("\(exercise.solutionFileName)をダウンロード")
+                    .accessibilityLabel(lang.l("practice_detail.download_accessibility", exercise.solutionFileName))
                 } else if !generatedFileURLs.keys.contains(exercise.id) {
                     // generateがまだ呼ばれていない場合は表示しない
                     EmptyView()
@@ -297,7 +298,7 @@ struct PracticeDetailView: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .font(.caption)
                             .foregroundStyle(AppColor.warning)
-                        Text("ファイルの生成に失敗しました")
+                        Text(lang.l("practice_detail.file_error"))
                             .font(AppFont.caption)
                             .foregroundStyle(AppColor.textTertiary)
                     }
@@ -315,7 +316,7 @@ struct PracticeDetailView: View {
                     .font(.subheadline)
                     .foregroundStyle(AppColor.practiceViolet)
                     .accessibilityHidden(true)
-                Text("解答の詳細解説")
+                Text(lang.l("practice_detail.solution_explanation"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.practiceViolet)
             }

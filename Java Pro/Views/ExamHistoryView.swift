@@ -15,6 +15,8 @@ struct ExamHistoryView: View {
 
     @State private var history: [UserExamResult] = []
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "ja_JP")
@@ -27,9 +29,9 @@ struct ExamHistoryView: View {
         Group {
             if history.isEmpty {
                 ContentUnavailableView(
-                    "受験履歴なし",
+                    lang.l("exam_history.empty_title"),
                     systemImage: "doc.text.magnifyingglass",
-                    description: Text("模擬試験を受けると、結果がここに表示されます")
+                    description: Text(lang.l("exam_history.empty_message"))
                 )
                 .frame(maxHeight: .infinity)
             } else {
@@ -52,7 +54,7 @@ struct ExamHistoryView: View {
                 .background(AppColor.background)
             }
         }
-        .navigationTitle("\(certLevel == .gold ? "Gold" : "Silver") 受験履歴")
+        .navigationTitle(certLevel == .gold ? lang.l("exam_history.gold_title") : lang.l("exam_history.silver_title"))
         .navigationBarTitleDisplayMode(.inline)
         .task {
             loadHistory()
@@ -68,11 +70,11 @@ struct ExamHistoryView: View {
 
         return VStack(spacing: AppLayout.paddingSM) {
             HStack {
-                Text("成績サマリー")
+                Text(lang.l("exam_history.summary"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                 Spacer()
-                Text("\(history.count)回受験")
+                Text(lang.l("exam_history.attempt_count", history.count))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -80,19 +82,19 @@ struct ExamHistoryView: View {
             HStack(spacing: 0) {
                 summaryStatItem(
                     value: "\(passCount)/\(history.count)",
-                    label: "合格",
+                    label: lang.l("exam_history.pass"),
                     color: AppColor.success
                 )
                 Divider().frame(height: 40)
                 summaryStatItem(
                     value: "\(Int(bestScore * 100))%",
-                    label: "最高正答率",
+                    label: lang.l("exam_history.best_accuracy"),
                     color: AppColor.primary
                 )
                 Divider().frame(height: 40)
                 summaryStatItem(
                     value: "\(Int(avgScore * 100))%",
-                    label: "平均正答率",
+                    label: lang.l("exam_history.avg_accuracy"),
                     color: AppColor.accent
                 )
             }
@@ -100,7 +102,7 @@ struct ExamHistoryView: View {
             // 成績推移バー
             if history.count >= 2 {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("正答率の推移")
+                    Text(lang.l("exam_history.chart_title"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textTertiary)
                     trendChart
@@ -189,7 +191,7 @@ struct ExamHistoryView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(result.passed ? "合格" : "不合格")
+                    Text(result.passed ? lang.l("exam_history.pass_label") : lang.l("exam_history.fail_label"))
                         .font(AppFont.headline)
                         .foregroundStyle(result.passed ? AppColor.success : AppColor.error)
                     Spacer()
@@ -204,14 +206,14 @@ struct ExamHistoryView: View {
                         .foregroundStyle(AppColor.textSecondary)
 
                     let rate = Double(result.score) / Double(max(result.totalQuestions, 1))
-                    Text("正答率 \(Int(rate * 100))%")
+                    Text(lang.l("exam_history.accuracy_percent", Int(rate * 100)))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
 
                     Spacer()
 
                     let minutes = result.timeSpentSeconds / 60
-                    Label("\(minutes)分", systemImage: "clock")
+                    Label(lang.l("exam_history.time_minutes", minutes), systemImage: "clock")
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textTertiary)
                 }

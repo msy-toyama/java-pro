@@ -17,7 +17,8 @@ struct OnboardingView: View {
     let onComplete: () -> Void
 
     @State private var currentPage = 0
-    private let totalPages = 5
+    private let totalPages = 6
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         ZStack {
@@ -27,18 +28,20 @@ struct OnboardingView: View {
 
             VStack(spacing: 0) {
                 TabView(selection: $currentPage) {
-                    WelcomePage()
+                    LanguageSelectionPage()
                         .tag(0)
-                    LessonPreviewPage()
+                    WelcomePage()
                         .tag(1)
-                    QuizDemoPage()
+                    LessonPreviewPage()
                         .tag(2)
-                    ReviewSystemPage()
+                    QuizDemoPage()
                         .tag(3)
+                    ReviewSystemPage()
+                        .tag(4)
                     GoalSettingPage(onComplete: { dailyMinutes, enableNotifications in
                         saveGoalAndComplete(dailyMinutes: dailyMinutes, enableNotifications: enableNotifications)
                     })
-                        .tag(4)
+                        .tag(5)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeInOut(duration: 0.3), value: currentPage)
@@ -54,9 +57,10 @@ struct OnboardingView: View {
         let colors: [Color] = {
             switch currentPage {
             case 0: return [AppColor.primary.opacity(0.05), AppColor.background]
-            case 1: return [AppColor.success.opacity(0.05), AppColor.background]
-            case 2: return [AppColor.accent.opacity(0.05), AppColor.background]
-            case 3: return [AppColor.levelPurple.opacity(0.05), AppColor.background]
+            case 1: return [AppColor.primary.opacity(0.05), AppColor.background]
+            case 2: return [AppColor.success.opacity(0.05), AppColor.background]
+            case 3: return [AppColor.accent.opacity(0.05), AppColor.background]
+            case 4: return [AppColor.levelPurple.opacity(0.05), AppColor.background]
             default: return [AppColor.primary.opacity(0.05), AppColor.background]
             }
         }()
@@ -78,7 +82,7 @@ struct OnboardingView: View {
 
             if currentPage < totalPages - 1 {
                 HStack {
-                    Button("スキップ") {
+                    Button(lang.l("onboarding.skip")) {
                         completeOnboarding()
                     }
                     .font(AppFont.callout)
@@ -92,7 +96,7 @@ struct OnboardingView: View {
                         }
                     } label: {
                         HStack(spacing: 4) {
-                            Text("次へ")
+                            Text(lang.l("onboarding.next"))
                             Image(systemName: "arrow.right")
                         }
                         .font(AppFont.headline)
@@ -129,10 +133,83 @@ struct OnboardingView: View {
     }
 }
 
+// MARK: - Page 0: 言語選択
+
+private struct LanguageSelectionPage: View {
+    private var lang: LanguageManager { LanguageManager.shared }
+
+    var body: some View {
+        VStack(spacing: AppLayout.paddingLG) {
+            Spacer()
+
+            // Globe icon
+            ZStack {
+                Circle()
+                    .fill(AppColor.primary.opacity(0.08))
+                    .frame(width: 100, height: 100)
+                Image(systemName: "globe")
+                    .font(.system(size: 44, weight: .light))
+                    .foregroundStyle(AppColor.primary)
+            }
+
+            Text("Choose Your Language")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundStyle(AppColor.textPrimary)
+
+            Text("言語を選択してください")
+                .font(AppFont.body)
+                .foregroundStyle(AppColor.textSecondary)
+
+            VStack(spacing: AppLayout.paddingSM) {
+                ForEach(AppLanguage.allCases, id: \.self) { language in
+                    Button {
+                        withAnimation(AppAnimation.quick) {
+                            lang.setLanguage(language)
+                        }
+                    } label: {
+                        HStack {
+                            Text(language == .japanese ? "🇯🇵" : "🇺🇸")
+                                .font(.title)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(language.displayName)
+                                    .font(AppFont.headline)
+                                    .foregroundStyle(AppColor.textPrimary)
+                                Text(language.subtitle)
+                                    .font(AppFont.caption)
+                                    .foregroundStyle(AppColor.textSecondary)
+                            }
+                            Spacer()
+                            if lang.currentLanguage == language {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(AppColor.primary)
+                                    .font(.title3)
+                            }
+                        }
+                        .padding(AppLayout.paddingMD)
+                        .background(
+                            lang.currentLanguage == language ? AppColor.primary.opacity(0.08) : AppColor.cardBackground,
+                            in: RoundedRectangle(cornerRadius: AppLayout.cornerRadius)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: AppLayout.cornerRadius)
+                                .stroke(lang.currentLanguage == language ? AppColor.primary : Color.gray.opacity(0.15), lineWidth: lang.currentLanguage == language ? 2 : 1)
+                        )
+                    }
+                }
+            }
+            .padding(.horizontal, AppLayout.paddingLG)
+
+            Spacer()
+            Spacer()
+        }
+    }
+}
+
 // MARK: - Page 1: ウェルカム
 
 private struct WelcomePage: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
     @State private var showTitle = false
     @State private var showSubtitle = false
     @State private var iconScale: CGFloat = 0.3
@@ -168,20 +245,20 @@ private struct WelcomePage: View {
             }
 
             VStack(spacing: AppLayout.paddingSM) {
-                Text("プロプロ")
+                Text(lang.l("onboarding.title"))
                     .font(.system(size: 36, weight: .bold, design: .rounded))
                     .foregroundStyle(AppColor.textPrimary)
                     .opacity(showTitle ? 1 : 0)
                     .offset(y: showTitle ? 0 : 20)
 
-                Text("Javaを、一歩ずつ。")
+                Text(lang.l("onboarding.tagline"))
                     .font(AppFont.title)
                     .foregroundStyle(AppColor.primary)
                     .opacity(showSubtitle ? 1 : 0)
                     .offset(y: showSubtitle ? 0 : 15)
             }
 
-            Text("初心者のために設計された\n\(ContentService.shared.totalLessonCount)レッスンでJavaの基礎から応用まで。\n1レッスンわずか3〜5分で学べます。")
+            Text(lang.l("onboarding.description", ContentService.shared.totalLessonCount))
                 .font(AppFont.body)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(AppColor.textSecondary)
@@ -190,9 +267,9 @@ private struct WelcomePage: View {
                 .opacity(showSubtitle ? 1 : 0)
 
             HStack(spacing: AppLayout.paddingSM) {
-                FeatureChip(icon: "book.fill", text: "\(ContentService.shared.totalLessonCount)レッスン", color: AppColor.primary)
-                FeatureChip(icon: "questionmark.circle.fill", text: "\(ContentService.shared.totalQuizCount)問のクイズ", color: AppColor.success)
-                FeatureChip(icon: "clock.fill", text: "3〜5分/回", color: AppColor.accent)
+                FeatureChip(icon: "book.fill", text: lang.l("onboarding.feature.lessons", ContentService.shared.totalLessonCount), color: AppColor.primary)
+                FeatureChip(icon: "questionmark.circle.fill", text: lang.l("onboarding.feature.quizzes", ContentService.shared.totalQuizCount), color: AppColor.success)
+                FeatureChip(icon: "clock.fill", text: lang.l("onboarding.feature.time"), color: AppColor.accent)
             }
             .opacity(showSubtitle ? 1 : 0)
 
@@ -215,6 +292,7 @@ private struct WelcomePage: View {
 
 private struct LessonPreviewPage: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
     @State private var showCards = false
     @State private var highlightedCard: Int?
 
@@ -223,10 +301,10 @@ private struct LessonPreviewPage: View {
             Spacer()
 
             VStack(spacing: AppLayout.paddingSM) {
-                Text("レッスンで学ぶ")
+                Text(lang.l("onboarding.lesson_title"))
                     .font(AppFont.largeTitle)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("解説→コード例→ポイントの流れで\n自然に理解が深まります")
+                Text(lang.l("onboarding.lesson_desc"))
                     .font(AppFont.body)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(AppColor.textSecondary)
@@ -237,8 +315,8 @@ private struct LessonPreviewPage: View {
                 MockSectionCard(
                     icon: "doc.text",
                     iconColor: AppColor.info,
-                    title: "概要",
-                    bodyText: "Javaのプログラムは「クラス」という\n箱の中に処理を書いていきます。",
+                    title: lang.l("onboarding.section.overview"),
+                    bodyText: lang.l("onboarding.lesson_body.overview"),
                     isHighlighted: highlightedCard == 0
                 )
                 .offset(y: showCards ? 0 : 40)
@@ -247,7 +325,7 @@ private struct LessonPreviewPage: View {
                 MockSectionCard(
                     icon: "chevron.left.forwardslash.chevron.right",
                     iconColor: AppColor.success,
-                    title: "コード例",
+                    title: lang.l("onboarding.section.code"),
                     codeExample: "public class Hello {\n  public static void main(String[] args) {\n    System.out.println(\"Hello!\");\n  }\n}",
                     isHighlighted: highlightedCard == 1
                 )
@@ -257,8 +335,8 @@ private struct LessonPreviewPage: View {
                 MockSectionCard(
                     icon: "star.fill",
                     iconColor: AppColor.accent,
-                    title: "ポイント",
-                    bodyText: "main メソッドがプログラムの\n入口（エントリーポイント）です。",
+                    title: lang.l("onboarding.section.point"),
+                    bodyText: lang.l("onboarding.lesson_body.point"),
                     isHighlighted: highlightedCard == 2
                 )
                 .offset(y: showCards ? 0 : 80)
@@ -298,6 +376,7 @@ private struct LessonPreviewPage: View {
 
 private struct QuizDemoPage: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
     @State private var selectedChoice: Int?
     @State private var isAnswered = false
     @State private var showEncouragement = false
@@ -314,10 +393,10 @@ private struct QuizDemoPage: View {
             Spacer()
 
             VStack(spacing: AppLayout.paddingSM) {
-                Text("クイズで定着")
+                Text(lang.l("onboarding.quiz_title"))
                     .font(AppFont.largeTitle)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("各レッスンの後にクイズで\n理解度をチェックできます")
+                Text(lang.l("onboarding.quiz_desc"))
                     .font(AppFont.body)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(AppColor.textSecondary)
@@ -325,14 +404,14 @@ private struct QuizDemoPage: View {
             }
 
             VStack(alignment: .leading, spacing: AppLayout.paddingMD) {
-                Text("4択問題")
+                Text(lang.l("onboarding.quiz_type"))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.primary)
                     .padding(.horizontal, AppLayout.paddingSM)
                     .padding(.vertical, AppLayout.paddingXS)
                     .background(AppColor.primary.opacity(0.12), in: Capsule())
 
-                Text("Javaで文字を画面に表示する\n命令はどれでしょう？")
+                Text(lang.l("onboarding.quiz_question"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                     .lineSpacing(4)
@@ -380,7 +459,7 @@ private struct QuizDemoPage: View {
                     HStack(spacing: AppLayout.paddingSM) {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(AppColor.success)
-                        Text("正解！タップするだけで回答できます")
+                        Text(lang.l("onboarding.quiz_correct"))
                             .font(AppFont.caption)
                             .foregroundStyle(AppColor.success)
                     }
@@ -388,7 +467,7 @@ private struct QuizDemoPage: View {
                 }
 
                 if isAnswered, let selected = selectedChoice, !demoChoices[selected].isCorrect {
-                    Button("もう一度") {
+                    Button(lang.l("onboarding.quiz_retry")) {
                         withAnimation {
                             selectedChoice = nil
                             isAnswered = false
@@ -435,25 +514,28 @@ private struct QuizDemoPage: View {
 
 private struct ReviewSystemPage: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
     @State private var currentStage = -1
 
-    private let stages: [(emoji: String, label: String, interval: String, color: Color)] = [
-        ("🔴", "間違えた直後", "すぐに復習", AppColor.error),
-        ("🟠", "1回正解", "24時間後", Color(hex: "F97316")),
-        ("🟡", "2回正解", "3日後", AppColor.accent),
-        ("🟢", "3回正解", "7日後", AppColor.success),
-        ("✅", "4回正解", "定着完了！", AppColor.primary),
-    ]
+    private var stages: [(emoji: String, label: String, interval: String, color: Color)] {
+        [
+            ("🔴", lang.l("onboarding.review_stage.wrong"), lang.l("onboarding.review_interval.immediate"), AppColor.error),
+            ("🟠", lang.l("onboarding.review_stage.1"), lang.l("onboarding.review_interval.24h"), Color(hex: "F97316")),
+            ("🟡", lang.l("onboarding.review_stage.2"), lang.l("onboarding.review_interval.3d"), AppColor.accent),
+            ("🟢", lang.l("onboarding.review_stage.3"), lang.l("onboarding.review_interval.7d"), AppColor.success),
+            ("✅", lang.l("onboarding.review_stage.4"), lang.l("onboarding.review_interval.done"), AppColor.primary),
+        ]
+    }
 
     var body: some View {
         VStack(spacing: AppLayout.paddingLG) {
             Spacer()
 
             VStack(spacing: AppLayout.paddingSM) {
-                Text("忘却曲線で復習")
+                Text(lang.l("onboarding.review_title"))
                     .font(AppFont.largeTitle)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("科学的なタイミングで自動的に\n復習を提案します")
+                Text(lang.l("onboarding.review_desc"))
                     .font(AppFont.body)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(AppColor.textSecondary)
@@ -500,7 +582,7 @@ private struct ReviewSystemPage: View {
             .shadow(color: .black.opacity(0.06), radius: 8, y: 2)
             .padding(.horizontal, AppLayout.paddingLG)
 
-            Text("学んだことを確実に\n長期記憶に定着させます")
+            Text(lang.l("onboarding.review_bottom"))
                 .font(AppFont.caption)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(AppColor.textTertiary)
@@ -526,6 +608,7 @@ private struct ReviewSystemPage: View {
 
 private struct GoalSettingPage: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
     let onComplete: (_ dailyMinutes: Int, _ enableNotifications: Bool) -> Void
 
     @State private var selectedGoal: DailyGoal = .normal
@@ -537,10 +620,10 @@ private struct GoalSettingPage: View {
             Spacer()
 
             VStack(spacing: AppLayout.paddingSM) {
-                Text("あなたのペースで")
+                Text(lang.l("onboarding.pace_title"))
                     .font(AppFont.largeTitle)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("1日の学習目標を選びましょう")
+                Text(lang.l("onboarding.pace_desc"))
                     .font(AppFont.body)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -587,7 +670,7 @@ private struct GoalSettingPage: View {
             HStack {
                 Image(systemName: "bell.fill")
                     .foregroundStyle(AppColor.accent)
-                Toggle("毎日のリマインダー通知", isOn: $notificationsEnabled)
+                Toggle(lang.l("onboarding.reminder"), isOn: $notificationsEnabled)
                     .font(AppFont.callout)
                     .tint(AppColor.primary)
             }
@@ -601,7 +684,8 @@ private struct GoalSettingPage: View {
                     if notificationsEnabled {
                         let granted = await NotificationService.shared.requestAuthorization()
                         if granted {
-                            NotificationService.shared.scheduleDailyReminder(hour: 20, minute: 0)
+                            let strings = LanguageManager.shared.notificationStrings()
+                            NotificationService.shared.scheduleDailyReminder(hour: 20, minute: 0, title: strings.title, bodies: strings.bodies)
                         } else {
                             actuallyEnabled = false
                         }
@@ -610,7 +694,7 @@ private struct GoalSettingPage: View {
                 }
             } label: {
                 HStack(spacing: AppLayout.paddingSM) {
-                    Text("学習をはじめる")
+                    Text(lang.l("onboarding.start"))
                         .font(.system(.title3, design: .rounded, weight: .bold))
                     Image(systemName: "arrow.right")
                         .font(.title3)
@@ -658,18 +742,20 @@ private enum DailyGoal: CaseIterable {
     }
 
     var title: String {
+        let lang = LanguageManager.shared
         switch self {
-        case .light: return "ゆっくり（1レッスン/日）"
-        case .normal: return "ちょうどいい（2レッスン/日）"
-        case .intensive: return "がっつり（3レッスン+復習/日）"
+        case .light: return lang.l("onboarding.goal.light.title")
+        case .normal: return lang.l("onboarding.goal.medium.title")
+        case .intensive: return lang.l("onboarding.goal.heavy.title")
         }
     }
 
     var description: String {
+        let lang = LanguageManager.shared
         switch self {
-        case .light: return "約5分 ・ 忙しい日でも続けやすい"
-        case .normal: return "約10分 ・ バランスの良いペース"
-        case .intensive: return "約20分 ・ 最短で習得を目指す"
+        case .light: return lang.l("onboarding.goal.light.desc")
+        case .normal: return lang.l("onboarding.goal.medium.desc")
+        case .intensive: return lang.l("onboarding.goal.heavy.desc")
         }
     }
 

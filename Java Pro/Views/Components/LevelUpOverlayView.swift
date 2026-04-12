@@ -12,6 +12,7 @@ import SwiftUI
 struct LevelUpOverlayView: View {
     let level: Int
     @Binding var isPresented: Bool
+    private var lang: LanguageManager { LanguageManager.shared }
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -95,7 +96,7 @@ struct LevelUpOverlayView: View {
                         Button {
                             dismissOverlay()
                         } label: {
-                            Text("タップして続ける")
+                            Text(lang.l("level_up.tap_continue"))
                                 .font(AppFont.callout)
                                 .foregroundStyle(AppColor.textSecondary)
                                 .padding(.vertical, 12)
@@ -109,7 +110,7 @@ struct LevelUpOverlayView: View {
                 }
             }
             .accessibilityElement(children: .combine)
-            .accessibilityLabel("レベルアップ！レベル\(level)、\(levelTitle)")
+            .accessibilityLabel(lang.l("level_up.accessibility_label", level, levelTitle))
             .accessibilityAddTraits(.isModal)
             .transition(.opacity)
             .onAppear { startAnimation() }
@@ -117,7 +118,7 @@ struct LevelUpOverlayView: View {
     }
 
     private var levelTitle: String {
-        var title = "Java見習い"
+        var title = lang.l("home.default_title")
         for (lv, t) in GamificationService.levelTitles.sorted(by: { $0.key < $1.key }) {
             if level >= lv { title = t }
         }

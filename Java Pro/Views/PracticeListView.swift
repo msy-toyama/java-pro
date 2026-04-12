@@ -13,23 +13,24 @@ struct PracticeListView: View {
     @State private var appearedItems: Set<String> = []
     @State private var collapsedSections: Set<String> = []
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private var chapters: [PracticeChapter] {
         PracticeService.shared.practiceChapters
     }
 
     /// カテゴリ定義: 教材学習と同じ並び順・ラベル・アイコン・カラー
-    private static let categoryDefinitions: [(key: String, title: String, icon: String, color: Color)] = [
-        ("basics",            "Javaの基礎を学ぶ",          "book.fill",                         AppColor.success),
-        ("oop",               "オブジェクト指向設計",        "cube.fill",                         Color(hex: "#6366F1")),
-        ("error_handling",    "エラーハンドリング",          "exclamationmark.shield.fill",       AppColor.error),
-        ("standard_library",  "Java標準ライブラリ活用",     "shippingbox.fill",                  Color(hex: "#06B6D4")),
-        ("data_collections",  "データ構造とジェネリクス",    "tray.2.fill",                       Color(hex: "#3B82F6")),
-        ("functional_stream", "関数型とStream処理",         "chevron.left.forwardslash.chevron.right", Color(hex: "#10B981")),
-        ("database_web",      "データベースとWeb開発",      "globe",                             Color(hex: "#F97316")),
-        ("concurrency_io",    "並行処理とファイルI/O",      "arrow.triangle.branch",             Color(hex: "#D946EF")),
-        ("modules_i18n",      "モジュールと国際化",          "square.grid.3x3.fill",              Color(hex: "#F59E0B")),
-    ]
+    private var categoryDefinitions: [(key: String, title: String, icon: String, color: Color)] {[
+        ("basics",            lang.l("learn.category.basics"),          "book.fill",                         AppColor.success),
+        ("oop",               lang.l("learn.category.oop"),        "cube.fill",                         Color(hex: "#6366F1")),
+        ("error_handling",    lang.l("learn.category.errorhandling"),          "exclamationmark.shield.fill",       AppColor.error),
+        ("standard_library",  lang.l("learn.category.api"),     "shippingbox.fill",                  Color(hex: "#06B6D4")),
+        ("data_collections",  lang.l("learn.category.generics"),    "tray.2.fill",                       Color(hex: "#3B82F6")),
+        ("functional_stream", lang.l("learn.category.functional"),         "chevron.left.forwardslash.chevron.right", Color(hex: "#10B981")),
+        ("database_web",      lang.l("learn.category.web"),      "globe",                             Color(hex: "#F97316")),
+        ("concurrency_io",    lang.l("learn.category.concurrency"),      "arrow.triangle.branch",             Color(hex: "#D946EF")),
+        ("modules_i18n",      lang.l("learn.category.modules"),          "square.grid.3x3.fill",              Color(hex: "#F59E0B")),
+    ]}
 
     var body: some View {
         ScrollView {
@@ -84,16 +85,16 @@ struct PracticeListView: View {
                                             .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.pressable)
-                                    .accessibilityLabel("\(chapter.title)、\(chapter.exercises.count)問")
-                                    .accessibilityHint("演習一覧を開きます")
+                                    .accessibilityLabel(lang.l("practice.exercises_count", chapter.title, chapter.exercises.count))
+                                    .accessibilityHint(lang.l("practice.open_exercises_hint"))
                                 } else {
                                     Button { showPaywall = true } label: {
                                         PracticeChapterCard(chapter: chapter, isLocked: true)
                                             .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.pressable)
-                                    .accessibilityLabel("\(chapter.title)、ロック中")
-                                    .accessibilityHint("プレミアムプランを表示します")
+                                    .accessibilityLabel(lang.l("practice.locked_label", chapter.title))
+                                    .accessibilityHint(lang.l("practice.premium_hint"))
                                 }
                             }
                             .opacity(appearedItems.contains(chapter.id) ? 1 : 0)
@@ -140,10 +141,10 @@ struct PracticeListView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("環境構築ガイド")
+                    Text(lang.l("practice.env_guide"))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text("Java / DB / Web の開発環境セットアップ")
+                    Text(lang.l("practice.env_guide_desc"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                         .lineLimit(2)
@@ -165,8 +166,8 @@ struct PracticeListView: View {
             )
         }
         .buttonStyle(.pressable)
-        .accessibilityLabel("環境構築ガイド")
-        .accessibilityHint("セットアップガイドを開きます")
+        .accessibilityLabel(lang.l("practice.env_guide"))
+        .accessibilityHint(lang.l("practice.env_guide_hint"))
     }
 
     // MARK: - Category Header
@@ -224,7 +225,7 @@ struct PracticeListView: View {
 
     private var groupedChapters: [CategorySection] {
         var sections: [CategorySection] = []
-        for def in Self.categoryDefinitions {
+        for def in categoryDefinitions {
             let matched = chapters.filter { $0.category == def.key }
             if !matched.isEmpty {
                 sections.append(CategorySection(
@@ -244,6 +245,7 @@ struct PracticeListView: View {
 private struct PracticeChapterCard: View {
     let chapter: PracticeChapter
     var isLocked: Bool = false
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private var chapterColor: Color {
         // カテゴリに応じた色を返す
@@ -278,7 +280,7 @@ private struct PracticeChapterCard: View {
                     Image(systemName: "chevron.left.forwardslash.chevron.right")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(chapterColor)
-                    Text("\(chapter.exercises.count)問")
+                    Text(lang.l("common.quiz_count", chapter.exercises.count))
                         .font(.system(size: 9, weight: .bold, design: .rounded))
                         .foregroundStyle(chapterColor.opacity(0.8))
                 }
@@ -299,7 +301,7 @@ private struct PracticeChapterCard: View {
                         Image(systemName: "crown.fill")
                             .font(.caption2)
                             .foregroundStyle(AppColor.accent)
-                        Text("プレミアム")
+                        Text(lang.l("practice.premium"))
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(AppColor.accent)
                     }
@@ -328,9 +330,9 @@ private struct PracticeChapterCard: View {
     private var difficultyIndicator: some View {
         let maxDiff = chapter.exercises.map(\.difficulty).max() ?? 1
         let label = switch maxDiff {
-        case 1: "初級"
-        case 2: "中級"
-        default: "上級"
+        case 1: lang.l("practice.difficulty.beginner")
+        case 2: lang.l("practice.difficulty.intermediate")
+        default: lang.l("practice.difficulty.advanced")
         }
         return HStack(spacing: 2) {
             ForEach(1...3, id: \.self) { i in

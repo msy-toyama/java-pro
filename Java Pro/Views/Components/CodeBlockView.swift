@@ -11,6 +11,7 @@ import SwiftUI
 struct CodeBlockView: View {
     let code: String
     @State private var showCopied = false
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -36,12 +37,12 @@ struct CodeBlockView: View {
                 } label: {
                     HStack(spacing: 4) {
                         Image(systemName: showCopied ? "checkmark" : "doc.on.doc")
-                        Text(showCopied ? "コピー済み" : "コピー")
+                        Text(showCopied ? lang.l("code_block.copied") : lang.l("code_block.copy"))
                     }
                     .font(AppFont.codeSmall)
                     .foregroundStyle(showCopied ? AppColor.terminalGreen : AppColor.codeText.opacity(0.5))
                 }
-                .accessibilityLabel(showCopied ? "コピー済み" : "コードをコピー")
+                .accessibilityLabel(showCopied ? lang.l("code_block.accessibility.copied") : lang.l("code_block.accessibility.copy"))
             }
             .padding(.horizontal, AppLayout.paddingSM + 2)
             .padding(.vertical, AppLayout.paddingSM)

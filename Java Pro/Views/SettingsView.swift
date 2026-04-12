@@ -13,13 +13,14 @@ import StoreKit
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var vm = SettingsViewModel()
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         NavigationStack {
             List {
                 // 外観セクション
-                Section("外観") {
-                    Picker("テーマ", selection: Binding(
+                Section(lang.l("settings.section.appearance")) {
+                    Picker(lang.l("settings.theme"), selection: Binding(
                         get: { vm.isDarkMode.map { $0 ? 1 : 0 } ?? 2 },
                         set: { value in
                             switch value {
@@ -30,32 +31,45 @@ struct SettingsView: View {
                             vm.updateAppearance(modelContext: modelContext)
                         }
                     )) {
-                        Text("ライト").tag(0)
-                        Text("ダーク").tag(1)
-                        Text("システム").tag(2)
+                        Text(lang.l("settings.theme.light")).tag(0)
+                        Text(lang.l("settings.theme.dark")).tag(1)
+                        Text(lang.l("settings.theme.system")).tag(2)
                     }
                     .pickerStyle(.segmented)
                 }
                 .sectionAppear(index: 0)
 
+                // 言語セクション
+                Section(lang.l("settings.section.language")) {
+                    Picker(lang.l("settings.language"), selection: Binding(
+                        get: { lang.currentLanguage },
+                        set: { lang.setLanguage($0) }
+                    )) {
+                        ForEach(AppLanguage.allCases, id: \.self) { language in
+                            Text(language.displayName).tag(language)
+                        }
+                    }
+                }
+                .sectionAppear(index: 1)
+
                 // 学習目標
-                Section("学習目標") {
-                    Picker("目標資格", selection: $vm.selectedCertification) {
-                        Text("入門（資格なし）").tag(CertificationLevel.beginner)
+                Section(lang.l("settings.section.goals")) {
+                    Picker(lang.l("settings.cert_goal"), selection: $vm.selectedCertification) {
+                        Text(lang.l("settings.cert.beginner")).tag(CertificationLevel.beginner)
                         Text("Java Silver").tag(CertificationLevel.silver)
                         Text("Java Gold").tag(CertificationLevel.gold)
                     }
                     .onChange(of: vm.selectedCertification) { _, _ in vm.updateSettings(modelContext: modelContext) }
 
-                    Stepper("1日の目標: \(vm.dailyGoalMinutes)分", value: $vm.dailyGoalMinutes, in: 5...60, step: 5)
+                    Stepper(lang.l("settings.daily_goal", vm.dailyGoalMinutes), value: $vm.dailyGoalMinutes, in: 5...60, step: 5)
                         .onChange(of: vm.dailyGoalMinutes) { _, _ in vm.updateSettings(modelContext: modelContext) }
                 }
-                .sectionAppear(index: 1)
+                .sectionAppear(index: 2)
 
                 // フィードバック
-                Section("フィードバック") {
+                Section(lang.l("settings.section.feedback")) {
                     Toggle(isOn: $vm.hapticFeedbackEnabled) {
-                        Label("触覚フィードバック", systemImage: "hand.tap.fill")
+                        Label(lang.l("settings.haptic"), systemImage: "hand.tap.fill")
                     }
                     .tint(AppColor.primary)
                     .onChange(of: vm.hapticFeedbackEnabled) { _, _ in vm.updateSettings(modelContext: modelContext) }
@@ -65,13 +79,13 @@ struct SettingsView: View {
                             let generator = UINotificationFeedbackGenerator()
                             generator.notificationOccurred(.success)
                         } label: {
-                            Label("振動をテスト", systemImage: "iphone.radiowaves.left.and.right")
+                            Label(lang.l("settings.haptic_test"), systemImage: "iphone.radiowaves.left.and.right")
                                 .font(AppFont.callout)
                         }
                     }
 
                     Toggle(isOn: $vm.soundEnabled) {
-                        Label("効果音", systemImage: vm.soundEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                        Label(lang.l("settings.sound"), systemImage: vm.soundEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
                     }
                     .tint(AppColor.primary)
                     .onChange(of: vm.soundEnabled) { _, _ in vm.updateSettings(modelContext: modelContext) }
@@ -79,7 +93,7 @@ struct SettingsView: View {
 
                     if vm.soundEnabled {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("音量: \(Int(vm.soundVolume * 100))%")
+                            Text("\(lang.l("settings.volume")) \(Int(vm.soundVolume * 100))%")
                                 .font(AppFont.caption)
                                 .foregroundStyle(AppColor.textSecondary)
                                 .contentTransition(.numericText())
@@ -99,28 +113,28 @@ struct SettingsView: View {
                         }
 
                         HStack(spacing: AppLayout.paddingSM) {
-                            Button("正解") { SoundService.shared.play(.correct) }
+                            Button(lang.l("settings.sound.correct")) { SoundService.shared.play(.correct) }
                                 .buttonStyle(.bordered)
                                 .tint(AppColor.success)
-                            Button("不正解") { SoundService.shared.play(.incorrect) }
+                            Button(lang.l("settings.sound.incorrect")) { SoundService.shared.play(.incorrect) }
                                 .buttonStyle(.bordered)
                                 .tint(AppColor.error)
-                            Button("完了") { SoundService.shared.play(.lessonComplete) }
+                            Button(lang.l("settings.sound.complete")) { SoundService.shared.play(.lessonComplete) }
                                 .buttonStyle(.bordered)
                                 .tint(AppColor.primary)
-                            Button("レベルUP") { SoundService.shared.play(.levelUp) }
+                            Button(lang.l("settings.sound.level_up")) { SoundService.shared.play(.levelUp) }
                                 .buttonStyle(.bordered)
                                 .tint(AppColor.xpGold)
                         }
                         .font(AppFont.caption)
                     }
                 }
-                .sectionAppear(index: 2)
+                .sectionAppear(index: 3)
 
                 // 通知セクション
-                Section("学習リマインダー") {
+                Section(lang.l("settings.section.reminder")) {
                     Toggle(isOn: $vm.notificationsEnabled) {
-                        Label("毎日の通知", systemImage: vm.notificationsEnabled ? "bell.fill" : "bell.slash")
+                        Label(lang.l("settings.notification"), systemImage: vm.notificationsEnabled ? "bell.fill" : "bell.slash")
                     }
                     .tint(AppColor.primary)
                     .onChange(of: vm.notificationsEnabled) { _, newValue in
@@ -130,7 +144,7 @@ struct SettingsView: View {
 
                     if vm.notificationsEnabled {
                         DatePicker(
-                            "通知時間",
+                            lang.l("settings.notification_time"),
                             selection: vm.reminderTimeBinding,
                             displayedComponents: .hourAndMinute
                         )
@@ -139,29 +153,29 @@ struct SettingsView: View {
                         .onChange(of: vm.reminderMinute) { _, _ in vm.updateReminderTime(modelContext: modelContext) }
                     }
                 }
-                .sectionAppear(index: 3)
+                .sectionAppear(index: 4)
                 .animation(.spring(response: 0.35, dampingFraction: 0.8), value: vm.notificationsEnabled)
 
                 // プランセクション
-                Section("プラン") {
+                Section(lang.l("settings.section.plan")) {
                     if StoreService.shared.fullAccessUnlocked || StoreService.shared.debugUnlockAll {
                         HStack {
-                            Label("フルアクセス", systemImage: "checkmark.seal.fill")
+                            Label(lang.l("settings.full_access"), systemImage: "checkmark.seal.fill")
                                 .foregroundStyle(AppColor.success)
                                 .symbolEffect(.bounce, options: .nonRepeating)
                             Spacer()
                             #if DEBUG
                             if !StoreService.shared.fullAccessUnlocked {
-                                Text("デバッグ")
+                                Text(lang.l("settings.debug"))
                                     .font(AppFont.caption)
                                     .foregroundStyle(AppColor.textTertiary)
                             } else {
-                                Text("購入済み")
+                                Text(lang.l("settings.purchased"))
                                     .font(AppFont.caption)
                                     .foregroundStyle(AppColor.textTertiary)
                             }
                             #else
-                            Text("購入済み")
+                            Text(lang.l("settings.purchased"))
                                 .font(AppFont.caption)
                                 .foregroundStyle(AppColor.textTertiary)
                             #endif
@@ -171,14 +185,14 @@ struct SettingsView: View {
                             vm.showPaywall = true
                         } label: {
                             HStack {
-                                Label("フルアクセスを購入", systemImage: "crown.fill")
+                                Label(lang.l("settings.purchase_full"), systemImage: "crown.fill")
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .foregroundStyle(AppColor.textTertiary)
                             }
                         }
 
-                        Button("購入を復元") {
+                        Button(lang.l("settings.restore")) {
                             Task {
                                 await StoreService.shared.restorePurchases()
                             }
@@ -187,28 +201,28 @@ struct SettingsView: View {
                         .disabled(StoreService.shared.isPurchasing)
                     }
                 }
-                .sectionAppear(index: 4)
+                .sectionAppear(index: 5)
 
                 // データセクション
-                Section("データ管理") {
+                Section(lang.l("settings.section.data")) {
                     Button(role: .destructive) {
                         vm.showResetConfirm = true
                     } label: {
-                        Label("学習データをリセット", systemImage: "trash")
+                        Label(lang.l("settings.reset_data"), systemImage: "trash")
                     }
                 }
-                .sectionAppear(index: 5)
+                .sectionAppear(index: 6)
 
                 // アプリ情報
-                Section("アプリ情報") {
+                Section(lang.l("settings.section.app_info")) {
                     HStack {
-                        Text("バージョン")
+                        Text(lang.l("settings.version"))
                         Spacer()
                         Text(vm.appVersion)
                             .foregroundStyle(AppColor.textTertiary)
                     }
                     HStack {
-                        Text("ビルド")
+                        Text(lang.l("settings.build"))
                         Spacer()
                         Text(vm.buildNumber)
                             .foregroundStyle(AppColor.textTertiary)
@@ -216,7 +230,7 @@ struct SettingsView: View {
                     if let termsURL = URL(string: "https://msy-toyama.github.io/java-pro/terms.html") {
                     Link(destination: termsURL) {
                         HStack {
-                            Label("利用規約", systemImage: "doc.text")
+                            Label(lang.l("settings.terms"), systemImage: "doc.text")
                             Spacer()
                             Image(systemName: "arrow.up.right.square")
                                 .font(.caption)
@@ -227,7 +241,7 @@ struct SettingsView: View {
                     if let privacyURL = URL(string: "https://msy-toyama.github.io/java-pro/privacy.html") {
                     Link(destination: privacyURL) {
                         HStack {
-                            Label("プライバシーポリシー", systemImage: "hand.raised.fill")
+                            Label(lang.l("settings.privacy"), systemImage: "hand.raised.fill")
                             Spacer()
                             Image(systemName: "arrow.up.right.square")
                                 .font(.caption)
@@ -236,45 +250,45 @@ struct SettingsView: View {
                     }
                     }
                     // Oracle 商標免責事項
-                    Text("「Java」および「Oracle」は Oracle Corporation の登録商標です。本アプリは Oracle Corporation とは無関係であり、認定・推奨を受けたものではありません。模擬試験はすべて独自作成の非公式問題です。")
+                    Text(lang.l("settings.oracle_disclaimer"))
                         .font(.system(size: 11))
                         .foregroundStyle(AppColor.textTertiary)
                 }
-                .sectionAppear(index: 6)
+                .sectionAppear(index: 7)
             }
-            .navigationTitle("設定")
+            .navigationTitle(lang.l("settings.title"))
             .onAppear { vm.loadSettings(modelContext: modelContext) }
             .onDisappear { vm.cancelVolumeSaveTask() }
-            .alert("本当にリセットしますか？", isPresented: $vm.showResetConfirm) {
-                Button("リセット", role: .destructive) {
+            .alert(lang.l("settings.reset_confirm_title"), isPresented: $vm.showResetConfirm) {
+                Button(lang.l("settings.reset_button"), role: .destructive) {
                     vm.resetAllData(modelContext: modelContext)
                 }
-                Button("キャンセル", role: .cancel) {}
+                Button(lang.l("settings.cancel"), role: .cancel) {}
             } message: {
-                Text("すべての学習進捗・XP・バッジが削除されます。この操作は取り消せません。")
+                Text(lang.l("settings.reset_confirm_message"))
             }
-            .alert("通知が許可されていません", isPresented: $vm.showPermissionDenied) {
-                Button("設定を開く") {
+            .alert(lang.l("settings.notification_denied_title"), isPresented: $vm.showPermissionDenied) {
+                Button(lang.l("settings.open_settings")) {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
                         UIApplication.shared.open(url)
                     }
                 }
-                Button("閉じる", role: .cancel) {}
+                Button(lang.l("settings.close"), role: .cancel) {}
             } message: {
-                Text("「設定」アプリから プロプロ の通知を許可してください。")
+                Text(lang.l("settings.notification_denied_message"))
             }
             .sheet(isPresented: $vm.showPaywall) {
                 PaywallView()
             }
-            .alert("リセット完了", isPresented: $vm.showResetComplete) {
-                Button("OK") {}
+            .alert(lang.l("settings.reset_complete_title"), isPresented: $vm.showResetComplete) {
+                Button(lang.l("settings.ok")) {}
             } message: {
-                Text("すべての学習データがリセットされました。")
+                Text(lang.l("settings.reset_complete_message"))
             }
-            .alert("リセットに失敗しました", isPresented: $vm.showResetError) {
-                Button("OK", role: .cancel) {}
+            .alert(lang.l("settings.reset_error_title"), isPresented: $vm.showResetError) {
+                Button(lang.l("settings.ok"), role: .cancel) {}
             } message: {
-                Text("データの削除中にエラーが発生しました。アプリを再起動して再度お試しください。")
+                Text(lang.l("settings.reset_error_message"))
             }
         }
     }}

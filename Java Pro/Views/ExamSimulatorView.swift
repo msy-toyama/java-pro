@@ -18,6 +18,8 @@ struct ExamSimulatorView: View {
 
     @State private var vm: ExamSimulatorViewModel
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     init(examId: String) {
         _vm = State(initialValue: ExamSimulatorViewModel(examId: examId))
     }
@@ -35,9 +37,9 @@ struct ExamSimulatorView: View {
                     )
                 } else if vm.loadError {
                     ContentUnavailableView(
-                        "読み込みエラー",
+                        lang.l("exam.load_error_title"),
                         systemImage: "exclamationmark.triangle.fill",
-                        description: Text("試験問題の読み込みに失敗しました。\nアプリを再起動してお試しください。")
+                        description: Text(lang.l("exam.load_error_message"))
                     )
                 } else if vm.quizzes.isEmpty {
                     loadingView
@@ -51,15 +53,15 @@ struct ExamSimulatorView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     if !vm.examFinished && !vm.loadError {
-                        Button("中断") { vm.showConfirmEnd = true }
+                        Button(lang.l("exam.cancel")) { vm.showConfirmEnd = true }
                     }
                 }
             }
-            .alert("試験を終了しますか？", isPresented: $vm.showConfirmEnd) {
-                Button("終了して採点", role: .destructive) { vm.finishExam(modelContext: modelContext) }
-                Button("続ける", role: .cancel) {}
+            .alert(lang.l("exam.confirm_end_title"), isPresented: $vm.showConfirmEnd) {
+                Button(lang.l("exam.confirm_end_submit"), role: .destructive) { vm.finishExam(modelContext: modelContext) }
+                Button(lang.l("exam.confirm_end_continue"), role: .cancel) {}
             } message: {
-                Text("回答済み: \(vm.answeredCount)/\(vm.quizzes.count)問")
+                Text(lang.l("exam.answered_count", vm.answeredCount, vm.quizzes.count))
             }
             .onAppear { vm.loadExam(modelContext: modelContext) }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
@@ -87,10 +89,10 @@ struct ExamSimulatorView: View {
                     .tint(AppColor.primary)
             }
             VStack(spacing: AppLayout.paddingSM) {
-                Text("問題を読み込み中...")
+                Text(lang.l("exam.loading"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
-                Text(vm.exam?.title ?? "模擬試験")
+                Text(vm.exam.map { lang.l($0.titleKey) } ?? lang.l("exam.title"))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -151,12 +153,12 @@ struct ExamSimulatorView: View {
         VStack(spacing: 0) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("問 \(vm.currentIndex + 1) / \(vm.quizzes.count)")
+                    Text(lang.l("exam.question_number", vm.currentIndex + 1, vm.quizzes.count))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
                         .contentTransition(.numericText())
                         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: vm.currentIndex)
-                    Text("回答済み: \(vm.answeredCount)/\(vm.quizzes.count)")
+                    Text(lang.l("exam.answered_status", vm.answeredCount, vm.quizzes.count))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(AppColor.textTertiary)
                         .contentTransition(.numericText())
@@ -173,7 +175,7 @@ struct ExamSimulatorView: View {
                         .timerWarning(vm.remainingSeconds < 300)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("残り時間 \(vm.timeString)")
+                .accessibilityLabel(lang.l("exam.remaining_time", vm.timeString))
             }
             .padding(.horizontal, AppLayout.paddingMD)
             .padding(.vertical, AppLayout.paddingSM)
@@ -207,7 +209,7 @@ struct ExamSimulatorView: View {
         VStack(alignment: .leading, spacing: AppLayout.paddingMD) {
             // クイズタイプバッジ
             if quiz.type == .multiChoice, let required = quiz.requiredSelections {
-                Text("\(required)つ選択してください")
+                Text(lang.l("exam.select_count", required))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.levelPurple)
                     .padding(.horizontal, AppLayout.paddingSM)
@@ -219,7 +221,7 @@ struct ExamSimulatorView: View {
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
                 .lineSpacing(4)
-                .accessibilityLabel("問\(vm.currentIndex + 1)の問題: \(quiz.question)")
+                .accessibilityLabel(lang.l("quiz.question_accessibility", vm.currentIndex + 1, quiz.question))
 
             if let code = quiz.code, !code.isEmpty {
                 CodeBlockView(code: code)
@@ -266,7 +268,7 @@ struct ExamSimulatorView: View {
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: isSelected)
         }
         .accessibilityLabel(choice.text)
-        .accessibilityValue(isSelected ? "選択中" : "")
+        .accessibilityValue(isSelected ? lang.l("exam.selected") : "")
         .buttonStyle(.pressable(scale: 0.97))
     }
 
@@ -283,9 +285,9 @@ struct ExamSimulatorView: View {
                     .scaleEffect(vm.flagBounce ? 1.3 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.4), value: vm.flagBounce)
             }
-            .accessibilityLabel("フラグ")
-            .accessibilityValue(vm.flaggedQuestions.contains(vm.currentIndex) ? "フラグ済み" : "未フラグ")
-            .accessibilityHint("この問題にフラグを付けます")
+            .accessibilityLabel(lang.l("exam.flag"))
+            .accessibilityValue(vm.flaggedQuestions.contains(vm.currentIndex) ? lang.l("exam.flagged_status") : lang.l("exam.unflagged_status"))
+            .accessibilityHint(lang.l("exam.flag_hint"))
 
             Spacer()
 
@@ -295,14 +297,14 @@ struct ExamSimulatorView: View {
                     .frame(minWidth: 44, minHeight: 44)
             }
             .disabled(vm.currentIndex == 0)
-            .accessibilityLabel("前の問題")
+            .accessibilityLabel(lang.l("exam.prev"))
 
             Button { vm.showQuestionList = true } label: {
                 Image(systemName: "list.bullet")
                     .font(.title3)
                     .frame(minWidth: 44, minHeight: 44)
             }
-            .accessibilityLabel("問題一覧")
+            .accessibilityLabel(lang.l("exam.question_list"))
 
             Button { vm.goToNext() } label: {
                 Image(systemName: vm.currentIndex == vm.quizzes.count - 1 ? "checkmark.circle.fill" : "chevron.right")
@@ -310,7 +312,7 @@ struct ExamSimulatorView: View {
                     .frame(minWidth: 44, minHeight: 44)
                     .symbolEffect(.bounce, value: vm.currentIndex == vm.quizzes.count - 1)
             }
-            .accessibilityLabel(vm.currentIndex == vm.quizzes.count - 1 ? "採点する" : "次の問題")
+            .accessibilityLabel(vm.currentIndex == vm.quizzes.count - 1 ? lang.l("exam.grade") : lang.l("exam.next_question"))
         }
         .padding(.horizontal, AppLayout.paddingMD)
         .padding(.vertical, AppLayout.paddingSM)
@@ -352,18 +354,18 @@ struct ExamSimulatorView: View {
                                 }
                             }
                         }
-                        .accessibilityLabel("問\(index + 1)\(answered ? "、回答済み" : "、未回答")\(flagged ? "、フラグ付き" : "")")
+                        .accessibilityLabel(lang.l("exam_review.question_number", index + 1) + (answered ? ", \(lang.l("exam.answered_label"))" : ", \(lang.l("exam.unanswered_label"))") + (flagged ? ", \(lang.l("exam.flagged_label"))" : ""))
                     }
                 }
                 .padding(AppLayout.paddingMD)
 
                 // サマリー
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("回答済み: \(vm.answeredCount)")
+                    Text(lang.l("exam.list.answered_count", vm.answeredCount))
                         .font(AppFont.caption)
-                    Text("フラグ: \(vm.flaggedQuestions.count)")
+                    Text(lang.l("exam.list.flagged_count", vm.flaggedQuestions.count))
                         .font(AppFont.caption)
-                    Text("未回答: \(vm.quizzes.count - vm.answeredCount)")
+                    Text(lang.l("exam.list.unanswered_count", vm.quizzes.count - vm.answeredCount))
                         .font(AppFont.caption)
                 }
                 .foregroundStyle(AppColor.textSecondary)
@@ -373,7 +375,7 @@ struct ExamSimulatorView: View {
                     vm.showQuestionList = false
                     vm.showConfirmEnd = true
                 } label: {
-                    Text("試験を終了する")
+                    Text(lang.l("exam.list.end"))
                         .font(AppFont.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
@@ -382,11 +384,11 @@ struct ExamSimulatorView: View {
                 .tint(AppColor.error)
                 .padding(.horizontal, AppLayout.paddingMD)
             }
-            .navigationTitle("問題一覧")
+            .navigationTitle(lang.l("exam.question_list"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("閉じる") { vm.showQuestionList = false }
+                    Button(lang.l("exam.list.close")) { vm.showQuestionList = false }
                 }
             }
         }

@@ -12,6 +12,7 @@ struct SectionView: View {
     let section: LessonSection
     var sectionNumber: Int = 1
     var totalSections: Int = 1
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -98,7 +99,7 @@ struct SectionView: View {
                     .font(.caption2)
             }
             VStack(alignment: .leading, spacing: 3) {
-                Text("ポイント")
+                Text(lang.l("section.note_label"))
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(AppColor.accent)
                     .textCase(.uppercase)
@@ -118,11 +119,11 @@ struct SectionView: View {
 
     private var sectionTypeLabel: String {
         switch section.sectionType {
-        case .overview: return "概要"
-        case .rule:     return "ルール"
-        case .code:     return "コード"
-        case .point:    return "ポイント"
-        case .tip:      return "補足"
+        case .overview: return lang.l("section.type.overview")
+        case .rule:     return lang.l("section.type.rule")
+        case .code:     return lang.l("section.type.code")
+        case .point:    return lang.l("section.type.point")
+        case .tip:      return lang.l("section.type.tip")
         }
     }
 

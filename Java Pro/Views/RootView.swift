@@ -23,6 +23,7 @@ struct RootView: View {
     @State private var studyTimer: Timer?
     private var appearance = AppearanceManager.shared
     private var saveErrorNotifier = SaveErrorNotifier.shared
+    private var lang = LanguageManager.shared
 
     var body: some View {
         Group {
@@ -39,23 +40,23 @@ struct RootView: View {
             }
         }
         .preferredColorScheme(appearance.colorSchemeOverride)
-        .alert("データ保存エラー", isPresented: $showSaveError) {
+        .alert(lang.l("root.save_error_title"), isPresented: $showSaveError) {
             Button("OK") { saveErrorNotifier.clear() }
         } message: {
-            Text(saveErrorNotifier.lastError ?? "データの保存に失敗しました。アプリを再起動してください。")
+            Text(saveErrorNotifier.lastError ?? lang.l("root.save_error_message"))
         }
         .onChange(of: saveErrorNotifier.lastError) { _, newValue in
             showSaveError = newValue != nil
         }
-        .alert("データの読み込みに問題が発生しました", isPresented: $dataRecoveryMode) {
+        .alert(lang.l("root.load_error_title"), isPresented: $dataRecoveryMode) {
             Button("OK") { dataRecoveryMode = false }
         } message: {
-            Text("学習データの読み込みに失敗したため、一時的なモードで起動しています。アプリを再起動しても改善しない場合は、サポートにお問い合わせください。")
+            Text(lang.l("root.load_error_message"))
         }
-        .alert("教材データの読み込みエラー", isPresented: $showContentLoadError) {
+        .alert(lang.l("root.content_error_title"), isPresented: $showContentLoadError) {
             Button("OK") { showContentLoadError = false }
         } message: {
-            Text(ContentService.shared.loadError ?? "一部の教材データの読み込みに失敗しました。アプリを再起動してください。")
+            Text(ContentService.shared.loadError ?? lang.l("root.content_error_message"))
         }
         .task {
             let service = ProgressService(modelContext: modelContext)
@@ -154,9 +155,12 @@ struct RootView: View {
         let service = ProgressService(modelContext: modelContext)
         let settings = service.getSettings()
         guard settings.notificationsEnabled else { return }
+        let strings = LanguageManager.shared.notificationStrings()
         NotificationService.shared.scheduleDailyReminder(
             hour: settings.reminderHour,
-            minute: settings.reminderMinute
+            minute: settings.reminderMinute,
+            title: strings.title,
+            bodies: strings.bodies
         )
     }
 
@@ -169,9 +173,12 @@ struct RootView: View {
         Task {
             let granted = await NotificationService.shared.requestAuthorization()
             if granted {
+                let strings = LanguageManager.shared.notificationStrings()
                 NotificationService.shared.scheduleDailyReminder(
                     hour: settings.reminderHour,
-                    minute: settings.reminderMinute
+                    minute: settings.reminderMinute,
+                    title: strings.title,
+                    bodies: strings.bodies
                 )
             } else {
                 // 権限拒否されたらOFFにする
@@ -194,6 +201,7 @@ private struct LaunchScreen: View {
     @State private var ringRotation: Double = 0
     @State private var subtitleOpacity: Double = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var lang = LanguageManager.shared
 
     var body: some View {
         ZStack {
@@ -245,12 +253,12 @@ private struct LaunchScreen: View {
                         .opacity(iconOpacity)
                 }
 
-                Text("プロプロ")
+                Text(lang.l("root.launch_title"))
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .opacity(textOpacity)
 
-                Text("プロのJavaスキルを手に入れよう")
+                Text(lang.l("root.launch_subtitle"))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.7))
                     .opacity(subtitleOpacity)

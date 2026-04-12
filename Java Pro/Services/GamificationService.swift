@@ -50,29 +50,29 @@ final class GamificationService {
         return thresholds
     }()
 
-    /// レベルごとの称号。
+    /// レベルごとの称号キー（ローカライズキーを格納し、表示時に解決する）。
     static let levelTitles: [Int: String] = [
-        1: "Java見習い",
-        3: "Hello Worlder",
-        5: "コード初心者",
-        8: "配列探検家",
-        10: "変数マスター",
-        13: "メソッド使い",
-        15: "ループ使い",
-        18: "クラス設計士",
-        20: "オブジェクト職人",
-        23: "例外ハンドラー",
-        25: "Silver挑戦者",
-        28: "API探求者",
-        30: "ラムダ使い",
-        33: "Streamマスター",
-        35: "並行処理者",
-        38: "Gold挑戦者",
-        40: "モジュール設計士",
-        43: "アーキテクト",
-        45: "Java賢者",
-        48: "伝説のコーダー",
-        50: "Javaマスター",
+        1: "level.title.1",
+        3: "level.title.3",
+        5: "level.title.5",
+        8: "level.title.8",
+        10: "level.title.10",
+        13: "level.title.13",
+        15: "level.title.15",
+        18: "level.title.18",
+        20: "level.title.20",
+        23: "level.title.23",
+        25: "level.title.25",
+        28: "level.title.28",
+        30: "level.title.30",
+        33: "level.title.33",
+        35: "level.title.35",
+        38: "level.title.38",
+        40: "level.title.40",
+        43: "level.title.43",
+        45: "level.title.45",
+        48: "level.title.48",
+        50: "level.title.50",
     ]
 
     // MARK: - XP 付与
@@ -182,60 +182,60 @@ final class GamificationService {
         return min(max(progress, 0), 1.0)
     }
 
-    /// 現在のレベル称号を取得する。
+    /// 現在のレベル称号を取得する（ローカライズ済み文字列を返す）。
     func currentTitle() -> String {
         let level = getOrCreateUserLevel().level
-        // 最も近い称号を返す
-        var title = "Java見習い"
-        for (lv, t) in Self.levelTitles.sorted(by: { $0.key < $1.key }) {
-            if level >= lv { title = t }
+        // 最も近い称号キーを取得し、ローカライズして返す
+        var titleKey = "level.title.1"
+        for (lv, key) in Self.levelTitles.sorted(by: { $0.key < $1.key }) {
+            if level >= lv { titleKey = key }
         }
-        return title
+        return LanguageManager.shared.l(titleKey)
     }
 
     // MARK: - バッジ
 
-    /// バッジ定義（32種）。
-    static let badgeDefinitions: [(id: String, name: String, description: String, icon: String, color: String, condition: String)] = [
+    /// バッジ定義（32種）。nameKey/descriptionKey にローカライズキーを格納し、表示時に解決する。
+    static let badgeDefinitions: [(id: String, nameKey: String, descriptionKey: String, icon: String, color: String, condition: String)] = [
         // 学習系
-        ("first_lesson", "はじめの一歩", "最初のレッスンを完了", "figure.walk", "3B82F6", "lesson_1"),
-        ("lesson_10", "学習家", "10レッスン完了", "book.fill", "8B5CF6", "lesson_10"),
-        ("lesson_25", "勉強熱心", "25レッスン完了", "book.closed.fill", "EC4899", "lesson_25"),
-        ("lesson_50", "知識の泉", "50レッスン完了", "books.vertical.fill", "F59E0B", "lesson_50"),
-        ("lesson_100", "学問の達人", "100レッスン完了", "graduationcap.fill", "10B981", "lesson_100"),
-        ("all_ch01", "入門マスター", "Chapter 01 完全制覇", "star.fill", "06B6D4", "chapter_ch01"),
-        ("oop_master", "OOPマスター", "OOP全チャプター完了", "cube.fill", "6366F1", "oop_complete"),
-        ("all_lessons", "全レッスン制覇", "全レッスン完了", "crown.fill", "FFD700", "all_lessons"),
+        ("first_lesson", "badge.first_lesson.name", "badge.first_lesson.desc", "figure.walk", "3B82F6", "lesson_1"),
+        ("lesson_10", "badge.lesson_10.name", "badge.lesson_10.desc", "book.fill", "8B5CF6", "lesson_10"),
+        ("lesson_25", "badge.lesson_25.name", "badge.lesson_25.desc", "book.closed.fill", "EC4899", "lesson_25"),
+        ("lesson_50", "badge.lesson_50.name", "badge.lesson_50.desc", "books.vertical.fill", "F59E0B", "lesson_50"),
+        ("lesson_100", "badge.lesson_100.name", "badge.lesson_100.desc", "graduationcap.fill", "10B981", "lesson_100"),
+        ("all_ch01", "badge.all_ch01.name", "badge.all_ch01.desc", "star.fill", "06B6D4", "chapter_ch01"),
+        ("oop_master", "badge.oop_master.name", "badge.oop_master.desc", "cube.fill", "6366F1", "oop_complete"),
+        ("all_lessons", "badge.all_lessons.name", "badge.all_lessons.desc", "crown.fill", "FFD700", "all_lessons"),
 
         // クイズ系
-        ("quiz_10", "クイズ初心者", "10問正解", "questionmark.circle.fill", "3B82F6", "quiz_10"),
-        ("quiz_50", "クイズ好き", "50問正解", "checkmark.circle.fill", "8B5CF6", "quiz_50"),
-        ("quiz_100", "クイズマスター", "100問正解", "checkmark.seal.fill", "10B981", "quiz_100"),
-        ("quiz_200", "クイズエキスパート", "200問正解", "checkmark.diamond.fill", "EC4899", "quiz_200"),
-        ("quiz_500", "クイズの鬼", "500問正解", "bolt.circle.fill", "F59E0B", "quiz_500"),
-        ("perfect_3", "パーフェクト×3", "3回全問正解", "sparkles", "EC4899", "perfect_3"),
-        ("perfect_10", "パーフェクト×10", "10回全問正解", "star.circle.fill", "FFD700", "perfect_10"),
-        ("speed_demon", "スピードスター", "30秒以内に全問正解", "hare.fill", "EF4444", "speed_quiz"),
-        ("error_finder", "バグハンター", "エラー発見問題10問正解", "ladybug.fill", "DC2626", "error_10"),
+        ("quiz_10", "badge.quiz_10.name", "badge.quiz_10.desc", "questionmark.circle.fill", "3B82F6", "quiz_10"),
+        ("quiz_50", "badge.quiz_50.name", "badge.quiz_50.desc", "checkmark.circle.fill", "8B5CF6", "quiz_50"),
+        ("quiz_100", "badge.quiz_100.name", "badge.quiz_100.desc", "checkmark.seal.fill", "10B981", "quiz_100"),
+        ("quiz_200", "badge.quiz_200.name", "badge.quiz_200.desc", "checkmark.diamond.fill", "EC4899", "quiz_200"),
+        ("quiz_500", "badge.quiz_500.name", "badge.quiz_500.desc", "bolt.circle.fill", "F59E0B", "quiz_500"),
+        ("perfect_3", "badge.perfect_3.name", "badge.perfect_3.desc", "sparkles", "EC4899", "perfect_3"),
+        ("perfect_10", "badge.perfect_10.name", "badge.perfect_10.desc", "star.circle.fill", "FFD700", "perfect_10"),
+        ("speed_demon", "badge.speed_demon.name", "badge.speed_demon.desc", "hare.fill", "EF4444", "speed_quiz"),
+        ("error_finder", "badge.error_finder.name", "badge.error_finder.desc", "ladybug.fill", "DC2626", "error_10"),
 
         // ストリーク系
-        ("streak_3", "3日連続", "3日連続学習", "flame.fill", "F59E0B", "streak_3"),
-        ("streak_7", "1週間連続", "7日連続学習", "flame.fill", "EF4444", "streak_7"),
-        ("streak_14", "2週間連続", "14日連続学習", "flame.circle.fill", "EC4899", "streak_14"),
-        ("streak_30", "30日連続", "30日連続学習！", "flame.circle.fill", "FFD700", "streak_30"),
-        ("streak_50", "50日の絆", "50日連続学習", "flame.circle.fill", "FF6B35", "streak_50"),
-        ("streak_100", "100日の絆", "100日連続学習", "trophy.fill", "FFD700", "streak_100"),
-        ("streak_365", "年間皆勤", "365日連続学習", "medal.fill", "FFD700", "streak_365"),
+        ("streak_3", "badge.streak_3.name", "badge.streak_3.desc", "flame.fill", "F59E0B", "streak_3"),
+        ("streak_7", "badge.streak_7.name", "badge.streak_7.desc", "flame.fill", "EF4444", "streak_7"),
+        ("streak_14", "badge.streak_14.name", "badge.streak_14.desc", "flame.circle.fill", "EC4899", "streak_14"),
+        ("streak_30", "badge.streak_30.name", "badge.streak_30.desc", "flame.circle.fill", "FFD700", "streak_30"),
+        ("streak_50", "badge.streak_50.name", "badge.streak_50.desc", "flame.circle.fill", "FF6B35", "streak_50"),
+        ("streak_100", "badge.streak_100.name", "badge.streak_100.desc", "trophy.fill", "FFD700", "streak_100"),
+        ("streak_365", "badge.streak_365.name", "badge.streak_365.desc", "medal.fill", "FFD700", "streak_365"),
 
         // 資格系
-        ("silver_ready", "Silver準備完了", "Silver範囲の全レッスン完了", "shield.fill", "C0C0C0", "silver_lessons"),
-        ("silver_pass", "Silver合格", "Silver模擬試験で合格点", "shield.checkered", "C0C0C0", "silver_pass"),
-        ("gold_ready", "Gold準備完了", "Gold範囲の全レッスン完了", "shield.fill", "FFD700", "gold_lessons"),
-        ("gold_pass", "Gold合格", "Gold模擬試験で合格点", "shield.checkered", "FFD700", "gold_pass"),
-        ("xp_1000", "XP 1,000突破", "累計1,000 XP獲得", "bolt.fill", "8B5CF6", "xp_1000"),
-        ("xp_5000", "XP 5,000突破", "累計5,000 XP獲得", "bolt.circle.fill", "10B981", "xp_5000"),
-        ("xp_10000", "XP 10,000突破", "累計10,000 XP獲得", "bolt.shield.fill", "EF4444", "xp_10000"),
-        ("xp_30000", "XPマスター", "累計30,000 XP獲得", "bolt.ring.closed", "FFD700", "xp_30000"),
+        ("silver_ready", "badge.silver_ready.name", "badge.silver_ready.desc", "shield.fill", "C0C0C0", "silver_lessons"),
+        ("silver_pass", "badge.silver_pass.name", "badge.silver_pass.desc", "shield.checkered", "C0C0C0", "silver_pass"),
+        ("gold_ready", "badge.gold_ready.name", "badge.gold_ready.desc", "shield.fill", "FFD700", "gold_lessons"),
+        ("gold_pass", "badge.gold_pass.name", "badge.gold_pass.desc", "shield.checkered", "FFD700", "gold_pass"),
+        ("xp_1000", "badge.xp_1000.name", "badge.xp_1000.desc", "bolt.fill", "8B5CF6", "xp_1000"),
+        ("xp_5000", "badge.xp_5000.name", "badge.xp_5000.desc", "bolt.circle.fill", "10B981", "xp_5000"),
+        ("xp_10000", "badge.xp_10000.name", "badge.xp_10000.desc", "bolt.shield.fill", "EF4444", "xp_10000"),
+        ("xp_30000", "badge.xp_30000.name", "badge.xp_30000.desc", "bolt.ring.closed", "FFD700", "xp_30000"),
     ]
 
     /// 獲得済みバッジ一覧を取得する。
@@ -262,8 +262,8 @@ final class GamificationService {
 
         let badge = UserBadge(
             badgeId: def.id,
-            name: def.name,
-            description: def.description,
+            name: def.nameKey,
+            description: def.descriptionKey,
             iconName: def.icon,
             colorHex: def.color
         )

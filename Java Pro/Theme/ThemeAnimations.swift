@@ -184,7 +184,7 @@ struct AnimatedProgressBar: View {
             }
         }
         .frame(height: height)
-        .accessibilityLabel("進捗")
+        .accessibilityLabel(LanguageManager.shared.l("common.progress"))
         .accessibilityValue("\(Int(progress * 100))%")
         .onAppear {
             if reduceMotion {

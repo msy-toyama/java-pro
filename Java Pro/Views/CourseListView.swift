@@ -21,20 +21,21 @@ struct CourseListView: View {
     @State private var navigationPath = NavigationPath()
     @State private var selectedMode: LearnMode = .course
     @State private var collapsedSections: Set<String> = []
+    private var lang: LanguageManager { LanguageManager.shared }
 
     /// 学習モード切替
-    enum LearnMode: String, CaseIterable {
-        case course = "教材学習"
-        case practice = "実践演習"
+    enum LearnMode: CaseIterable {
+        case course
+        case practice
     }
 
     var body: some View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 // モード切替 Picker
-                Picker("学習モード", selection: $selectedMode) {
+                Picker(lang.l("learn.mode.label"), selection: $selectedMode) {
                     ForEach(LearnMode.allCases, id: \.self) { mode in
-                        Text(mode.rawValue).tag(mode)
+                        Text(mode == .course ? lang.l("learn.mode.textbook") : lang.l("learn.mode.practice")).tag(mode)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -49,11 +50,11 @@ struct CourseListView: View {
                 }
             }
             .background(AppColor.background)
-            .navigationTitle("学習")
+            .navigationTitle(lang.l("learn.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    BrandedTitleView(title: "学習", icon: "book.fill", subtitle: "コース一覧")
+                    BrandedTitleView(title: lang.l("learn.title"), icon: "book.fill", subtitle: lang.l("learn.courses"))
                 }
             }
             .toolbar {
@@ -64,7 +65,7 @@ struct CourseListView: View {
                         Image(systemName: "character.book.closed.fill")
                             .foregroundStyle(AppColor.primary)
                     }
-                    .accessibilityLabel("用語集")
+                    .accessibilityLabel(lang.l("learn.glossary"))
                 }
             }
             .navigationDestination(for: CourseIndex.self) { course in
@@ -150,8 +151,8 @@ struct CourseListView: View {
                                         .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.pressable)
-                                    .accessibilityLabel("\(course.title)、\(completedCounts[course.id] ?? 0)/\(course.lessonCount)レッスン完了")
-                                    .accessibilityHint("レッスン一覧を開きます")
+                                    .accessibilityLabel(lang.l("learn.course_lessons_completed", course.title, completedCounts[course.id] ?? 0, course.lessonCount))
+                                    .accessibilityHint(lang.l("learn.open_lesson_list"))
                                 } else {
                                     Button { showPaywall = true } label: {
                                         CourseCardView(
@@ -162,8 +163,8 @@ struct CourseListView: View {
                                         .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.pressable)
-                                    .accessibilityLabel("\(course.title)、ロック中")
-                                    .accessibilityHint("プレミアムプランを表示します")
+                                    .accessibilityLabel(lang.l("learn.course_locked", course.title))
+                                    .accessibilityHint(lang.l("learn.show_premium_hint"))
                                 }
                             }
                             .opacity(appearedItems.contains(course.id) ? 1 : 0)
@@ -239,17 +240,17 @@ struct CourseListView: View {
     }
 
     /// カテゴリ定義: 表示順・ラベル・アイコン・カラーのマッピング
-    private static let categoryDefinitions: [(key: String, title: String, icon: String, color: Color)] = [
-        ("basics",            "Javaの基礎を学ぶ",          "book.fill",                         AppColor.success),
-        ("oop",               "オブジェクト指向設計",        "cube.fill",                         Color(hex: "#6366F1")),
-        ("error_handling",    "エラーハンドリング",          "exclamationmark.shield.fill",       AppColor.error),
-        ("standard_library",  "Java標準ライブラリ活用",     "shippingbox.fill",                  Color(hex: "#06B6D4")),
-        ("data_collections",  "データ構造とジェネリクス",    "tray.2.fill",                       Color(hex: "#3B82F6")),
-        ("functional_stream", "関数型とStream処理",         "chevron.left.forwardslash.chevron.right", Color(hex: "#10B981")),
-        ("database_web",      "データベースとWeb開発",      "globe",                             Color(hex: "#F97316")),
-        ("concurrency_io",    "並行処理とファイルI/O",      "arrow.triangle.branch",             Color(hex: "#D946EF")),
-        ("modules_i18n",      "モジュールと国際化",          "square.grid.3x3.fill",              Color(hex: "#F59E0B")),
-        ("exam_practice",     "試験対策演習",               "trophy.fill",                       AppColor.accent),
+    private static let categoryDefinitions: [(key: String, titleKey: String, icon: String, color: Color)] = [
+        ("basics",            "learn.category.basics",          "book.fill",                         AppColor.success),
+        ("oop",               "learn.category.oop",        "cube.fill",                         Color(hex: "#6366F1")),
+        ("error_handling",    "learn.category.errorhandling",          "exclamationmark.shield.fill",       AppColor.error),
+        ("standard_library",  "learn.category.api",     "shippingbox.fill",                  Color(hex: "#06B6D4")),
+        ("data_collections",  "learn.category.generics",    "tray.2.fill",                       Color(hex: "#3B82F6")),
+        ("functional_stream", "learn.category.functional",         "chevron.left.forwardslash.chevron.right", Color(hex: "#10B981")),
+        ("database_web",      "learn.category.web",      "globe",                             Color(hex: "#F97316")),
+        ("concurrency_io",    "learn.category.concurrency",      "arrow.triangle.branch",             Color(hex: "#D946EF")),
+        ("modules_i18n",      "learn.category.modules",          "square.grid.3x3.fill",              Color(hex: "#F59E0B")),
+        ("exam_practice",     "learn.category.exam",               "trophy.fill",                       AppColor.accent),
     ]
 
     private var groupedCourses: [CourseSection] {
@@ -260,7 +261,7 @@ struct CourseListView: View {
                 .sorted { $0.order < $1.order }
             if !matched.isEmpty {
                 sections.append(CourseSection(
-                    title: def.title,
+                    title: LanguageManager.shared.l(def.titleKey),
                     icon: def.icon,
                     color: def.color,
                     courses: matched
@@ -271,7 +272,7 @@ struct CourseListView: View {
         let knownKeys = Set(Self.categoryDefinitions.map(\.key))
         let uncategorized = courses.filter { knownKeys.contains($0.category ?? "") == false }
         if !uncategorized.isEmpty {
-            sections.append(CourseSection(title: "その他", icon: "folder", color: AppColor.textSecondary, courses: uncategorized))
+            sections.append(CourseSection(title: LanguageManager.shared.l("learn.category.other"), icon: "folder", color: AppColor.textSecondary, courses: uncategorized))
         }
         return sections
     }
@@ -294,6 +295,7 @@ struct CourseCardView: View {
     let course: CourseIndex
     let completedCount: Int
     var isLocked: Bool = false
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private var progress: Double {
         course.lessonCount > 0 ? Double(completedCount) / Double(course.lessonCount) : 0
@@ -375,7 +377,7 @@ struct CourseCardView: View {
                         Image(systemName: "crown.fill")
                             .font(.caption2)
                             .foregroundStyle(AppColor.accent)
-                        Text("プレミアム")
+                        Text(lang.l("learn.premium"))
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(AppColor.accent)
                     }

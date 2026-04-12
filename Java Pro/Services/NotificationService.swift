@@ -44,7 +44,12 @@ final class NotificationService: Sendable {
     /// 当日分（指定時刻がまだ先の場合）＋ 先7日分を個別登録し、
     /// 毎日異なるメッセージを表示する。
     /// アプリ起動時に再度呼び出すことで、常に先7日分が補充される。
-    func scheduleDailyReminder(hour: Int, minute: Int) {
+    /// - Parameters:
+    ///   - hour: 通知時刻（時）
+    ///   - minute: 通知時刻（分）
+    ///   - title: ローカライズ済み通知タイトル
+    ///   - bodies: ローカライズ済み通知本文の配列（ランダム選択）
+    func scheduleDailyReminder(hour: Int, minute: Int, title: String, bodies: [String]) {
         // 既存のリマインドを取り消し
         cancelDailyReminder()
 
@@ -67,8 +72,8 @@ final class NotificationService: Sendable {
             }
 
             let content = UNMutableNotificationContent()
-            content.title = "今日もJavaを学ぼう 📚"
-            content.body = randomReminderBody()
+            content.title = title
+            content.body = bodies.randomElement() ?? ""
             content.sound = .default
 
             let trigger = UNCalendarNotificationTrigger(
@@ -97,17 +102,4 @@ final class NotificationService: Sendable {
     }
 
     // MARK: - Private
-
-    /// リマインド本文をランダムに返す（飽き防止）。
-    private func randomReminderBody() -> String {
-        let messages = [
-            "5分だけでOK！今日のレッスンが待っています。",
-            "昨日の復習が溜まっています。サクッと確認しましょう。",
-            "継続は力なり！今日もJavaを一歩進めませんか？",
-            "スキマ時間にクイズ1問だけ解いてみましょう。",
-            "毎日続けることが上達の近道です。",
-            "今日はどの章を学びますか？"
-        ]
-        return messages.randomElement() ?? messages[0]
-    }
 }

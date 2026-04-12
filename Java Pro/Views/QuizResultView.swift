@@ -28,6 +28,8 @@ struct QuizResultView: View {
     @State private var isNavigating = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     // MARK: - Navigation helpers
 
     private var nextLessonId: String? {
@@ -78,11 +80,11 @@ struct QuizResultView: View {
             .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
-        .navigationTitle("クイズ結果")
+        .navigationTitle(lang.l("quiz_result.title"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("閉じる") { dismiss() }
+                Button(lang.l("quiz_result.close")) { dismiss() }
             }
         }
         .onAppear {
@@ -126,10 +128,10 @@ struct QuizResultView: View {
 
     private var rateText: some View {
         let rate = Int(Double(correctCount) / Double(max(totalCount, 1)) * 100)
-        return Text("正解率: \(rate)%")
+        return Text(lang.l("quiz_result.accuracy", rate))
             .font(AppFont.callout)
             .foregroundStyle(AppColor.textSecondary)
-            .accessibilityLabel("スコア \(correctCount)/\(totalCount)、正解率\(rate)%")
+            .accessibilityLabel(lang.l("quiz_result.accuracy", rate))
     }
 
     // MARK: - XP Card
@@ -141,11 +143,11 @@ struct QuizResultView: View {
                 .font(.title2)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
-                Text("+\(earnedXP) XP 獲得！")
+                Text(lang.l("quiz_result.xp_earned", earnedXP))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.xpGold)
                 if correctCount == totalCount {
-                    Text("パーフェクトボーナス含む")
+                    Text(lang.l("quiz_result.perfect_bonus"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }
@@ -163,7 +165,7 @@ struct QuizResultView: View {
                 .font(.system(size: 36))
                 .foregroundStyle(AppColor.levelPurple)
                 .accessibilityHidden(true)
-            Text("レベルアップ！")
+            Text(lang.l("quiz_result.level_up"))
                 .font(AppFont.title)
                 .foregroundStyle(AppColor.levelPurple)
             Text("Level \(level)")
@@ -179,7 +181,7 @@ struct QuizResultView: View {
 
     private var badgesCard: some View {
         VStack(spacing: AppLayout.paddingSM) {
-            Text("新しいバッジを獲得！")
+            Text(lang.l("quiz_result.new_badge"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.accent)
             ForEach(newBadges, id: \.self) { badgeId in
@@ -189,8 +191,8 @@ struct QuizResultView: View {
                             .font(.title2)
                             .foregroundStyle(Color(hex: def.color))
                         VStack(alignment: .leading) {
-                            Text(def.name).font(AppFont.headline).foregroundStyle(AppColor.textPrimary)
-                            Text(def.description).font(AppFont.caption).foregroundStyle(AppColor.textSecondary)
+                            Text(lang.l(def.nameKey)).font(AppFont.headline).foregroundStyle(AppColor.textPrimary)
+                            Text(lang.l(def.descriptionKey)).font(AppFont.caption).foregroundStyle(AppColor.textSecondary)
                         }
                         Spacer()
                     }
@@ -221,10 +223,10 @@ struct QuizResultView: View {
 
     private var resultMessage: String {
         let rate = Double(correctCount) / Double(max(totalCount, 1))
-        if rate >= 1.0 { return "パーフェクト！" }
-        if rate >= 0.8 { return "素晴らしい！" }
-        if rate >= 0.5 { return "いい感じです！" }
-        return "もう一度挑戦しましょう"
+        if rate >= 1.0 { return lang.l("quiz_result.perfect") }
+        if rate >= 0.8 { return lang.l("quiz_result.great") }
+        if rate >= 0.5 { return lang.l("quiz_result.good") }
+        return lang.l("quiz_result.retry_message")
     }
 
     // MARK: - Action Buttons
@@ -245,7 +247,7 @@ struct QuizResultView: View {
                     HStack(spacing: AppLayout.paddingSM) {
                         Image(systemName: "arrow.right.circle.fill")
                             .font(.title3)
-                        Text("次のレッスンへ")
+                        Text(lang.l("quiz_result.next_lesson"))
                             .font(AppFont.headline)
                     }
                     .foregroundStyle(.white)
@@ -279,7 +281,7 @@ struct QuizResultView: View {
                         Image(systemName: "book.and.wrench.fill")
                             .font(.title3)
                         VStack(spacing: 2) {
-                            Text("次のコンテンツへ")
+                            Text(lang.l("quiz_result.next_content"))
                                 .font(AppFont.headline)
                             if let title = nextCourseTitle {
                                 Text(title)
@@ -312,7 +314,7 @@ struct QuizResultView: View {
                     HStack(spacing: AppLayout.paddingSM) {
                         Image(systemName: "arrow.counterclockwise")
                             .font(.title3)
-                        Text("もう一度挑戦")
+                        Text(lang.l("quiz_result.retry"))
                             .font(AppFont.headline)
                     }
                     .foregroundStyle(AppColor.primary)
@@ -329,7 +331,7 @@ struct QuizResultView: View {
 
             // 閉じる
             Button { dismiss() } label: {
-                Text("閉じる")
+                Text(lang.l("quiz_result.close_button"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textSecondary)
                     .frame(maxWidth: .infinity)
@@ -350,10 +352,10 @@ struct QuizResultView: View {
                     .foregroundStyle(AppColor.practiceIndigo)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("学んだ内容を実践しよう！")
+                    Text(lang.l("quiz_result.practice_prompt"))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text("\(chapter.title) の実践演習 \(chapter.exercises.count)問")
+                    Text(lang.l("quiz_result.practice_count", chapter.title, chapter.exercises.count))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }
@@ -361,7 +363,7 @@ struct QuizResultView: View {
 
             NavigationLink(value: chapter) {
                 HStack(spacing: 6) {
-                    Text("実践演習に挑戦")
+                    Text(lang.l("quiz_result.practice_button"))
                         .font(AppFont.callout)
                     Image(systemName: "arrow.right")
                         .font(.caption)

@@ -22,7 +22,8 @@ final class SaveErrorNotifier {
 
     /// 保存エラーを報告する。
     func report(_ error: Error) {
-        lastError = "データの保存に失敗しました。\n\(error.localizedDescription)"
+        let msg = LanguageManager.shared.l("save_error.message")
+        lastError = "\(msg)\n\(error.localizedDescription)"
     }
 
     /// エラーをクリアする。

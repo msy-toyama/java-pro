@@ -16,23 +16,25 @@ struct WeakPointView: View {
     @State private var weakTopics: [WeakTopic] = []
     @State private var isLoading = true
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     var body: some View {
         Group {
             if isLoading {
-                ProgressView("分析中…")
+                ProgressView(lang.l("weak.analyzing"))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if weakTopics.isEmpty {
                 ContentUnavailableView(
-                    "弱点なし！",
+                    lang.l("weak.none_title"),
                     systemImage: "checkmark.seal.fill",
-                    description: Text("すべての分野でよい正答率です。\nこの調子で頑張りましょう！")
+                    description: Text(lang.l("weak.none_message"))
                 )
             } else {
                 weakTopicsList
             }
         }
         .background(AppColor.background)
-        .navigationTitle("弱点分析")
+        .navigationTitle(lang.l("weak.title"))
         .navigationBarTitleDisplayMode(.inline)
         .task { await loadWeakTopics() }
     }
@@ -70,10 +72,10 @@ struct WeakPointView: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(weakTopics.count)分野で改善の余地があります")
+                Text(lang.l("weak.areas_count", weakTopics.count))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("正答率 80% 未満の分野を表示しています")
+                Text(lang.l("weak.threshold_note"))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -102,7 +104,7 @@ struct WeakPointView: View {
                     Text(topic.title)
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text("正解: \(topic.totalAttempts - topic.incorrectCount)/\(topic.totalAttempts)問  (\(Int(topic.correctRate * 100))%)")
+                    Text(lang.l("weak.correct_detail", topic.totalAttempts - topic.incorrectCount, topic.totalAttempts, Int(topic.correctRate * 100)))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }
@@ -146,15 +148,15 @@ struct WeakPointView: View {
 
     private var adviceCard: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Label("学習のコツ", systemImage: "graduationcap.fill")
+            Label(lang.l("weak.study_tips"), systemImage: "graduationcap.fill")
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.info)
 
             VStack(alignment: .leading, spacing: 8) {
-                tipRow("🔄", "弱点分野のクイズを繰り返し解きましょう")
-                tipRow("📖", "該当レッスンをもう一度読み返しましょう")
-                tipRow("💻", "コード実行で実際に動作を確認しましょう")
-                tipRow("📝", "間違えた問題はメモして定期的に復習しましょう")
+                tipRow("🔄", lang.l("weak.tip.review_mistakes"))
+                tipRow("📖", lang.l("weak.tip.revisit_lessons"))
+                tipRow("💻", lang.l("weak.tip.run_code"))
+                tipRow("📝", lang.l("weak.tip.note_mistakes"))
             }
         }
         .padding(AppLayout.paddingMD)
@@ -193,11 +195,11 @@ struct WeakPointView: View {
 
     private func recommendedAction(_ topic: WeakTopic) -> String {
         if topic.correctRate < 0.4 {
-            return "基礎からレッスンを見直すことをお勧めします"
+            return lang.l("weak.action.review_basics")
         } else if topic.correctRate < 0.6 {
-            return "クイズを繰り返し練習しましょう"
+            return lang.l("weak.action.practice_quizzes")
         } else {
-            return "あと少し！復習モードで仕上げましょう"
+            return lang.l("weak.action.almost_there")
         }
     }
 

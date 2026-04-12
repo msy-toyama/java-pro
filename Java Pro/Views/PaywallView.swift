@@ -10,6 +10,7 @@ import StoreKit
 
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         NavigationStack {
@@ -53,11 +54,11 @@ struct PaywallView: View {
                 .padding(AppLayout.paddingMD)
             }
             .background(AppColor.background)
-            .navigationTitle("フルアクセス")
+            .navigationTitle(lang.l("paywall.full_access"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("閉じる") { dismiss() }
+                    Button(lang.l("paywall.close")) { dismiss() }
                 }
             }
         }
@@ -77,11 +78,11 @@ struct PaywallView: View {
                 .shimmer(duration: 2.5)
                 .accessibilityHidden(true)
 
-            Text("プロプロ フルアクセス")
+            Text(lang.l("paywall.title"))
                 .font(AppFont.largeTitle)
                 .foregroundStyle(AppColor.textPrimary)
 
-            Text("買い切りで全コンテンツが永久に使い放題")
+            Text(lang.l("paywall.subtitle"))
                 .font(AppFont.callout)
                 .foregroundStyle(AppColor.textSecondary)
                 .multilineTextAlignment(.center)
@@ -93,15 +94,15 @@ struct PaywallView: View {
 
     private var freeSection: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("無料で使える機能")
+            Text(lang.l("paywall.free_title"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
-            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: "入門〜継承 8チャプター・46レッスン")
-            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: "159問のクイズ")
-            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: "SE11 Silver 模擬試験（80問×1回）")
-            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: "実践演習（基礎コーディング課題）")
-            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: "バッジ・レベルアップ機能")
+            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: lang.l("paywall.free.lessons"))
+            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: lang.l("paywall.free.quiz"))
+            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: lang.l("paywall.free.exam"))
+            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: lang.l("paywall.free.review"))
+            featureRow(icon: "checkmark.circle.fill", color: AppColor.success, text: lang.l("paywall.free.glossary"))
         }
         .padding(AppLayout.paddingMD)
         .background(AppColor.success.opacity(0.06), in: RoundedRectangle(cornerRadius: AppLayout.cornerRadius))
@@ -111,16 +112,16 @@ struct PaywallView: View {
 
     private var benefitsSection: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("フルアクセスで解放")
+            Text(lang.l("paywall.pro_title"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
-            featureRow(icon: "lock.open.fill", color: AppColor.primary, text: "全\(ContentService.shared.getAllCourses().count)チャプター・\(ContentService.shared.totalLessonCount)レッスンにアクセス")
-            featureRow(icon: "chevron.left.forwardslash.chevron.right", color: Color(hex: "#6366F1"), text: "全実践演習（ポリモーフィズム以降含む）")
-            featureRow(icon: "doc.text.fill", color: AppColor.accent, text: "Silver/Gold 模擬試験（全\(ExamService.totalExamQuestionCount)問）")
-            featureRow(icon: "chart.bar.fill", color: AppColor.levelPurple, text: "詳細な弱点分析・学習統計")
-            featureRow(icon: "arrow.clockwise", color: AppColor.success, text: "無制限の復習アクセス")
-            featureRow(icon: "nosign", color: AppColor.error, text: "広告完全非表示")
+            featureRow(icon: "lock.open.fill", color: AppColor.primary, text: lang.l("paywall.pro.all_lessons", ContentService.shared.getAllCourses().count, ContentService.shared.totalLessonCount))
+            featureRow(icon: "chevron.left.forwardslash.chevron.right", color: Color(hex: "#6366F1"), text: lang.l("paywall.pro.practice"))
+            featureRow(icon: "doc.text.fill", color: AppColor.accent, text: lang.l("paywall.pro.all_exams", ExamService.totalExamQuestionCount))
+            featureRow(icon: "chart.bar.fill", color: AppColor.levelPurple, text: lang.l("paywall.pro.analysis"))
+            featureRow(icon: "arrow.clockwise", color: AppColor.success, text: lang.l("paywall.pro.unlimited_review"))
+            featureRow(icon: "nosign", color: AppColor.error, text: lang.l("paywall.pro.no_ads"))
         }
         .padding(AppLayout.paddingMD)
         .background(AppColor.cardBackground, in: RoundedRectangle(cornerRadius: AppLayout.cornerRadius))
@@ -148,7 +149,7 @@ struct PaywallView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark.seal.fill")
                         .foregroundStyle(AppColor.success)
-                    Text("購入済み — 全コンテンツが利用可能です")
+                    Text(lang.l("paywall.purchased"))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.success)
                 }
@@ -158,14 +159,14 @@ struct PaywallView: View {
             } else if let product = StoreService.shared.product(for: .fullAccess) {
                 // 価格表示カード
                 VStack(spacing: 4) {
-                    Text("買い切り")
+                    Text(lang.l("paywall.one_time"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     Text(product.displayPrice)
                         .font(.system(size: 36, weight: .bold))
                         .foregroundStyle(AppColor.primary)
                         .shimmer(duration: 3.0)
-                    Text("一度の購入で永久に使えます")
+                    Text(lang.l("paywall.one_time_desc"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }
@@ -191,7 +192,7 @@ struct PaywallView: View {
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
                     } else {
-                        Text("\(product.displayPrice) でフルアクセスを購入")
+                        Text(lang.l("paywall.buy_button", product.displayPrice))
                             .font(AppFont.headline)
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
@@ -205,7 +206,7 @@ struct PaywallView: View {
                 // 商品読み込み中 / エラー時
                 VStack(spacing: 8) {
                     ProgressView()
-                    Text("商品情報を読み込み中...")
+                    Text(lang.l("paywall.loading"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }
@@ -221,7 +222,7 @@ struct PaywallView: View {
     // MARK: - Restore
 
     private var restoreLink: some View {
-        Button("以前の購入を復元") {
+        Button(lang.l("paywall.restore")) {
             Task { await StoreService.shared.restorePurchases() }
         }
         .font(AppFont.callout)
@@ -237,16 +238,16 @@ struct PaywallView: View {
 
     private var disclaimerSection: some View {
         VStack(spacing: 6) {
-            Text("買い切り型のため、一度購入すると追加料金なしで永久にご利用いただけます。Apple IDに紐づけて管理されます。")
+            Text(lang.l("paywall.disclaimer"))
                 .font(.system(size: 11))
                 .foregroundStyle(AppColor.textTertiary)
                 .multilineTextAlignment(.center)
             HStack(spacing: 16) {
                 if let url = Self.privacyPolicyURL {
-                    Link("プライバシーポリシー", destination: url)
+                    Link(lang.l("paywall.privacy"), destination: url)
                 }
                 if let url = Self.termsOfUseURL {
-                    Link("利用規約", destination: url)
+                    Link(lang.l("paywall.terms"), destination: url)
                 }
             }
             .font(.system(size: 11))

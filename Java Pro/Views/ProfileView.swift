@@ -13,12 +13,13 @@ struct ProfileView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var userLevel = 1
     @State private var totalXP = 0
-    @State private var levelTitle = "Java見習い"
+    @State private var levelTitle = LanguageManager.shared.l("home.default_title")
     @State private var levelProgress: Double = 0
     @State private var totalLessonsCompleted = 0
     @State private var totalQuizzesCorrect = 0
     @State private var currentStreak = 0
     @State private var earnedBadges: [UserBadge] = []
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         NavigationStack {
@@ -49,9 +50,9 @@ struct ProfileView: View {
                 .frame(maxWidth: .infinity)
             }
             .background(AppColor.background)
-            .navigationTitle("マイページ")
+            .navigationTitle(lang.l("profile.title"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: "マイページ", icon: "person.fill") } }
+            .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: lang.l("profile.title"), icon: "person.fill") } }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
@@ -60,7 +61,7 @@ struct ProfileView: View {
                         Image(systemName: "gearshape.fill")
                             .foregroundStyle(AppColor.textSecondary)
                     }
-                    .accessibilityLabel("設定")
+                    .accessibilityLabel(lang.l("profile.settings"))
                 }
             }
             .onAppear(perform: loadData)
@@ -120,7 +121,7 @@ struct ProfileView: View {
 
     private var xpStatsCard: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("XP進捗")
+            Text(lang.l("profile.xp_progress"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
@@ -153,7 +154,7 @@ struct ProfileView: View {
 
     private var learningStatsCard: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("学習統計")
+            Text(lang.l("profile.stats"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
@@ -162,9 +163,9 @@ struct ProfileView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ], spacing: AppLayout.paddingMD) {
-                profileStat(value: "\(totalLessonsCompleted)", label: "レッスン完了", icon: "book.fill", color: AppColor.primary)
-                profileStat(value: "\(totalQuizzesCorrect)", label: "クイズ正解", icon: "checkmark.circle.fill", color: AppColor.success)
-                profileStat(value: "\(currentStreak)", label: "連続日数", icon: "flame.fill", color: AppColor.accent)
+                profileStat(value: "\(totalLessonsCompleted)", label: lang.l("profile.lessons_completed"), icon: "book.fill", color: AppColor.primary)
+                profileStat(value: "\(totalQuizzesCorrect)", label: lang.l("profile.quiz_correct"), icon: "checkmark.circle.fill", color: AppColor.success)
+                profileStat(value: "\(currentStreak)", label: lang.l("profile.streak_days"), icon: "flame.fill", color: AppColor.accent)
             }
         }
         .modifier(CardStyle())
@@ -196,19 +197,19 @@ struct ProfileView: View {
     private var earnedBadgesSection: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
             HStack {
-                Text("獲得バッジ (\(earnedBadges.count))")
+                Text(lang.l("profile.badges_earned_count", earnedBadges.count))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                 Spacer()
                 NavigationLink(destination: BadgeListView()) {
-                    Text("すべて見る")
+                    Text(lang.l("profile.see_all"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.primary)
                 }
             }
 
             if earnedBadges.isEmpty {
-                Text("まだバッジを獲得していません。\n学習を続けてバッジを集めましょう！")
+                Text(lang.l("profile.no_badges"))
                     .font(AppFont.callout)
                     .foregroundStyle(AppColor.textSecondary)
                     .multilineTextAlignment(.center)
@@ -240,14 +241,14 @@ struct ProfileView: View {
                     .font(.title3)
                     .foregroundStyle(Color(hex: badge.colorHex))
             }
-            Text(badge.name)
+            Text(lang.l(badge.name))
                 .font(AppFont.codeSmall)
                 .foregroundStyle(AppColor.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(badge.name)バッジ、獲得済み")
+        .accessibilityLabel(lang.l("profile.badge_earned_label", lang.l(badge.name)))
     }
 
     // MARK: - 未獲得バッジ
@@ -259,7 +260,7 @@ struct ProfileView: View {
         return Group {
             if !locked.isEmpty {
                 VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-                    Text("未獲得バッジ")
+                    Text(lang.l("profile.locked_badges"))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
 
@@ -279,7 +280,7 @@ struct ProfileView: View {
         }
     }
 
-    private func lockedBadgeCell(_ def: (id: String, name: String, description: String, icon: String, color: String, condition: String)) -> some View {
+    private func lockedBadgeCell(_ def: (id: String, nameKey: String, descriptionKey: String, icon: String, color: String, condition: String)) -> some View {
         VStack(spacing: 4) {
             ZStack {
                 Circle()
@@ -289,14 +290,14 @@ struct ProfileView: View {
                     .font(.caption)
                     .foregroundStyle(AppColor.textTertiary)
             }
-            Text(def.name)
+            Text(lang.l(def.nameKey))
                 .font(AppFont.codeSmall)
                 .foregroundStyle(AppColor.textTertiary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(def.name)バッジ、未獲得")
+        .accessibilityLabel(lang.l("profile.badge_locked_label", lang.l(def.nameKey)))
     }
 
     // MARK: - Data

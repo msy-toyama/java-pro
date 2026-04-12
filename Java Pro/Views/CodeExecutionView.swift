@@ -27,6 +27,7 @@ struct CodeExecutionView: View {
     let result: ExecutionResult
     let pattern: ExecutionPattern
     let title: String?
+    private var lang: LanguageManager { LanguageManager.shared }
 
     @State private var displayedText = ""
     @State private var isAnimating = false
@@ -73,9 +74,9 @@ struct CodeExecutionView: View {
     private var headerText: String {
         if let title { return title }
         switch pattern {
-        case .successCorrect:   return "実行結果（正常）"
-        case .successIncorrect: return "実行結果（正常・期待と異なる出力）"
-        case .error:            return "実行結果（エラー）"
+        case .successCorrect:   return lang.l("execution.success")
+        case .successIncorrect: return lang.l("execution.success_mismatch")
+        case .error:            return lang.l("execution.error")
         }
     }
 
@@ -84,9 +85,9 @@ struct CodeExecutionView: View {
             if let errorMessage = result.errorMessage {
                 return errorMessage
             }
-            return result.output.isEmpty ? "エラーが発生しました" : result.output
+            return result.output.isEmpty ? lang.l("execution.error_occurred") : result.output
         }
-        return result.output.isEmpty ? "(出力なし)" : result.output
+        return result.output.isEmpty ? lang.l("execution.no_output") : result.output
     }
 
     var body: some View {
@@ -245,6 +246,7 @@ struct QuizExecutionResultSection: View {
     let quiz: QuizData
     let selectedChoiceId: String?
     let isAnswered: Bool
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         if isAnswered {
@@ -253,7 +255,7 @@ struct QuizExecutionResultSection: View {
                 if let selectedId = selectedChoiceId,
                    let choice = quiz.choices.first(where: { $0.id == selectedId }),
                    let result = choice.executionResult {
-                    Text("あなたの選択の実行結果")
+                    Text(lang.l("execution.your_result"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     CodeExecutionView(
@@ -268,19 +270,19 @@ struct QuizExecutionResultSection: View {
                    !selected.isCorrect,
                    let correctChoice = quiz.choices.first(where: { $0.isCorrect }),
                    let correctResult = correctChoice.executionResult {
-                    Text("正解の実行結果")
+                    Text(lang.l("execution.correct_result"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     CodeExecutionView(
                         result: correctResult,
                         pattern: .successCorrect,
-                        title: "正解: \(correctChoice.text)"
+                        title: lang.l("execution.correct_choice_label", correctChoice.text)
                     )
                 }
 
                 // クイズ全体の実行結果（outputPredict 等）
                 if let result = quiz.executionResult {
-                    Text("このコードの実行結果")
+                    Text(lang.l("execution.this_code_result"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     CodeExecutionView(
@@ -291,13 +293,13 @@ struct QuizExecutionResultSection: View {
 
                 // errorFind: 修正後の実行結果
                 if let fixedResult = quiz.fixedExecutionResult {
-                    Text("修正後の実行結果")
+                    Text(lang.l("execution.fixed_result"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     CodeExecutionView(
                         result: fixedResult,
                         pattern: .successCorrect,
-                        title: "修正後（正常実行）"
+                        title: lang.l("execution.fixed_success")
                     )
                 }
             }

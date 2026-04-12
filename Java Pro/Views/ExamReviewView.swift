@@ -19,6 +19,8 @@ struct ExamReviewView: View {
     @State private var currentIndex = 0
     @State private var filterIncorrectOnly = false
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     private var filteredQuizzes: [QuizData] {
         if filterIncorrectOnly {
             return quizzes.filter { !isCorrect(quiz: $0) }
@@ -48,9 +50,9 @@ struct ExamReviewView: View {
 
                 if filteredQuizzes.isEmpty {
                     ContentUnavailableView(
-                        "すべて正解です！",
+                        lang.l("exam_review.all_correct_title"),
                         systemImage: "checkmark.circle.fill",
-                        description: Text("不正解の問題はありません。")
+                        description: Text(lang.l("exam_review.all_correct_message"))
                     )
                 } else {
                     // 問題ヘッダー
@@ -74,11 +76,11 @@ struct ExamReviewView: View {
                 }
             }
             .background(AppColor.background)
-            .navigationTitle("解答・解説")
+            .navigationTitle(lang.l("exam_review.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("閉じる") { dismiss() }
+                    Button(lang.l("exam_review.close")) { dismiss() }
                 }
             }
         }
@@ -88,11 +90,11 @@ struct ExamReviewView: View {
 
     private var filterBar: some View {
         HStack(spacing: AppLayout.paddingSM) {
-            filterButton(title: "全問題 (\(quizzes.count))", active: !filterIncorrectOnly) {
+            filterButton(title: lang.l("exam_review.filter.all_count", quizzes.count), active: !filterIncorrectOnly) {
                 filterIncorrectOnly = false
                 currentIndex = 0
             }
-            filterButton(title: "不正解のみ (\(incorrectCount))", active: filterIncorrectOnly) {
+            filterButton(title: lang.l("exam_review.filter.incorrect_count", incorrectCount), active: filterIncorrectOnly) {
                 filterIncorrectOnly = true
                 currentIndex = 0
             }
@@ -132,12 +134,12 @@ struct ExamReviewView: View {
                     Image(systemName: correct ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .foregroundStyle(correct ? AppColor.success : AppColor.error)
                         .accessibilityHidden(true)
-                    Text("問 \(originalIndex + 1)")
+                    Text(lang.l("exam_review.question_number", originalIndex + 1))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("問\(originalIndex + 1)、\(correct ? "正解" : "不正解")")
+                .accessibilityLabel(lang.l("exam_review.question_number", originalIndex + 1) + ", " + (correct ? lang.l("exam_review.correct_label") : lang.l("exam_review.incorrect_label")))
             }
 
             Spacer()
@@ -193,7 +195,7 @@ struct ExamReviewView: View {
                         Image(systemName: "lightbulb.fill")
                             .foregroundStyle(AppColor.accent)
                             .accessibilityHidden(true)
-                        Text("解説")
+                        Text(lang.l("exam_review.explanation"))
                             .font(AppFont.headline)
                             .foregroundStyle(AppColor.textPrimary)
                     }
@@ -266,7 +268,7 @@ struct ExamReviewView: View {
 
             // 正解マーク
             if isCorrectChoice {
-                Text("正解")
+                Text(lang.l("exam_review.correct_answer"))
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(AppColor.success)
                     .padding(.horizontal, 6)
@@ -276,7 +278,7 @@ struct ExamReviewView: View {
 
             // ユーザーが選択したが不正解
             if userSelected && !isCorrectChoice {
-                Text("あなたの回答")
+                Text(lang.l("exam_review.your_answer"))
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(AppColor.error)
                     .padding(.horizontal, 6)
@@ -291,7 +293,7 @@ struct ExamReviewView: View {
                 .stroke(borderColor, lineWidth: userSelected || isCorrectChoice ? 2 : 1)
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(choice.text)、\(isCorrectChoice ? "正解" : "不正解")\(userSelected ? "、選択済み" : "")")
+        .accessibilityLabel("\(choice.text), \(isCorrectChoice ? lang.l("exam_review.correct_label") : lang.l("exam_review.incorrect_label"))\(userSelected ? ", \(lang.l("exam_review.choice_selected"))" : "")")
     }
 
     @ViewBuilder
@@ -323,7 +325,7 @@ struct ExamReviewView: View {
             } label: {
                 HStack(spacing: 4) {
                     Image(systemName: "chevron.left")
-                    Text("前へ")
+                    Text(lang.l("exam_review.prev"))
                 }
                 .font(AppFont.callout)
             }
@@ -351,7 +353,7 @@ struct ExamReviewView: View {
                 }
             } label: {
                 HStack(spacing: 4) {
-                    Text("次へ")
+                    Text(lang.l("exam_review.next"))
                     Image(systemName: "chevron.right")
                 }
                 .font(AppFont.callout)

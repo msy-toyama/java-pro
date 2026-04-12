@@ -27,6 +27,7 @@ struct GuideStep: Identifiable {
 struct GuideTourOverlay: View {
     let steps: [GuideStep]
     let onComplete: () -> Void
+    private var lang: LanguageManager { LanguageManager.shared }
 
     @State private var currentStep = 0
     @State private var isVisible = false
@@ -61,9 +62,9 @@ struct GuideTourOverlay: View {
                 .opacity(isVisible ? 0.55 : 0)
                 .ignoresSafeArea()
                 .onTapGesture { advanceStep() }
-                .accessibilityLabel("ガイドツアー背景")
+                .accessibilityLabel(lang.l("guide.accessibility.bg"))
                 .accessibilityAddTraits(.isButton)
-                .accessibilityHint("タップして次のステップへ進みます")
+                .accessibilityHint(lang.l("guide.accessibility.bg_hint"))
 
             // ガイドカード
             VStack(spacing: 0) {
@@ -118,14 +119,14 @@ struct GuideTourOverlay: View {
                         }
                     }
                     .padding(.top, AppLayout.paddingSM)
-                    .accessibilityLabel("ステップ \(currentStep + 1) / \(steps.count)")
+                    .accessibilityLabel(lang.l("guide.accessibility.step", currentStep + 1, steps.count))
 
                     // タップして進むボタン
                     Button {
                         advanceStep()
                     } label: {
                         HStack(spacing: 6) {
-                            Text(isLastStep ? "はじめる" : "次へ")
+                            Text(isLastStep ? lang.l("guide.begin") : lang.l("guide.next"))
                                 .font(AppFont.headline)
                             if !isLastStep {
                                 Image(systemName: "chevron.right")
@@ -139,18 +140,18 @@ struct GuideTourOverlay: View {
                     }
                     .buttonStyle(.pressable)
                     .padding(.top, AppLayout.paddingSM)
-                    .accessibilityHint(isLastStep ? "ガイドツアーを終了してアプリを開始します" : "次のガイドステップに進みます")
+                    .accessibilityHint(isLastStep ? lang.l("guide.accessibility.end_hint") : lang.l("guide.accessibility.next_hint"))
 
                     // スキップ
                     if !isLastStep {
                         Button {
                             dismissTour()
                         } label: {
-                            Text("スキップ")
+                            Text(lang.l("guide.skip"))
                                 .font(AppFont.caption)
                                 .foregroundStyle(AppColor.textTertiary)
                         }
-                        .accessibilityHint("ガイドツアーをスキップします")
+                        .accessibilityHint(lang.l("guide.accessibility.skip_hint"))
                     }
 
                     // ステップカウント（VoiceOverでは進捗インジケーターで読み上げ済み）
@@ -254,131 +255,133 @@ struct GuideTourOverlay: View {
 // MARK: - Guide Tour Definitions
 
 /// 各画面のガイドツアーステップ定義。
+@MainActor
 enum GuideTourSteps {
+    private static var lang: LanguageManager { LanguageManager.shared }
 
     /// ホーム画面のガイドツアー（初回表示時）
-    static let home: [GuideStep] = [
+    static var home: [GuideStep] {[
         GuideStep(
             icon: "hand.wave.fill",
-             title: "ようこそ プロプロ へ！",
-            message: "このホーム画面があなたの学習ダッシュボードです。\n今日の学習状況がひと目でわかります。",
+             title: lang.l("guide.home.welcome.title"),
+            message: lang.l("guide.home.welcome.message"),
             accentColor: AppColor.primary
         ),
         GuideStep(
             icon: "star.fill",
-            title: "XPを貯めてレベルアップ",
-            message: "レッスンやクイズを完了するとXP（経験値）がもらえます。\nXPを貯めてレベルを上げましょう！",
+            title: lang.l("guide.home.xp.title"),
+            message: lang.l("guide.home.xp.message"),
             accentColor: AppColor.xpGold
         ),
         GuideStep(
             icon: "flame.fill",
-            title: "連続学習でストリーク獲得",
-            message: "毎日学習を続けると連続日数が増えます。\nストリークを伸ばしてモチベーションを維持しましょう！",
+            title: lang.l("guide.home.streak.title"),
+            message: lang.l("guide.home.streak.message"),
             accentColor: AppColor.accent
         ),
         GuideStep(
             icon: "trophy.fill",
-            title: "バッジを集めよう",
-            message: "学習の節目や達成条件に応じてバッジが獲得できます。\nレッスン完了・ストリーク継続・試験合格など\nさまざまなバッジを目指しましょう！",
+            title: lang.l("guide.home.badges.title"),
+            message: lang.l("guide.home.badges.message"),
             accentColor: AppColor.levelPurple
         ),
         GuideStep(
             icon: "target",
-            title: "目標を設定して学習",
-            message: "1日の学習時間の目標を設定できます。\n目標を達成すると進捗バーが満たされます。\n無理なく自分のペースで続けましょう！",
+            title: lang.l("guide.home.goal.title"),
+            message: lang.l("guide.home.goal.message"),
             accentColor: AppColor.success
         )
-    ]
+    ]}
 
     /// 学習画面（コース一覧）のガイドツアー
     static var learn: [GuideStep] {[
         GuideStep(
             icon: "book.fill",
-            title: "学習コース",
-            message: "Javaの基礎から応用まで、体系的に学べる\n全\(ContentService.shared.totalLessonCount)レッスンが用意されています。\n上から順番に進めるのがおすすめです。",
+            title: lang.l("guide.learn.courses.title"),
+            message: lang.l("guide.learn.courses.message", ContentService.shared.totalLessonCount),
             accentColor: AppColor.primary
         ),
         GuideStep(
             icon: "list.bullet.rectangle.portrait",
-            title: "レッスンの進め方",
-            message: "各レッスンは解説→コード例→クイズの流れです。\nクイズに正解するとレッスンが完了し、\nXPが獲得できます。",
+            title: lang.l("guide.learn.lesson_flow.title"),
+            message: lang.l("guide.learn.lesson_flow.message"),
             accentColor: AppColor.success
         ),
         GuideStep(
             icon: "lock.open.fill",
-            title: "無料 & Proコンテンツ",
-            message: "入門〜継承までのレッスンは無料で学べます。\nポリモーフィズム以降のコンテンツは\nProプランですべてアクセスできます。",
+            title: lang.l("guide.learn.pro.title"),
+            message: lang.l("guide.learn.pro.message"),
             accentColor: AppColor.accent
         ),
         GuideStep(
             icon: "arrow.counterclockwise.circle.fill",
-            title: "復習で定着",
-            message: "完了したレッスンは時間をあけて復習できます。\n間隔反復学習で記憶の定着率がアップします。",
+            title: lang.l("guide.learn.review.title"),
+            message: lang.l("guide.learn.review.message"),
             accentColor: AppColor.warning
         )
     ]}
 
     /// 実践演習画面のガイドツアー
-    static let practice: [GuideStep] = [
+    static var practice: [GuideStep] {[
         GuideStep(
             icon: "chevron.left.forwardslash.chevron.right",
-            title: "実践演習",
-            message: "学んだ知識を実際のコードで確認できます。\n各章のテーマに沿った\nコーディング課題に挑戦しましょう。",
+            title: lang.l("guide.practice.title"),
+            message: lang.l("guide.practice.message"),
             accentColor: AppColor.primary
         ),
         GuideStep(
             icon: "wrench.and.screwdriver.fill",
-            title: "まずは環境構築",
-            message: "最初に環境構築ガイドを見て\nJavaの実行環境を準備してください。\nWindows/Mac 両方の手順を用意しています。",
+            title: lang.l("guide.practice.setup.title"),
+            message: lang.l("guide.practice.setup.message"),
             accentColor: AppColor.success
         ),
         GuideStep(
             icon: "lightbulb.fill",
-            title: "ヒントと解答付き",
-            message: "わからない問題にはヒントが用意されています。\n解答コードにはコメント付きで\n初学者でも理解できるようにしています。",
+            title: lang.l("guide.practice.hints.title"),
+            message: lang.l("guide.practice.hints.message"),
             accentColor: AppColor.accent
         ),
         GuideStep(
             icon: "square.and.arrow.down",
-            title: ".java ファイルをダウンロード",
-            message: "解答コードは .java ファイルとして\nダウンロードできます。\nお手元の環境で実行して動作を確認しましょう。",
+            title: lang.l("guide.practice.download.title"),
+            message: lang.l("guide.practice.download.message"),
             accentColor: Color(hex: "#6366F1")
         )
-    ]
+    ]}
 
     /// 試験対策画面のガイドツアー
-    static let exam: [GuideStep] = [
+    static var exam: [GuideStep] {[
         GuideStep(
             icon: "graduationcap.fill",
-            title: "試験対策モード",
-            message: "Oracle Java認定資格の\nSilver / Gold 試験対策ができます。\n学習進捗と模擬試験をここで管理します。",
+            title: lang.l("guide.exam.title"),
+            message: lang.l("guide.exam.message"),
             accentColor: AppColor.primary
         ),
         GuideStep(
             icon: "doc.text.fill",
-            title: "模擬試験にチャレンジ",
-            message: "本番に近い形式の模擬試験を受けられます。\nタイマー付きで時間管理の練習もできます。\nSE 11 と SE 17 の両方に対応しています。",
+            title: lang.l("guide.exam.mock.title"),
+            message: lang.l("guide.exam.mock.message"),
             accentColor: AppColor.info
         ),
         GuideStep(
             icon: "exclamationmark.shield.fill",
-            title: "非公式の模擬試験です",
-            message: "本アプリの模擬試験はOracle公式ではありません。\n本番の出題傾向に基づいた学習用教材として\n作成しています。実力チェックにご活用ください。",
+            title: lang.l("guide.exam.disclaimer.title"),
+            message: lang.l("guide.exam.disclaimer.message"),
             accentColor: AppColor.warning
         ),
         GuideStep(
             icon: "chart.bar.fill",
-            title: "弱点を分析",
-            message: "模擬試験の結果からトピック別の正答率を分析し、\n弱点を可視化します。\n苦手分野を重点的に復習しましょう。",
+            title: lang.l("guide.exam.analysis.title"),
+            message: lang.l("guide.exam.analysis.message"),
             accentColor: AppColor.error
         ),
         GuideStep(
             icon: "checkmark.seal.fill",
-            title: "合格を目指そう",
-            message: "合格ラインは正答率\(ExamService.passingRatePercent)%です。\n模擬試験を繰り返し受けて\n確実に合格できる力を身につけましょう！",
+            title: lang.l("guide.exam.goal.title"),
+            message: lang.l("guide.exam.goal.message", ExamService.passingRatePercent),
             accentColor: AppColor.success
         )
-    ]
+    ]}
 }
 
 // MARK: - UserDefaults Keys for Tour State

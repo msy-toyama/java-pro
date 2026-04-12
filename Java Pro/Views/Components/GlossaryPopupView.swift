@@ -13,6 +13,7 @@ struct GlossaryPopupView: View {
     let entry: GlossaryEntry
     @Environment(\.dismiss) private var dismiss
     @State private var appeared = false
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -63,7 +64,7 @@ struct GlossaryPopupView: View {
                         .font(.title3)
                         .foregroundStyle(AppColor.textTertiary)
                 }
-                .accessibilityLabel("閉じる")
+                .accessibilityLabel(lang.l("glossary_popup.close"))
             }
             .padding(.horizontal, AppLayout.paddingMD)
 
@@ -103,7 +104,7 @@ struct GlossaryPopupView: View {
 
     private var relatedLessonsCompact: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("関連レッスン")
+            Text(lang.l("glossary_popup.related"))
                 .font(.system(size: 10, weight: .bold))
                 .foregroundStyle(AppColor.textTertiary)
                 .textCase(.uppercase)

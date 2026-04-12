@@ -21,6 +21,8 @@ struct CertificationView: View {
     @State private var examAttempts: [String: Int] = [:]
     @State private var showGuideTour = false
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     /// fullScreenCover(item:) 用の Identifiable ラッパー
     struct ExamItem: Identifiable, Equatable {
         let id: String
@@ -55,7 +57,7 @@ struct CertificationView: View {
                         ExamHistoryView(certLevel: selectedCert)
                     } label: {
                         HStack {
-                            Label("模擬試験の履歴", systemImage: "clock.arrow.circlepath")
+                            Label(lang.l("cert.exam_history"), systemImage: "clock.arrow.circlepath")
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(AppColor.textTertiary)
@@ -67,14 +69,14 @@ struct CertificationView: View {
                     }
                     .buttonStyle(.pressable)
                     .staggeredAppear(index: 4)
-                    .accessibilityHint("模擬試験の履歴を表示します")
+                    .accessibilityHint(lang.l("cert.exam_history_hint"))
 
                     // 弱点リンク
                     NavigationLink {
                         WeakPointView(certLevel: selectedCert == .gold ? "gold" : "silver")
                     } label: {
                         HStack {
-                            Label("弱点分析", systemImage: "exclamationmark.triangle.fill")
+                            Label(lang.l("cert.weak_points"), systemImage: "exclamationmark.triangle.fill")
                                 .foregroundStyle(AppColor.accent)
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -87,14 +89,14 @@ struct CertificationView: View {
                     }
                     .buttonStyle(.pressable)
                     .staggeredAppear(index: 5)
-                    .accessibilityHint("弱点分析画面を開きます")
+                    .accessibilityHint(lang.l("cert.weak_points_hint"))
 
                     // 復習セクション
                     NavigationLink {
                         ReviewView()
                     } label: {
                         HStack {
-                            Label("復習", systemImage: "arrow.counterclockwise.circle.fill")
+                            Label(lang.l("cert.review"), systemImage: "arrow.counterclockwise.circle.fill")
                                 .foregroundStyle(AppColor.warning)
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -107,10 +109,10 @@ struct CertificationView: View {
                     }
                     .buttonStyle(.pressable)
                     .staggeredAppear(index: 6)
-                    .accessibilityHint("復習画面を開きます")
+                    .accessibilityHint(lang.l("cert.review_hint"))
 
                     // 非公式免責表示
-                    Text("※ 本アプリの模擬試験は独自作成の非公式問題です。Oracle 公式試験とは異なります。")
+                    Text(lang.l("cert.disclaimer"))
                         .font(.system(size: 11))
                         .foregroundStyle(AppColor.textTertiary)
                         .multilineTextAlignment(.center)
@@ -120,9 +122,9 @@ struct CertificationView: View {
                 .padding(AppLayout.paddingMD)
             }
             .background(AppColor.background)
-            .navigationTitle("試験対策")
+            .navigationTitle(lang.l("cert.title"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: "試験対策", icon: "medal.fill", subtitle: "Silver / Gold") } }
+            .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: lang.l("cert.title"), icon: "medal.fill", subtitle: "Silver / Gold") } }
             .onAppear {
                 loadData()
                 if !showGuideTour && !UserDefaults.standard.hasSeenExamTour {
@@ -160,7 +162,7 @@ struct CertificationView: View {
     private var certPicker: some View {
         VStack(spacing: AppLayout.paddingSM) {
             // 資格レベル選択
-            Picker("資格レベル", selection: $selectedCert) {
+            Picker(lang.l("cert.level"), selection: $selectedCert) {
                 Text("Silver").tag(CertificationLevel.silver)
                 Text("Gold").tag(CertificationLevel.gold)
             }
@@ -168,7 +170,7 @@ struct CertificationView: View {
             .onChange(of: selectedCert) { _, _ in loadData() }
 
             // Javaバージョン選択
-            Picker("Javaバージョン", selection: $selectedVersion) {
+            Picker(lang.l("cert.java_version"), selection: $selectedVersion) {
                 Text("SE 11").tag(ExamService.JavaVersion.se11)
                 Text("SE 17").tag(ExamService.JavaVersion.se17)
             }
@@ -186,7 +188,7 @@ struct CertificationView: View {
                     Text("Java \(selectedCert == .silver ? "Silver" : "Gold") \(selectedVersion.displayName)")
                         .font(AppFont.title)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text(progress.examPassed ? "模擬試験に合格しました" : "学習進捗")
+                    Text(progress.examPassed ? lang.l("cert.passed") : lang.l("cert.progress"))
                         .font(AppFont.caption)
                         .foregroundStyle(progress.examPassed ? AppColor.success : AppColor.textSecondary)
                 }
@@ -207,10 +209,10 @@ struct CertificationView: View {
             }
 
             HStack(spacing: AppLayout.paddingLG) {
-                statItem(title: "レッスン", value: "\(progress.completedLessons)/\(progress.totalLessons)")
-                statItem(title: "クイズ正解", value: "\(progress.correctQuizzes)/\(progress.totalQuizzes)")
+                statItem(title: lang.l("cert.lessons"), value: "\(progress.completedLessons)/\(progress.totalLessons)")
+                statItem(title: lang.l("cert.quiz_correct"), value: "\(progress.correctQuizzes)/\(progress.totalQuizzes)")
                 if let best = progress.bestExamScore {
-                    statItem(title: "最高スコア", value: "\(Int(best * 100))%")
+                    statItem(title: lang.l("cert.best_score"), value: "\(Int(best * 100))%")
                 }
             }
         }
@@ -238,7 +240,7 @@ struct CertificationView: View {
 
     private func topicProgressSection(_ progress: CertProgress) -> some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("チャプター別進捗")
+            Text(lang.l("cert.chapter_progress"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
@@ -270,7 +272,7 @@ struct CertificationView: View {
             HStack {
                 Image(systemName: "doc.text.fill")
                     .foregroundStyle(AppColor.primary)
-                Text("模擬試験")
+                Text(lang.l("cert.mock_exam"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
             }
@@ -301,7 +303,7 @@ struct CertificationView: View {
 
                         VStack(alignment: .leading, spacing: 3) {
                             HStack(spacing: 6) {
-                                Text(exam.title)
+                                Text(lang.l(exam.titleKey))
                                     .font(AppFont.headline)
                                     .foregroundStyle(canAccess ? AppColor.textPrimary : AppColor.textTertiary)
                                 if !canAccess {
@@ -313,17 +315,17 @@ struct CertificationView: View {
                                         .background(AppColor.accent, in: Capsule())
                                 }
                             }
-                            Text(exam.subtitle)
+                            Text(lang.l(exam.subtitleKey))
                                 .font(.system(size: 11))
                                 .foregroundStyle(AppColor.textTertiary)
                         }
                         Spacer()
                         VStack(alignment: .trailing, spacing: 2) {
                             if attempts > 0 {
-                                Text("\(attempts)回")
+                                Text(lang.l("cert.attempt_count", attempts))
                                     .font(.system(size: 12, weight: .semibold, design: .rounded))
                                     .foregroundStyle(AppColor.primary)
-                                Text("受験")
+                                Text(lang.l("cert.attempt_label"))
                                     .font(.system(size: 9))
                                     .foregroundStyle(AppColor.textTertiary)
                             }

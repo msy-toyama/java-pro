@@ -228,15 +228,16 @@ import SwiftUI
 extension QuizData.QuizType {
     /// UIに表示するラベルとカラーの統一定義。全Viewから参照すること。
     var displayLabel: String {
+        let lang = LanguageManager.shared
         switch self {
-        case .fourChoice:     "4択問題"
-        case .multiChoice:    "複数選択"
-        case .fillBlank:      "穴埋め問題"
-        case .reorder:        "並び替え問題"
-        case .outputPredict:  "出力予想"
-        case .errorFind:      "エラー発見"
-        case .codeComplete:   "コード補完"
-        case .examSimulator:  "試験形式"
+        case .fourChoice:     return lang.l("quiz_type.four_choice")
+        case .multiChoice:    return lang.l("quiz_type.multi_choice")
+        case .fillBlank:      return lang.l("quiz_type.fill_blank")
+        case .reorder:        return lang.l("quiz_type.reorder")
+        case .outputPredict:  return lang.l("quiz_type.output_predict")
+        case .errorFind:      return lang.l("quiz_type.error_find")
+        case .codeComplete:   return lang.l("quiz_type.code_complete")
+        case .examSimulator:  return lang.l("quiz_type.exam_simulator")
         }
     }
 

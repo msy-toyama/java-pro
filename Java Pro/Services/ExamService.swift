@@ -35,11 +35,11 @@ final class ExamService {
         }
     }
 
-    /// 模擬試験のメタデータ。
+    /// 模擬試験のメタデータ。titleKey/subtitleKey にローカライズキーを格納し、表示時に解決する。
     struct ExamDefinition {
         let id: String
-        let title: String
-        let subtitle: String          // 試験番号情報
+        let titleKey: String
+        let subtitleKey: String       // 試験番号情報
         let certLevel: CertificationLevel
         let javaVersion: JavaVersion
         let totalQuestions: Int        // 出題数（プールからランダム抽出）
@@ -49,24 +49,24 @@ final class ExamService {
 
     nonisolated static let examDefinitions: [ExamDefinition] = [
         // SE 11 Silver — 1Z0-815 出題範囲対応
-        ExamDefinition(id: "se11_silver_1", title: "SE11 Silver 模擬試験 1", subtitle: "1Z0-815 出題範囲対応 · 80問 / 180分",
+        ExamDefinition(id: "se11_silver_1", titleKey: "exam_def.se11_silver_1.title", subtitleKey: "exam_def.se11_silver_1.subtitle",
                        certLevel: .silver, javaVersion: .se11, totalQuestions: 80, timeLimitMinutes: 180, passingRate: 0.63),
-        ExamDefinition(id: "se11_silver_2", title: "SE11 Silver 模擬試験 2", subtitle: "1Z0-815 出題範囲対応 · 80問 / 180分",
+        ExamDefinition(id: "se11_silver_2", titleKey: "exam_def.se11_silver_2.title", subtitleKey: "exam_def.se11_silver_1.subtitle",
                        certLevel: .silver, javaVersion: .se11, totalQuestions: 80, timeLimitMinutes: 180, passingRate: 0.63),
         // SE 11 Gold — 1Z0-816 出題範囲対応
-        ExamDefinition(id: "se11_gold_1",   title: "SE11 Gold 模擬試験 1",   subtitle: "1Z0-816 出題範囲対応 · 80問 / 180分",
+        ExamDefinition(id: "se11_gold_1",   titleKey: "exam_def.se11_gold_1.title",   subtitleKey: "exam_def.se11_gold.subtitle",
                        certLevel: .gold,   javaVersion: .se11, totalQuestions: 80, timeLimitMinutes: 180, passingRate: 0.63),
-        ExamDefinition(id: "se11_gold_2",   title: "SE11 Gold 模擬試験 2",   subtitle: "1Z0-816 出題範囲対応 · 80問 / 180分",
+        ExamDefinition(id: "se11_gold_2",   titleKey: "exam_def.se11_gold_2.title",   subtitleKey: "exam_def.se11_gold.subtitle",
                        certLevel: .gold,   javaVersion: .se11, totalQuestions: 80, timeLimitMinutes: 180, passingRate: 0.63),
         // SE 17 Silver — 1Z0-825 出題範囲対応（60問 / 90分）
-        ExamDefinition(id: "se17_silver_1", title: "SE17 Silver 模擬試験 1", subtitle: "1Z0-825 出題範囲対応 · 60問 / 90分",
+        ExamDefinition(id: "se17_silver_1", titleKey: "exam_def.se17_silver_1.title", subtitleKey: "exam_def.se17_silver_1.subtitle",
                        certLevel: .silver, javaVersion: .se17, totalQuestions: 60, timeLimitMinutes: 90, passingRate: 0.63),
-        ExamDefinition(id: "se17_silver_2", title: "SE17 Silver 模擬試験 2", subtitle: "1Z0-825 出題範囲対応 · 60問 / 90分",
+        ExamDefinition(id: "se17_silver_2", titleKey: "exam_def.se17_silver_2.title", subtitleKey: "exam_def.se17_silver_1.subtitle",
                        certLevel: .silver, javaVersion: .se17, totalQuestions: 60, timeLimitMinutes: 90, passingRate: 0.63),
         // SE 17 Gold — 1Z0-826 出題範囲対応（60問 / 90分）
-        ExamDefinition(id: "se17_gold_1",   title: "SE17 Gold 模擬試験 1",   subtitle: "1Z0-826 出題範囲対応 · 60問 / 90分",
+        ExamDefinition(id: "se17_gold_1",   titleKey: "exam_def.se17_gold_1.title",   subtitleKey: "exam_def.se17_gold.subtitle",
                        certLevel: .gold,   javaVersion: .se17, totalQuestions: 60, timeLimitMinutes: 90, passingRate: 0.63),
-        ExamDefinition(id: "se17_gold_2",   title: "SE17 Gold 模擬試験 2",   subtitle: "1Z0-826 出題範囲対応 · 60問 / 90分",
+        ExamDefinition(id: "se17_gold_2",   titleKey: "exam_def.se17_gold_2.title",   subtitleKey: "exam_def.se17_gold.subtitle",
                        certLevel: .gold,   javaVersion: .se17, totalQuestions: 60, timeLimitMinutes: 90, passingRate: 0.63),
     ]
 
@@ -220,41 +220,8 @@ final class ExamService {
 
     // MARK: - Topic Display Name
 
-    /// certificationTopic キーを日本語表示名に変換する。
+    /// certificationTopic キーをローカライズ済み表示名に変換する。
     static func topicDisplayName(_ key: String) -> String {
-        let map: [String: String] = [
-            "java_basics": "Javaの基本",
-            "variables": "変数・データ型",
-            "operators": "演算子",
-            "control_flow": "条件分岐",
-            "loops": "ループ",
-            "arrays": "配列",
-            "methods": "メソッド",
-            "strings": "文字列",
-            "classes": "クラス",
-            "encapsulation": "カプセル化",
-            "inheritance": "継承",
-            "polymorphism": "ポリモーフィズム",
-            "interfaces": "インターフェース",
-            "exceptions": "例外処理",
-            "java_api": "Java API",
-            "lambda": "ラムダ式",
-            "modules": "モジュール",
-            "generics": "ジェネリクス",
-            "collections": "コレクション",
-            "streams": "Stream API",
-            "concurrency": "並行処理",
-            "io_nio": "I/O・NIO.2",
-            "jdbc": "JDBC",
-            "annotations": "アノテーション",
-            "localization": "ローカライゼーション",
-            "nested_classes": "ネストクラス",
-            "var_type_inference": "var型推論",
-            "switch_expressions": "switch式",
-            "sealed_classes": "sealedクラス",
-            "pattern_matching": "パターンマッチング",
-            "general": "その他",
-        ]
-        return map[key] ?? key
+        LanguageManager.shared.l("topic.\(key)")
     }
 }

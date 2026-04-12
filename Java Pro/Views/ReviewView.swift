@@ -14,6 +14,7 @@ struct ReviewView: View {
     @State private var reviewQuizzes: [QuizData] = []
     @State private var weakCourses: [(CourseIndex, Double)] = []
     @State private var showReviewQuiz = false
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         Group {
@@ -24,7 +25,7 @@ struct ReviewView: View {
             }
         }
         .background(AppColor.background)
-        .navigationTitle("復習")
+        .navigationTitle(lang.l("review.title"))
         .onAppear(perform: loadData)
         .sheet(isPresented: $showReviewQuiz) {
             QuizView(quizzes: reviewQuizzes, isReviewMode: true, onComplete: {
@@ -67,10 +68,10 @@ struct ReviewView: View {
                     .foregroundStyle(AppColor.primary)
                     .pulse(min: 0.92, max: 1.08, duration: 1.5)
                     .accessibilityHidden(true)
-                Text("復習を開始する")
+                Text(lang.l("review.start"))
                     .font(AppFont.title)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("\(reviewQuizzes.count) 問")
+                Text(lang.l("review.question_count", reviewQuizzes.count))
                     .font(AppFont.callout)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -80,22 +81,22 @@ struct ReviewView: View {
             .shadow(color: .black.opacity(0.05), radius: AppLayout.cardShadowRadius, y: AppLayout.cardShadowY)
         }
         .buttonStyle(.pressable)
-        .accessibilityLabel("復習を開始、\(reviewQuizzes.count)問")
-        .accessibilityHint("復習クイズを開始します")
+        .accessibilityLabel(lang.l("review.start_accessibility", reviewQuizzes.count))
+        .accessibilityHint(lang.l("review.start_hint"))
     }
 
     private var reviewSummary: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("復習の仕組み")
+            Text(lang.l("review.how_it_works"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
             VStack(alignment: .leading, spacing: 6) {
-                reviewStageRow(emoji: "🔴", text: "間違えた直後 → 即復習")
-                reviewStageRow(emoji: "🟠", text: "1回正解 → 24時間後に復習")
-                reviewStageRow(emoji: "🟡", text: "2回正解 → 3日後に復習")
-                reviewStageRow(emoji: "🟢", text: "3回正解 → 7日後に復習")
-                reviewStageRow(emoji: "✅", text: "4回正解 → 定着完了！")
+                reviewStageRow(emoji: "🔴", text: lang.l("review.stage.immediate"))
+                reviewStageRow(emoji: "🟠", text: lang.l("review.stage.24h"))
+                reviewStageRow(emoji: "🟡", text: lang.l("review.stage.3d"))
+                reviewStageRow(emoji: "🟢", text: lang.l("review.stage.7d"))
+                reviewStageRow(emoji: "✅", text: lang.l("review.stage.done"))
             }
         }
         .modifier(CardStyle())
@@ -112,7 +113,7 @@ struct ReviewView: View {
 
     private var weakCoursesSection: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("苦手なテーマ")
+            Text(lang.l("review.weak_themes"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
@@ -143,10 +144,10 @@ struct ReviewView: View {
             Image(systemName: "checkmark.seal.fill")
                 .font(.system(size: 64))
                 .foregroundStyle(AppColor.success)
-            Text("復習するクイズはありません")
+            Text(lang.l("review.empty_title"))
                 .font(AppFont.title)
                 .foregroundStyle(AppColor.textPrimary)
-            Text("レッスンを進めてクイズに回答すると\nここに復習が表示されます")
+            Text(lang.l("review.empty_message"))
                 .font(AppFont.callout)
                 .foregroundStyle(AppColor.textSecondary)
                 .multilineTextAlignment(.center)

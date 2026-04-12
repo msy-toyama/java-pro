@@ -15,6 +15,7 @@ struct HomeView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     var switchToTab: ((MainTabView.Tab) -> Void)?
     @State private var vm = HomeViewModel()
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         NavigationStack {
@@ -47,9 +48,9 @@ struct HomeView: View {
                     .padding(AppLayout.paddingMD)
                 }
                 .background(AppColor.background)
-                .navigationTitle("ホーム")
+                .navigationTitle(lang.l("home.title"))
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: "ホーム", icon: "house.fill", subtitle: "プロプロ") } }
+                .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: lang.l("home.title"), icon: "house.fill", subtitle: lang.l("home.subtitle")) } }
                 .onAppear { vm.loadData(modelContext: modelContext) }
             } else {
             ScrollView {
@@ -96,9 +97,9 @@ struct HomeView: View {
             }
             .background(AppColor.background)
             .refreshable { vm.loadData(modelContext: modelContext) }
-            .navigationTitle("ホーム")
+            .navigationTitle(lang.l("home.title"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: "ホーム", icon: "house.fill", subtitle: "プロプロ") } }
+            .toolbar { ToolbarItem(placement: .principal) { BrandedTitleView(title: lang.l("home.title"), icon: "house.fill", subtitle: lang.l("home.subtitle")) } }
             .navigationDestination(for: LessonData.self) { lesson in
                 LessonDetailView(lesson: lesson)
             }
@@ -175,7 +176,7 @@ struct HomeView: View {
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundStyle(AppColor.xpGold)
                         .shimmer(duration: 3.0, isActive: vm.todayStats.earnedXP > 0)
-                    Text("今日のXP")
+                    Text(lang.l("home.today_xp"))
                         .font(AppFont.codeSmall)
                         .foregroundStyle(AppColor.textTertiary)
                 }
@@ -205,7 +206,7 @@ struct HomeView: View {
         }
         .glowCard(color: AppColor.levelPurple)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("レベル\(vm.userLevel) \(vm.levelTitle)、合計\(vm.totalXP)XP、今日+\(vm.todayStats.earnedXP)XP")
+        .accessibilityLabel(lang.l("home.accessibility.level_card", vm.userLevel, vm.levelTitle, vm.totalXP, vm.todayStats.earnedXP))
     }
 
     // MARK: - ストリーク
@@ -216,7 +217,7 @@ struct HomeView: View {
                 Text("\(vm.todayStats.streak)")
                     .font(.system(size: 42, weight: .bold, design: .rounded))
                     .foregroundStyle(vm.todayStats.streak > 0 ? AppColor.accent : AppColor.textTertiary)
-                Text("日連続")
+                Text(lang.l("home.streak_days"))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -226,7 +227,7 @@ struct HomeView: View {
                 Text(vm.streakMessage)
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("毎日少しずつ学び続けましょう")
+                Text(lang.l("home.daily_encouragement"))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -241,7 +242,7 @@ struct HomeView: View {
         }
         .modifier(CardStyle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(vm.todayStats.streak)日連続学習、\(vm.streakMessage)")
+        .accessibilityLabel(lang.l("home.accessibility.streak_card", vm.todayStats.streak, vm.streakMessage))
     }
 
     // MARK: - 今日の目標
@@ -254,11 +255,11 @@ struct HomeView: View {
                 Image(systemName: progress >= 1.0 ? "target" : "scope")
                     .foregroundStyle(progress >= 1.0 ? AppColor.success : AppColor.primary)
                     .accessibilityHidden(true)
-                Text("今日の目標")
+                Text(lang.l("home.today_goal"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                 Spacer()
-                Text("\(vm.todayStats.studyMinutes)/\(vm.dailyGoalMinutes)分")
+                Text(lang.l("home.daily_goal_minutes", vm.todayStats.studyMinutes, vm.dailyGoalMinutes))
                     .font(AppFont.caption)
                     .foregroundStyle(progress >= 1.0 ? AppColor.success : AppColor.textSecondary)
             }
@@ -275,7 +276,7 @@ struct HomeView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(AppColor.success)
                         .accessibilityHidden(true)
-                    Text("目標達成！お疲れさまです 🎉")
+                    Text(lang.l("home.goal_achieved"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.success)
                 }
@@ -283,7 +284,7 @@ struct HomeView: View {
         }
         .modifier(CardStyle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("今日の目標、\(vm.todayStats.studyMinutes)分の\(vm.dailyGoalMinutes)分達成\(progress >= 1.0 ? "、目標達成" : "")")
+        .accessibilityLabel(lang.l("home.accessibility.daily_goal_card", vm.todayStats.studyMinutes, vm.dailyGoalMinutes) + (progress >= 1.0 ? lang.l("home.accessibility.daily_goal_achieved_suffix") : ""))
     }
 
     // MARK: - おすすめレッスン
@@ -292,13 +293,13 @@ struct HomeView: View {
         NavigationLink(value: lesson) {
             HStack(spacing: AppLayout.paddingMD) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("次のレッスン")
+                    Text(lang.l("home.next_lesson"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     Text(lesson.title)
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text("約\(lesson.estimatedMinutes)分")
+                    Text(lang.l("common.about_minutes", lesson.estimatedMinutes))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textTertiary)
                 }
@@ -310,26 +311,26 @@ struct HomeView: View {
             }
             .modifier(CardStyle())
         }
-        .accessibilityLabel("次のレッスン: \(lesson.title)、約\(lesson.estimatedMinutes)分")
-        .accessibilityHint("レッスンを開始します")
+        .accessibilityLabel(lang.l("home.accessibility.next_lesson_label", lesson.title, lesson.estimatedMinutes))
+        .accessibilityHint(lang.l("home.accessibility.next_lesson_hint"))
     }
 
     // MARK: - 今日の統計
 
     private var todayStatsCard: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("今日の学習")
+            Text(lang.l("home.today_study"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
             HStack(spacing: AppLayout.paddingLG) {
-                StatItem(icon: "book.fill", value: "\(vm.todayStats.completedLessons)", label: "レッスン", color: AppColor.primary)
-                StatItem(icon: "checkmark.circle.fill", value: "\(vm.todayStats.completedQuizzes)", label: "クイズ", color: AppColor.success)
+                StatItem(icon: "book.fill", value: "\(vm.todayStats.completedLessons)", label: lang.l("home.lessons"), color: AppColor.primary)
+                StatItem(icon: "checkmark.circle.fill", value: "\(vm.todayStats.completedQuizzes)", label: lang.l("home.quizzes"), color: AppColor.success)
                 StatItem(icon: "star.fill", value: "\(vm.todayStats.earnedXP)", label: "XP", color: AppColor.xpGold)
             }
         }
         .modifier(CardStyle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("今日の学習、レッスン\(vm.todayStats.completedLessons)、クイズ\(vm.todayStats.completedQuizzes)、XP\(vm.todayStats.earnedXP)")
+        .accessibilityLabel(lang.l("home.accessibility.today_study_card", vm.todayStats.completedLessons, vm.todayStats.completedQuizzes, vm.todayStats.earnedXP))
     }
 
     // MARK: - 最近のバッジ
@@ -337,14 +338,14 @@ struct HomeView: View {
     private var recentBadgesCard: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
             HStack {
-                Text("最近獲得したバッジ")
+                Text(lang.l("home.recent_badges"))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                 Spacer()
                 Button {
                     switchToTab?(.mypage)
                 } label: {
-                    Text("すべて見る")
+                    Text(lang.l("home.see_all"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.primary)
                 }
@@ -360,7 +361,7 @@ struct HomeView: View {
                                 .font(.title3)
                                 .foregroundStyle(Color(hex: badge.colorHex))
                         }
-                        Text(badge.name)
+                        Text(lang.l(badge.name))
                             .font(AppFont.codeSmall)
                             .foregroundStyle(AppColor.textSecondary)
                             .lineLimit(1)
@@ -383,10 +384,10 @@ struct HomeView: View {
                     .foregroundStyle(AppColor.warning)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("復習が \(vm.reviewCount)件 あります")
+                    Text(lang.l("home.review_pending", vm.reviewCount))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.textPrimary)
-                    Text("忘れる前に復習しましょう")
+                    Text(lang.l("home.review_reminder"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                 }
@@ -398,15 +399,15 @@ struct HomeView: View {
             .modifier(CardStyle())
         }
         .buttonStyle(.pressable)
-        .accessibilityLabel("復習が\(vm.reviewCount)件あります")
-        .accessibilityHint("復習タブに移動します")
+        .accessibilityLabel(lang.l("home.review_pending", vm.reviewCount))
+        .accessibilityHint(lang.l("home.accessibility.review_hint"))
     }
 
     // MARK: - 進捗
 
     private var progressSummaryCard: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("全体の進捗")
+            Text(lang.l("home.overall_progress"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
@@ -417,7 +418,7 @@ struct HomeView: View {
                 foregroundColor: AppColor.primary
             )
 
-            Text("\(vm.totalCompleted) / \(vm.totalLessons) レッスン完了（\(Int(vm.overallProgress * 100))%）")
+            Text(lang.l("home.lessons_completed_progress", vm.totalCompleted, vm.totalLessons, Int(vm.overallProgress * 100)))
                 .font(AppFont.caption)
                 .foregroundStyle(AppColor.textSecondary)
         }

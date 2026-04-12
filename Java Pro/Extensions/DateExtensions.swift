@@ -65,8 +65,8 @@ extension Date {
 
     /// 「今日」「昨日」「4/5」等の短い表示文字列。
     var shortDisplayString: String {
-        if isToday { return "今日" }
-        if isYesterday { return "昨日" }
+        if isToday { return LanguageManager.shared.l("date.today") }
+        if isYesterday { return LanguageManager.shared.l("date.yesterday") }
         return Self.shortDisplayFormatter.string(from: self)
     }
 

@@ -74,7 +74,7 @@ final class StoreService {
                 .sorted { $0.price < $1.price }
         } catch {
             AppLogger.store.error("商品取得エラー: \(error)")
-            errorMessage = "商品情報の取得に失敗しました。通信状況をご確認ください。"
+            errorMessage = LanguageManager.shared.l("store.error.load_failed")
         }
     }
 
@@ -87,7 +87,7 @@ final class StoreService {
 
     func purchase(_ productId: StoreProductID) async -> Bool {
         guard let product = product(for: productId) else {
-            errorMessage = "商品が見つかりません"
+            errorMessage = LanguageManager.shared.l("store.error.not_found")
             return false
         }
         return await purchase(product)
@@ -109,14 +109,14 @@ final class StoreService {
             case .userCancelled:
                 return false
             case .pending:
-                errorMessage = "購入の承認を待っています"
+                errorMessage = LanguageManager.shared.l("store.error.pending")
                 return false
             @unknown default:
-                errorMessage = "予期しない購入結果が返されました。しばらく待ってから再試行してください"
+                errorMessage = LanguageManager.shared.l("store.error.unknown")
                 return false
             }
         } catch {
-            errorMessage = "購入エラー: \(error.localizedDescription)"
+            errorMessage = LanguageManager.shared.l("store.error.purchase", error.localizedDescription)
             return false
         }
     }
@@ -132,7 +132,7 @@ final class StoreService {
             try await AppStore.sync()
             await refreshPurchaseStatus()
         } catch {
-            errorMessage = "復元エラー: \(error.localizedDescription)"
+            errorMessage = LanguageManager.shared.l("store.error.restore", error.localizedDescription)
         }
     }
 

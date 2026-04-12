@@ -16,12 +16,13 @@ struct BadgeListView: View {
 
     private static let badgeDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年M月d日"
-        formatter.locale = Locale(identifier: "ja_JP")
+        let format = LanguageManager.shared.l("badges.date_format")
+        formatter.dateFormat = format
         formatter.calendar = Calendar(identifier: .gregorian)
         return formatter
     }()
     @State private var selectedBadge: BadgeDetail?
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private let columns = [
         GridItem(.flexible(), spacing: AppLayout.paddingSM),
@@ -38,12 +39,12 @@ struct BadgeListView: View {
 
                 // 獲得済み
                 if !earnedBadges.isEmpty {
-                    sectionTitle("獲得済み (\(earnedBadges.count))")
+                    sectionTitle(lang.l("badges.earned_count", earnedBadges.count))
                     LazyVGrid(columns: columns, spacing: AppLayout.paddingMD) {
                         ForEach(Array(earnedBadges.enumerated()), id: \.element.badgeId) { index, badge in
                             badgeCell(
                                 id: badge.badgeId,
-                                name: badge.name,
+                                name: lang.l(badge.name),
                                 icon: badge.iconName,
                                 colorHex: badge.colorHex,
                                 earned: true,
@@ -59,12 +60,12 @@ struct BadgeListView: View {
                     !earnedBadges.contains(where: { $0.badgeId == def.id })
                 }
                 if !lockedDefs.isEmpty {
-                    sectionTitle("未獲得 (\(lockedDefs.count))")
+                    sectionTitle(lang.l("badges.locked_count", lockedDefs.count))
                     LazyVGrid(columns: columns, spacing: AppLayout.paddingMD) {
                         ForEach(lockedDefs, id: \.id) { def in
                             badgeCell(
                                 id: def.id,
-                                name: def.name,
+                                name: lang.l(def.nameKey),
                                 icon: def.icon,
                                 colorHex: def.color,
                                 earned: false,
@@ -77,7 +78,7 @@ struct BadgeListView: View {
             .padding(AppLayout.paddingMD)
         }
         .background(AppColor.background)
-        .navigationTitle("バッジコレクション")
+        .navigationTitle(lang.l("badges.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: loadBadges)
         .sheet(item: $selectedBadge) { detail in
@@ -109,10 +110,10 @@ struct BadgeListView: View {
             .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(earned) / \(total) バッジ獲得")
+                Text(lang.l("badges.progress", earned, total))
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
-                Text("コンプリート率 \(Int(rate * 100))%")
+                Text(lang.l("badges.completion", Int(rate * 100)))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -121,7 +122,7 @@ struct BadgeListView: View {
         .padding(AppLayout.paddingMD)
         .modifier(CardStyle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(earned)/\(total)バッジ獲得、コンプリート率\(Int(rate * 100))%")
+        .accessibilityLabel(lang.l("badges.progress", earned, total) + ", " + lang.l("badges.completion", Int(rate * 100)))
     }
 
     // MARK: - Section Title
@@ -141,8 +142,8 @@ struct BadgeListView: View {
             if let def = GamificationService.badgeDefinitions.first(where: { $0.id == id }) {
                 selectedBadge = BadgeDetail(
                     id: def.id,
-                    name: def.name,
-                    description: def.description,
+                    name: lang.l(def.nameKey),
+                    description: lang.l(def.descriptionKey),
                     icon: def.icon,
                     colorHex: def.color,
                     earned: earned,
@@ -177,8 +178,8 @@ struct BadgeListView: View {
             .padding(.vertical, AppLayout.paddingSM)
         }
         .buttonStyle(.pressable)
-        .accessibilityLabel("\(name)バッジ、\(earned ? "獲得済み" : "未獲得")")
-        .accessibilityHint("詳細を表示します")
+        .accessibilityLabel(lang.l(earned ? "badges.badge_earned_label" : "badges.badge_locked_label", name))
+        .accessibilityHint(lang.l("common.show_detail_hint"))
     }
 
     // MARK: - Detail Sheet
@@ -213,18 +214,18 @@ struct BadgeListView: View {
                 .multilineTextAlignment(.center)
 
             if detail.earned, let date = detail.earnedAt {
-                Text("\(Self.badgeDateFormatter.string(from: date)) に獲得")
+                Text(lang.l("badges.earned_at_date", Self.badgeDateFormatter.string(from: date)))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textTertiary)
             } else {
-                Text("未獲得")
+                Text(lang.l("badges.locked"))
                     .font(AppFont.callout)
                     .foregroundStyle(AppColor.textTertiary)
             }
 
             Spacer()
 
-            Button("閉じる") {
+            Button(lang.l("badges.close")) {
                 selectedBadge = nil
             }
             .font(AppFont.headline)

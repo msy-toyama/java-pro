@@ -23,6 +23,8 @@ struct ExamResultView: View {
     @State private var showConfetti = false
     @State private var showReview = false
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     private var scoreRate: Double {
         Double(result.score) / Double(max(result.totalQuestions, 1))
     }
@@ -31,9 +33,9 @@ struct ExamResultView: View {
         let h = result.timeSpentSeconds / 3600
         let m = (result.timeSpentSeconds % 3600) / 60
         if h > 0 {
-            return "\(h)時間\(m)分"
+            return lang.l("exam_result.time_hours_minutes", h, m)
         }
-        return "\(m)分"
+        return lang.l("exam_result.time_minutes", m)
     }
 
     var body: some View {
@@ -71,7 +73,7 @@ struct ExamResultView: View {
                     .accessibilityHidden(true)
             }
         }
-        .navigationTitle("模擬試験結果")
+        .navigationTitle(lang.l("exam_result.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if reduceMotion {
@@ -121,11 +123,11 @@ struct ExamResultView: View {
                 }
             }
 
-            Text(result.passed ? "合格！" : "不合格")
+            Text(result.passed ? lang.l("exam_result.pass") : lang.l("exam_result.fail"))
                 .font(AppFont.largeTitle)
                 .foregroundStyle(result.passed ? AppColor.success : AppColor.error)
 
-            Text("正答率: \(Int(scoreRate * 100))%  /  合格ライン: \(ExamService.passingRatePercent)%")
+            Text(lang.l("exam_result.accuracy_detail", Int(scoreRate * 100), ExamService.passingRatePercent))
                 .font(AppFont.callout)
                 .foregroundStyle(AppColor.textSecondary)
 
@@ -134,7 +136,7 @@ struct ExamResultView: View {
                     Image(systemName: "star.fill")
                         .foregroundStyle(AppColor.xpGold)
                         .accessibilityHidden(true)
-                    Text("+500 XP 獲得！")
+                    Text(lang.l("exam_result.xp_earned"))
                         .font(AppFont.headline)
                         .foregroundStyle(AppColor.xpGold)
                 }
@@ -144,14 +146,14 @@ struct ExamResultView: View {
             }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(result.passed ? "合格" : "不合格")、スコア\(result.score)/\(result.totalQuestions)、正答率\(Int(scoreRate * 100))%")
+        .accessibilityLabel(lang.l("exam_result.pass_accessibility", result.passed ? lang.l("exam_result.pass") : lang.l("exam_result.fail"), result.score, result.totalQuestions, Int(scoreRate * 100)))
     }
 
     // MARK: - Topic Breakdown
 
     private var topicBreakdown: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
-            Text("分野別正答率")
+            Text(lang.l("exam_result.topic_accuracy"))
                 .font(AppFont.headline)
                 .foregroundStyle(AppColor.textPrimary)
 
@@ -197,7 +199,7 @@ struct ExamResultView: View {
             Image(systemName: "clock")
                 .foregroundStyle(AppColor.textTertiary)
                 .accessibilityHidden(true)
-            Text("所要時間: \(timeString)")
+            Text(lang.l("exam_result.time_spent") + " " + timeString)
                 .font(AppFont.callout)
                 .foregroundStyle(AppColor.textSecondary)
         }
@@ -213,7 +215,7 @@ struct ExamResultView: View {
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "doc.text.magnifyingglass")
-                        Text("解答・解説を確認")
+                        Text(lang.l("exam_result.review_solutions"))
                     }
                     .font(AppFont.headline)
                     .foregroundStyle(.white)
@@ -222,13 +224,13 @@ struct ExamResultView: View {
                     .background(AppColor.accent, in: RoundedRectangle(cornerRadius: AppLayout.cornerRadius))
                 }
                 .buttonStyle(.pressable)
-                .accessibilityLabel("解答と解説を確認する")
+                .accessibilityLabel(lang.l("exam_result.review_accessibility"))
             }
 
             Button {
                 dismiss()
             } label: {
-                Text("閉じる")
+                Text(lang.l("exam_result.close"))
                     .font(AppFont.headline)
                     .foregroundStyle(quizzes.isEmpty ? .white : AppColor.primary)
                     .frame(maxWidth: .infinity)

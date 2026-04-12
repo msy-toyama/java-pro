@@ -34,13 +34,15 @@ final class HomeViewModel {
 
     // MARK: - Computed
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     var streakMessage: String {
         switch todayStats.streak {
-        case 0: return "今日も学びましょう！"
-        case 1: return "学習スタート！"
-        case 2...6: return "いい調子です！"
-        case 7...29: return "素晴らしい継続力！"
-        default: return "圧巻の継続です！"
+        case 0: return lang.l("home.streak.0")
+        case 1: return lang.l("home.streak.1")
+        case 2...6: return lang.l("home.streak.short")
+        case 7...29: return lang.l("home.streak.medium")
+        default: return lang.l("home.streak.long")
         }
     }
 

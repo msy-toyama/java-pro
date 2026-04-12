@@ -11,6 +11,7 @@ import SwiftUI
 
 struct EnvironmentSetupDetailView: View {
     let section: SetupGuideSection
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         ScrollView {
@@ -29,7 +30,7 @@ struct EnvironmentSetupDetailView: View {
                         Text(section.title)
                             .font(AppFont.title3)
                             .foregroundStyle(AppColor.textPrimary)
-                        Text("\(section.steps.count) ステップ")
+                        Text(lang.l("env_setup.step_count", section.steps.count))
                             .font(AppFont.caption)
                             .foregroundStyle(AppColor.textTertiary)
                     }

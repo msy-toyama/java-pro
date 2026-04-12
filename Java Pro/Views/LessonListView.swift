@@ -17,6 +17,7 @@ struct LessonListView: View {
     @State private var lessons: [LessonData] = []
     @State private var progressMap: [String: LessonStatus] = [:]
     @State private var appearedItems: Set<String> = []
+    private var lang: LanguageManager { LanguageManager.shared }
 
     private var courseColor: Color {
         AppColor.chapterColor(order: course.order)
@@ -162,7 +163,7 @@ struct LessonListView: View {
                     .frame(height: 6)
                     .padding(.horizontal, AppLayout.paddingLG)
 
-                    Text("\(completed)/\(total) レッスン完了")
+                    Text(lang.l("lesson_list.completed_count", completed, total))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textTertiary)
                 }
@@ -189,6 +190,7 @@ struct LessonRowView: View {
     let status: LessonStatus
     let color: Color
     var lessonNumber: Int = 1
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         HStack(spacing: AppLayout.paddingSM) {
@@ -207,10 +209,10 @@ struct LessonRowView: View {
                     .font(AppFont.headline)
                     .foregroundStyle(AppColor.textPrimary)
                 HStack(spacing: AppLayout.paddingSM) {
-                    Label("約\(lesson.estimatedMinutes)分", systemImage: "clock")
+                    Label(lang.l("common.about_minutes", lesson.estimatedMinutes), systemImage: "clock")
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
-                    Label("\(lesson.quizzes.count)問", systemImage: "questionmark.circle")
+                    Label(lang.l("common.quiz_count", lesson.quizzes.count), systemImage: "questionmark.circle")
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textTertiary)
                 }
@@ -225,14 +227,14 @@ struct LessonRowView: View {
         .background(AppColor.cardBackground, in: RoundedRectangle(cornerRadius: AppLayout.cornerRadius))
         .shadow(color: .black.opacity(0.03), radius: 4, y: 1)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(lesson.title)、\(statusLabel)、約\(lesson.estimatedMinutes)分")
+        .accessibilityLabel(lang.l("lesson_list.lesson_accessibility", lesson.title, statusLabel, lesson.estimatedMinutes))
     }
 
     private var statusLabel: String {
         switch status {
-        case .notStarted: return "未開始"
-        case .inProgress: return "学習中"
-        case .completed: return "完了"
+        case .notStarted: return lang.l("lesson_list.status.not_started")
+        case .inProgress: return lang.l("lesson_list.status.in_progress")
+        case .completed: return lang.l("lesson_list.status.completed")
         }
     }
 }

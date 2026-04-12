@@ -41,11 +41,12 @@ extension MainTabView {
         case home, learn, exam, mypage
 
         var label: String {
+            let lang = LanguageManager.shared
             switch self {
-            case .home:   return "ホーム"
-            case .learn:  return "学習"
-            case .exam:   return "試験対策"
-            case .mypage: return "マイページ"
+            case .home:   return lang.l("tab.home")
+            case .learn:  return lang.l("tab.learn")
+            case .exam:   return lang.l("tab.exam")
+            case .mypage: return lang.l("tab.profile")
             }
         }
 

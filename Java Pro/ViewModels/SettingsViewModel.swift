@@ -116,7 +116,8 @@ final class SettingsViewModel {
                 let granted = await NotificationService.shared.requestAuthorization()
                 if granted {
                     settings.notificationsEnabled = true
-                    NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+                    let strings = LanguageManager.shared.notificationStrings()
+                    NotificationService.shared.scheduleDailyReminder(hour: self.reminderHour, minute: self.reminderMinute, title: strings.title, bodies: strings.bodies)
                 } else {
                     notificationsEnabled = false
                     settings.notificationsEnabled = false
@@ -152,7 +153,8 @@ final class SettingsViewModel {
 
         if notificationsEnabled {
             Task {
-                NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+                let strings = LanguageManager.shared.notificationStrings()
+                NotificationService.shared.scheduleDailyReminder(hour: self.reminderHour, minute: self.reminderMinute, title: strings.title, bodies: strings.bodies)
             }
         }
     }

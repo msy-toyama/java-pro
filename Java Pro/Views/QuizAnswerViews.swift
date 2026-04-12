@@ -16,11 +16,13 @@ struct QuizReorderView: View {
     @Binding var isAnswered: Bool
     let onSubmit: () -> Void
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     var body: some View {
         VStack(spacing: AppLayout.paddingSM) {
             if !selectedOrderIds.isEmpty {
                 VStack(spacing: 4) {
-                    Text("あなたの並び順：")
+                    Text(lang.l("quiz_answer.your_order"))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textSecondary)
                     ForEach(Array(selectedOrderIds.enumerated()), id: \.element) { index, choiceId in
@@ -42,7 +44,7 @@ struct QuizReorderView: View {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundStyle(AppColor.textTertiary)
                                     }
-                                    .accessibilityLabel("取り消す")
+                                    .accessibilityLabel(lang.l("quiz_answer.undo"))
                                 }
                             }
                             .padding(AppLayout.paddingSM)
@@ -72,14 +74,14 @@ struct QuizReorderView: View {
                     }
                     .buttonStyle(.pressable(scale: 0.97))
                     .accessibilityLabel(choice.text)
-                    .accessibilityHint("タップして並び順に追加")
+                    .accessibilityHint(lang.l("quiz_answer.tap_to_add"))
                 }
             }
             if selectedOrderIds.count == quiz.choices.count && !isAnswered {
                 Button {
                     onSubmit()
                 } label: {
-                    Text("この順番で回答する")
+                    Text(lang.l("quiz_answer.submit_order"))
                         .font(AppFont.headline)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
@@ -101,10 +103,12 @@ struct QuizMultiChoiceView: View {
     @Binding var isAnswered: Bool
     let onSubmit: () -> Void
 
+    private var lang: LanguageManager { LanguageManager.shared }
+
     var body: some View {
         VStack(spacing: AppLayout.paddingSM) {
             if let required = quiz.requiredSelections {
-                Text("\(required)つ選択してください")
+                Text(lang.l("quiz_answer.select_count", required))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textSecondary)
             }
@@ -148,14 +152,14 @@ struct QuizMultiChoiceView: View {
                 .buttonStyle(.pressable(scale: 0.97))
                 .disabled(isAnswered)
                 .accessibilityLabel(choice.text)
-                .accessibilityValue(selectedChoiceIds.contains(choice.id) ? "選択中" : "")
+                .accessibilityValue(selectedChoiceIds.contains(choice.id) ? lang.l("quiz.selected_label") : "")
             }
             if !isAnswered && !selectedChoiceIds.isEmpty {
                 let isReady = quiz.requiredSelections.map { selectedChoiceIds.count >= $0 } ?? true
                 Button {
                     onSubmit()
                 } label: {
-                    Text("この選択で回答する（\(selectedChoiceIds.count)個選択中）")
+                    Text(lang.l("quiz_answer.submit_selection", selectedChoiceIds.count))
                         .font(AppFont.headline)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
@@ -178,6 +182,8 @@ struct QuizCodeCompleteView: View {
     @Binding var blankSelections: [String: String]
     @Binding var isAnswered: Bool
     let onSubmit: () -> Void
+
+    private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
         VStack(alignment: .leading, spacing: AppLayout.paddingSM) {
@@ -220,7 +226,7 @@ struct QuizCodeCompleteView: View {
                             .buttonStyle(.pressable(scale: 0.97))
                             .disabled(isAnswered)
                             .accessibilityLabel(choice.text)
-                            .accessibilityValue(blankSelections[blank.id] == choice.id ? "選択中" : "")
+                            .accessibilityValue(blankSelections[blank.id] == choice.id ? lang.l("quiz.selected_label") : "")
                         }
                     }
                 }
@@ -229,7 +235,7 @@ struct QuizCodeCompleteView: View {
                 Button {
                     onSubmit()
                 } label: {
-                    Text("この組み合わせで回答する")
+                    Text(lang.l("quiz_answer.submit_combination"))
                         .font(AppFont.headline)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
