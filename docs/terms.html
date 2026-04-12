@@ -283,11 +283,12 @@
     <!-- ナビゲーション -->
     <nav class="navbar">
         <div class="navbar-inner">
-            <a href="terms.html" class="navbar-brand">
+            <a href="home.html" class="navbar-brand">
                 <div class="logo">PP</div>
                 <span>プロプロ</span>
             </a>
             <div class="navbar-links">
+                <a href="home.html">ホーム</a>
                 <a href="terms.html" class="active">利用規約</a>
                 <a href="privacy.html">プライバシーポリシー</a>
             </div>
@@ -344,7 +345,7 @@
                 <li>体系的な Java 学習コンテンツ（全34コース・169レッスン）の閲覧</li>
                 <li>多様なクイズ形式による理解度確認（四択・複数選択・穴埋め・並び替え・出力予測・エラー発見・コード補完・試験形式の全8種、計575問）</li>
                 <li>実践演習（39チャプター・108問）および Java 環境構築ガイド（5セクション）</li>
-                <li>非公式模擬試験の受験（SE11/SE17 × Silver/Gold × 各2セット = 計8種・640問）</li>
+                <li>非公式模擬試験の受験（SE11/SE17 × Silver/Gold × 各2セット = 計8種・690問）</li>
                 <li>学習進捗の管理およびゲーミフィケーション（XP・バッジ・レベル・連続学習日数）</li>
                 <li>弱点分析・資格別進捗トラッキング</li>
                 <li>間隔反復法に基づく復習システム（4段階：即時→ 24時間 → 3日 → 7日 → 習得完了）</li>
@@ -362,7 +363,7 @@
             <h2><span class="num">3</span>無料範囲と課金</h2>
             <ol>
                 <li><strong>無料コンテンツ:</strong> 本アプリは無料でダウンロードできます。入門コース（Beginner 8コース・46レッスンの全レッスン・クイズ）、SE11 Silver 模擬試験1、用語集、バッジ・レベルシステム、復習機能、環境構築ガイドは無料でご利用いただけます。</li>
-                <li><strong>フルアクセス（買い切り ¥980）:</strong> Silver / Gold 範囲のコース、残り7種の模擬試験、および有料実践演習をご利用いただくには、アプリ内課金（買い切り）による「フルアクセス」の購入が必要です。サブスクリプション（月額・年額課金）ではありません。</li>
+                <li><strong>フルアクセス（買い切り ¥480）:</strong> Silver / Gold 範囲のコース、残り7種の模擬試験、および有料実践演習をご利用いただくには、アプリ内課金（買い切り）による「フルアクセス」の購入が必要です。サブスクリプション（月額・年額課金）ではありません。</li>
                 <li><strong>決済:</strong> 購入は Apple の App Store 決済を通じて行われます。課金・返金については <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener noreferrer">Apple メディアサービス利用規約</a> に準拠します。</li>
                 <li><strong>購入の復元:</strong> 機種変更やアプリの再インストール時は、設定画面の「購入を復元」ボタンから購入済みの権利を復元できます。</li>
             </ol>
@@ -473,6 +474,7 @@
         <!-- フッター -->
         <footer>
             <div class="footer-links">
+                <a href="home.html">ホーム</a>
                 <a href="terms.html">利用規約</a>
                 <a href="privacy.html">プライバシーポリシー</a>
                 <a href="https://www.instagram.com/photoyasan16" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -486,10 +488,11 @@
     </div>
 
     <!-- トップに戻るボタン -->
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="ページの先頭に戻る">↑</button>
+    <button class="back-to-top" id="backToTop" aria-label="ページの先頭に戻る">↑</button>
 
     <script>
         const btn = document.getElementById('backToTop');
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         window.addEventListener('scroll', () => {
             btn.classList.toggle('visible', window.scrollY > 400);
         });
