@@ -38,6 +38,15 @@ struct RichBodyView: View {
     /// 用語リンクのURLスキーム。
     static let glossaryScheme = "prpro-glossary"
 
+    /// 用語リンク URL のホスト部分に使用する許可文字セット。
+    /// `.urlPathAllowed` だと `/`, `:`, `@` がエンコードされず URL パースが破綻するため、
+    /// 英数字とハイフン・アンダースコアのみ許可する安全なセットを使用する。
+    private static let glossaryURLAllowed: CharacterSet = {
+        var cs = CharacterSet.alphanumerics
+        cs.insert(charactersIn: "-_")
+        return cs
+    }()
+
     /// `**太字**` と `[[用語]]` マークアップをパースし、
     /// 強調スタイルおよび用語リンク付きの `Text` を生成する。
     /// - `**text**` → 太字 + アクセントカラー
@@ -82,7 +91,7 @@ struct RichBodyView: View {
                     flushBuffer()
                     let term = String(chars[(i + 2)..<endIdx])
                     var attr = AttributedString(term)
-                    let encoded = term.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? term
+                    let encoded = term.addingPercentEncoding(withAllowedCharacters: Self.glossaryURLAllowed) ?? term
                     attr.link = URL(string: "\(glossaryScheme)://\(encoded)")
                     attr.underlineStyle = .single
                     result += attr

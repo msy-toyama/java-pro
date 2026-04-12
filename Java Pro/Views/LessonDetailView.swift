@@ -102,13 +102,18 @@ struct LessonDetailView: View {
                 GlossaryPopupView(entry: entry)
             }
             .environment(\.openURL, OpenURLAction { url in
-                if url.scheme == RichBodyView.glossaryScheme,
-                   let term = url.host()?.removingPercentEncoding,
-                   let entry = ContentService.shared.getGlossaryEntry(term: term) {
-                    glossaryPopupEntry = entry
-                    return .handled
+                guard url.scheme == RichBodyView.glossaryScheme else {
+                    return .systemAction
                 }
-                return .systemAction
+                guard let term = url.host()?.removingPercentEncoding else {
+                    return .handled   // スキームは一致するがデコード失敗 → 無視
+                }
+                if let entry = ContentService.shared.getGlossaryEntry(term: term) {
+                    glossaryPopupEntry = entry
+                } else {
+                    print("[GlossaryLink] 用語が見つかりません: \(term)")
+                }
+                return .handled
             })
             .onAppear {
                 let service = ProgressService(modelContext: modelContext)

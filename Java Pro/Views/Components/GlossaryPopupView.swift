@@ -91,7 +91,7 @@ struct GlossaryPopupView: View {
                 .frame(height: AppLayout.paddingLG)
         }
         .background(AppColor.cardBackground)
-        .presentationDetents([.height(280)])
+        .presentationDetents([.height(280), .medium])
         .presentationCornerRadius(AppLayout.cornerRadiusLarge)
         .presentationDragIndicator(.hidden)
         .onAppear {
