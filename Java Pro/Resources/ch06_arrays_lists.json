@@ -13,7 +13,7 @@
           "lessonId": "ch06_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・配列の宣言・初期化・要素へのアクセス方法\n・インデックス（添字）は0から始まるルール\n・配列の長さ（length）の取得方法\n\n配列は「同じ型のデータをまとめて管理する」最も基本的な仕組みです。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[配列]]の宣言・初期化・要素へのアクセス方法\n・インデックス（添字）は0から始まるルール\n・配列の長さ（length）の取得方法\n\n配列は「同じ型のデータをまとめて管理する」最も基本的な仕組みです。",
           "code": null,
           "note": null,
           "order": 1
@@ -24,7 +24,7 @@
           "title": "配列の宣言と初期化",
           "body": "配列の作成方法は大きく3通りあります。",
           "code": "// 方法1: サイズ指定で作成（デフォルト値で初期化）\nint[] scores = new int[5];\n// → [0, 0, 0, 0, 0]  ※intのデフォルト値は0\n\n// 方法2: 初期値を指定して作成\nString[] fruits = {\"りんご\", \"みかん\", \"ぶどう\"};\n\n// 方法3: newキーワード + 初期値\ndouble[] prices = new double[]{100.0, 250.5, 380.0};\n\n// 各型のデフォルト値\n// int    → 0\n// double → 0.0\n// boolean → false\n// char   → '\\u0000'\n// String(参照型) → null",
-          "note": "配列のサイズは作成後に変更できません。サイズを変えたい場合はArrayList（後のレッスン）を使います。",
+          "note": "配列のサイズは作成後に変更できません。サイズを変えたい場合は[[ArrayList]]（後のレッスン）を使います。",
           "order": 2
         },
         {
@@ -33,16 +33,16 @@
           "title": "要素のアクセスとlength",
           "body": "配列の要素はインデックス（0から始まる番号）でアクセスします。",
           "code": "int[] nums = {10, 20, 30, 40, 50};\n\n// 要素の取得（0始まり）\nSystem.out.println(nums[0]); // 10（最初の要素）\nSystem.out.println(nums[4]); // 50（最後の要素）\n\n// 要素の変更\nnums[2] = 99;\nSystem.out.println(nums[2]); // 99\n\n// 配列の長さ\nSystem.out.println(nums.length); // 5 ※()は不要\n\n// 最後の要素を取得\nSystem.out.println(nums[nums.length - 1]); // 50\n\n// 範囲外アクセス → ArrayIndexOutOfBoundsException\n// System.out.println(nums[5]); // 実行時エラー！",
-          "note": "lengthはメソッドではなくフィールドなので()を付けません。String の length() とは異なります。",
+          "note": "lengthは[[メソッド]]ではなくフィールドなので()を付けません。[[String]] の length() とは異なります。",
           "order": 3
         },
         {
           "lessonId": "ch06_01",
           "sectionType": "code",
           "title": "配列とfor文",
-          "body": "配列の全要素を処理するにはfor文を使います。",
+          "body": "配列の全要素を処理するには[[for文]]を使います。",
           "code": "String[] names = {\"太郎\", \"花子\", \"次郎\"};\n\n// 通常のfor文\nfor (int i = 0; i < names.length; i++) {\n    System.out.println((i + 1) + \"番: \" + names[i]);\n}\n// 1番: 太郎  2番: 花子  3番: 次郎\n\n// 拡張for文（for-each）- 全要素を順に処理\nfor (String name : names) {\n    System.out.println(\"こんにちは、\" + name + \"さん\");\n}\n\n// 合計・平均の計算\nint[] scores = {85, 92, 78, 95, 88};\nint sum = 0;\nfor (int score : scores) {\n    sum += score;\n}\ndouble avg = (double) sum / scores.length;\nSystem.out.println(\"平均: \" + avg); // 平均: 87.6",
-          "note": "拡張for文はインデックスが不要な場合に簡潔に書けます。ただし、要素の変更やインデックスの参照が必要な場合は通常のfor文を使います。",
+          "note": "[[拡張for文]]はインデックスが不要な場合に簡潔に書けます。ただし、要素の変更やインデックスの参照が必要な場合は通常のfor文を使います。",
           "order": 4
         },
         {
@@ -187,7 +187,7 @@
           "lessonId": "ch06_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・2次元配列（表のようなデータ）の扱い方\n・Arrays.sort()、Arrays.toString()などの便利メソッド\n・配列のコピーと比較の注意点\n\nArraysクラスを使えば、手動で書いていた処理を1行で実現できます。",
+          "body": "このレッスンでは以下を学びます:\n\n・2次元[[配列]]（表のようなデータ）の扱い方\n・Arrays.sort()、Arrays.toString()などの便利[[メソッド]]\n・配列のコピーと比較の注意点\n\nArraysクラスを使えば、手動で書いていた処理を1行で実現できます。",
           "code": null,
           "note": null,
           "order": 1
@@ -223,7 +223,7 @@
           "lessonId": "ch06_02",
           "sectionType": "tip",
           "title": "配列のコピーは「=」ではできない",
-          "body": "配列を = で代入すると、中身のコピーではなく「同じ配列への参照」になります。\n\n| 方法 | 動作 |\n|---|---|\n| b = a | 同じ配列を共有（bを変えるとaも変わる） |\n| b = Arrays.copyOf(a, a.length) | 独立したコピーを作成 |\n| b = a.clone() | 独立したコピーを作成 |\n\nこれは「参照型」の重要な概念です。Chapter 7で詳しく学びます。",
+          "body": "配列を = で代入すると、中身のコピーではなく「同じ配列への参照」になります。\n\n| 方法 | 動作 |\n|---|---|\n| b = a | 同じ配列を共有（bを変えるとaも変わる） |\n| b = Arrays.copyOf(a, a.length) | 独立したコピーを作成 |\n| b = a.clone() | 独立したコピーを作成 |\n\nこれは「[[参照型]]」の重要な概念です。Chapter 7で詳しく学びます。",
           "code": null,
           "note": null,
           "order": 5
@@ -361,7 +361,7 @@
           "lessonId": "ch06_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**ArrayList**：サイズが自動で変わるリスト\n・add, get, remove, size などの基本操作\n・配列とArrayListの使い分け\n\nArrayListはJava開発で最も頻繁に使われるデータ構造の1つです。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ArrayList**：サイズが自動で変わるリスト\n・add, get, remove, size などの基本操作\n・[[配列]]と[[ArrayList]]の使い分け\n\nArrayListはJava開発で最も頻繁に使われるデータ構造の1つです。",
           "code": null,
           "note": null,
           "order": 1
@@ -370,9 +370,9 @@
           "lessonId": "ch06_03",
           "sectionType": "rule",
           "title": "ListインターフェースとArrayList",
-          "body": "ListはJavaのコレクションフレームワークのインターフェースです。\n\n| クラス | 特徴 |\n|---|---|\n| List | 順序付き、重複OK、インデックスアクセス可能 |\n| ArrayList | 内部に配列を持つList実装（最も高速・一般的） |\n| LinkedList | ノードで連結するList実装（挿入・削除が速い） |\n\n変数の型はListインターフェースで宣言するのがベストプラクティスです。\n  ○ List<String> list = new ArrayList<>();\n  △ ArrayList<String> list = new ArrayList<>();\n\nインターフェース型で宣言する理由:\n・実装クラスを後から変更しやすい\n・メソッドの引数・戻り値で汎用的に使える",
+          "body": "ListはJavaのコレクションフレームワークの[[インターフェース]]です。\n\n| クラス | 特徴 |\n|---|---|\n| List | 順序付き、重複OK、インデックスアクセス可能 |\n| ArrayList | 内部に配列を持つList実装（最も高速・一般的） |\n| LinkedList | ノードで連結するList実装（挿入・削除が速い） |\n\n[[変数]]の型はListインターフェースで宣言するのがベストプラクティスです。\n  ○ List<String> list = new ArrayList<>();\n  △ ArrayList<String> list = new ArrayList<>();\n\nインターフェース型で宣言する理由:\n・実装[[クラス]]を後から変更しやすい\n・[[メソッド]]の引数・戻り値で汎用的に使える",
           "code": null,
-          "note": "ジェネリクス<String>は「この型のListの要素はString型のみ」を意味します。<>（ダイヤモンド演算子）は右辺の型推論です。",
+          "note": "[[ジェネリクス]]<String>は「この型のListの要素はString型のみ」を意味します。<>（[[ダイヤモンド演算子]]）は右辺の[[型推論]]です。",
           "order": 2
         },
         {
@@ -399,14 +399,14 @@
           "title": "ArrayListとLinkedListの違い",
           "body": "用途に応じて使い分けましょう。",
           "code": "import java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.List;\n\n// ArrayList: 内部に配列 → ランダムアクセスが高速\nList<String> arrayList = new ArrayList<>();\narrayList.add(\"A\");\narrayList.add(\"B\");\narrayList.add(\"C\");\nString b = arrayList.get(1); // O(1) 高速！\n\n// LinkedList: ノードの連結 → 先頭・途中の挿入・削除が高速\nList<String> linkedList = new LinkedList<>();\nlinkedList.add(\"X\");\nlinkedList.add(\"Y\");\nlinkedList.add(\"Z\");\nlinkedList.add(0, \"W\"); // O(1) 先頭挿入が高速！\n\n// 使い分けの目安:\n// ・ランダムアクセスが多い → ArrayList（大半のケース）\n// ・先頭への追加・削除が頻繁 → LinkedList\n// ・迷ったらArrayListを選ぶ",
-          "note": "実務ではほとんどのケースでArrayListが使われます。LinkedListはキューやスタックとしての利用が主です。",
+          "note": "実務ではほとんどのケースでArrayListが使われます。[[LinkedList]]はキューや[[スタック]]としての利用が主です。",
           "order": 5
         },
         {
           "lessonId": "ch06_03",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・List<E> インターフェースで変数を宣言するのが推奨\n| 項目 | 説明 |\n|---|---|\n| ArrayList | 配列ベース、ランダムアクセスO(1)、最も一般的 |\n| LinkedList | 連結ベース、先頭挿入O(1) |\n| 主要メソッド | add, get, set, remove, size, contains, indexOf, isEmpty, clear |\n・size()はメソッド（配列のlengthはフィールド）\n・<>ダイヤモンド演算子で右辺の型推論が可能",
+          "body": "・List<E> インターフェースで変数を宣言するのが推奨\n| 項目 | 説明 |\n|---|---|\n| ArrayList | 配列ベース、ランダムアクセスO(1)、最も一般的 |\n| LinkedList | 連結ベース、先頭挿入O(1) |\n| 主要メソッド | add, get, set, remove, size, contains, indexOf, isEmpty, clear |\n・size()はメソッド（配列のlengthはフィールド）\n・<>ダイヤモンド[[演算子]]で右辺の型推論が可能",
           "code": null,
           "note": null,
           "order": 6
@@ -617,7 +617,7 @@
           "lessonId": "ch06_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・Set（セット）の特徴：重複を許さない\n・HashSetの使い方と注意点\n・「既に登録済みか？」を高速に判定する方法\n\nユニークな値を管理したいとき、Setが最適な選択肢です。",
+          "body": "このレッスンでは以下を学びます:\n\n・Set（セット）の特徴：重複を許さない\n・[[HashSet]]の使い方と注意点\n・「既に登録済みか？」を高速に判定する方法\n\nユニークな値を管理したいとき、Setが最適な選択肢です。",
           "code": null,
           "note": null,
           "order": 1
@@ -635,9 +635,9 @@
           "lessonId": "ch06_04",
           "sectionType": "code",
           "title": "TreeSetとLinkedHashSet",
-          "body": "Setの実装クラスにはそれぞれ特徴があります。",
+          "body": "Setの実装[[クラス]]にはそれぞれ特徴があります。",
           "code": "import java.util.*;\n\n// TreeSet: 要素がソートされる（自然順序）\nSet<Integer> treeSet = new TreeSet<>();\ntreeSet.add(30);\ntreeSet.add(10);\ntreeSet.add(20);\nSystem.out.println(treeSet); // [10, 20, 30] 常にソート順\n\n// LinkedHashSet: 挿入順序を保持\nSet<String> linked = new LinkedHashSet<>();\nlinked.add(\"C\");\nlinked.add(\"A\");\nlinked.add(\"B\");\nSystem.out.println(linked); // [C, A, B] 挿入順を維持\n\n// 使い分け:\n// HashSet     → 最速。順序不要の場合（大半のケース）\n// TreeSet     → ソート順が必要な場合\n// LinkedHashSet → 挿入順を保持したい場合\n\n// 集合演算\nSet<String> set1 = new HashSet<>(Set.of(\"A\", \"B\", \"C\"));\nSet<String> set2 = new HashSet<>(Set.of(\"B\", \"C\", \"D\"));\n\n// 積集合（共通要素）\nset1.retainAll(set2);\nSystem.out.println(set1); // [B, C]",
-          "note": "TreeSetは内部で赤黒木を使用しており、要素がComparableを実装している必要があります。String, Integer等の標準型はComparableを実装済みです。",
+          "note": "[[TreeSet]]は内部で赤黒木を使用しており、要素が[[Comparable]]を実装している必要があります。[[String]], Integer等の標準型はComparableを実装済みです。",
           "order": 3
         },
         {
@@ -846,7 +846,7 @@
           "lessonId": "ch06_05",
           "sectionType": "code",
           "title": "HashMapの基本操作",
-          "body": "HashMapはMapインターフェースの最も一般的な実装です。",
+          "body": "[[HashMap]]はMapインターフェースの最も一般的な実装です。",
           "code": "import java.util.HashMap;\nimport java.util.Map;\n\nMap<String, Integer> scores = new HashMap<>();\n\n// 値の追加・更新\nscores.put(\"太郎\", 85);\nscores.put(\"花子\", 92);\nscores.put(\"次郎\", 78);\nscores.put(\"太郎\", 90);  // 同じキーは上書き\n\n// 値の取得\nint taro = scores.get(\"太郎\");  // 90\nSystem.out.println(scores.get(\"四郎\")); // null（存在しない）\n\n// デフォルト値付き取得\nint value = scores.getOrDefault(\"四郎\", 0); // 0\n\n// 存在チェック\nSystem.out.println(scores.containsKey(\"花子\")); // true\nSystem.out.println(scores.containsValue(92));   // true\n\n// サイズ\nSystem.out.println(scores.size()); // 3\n\n// 削除\nscores.remove(\"次郎\");\n\n// ループ（エントリーセット）\nfor (Map.Entry<String, Integer> e : scores.entrySet()) {\n    System.out.println(e.getKey() + \": \" + e.getValue());\n}",
           "note": "Mapのキーはユニーク（重複不可）です。同じキーでput()すると値が上書きされます。",
           "order": 2
@@ -855,16 +855,16 @@
           "lessonId": "ch06_05",
           "sectionType": "code",
           "title": "Mapの便利メソッドとTreeMap",
-          "body": "Java 8以降で追加された便利メソッドとTreeMapの使い方です。",
+          "body": "Java 8以降で追加された便利[[メソッド]]と[[TreeMap]]の使い方です。",
           "code": "import java.util.*;\n\nMap<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\n\n// putIfAbsent: キーが存在しない場合のみ追加\nmap.putIfAbsent(\"A\", 99); // \"A\"は既にあるので変更なし\nmap.putIfAbsent(\"C\", 3);  // \"C\"を追加\n\n// merge: 既存値と新値を結合\nmap.merge(\"A\", 10, Integer::sum); // A: 1 + 10 = 11\n\n// forEach\nmap.forEach((k, v) -> System.out.println(k + \"=\" + v));\n\n// キーセット・値コレクション\nSet<String> keys = map.keySet();      // [A, B, C]\nCollection<Integer> vals = map.values(); // [11, 2, 3]\n\n// TreeMap: キーがソートされる\nMap<String, Integer> treeMap = new TreeMap<>();\ntreeMap.put(\"banana\", 200);\ntreeMap.put(\"apple\", 100);\ntreeMap.put(\"cherry\", 300);\nSystem.out.println(treeMap);\n// {apple=100, banana=200, cherry=300} キーでソート",
-          "note": "TreeMapはキーの自然順序でソートされます。HashMapは順序不定、LinkedHashMapは挿入順序を保持します。SetとMapの実装クラスの対応を覚えましょう。",
+          "note": "TreeMapはキーの自然順序でソートされます。HashMapは順序不定、LinkedHashMapは挿入順序を保持します。SetとMapの実装[[クラス]]の対応を覚えましょう。",
           "order": 3
         },
         {
           "lessonId": "ch06_05",
           "sectionType": "tip",
           "title": "コレクション実装の選び方",
-          "body": "目的によって最適なコレクションを選びましょう。\n\n【List系】順序あり・重複OK\n・**ArrayList**: 最も一般的。ランダムアクセス○、挿入削除△\n・LinkedList: 先頭への挿入削除○、ランダムアクセス△\n\n【Set系】順序なし・重複NG\n| クラス | 特徴 |\n|---|---|\n| HashSet | 最速。順序不定 |\n| TreeSet | ソート順 |\n| LinkedHashSet | 挿入順 |\n\n【Map系】キー→値のペア\n| クラス | 特徴 |\n|---|---|\n| HashMap | 最速。キー順序不定 |\n| TreeMap | キーでソート |\n| LinkedHashMap | 挿入順 |\n\n迷ったら: ArrayList / HashSet / HashMap を選ぶ！",
+          "body": "目的によって最適なコレクションを選びましょう。\n\n【List系】順序あり・重複OK\n・**ArrayList**: 最も一般的。ランダムアクセス○、挿入削除△\n・[[LinkedList]]: 先頭への挿入削除○、ランダムアクセス△\n\n【Set系】順序なし・重複NG\n| クラス | 特徴 |\n|---|---|\n| HashSet | 最速。順序不定 |\n| TreeSet | ソート順 |\n| LinkedHashSet | 挿入順 |\n\n【Map系】キー→値のペア\n| クラス | 特徴 |\n|---|---|\n| HashMap | 最速。キー順序不定 |\n| TreeMap | キーでソート |\n| LinkedHashMap | 挿入順 |\n\n迷ったら: [[ArrayList]] / [[HashSet]] / HashMap を選ぶ！",
           "code": null,
           "note": null,
           "order": 4
@@ -1039,7 +1039,7 @@
           "lessonId": "ch06_06",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**List.of**()、Map.of()で不変コレクションを作成\n・Collections.unmodifiableList()との違い\n・不変コレクションを使うメリット（安全性の向上）\n\n変更されるべきでないデータを保護する設計を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**List.of**()、Map.of()で不変コレクションを作成\n・[[Collections]].unmodifiableList()との違い\n・不変コレクションを使うメリット（安全性の向上）\n\n変更されるべきでないデータを保護する設計を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -1048,16 +1048,16 @@
           "lessonId": "ch06_06",
           "sectionType": "code",
           "title": "不変コレクション（List.of / Set.of / Map.of）",
-          "body": "Java 9以降のファクトリメソッドで変更不可のコレクションを作成できます。",
+          "body": "Java 9以降のファクトリ[[メソッド]]で変更不可のコレクションを作成できます。",
           "code": "// 不変List（Java 9+）\nList<String> fruits = List.of(\"りんご\", \"みかん\", \"ぶどう\");\nSystem.out.println(fruits); // [りんご, みかん, ぶどう]\n// fruits.add(\"バナナ\"); // UnsupportedOperationException!\n\n// 不変Set（Java 9+）\nSet<Integer> nums = Set.of(1, 2, 3);\n// nums.add(4); // UnsupportedOperationException!\n\n// 不変Map（Java 9+）\nMap<String, Integer> scores = Map.of(\n    \"太郎\", 85,\n    \"花子\", 92,\n    \"次郎\", 78\n);\n// scores.put(\"四郎\", 70); // UnsupportedOperationException!\n\n// 多数のエントリがある場合はMap.ofEntries\nMap<String, Integer> map = Map.ofEntries(\n    Map.entry(\"A\", 1),\n    Map.entry(\"B\", 2),\n    Map.entry(\"C\", 3)\n);\n\n// 不変コレクションの特徴:\n// ・add/remove/put等の変更操作は UnsupportedOperationException\n// ・null要素を含められない（NullPointerException）\n// ・スレッドセーフ",
-          "note": "**List.of**()はnull要素を許可しません。nullを含むリストが必要な場合はArrayListを使います。",
+          "note": "**List.of**()はnull要素を許可しません。nullを含むリストが必要な場合は[[ArrayList]]を使います。",
           "order": 2
         },
         {
           "lessonId": "ch06_06",
           "sectionType": "tip",
           "title": "不変コレクションに対する変更操作はUnsupportedOperationException",
-          "body": "**List.of**()やMap.of()で作成したコレクションは変更できません。\n\n・add, remove, put等を呼ぶと UnsupportedOperationException\n・null要素を含めると NullPointerException\n\n「変更する必要がないデータは不変にする」と、意図しない変更によるバグを防げます。",
+          "body": "**List.of**()やMap.of()で作成したコレクションは変更できません。\n\n・add, remove, put等を呼ぶと UnsupportedOperationException\n・null要素を含めると [[NullPointerException]]\n\n「変更する必要がないデータは不変にする」と、意図しない変更によるバグを防げます。",
           "code": null,
           "note": "不変コレクションを変更可能にしたい場合: new **ArrayList**<>(**List.of**(1, 2, 3))",
           "order": 3
@@ -1075,7 +1075,7 @@
           "lessonId": "ch06_06",
           "sectionType": "code",
           "title": "配列とListの相互変換",
-          "body": "配列とListを相互変換する方法です。",
+          "body": "[[配列]]とListを相互変換する方法です。",
           "code": "import java.util.*;\n\n// --- 配列 → List ---\nString[] array = {\"A\", \"B\", \"C\"};\n\n// Arrays.asList: 固定サイズのList（追加・削除不可）\nList<String> fixed = Arrays.asList(array);\n// fixed.add(\"D\"); // UnsupportedOperationException\nfixed.set(0, \"X\"); // OK（変更は可能）\n\n// 可変Listに変換（推奨）\nList<String> mutable = new ArrayList<>(Arrays.asList(array));\nmutable.add(\"D\"); // OK\n\n// Java 11+: List.of() で不変List\nList<String> immutable = List.of(array);\n\n// --- List → 配列 ---\nList<String> list = List.of(\"X\", \"Y\", \"Z\");\n\n// toArray（型指定）\nString[] arr = list.toArray(new String[0]);\nSystem.out.println(Arrays.toString(arr)); // [X, Y, Z]\n\n// Java 11+ toArray（メソッド参照）\nString[] arr2 = list.toArray(String[]::new);",
           "note": "Arrays.asList()で作られたListは固定サイズです。要素の追加・削除はできませんが、set()による変更は可能です。また元の配列とリンクしており、片方の変更がもう片方にも反映されます。",
           "order": 5
@@ -1213,7 +1213,7 @@
           "lessonId": "ch06_07",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・ラッパークラス（Integer, Double等）の役割\n・オートボクシング・アンボクシングの仕組み\n・基本型とラッパークラスの使い分け\n\nコレクションに数値を入れるために必要な知識です。",
+          "body": "このレッスンでは以下を学びます:\n\n・ラッパー[[クラス]]（Integer, Double等）の役割\n・[[オートボクシング]]・アンボクシングの仕組み\n・基本型とラッパークラスの使い分け\n\nコレクションに数値を入れるために必要な知識です。",
           "code": null,
           "note": null,
           "order": 1
@@ -1222,7 +1222,7 @@
           "lessonId": "ch06_07",
           "sectionType": "rule",
           "title": "ラッパークラス一覧",
-          "body": "各プリミティブ型に対応するラッパークラスがあります。\n\n| プリミティブ型 | ラッパークラス |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\n覚えるポイント:\n・intのラッパーはInteger（Intではない）\n・charのラッパーはCharacter（Charではない）\n・他は先頭大文字にするだけ（double → Double）",
+          "body": "各[[プリミティブ型]]に対応するラッパークラスがあります。\n\n| プリミティブ型 | ラッパークラス |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\n覚えるポイント:\n・intのラッパーはInteger（Intではない）\n・charのラッパーはCharacter（Charではない）\n・他は先頭大文字にするだけ（double → Double）",
           "code": null,
           "note": "ラッパークラスはすべてjava.langパッケージに属しており、importなしで使えます。",
           "order": 2
@@ -1242,14 +1242,14 @@
           "title": "オートボクシングとアンボクシング",
           "body": "Java 5以降、プリミティブ型とラッパークラスの変換が自動で行われます。",
           "code": "// オートボクシング: プリミティブ → ラッパー（自動変換）\nInteger a = 100;         // int → Integer（自動）\nDouble b = 3.14;         // double → Double（自動）\n\n// アンボクシング: ラッパー → プリミティブ（自動変換）\nint c = a;               // Integer → int（自動）\ndouble d = b;            // Double → double（自動）\n\n// コレクションでの利用\nList<Integer> numbers = new ArrayList<>();\nnumbers.add(10);         // int → Integer（オートボクシング）\nnumbers.add(20);\nint first = numbers.get(0); // Integer → int（アンボクシング）\n\n// 計算も自動変換\nInteger x = 10;\nInteger y = 20;\nint sum = x + y; // Integer → int → 計算 → int\n\n// ⚠️ nullのアンボクシングに注意！\nInteger nullVal = null;\n// int n = nullVal; // NullPointerException!",
-          "note": "nullのアンボクシングはNullPointerExceptionを引き起こします。Mapのget()等でnullが返る場面では注意が必要です。",
+          "note": "nullのアンボクシングは[[NullPointerException]]を引き起こします。Mapのget()等でnullが返る場面では注意が必要です。",
           "order": 4
         },
         {
           "lessonId": "ch06_07",
           "sectionType": "code",
           "title": "ラッパークラスの便利メソッド",
-          "body": "ラッパークラスには型変換や定数など便利な機能があります。",
+          "body": "ラッパークラスには[[型変換]]や定数など便利な機能があります。",
           "code": "// 文字列 → 数値変換（parseXxx）\nint i = Integer.parseInt(\"123\");         // 123\ndouble d = Double.parseDouble(\"3.14\");   // 3.14\nlong l = Long.parseLong(\"1000000\");      // 1000000\n\n// 数値 → 文字列変換\nString s1 = Integer.toString(123);         // \"123\"\nString s2 = String.valueOf(123);           // \"123\"（推奨）\n\n// 定数\nSystem.out.println(Integer.MAX_VALUE);     // 2147483647\nSystem.out.println(Integer.MIN_VALUE);     // -2147483648\nSystem.out.println(Double.MAX_VALUE);      // 1.7976931348623157E308\n\n// valueOf: キャッシュ付きオブジェクト生成\nInteger a1 = Integer.valueOf(127);\nInteger a2 = Integer.valueOf(127);\nSystem.out.println(a1 == a2);  // true（-128〜127はキャッシュ）\n\nInteger b1 = Integer.valueOf(128);\nInteger b2 = Integer.valueOf(128);\nSystem.out.println(b1 == b2);  // false（キャッシュ範囲外）\nSystem.out.println(b1.equals(b2)); // true（値比較）",
           "note": "Integerは-128〜127の範囲でキャッシュされるため==でtrueになりますが、範囲外ではfalseです。ラッパークラスの比較は必ずequals()を使いましょう。",
           "order": 5

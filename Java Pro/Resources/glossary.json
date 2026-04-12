@@ -93,7 +93,7 @@
     "id": "g011",
     "term": "カプセル化",
     "reading": "カプセルカ",
-    "definition": "フィールドをprivateにし、getter/setterメソッド経由でアクセスさせる設計手法。データの安全性と保守性を高める。",
+    "definition": "オブジェクト（データ）を外部から直接書き換えられないように隠し、メソッドを通じてのみアクセスさせるオブジェクト指向の原則。たとえば銀行口座の残高を直接変更できないようにし、入金・出金メソッドだけを公開するイメージ。フィールドをprivateにし、getter/setterメソッドで安全にアクセスする。",
     "relatedLessonIds": [
       "ch07_04"
     ]
@@ -120,7 +120,7 @@
     "id": "g014",
     "term": "オーバーロード",
     "reading": "オーバーロード",
-    "definition": "同じクラス内で同じ名前のメソッドを引数の型や数を変えて複数定義すること。コンパイラが引数に応じて適切なメソッドを選択する。",
+    "definition": "同じクラス内で同じ名前のメソッドを、引数の型や数を変えて複数定義すること。たとえばprint(int)とprint(String)のように、引数の違いでどのメソッドを呼ぶかを自動判定する仕組み。戻り値の型だけが異なる場合はオーバーロードにならない。",
     "relatedLessonIds": [
       "ch05_03"
     ]
@@ -138,7 +138,7 @@
     "id": "g016",
     "term": "インターフェース",
     "reading": "インターフェース",
-    "definition": "クラスが実装すべきメソッドの一覧を定義する「契約」。implementsキーワードで実装し、複数同時に実装できる。",
+    "definition": "クラスが実装すべきメソッドの仕様（契約）を定義するもの。「何ができるか」だけを宣言し、「どうやるか」は実装クラスに任せる。たとえばリモコンの「電源ボタン」はどのテレビでも使えるように、共通のインターフェースが動作を保証する。Javaではimplementsキーワードで実装する。",
     "relatedLessonIds": [
       "ch08_04"
     ]
@@ -336,7 +336,7 @@
     "id": "g038",
     "term": "Stream API",
     "reading": "ストリームエーピーアイ",
-    "definition": "Java 8で導入されたデータ処理パイプライン。filter, map, collectなどの操作をチェーンして、コレクションのデータを宣言的に加工する。",
+    "definition": "コレクションの要素を連続的に処理するためのAPI。filter（条件で絞り込み）→ map（変換）→ collect（結果をまとめる）のようにパイプラインで処理を連鎖できる。forループと比べてコードが簡潔になり、並列処理への切り替えも容易。",
     "relatedLessonIds": [
       "ch24_01"
     ]
@@ -363,7 +363,7 @@
     "id": "g041",
     "term": "モジュール",
     "reading": "モジュール",
-    "definition": "Java 9で導入されたパッケージの上位概念。module-info.javaでexportsやrequiresを宣言し、公開範囲と依存関係を明示する。",
+    "definition": "Java 9から導入された、関連するパッケージをまとめる仕組み。大きなアプリケーションを機能ごとに分割し、どのパッケージを外部に公開するかを制御できる。module-info.javaファイルで定義する。",
     "relatedLessonIds": [
       "ch17_01"
     ]
@@ -372,7 +372,7 @@
     "id": "g042",
     "term": "スレッド",
     "reading": "スレッド",
-    "definition": "プログラム内の独立した実行単位。Threadクラスの継承やRunnableインターフェースの実装で作成し、並行処理を実現する。",
+    "definition": "プログラム内で同時に実行される処理の単位。料理人が2人いれば同時に2品作れるように、スレッドが2つあれば同時に2つの処理を並行実行できる。Javaではjava.lang.Threadクラスで作成する。",
     "relatedLessonIds": [
       "ch27_01"
     ]
@@ -491,7 +491,7 @@
     "id": "g055",
     "term": "Spring Boot",
     "reading": "スプリングブート",
-    "definition": "Javaの代表的なWebアプリケーションフレームワーク。設定より規約の原則で、最小限の設定でRESTful APIやWebアプリを構築できる。",
+    "definition": "Javaの代表的なWebアプリケーションフレームワーク。設定より規約（Convention over Configuration）の原則で、最小限の設定でWebアプリやRESTful API（HTTPでデータをやりとりするWebサービスの設計スタイル）を素早く構築できる。",
     "relatedLessonIds": [
       "ch38_01"
     ]
@@ -518,7 +518,7 @@
     "id": "g058",
     "term": "デッドロック",
     "reading": "デッドロック",
-    "definition": "2つ以上のスレッドが互いに相手のロック解放を待ち続けて処理が進まなくなる状態。ロックの取得順序を統一することで防止できる。",
+    "definition": "複数のスレッドが互いに相手の持つ資源の解放を待ち続け、どの処理も先に進めなくなる状態。たとえばAがBの鍵を、BがAの鍵を同時に要求し合うと、どちらも永遠に待ち続ける膠着状態になる。検出が難しく、設計段階で防止することが重要。",
     "relatedLessonIds": [
       "ch27_06"
     ]
@@ -770,7 +770,7 @@
     "id": "g086",
     "term": "LinkedList",
     "reading": "リンクドリスト",
-    "definition": "双方向連結リストのList実装。先頭・末尾への追加・削除がO(1)で高速。Dequeインターフェースも実装し、キューやスタックとしても使える。",
+    "definition": "双方向連結リストによるList実装。先頭・末尾への追加・削除が非常に高速（データ量に関わらず一定時間で完了）。Dequeインターフェースも実装し、キューやスタックとしても使用可能。ランダムアクセスはArrayListより遅い。",
     "relatedLessonIds": [
       "ch22_02"
     ]
@@ -779,7 +779,7 @@
     "id": "g087",
     "term": "HashSet",
     "reading": "ハッシュセット",
-    "definition": "ハッシュテーブルベースのSet実装。重複要素を許さず、順序を保証しない。add, contains, removeがO(1)で高速。",
+    "definition": "ハッシュテーブルを使ったSet実装。重複する要素を許さず、要素の順序を保証しない。追加・検索・削除が非常に高速（データ量に関わらず一定時間で完了）。要素にはequals()とhashCode()の正しい実装が必要。",
     "relatedLessonIds": [
       "ch22_03"
     ]
@@ -788,7 +788,7 @@
     "id": "g088",
     "term": "TreeMap",
     "reading": "ツリーマップ",
-    "definition": "赤黒木ベースのMap実装。キーが自然順序またはComparatorの順序でソートされる。put, getがO(log n)で動作する。",
+    "definition": "キーを自動的に昇順ソートして管理するMap実装。辞書のように「あ→か→さ」の順番で常にキーが並ぶ。検索はキーの数が増えても効率的に行える。キーはComparableを実装するか、Comparatorを指定する必要がある。",
     "relatedLessonIds": [
       "ch22_04"
     ]
@@ -797,7 +797,7 @@
     "id": "g089",
     "term": "Queue",
     "reading": "キュー",
-    "definition": "先入れ先出し（FIFO）のデータ構造を表すインターフェース。offer()で追加、poll()で取得・削除。LinkedListやArrayDequeが主な実装。",
+    "definition": "先入れ先出し（FIFO: 先に入れたものが先に出る）のデータ構造を表すインターフェース。行列に並ぶイメージ。offer()で末尾に追加、poll()で先頭から取得・削除する。LinkedListやArrayDequeが主な実装クラス。",
     "relatedLessonIds": [
       "ch22_05"
     ]
@@ -932,7 +932,7 @@
     "id": "g104",
     "term": "並列ストリーム",
     "reading": "ヘイレツストリーム",
-    "definition": "parallelStream()またはparallel()で生成されるストリーム。ForkJoinPoolを内部で使い、複数スレッドで要素を並列処理する。",
+    "definition": "複数のCPUコアを使って、ストリームの要素を同時に並行処理する仕組み。大量データの処理を高速化できるが、要素の処理順序は保証されない。parallelStream()またはparallel()で変換する。内部ではForkJoinPool（タスクを自動分割・統合する仕組み）を使って処理を分散する。",
     "relatedLessonIds": [
       "ch24_06"
     ]
@@ -959,7 +959,7 @@
     "id": "g107",
     "term": "ConcurrentHashMap",
     "reading": "コンカレントハッシュマップ",
-    "definition": "スレッドセーフなHashMapの実装。内部的にセグメントロックを使い、高い並行性を実現する。synchronizedMapよりも高性能。",
+    "definition": "複数のスレッドから同時に安全にアクセスできるHashMap。Map全体ではなく内部を細かく区切ってロックするため、マルチスレッド環境でも高い性能を発揮する。putIfAbsent()やcompute()などの原子的操作メソッドも提供する。",
     "relatedLessonIds": [
       "ch27_04"
     ]
@@ -977,7 +977,7 @@
     "id": "g109",
     "term": "atomic",
     "reading": "アトミック",
-    "definition": "分割不可能な操作を意味する。AtomicInteger等のクラスはCAS（Compare-And-Swap）で同期なしにスレッドセーフな更新を実現する。",
+    "definition": "1つの操作が途中で中断されず、完全に実行されることを保証する性質。たとえば「値を読んで+1して書き戻す」という3ステップを、他のスレッドに割り込まれずに一度に実行できる。AtomicIntegerなどのクラスで、ロック不要の高速な同期を実現する。",
     "relatedLessonIds": [
       "ch27_04"
     ]
@@ -1004,7 +1004,7 @@
     "id": "g112",
     "term": "Serializable",
     "reading": "シリアライザブル",
-    "definition": "オブジェクトをバイトストリームに変換（直列化）可能にするマーカーインターフェース。ObjectOutputStreamでファイルやネットワークに書き出せる。",
+    "definition": "オブジェクトをバイト列に変換（直列化）して、ファイルやネットワークに保存・送信可能にするためのマーカーインターフェース（メソッドを持たない目印だけのインターフェース）。ObjectOutputStreamで書き込み、ObjectInputStreamで復元する。",
     "relatedLessonIds": [
       "ch28_04"
     ]
@@ -1031,7 +1031,7 @@
     "id": "g115",
     "term": "トランザクション",
     "reading": "トランザクション",
-    "definition": "データベースの一連の操作を1つの論理単位にまとめる仕組み。commit()で確定、rollback()で取り消す。ACID特性で信頼性を保証する。",
+    "definition": "データベースの一連の操作を1つの論理単位にまとめる仕組み。commit()で確定、rollback()で取り消す。4つの特性（原子性：全部成功か全部取消、一貫性：常に整合性を維持、独立性：他の処理の影響を受けない、永続性：確定後は消えない）を保証する。",
     "relatedLessonIds": [
       "ch29_04"
     ]
@@ -1040,7 +1040,7 @@
     "id": "g116",
     "term": "ResourceBundle",
     "reading": "リソースバンドル",
-    "definition": "ロケールごとのリソース（メッセージ、ラベル等）を管理するクラス。プロパティファイルと組み合わせて国際化（i18n）対応を行う。",
+    "definition": "ロケール（言語・地域）ごとのリソース（メッセージ、ラベル等）を管理するクラス。プロパティファイルと組み合わせて国際化対応（i18n = internationalizationの略、iとnの間に18文字あるため）を実現する。",
     "relatedLessonIds": [
       "ch31_02"
     ]
@@ -1086,578 +1086,737 @@
     "term": "バイトコード",
     "reading": "バイトコード",
     "definition": "Javaコンパイラ（javac）がソースコードを変換した中間コード。.classファイルに格納され、JVMが解釈・実行する。プラットフォーム非依存性の基盤技術。",
-    "relatedLessonIds": ["ch01_01"]
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
   },
   {
     "id": "g122",
     "term": "JRE",
     "reading": "ジェイアールイー",
     "definition": "Java Runtime Environment（Java実行環境）の略。JVMとJavaクラスライブラリを含み、Javaアプリケーションの実行に必要な環境。Java 11以降はJDKに統合された。",
-    "relatedLessonIds": ["ch01_01"]
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
   },
   {
     "id": "g123",
     "term": "ガベージコレクション",
     "reading": "ガベージコレクション",
     "definition": "不要になったオブジェクトのメモリを自動的に解放する仕組み。JVMが定期的に実行し、明示的なメモリ管理を不要にする。System.gc()でGCを提案できるが実行は保証されない。",
-    "relatedLessonIds": ["ch01_01"]
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
   },
   {
     "id": "g124",
     "term": "ヒープ",
     "reading": "ヒープ",
     "definition": "JVMがオブジェクトを動的に確保するメモリ領域。newで生成されたインスタンスや配列が格納される。ガベージコレクションの対象領域。-Xmxオプションで最大サイズを指定できる。",
-    "relatedLessonIds": ["ch07_01"]
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
   },
   {
     "id": "g125",
     "term": "スタック",
     "reading": "スタック",
-    "definition": "メソッド呼び出しごとに作られるメモリ領域。ローカル変数やメソッドの引数、戻りアドレスを格納する。LIFO（後入れ先出し）構造で、メソッド終了時に自動解放される。",
-    "relatedLessonIds": ["ch05_01"]
+    "definition": "メソッド呼び出しごとに作られるメモリ領域。ローカル変数やメソッドの引数、戻りアドレスを格納する。後入れ先出し（LIFO：最後に積んだものを最初に取り出す）方式で管理される。メソッドが終了すると自動的に解放される。",
+    "relatedLessonIds": [
+      "ch05_01"
+    ]
   },
   {
     "id": "g126",
     "term": "プリミティブ型",
     "reading": "プリミティブガタ",
     "definition": "Javaの基本データ型。byte(1B), short(2B), int(4B), long(8B), float(4B), double(8B), char(2B), boolean の8種類。オブジェクトではなく値そのものを保持し、ヒープではなくスタックに格納される。",
-    "relatedLessonIds": ["ch02_03"]
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
   },
   {
     "id": "g127",
     "term": "参照型",
     "reading": "サンショウガタ",
     "definition": "オブジェクトへの参照（メモリアドレス）を保持する型。クラス、インターフェース、配列、列挙型が該当する。null を代入可能。プリミティブ型と対比される概念。",
-    "relatedLessonIds": ["ch02_03"]
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
   },
   {
     "id": "g128",
     "term": "リテラル",
     "reading": "リテラル",
     "definition": "ソースコード中に直接記述される固定値。整数リテラル(42)、浮動小数点リテラル(3.14)、文字リテラル('A')、文字列リテラル(\"hello\")、真偽値リテラル(true/false)、nullリテラルがある。",
-    "relatedLessonIds": ["ch02_02"]
+    "relatedLessonIds": [
+      "ch02_02"
+    ]
   },
   {
     "id": "g129",
     "term": "演算子",
     "reading": "エンザンシ",
     "definition": "値に対する演算を表す記号。算術(+,-,*,/,%)、比較(==,!=,<,>)、論理(&&,||,!)、代入(=,+=)、ビット(&,|,^,~)、三項(?:)、instanceof演算子などがある。",
-    "relatedLessonIds": ["ch02_04"]
+    "relatedLessonIds": [
+      "ch02_04"
+    ]
   },
   {
     "id": "g130",
     "term": "キャスト",
     "reading": "キャスト",
     "definition": "ある型の値を別の型に明示的に変換すること。ダウンキャスト（親→子: (子クラス)親変数）は実行時にClassCastExceptionの可能性がある。ワイドニング（小→大型: int→long）は暗黙的に行われる。",
-    "relatedLessonIds": ["ch02_04"]
+    "relatedLessonIds": [
+      "ch02_04"
+    ]
   },
   {
     "id": "g131",
     "term": "new",
     "reading": "ニュー",
     "definition": "オブジェクトを生成するキーワード。ヒープ領域にメモリを確保し、コンストラクタを呼び出す。例: List<String> list = new ArrayList<>(); 配列の生成にも使用する。",
-    "relatedLessonIds": ["ch07_01"]
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
   },
   {
     "id": "g132",
     "term": "mainメソッド",
     "reading": "メインメソッド",
     "definition": "Javaアプリケーションのエントリーポイント。public static void main(String[] args) のシグネチャで定義する。JVMがプログラム実行時に最初に呼び出すメソッド。",
-    "relatedLessonIds": ["ch01_02"]
+    "relatedLessonIds": [
+      "ch01_02"
+    ]
   },
   {
     "id": "g133",
     "term": "インナークラス",
     "reading": "インナークラス",
     "definition": "クラスの内部に定義されたクラスの総称。メンバクラス、ローカルクラス、匿名クラス、staticネストクラスの4種類がある。外部クラスのメンバにアクセスでき、カプセル化を強化する。",
-    "relatedLessonIds": ["ch07_04"]
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
   },
   {
     "id": "g134",
     "term": "匿名クラス",
     "reading": "トクメイクラス",
     "definition": "名前を持たない使い捨てのクラス。インターフェースや抽象クラスのインスタンスをその場で生成する。ラムダ式の登場前はイベントハンドラの実装によく使われた。",
-    "relatedLessonIds": ["ch07_04"]
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
   },
   {
     "id": "g135",
     "term": "デザインパターン",
     "reading": "デザインパターン",
     "definition": "ソフトウェア設計における定型的な問題解決手法。GoFの23パターンが有名で、Singleton（唯一のインスタンス）、Factory（生成の委譲）、Observer（状態監視）などがある。",
-    "relatedLessonIds": ["ch07_01"]
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
   },
   {
     "id": "g136",
     "term": "Singletonパターン",
     "reading": "シングルトンパターン",
     "definition": "クラスのインスタンスが1つだけであることを保証するデザインパターン。privateコンストラクタ + staticフィールド + staticメソッドで実現する。スレッドセーフなenum実装が推奨される。",
-    "relatedLessonIds": ["ch07_01"]
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
   },
   {
     "id": "g137",
     "term": "List",
     "reading": "リスト",
-    "definition": "順序を持ち重複を許す要素のコレクション。java.util.List<E>インターフェース。主な実装はArrayList（ランダムアクセスO(1)）とLinkedList（挿入削除O(1)）。List.of()で不変リスト生成。",
-    "relatedLessonIds": ["ch06_02"]
+    "definition": "順序を持ち、重複を許す要素のコレクション。java.util.Listインターフェース。インデックス（番号）で要素にアクセスできる。主な実装はArrayList（ランダムアクセスが速い）とLinkedList（挿入・削除が速い）。",
+    "relatedLessonIds": [
+      "ch06_02"
+    ]
   },
   {
     "id": "g138",
     "term": "Set",
     "reading": "セット",
-    "definition": "重複を許さない要素のコレクション。java.util.Set<E>インターフェース。HashSet（O(1)探索）、TreeSet（ソート済み）、LinkedHashSet（挿入順保持）が代表的。Set.of()で不変セット生成。",
-    "relatedLessonIds": ["ch22_02"]
+    "definition": "重複を許さない要素のコレクション。java.util.Setインターフェース。HashSet（高速な検索）、TreeSet（自動ソート）、LinkedHashSet（挿入順を保持）の3つの主な実装がある。",
+    "relatedLessonIds": [
+      "ch22_02"
+    ]
   },
   {
     "id": "g139",
     "term": "Map",
     "reading": "マップ",
-    "definition": "キーと値のペアを管理するコレクション。java.util.Map<K,V>インターフェース。HashMap（O(1)アクセス）、TreeMap（キーソート済み）、LinkedHashMap（挿入順保持）が代表的。Map.of()で不変マップ生成。",
-    "relatedLessonIds": ["ch22_03"]
+    "definition": "キーと値のペアを管理するコレクション。java.util.Mapインターフェース。辞書のように「キーで検索して値を取得」できる。HashMap（高速アクセス）、TreeMap（キーの自動ソート）、LinkedHashMap（挿入順を保持）の主な実装がある。",
+    "relatedLessonIds": [
+      "ch22_03"
+    ]
   },
   {
     "id": "g140",
     "term": "Collections",
     "reading": "コレクションズ",
     "definition": "コレクション操作のユーティリティクラス。sort()でソート、unmodifiableList()で不変化、synchronizedList()でスレッドセーフ化、reverse()で逆順化など。Collectorsクラスとは異なる。",
-    "relatedLessonIds": ["ch22_01"]
+    "relatedLessonIds": [
+      "ch22_01"
+    ]
   },
   {
     "id": "g141",
     "term": "ArrayDeque",
     "reading": "アレイデック",
-    "definition": "配列ベースの両端キュー実装。Dequeインターフェースの実装クラス。Stack（LIFO）やQueue（FIFO）の両方の用途に使え、LinkedListより高速。null要素は許可されない。",
-    "relatedLessonIds": ["ch22_02"]
+    "definition": "配列ベースの両端キュー実装。Dequeインターフェースの実装クラス。スタック（後入れ先出し）やキュー（先入れ先出し）の両方として使える。Stackクラスの代わりに推奨される、高速なデータ構造。",
+    "relatedLessonIds": [
+      "ch22_02"
+    ]
   },
   {
     "id": "g142",
     "term": "Error",
     "reading": "エラー",
     "definition": "回復不可能な重大な問題を示すThrowableのサブクラス。OutOfMemoryError、StackOverflowErrorなどがある。通常はcatchすべきでなく、プログラムの修正やJVM設定変更で対処する。",
-    "relatedLessonIds": ["ch09_01"]
+    "relatedLessonIds": [
+      "ch09_01"
+    ]
   },
   {
     "id": "g143",
     "term": "カスタム例外",
     "reading": "カスタムレイガイ",
     "definition": "アプリケーション固有のエラーを表すために独自に定義する例外クラス。Exceptionを継承（チェック例外）またはRuntimeExceptionを継承（非チェック例外）して作成する。",
-    "relatedLessonIds": ["ch14_02"]
+    "relatedLessonIds": [
+      "ch14_02"
+    ]
   },
   {
     "id": "g144",
     "term": "multi-catch",
     "reading": "マルチキャッチ",
     "definition": "1つのcatchブロックで複数の例外型を捕捉する構文。catch(IOException | SQLException e)のように|で例外型を区切る。Java 7で導入され、コードの冗長性を削減できる。",
-    "relatedLessonIds": ["ch14_01"]
+    "relatedLessonIds": [
+      "ch14_01"
+    ]
   },
   {
     "id": "g145",
     "term": "StackOverflowError",
     "reading": "スタックオーバーフローエラー",
     "definition": "スタック領域が不足した際に発生するエラー。主に無限再帰や極端に深い再帰呼び出しで発生する。Errorクラスのサブクラスであり、通常はキャッチすべきでない。",
-    "relatedLessonIds": ["ch09_01"]
+    "relatedLessonIds": [
+      "ch09_01"
+    ]
   },
   {
     "id": "g146",
     "term": "ClassCastException",
     "reading": "クラスキャストエクセプション",
     "definition": "不正な型変換（キャスト）を行った際に発生する実行時例外。instanceof演算子で事前に型チェックすることで防止できる。Java 16+ではパターンマッチングが推奨される。",
-    "relatedLessonIds": ["ch09_02"]
+    "relatedLessonIds": [
+      "ch09_02"
+    ]
   },
   {
     "id": "g147",
     "term": "パターンマッチング",
     "reading": "パターンマッチング",
     "definition": "instanceof演算子と組み合わせた型パターン。if (obj instanceof String s) のように、型チェックと変数宣言を同時に行える。Java 16で正式導入。switch文でも使用可能（Java 21+）。",
-    "relatedLessonIds": ["ch12_03"]
+    "relatedLessonIds": [
+      "ch12_03"
+    ]
   },
   {
     "id": "g148",
     "term": "yield",
     "reading": "イールド",
     "definition": "switch式のブロック内で値を返すキーワード。case MONDAY -> { yield \"月曜日\"; } のように複数文の処理後に値を返す場合に使用する。Java 14で導入された。",
-    "relatedLessonIds": ["ch03_03"]
+    "relatedLessonIds": [
+      "ch03_03"
+    ]
   },
   {
     "id": "g149",
     "term": "Runnable",
     "reading": "ランナブル",
     "definition": "スレッドで実行する処理を定義する関数型インターフェース。run()メソッドを1つだけ持つ。Thread(Runnable)やExecutorService.submit(Runnable)で使用する。ラムダ式で簡潔に記述できる。",
-    "relatedLessonIds": ["ch27_01"]
+    "relatedLessonIds": [
+      "ch27_01"
+    ]
   },
   {
     "id": "g150",
     "term": "Callable",
     "reading": "コーラブル",
     "definition": "戻り値を返す関数型インターフェース。call()メソッドがV型の値を返し、チェック例外をスローできる。ExecutorService.submit(Callable)でFuture<V>を取得する。Runnableの進化版。",
-    "relatedLessonIds": ["ch27_02"]
+    "relatedLessonIds": [
+      "ch27_02"
+    ]
   },
   {
     "id": "g151",
     "term": "ReentrantLock",
     "reading": "リエントラントロック",
     "definition": "synchronizedの代替となる明示的なロック機構。tryLock()でタイムアウト付きロック取得、newCondition()で条件変数生成が可能。finally句でのunlock()が必須。",
-    "relatedLessonIds": ["ch27_03"]
+    "relatedLessonIds": [
+      "ch27_03"
+    ]
   },
   {
     "id": "g152",
     "term": "CountDownLatch",
     "reading": "カウントダウンラッチ",
     "definition": "指定した数のイベントが完了するまでスレッドを待機させる同期補助クラス。countDown()でカウント減算、await()で0になるまで待機する。一度きりの使い捨て。",
-    "relatedLessonIds": ["ch27_03"]
+    "relatedLessonIds": [
+      "ch27_03"
+    ]
   },
   {
     "id": "g153",
     "term": "Reader",
     "reading": "リーダー",
     "definition": "文字ストリームから読み込むための抽象クラス。FileReader、BufferedReader、InputStreamReaderなどのスーパークラス。1文字ずつまたはchar配列で読み込む。",
-    "relatedLessonIds": ["ch28_02"]
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
   },
   {
     "id": "g154",
     "term": "Writer",
     "reading": "ライター",
     "definition": "文字ストリームへ書き込むための抽象クラス。FileWriter、BufferedWriter、PrintWriterなどのスーパークラス。文字列やchar配列を書き込み、flush()でバッファをフラッシュする。",
-    "relatedLessonIds": ["ch28_02"]
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
   },
   {
     "id": "g155",
     "term": "OutputStream",
     "reading": "アウトプットストリーム",
     "definition": "バイトストリームへ書き込むための抽象クラス。FileOutputStream、BufferedOutputStreamなどのスーパークラス。write(byte[])でバイト配列を書き込む。InputStreamと対をなす。",
-    "relatedLessonIds": ["ch28_01"]
+    "relatedLessonIds": [
+      "ch28_01"
+    ]
   },
   {
     "id": "g156",
     "term": "Channel",
     "reading": "チャネル",
     "definition": "Java NIOの双方向データ転送経路。FileChannel、SocketChannelなどがある。Bufferと組み合わせて効率的なI/Oを実現する。従来のStreamより高性能で非ブロッキングI/Oが可能。",
-    "relatedLessonIds": ["ch28_03"]
+    "relatedLessonIds": [
+      "ch28_03"
+    ]
   },
   {
     "id": "g157",
     "term": "Buffer",
     "reading": "バッファ",
     "definition": "NIOでデータを一時的に格納する固定サイズのコンテナ。ByteBuffer、CharBuffer等のサブクラスがある。position, limit, capacity の3属性でデータの読み書き位置を管理する。flip()で読み取りモードに切り替える。",
-    "relatedLessonIds": ["ch28_03"]
+    "relatedLessonIds": [
+      "ch28_03"
+    ]
   },
   {
     "id": "g158",
     "term": "アサーション",
     "reading": "アサーション",
     "definition": "assert文によるプログラム内の前提条件の検証。assert 条件式 : エラーメッセージ; で記述する。falseの場合AssertionErrorを投げる。-eaオプションで有効化する。本番では無効が推奨。",
-    "relatedLessonIds": ["ch14_03"]
+    "relatedLessonIds": [
+      "ch14_03"
+    ]
   },
   {
     "id": "g159",
     "term": "アクセス修飾子",
     "reading": "アクセスシュウショクシ",
     "definition": "クラスやメンバの可視範囲を制御するキーワード。public（全公開）、protected（同パッケージ+サブクラス）、デフォルト（同パッケージ）、private（同クラスのみ）の4段階がある。",
-    "relatedLessonIds": ["ch07_02"]
+    "relatedLessonIds": [
+      "ch07_02"
+    ]
   },
   {
     "id": "g160",
     "term": "staticメソッド",
     "reading": "スタティックメソッド",
     "definition": "クラスに属するメソッドで、インスタンスを生成せずにクラス名.メソッド名()で呼び出せる。thisやインスタンスフィールドにはアクセスできない。Math.max()やCollections.sort()が代表例。",
-    "relatedLessonIds": ["ch05_03"]
+    "relatedLessonIds": [
+      "ch05_03"
+    ]
   },
   {
     "id": "g161",
     "term": "staticフィールド",
     "reading": "スタティックフィールド",
     "definition": "クラスに属するフィールドで、全インスタンスで共有される。クラスロード時に1回だけ初期化される。定数定義（static final）やカウンタに使われる。",
-    "relatedLessonIds": ["ch05_03"]
+    "relatedLessonIds": [
+      "ch05_03"
+    ]
   },
   {
     "id": "g162",
     "term": "イニシャライザ",
     "reading": "イニシャライザ",
     "definition": "フィールドの初期化を行うブロック。インスタンスイニシャライザ({...})はコンストラクタの前に実行され、staticイニシャライザ(static {...})はクラスロード時に1度だけ実行される。",
-    "relatedLessonIds": ["ch07_03"]
+    "relatedLessonIds": [
+      "ch07_03"
+    ]
   },
   {
     "id": "g163",
     "term": "可変長引数",
     "reading": "カヘンチョウヒキスウ",
     "definition": "メソッドの引数に任意の数の値を渡せる機能。型名...引数名 で定義する。内部では配列として扱われる。1メソッドに1つだけ、最後の引数にのみ指定可能。例: void print(String... args)",
-    "relatedLessonIds": ["ch05_02"]
+    "relatedLessonIds": [
+      "ch05_02"
+    ]
   },
   {
     "id": "g164",
     "term": "ダイヤモンド演算子",
     "reading": "ダイヤモンドエンザンシ",
     "definition": "ジェネリクスの型推論を簡潔にする<>（空のアングルブラケット）。List<String> list = new ArrayList<>(); のように、右辺の型パラメータを省略できる。Java 7で導入。",
-    "relatedLessonIds": ["ch21_01"]
+    "relatedLessonIds": [
+      "ch21_01"
+    ]
   },
   {
     "id": "g165",
     "term": "型消去",
     "reading": "カタショウキョ",
     "definition": "ジェネリクスの型パラメータがコンパイル時に除去されるJavaの仕組み。List<String>はコンパイル後にList（raw type）になる。実行時に型パラメータ情報は利用できない。",
-    "relatedLessonIds": ["ch21_02"]
+    "relatedLessonIds": [
+      "ch21_02"
+    ]
   },
   {
     "id": "g166",
     "term": "境界型パラメータ",
     "reading": "キョウカイガタパラメータ",
     "definition": "ジェネリクスで型パラメータに制約を設ける構文。<T extends Comparable<T>>で上限境界、<? super Integer>で下限境界を指定する。PECS原則（Producer-Extends, Consumer-Super）が重要。",
-    "relatedLessonIds": ["ch21_03"]
+    "relatedLessonIds": [
+      "ch21_03"
+    ]
   },
   {
     "id": "g167",
     "term": "BiFunction",
     "reading": "バイファンクション",
     "definition": "2つの引数を受け取り1つの結果を返す関数型インターフェース。apply(T, U)メソッドを持つ。Map.replaceAll()やMap.merge()で活用される。",
-    "relatedLessonIds": ["ch23_02"]
+    "relatedLessonIds": [
+      "ch23_02"
+    ]
   },
   {
     "id": "g168",
     "term": "BinaryOperator",
     "reading": "バイナリオペレーター",
     "definition": "同じ型の2つの引数を受け取り同じ型の結果を返す関数型インターフェース。BiFunctionの特殊形。Stream.reduce()の引数として頻繁に使用される。",
-    "relatedLessonIds": ["ch23_02"]
+    "relatedLessonIds": [
+      "ch23_02"
+    ]
   },
   {
     "id": "g169",
     "term": "forEach",
     "reading": "フォーイーチ",
     "definition": "コレクションやStreamの各要素に対して処理を実行するメソッド。list.forEach(System.out::println)のようにConsumerを引数に取る。拡張for文のメソッド参照版。",
-    "relatedLessonIds": ["ch24_01"]
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
   },
   {
     "id": "g170",
     "term": "sorted",
     "reading": "ソーテッド",
     "definition": "Streamの要素をソートする中間操作。自然順序またはComparatorを指定してソートする。元のStreamやコレクションは変更されない。Comparable未実装の要素ではClassCastExceptionが発生。",
-    "relatedLessonIds": ["ch24_02"]
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
   },
   {
     "id": "g171",
     "term": "distinct",
     "reading": "ディスティンクト",
     "definition": "Streamの重複要素を除去する中間操作。equals()とhashCode()に基づいて重複判定を行う。Set的な動作を実現する。",
-    "relatedLessonIds": ["ch24_02"]
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
   },
   {
     "id": "g172",
     "term": "peek",
     "reading": "ピーク",
     "definition": "Streamの各要素に対して副作用（ログ出力等）を実行する中間操作。デバッグ目的で使用され、要素を変更してはならない。本番コードでの多用は非推奨。",
-    "relatedLessonIds": ["ch24_02"]
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
   },
   {
     "id": "g173",
     "term": "groupingBy",
     "reading": "グルーピングバイ",
     "definition": "Collectors.groupingBy()は要素を分類関数に基づいてグループ化するCollector。Map<K, List<V>>を返す。downstream collectorで集計処理をチェーンできる。SQLのGROUP BYに相当。",
-    "relatedLessonIds": ["ch24_03"]
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
   },
   {
     "id": "g174",
     "term": "partitioningBy",
     "reading": "パーティショニングバイ",
     "definition": "Collectors.partitioningBy()は要素をPredicateの真偽で2グループに分割するCollector。Map<Boolean, List<T>>を返す。groupingByの特殊ケースで、条件による二分割に最適。",
-    "relatedLessonIds": ["ch24_03"]
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
   },
   {
     "id": "g175",
     "term": "toList",
     "reading": "トゥーリスト",
     "definition": "Stream.toList()はStreamの要素を不変のListに変換する終端操作。Java 16で導入され、Collectors.toList()より簡潔。返されるリストは変更不可（UnsupportedOperationException）。",
-    "relatedLessonIds": ["ch24_01"]
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
   },
-
   {
     "id": "g176",
     "term": "リフレクション",
     "reading": "リフレクション",
     "definition": "実行時にクラスやメソッドの情報を取得・操作する機能。java.lang.reflectパッケージのClass, Method, Field等を使用する。フレームワークやDIコンテナの内部で多用されるが、型安全性が損なわれるため通常のアプリコードでは避けるべき。",
-    "relatedLessonIds": ["ch15_03"]
+    "relatedLessonIds": [
+      "ch15_03"
+    ]
   },
-
   {
     "id": "g177",
     "term": "オートボクシング",
     "reading": "オートボクシング",
     "definition": "プリミティブ型からラッパークラスへの自動変換。int→Integer等。逆変換はアンボクシングと呼ばれる。nullのアンボクシングはNullPointerExceptionを発生させるため注意が必要。",
-    "relatedLessonIds": ["ch02_03"]
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
   },
   {
     "id": "g178",
     "term": "不変オブジェクト",
     "reading": "フヘンオブジェクト",
     "definition": "生成後に状態を変更できないオブジェクト。String、LocalDate、List.of()の戻り値などが代表例。スレッドセーフであり、防御的コピーが不要。finalクラス + private finalフィールドで実現する。",
-    "relatedLessonIds": ["ch07_03"]
+    "relatedLessonIds": [
+      "ch07_03"
+    ]
   },
   {
     "id": "g179",
     "term": "関数合成",
     "reading": "カンスウゴウセイ",
     "definition": "複数の関数を組み合わせて新しい関数を作ること。Function.andThen()で後処理を追加、compose()で前処理を追加する。Predicate.and(), or(), negate()も関数合成の一種。",
-    "relatedLessonIds": ["ch23_03"]
+    "relatedLessonIds": [
+      "ch23_03"
+    ]
   },
   {
     "id": "g180",
     "term": "遅延評価",
     "reading": "チエンヒョウカ",
     "definition": "Stream APIの中間操作は終端操作が呼ばれるまで実行されない仕組み。filter()やmap()は即座には実行されず、collect()やforEach()などの終端操作で初めて処理が走る。大量データの効率的な処理を可能にする。",
-    "relatedLessonIds": ["ch24_01"]
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
   },
   {
     "id": "g181",
     "term": "直列化",
     "reading": "チョクレツカ",
     "definition": "オブジェクトをバイト列に変換してファイルやネットワークに保存・転送すること。Serializableインターフェースを実装して利用する。逆変換は逆直列化（デシリアライズ）と呼ぶ。serialVersionUIDの定義が推奨される。",
-    "relatedLessonIds": ["ch28_04"]
+    "relatedLessonIds": [
+      "ch28_04"
+    ]
   },
   {
     "id": "g182",
     "term": "正規表現",
     "reading": "セイキヒョウゲン",
     "definition": "文字列のパターンを記述する記法。PatternとMatcherクラスで利用する。String.matches()、replaceAll()、split()でも使用される。\\\\dは数字、\\\\wは英数字、.は任意の1文字を表す。",
-    "relatedLessonIds": ["ch15_03"]
+    "relatedLessonIds": [
+      "ch15_03"
+    ]
   },
   {
     "id": "g183",
     "term": "ストリームパイプライン",
     "reading": "ストリームパイプライン",
     "definition": "ソース → 中間操作(0個以上) → 終端操作(1個) の連鎖構造。stream().filter(...).map(...).collect(...) のように流れるようにデータを処理する。一度消費したStreamは再利用不可。",
-    "relatedLessonIds": ["ch24_01"]
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
   },
   {
     "id": "g184",
     "term": "中間操作",
     "reading": "チュウカンソウサ",
     "definition": "Streamパイプラインの中間段階で、新しいStreamを返す操作。filter, map, flatMap, sorted, distinct, peek, limit, skip等がある。遅延評価され、終端操作が呼ばれるまで実行されない。",
-    "relatedLessonIds": ["ch24_02"]
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
   },
   {
     "id": "g185",
     "term": "終端操作",
     "reading": "シュウタンソウサ",
     "definition": "Streamパイプラインの最終段階で、結果を生成する操作。collect, forEach, reduce, count, min, max, findFirst, anyMatch, toList等がある。終端操作の呼び出しでパイプラインが実行される。",
-    "relatedLessonIds": ["ch24_03"]
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
   },
   {
     "id": "g186",
     "term": "requires",
     "reading": "リクワイアーズ",
     "definition": "モジュールシステムで他のモジュールへの依存を宣言するキーワード。module-info.javaでrequires モジュール名;と記述する。requires transitiveで推移的依存を宣言できる。",
-    "relatedLessonIds": ["ch17_02"]
+    "relatedLessonIds": [
+      "ch17_02"
+    ]
   },
   {
     "id": "g187",
     "term": "ServiceLoader",
     "reading": "サービスローダー",
     "definition": "サービスプロバイダインターフェース(SPI)の実装を動的にロードする仕組み。module-info.javaのprovides...with...で提供し、uses...で消費する。プラグインアーキテクチャの基盤。",
-    "relatedLessonIds": ["ch32_02"]
+    "relatedLessonIds": [
+      "ch32_02"
+    ]
   },
   {
     "id": "g188",
     "term": "型推論",
     "reading": "カタスイロン",
     "definition": "コンパイラが文脈から型を自動推定する機能。ローカル変数のvar宣言、ダイヤモンド演算子<>、ラムダ式のパラメータ型省略など。コード簡潔化に寄与するが、可読性とのバランスが重要。",
-    "relatedLessonIds": ["ch02_02"]
+    "relatedLessonIds": [
+      "ch02_02"
+    ]
   },
   {
     "id": "g189",
     "term": "例外チェーン",
     "reading": "レイガイチェーン",
     "definition": "例外の原因となった別の例外を保持する仕組み。throw new RuntimeException(\"メッセージ\", cause)のようにコンストラクタでcauseを渡す。getCause()で原因例外を取得できる。",
-    "relatedLessonIds": ["ch14_02"]
+    "relatedLessonIds": [
+      "ch14_02"
+    ]
   },
   {
     "id": "g190",
     "term": "ダイヤモンド継承問題",
     "reading": "ダイヤモンドケイショウモンダイ",
     "definition": "多重継承で同名メソッドの衝突が起きる問題。Javaはクラスの多重継承を禁止しinterface+defaultメソッドで代替する。複数interfaceのdefaultメソッドが衝突した場合は明示的にオーバーライドが必要。",
-    "relatedLessonIds": ["ch13_02"]
+    "relatedLessonIds": [
+      "ch13_02"
+    ]
   },
   {
     "id": "g191",
     "term": "共変戻り値",
     "reading": "キョウヘンモドリチ",
     "definition": "サブクラスでオーバーライドしたメソッドの戻り値型を、スーパークラスの戻り値型のサブタイプに変更できること。例: Object clone()をMyClass clone()にオーバーライドできる。",
-    "relatedLessonIds": ["ch08_02"]
+    "relatedLessonIds": [
+      "ch08_02"
+    ]
   },
   {
     "id": "g192",
     "term": "strictfp",
     "reading": "ストリクトエフピー",
     "definition": "浮動小数点演算をIEEE 754規格に厳密に従わせるキーワード。クラスやメソッドに付与する。Java 17でデフォルト動作となり、明示的な使用は不要になった。試験で出題されることがある。",
-    "relatedLessonIds": ["ch15_01"]
+    "relatedLessonIds": [
+      "ch15_01"
+    ]
   },
   {
     "id": "g193",
     "term": "transient",
     "reading": "トランジエント",
     "definition": "シリアライズの対象外にするフィールド修飾子。パスワードや一時的な計算結果など、永続化不要なフィールドに付与する。デシリアライズ時はデフォルト値（null, 0等）になる。",
-    "relatedLessonIds": ["ch28_04"]
+    "relatedLessonIds": [
+      "ch28_04"
+    ]
   },
   {
     "id": "g194",
     "term": "ZonedDateTime",
     "reading": "ゾーンドデートタイム",
     "definition": "タイムゾーン付きの日時を表すクラス。LocalDateTime + ZoneId で構成される。サマータイムの遷移も考慮する。グローバルアプリケーションでの日時処理に不可欠。",
-    "relatedLessonIds": ["ch26_02"]
+    "relatedLessonIds": [
+      "ch26_02"
+    ]
   },
   {
     "id": "g195",
     "term": "Instant",
     "reading": "インスタント",
     "definition": "エポック（1970-01-01T00:00:00Z）からの経過時間を表す不変クラス。タイムゾーンに依存しないUTC基準の時刻。マシン時刻の表現に最適で、Duration計算に使用される。",
-    "relatedLessonIds": ["ch26_02"]
+    "relatedLessonIds": [
+      "ch26_02"
+    ]
   },
   {
     "id": "g196",
     "term": "Charset",
     "reading": "キャラセット",
     "definition": "文字エンコーディングを表すクラス。StandardCharsets.UTF_8が標準。InputStreamReader/OutputStreamWriterで明示的に指定し、文字化けを防止する。Java 18以降はUTF-8がデフォルト。",
-    "relatedLessonIds": ["ch28_02"]
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
   },
-
   {
     "id": "g197",
     "term": "Connection",
     "reading": "コネクション",
     "definition": "java.sql.ConnectionはJDBCでデータベースへの接続を表すインターフェース。DriverManager.getConnection()で取得し、try-with-resourcesで確実にクローズする。setAutoCommit(false)でトランザクション制御が可能。",
-    "relatedLessonIds": ["ch29_01"]
+    "relatedLessonIds": [
+      "ch29_01"
+    ]
   },
-
   {
     "id": "g198",
     "term": "列挙型定数",
     "reading": "レッキョガタテイスウ",
     "definition": "enum内で定義される固定のインスタンス。各定数はフィールド・メソッド・コンストラクタを持てる。values()で全定数の配列、valueOf()で名前からの定数取得が可能。switch文との相性が良い。",
-    "relatedLessonIds": ["ch07_04"]
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
   },
   {
     "id": "g199",
     "term": "レコードクラス",
     "reading": "レコードクラス",
     "definition": "不変のデータキャリアを簡潔に定義するクラス（Java 16+）。record Point(int x, int y) {}のように宣言し、コンストラクタ・getter・equals・hashCode・toStringが自動生成される。",
-    "relatedLessonIds": ["ch07_04"]
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
   },
   {
     "id": "g200",
     "term": "sealedクラス",
     "reading": "シールドクラス",
     "definition": "継承できるサブクラスを制限するクラス（Java 17+）。sealed class Shape permits Circle, Rectangle {}のように宣言。サブクラスはfinal, sealed, non-sealedのいずれかにする必要がある。",
-    "relatedLessonIds": ["ch07_04"]
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
   },
-
   {
     "id": "g201",
     "term": "ClassLoader",
     "reading": "クラスローダー",
     "definition": "クラスファイルをJVMにロードする仕組み。Bootstrap, Platform, Applicationの3階層で構成される。親委譲モデルにより、親ローダーが先にクラスを検索する。モジュールシステムと密接に関連する。",
-    "relatedLessonIds": ["ch17_01"]
+    "relatedLessonIds": [
+      "ch17_01"
+    ]
   },
   {
     "id": "g202",
     "term": "インターフェースのprivateメソッド",
     "reading": "インターフェースノプライベートメソッド",
     "definition": "Java 9で導入された機能。インターフェース内のdefaultメソッド間で共通ロジックを抽出するために使用する。実装クラスからはアクセスできず、インターフェース内部のリファクタリングに有用。",
-    "relatedLessonIds": ["ch13_03"]
+    "relatedLessonIds": [
+      "ch13_03"
+    ]
   }
 ]

@@ -350,6 +350,11 @@ final class ContentService {
         glossary
     }
 
+    /// 用語名で辞典エントリを完全一致検索する（[[用語]] リンク解決用）。
+    func getGlossaryEntry(term: String) -> GlossaryEntry? {
+        glossary.first { $0.term == term }
+    }
+
     /// キーワードで辞典を検索する（部分一致）。
     func searchGlossary(query: String) -> [GlossaryEntry] {
         guard !query.isEmpty else { return glossary }

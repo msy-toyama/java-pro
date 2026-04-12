@@ -13,7 +13,7 @@
           "lessonId": "ch38_01",
           "sectionType": "overview",
           "title": "Spring Bootの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・**Spring Boot**とは何か（Springフレームワークの簡易版）\n・DI（**依存性注入**）の基本概念\n・Spring Bootの「設定より規約」の考え方\n\nJavaのWebアプリ開発で最も人気のあるフレームワークです。",
+          "body": "このレッスンでは以下を学びます:\n\n・**Spring Boot**とは何か（Springフレームワークの簡易版）\n・DI（**依存性注入**）の基本概念\n・[[Spring Boot]]の「設定より規約」の考え方\n\nJavaのWebアプリ開発で最も人気のあるフレームワークです。",
           "code": null,
           "note": null,
           "order": 1
@@ -40,7 +40,7 @@
           "lessonId": "ch38_01",
           "sectionType": "code",
           "title": "最小限のSpring Bootアプリケーション",
-          "body": "**Spring Boot**アプリケーションは、mainメソッドを持つクラスに@SpringBootApplicationアノテーションを付けるだけで起動できます。\nSpringApplication.run()メソッドでアプリケーションが起動します。",
+          "body": "**Spring Boot**アプリケーションは、[[mainメソッド]]を持つ[[クラス]]に@SpringBootApplicationアノテーションを付けるだけで起動できます。\nSpringApplication.run()[[メソッド]]でアプリケーションが起動します。",
           "code": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApplication.class, args);\n    }\n}\n\n// これだけでWebサーバーが起動し、\n// http://localhost:8080 でアクセス可能になる",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4
@@ -196,7 +196,7 @@
           "lessonId": "ch38_02",
           "sectionType": "code",
           "title": "プロジェクト構造の例",
-          "body": "典型的な**Spring Boot**プロジェクトのディレクトリ構造を確認しましょう。\nメインクラスはルートパッケージに配置するのが慣例です。",
+          "body": "典型的な**Spring Boot**プロジェクトのディレクトリ構造を確認しましょう。\nメイン[[クラス]]はルートパッケージに配置するのが慣例です。",
           "code": "# Spring Bootプロジェクトの標準ディレクトリ構造\nmy-app/\n├── pom.xml\n├── src/\n│   ├── main/\n│   │   ├── java/\n│   │   │   └── com/example/myapp/\n│   │   │       ├── MyAppApplication.java\n│   │   │       ├── controller/\n│   │   │       │   └── HelloController.java\n│   │   │       ├── service/\n│   │   │       │   └── HelloService.java\n│   │   │       └── model/\n│   │   │           └── User.java\n│   │   └── resources/\n│   │       ├── application.properties\n│   │       ├── static/\n│   │       └── templates/\n│   └── test/\n│       └── java/\n│           └── com/example/myapp/\n│               └── MyAppApplicationTests.java",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -205,7 +205,7 @@
           "lessonId": "ch38_02",
           "sectionType": "point",
           "title": "@SpringBootApplicationアノテーション",
-          "body": "@SpringBootApplicationは3つのアノテーションを統合したメタアノテーションです。\n| アノテーション | 役割 |\n|---|---|\n| @Configuration | このクラスがBean定義のソースであることを示します。 |\n| @EnableAutoConfiguration | AutoConfigurationを有効にします。 |\n| @ComponentScan | 現在のパッケージ以下のコンポーネントを自動スキャンします。 |\nそのため、メインクラスはルートパッケージに配置するのが重要です。\nサブパッケージのコンポーネントは自動的に検出されます。",
+          "body": "@SpringBootApplicationは3つの[[アノテーション]]を統合したメタアノテーションです。\n| アノテーション | 役割 |\n|---|---|\n| @Configuration | このクラスがBean定義のソースであることを示します。 |\n| @EnableAutoConfiguration | AutoConfigurationを有効にします。 |\n| @ComponentScan | 現在のパッケージ以下のコンポーネントを自動スキャンします。 |\nそのため、メインクラスはルートパッケージに配置するのが重要です。\nサブパッケージのコンポーネントは自動的に検出されます。",
           "code": null,
           "note": null,
           "order": 4
@@ -413,7 +413,7 @@
           "lessonId": "ch38_03",
           "sectionType": "code",
           "title": "@RestControllerとマッピング",
-          "body": "**@RestController**はコントローラークラスに付けるアノテーションです。\n@GetMapping、@PostMapping、@PutMapping、@DeleteMappingでHTTPメソッドに対応するエンドポイントを定義します。\nメソッドの戻り値はJacksonライブラリにより自動的にJSONに変換されます。",
+          "body": "**@RestController**はコントローラー[[クラス]]に付ける[[アノテーション]]です。\n@GetMapping、@PostMapping、@PutMapping、@DeleteMappingでHTTPメソッドに対応するエンドポイントを定義します。\nメソッドの戻り値はJacksonライブラリにより自動的にJSONに変換されます。",
           "code": "import org.springframework.web.bind.annotation.*;\nimport java.util.*;\n\n@RestController\n@RequestMapping(\"/api/users\")\n// UserControllerクラスの定義\npublic class UserController {\n\n    @GetMapping\n    // getAllUsersメソッドの定義\n    public List<User> getAllUsers() {\n        return userService.findAll();\n    }\n\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n\n    @PostMapping\n    public User createUser(@RequestBody User user) {\n        return userService.save(user);\n    }\n\n    @DeleteMapping(\"/{id}\")\n    // deleteUserメソッドの定義\n    public void deleteUser(@PathVariable Long id) {\n        userService.deleteById(id);\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -440,7 +440,7 @@
           "lessonId": "ch38_03",
           "sectionType": "tip",
           "title": "レスポンスとステータスコード",
-          "body": "ResponseEntity<T>を使うとHTTPステータスコードを明示的に設定できます。\n@ResponseStatus(HttpStatus.CREATED)でデフォルトのステータスコードを変更できます。\nデフォルトでは、正常時は200 OK、例外時は500 Internal Server Errorが返されます。\n@ExceptionHandlerで特定の例外に対するエラーレスポンスをカスタマイズできます。",
+          "body": "ResponseEntity<T>を使うとHTTPステータスコードを明示的に設定できます。\n@ResponseStatus(HttpStatus.CREATED)でデフォルトのステータスコードを変更できます。\nデフォルトでは、正常時は200 OK、[[例外]]時は500 Internal Server Errorが返されます。\n@ExceptionHandlerで特定の例外に対するエラーレスポンスをカスタマイズできます。",
           "code": null,
           "note": "ResponseEntity.ok(body)、ResponseEntity.notFound().build()などのファクトリメソッドが便利です。",
           "order": 5
@@ -632,7 +632,7 @@
           "lessonId": "ch38_04",
           "sectionType": "rule",
           "title": "ステレオタイプアノテーション",
-          "body": "Springでは、クラスの役割に応じたステレオタイプアノテーションを使用します。\n| アノテーション | 役割 |\n|---|---|\n| @Component | 汎用的なSpring管理コンポーネントを表します。 |\n| @Service | ビジネスロジックを持つサービスレイヤーのクラスに使用します。 |\n| @Repository | データアクセスレイヤーのクラスに使用し、例外変換機能が追加されます。 |\n| @Controller | MVCのコントローラーに使用します（@RestControllerの親）。 |\nすべてのステレオタイプアノテーションは@Componentを内包しています。",
+          "body": "Springでは、[[クラス]]の役割に応じたステレオタイプ[[アノテーション]]を使用します。\n| アノテーション | 役割 |\n|---|---|\n| @Component | 汎用的なSpring管理コンポーネントを表します。 |\n| @Service | ビジネスロジックを持つサービスレイヤーのクラスに使用します。 |\n| @Repository | データアクセスレイヤーのクラスに使用し、例外変換機能が追加されます。 |\n| @Controller | MVCのコントローラーに使用します（@RestControllerの親）。 |\nすべてのステレオタイプアノテーションは@Componentを内包しています。",
           "code": null,
           "note": null,
           "order": 2
@@ -641,7 +641,7 @@
           "lessonId": "ch38_04",
           "sectionType": "code",
           "title": "DIの実装例",
-          "body": "**@Autowired**アノテーションで依存関係を自動注入できます。\nコンストラクタインジェクションが最も推奨される方法です。\nコンストラクタが1つだけの場合、@Autowiredは省略可能です。",
+          "body": "**@Autowired**アノテーションで依存関係を自動注入できます。\n[[コンストラクタ]]インジェクションが最も推奨される方法です。\nコンストラクタが1つだけの場合、@Autowiredは省略可能です。",
           "code": "// サービスクラス\n@Service\n// UserServiceクラスの定義\npublic class UserService {\n    private final UserRepository repository;\n\n    // コンストラクタインジェクション（推奨）\n    // コンストラクタが1つの場合@Autowired省略可能\n    public UserService(UserRepository repository) {\n        this.repository = repository;\n    }\n\n    // findAllメソッドの定義\n    public List<User> findAll() {\n        return repository.findAll();\n    }\n}\n\n// リポジトリクラス\n@Repository\n// UserRepositoryクラスの定義\npublic class UserRepository {\n    // findAllメソッドの定義\n    public List<User> findAll() {\n        // データベースアクセス\n        return List.of(new User(\"Alice\"), new User(\"Bob\"));\n    }\n}\n\n// コントローラー\n@RestController\n// UserControllerクラスの定義\npublic class UserController {\n    private final UserService userService;\n\n    public UserController(UserService userService) {\n        this.userService = userService;\n    }\n    @GetMapping(\"/users\")\n    public List<User> getUsers() {\n        return userService.findAll();\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -659,9 +659,9 @@
           "lessonId": "ch38_04",
           "sectionType": "tip",
           "title": "Beanのスコープとライフサイクル",
-          "body": "SpringのBeanはデフォルトでシングルトンスコープです（アプリケーション全体で1つのインスタンス）。\n@Scope(\"prototype\")を付けると、注入のたびに新しいインスタンスが生成されます。\nWebスコープとしてrequest、session、applicationスコープもあります。\n@PostConstructでBean初期化後の処理、@PreDestroyで破棄前の処理を定義できます。",
+          "body": "SpringのBeanはデフォルトでシングルトン[[スコープ]]です（アプリケーション全体で1つの[[インスタンス]]）。\n@Scope(\"prototype\")を付けると、注入のたびに新しいインスタンスが生成されます。\nWebスコープとしてrequest、session、applicationスコープもあります。\n@PostConstructでBean初期化後の処理、@PreDestroyで破棄前の処理を定義できます。",
           "code": null,
-          "note": "シングルトンBeanはスレッドセーフに設計する必要があります。状態を持たないように心がけましょう。",
+          "note": "シングルトンBeanは[[スレッド]]セーフに設計する必要があります。状態を持たないように心がけましょう。",
           "order": 5
         }
       ],

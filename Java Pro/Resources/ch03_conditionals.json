@@ -13,7 +13,7 @@
           "lessonId": "ch03_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・if文の基本構文\n・条件式（比較演算子）の書き方\n・条件が成立したときだけ処理を実行する仕組み\n\n条件分岐はプログラムに「判断力」を与える重要な機能です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[if文]]の基本構文\n・条件式（比較[[演算子]]）の書き方\n・条件が成立したときだけ処理を実行する仕組み\n\n条件分岐はプログラムに「判断力」を与える重要な機能です。",
           "code": null,
           "note": null,
           "order": 1
@@ -425,7 +425,7 @@
           "lessonId": "ch03_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・switch文の構文と動作\n・caseとbreakの関係\n・defaultラベルの使い方\n\n値ごとに処理を分けたいとき、switch文を使うとコードが読みやすくなります。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[switch文]]の構文と動作\n・caseとbreakの関係\n・defaultラベルの使い方\n\n値ごとに処理を分けたいとき、switch文を使うとコードが読みやすくなります。",
           "code": null,
           "note": null,
           "order": 1
@@ -434,7 +434,7 @@
           "lessonId": "ch03_03",
           "sectionType": "code",
           "title": "論理演算子",
-          "body": "条件を組み合わせる3つの演算子です。",
+          "body": "条件を組み合わせる3つの[[演算子]]です。",
           "code": "// 変数の宣言と初期化\nint age = 20;\nboolean hasTicket = true;\n\n// AND（かつ）: 両方trueならtrue\n// 条件分岐\nif (age >= 18 && hasTicket) {\n    System.out.println(\"入場できます\");\n}\n\n// OR（または）: どちらかtrueならtrue\nint day = 6; // 土曜\nif (day == 6 || day == 0) {\n    System.out.println(\"休日です\");\n}\n\n// NOT（否定）: true/falseを反転\nboolean isHoliday = false;\nif (!isHoliday) {\n    System.out.println(\"平日です\");\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -689,7 +689,7 @@
           "lessonId": "ch03_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・論理演算子（&&, ||, !）の使い方\n・複数条件を組み合わせた判定\n・**短絡評価**（ショートサーキット）の仕組み\n\n複雑な条件を1つのif文で表現できるようになります。",
+          "body": "このレッスンでは以下を学びます:\n\n・論理[[演算子]]（&&, ||, !）の使い方\n・複数条件を組み合わせた判定\n・**短絡評価**（ショートサーキット）の仕組み\n\n複雑な条件を1つの[[if文]]で表現できるようになります。",
           "code": null,
           "note": null,
           "order": 1
@@ -707,7 +707,7 @@
           "lessonId": "ch03_04",
           "sectionType": "rule",
           "title": "switchで使える型",
-          "body": "switch文の式に使える型:\n・int, byte, short, char\n・String（Java 7以降）\n・enum（列挙型）\n\n使えない型:\n・double, float, long, boolean",
+          "body": "[[switch文]]の式に使える型:\n・int, byte, short, char\n・[[String]]（Java 7以降）\n・enum（列挙型）\n\n使えない型:\n・double, float, long, boolean",
           "code": null,
           "note": null,
           "order": 3
@@ -861,7 +861,7 @@
           "lessonId": "ch03_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**三項演算子**（条件 ? 値1 : 値2）の構文\n・**if-else**との使い分け\n・三項演算子を使うべき場面と避けるべき場面\n\nシンプルな条件分岐を1行で書ける便利な記法を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**三項演算子**（条件 ? 値1 : 値2）の構文\n・**if-else**との使い分け\n・[[三項演算子]]を使うべき場面と避けるべき場面\n\nシンプルな条件分岐を1行で書ける便利な記法を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -879,7 +879,7 @@
           "lessonId": "ch03_05",
           "sectionType": "tip",
           "title": "三項演算子は使いすぎに注意",
-          "body": "**三項演算子**（条件 ? 値1 : 値2）は便利ですが、ネスト（入れ子）にすると読みにくくなります。\n\n・良い例: String msg = score >= 60 ? \"合格\" : \"不合格\";\n・悪い例: String msg = a > b ? (b > c ? \"A\" : \"B\") : (a > c ? \"C\" : \"D\");\n\n単純な2択の場合は三項演算子、複雑な条件は**if-else**文を使いましょう。",
+          "body": "**三項演算子**（条件 ? 値1 : 値2）は便利ですが、ネスト（入れ子）にすると読みにくくなります。\n\n・良い例: [[String]] msg = score >= 60 ? \"合格\" : \"不合格\";\n・悪い例: String msg = a > b ? (b > c ? \"A\" : \"B\") : (a > c ? \"C\" : \"D\");\n\n単純な2択の場合は三項[[演算子]]、複雑な条件は**if-else**文を使いましょう。",
           "code": null,
           "note": null,
           "order": 3
@@ -888,7 +888,7 @@
           "lessonId": "ch03_05",
           "sectionType": "code",
           "title": "if文のネスト",
-          "body": "if文の中にif文を書くことをネスト（入れ子）といいます。",
+          "body": "[[if文]]の中にif文を書くことをネスト（入れ子）といいます。",
           "code": "// 変数の宣言と初期化\nint score = 85;\nboolean isPresent = true;\n\n// 条件分岐\nif (isPresent) {\n    if (score >= 80) {\n        System.out.println(\"出席かつ高得点！\");\n    } else {\n        System.out.println(\"出席しています\");\n    }\n} else {\n    System.out.println(\"欠席です\");\n}",
           "note": "ネストが深くなるとコードが読みにくくなります。&&で条件をまとめたり、早期リターンで対処しましょう。",
           "order": 4

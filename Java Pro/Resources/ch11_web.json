@@ -13,7 +13,7 @@
           "lessonId": "ch11_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・HTTP通信の仕組み（リクエストとレスポンス）\n・HTTPメソッド（GET, POST, PUT, DELETE）の違い\n・**ステータスコード**（200, 404, 500等）の意味\n\nWeb開発の土台となるHTTP通信の基礎を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・HTTP通信の仕組み（リクエストとレスポンス）\n・[[HTTP]][[メソッド]]（GET, POST, PUT, DELETE）の違い\n・**ステータスコード**（200, 404, 500等）の意味\n\nWeb開発の土台となるHTTP通信の基礎を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -201,7 +201,7 @@
           "lessonId": "ch11_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**サーブレット**の基本構造（HttpServlet）\n・doGet()とdoPost()メソッドの実装\n・リクエストパラメータの取得方法\n\nサーブレットはJava Webアプリケーションの基盤技術です。",
+          "body": "このレッスンでは以下を学びます:\n\n・**サーブレット**の基本構造（HttpServlet）\n・doGet()とdoPost()[[メソッド]]の実装\n・リクエストパラメータの取得方法\n\n[[サーブレット]]はJava Webアプリケーションの基盤技術です。",
           "code": null,
           "note": null,
           "order": 1
@@ -210,16 +210,16 @@
           "lessonId": "ch11_02",
           "sectionType": "rule",
           "title": "サーブレットの仕組み",
-          "body": "**サーブレット**の動作フロー:\n\n1. クライアントがHTTPリクエストを送信\n2. Webコンテナ（Tomcat等）がリクエストを受信\n3. 適切なサーブレットクラスのメソッドを呼び出し\n   → GETリクエスト → doGet() メソッド\n   → POSTリクエスト → doPost() メソッド\n4. サーブレットが処理を行い、レスポンスを生成\n5. Webコンテナがレスポンスをクライアントに送信\n\n主要な構成要素:\n| 項目 | 説明 |\n|---|---|\n| HttpServlet | サーブレットの基底クラス。これを継承する |\n| HttpServletRequest | リクエスト情報（パラメータ、ヘッダー等） |\n| HttpServletResponse | レスポンス生成（HTML出力、ステータスコード等） |\n| Webコンテナ | サーブレットの実行環境（Apache Tomcat, Jetty等） |",
+          "body": "**サーブレット**の動作フロー:\n\n1. クライアントがHTTPリクエストを送信\n2. Webコンテナ（Tomcat等）がリクエストを受信\n3. 適切なサーブレット[[クラス]]のメソッドを呼び出し\n   → GETリクエスト → doGet() メソッド\n   → POSTリクエスト → doPost() メソッド\n4. サーブレットが処理を行い、レスポンスを生成\n5. Webコンテナがレスポンスをクライアントに送信\n\n主要な構成要素:\n| 項目 | 説明 |\n|---|---|\n| HttpServlet | サーブレットの基底クラス。これを継承する |\n| HttpServletRequest | リクエスト情報（パラメータ、ヘッダー等） |\n| HttpServletResponse | レスポンス生成（HTML出力、ステータスコード等） |\n| Webコンテナ | サーブレットの実行環境（Apache Tomcat, Jetty等） |",
           "code": null,
-          "note": "Webコンテナ（**サーブレット**コンテナ）はサーブレットのライフサイクル管理、スレッド管理、リクエストのルーティングを行います。",
+          "note": "Webコンテナ（**サーブレット**コンテナ）はサーブレットのライフサイクル管理、[[スレッド]]管理、リクエストのルーティングを行います。",
           "order": 2
         },
         {
           "lessonId": "ch11_02",
           "sectionType": "code",
           "title": "サーブレットの基本実装",
-          "body": "HttpServletを継承し、doGet/doPostメソッドをオーバーライドします。",
+          "body": "HttpServletを[[継承]]し、doGet/doPostメソッドを[[オーバーライド]]します。",
           "code": "import jakarta.servlet.*;\nimport jakarta.servlet.http.*;\nimport jakarta.servlet.annotation.WebServlet;\nimport java.io.*;\n\n@WebServlet(\"/hello\")  // URLパターンの指定\n// HelloServletクラスの定義\npublic class HelloServlet extends HttpServlet {\n\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // レスポンスの設定\n        resp.setContentType(\"text/html; charset=UTF-8\");\n\n        // リクエストパラメータの取得\n        // 変数の宣言と初期化\n        String name = req.getParameter(\"name\");\n        // 条件分岐\n        if (name == null) name = \"ゲスト\";\n\n        // HTML出力\n        PrintWriter out = resp.getWriter();\n        out.println(\"<html><body>\");\n        out.println(\"<h1>こんにちは、\" + name + \"さん！</h1>\");\n        out.println(\"</body></html>\");\n    }\n}\n// アクセス: http://localhost:8080/app/hello?name=太郎",
           "note": "@WebServletアノテーションでURLパターンを指定します。以前はweb.xmlに記述していましたが、Java EE 6以降はアノテーションが主流です。",
           "order": 3
@@ -228,7 +228,7 @@
           "lessonId": "ch11_02",
           "sectionType": "tip",
           "title": "サーブレットのライフサイクル",
-          "body": "**サーブレット**の生存期間を理解しましょう。\n\n| タイミング | 呼ばれるメソッド | 回数 |\n|---|---|---|\n| サーブレット初期化時 | init() | 1回だけ |\n| リクエストのたび | doGet()/doPost() | 毎回 |\n| サーブレット破棄時 | destroy() | 1回だけ |\n\nサーブレットのインスタンスは通常1つだけ作られ、複数リクエストで共有されます。",
+          "body": "**サーブレット**の生存期間を理解しましょう。\n\n| タイミング | 呼ばれるメソッド | 回数 |\n|---|---|---|\n| サーブレット初期化時 | init() | 1回だけ |\n| リクエストのたび | doGet()/doPost() | 毎回 |\n| サーブレット破棄時 | destroy() | 1回だけ |\n\nサーブレットの[[インスタンス]]は通常1つだけ作られ、複数リクエストで共有されます。",
           "code": null,
           "note": "そのため、**サーブレット**のフィールドにリクエスト固有のデータを保存してはいけません（スレッドセーフでない）。",
           "order": 4
@@ -639,7 +639,7 @@
           "title": "MVCパターン",
           "body": "MVC（Model-View-Controller）はWebアプリケーションの設計パターンです。\n\n| 要素 | 役割 | Java実装例 |\n|---|---|---|\n| Model | データとビジネスロジック | POJO、DAO、Service（UserDAO, OrderService） |\n| View | 画面表示 | JSP、Thymeleaf、HTMLテンプレート |\n| Controller | リクエスト処理の制御 | サーブレット、@Controller |\n\nMVCの利点:\n1. 責務の分離: 画面・ロジック・制御が独立\n2. 保守性: 画面変更がロジックに影響しない\n3. テスタビリティ: Modelを単体テスト可能\n4. チーム開発: フロント担当とバック担当で並行作業",
           "code": null,
-          "note": "Spring BootではMVCパターンが標準的に適用されます。@Controllerが**サーブレット**の役割を担い、Thymeleaf等がJSPの代わりにVの役割を果たします。",
+          "note": "[[Spring Boot]]ではMVCパターンが標準的に適用されます。@Controllerが**サーブレット**の役割を担い、Thymeleaf等がJSPの代わりにVの役割を果たします。",
           "order": 4
         },
         {
@@ -804,7 +804,7 @@
           "title": "JSONの読み書き（Gson/Jackson）",
           "body": "Javaオブジェクト ↔ JSON の変換は専用ライブラリを使います。",
           "code": "// User クラス\npublic class User {\n    private int id;\n    private String name;\n    private String email;\n    // getter/setter 省略\n}\n\n// --- Gsonの場合 ---\nimport com.google.gson.Gson;\n\nGson gson = new Gson();\n\n// Java → JSON（シリアライズ）\nUser user = new User(1, \"太郎\", \"taro@example.com\");\nString json = gson.toJson(user);\n// {\"id\":1,\"name\":\"太郎\",\"email\":\"taro@example.com\"}\n\n// JSON → Java（デシリアライズ）\nString jsonStr = \"{\\\"id\\\":2,\\\"name\\\":\\\"花子\\\"}\";\nUser u = gson.fromJson(jsonStr, User.class);\nSystem.out.println(u.getName()); // 花子\n\n// --- Jacksonの場合 ---\nimport com.fasterxml.jackson.databind.ObjectMapper;\n\nObjectMapper mapper = new ObjectMapper();\nString jacksonJson = mapper.writeValueAsString(user); // Java→JSON\nUser u2 = mapper.readValue(jsonStr, User.class);       // JSON→Java",
-          "note": "GsonはGoogleが、JacksonはFasterXMLが開発したJSON変換ライブラリです。Spring BootではJacksonがデフォルトで組み込まれています。",
+          "note": "GsonはGoogleが、JacksonはFasterXMLが開発したJSON変換ライブラリです。[[Spring Boot]]ではJacksonがデフォルトで組み込まれています。",
           "order": 3
         },
         {
@@ -976,7 +976,7 @@
           "lessonId": "ch11_06",
           "sectionType": "tip",
           "title": "フィルタの実行順序はweb.xmlの記述順",
-          "body": "複数のフィルタを定義した場合、web.xmlに記述した順番（上から下）に実行されます。\n\nリクエスト: フィルタA → フィルタB → **サーブレット**\nレスポンス: サーブレット → フィルタB → フィルタA\n\nフィルタは「前処理」と「後処理」の両方を実装でき、chain.doFilter()の前後に処理を書きます。",
+          "body": "複数のフィルタを定義した場合、web.xmlに記述した順番（上から下）に実行されます。\n\nリクエスト: フィルタA → フィルタB → **サーブレット**\nレスポンス: [[サーブレット]] → フィルタB → フィルタA\n\nフィルタは「前処理」と「後処理」の両方を実装でき、chain.doFilter()の前後に処理を書きます。",
           "code": null,
           "note": null,
           "order": 3
@@ -996,7 +996,7 @@
           "title": "Webアプリのプロジェクト構成",
           "body": "Java Webアプリの標準的なディレクトリ構成（Maven）:\n\nsrc/main/\n├── java/com/example/\n│   ├── servlet/        ← Controller（**サーブレット**）\n│   │   ├── UserListServlet.java\n│   │   └── LoginServlet.java\n│   ├── service/        ← ビジネスロジック\n│   │   └── UserService.java\n│   ├── dao/            ← データアクセス（DB操作）\n│   │   └── UserDAO.java\n│   ├── model/          ← データモデル（POJO）\n│   │   └── User.java\n│   └── filter/         ← フィルタ\n│       └── AuthFilter.java\n├── resources/          ← 設定ファイル\n└── webapp/\n    ├── WEB-INF/\n    │   ├── web.xml     ← デプロイメント記述子\n    │   └── views/      ← JSPファイル\n    └── css/js/images/  ← 静的リソース\n\nこの構成により、MVCパターンに沿った整理ができます。",
           "code": null,
-          "note": "Spring Bootでは従来のweb.xmlは不要で、WebアプリのセットアップがAutoConfigurationにより自動化されます。ただし、概念理解のためにServlet仕様を知っておくことは非常に重要です。",
+          "note": "[[Spring Boot]]では従来のweb.xmlは不要で、WebアプリのセットアップがAutoConfigurationにより自動化されます。ただし、概念理解のためにServlet仕様を知っておくことは非常に重要です。",
           "order": 5
         },
         {

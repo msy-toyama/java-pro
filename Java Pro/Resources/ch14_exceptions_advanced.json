@@ -13,7 +13,7 @@
           "lessonId": "ch14_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・Throwableクラスをルートとする例外の階層構造\n・Error, Exception, RuntimeExceptionの関係\n・チェック例外と非チェック例外の分類ルール\n\n例外の全体像を階層的に理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・Throwableクラスをルートとする[[例外]]の階層構造\n・Error, Exception, [[RuntimeException]]の関係\n・[[チェック例外]]と非チェック例外の分類ルール\n\n例外の全体像を階層的に理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch14_01",
           "sectionType": "rule",
           "title": "例外クラスの階層構造",
-          "body": "Javaの例外階層は以下のように構成されています。\n\nThrowable（すべての例外・エラーの親クラス）\n├── Error（深刻なエラー。プログラムでは通常捕捉しない）\n│   └── OutOfMemoryError, StackOverflowError など\n└── Exception（プログラムで対処可能な例外）\n    ├── RuntimeException（Unchecked例外：コンパイラがチェックしない）\n    │   └── NullPointerException, ArrayIndexOutOfBoundsException など\n    └── その他のException（Checked例外：必ずtry-catchまたはthrowsが必要）\n        └── IOException, SQLException, ClassNotFoundException など\n\nChecked例外は処理しないとコンパイルエラーになります。\nUnchecked例外（RuntimeExceptionとそのサブクラス）は処理しなくてもコンパイルが通ります。",
+          "body": "Javaの例外階層は以下のように構成されています。\n\nThrowable（すべての例外・エラーの親クラス）\n├── Error（深刻なエラー。プログラムでは通常捕捉しない）\n│   └── OutOfMemoryError, [[StackOverflowError]] など\n└── Exception（プログラムで対処可能な例外）\n    ├── RuntimeException（Unchecked例外：コンパイラがチェックしない）\n    │   └── [[NullPointerException]], ArrayIndexOutOfBoundsException など\n    └── その他のException（Checked例外：必ずtry-catchまたはthrowsが必要）\n        └── IOException, SQLException, ClassNotFoundException など\n\nChecked例外は処理しないと[[コンパイル]]エラーになります。\nUnchecked例外（RuntimeExceptionとそのサブクラス）は処理しなくてもコンパイルが通ります。",
           "code": null,
           "note": "ErrorもUnchecked（コンパイラがチェックしない）ですが、通常捕捉すべきではありません。",
           "order": 2
@@ -49,7 +49,7 @@
           "lessonId": "ch14_01",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・Throwable → Error / Exception の2系統に分かれる\n・Errorはプログラムで捕捉せず、JVMレベルの深刻な問題を表す\n・Checked例外（IOException等）はtry-catchかthrowsで処理が必須\n・Unchecked例外（RuntimeException系）は処理しなくてもコンパイルが通る\n・NullPointerException, ClassCastException, ArithmeticExceptionはUnchecked例外",
+          "body": "・Throwable → Error / Exception の2系統に分かれる\n・Errorはプログラムで捕捉せず、JVMレベルの深刻な問題を表す\n・Checked例外（IOException等）はtry-catchかthrowsで処理が必須\n・Unchecked例外（RuntimeException系）は処理しなくてもコンパイルが通る\n・NullPointerException, [[ClassCastException]], ArithmeticExceptionはUnchecked例外",
           "code": null,
           "note": null,
           "order": 5
@@ -178,7 +178,7 @@
           "lessonId": "ch14_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・多重キャッチ（複数のcatchブロック）の記述順序\n・**マルチキャッチ**（Java 7+）で複数例外を1つのcatchで処理\n・例外のポリモーフィズムと具象度のルール\n\n正しいcatchの順序は試験でも重要なポイントです。",
+          "body": "このレッスンでは以下を学びます:\n\n・多重キャッチ（複数のcatchブロック）の記述順序\n・**マルチキャッチ**（Java 7+）で複数[[例外]]を1つのcatchで処理\n・例外の[[ポリモーフィズム]]と具象度のルール\n\n正しいcatchの順序は試験でも重要なポイントです。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,9 +187,9 @@
           "lessonId": "ch14_02",
           "sectionType": "code",
           "title": "多重キャッチの記述順序",
-          "body": "複数のcatchブロックを使い分ける場合、サブクラスの例外を先に書きます。\nExceptionはすべての例外のスーパークラスなので、最後に書く必要があります。\n上のcatchブロックから順にマッチングされ、最初に一致したブロックのみが実行されます。",
+          "body": "複数のcatchブロックを使い分ける場合、サブ[[クラス]]の例外を先に書きます。\nExceptionはすべての例外のスーパークラスなので、最後に書く必要があります。\n上のcatchブロックから順にマッチングされ、最初に一致したブロックのみが実行されます。",
           "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            int[] arr = {1, 2, 3};\n            System.out.println(arr[5]);\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"配列の範囲外: \" + e.getMessage());\n        } catch (RuntimeException e) {\n            System.out.println(\"実行時例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外: \" + e.getMessage());\n        }\n    }\n}",
-          "note": "上のコードでExceptionのcatchを最初に書くと、それ以降のcatchに到達できずコンパイルエラーになります。",
+          "note": "上のコードでExceptionのcatchを最初に書くと、それ以降のcatchに到達できず[[コンパイル]]エラーになります。",
           "order": 2
         },
         {
@@ -198,7 +198,7 @@
           "title": "catchブロックの順序ルール",
           "body": "複数のcatchを書くとき、具象（子クラス）→抽象（親クラス）の順番で書く必要があります。\n\n| 順番 | 正しい | 間違い |\n|---|---|---|\n| 1番目 | FileNotFoundException | Exception |\n| 2番目 | IOException | IOException |\n| 3番目 | Exception | FileNotFoundException |\n\n親クラスを先に書くと、子クラスのcatchに到達できず、コンパイルエラーになります。",
           "code": null,
-          "note": "**マルチキャッチ** catch(A | B e) では、AとBに継承関係があるとコンパイルエラーです。",
+          "note": "**マルチキャッチ** catch(A | B e) では、AとBに[[継承]]関係があるとコンパイルエラーです。",
           "order": 3
         },
         {
@@ -413,7 +413,7 @@
           "lessonId": "ch14_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・throw文で意図的に例外を投げる方法\n・throws句でメソッドの例外宣言を行う方法\n・throwとthrowsの違いを明確に区別\n\n紛らわしい2つのキーワードを正確に使い分けましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・throw文で意図的に[[例外]]を投げる方法\n・throws句で[[メソッド]]の例外宣言を行う方法\n・throwとthrowsの違いを明確に区別\n\n紛らわしい2つのキーワードを正確に使い分けましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -422,16 +422,16 @@
           "lessonId": "ch14_03",
           "sectionType": "code",
           "title": "throwで例外をスローする",
-          "body": "throwキーワードを使うと、任意の場所で例外を発生させることができます。\nnewで例外オブジェクトを生成し、throwで投げます。\nthrowの後に処理を書くと到達不能コードとしてコンパイルエラーになります。",
+          "body": "throwキーワードを使うと、任意の場所で例外を発生させることができます。\nnewで例外オブジェクトを生成し、throwで投げます。\nthrowの後に処理を書くと到達不能コードとして[[コンパイル]]エラーになります。",
           "code": "// Mainクラスの定義\npublic class Main {\n    // checkAgeメソッドの定義\n    static void checkAge(int age) {\n        // 条件分岐\n        if (age < 0) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\"年齢は0以上でなければなりません: \" + age);\n        }\n        System.out.println(\"年齢: \" + age);\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            checkAge(-5);\n        } catch (IllegalArgumentException e) {\n            System.out.println(\"エラー: \" + e.getMessage());\n        }\n    }\n}",
-          "note": "IllegalArgumentExceptionはRuntimeException（Unchecked例外）なので、throwsを宣言しなくてもコンパイルが通ります。",
+          "note": "IllegalArgumentExceptionは[[RuntimeException]]（Unchecked例外）なので、throwsを宣言しなくてもコンパイルが通ります。",
           "order": 2
         },
         {
           "lessonId": "ch14_03",
           "sectionType": "tip",
           "title": "throwとthrowsの違い",
-          "body": "| 項目 | throw | throws |\n|---|---|---|\n| 用途 | 例外を投げる | 例外の可能性を宣言 |\n| 場所 | メソッドの本体内 | メソッド宣言の末尾 |\n| 対象 | 例外オブジェクト1つ | 例外クラス（複数可） |\n| 例 | throw new Exception() | throws IOException, SQLException |\n\nthrow は「今この場で例外を発生させる」、throws は「このメソッドは例外を投げるかもしれない」という宣言です。",
+          "body": "| 項目 | throw | throws |\n|---|---|---|\n| 用途 | 例外を投げる | 例外の可能性を宣言 |\n| 場所 | メソッドの本体内 | メソッド宣言の末尾 |\n| 対象 | 例外オブジェクト1つ | 例外クラス（複数可） |\n| 例 | throw new Exception() | throws IOException, SQLException |\n\nthrow は「今この場で例外を発生させる」、[[throws]] は「このメソッドは例外を投げるかもしれない」という宣言です。",
           "code": null,
           "note": null,
           "order": 3
@@ -440,7 +440,7 @@
           "lessonId": "ch14_03",
           "sectionType": "code",
           "title": "throwsによるChecked例外の宣言と伝播",
-          "body": "Checked例外をスローする場合、メソッド宣言にthrowsを付ける必要があります。\n呼び出し側はtry-catchで処理するか、さらにthrowsで上位に伝播させます。\n例外は処理されるまでコールスタックを遡り、どこでも処理されなければプログラムが異常終了します。",
+          "body": "Checked例外をスローする場合、メソッド宣言にthrowsを付ける必要があります。\n呼び出し側はtry-catchで処理するか、さらにthrowsで上位に伝播させます。\n例外は処理されるまでコール[[スタック]]を遡り、どこでも処理されなければプログラムが異常終了します。",
           "code": "import java.io.IOException;\n\n// Mainクラスの定義\npublic class Main {\n    // readFileメソッドの定義\n    static void readFile() throws IOException {\n        // 例外を投げる\n        throw new IOException(\"ファイルが見つかりません\");\n    }\n\n    // processFileメソッドの定義\n    static void processFile() throws IOException {\n        readFile();  // 例外をさらに上位に伝播\n    }\n\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            processFile();\n        } catch (IOException e) {\n            System.out.println(\"捕捉: \" + e.getMessage());\n        }\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4
@@ -624,7 +624,7 @@
           "lessonId": "ch14_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・独自の例外クラスの作成方法\n・**例外チェーン**（cause）で根本原因を伝搬\n・ビジネスルールに応じた例外設計\n\nアプリ固有のエラーを適切に表現する技術です。",
+          "body": "このレッスンでは以下を学びます:\n\n・独自の[[例外]][[クラス]]の作成方法\n・**例外チェーン**（cause）で根本原因を伝搬\n・ビジネスルールに応じた例外設計\n\nアプリ固有のエラーを適切に表現する技術です。",
           "code": null,
           "note": null,
           "order": 1
@@ -633,7 +633,7 @@
           "lessonId": "ch14_04",
           "sectionType": "code",
           "title": "Checked例外のカスタムクラス",
-          "body": "Exceptionを継承してChecked例外を作成します。\nコンストラクタでメッセージを受け取り、superでExceptionに渡すのが一般的です。\n呼び出し側はtry-catchまたはthrowsで処理が必要になります。",
+          "body": "Exceptionを[[継承]]してChecked例外を作成します。\n[[コンストラクタ]]でメッセージを受け取り、superでExceptionに渡すのが一般的です。\n呼び出し側はtry-catchまたはthrowsで処理が必要になります。",
           "code": "// InsufficientBalanceExceptionクラスの定義\nclass InsufficientBalanceException extends Exception {\n    private int balance;\n    private int amount;\n\n    InsufficientBalanceException(int balance, int amount) {\n        super(\"残高不足: 残高\" + balance + \"円に対して\" + amount + \"円の引き出し\");\n        this.balance = balance;\n        this.amount = amount;\n    }\n\n    // getBalanceメソッドの定義\n    int getBalance() { return balance; }\n    // getAmountメソッドの定義\n    int getAmount() { return amount; }\n}\n\n// BankAccountクラスの定義\nclass BankAccount {\n    private int balance;\n\n    BankAccount(int balance) { this.balance = balance; }\n\n    void withdraw(int amount) throws InsufficientBalanceException {\n        // 条件分岐\n        if (amount > balance) {\n            // 例外を投げる\n            throw new InsufficientBalanceException(balance, amount);\n        }\n        balance -= amount;\n        System.out.println(amount + \"円引き出し。残高: \" + balance + \"円\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount account = new BankAccount(1000);\n        // 例外が発生する可能性がある処理\n        try {\n            account.withdraw(500);\n            account.withdraw(800);\n        } catch (InsufficientBalanceException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -642,7 +642,7 @@
           "lessonId": "ch14_04",
           "sectionType": "code",
           "title": "Unchecked例外のカスタムクラス",
-          "body": "RuntimeExceptionを継承するとUnchecked例外になります。\n処理の強制がないため、呼び出し側でtry-catchやthrowsが不要です。\nプログラミングエラーやバグを示す場合はUnchecked例外が適しています。",
+          "body": "[[RuntimeException]]を継承するとUnchecked例外になります。\n処理の強制がないため、呼び出し側でtry-catchやthrowsが不要です。\nプログラミングエラーやバグを示す場合はUnchecked例外が適しています。",
           "code": "// InvalidProductCodeExceptionクラスの定義\nclass InvalidProductCodeException extends RuntimeException {\n    InvalidProductCodeException(String code) {\n        super(\"無効な商品コード: \" + code);\n    }\n}\n\n// Productクラスの定義\nclass Product {\n    // validateメソッドの定義\n    static void validate(String code) {\n        // 条件分岐\n        if (code == null || code.length() != 8) {\n            // 例外を投げる\n            throw new InvalidProductCodeException(code);\n        }\n        System.out.println(\"商品コード \" + code + \" は有効です\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        Product.validate(\"PROD0001\");  // 有効\n        Product.validate(\"ABC\");       // 例外発生\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -794,7 +794,7 @@
           "lessonId": "ch14_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**try-with-resources**文の構文と動作\n・AutoCloseableインターフェースの実装\n・Suppressed例外の仕組み\n\nリソース管理の最善の方法を身につけましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・**try-with-resources**文の構文と動作\n・[[AutoCloseable]][[インターフェース]]の実装\n・Suppressed例外の仕組み\n\nリソース管理の最善の方法を身につけましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -803,16 +803,16 @@
           "lessonId": "ch14_05",
           "sectionType": "code",
           "title": "try-with-resources構文の基本",
-          "body": "AutoCloseableを実装したクラスをtryの括弧内で宣言すると、ブロック終了時に自動でclose()が呼ばれます。\n例外が発生してもしなくてもclose()は必ず実行されます。\n複数のリソースをセミコロンで区切って宣言でき、宣言と逆の順序でクローズされます。",
+          "body": "AutoCloseableを実装した[[クラス]]をtryの括弧内で宣言すると、ブロック終了時に自動でclose()が呼ばれます。\n例外が発生してもしなくてもclose()は必ず実行されます。\n複数のリソースをセミコロンで区切って宣言でき、宣言と逆の順序でクローズされます。",
           "code": "class MyResource implements AutoCloseable {\n    String name;\n\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n\n    void use() {\n        System.out.println(name + \" used\");\n    }\n\n    @Override\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyResource r1 = new MyResource(\"R1\");\n             MyResource r2 = new MyResource(\"R2\")) {\n            r1.use();\n            r2.use();\n        }\n    }\n}\n// 出力:\n// R1 opened\n// R2 opened\n// R1 used\n// R2 used\n// R2 closed  ← 宣言と逆順にクローズ\n// R1 closed",
-          "note": "リソースは宣言された順と逆の順序でクローズされます。これはスタック（LIFO）の動作と同じです。",
+          "note": "リソースは宣言された順と逆の順序でクローズされます。これは[[スタック]]（LIFO）の動作と同じです。",
           "order": 2
         },
         {
           "lessonId": "ch14_05",
           "sectionType": "tip",
           "title": "Suppressed例外とは",
-          "body": "**try-with-resources**では、tryブロック内の例外とclose()の例外が同時に発生することがあります。\n\n・tryブロックの例外が「主例外」として伝搬\n・close()の例外は「Suppressed例外」として主例外に付加\n・getSuppressed() で取得可能\n\n従来のtry-finallyでは、close()の例外がtryの例外を上書きしてしまう問題がありました。",
+          "body": "**try-with-resources**では、tryブロック内の例外とclose()の例外が同時に発生することがあります。\n\n・tryブロックの例外が「主例外」として伝搬\n・close()の例外は「Suppressed例外」として主例外に付加\n・getSuppressed() で取得可能\n\n従来のtry-[[finally]]では、close()の例外がtryの例外を上書きしてしまう問題がありました。",
           "code": null,
           "note": null,
           "order": 3
@@ -823,7 +823,7 @@
           "title": "try-with-resourcesのルール",
           "body": "**try-with-resources**構文には以下のルールがあります。\n\n| ルール |\n| --- |\n| tryの括弧内で宣言するクラスはAutoCloseable（またはCloseable）を実装している必要がある |\n| 括弧内で宣言した変数は暗黙的にfinalで、try内で再代入するとコンパイルエラー |\n| 複数のリソースはセミコロン（;）で区切って宣言する |\n| リソースは宣言の逆順でクローズされる |\n| catchやfinallyブロックは省略可能（従来のtryでは少なくともcatchかfinallyが必要） |\n| 6 | close()で発生した例外はtryブロック内の例外に「抑制された例外（suppressed exception）」として追加される |",
           "code": null,
-          "note": "Java 9以降では、tryブロックの外で宣言された実質的にfinalな変数もtryの括弧内で参照できます。",
+          "note": "Java 9以降では、tryブロックの外で宣言された実質的にfinalな[[変数]]もtryの括弧内で参照できます。",
           "order": 4
         },
         {
@@ -839,7 +839,7 @@
           "lessonId": "ch14_05",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**try-with-resources**はAutoCloseableを実装したリソースを自動クローズする\n・リソースは宣言された順の逆順でクローズされる\n・try-with-resourcesではcatchやfinallyを省略できる\n・tryブロック内の例外が優先され、close()の例外は抑制された例外になる\n・括弧内の変数は**暗黙的にfinal**であり再代入不可",
+          "body": "・**try-with-resources**はAutoCloseableを実装したリソースを自動クローズする\n・リソースは宣言された順の逆順でクローズされる\n・[[try-with-resources]]ではcatchやfinallyを省略できる\n・tryブロック内の例外が優先され、close()の例外は抑制された例外になる\n・括弧内の変数は**暗黙的にfinal**であり再代入不可",
           "code": null,
           "note": null,
           "order": 6

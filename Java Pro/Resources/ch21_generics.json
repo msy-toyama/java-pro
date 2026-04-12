@@ -13,7 +13,7 @@
           "lessonId": "ch21_01",
           "sectionType": "overview",
           "title": "ジェネリクスとは",
-          "body": "このレッスンでは以下を学びます:\n\n・**ジェネリクス**の目的（**型安全**性の向上）\n・**型パラメータ**<T>の宣言と使い方\n・ジェネリクスなしの場合のキャストの危険性\n\n型をパラメータ化することで、コンパイル時にバグを検出できます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ジェネリクス**の目的（**型安全**性の向上）\n・**型パラメータ**<T>の宣言と使い方\n・[[ジェネリクス]]なしの場合の[[キャスト]]の危険性\n\n型をパラメータ化することで、[[コンパイル]]時にバグを検出できます。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch21_01",
           "sectionType": "rule",
           "title": "ジェネリッククラスの定義",
-          "body": "ジェネリッククラスは、クラス名の後に角括弧（<>）で**型パラメータ**を宣言して定義します。\n型パラメータはクラス内でフィールドの型やメソッドの引数・戻り値の型として使用できます。\nインスタンス生成時に具体的な型を指定することで、その型に特化したクラスとして振る舞います。\nJava 7以降では、ダイヤモンド演算子（<>）を使い、右辺の型引数を省略できます。\n型パラメータには参照型のみ指定可能で、int やdouble などのプリミティブ型は使用できません。",
+          "body": "ジェネリック[[クラス]]は、クラス名の後に角括弧（<>）で**型パラメータ**を宣言して定義します。\n型パラメータはクラス内でフィールドの型や[[メソッド]]の引数・戻り値の型として使用できます。\n[[インスタンス]]生成時に具体的な型を指定することで、その型に特化したクラスとして振る舞います。\nJava 7以降では、[[ダイヤモンド演算子]]（<>）を使い、右辺の型引数を省略できます。\n型パラメータには[[参照型]]のみ指定可能で、int やdouble などの[[プリミティブ型]]は使用できません。",
           "code": "// ジェネリッククラスの定義\npublic class Box<T> {\n    private T value;\n\n    public void set(T value) {\n        this.value = value;\n    }\n\n    public T get() {\n        return value;\n    }\n}\n\n// 使用例\nBox<String> strBox = new Box<>();  // ダイヤモンド演算子\nstrBox.set(\"Hello\");\nString s = strBox.get();  // キャスト不要\n\nBox<Integer> intBox = new Box<>();\nintBox.set(42);\nint n = intBox.get();  // 自動アンボクシング",
           "note": null,
           "order": 2
@@ -31,7 +31,7 @@
           "lessonId": "ch21_01",
           "sectionType": "rule",
           "title": "型パラメータの命名規則",
-          "body": "**型パラメータ**には慣例的に1文字の大文字を使用します。\nT（Type）は一般的な型を表し、最も広く使われます。\nE（Element）はコレクションの要素型に使われます（例：List<E>）。\nK（Key）とV（Value）はマップのキーと値に使われます（例：Map<K, V>）。\nN（Number）は数値型に使われることがあります。\n複数の型パラメータを持つクラスも定義でき、カンマで区切って宣言します。",
+          "body": "型パラメータには慣例的に1文字の大文字を使用します。\nT（Type）は一般的な型を表し、最も広く使われます。\nE（Element）はコレクションの要素型に使われます（例：List<E>）。\nK（Key）とV（Value）はマップのキーと値に使われます（例：Map<K, V>）。\nN（Number）は数値型に使われることがあります。\n複数の型パラメータを持つクラスも定義でき、カンマで区切って宣言します。",
           "code": "// 複数の型パラメータを持つクラス\npublic class Pair<K, V> {\n    private K key;\n    private V value;\n\n    public Pair(K key, V value) {\n        this.key = key;\n        this.value = value;\n    }\n\n    public K getKey() { return key; }\n    public V getValue() { return value; }\n}\n\n// 使用例\nPair<String, Integer> pair = new Pair<>(\"Age\", 25);",
           "note": null,
           "order": 3
@@ -40,7 +40,7 @@
           "lessonId": "ch21_01",
           "sectionType": "point",
           "title": "型安全性とキャスト不要の利点",
-          "body": "**ジェネリクス**を使わない場合、コレクションにはあらゆるオブジェクトを格納できてしまいます。\n要素を取り出す際に明示的なキャストが必要となり、誤った型へのキャストは実行時例外になります。\nジェネリクスを使えば、コンパイル時に不正な型の格納を検出できます。\nこれにより、実行時のClassCastExceptionを防ぎ、安全なコードを実現できます。\n型推論により、冗長な記述も減り、コードの可読性も向上します。",
+          "body": "**ジェネリクス**を使わない場合、コレクションにはあらゆるオブジェクトを格納できてしまいます。\n要素を取り出す際に明示的なキャストが必要となり、誤った型へのキャストは実行時[[例外]]になります。\nジェネリクスを使えば、コンパイル時に不正な型の格納を検出できます。\nこれにより、実行時の[[ClassCastException]]を防ぎ、安全なコードを実現できます。\n[[型推論]]により、冗長な記述も減り、コードの可読性も向上します。",
           "code": "// ジェネリクスなし（非推奨）\nList list = new ArrayList();\nlist.add(\"Hello\");\nlist.add(123);  // コンパイルエラーにならない\nString s = (String) list.get(1);  // 実行時にClassCastException\n\n// ジェネリクスあり（推奨）\nList<String> safeList = new ArrayList<>();\nsafeList.add(\"Hello\");\n// safeList.add(123);  // コンパイルエラー！\nString s2 = safeList.get(0);  // キャスト不要",
           "note": null,
           "order": 4
@@ -49,9 +49,9 @@
           "lessonId": "ch21_01",
           "sectionType": "tip",
           "title": "raw型に関する注意",
-          "body": "**型パラメータ**を指定せずにジェネリッククラスを使用することをraw型と呼びます。\nraw型を使うとコンパイル時に警告（unchecked warning）が発生します。\nraw型のコレクションに要素を追加すると、**型安全**性が失われます。\nJava Gold試験ではraw型と**ジェネリクス**型の混在に関する問題が出題されることがあります。\n既存のレガシーコードとの互換性のためにraw型は許容されていますが、新規コードでは必ず型パラメータを指定しましょう。",
+          "body": "型パラメータを指定せずにジェネリッククラスを使用することをraw型と呼びます。\nraw型を使うとコンパイル時に警告（unchecked warning）が発生します。\nraw型のコレクションに要素を追加すると、**型安全**性が失われます。\nJava Gold試験ではraw型とジェネリクス型の混在に関する問題が出題されることがあります。\n既存のレガシーコードとの互換性のためにraw型は許容されていますが、新規コードでは必ず型パラメータを指定しましょう。",
           "code": null,
-          "note": "raw型はコンパイルは通りますが、**型安全**性が保証されないため、原則として使用を避けてください。",
+          "note": "raw型はコンパイルは通りますが、型安全性が保証されないため、原則として使用を避けてください。",
           "order": 5
         }
       ],
@@ -178,7 +178,7 @@
           "lessonId": "ch21_02",
           "sectionType": "overview",
           "title": "ジェネリックメソッドとは",
-          "body": "このレッスンでは以下を学びます:\n\n・ジェネリックメソッドの定義構文\n・クラスの**型パラメータ**とメソッドの型パラメータの違い\n・型推論によるダイヤモンド演算子<>の活用\n\nメソッド単位で柔軟に型を指定できる仕組みです。",
+          "body": "このレッスンでは以下を学びます:\n\n・ジェネリック[[メソッド]]の定義構文\n・[[クラス]]の**型パラメータ**とメソッドの型パラメータの違い\n・[[型推論]]による[[ダイヤモンド演算子]]<>の活用\n\nメソッド単位で柔軟に型を指定できる仕組みです。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch21_02",
           "sectionType": "code",
           "title": "ジェネリックメソッドの定義",
-          "body": "ジェネリックメソッドを定義するには、戻り値の型の直前に**型パラメータ**を角括弧で宣言します。\n宣言した型パラメータは、そのメソッドの引数や戻り値、ローカル変数の型として使用できます。\nメソッドの型パラメータはクラスの型パラメータとは独立しており、同じ名前でも別の型パラメータとして扱われます。\nジェネリックメソッドはコードの再利用性を高め、異なる型に対して同じロジックを適用できます。",
+          "body": "ジェネリックメソッドを定義するには、戻り値の型の直前に**型パラメータ**を角括弧で宣言します。\n宣言した型パラメータは、そのメソッドの引数や戻り値、ローカル[[変数]]の型として使用できます。\nメソッドの型パラメータはクラスの型パラメータとは独立しており、同じ名前でも別の型パラメータとして扱われます。\nジェネリックメソッドはコードの再利用性を高め、異なる型に対して同じロジックを適用できます。",
           "code": "// Utilクラスの定義\npublic class Util {\n    // ジェネリックメソッドの定義\n    // getFirstメソッドの定義\n    public <T> T getFirst(List<T> list) {\n        // 条件分岐\n        if (list == null || list.isEmpty()) {\n            return null;\n        }\n        return list.get(0);\n    }\n\n    // 複数の型パラメータを持つジェネリックメソッド\n    public <K, V> String format(K key, V value) {\n        return key + \" = \" + value;\n    }\n}\n\n// 使用例\nUtil util = new Util();\nList<String> names = List.of(\"Alice\", \"Bob\");\n// 変数の宣言と初期化\nString first = util.getFirst(names);  // 型推論によりTはString",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -196,7 +196,7 @@
           "lessonId": "ch21_02",
           "sectionType": "rule",
           "title": "型推論の仕組み",
-          "body": "ジェネリックメソッドを呼び出す際、多くの場合、**型パラメータ**を明示的に指定する必要はありません。\nコンパイラが引数の型から型パラメータの具体的な型を推論（Type Inference）します。\n明示的に型を指定する場合は、メソッド名の前にドット演算子と型引数を記述します。\nstaticメソッドの場合は、クラス名.< 型 >メソッド名の形式で呼び出します。\nJava 8以降、型推論の能力が強化され、より多くのケースで型の明示が不要になっています。",
+          "body": "ジェネリックメソッドを呼び出す際、多くの場合、型パラメータを明示的に指定する必要はありません。\nコンパイラが引数の型から型パラメータの具体的な型を推論（Type Inference）します。\n明示的に型を指定する場合は、メソッド名の前にドット[[演算子]]と型引数を記述します。\n[[staticメソッド]]の場合は、クラス名.< 型 >メソッド名の形式で呼び出します。\nJava 8以降、型推論の能力が強化され、より多くのケースで型の明示が不要になっています。",
           "code": "public class TypeInference {\n    public static <T> List<T> singletonList(T item) {\n        List<T> list = new ArrayList<>();\n        list.add(item);\n        return list;\n    }\n\n    public static void main(String[] args) {\n        // 型推論（通常はこの書き方）\n        List<String> list1 = singletonList(\"Hello\");\n\n        // 明示的に型を指定\n        List<String> list2 = TypeInference.<String>singletonList(\"Hello\");\n\n        // 型推論が曖昧な場合は明示が必要なこともある\n        List<Object> list3 = TypeInference.<Object>singletonList(null);\n    }\n}",
           "note": null,
           "order": 3
@@ -205,16 +205,16 @@
           "lessonId": "ch21_02",
           "sectionType": "point",
           "title": "staticメソッドと型パラメータ",
-          "body": "staticメソッドは、クラスの**型パラメータ**にアクセスできません。\nこれは、クラスの型パラメータがインスタンスに紐づくものであり、staticメソッドはインスタンスに依存しないためです。\nそのため、staticメソッドで**ジェネリクス**を使いたい場合は、メソッド独自の型パラメータを宣言する必要があります。\nこの点はJava Gold試験で頻出のポイントです。",
+          "body": "staticメソッドは、クラスの型パラメータにアクセスできません。\nこれは、クラスの型パラメータが[[インスタンス]]に紐づくものであり、staticメソッドはインスタンスに依存しないためです。\nそのため、staticメソッドで**ジェネリクス**を使いたい場合は、メソッド独自の型パラメータを宣言する必要があります。\nこの点はJava Gold試験で頻出のポイントです。",
           "code": "public class Container<T> {\n    private T value;\n\n    // OK: インスタンスメソッドはクラスの型パラメータTを使える\n    public T getValue() {\n        return value;\n    }\n\n    // コンパイルエラー: staticメソッドでクラスの型パラメータTは使えない\n    // public static T create() { return null; }\n\n    // OK: メソッド独自の型パラメータ<U>を宣言\n    public static <U> Container<U> of(U value) {\n        Container<U> c = new Container<>();\n        c.value = value;\n        return c;\n    }\n}",
-          "note": "staticメソッドでクラスの**型パラメータ**を使おうとするとコンパイルエラーになります。必ずメソッド独自の型パラメータを宣言してください。",
+          "note": "staticメソッドでクラスの型パラメータを使おうとすると[[コンパイル]]エラーになります。必ずメソッド独自の型パラメータを宣言してください。",
           "order": 4
         },
         {
           "lessonId": "ch21_02",
           "sectionType": "tip",
           "title": "ジェネリックメソッドの活用場面",
-          "body": "ジェネリックメソッドは、ユーティリティクラスで特に有用です。\nCollectionsクラスのsort()やemptyList()など、標準ライブラリでも広く使われています。\nメソッドの引数と戻り値の型に関連性を持たせたい場合に適しています。\n例えば、入力と同じ型の値を返すメソッドや、2つの引数が同じ型であることを保証するメソッドなどに利用できます。",
+          "body": "ジェネリックメソッドは、ユーティリティクラスで特に有用です。\n[[Collections]]クラスのsort()やemptyList()など、標準ライブラリでも広く使われています。\nメソッドの引数と戻り値の型に関連性を持たせたい場合に適しています。\n例えば、入力と同じ型の値を返すメソッドや、2つの引数が同じ型であることを保証するメソッドなどに利用できます。",
           "code": null,
           "note": null,
           "order": 5
@@ -404,7 +404,7 @@
           "lessonId": "ch21_03",
           "sectionType": "overview",
           "title": "境界付き型パラメータとは",
-          "body": "このレッスンでは以下を学びます:\n\n・extends で**型パラメータ**に上限を設定\n・境界付き型パラメータでメソッド呼び出しを可能に\n・複数の型境界（&による結合）\n\n型パラメータに「最低限この型を持つ」制約を付ける方法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・extends で**型パラメータ**に上限を設定\n・境界付き型パラメータで[[メソッド]]呼び出しを可能に\n・複数の型境界（&による結合）\n\n型パラメータに「最低限この型を持つ」制約を付ける方法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -413,7 +413,7 @@
           "lessonId": "ch21_03",
           "sectionType": "code",
           "title": "上限境界の使い方",
-          "body": "上限境界（Upper Bound）は<T extends 上限型>の形式で指定します。\n上限境界を設けると、**型パラメータ**Tは指定した型のサブタイプに限定されます。\nこれにより、T型の変数に対して上限型で定義されたメソッドを安全に呼び出せます。\n上限にはクラスだけでなく、インターフェースも指定できます。",
+          "body": "上限境界（Upper Bound）は<T extends 上限型>の形式で指定します。\n上限境界を設けると、**型パラメータ**Tは指定した型のサブタイプに限定されます。\nこれにより、T型の[[変数]]に対して上限型で定義されたメソッドを安全に呼び出せます。\n上限には[[クラス]]だけでなく、[[インターフェース]]も指定できます。",
           "code": "// Number型以下に制限するジェネリックメソッド\npublic static <T extends Number> double sum(List<T> list) {\n    double total = 0.0;\n    for (T element : list) {\n        total += element.doubleValue();  // Numberのメソッドを呼べる\n    }\n    return total;\n}\n\n// 使用例\nList<Integer> intList = List.of(1, 2, 3);\ndouble result1 = sum(intList);  // OK: IntegerはNumberのサブクラス\n\nList<Double> dblList = List.of(1.5, 2.5);\ndouble result2 = sum(dblList);  // OK: DoubleはNumberのサブクラス\n\n// List<String> strList = List.of(\"a\");\n// sum(strList);  // コンパイルエラー: StringはNumberのサブクラスではない",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -422,7 +422,7 @@
           "lessonId": "ch21_03",
           "sectionType": "rule",
           "title": "複数境界（Multiple Bounds）",
-          "body": "**型パラメータ**に複数の境界を設定するには、&（アンパサンド）で区切ります。\n複数境界を使うと、型パラメータが複数の型を同時に満たすことを要求できます。\nクラスとインターフェースを組み合わせる場合、クラスを最初に記述する必要があります。\nインターフェースのみの場合は順序に制約はありませんが、クラスは最大1つしか指定できません。\n複数境界により、より厳密な型制約を表現できます。",
+          "body": "型パラメータに複数の境界を設定するには、&（アンパサンド）で区切ります。\n複数境界を使うと、型パラメータが複数の型を同時に満たすことを要求できます。\nクラスとインターフェースを組み合わせる場合、クラスを最初に記述する必要があります。\nインターフェースのみの場合は順序に制約はありませんが、クラスは最大1つしか指定できません。\n複数境界により、より厳密な型制約を表現できます。",
           "code": "// ComparableかつSerializableを実装する型に制限\npublic static <T extends Comparable<T> & Serializable> T findMax(List<T> list) {\n    T max = list.get(0);\n    for (T item : list) {\n        if (item.compareTo(max) > 0) {\n            max = item;\n        }\n    }\n    return max;\n}\n\n// クラス + インターフェースの場合、クラスが先\n// <T extends Number & Comparable<T>>  // OK\n// <T extends Comparable<T> & Number>  // コンパイルエラー（クラスが後）",
           "note": "複数境界でクラスとインターフェースを併用する場合、クラスは必ず最初に記述してください。",
           "order": 3
@@ -431,7 +431,7 @@
           "lessonId": "ch21_03",
           "sectionType": "point",
           "title": "再帰的型境界",
-          "body": "再帰的型境界（Recursive Type Bound）は、**型パラメータ**が自身を参照する境界を持つパターンです。\n代表的な例が<T extends Comparable<T>>で、T型同士を比較可能にします。\nこのパターンはソートやコレクションの最大値・最小値の計算で頻繁に使われます。\nJava標準APIでもEnumクラスがEnum<E extends Enum<E>>という再帰的型境界を使用しています。\nGold試験ではこのパターンの理解が問われることがあります。",
+          "body": "再帰的型境界（Recursive Type Bound）は、型パラメータが自身を参照する境界を持つパターンです。\n代表的な例が<T extends [[Comparable]]<T>>で、T型同士を比較可能にします。\nこのパターンはソートやコレクションの最大値・最小値の計算で頻繁に使われます。\nJava標準APIでもEnumクラスがEnum<E extends Enum<E>>という再帰的型境界を使用しています。\nGold試験ではこのパターンの理解が問われることがあります。",
           "code": "// 再帰的型境界の例\npublic class SortUtil {\n    // T型がComparable<T>を実装していることを保証\n    public static <T extends Comparable<T>> T max(T a, T b) {\n        return a.compareTo(b) >= 0 ? a : b;\n    }\n\n    public static void main(String[] args) {\n        String result = max(\"Apple\", \"Banana\");  // \"Banana\"\n        Integer num = max(10, 20);  // 20\n    }\n}",
           "note": null,
           "order": 4
@@ -440,7 +440,7 @@
           "lessonId": "ch21_03",
           "sectionType": "tip",
           "title": "境界付き型パラメータとワイルドカードの違い",
-          "body": "境界付き**型パラメータ**（<T extends X>）と**ワイルドカード**（<? extends X>）は似ていますが、役割が異なります。\n境界付き型パラメータは型に名前（T）をつけるため、メソッド内で同じ型として参照できます。\nワイルドカードは型に名前がないため、複数の箇所で同じ型として参照することができません。\n戻り値の型や複数の引数の型を関連付けたい場合は、境界付き型パラメータを使います。\n単にコレクションの要素を読み取るだけなら、ワイルドカードの方がシンプルです。",
+          "body": "境界付き型パラメータ（<T extends X>）と**ワイルドカード**（<? extends X>）は似ていますが、役割が異なります。\n境界付き型パラメータは型に名前（T）をつけるため、メソッド内で同じ型として参照できます。\n[[ワイルドカード]]は型に名前がないため、複数の箇所で同じ型として参照することができません。\n戻り値の型や複数の引数の型を関連付けたい場合は、境界付き型パラメータを使います。\n単にコレクションの要素を読み取るだけなら、ワイルドカードの方がシンプルです。",
           "code": null,
           "note": null,
           "order": 5
@@ -649,7 +649,7 @@
           "lessonId": "ch21_04",
           "sectionType": "overview",
           "title": "ワイルドカードの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・**ワイルドカード**（?）の基本概念\n・上限ワイルドカード（? extends T）の使い方\n・下限ワイルドカード（? super T）の使い方\n\nPECS原則（Producer-Extends, Consumer-Super）を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ワイルドカード**（?）の基本概念\n・上限[[ワイルドカード]]（? extends T）の使い方\n・下限ワイルドカード（? super T）の使い方\n\nPECS原則（Producer-Extends, [[Consumer]]-Super）を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -667,7 +667,7 @@
           "lessonId": "ch21_04",
           "sectionType": "code",
           "title": "下限境界ワイルドカード",
-          "body": "下限境界**ワイルドカード**<? super T>は、T型またはそのスーパータイプの要素を持つコレクションを受け入れます。\n下限境界ワイルドカードを使ったリストにはT型およびそのサブタイプの要素を追加できます。\nただし、要素を読み取る際はObject型としてしか取得できません。\nこれは要素の正確な型が不明であるためです。",
+          "body": "下限境界ワイルドカード<? super T>は、T型またはそのスーパータイプの要素を持つコレクションを受け入れます。\n下限境界ワイルドカードを使ったリストにはT型およびそのサブタイプの要素を追加できます。\nただし、要素を読み取る際はObject型としてしか取得できません。\nこれは要素の正確な型が不明であるためです。",
           "code": "// 下限境界ワイルドカード\npublic static void addNumbers(List<? super Integer> list) {\n    list.add(1);      // OK: Integer型を追加できる\n    list.add(2);\n    list.add(3);\n    // list.add(1.5);  // コンパイルエラー: DoubleはIntegerのサブタイプではない\n\n    // 読み取りはObject型としてのみ\n    Object obj = list.get(0);\n    // Integer n = list.get(0);  // コンパイルエラー\n}\n\n// 使用例\nList<Number> numList = new ArrayList<>();\naddNumbers(numList);   // OK: NumberはIntegerのスーパータイプ\n\nList<Object> objList = new ArrayList<>();\naddNumbers(objList);   // OK: ObjectはIntegerのスーパータイプ\n\n// List<Double> dblList = new ArrayList<>();\n// addNumbers(dblList);  // コンパイルエラー: DoubleはIntegerのスーパータイプではない",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -676,7 +676,7 @@
           "lessonId": "ch21_04",
           "sectionType": "rule",
           "title": "PECS原則",
-          "body": "PECS（Producer Extends, Consumer Super）は、**ワイルドカード**の使い分けを覚えるための原則です。\nProducer（生産者）としてコレクションからデータを取り出す場合は<? extends T>を使います。\nConsumer（消費者）としてコレクションにデータを追加する場合は<? super T>を使います。\n読み取りと書き込みの両方が必要な場合は、ワイルドカードを使わず正確な型を指定します。\nこの原則は、Collections.copy()メソッドのシグネチャに典型的に表れています。",
+          "body": "PECS（Producer Extends, Consumer Super）は、ワイルドカードの使い分けを覚えるための原則です。\nProducer（生産者）としてコレクションからデータを取り出す場合は<? extends T>を使います。\nConsumer（消費者）としてコレクションにデータを追加する場合は<? super T>を使います。\n読み取りと書き込みの両方が必要な場合は、ワイルドカードを使わず正確な型を指定します。\nこの原則は、[[Collections]].copy()[[メソッド]]のシグネチャに典型的に表れています。",
           "code": "// PECSの典型例: Collections.copy()\n// dest: データを受け取る（Consumer） → super\n// src:  データを提供する（Producer） → extends\npublic static <T> void copy(List<? super T> dest, List<? extends T> src) {\n    for (int i = 0; i < src.size(); i++) {\n        dest.set(i, src.get(i));\n    }\n}\n\n// 使用例\nList<Number> dest = new ArrayList<>(Arrays.asList(0, 0, 0));\nList<Integer> src = List.of(1, 2, 3);\nCollections.copy(dest, src);  // dest = [1, 2, 3]",
           "note": "PECS: 「取り出す（Producer）ならextends」、「入れる（Consumer）ならsuper」と覚えましょう。",
           "order": 4
@@ -685,7 +685,7 @@
           "lessonId": "ch21_04",
           "sectionType": "tip",
           "title": "ワイルドカードの制限事項",
-          "body": "**ワイルドカード**はクラスやメソッドの**型パラメータ**の宣言には使用できません。\nclass MyClass<?>はコンパイルエラーになります。\nワイルドカードはあくまで「型の使用箇所」で利用するもので、「型の定義箇所」では使えません。\n上限境界ワイルドカードのリストにはnull以外の要素を追加できない点は、特に注意が必要です。\nワイルドカードキャプチャという仕組みにより、内部的にはコンパイラがワイルドカードに一時的な型を割り当てることがあります。",
+          "body": "ワイルドカードは[[クラス]]やメソッドの**型パラメータ**の宣言には使用できません。\nclass MyClass<?>は[[コンパイル]]エラーになります。\nワイルドカードはあくまで「型の使用箇所」で利用するもので、「型の定義箇所」では使えません。\n上限境界ワイルドカードのリストにはnull以外の要素を追加できない点は、特に注意が必要です。\nワイルドカードキャプチャという仕組みにより、内部的にはコンパイラがワイルドカードに一時的な型を割り当てることがあります。",
           "code": null,
           "note": null,
           "order": 5
@@ -869,7 +869,7 @@
           "lessonId": "ch21_05",
           "sectionType": "overview",
           "title": "型消去（Type Erasure）とは",
-          "body": "このレッスンでは以下を学びます:\n\n・**型消去**（Type Erasure）の仕組み\n・**ジェネリクス**でできないこと（new T()、instanceof T等）\n・ブリッジメソッドが自動生成される理由\n\nコンパイル後にジェネリクス情報が消える影響を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・**型消去**（Type Erasure）の仕組み\n・**ジェネリクス**でできないこと（new T()、[[instanceof]] T等）\n・ブリッジ[[メソッド]]が自動生成される理由\n\n[[コンパイル]]後に[[ジェネリクス]]情報が消える影響を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -878,7 +878,7 @@
           "lessonId": "ch21_05",
           "sectionType": "code",
           "title": "型消去の仕組み",
-          "body": "コンパイラは**型消去**により、**ジェネリクス**のコードを**型パラメータ**なしの同等コードに変換します。\n必要な箇所にはキャストが自動的に挿入されます。\nブリッジメソッドが生成されることもあり、これはジェネリクスを使った継承で多態性を維持するためです。\n型消去後のコードは、ジェネリクス導入以前のJavaコードと互換性があります。",
+          "body": "コンパイラは**型消去**により、**ジェネリクス**のコードを**型パラメータ**なしの同等コードに変換します。\n必要な箇所には[[キャスト]]が自動的に挿入されます。\nブリッジメソッドが生成されることもあり、これはジェネリクスを使った[[継承]]で多態性を維持するためです。\n[[型消去]]後のコードは、ジェネリクス導入以前のJavaコードと互換性があります。",
           "code": "// コンパイル前（ソースコード）\n// Boxクラスの定義\npublic class Box<T> {\n    private T value;\n    public T get() { return value; }\n    // setメソッドの定義\n    public void set(T value) { this.value = value; }\n}\n\nBox<String> box = new Box<>();\nbox.set(\"Hello\");\n// 変数の宣言と初期化\nString s = box.get();\n\n// 型消去後（バイトコード相当）\n// Boxクラスの定義\npublic class Box {\n    private Object value;\n    public Object get() { return value; }\n    // setメソッドの定義\n    public void set(Object value) { this.value = value; }\n}\n\nBox box = new Box();\nbox.set(\"Hello\");\nString s = (String) box.get();  // キャストが自動挿入",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -887,7 +887,7 @@
           "lessonId": "ch21_05",
           "sectionType": "rule",
           "title": "ジェネリクスの制限事項",
-          "body": "**型消去**による**ジェネリクス**の主な制限事項を理解することは、Java Gold試験で非常に重要です。\nプリミティブ型を**型パラメータ**に使用できません（Box<int>は不可、Box<Integer>を使用）。\n型パラメータを使ってインスタンスを生成できません（new T()は不可）。\nジェネリック型の配列を直接作成できません（new T[]やnew List<String>[]は不可）。\ninstanceof演算子でパラメータ化された型を使用できません（obj instanceof List<String>は不可）。\nstaticフィールドやstaticメソッドでクラスの型パラメータを使用できません。",
+          "body": "型消去によるジェネリクスの主な制限事項を理解することは、Java Gold試験で非常に重要です。\n[[プリミティブ型]]を**型パラメータ**に使用できません（Box<int>は不可、Box<Integer>を使用）。\n型パラメータを使って[[インスタンス]]を生成できません（new T()は不可）。\nジェネリック型の[[配列]]を直接作成できません（new T[]やnew List<String>[]は不可）。\ninstanceof演算子でパラメータ化された型を使用できません（obj instanceof List<String>は不可）。\n[[staticフィールド]]や[[staticメソッド]]で[[クラス]]の型パラメータを使用できません。",
           "code": "public class Restrictions<T> {\n    // コンパイルエラー: プリミティブ型は不可\n    // Box<int> box;\n\n    // コンパイルエラー: new T()は不可\n    // public T create() { return new T(); }\n\n    // コンパイルエラー: ジェネリック配列の生成は不可\n    // T[] array = new T[10];\n\n    // コンパイルエラー: パラメータ化された型でのinstanceofは不可\n    // if (obj instanceof List<String>) { }\n\n    // OK: 非境界ワイルドカードでのinstanceofは可能\n    public boolean isList(Object obj) {\n        return obj instanceof List<?>;\n    }\n\n    // OK: raw型でのinstanceofも可能\n    public boolean isListRaw(Object obj) {\n        return obj instanceof List;\n    }\n}",
           "note": null,
           "order": 3
@@ -896,16 +896,16 @@
           "lessonId": "ch21_05",
           "sectionType": "point",
           "title": "ジェネリクスとオーバーロード",
-          "body": "**型消去**により、**ジェネリクス**の**型パラメータ**のみが異なるメソッドはオーバーロードできません。\n例えば、method(List<String>)とmethod(List<Integer>)は型消去後にどちらもmethod(List)になるため、同じクラスに共存できません。\nこれはコンパイルエラーになります。\n型消去の影響を正しく理解し、メソッドシグネチャの衝突を避ける必要があります。",
+          "body": "型消去により、ジェネリクスの型パラメータのみが異なるメソッドは[[オーバーロード]]できません。\n例えば、method(List<String>)とmethod(List<Integer>)は型消去後にどちらもmethod(List)になるため、同じクラスに共存できません。\nこれはコンパイルエラーになります。\n型消去の影響を正しく理解し、メソッドシグネチャの衝突を避ける必要があります。",
           "code": "public class OverloadExample {\n    // コンパイルエラー: 型消去後に同じシグネチャになる\n    // public void process(List<String> list) { }\n    // public void process(List<Integer> list) { }\n\n    // 型消去後、両方とも以下と同じになってしまう\n    // public void process(List list) { }\n\n    // 解決策: メソッド名を変える\n    public void processStrings(List<String> list) { }\n    public void processIntegers(List<Integer> list) { }\n}",
-          "note": "**型消去**後のシグネチャが同一になるオーバーロードはコンパイルエラーになります。",
+          "note": "型消去後のシグネチャが同一になるオーバーロードはコンパイルエラーになります。",
           "order": 4
         },
         {
           "lessonId": "ch21_05",
           "sectionType": "tip",
           "title": "型トークンによる型情報の保持",
-          "body": "**型消去**により実行時に**型パラメータ**の情報は失われますが、型トークン（Type Token）を使って型情報を保持する技法があります。\nClassオブジェクトを引数として渡すことで、実行時にも型情報を利用できます。\nこの手法はフレームワークやライブラリで広く使われています。\nまた、サブクラスの**ジェネリクス**情報はリフレクションで取得できる場合があります。",
+          "body": "型消去により実行時に型パラメータの情報は失われますが、型トークン（Type Token）を使って型情報を保持する技法があります。\nClassオブジェクトを引数として渡すことで、実行時にも型情報を利用できます。\nこの手法はフレームワークやライブラリで広く使われています。\nまた、サブクラスのジェネリクス情報は[[リフレクション]]で取得できる場合があります。",
           "code": "// 型トークンを使った例\npublic class TypeSafeMap {\n    private Map<Class<?>, Object> map = new HashMap<>();\n\n    public <T> void put(Class<T> type, T value) {\n        map.put(type, value);\n    }\n\n    public <T> T get(Class<T> type) {\n        return type.cast(map.get(type));\n    }\n}\n\n// 使用例\nTypeSafeMap tsm = new TypeSafeMap();\ntsm.put(String.class, \"Hello\");\ntsm.put(Integer.class, 42);\nString s = tsm.get(String.class);  // キャスト不要",
           "note": null,
           "order": 5

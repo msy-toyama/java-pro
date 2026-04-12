@@ -40,7 +40,7 @@
           "lessonId": "ch19_01",
           "sectionType": "rule",
           "title": "enumの重要な特徴",
-          "body": "1. enumは暗黙的にjava.lang.Enumを継承 — 他のクラスをextendsできない\n2. 暗黙的にfinal — enumを継承するサブクラスは作れない\n3. コンストラクタはprivateのみ — 外部からnewできない\n4. ==で比較可能 — equals()より ==推奨（null安全・高速）\n5. Comparable・Serializableを自動実装\n6. values()はコンパイラが自動生成するstaticメソッド",
+          "body": "1. enumは暗黙的にjava.lang.Enumを[[継承]] — 他の[[クラス]]をextendsできない\n2. 暗黙的にfinal — enumを継承するサブクラスは作れない\n3. [[コンストラクタ]]はprivateのみ — 外部からnewできない\n4. ==で比較可能 — equals()より ==推奨（null安全・高速）\n5. [[Comparable]]・[[Serializable]]を自動実装\n6. values()はコンパイラが自動生成する[[staticメソッド]]",
           "code": null,
           "note": null,
           "order": 4
@@ -58,7 +58,7 @@
           "lessonId": "ch19_01",
           "sectionType": "point",
           "title": "まとめ",
-          "body": "• enumは定数の集合を型安全に定義する仕組み\n• name() — 定数名を文字列で取得\n• ordinal() — 定義順のインデックス（0始まり）\n• values() — 全定数の配列を取得\n• valueOf(String) — 文字列から定数へ変換（不一致はIllegalArgumentException）\n• switch文のcaseでは型名なしで定数名のみ書く\n• ==で比較可能（推奨） — null安全で高速",
+          "body": "• enumは定数の集合を型安全に定義する仕組み\n• name() — 定数名を文字列で取得\n• ordinal() — 定義順のインデックス（0始まり）\n• values() — 全定数の[[配列]]を取得\n• valueOf([[String]]) — 文字列から定数へ変換（不一致はIllegalArgumentException）\n• [[switch文]]のcaseでは型名なしで定数名のみ書く\n• ==で比較可能（推奨） — null安全で高速",
           "code": null,
           "note": null,
           "order": 6
@@ -186,7 +186,7 @@
           "lessonId": "ch19_02",
           "sectionType": "overview",
           "title": "enumはクラスの一種",
-          "body": "このレッスンでは以下を学びます:\n\n・テキストブロック（\"\"\"）で複数行文字列を簡潔に記述\n・varキーワードによるローカル変数の型推論\n・レコードクラス（record）で不変データクラスを簡潔に定義\n\nボイラープレートコードを大幅に削減する機能群です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[テキストブロック]]（\"\"\"）で複数行文字列を簡潔に記述\n・varキーワードによるローカル[[変数]]の[[型推論]]\n・[[レコードクラス]]（[[record]]）で不変データ[[クラス]]を簡潔に定義\n\nボイラープレートコードを大幅に削減する機能群です。",
           "code": null,
           "note": null,
           "order": 1
@@ -204,7 +204,7 @@
           "lessonId": "ch19_02",
           "sectionType": "tip",
           "title": "enumにメソッドやフィールドを持たせる",
-          "body": "Javaのenumは単なる定数の列挙ではなく、フィールド・メソッド・コンストラクタを持てます。\n\n・各enum定数にデータを持たせることができる\n・コンストラクタはprivateのみ（外部からnewできない）\n・抽象メソッドを定義して各定数に実装させることも可能\n\nStrategy パターンをenumで実現する手法はJavaの実務でよく使われます。",
+          "body": "Javaのenumは単なる定数の列挙ではなく、フィールド・[[メソッド]]・[[コンストラクタ]]を持てます。\n\n・各enum定数にデータを持たせることができる\n・コンストラクタはprivateのみ（外部からnewできない）\n・抽象メソッドを定義して各定数に実装させることも可能\n\nStrategy パターンをenumで実現する手法はJavaの実務でよく使われます。",
           "code": null,
           "note": null,
           "order": 3
@@ -222,7 +222,7 @@
           "lessonId": "ch19_02",
           "sectionType": "rule",
           "title": "enumのコンストラクタルール",
-          "body": "1. コンストラクタはprivateのみ — publicやprotectedは不可（コンパイルエラー）\n2. 定数リストの後にフィールド/メソッドを書く場合、最後の定数の後にセミコロン（;）が必須\n3. 抽象メソッドを宣言したら、全ての定数でオーバーライドが必要\n4. enumにインターフェースをimplementsすることは可能\n5. enumにstaticメソッドやstaticフィールドを定義できる",
+          "body": "1. コンストラクタはprivateのみ — publicやprotectedは不可（[[コンパイル]]エラー）\n2. 定数リストの後にフィールド/メソッドを書く場合、最後の定数の後にセミコロン（;）が必須\n3. 抽象メソッドを宣言したら、全ての定数で[[オーバーライド]]が必要\n4. enumに[[インターフェース]]をimplementsすることは可能\n5. enumに[[staticメソッド]]や[[staticフィールド]]を定義できる",
           "code": null,
           "note": null,
           "order": 5
@@ -360,7 +360,7 @@
           "lessonId": "ch19_03",
           "sectionType": "overview",
           "title": "varとは",
-          "body": "このレッスンでは以下を学びます:\n\n・switch式（値を返すswitch）の構文\n・アロー構文（case X ->）によるフォールスルー防止\n・yield キーワードで値を返す方法\n\nswitch文の進化形で、より安全で簡潔な分岐が書けます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[switch式]]（値を返すswitch）の構文\n・アロー構文（case X ->）によるフォールスルー防止\n・yield キーワードで値を返す方法\n\n[[switch文]]の進化形で、より安全で簡潔な分岐が書けます。",
           "code": null,
           "note": null,
           "order": 1
@@ -378,7 +378,7 @@
           "lessonId": "ch19_03",
           "sectionType": "tip",
           "title": "switch文とswitch式の違い",
-          "body": "Java 14以降、switchは「文」だけでなく「式」としても使えます。\n\n| 特徴 | switch文 | switch式 |\n|---|---|---|\n| 値を返す | × | ○ |\n| break | 必要 | 不要（アロー構文） |\n| フォールスルー | 起きうる | 起きない（アロー構文） |\n| 網羅性チェック | なし | あり（全ケースを網羅する必要） |\n\nswitch式ではdefaultを書かないと、enumの全値をカバーしない限りコンパイルエラーになります。",
+          "body": "Java 14以降、switchは「文」だけでなく「式」としても使えます。\n\n| 特徴 | switch文 | switch式 |\n|---|---|---|\n| 値を返す | × | ○ |\n| break | 必要 | 不要（アロー構文） |\n| フォールスルー | 起きうる | 起きない（アロー構文） |\n| 網羅性チェック | なし | あり（全ケースを網羅する必要） |\n\n**switch式**ではdefaultを書かないと、enumの全値をカバーしない限り[[コンパイル]]エラーになります。",
           "code": null,
           "note": null,
           "order": 3
@@ -387,7 +387,7 @@
           "lessonId": "ch19_03",
           "sectionType": "rule",
           "title": "varが使えない場所",
-          "body": "varは以下の場所では使用できません（コンパイルエラー）:\n\n| 使えない場所 | 例 | 理由 |\n|---|---|---|\n| フィールド宣言 | `var x = 10;`（クラス直下） | ローカル変数限定 |\n| メソッドの引数 | `void m(var x)` | 型が不明 |\n| 戻り値の型 | `var m() { ... }` | 型が不明 |\n| 初期化なし | `var x;` | 推論する情報がない |\n| null代入 | `var x = null;` | 型が確定しない |\n| 配列初期化子 | `var a = {1, 2, 3};` | 型が曖昧 |\n| ラムダ式 | `var f = (x) -> x + 1;` | 関数型IFが不明 |",
+          "body": "**var**は以下の場所では使用できません（コンパイルエラー）:\n\n| 使えない場所 | 例 | 理由 |\n|---|---|---|\n| フィールド宣言 | `var x = 10;`（クラス直下） | ローカル変数限定 |\n| メソッドの引数 | `void m(var x)` | 型が不明 |\n| 戻り値の型 | `var m() { ... }` | 型が不明 |\n| 初期化なし | `var x;` | 推論する情報がない |\n| null代入 | `var x = null;` | 型が確定しない |\n| 配列初期化子 | `var a = {1, 2, 3};` | 型が曖昧 |\n| ラムダ式 | `var f = (x) -> x + 1;` | 関数型IFが不明 |",
           "code": null,
           "note": null,
           "order": 4
@@ -405,7 +405,7 @@
           "lessonId": "ch19_03",
           "sectionType": "point",
           "title": "まとめ",
-          "body": "• varはローカル変数の宣言にのみ使える（フィールド・引数・戻り値は不可）\n• 初期化が必須 — 右辺から型を推論するため\n• null / 配列初期化子 / ラムダ式の直接代入は不可\n• varは予約された型名であり予約語ではない\n• Diamond演算子<>との組合せに注意 — `new ArrayList<>()` はObject型に推論\n• 可読性の観点：型が明確な場面で使うのが推奨\n• Java 11以降：ラムダ引数での `(@Annotation var x)` が可能",
+          "body": "• varはローカル[[変数]]の宣言にのみ使える（フィールド・引数・戻り値は不可）\n• 初期化が必須 — 右辺から型を推論するため\n• null / [[配列]]初期化子 / [[ラムダ式]]の直接代入は不可\n• varは予約された型名であり予約語ではない\n• Diamond演算子<>との組合せに注意 — `new [[ArrayList]]<>()` はObject型に推論\n• 可読性の観点：型が明確な場面で使うのが推奨\n• Java 11以降：ラムダ引数での `(@Annotation var x)` が可能",
           "code": null,
           "note": null,
           "order": 6
@@ -534,7 +534,7 @@
           "lessonId": "ch19_04",
           "sectionType": "overview",
           "title": "switch文からswitch式へ",
-          "body": "このレッスンでは以下を学びます:\n\n・パターンマッチング instanceof（instanceof + 変数宣言）\n・sealedクラスで継承を制限する仕組み\n・permits句で許可するサブクラスを列挙\n\n型の安全性をさらに強化する新しい言語機能群です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[パターンマッチング]] [[instanceof]]（instanceof + [[変数]]宣言）\n・[[sealedクラス]]で[[継承]]を制限する仕組み\n・permits句で許可するサブ[[クラス]]を列挙\n\n型の安全性をさらに強化する新しい言語機能群です。",
           "code": null,
           "note": null,
           "order": 1
@@ -579,7 +579,7 @@
           "lessonId": "ch19_04",
           "sectionType": "point",
           "title": "まとめ",
-          "body": "• switch式 — 値を返す式として使える（末尾にセミコロン必要）\n• アロー構文（->） — フォールスルーなし、breakが不要\n• yield — ブロック構文内で値を返す（returnではない）\n• 複数caseのカンマ列挙 — `case 1, 2, 3 ->` が可能\n• enum網羅性 — switch式でenumの全定数をカバーするか、defaultが必要\n• パターンマッチング for instanceof — `obj instanceof Type var` で型チェックと変数束縛を同時に行う\n• パターン変数は &&では使えるが||では使えない\n• フロースコーピング — `if (!(obj instanceof ...)) return;` の後でパターン変数が使える",
+          "body": "• [[switch式]] — 値を返す式として使える（末尾にセミコロン必要）\n• アロー構文（->） — フォールスルーなし、breakが不要\n• yield — ブロック構文内で値を返す（returnではない）\n• 複数caseのカンマ列挙 — `case 1, 2, 3 ->` が可能\n• enum網羅性 — **switch式**でenumの全定数をカバーするか、defaultが必要\n• **パターンマッチング** for instanceof — `obj instanceof Type var` で型チェックと変数束縛を同時に行う\n• パターン変数は &&では使えるが||では使えない\n• フロースコーピング — `if (!(obj instanceof ...)) return;` の後でパターン変数が使える",
           "code": null,
           "note": null,
           "order": 6
@@ -708,7 +708,7 @@
           "lessonId": "ch19_05",
           "sectionType": "overview",
           "title": "Java SE 17の便利な新機能",
-          "body": "このレッスンでは以下を学びます:\n\n・NullPointerExceptionの改善メッセージ（Java 14+）\n・Stream.toList()の追加（Java 16+）\n・その他の便利な改善点\n\n日常的なコーディングが楽になる小さな改善の数々です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[NullPointerException]]の改善メッセージ（Java 14+）\n・Stream.toList()の追加（Java 16+）\n・その他の便利な改善点\n\n日常的なコーディングが楽になる小さな改善の数々です。",
           "code": null,
           "note": null,
           "order": 1
@@ -726,9 +726,9 @@
           "lessonId": "ch19_05",
           "sectionType": "tip",
           "title": "テキストブロックのインデント制御",
-          "body": "テキストブロック（\"\"\"...\"\"\"）のインデントは閉じ\"\"\"の位置で制御されます。\n\n・閉じ\"\"\"を左に寄せる → インデントが残る\n・閉じ\"\"\"をテキストと同じ位置に → インデントが除去される\n\nrecordクラスはコンパクトコンストラクタというバリデーション用の特別なコンストラクタを持てます。",
+          "body": "[[テキストブロック]]（\"\"\"...\"\"\"）のインデントは閉じ\"\"\"の位置で制御されます。\n\n・閉じ\"\"\"を左に寄せる → インデントが残る\n・閉じ\"\"\"をテキストと同じ位置に → インデントが除去される\n\nrecordクラスはコンパクト[[コンストラクタ]]というバリデーション用の特別なコンストラクタを持てます。",
           "code": null,
-          "note": "recordの等価比較（equals/hashCode/toString）は自動生成されます。",
+          "note": "**record**の等価比較（equals/hashCode/toString）は自動生成されます。",
           "order": 3
         },
         {
@@ -753,7 +753,7 @@
           "lessonId": "ch19_05",
           "sectionType": "point",
           "title": "まとめ",
-          "body": "テキストブロック:\n• `\"\"\"` で開始・終了（開始直後は改行が必要）\n• 閉じ `\"\"\"` の位置で共通インデントが決定\n• `\\` で行末改行を抑制、`\\s` でスペース確保\n\nrecord:\n• `record Name(型 フィールド, ...) {}` でイミュータブルクラスを簡潔に定義\n• 自動生成: コンストラクタ、アクセサ（getなし）、toString、equals、hashCode\n• コンパクトコンストラクタ — バリデーション用（引数リスト省略可）\n• extendsは不可、implementsは可能\n• フィールドは暗黙的にprivate final",
+          "body": "**テキストブロック**:\n• `\"\"\"` で開始・終了（開始直後は改行が必要）\n• 閉じ `\"\"\"` の位置で共通インデントが決定\n• `\\` で行末改行を抑制、`\\s` でスペース確保\n\n[[record]]:\n• `record Name(型 フィールド, ...) {}` でイミュータブルクラスを簡潔に定義\n• 自動生成: コンストラクタ、アクセサ（getなし）、toString、equals、hashCode\n• コンパクトコンストラクタ — バリデーション用（引数リスト省略可）\n• extendsは不可、implementsは可能\n• フィールドは暗黙的にprivate final",
           "code": null,
           "note": null,
           "order": 6
@@ -899,7 +899,7 @@
           "lessonId": "ch19_06",
           "sectionType": "tip",
           "title": "sealedクラスとパターンマッチングの組み合わせ",
-          "body": "sealedクラスを使うと、switch式でのパターンマッチングが網羅的になります。\n\n・許可されたサブクラスが全てcaseに含まれていれば、defaultは不要\n・新しいサブクラスを追加すると、対応するcaseがないswitch式がコンパイルエラーに\n・これにより、新しい型への対応漏れを防止できる\n\nsealedクラスは「変更に対して安全な設計」を実現する強力な機能です。",
+          "body": "[[sealedクラス]]を使うと、[[switch式]]での[[パターンマッチング]]が網羅的になります。\n\n・許可されたサブ[[クラス]]が全てcaseに含まれていれば、defaultは不要\n・新しいサブクラスを追加すると、対応するcaseがないswitch式が[[コンパイル]]エラーに\n・これにより、新しい型への対応漏れを防止できる\n\nsealedクラスは「変更に対して安全な設計」を実現する強力な機能です。",
           "code": null,
           "note": null,
           "order": 3
@@ -908,7 +908,7 @@
           "lessonId": "ch19_06",
           "sectionType": "rule",
           "title": "sealedクラスのルール",
-          "body": "| ルール | 説明 |\n|---|---|\n| permitsで許可クラスを列挙 | 同じファイル内なら省略可能 |\n| サブクラスは3つの修飾子から1つを選択 | `final`, `sealed`, `non-sealed` |\n| サブクラスは同じモジュールまたはパッケージ内 | 別パッケージからの継承は不可 |\n| インターフェースもsealed化可能 | `sealed interface` + permits |\n| recordはimplicitly final | sealed interfaceのpermitsにrecord使用可 |\n\nサブクラスの修飾子の意味:\n• `final` — これ以上の継承を完全に禁止\n• `sealed` — さらに限定されたサブクラスのみ許可\n• `non-sealed` — 通常通り自由に継承可能（封印を解除）",
+          "body": "| ルール | 説明 |\n|---|---|\n| permitsで許可クラスを列挙 | 同じファイル内なら省略可能 |\n| サブクラスは3つの修飾子から1つを選択 | `final`, `sealed`, `non-sealed` |\n| サブクラスは同じモジュールまたはパッケージ内 | 別パッケージからの継承は不可 |\n| インターフェースもsealed化可能 | `sealed interface` + permits |\n| recordはimplicitly final | sealed interfaceのpermitsにrecord使用可 |\n\nサブクラスの修飾子の意味:\n• `final` — これ以上の[[継承]]を完全に禁止\n• `sealed` — さらに限定されたサブクラスのみ許可\n• `non-sealed` — 通常通り自由に継承可能（封印を解除）",
           "code": null,
           "note": null,
           "order": 4
@@ -926,7 +926,7 @@
           "lessonId": "ch19_06",
           "sectionType": "point",
           "title": "Java SE 17新機能の総まとめ",
-          "body": "このチャプターで学んだJava SE 17の主要機能:\n\n| 機能 | 導入バージョン | 試験重要度 |\n|---|---|---|\n| enum（応用含む） | Java 5 | ★★★ |\n| var（ローカル変数型推論） | Java 10 | ★★★ |\n| テキストブロック | Java 15（正式） | ★★☆ |\n| switch式（アロー構文・yield） | Java 14（正式） | ★★★ |\n| パターンマッチング for instanceof | Java 16（正式） | ★★★ |\n| record | Java 16（正式） | ★★☆ |\n| sealed classes | Java 17（正式） | ★★☆ |\n\n• 試験対策: enumの特殊ルール、varの制約、switch式のyield vs return、recordのアクセサ名（getなし）が頻出\n• 実務: record + sealed classesを組合せた堅牢なデータモデリングが現代Javaの主流",
+          "body": "このチャプターで学んだJava SE 17の主要機能:\n\n| 機能 | 導入バージョン | 試験重要度 |\n|---|---|---|\n| enum（応用含む） | Java 5 | ★★★ |\n| var（ローカル変数型推論） | Java 10 | ★★★ |\n| テキストブロック | Java 15（正式） | ★★☆ |\n| switch式（アロー構文・yield） | Java 14（正式） | ★★★ |\n| パターンマッチング for instanceof | Java 16（正式） | ★★★ |\n| record | Java 16（正式） | ★★☆ |\n| sealed classes | Java 17（正式） | ★★☆ |\n\n• 試験対策: enumの特殊ルール、**var**の制約、**switch式**のyield vs return、**record**のアクセサ名（getなし）が頻出\n• 実務: [[record]] + **sealed** classesを組合せた堅牢なデータモデリングが現代Javaの主流",
           "code": null,
           "note": null,
           "order": 6

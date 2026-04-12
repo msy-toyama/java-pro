@@ -13,7 +13,7 @@
           "lessonId": "ch08_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**継承**の基本構文（extends キーワード）\n・親クラス（スーパークラス）と子クラス（サブクラス）の関係\n・コードの再利用性を高める設計\n\n継承を理解すると、大規模なプログラムを効率的に設計できるようになります。",
+          "body": "このレッスンでは以下を学びます:\n\n・**継承**の基本構文（extends キーワード）\n・親[[クラス]]（スーパークラス）と子クラス（サブクラス）の関係\n・コードの再利用性を高める設計\n\n[[継承]]を理解すると、大規模なプログラムを効率的に設計できるようになります。",
           "code": null,
           "note": null,
           "order": 1
@@ -31,7 +31,7 @@
           "lessonId": "ch08_01",
           "sectionType": "rule",
           "title": "protectedアクセス修飾子",
-          "body": "**継承**に深く関わるアクセス修飾子の比較:\n\n| 修飾子 | 同じクラス | 同じパッケージ | 子クラス | 他パッケージ |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (なし) | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\nprotectedは「子クラスからアクセスできる」修飾子です。\nprivateフィールドは子クラスにも継承されますが、直接アクセスできません。\ngetterやsetterなどpublic/protectedメソッド経由でアクセスします。",
+          "body": "**継承**に深く関わる[[アクセス修飾子]]の比較:\n\n| 修飾子 | 同じクラス | 同じパッケージ | 子クラス | 他パッケージ |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (なし) | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\nprotectedは「子クラスからアクセスできる」修飾子です。\nprivateフィールドは子クラスにも継承されますが、直接アクセスできません。\ngetterやsetterなどpublic/protectedメソッド経由でアクセスします。",
           "code": null,
           "note": "パッケージプライベート（修飾子なし）は同じパッケージ内でのみアクセス可能で、異なるパッケージの子クラスからはアクセスできません。",
           "order": 3
@@ -178,7 +178,7 @@
           "lessonId": "ch08_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・子クラスのコンストラクタが親クラスのコンストラクタを呼ぶ仕組み\n・super()を使った明示的な呼び出し\n・暗黙のsuper()が挿入される条件\n\nコンストラクタチェーンを理解しないと、コンパイルエラーの原因がわかりません。",
+          "body": "このレッスンでは以下を学びます:\n\n・子[[クラス]]の[[コンストラクタ]]が親クラスのコンストラクタを呼ぶ仕組み\n・super()を使った明示的な呼び出し\n・暗黙のsuper()が挿入される条件\n\nコンストラクタチェーンを理解しないと、[[コンパイル]]エラーの原因がわかりません。",
           "code": null,
           "note": null,
           "order": 1
@@ -352,7 +352,7 @@
           "lessonId": "ch08_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**オーバーライド**: 親メソッドを子クラスで再定義する\n・**@Override**アノテーションの重要性\n・オーバーロードとオーバーライドの明確な違い\n\n名前が似ていますが、全く異なる概念を区別することが重要です。",
+          "body": "このレッスンでは以下を学びます:\n\n・**オーバーライド**: 親[[メソッド]]を子[[クラス]]で再定義する\n・**@Override**[[アノテーション]]の重要性\n・[[オーバーロード]]と[[オーバーライド]]の明確な違い\n\n名前が似ていますが、全く異なる概念を区別することが重要です。",
           "code": null,
           "note": null,
           "order": 1
@@ -363,7 +363,7 @@
           "title": "オーバーライドの実装",
           "body": "**@Override**アノテーションを付けて親メソッドを再定義します。",
           "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n\n    // getInfoメソッドの定義\n    String getInfo() {\n        return \"動物\";\n    }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    @Override  // オーバーライドを明示（推奨）\n    void speak() {\n        System.out.println(\"ニャー\");\n    }\n\n    @Override\n    String getInfo() {\n        return \"猫: \" + super.getInfo(); // 親のメソッドも呼べる\n    }\n}\n\nAnimal a = new Cat();\na.speak();                     // ニャー（子クラスのメソッドが実行）\nSystem.out.println(a.getInfo()); // 猫: 動物",
-          "note": "**@Override**は省略可能ですが、付けることが強く推奨されます。タイプミスがあるとコンパイルエラーで検出できるためです。",
+          "note": "**@Override**は省略可能ですが、付けることが強く推奨されます。タイプミスがあると[[コンパイル]]エラーで検出できるためです。",
           "order": 2
         },
         {
@@ -379,7 +379,7 @@
           "lessonId": "ch08_03",
           "sectionType": "rule",
           "title": "オーバーライドのルール",
-          "body": "**オーバーライド**には厳密なルールがあります:\n\n1. メソッド名・引数リストが完全に一致すること\n2. 戻り値の型は同じか、そのサブタイプ（共変戻り値型）\n   ・親: Object getX() → 子: String getX() ○\n3. アクセス修飾子は同じか、より緩く\n   ・親: protected → 子: public ○\n   ・親: public → 子: protected × コンパイルエラー\n4. throws句の例外は同じか、そのサブクラス\n5. finalメソッドはオーバーライドできない\n6. staticメソッドはオーバーライドではなく「隠蔽（hiding）」\n\nオーバーライド vs オーバーロード:\n| 比較項目 | オーバーライド | オーバーロード |\n|---|---|---|\n| 定義場所 | 親子クラス間 | 同じクラス内 |\n| メソッド名 | 同じ | 同じ |\n| 引数 | 同じ | 異なる |\n| 戻り値 | 同じ/サブタイプ | 自由 |",
+          "body": "**オーバーライド**には厳密なルールがあります:\n\n1. メソッド名・引数リストが完全に一致すること\n2. 戻り値の型は同じか、そのサブタイプ（[[共変戻り値]]型）\n   ・親: Object getX() → 子: [[String]] getX() ○\n3. [[アクセス修飾子]]は同じか、より緩く\n   ・親: protected → 子: public ○\n   ・親: public → 子: protected × コンパイルエラー\n4. throws句の[[例外]]は同じか、そのサブクラス\n5. finalメソッドはオーバーライドできない\n6. [[staticメソッド]]はオーバーライドではなく「隠蔽（hiding）」\n\nオーバーライド vs オーバーロード:\n| 比較項目 | オーバーライド | オーバーロード |\n|---|---|---|\n| 定義場所 | 親子クラス間 | 同じクラス内 |\n| メソッド名 | 同じ | 同じ |\n| 引数 | 同じ | 異なる |\n| 戻り値 | 同じ/サブタイプ | 自由 |",
           "code": null,
           "note": "finalメソッド・finalクラスは設計意図として「これ以上変更しない」ことを示します。Stringクラスがfinal宣言されているのもこの理由です。",
           "order": 4
@@ -587,7 +587,7 @@
           "lessonId": "ch08_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・抽象クラス（abstractクラス）の定義と使い方\n・抽象メソッドで子クラスに実装を強制する仕組み\n・抽象クラスを使った設計パターン\n\n「共通の骨組みを提供しつつ、詳細は各クラスに任せる」設計を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[抽象クラス]]（abstractクラス）の定義と使い方\n・抽象[[メソッド]]で子クラスに実装を強制する仕組み\n・抽象クラスを使った設計パターン\n\n「共通の骨組みを提供しつつ、詳細は各クラスに任せる」設計を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -605,7 +605,7 @@
           "lessonId": "ch08_04",
           "sectionType": "tip",
           "title": "抽象クラスはインスタンス化できない",
-          "body": "抽象クラスは「未完成のクラス」なので、new でインスタンスを作れません。\n\n・new Animal() → コンパイルエラー（Animalが抽象クラスの場合）\n・Animal a = new Dog() → OK（Dog が Animal を**継承**し、抽象メソッドを実装済み）\n\n抽象クラスの目的は「共通の設計を提供しつつ、具体的な実装を子クラスに任せる」ことです。",
+          "body": "抽象クラスは「未完成のクラス」なので、new で[[インスタンス]]を作れません。\n\n・new Animal() → [[コンパイル]]エラー（Animalが抽象クラスの場合）\n・Animal a = new Dog() → OK（Dog が Animal を**継承**し、抽象メソッドを実装済み）\n\n抽象クラスの目的は「共通の設計を提供しつつ、具体的な実装を子クラスに任せる」ことです。",
           "code": null,
           "note": "抽象クラスに抽象メソッドがなくても定義できます（new を禁止する目的で使うことがあります）。",
           "order": 3
@@ -614,7 +614,7 @@
           "lessonId": "ch08_04",
           "sectionType": "rule",
           "title": "抽象クラスのルール",
-          "body": "1. abstractクラスはインスタンス化できない（new不可）\n2. 抽象メソッド: abstract修飾子 + 処理本体なし + セミコロンで終わる\n   abstract void doSomething();  // { } は書かない\n3. 抽象メソッドを持つクラスは必ずabstractクラスにする\n4. 子クラスはすべての抽象メソッドを**オーバーライド**する\n   → しない場合は子クラスもabstractにする\n5. 抽象クラスは通常メソッド・フィールド・コンストラクタも持てる\n6. 抽象メソッドにprivateは使えない（子クラスからアクセスできないため）\n\n抽象クラスの用途:\n・共通処理をまとめつつ、個別処理の実装を強制\n・Template Methodパターン（共通の流れ + カスタマイズポイント）",
+          "body": "1. abstractクラスはインスタンス化できない（new不可）\n2. 抽象メソッド: abstract修飾子 + 処理本体なし + セミコロンで終わる\n   abstract void doSomething();  // { } は書かない\n3. 抽象メソッドを持つクラスは必ずabstractクラスにする\n4. 子クラスはすべての抽象メソッドを**オーバーライド**する\n   → しない場合は子クラスもabstractにする\n5. 抽象クラスは通常メソッド・フィールド・[[コンストラクタ]]も持てる\n6. 抽象メソッドにprivateは使えない（子クラスからアクセスできないため）\n\n抽象クラスの用途:\n・共通処理をまとめつつ、個別処理の実装を強制\n・Template Methodパターン（共通の流れ + カスタマイズポイント）",
           "code": null,
           "note": "抽象クラスはインスタンス化できませんが、コンストラクタは定義できます。これは子クラスからsuper()で呼ぶためです。",
           "order": 4
@@ -800,7 +800,7 @@
           "lessonId": "ch08_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・インターフェースの定義（implementsキーワード）\n・クラスとインターフェースの違い\n・複数のインターフェースを同時に実装する方法\n\nインターフェースは「何ができるか」の契約を定義する仕組みです。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[インターフェース]]の定義（implementsキーワード）\n・[[クラス]]とインターフェースの違い\n・複数のインターフェースを同時に実装する方法\n\nインターフェースは「何ができるか」の契約を定義する仕組みです。",
           "code": null,
           "note": null,
           "order": 1
@@ -811,7 +811,7 @@
           "title": "インターフェースの定義と実装",
           "body": "interfaceキーワードで定義し、implementsで実装します。",
           "code": "// インターフェースの定義\n// Printableインターフェースの定義\ninterface Printable {\n    void print(); // 暗黙的に public abstract\n}\n\n// Loggableインターフェースの定義\ninterface Loggable {\n    void log(String message);\n}\n\n// 複数のインターフェースを実装\n// Documentクラスの定義\nclass Document implements Printable, Loggable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n\n    @Override\n    // printメソッドの定義\n    public void print() {\n        System.out.println(\"印刷: \" + content);\n    }\n\n    @Override\n    // logメソッドの定義\n    public void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n    }\n}\n\n// インターフェース型の変数として扱える\nPrintable p = new Document(\"報告書\");\np.print();  // 印刷: 報告書\n\nLoggable l = new Document(\"設計書\");\nl.log(\"作成完了\"); // [LOG] 作成完了",
-          "note": "インターフェースのメソッドは暗黙的にpublic abstractです。実装クラスではpublicを付けないとコンパイルエラーになります。",
+          "note": "インターフェースの[[メソッド]]は暗黙的にpublic abstractです。実装クラスではpublicを付けないと[[コンパイル]]エラーになります。",
           "order": 2
         },
         {
@@ -836,7 +836,7 @@
           "lessonId": "ch08_05",
           "sectionType": "rule",
           "title": "インターフェース vs 抽象クラス",
-          "body": "| 特徴 | インターフェース | 抽象クラス |\n|---|---|---|\n| 多重継承 | ○（複数implements可） | ×（extends 1つ） |\n| コンストラクタ | × | ○ |\n| インスタンス変数 | ×（定数のみ） | ○ |\n| default/staticメソッド | ○（Java 8+） | ○ |\n| 使い分け | 「何ができるか」契約 | 「何であるか」共通基盤 |\n\nインターフェースのフィールド:\n・暗黙的に public static final（定数）\n・interface Colors { int RED = 1; } // = public static final int RED = 1;\n\n使い分けの目安:\n・「犬は動物の一種」→ 抽象クラス（is-a）\n・「犬は泳げる」→ インターフェース（can-do / has-ability）",
+          "body": "| 特徴 | インターフェース | 抽象クラス |\n|---|---|---|\n| 多重継承 | ○（複数implements可） | ×（extends 1つ） |\n| コンストラクタ | × | ○ |\n| インスタンス変数 | ×（定数のみ） | ○ |\n| default/staticメソッド | ○（Java 8+） | ○ |\n| 使い分け | 「何ができるか」契約 | 「何であるか」共通基盤 |\n\nインターフェースのフィールド:\n・暗黙的に public static final（定数）\n・interface Colors { int RED = 1; } // = public static final int RED = 1;\n\n使い分けの目安:\n・「犬は動物の一種」→ [[抽象クラス]]（is-a）\n・「犬は泳げる」→ インターフェース（can-do / has-ability）",
           "code": null,
           "note": null,
           "order": 5
@@ -845,7 +845,7 @@
           "lessonId": "ch08_05",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・interface: 契約（何ができるか）を定義\n・implements で実装、複数インターフェース実装可能\n・メソッドは暗黙的に public abstract\n・default メソッド: デフォルト実装あり（Java 8+）\n・static メソッド: インターフェース名.メソッド()で呼ぶ\n・フィールドは暗黙的に public static final（定数のみ）\n・抽象クラスはis-a、インターフェースはcan-do",
+          "body": "・interface: 契約（何ができるか）を定義\n・implements で実装、複数インターフェース実装可能\n・メソッドは暗黙的に public abstract\n・[[default メソッド]]: デフォルト実装あり（Java 8+）\n・static メソッド: インターフェース名.メソッド()で呼ぶ\n・フィールドは暗黙的に public static final（定数のみ）\n・抽象クラスはis-a、インターフェースはcan-do",
           "code": null,
           "note": null,
           "order": 6
@@ -1011,7 +1011,7 @@
           "lessonId": "ch08_06",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・instanceof演算子でオブジェクトの型を判定\n・**アップキャスト**と**ダウンキャスト**の違い\n・ClassCastExceptionを防ぐ安全なキャスト方法\n\n**ポリモーフィズム**を活用するうえで必須の知識です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[instanceof]][[演算子]]でオブジェクトの型を判定\n・**アップキャスト**と**ダウンキャスト**の違い\n・[[ClassCastException]]を防ぐ安全な[[キャスト]]方法\n\n**ポリモーフィズム**を活用するうえで必須の知識です。",
           "code": null,
           "note": null,
           "order": 1
@@ -1022,14 +1022,14 @@
           "title": "instanceofによる型チェック",
           "body": "オブジェクトが特定の型かどうかを判定します。",
           "code": "// Animalクラスの定義\nclass Animal { }\n// Dogクラスの定義\nclass Dog extends Animal {\n    // barkメソッドの定義\n    void bark() { System.out.println(\"ワン!\"); }\n}\n// Catクラスの定義\nclass Cat extends Animal {\n    // meowメソッドの定義\n    void meow() { System.out.println(\"ニャー!\"); }\n}\n\n// instanceof で型を判定\nAnimal a = new Dog();\nSystem.out.println(a instanceof Dog);    // true\nSystem.out.println(a instanceof Animal); // true （DogはAnimalの一種）\nSystem.out.println(a instanceof Cat);    // false\n\n// nullの場合は常にfalse\nAnimal n = null;\nSystem.out.println(n instanceof Animal); // false\n\n// 実用例: 型チェックしてからキャスト\nstatic void handleAnimal(Animal animal) {\n    // 条件分岐\n    if (animal instanceof Dog) {\n        Dog dog = (Dog) animal;\n        dog.bark();\n    // 別の条件をチェック\n    } else if (animal instanceof Cat) {\n        Cat cat = (Cat) animal;\n        cat.meow();\n    }\n}\n\n// Java 16+: パターンマッチング\nif (animal instanceof Dog dog) {\n    dog.bark(); // キャスト不要！\n}",
-          "note": "Java 16以降のパターンマッチング for instanceofを使うと、型チェックとキャストを同時に行えます。",
+          "note": "Java 16以降の[[パターンマッチング]] for instanceofを使うと、型チェックとキャストを同時に行えます。",
           "order": 2
         },
         {
           "lessonId": "ch08_06",
           "sectionType": "tip",
           "title": "ダウンキャストは危険 — 必ずinstanceofで確認",
-          "body": "**アップキャスト**は安全ですが、**ダウンキャスト**はClassCastExceptionの危険があります。\n\n・アップキャスト（子→親）: 常に安全。暗黙的に行われる\n・ダウンキャスト（親→子）: 明示的なキャストが必要。型が違うと例外\n\n必ず **instanceof** で確認してからキャストしましょう。\n\nJava 16以降は「パターンマッチング instanceof」が使えます（Chapter 19参照）。",
+          "body": "**アップキャスト**は安全ですが、**ダウンキャスト**はClassCastExceptionの危険があります。\n\n・アップキャスト（子→親）: 常に安全。暗黙的に行われる\n・ダウンキャスト（親→子）: 明示的なキャストが必要。型が違うと[[例外]]\n\n必ず **instanceof** で確認してからキャストしましょう。\n\nJava 16以降は「パターンマッチング instanceof」が使えます（Chapter 19参照）。",
           "code": null,
           "note": null,
           "order": 3
@@ -1040,7 +1040,7 @@
           "title": "アップキャストとダウンキャスト",
           "body": "子→親（**アップキャスト**）は安全、親→子（**ダウンキャスト**）は明示的キャストが必要です。",
           "code": "class Vehicle {\n    void run() { System.out.println(\"走行中\"); }\n}\nclass Car extends Vehicle {\n    void drift() { System.out.println(\"ドリフト!\"); }\n}\n\n// アップキャスト（子→親）: 暗黙的、常に安全\nVehicle v = new Car();  // 自動（キャスト不要）\nv.run();                // OK\n// v.drift();           // コンパイルエラー！ Vehicle型にdrift()はない\n\n// ダウンキャスト（親→子）: 明示的キャストが必要\nCar c = (Car) v;        // キャスト（実体がCarなのでOK）\nc.drift();              // OK → ドリフト!\n\n// ⚠️ 実体と異なる型へのダウンキャストは実行時エラー\nVehicle v2 = new Vehicle(); // 実体はVehicle\n// Car c2 = (Car) v2;      // ClassCastException!\n\n// 安全なダウンキャスト: instanceofで先にチェック\nif (v instanceof Car) {\n    Car safeCar = (Car) v;  // 安全\n    safeCar.drift();\n}",
-          "note": "コンパイルエラーと実行時エラーの区別が重要です。**ダウンキャスト**のコンパイルは通りますが、実体が異なるとClassCastExceptionが発生します。",
+          "note": "[[コンパイル]]エラーと実行時エラーの区別が重要です。**ダウンキャスト**のコンパイルは通りますが、実体が異なるとClassCastExceptionが発生します。",
           "order": 4
         },
         {
@@ -1176,7 +1176,7 @@
           "lessonId": "ch08_07",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**ポリモーフィズム**（多態性）の実践的な使い方\n・親型の変数で子クラスのメソッドを呼ぶ仕組み\n・ポリモーフィズムがもたらす柔軟な設計\n\n**継承**・**オーバーライド**・インターフェースの総合力が試されます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ポリモーフィズム**（多態性）の実践的な使い方\n・親型の[[変数]]で子[[クラス]]の[[メソッド]]を呼ぶ仕組み\n・[[ポリモーフィズム]]がもたらす柔軟な設計\n\n**継承**・**オーバーライド**・[[インターフェース]]の総合力が試されます。",
           "code": null,
           "note": null,
           "order": 1
@@ -1205,14 +1205,14 @@
           "title": "Objectクラスのメソッド",
           "body": "すべてのクラスはObjectクラスを暗黙的に**継承**しています。",
           "code": "// Objectクラスの主要メソッド:\n// toString() — 文字列表現を返す\n// equals()   — 等価性を判定する\n// hashCode() — ハッシュ値を返す\n\n// Studentクラスの定義\nclass Student {\n    String name;\n    int id;\n\n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n    @Override\n    // toStringメソッドの定義\n    public String toString() {\n        return \"Student{name='\" + name + \"', id=\" + id + \"}\";\n    }\n    @Override\n    // equalsメソッドの定義\n    public boolean equals(Object obj) {\n        // 条件分岐\n        if (this == obj) return true;\n        if (!(obj instanceof Student)) return false;\n        Student other = (Student) obj;\n        return this.id == other.id &&\n               this.name.equals(other.name);\n    }\n    @Override\n    public int hashCode() {\n        return name.hashCode() * 31 + id;\n    }\n}\nStudent s1 = new Student(\"太郎\", 1);\nStudent s2 = new Student(\"太郎\", 1);\nSystem.out.println(s1.toString()); // Student{name='太郎', id=1}\nSystem.out.println(s1.equals(s2)); // true\nSystem.out.println(s1 == s2);      // false（参照比較）",
-          "note": "equals()を**オーバーライド**したらhashCode()も必ずオーバーライドします。equalsがtrueの2つのオブジェクトは同じhashCodeを返す必要があります（HashMapやHashSetで正しく動くため）。",
+          "note": "equals()を**オーバーライド**したらhashCode()も必ず[[オーバーライド]]します。equalsがtrueの2つのオブジェクトは同じhashCodeを返す必要があります（[[HashMap]]や[[HashSet]]で正しく動くため）。",
           "order": 4
         },
         {
           "lessonId": "ch08_07",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**ポリモーフィズム**: 同じ呼び出しで型によって異なる動作\n・親型の配列/リストで異なる子クラスをまとめて扱える\n・新しい型を追加しても既存コードの修正が不要\n・すべてのクラスはObjectを暗黙的に**継承**\n・toString(): 文字列表現（デバッグ/表示に有用）\n・equals(): 等価判定（==は参照比較なので注意）\n・equalsを**オーバーライド**→hashCodeも必ずオーバーライド",
+          "body": "・**ポリモーフィズム**: 同じ呼び出しで型によって異なる動作\n・親型の[[配列]]/リストで異なる子クラスをまとめて扱える\n・新しい型を追加しても既存コードの修正が不要\n・すべてのクラスはObjectを暗黙的に**継承**\n・toString(): 文字列表現（デバッグ/表示に有用）\n・equals(): 等価判定（==は参照比較なので注意）\n・equalsを**オーバーライド**→hashCodeも必ずオーバーライド",
           "code": null,
           "note": null,
           "order": 5

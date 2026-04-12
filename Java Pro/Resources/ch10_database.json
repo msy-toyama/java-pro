@@ -40,7 +40,7 @@
           "lessonId": "ch10_01",
           "sectionType": "rule",
           "title": "MySQLとは",
-          "body": "MySQL（マイエスキューエル）は世界で最も普及しているオープンソースのRDBMS（リレーショナル**データベース**管理システム）です。\n\n主な特徴:\n・無料で使えるオープンソース（商用版もあり）\n・高速で安定した動作\n・Web系企業で広く採用（Instagram, Twitter, YouTube等）\n・Java（JDBC）との親和性が高い\n・WindowsでもmacOSでもLinuxでも動作\n\n他の代表的なRDBMS:\n| 項目 | 説明 |\n|---|---|\n| PostgreSQL | 高機能。複雑なクエリに強い |\n| Oracle Database | 企業の基幹システムで多く使われる |\n| SQLite | ファイルベースの軽量DB。モバイルアプリに最適 |",
+          "body": "MySQL（マイエスキューエル）は世界で最も普及しているオープンソースのRDBMS（リレーショナル**データベース**管理システム）です。\n\n主な特徴:\n・無料で使えるオープンソース（商用版もあり）\n・高速で安定した動作\n・Web系企業で広く採用（Instagram, Twitter, YouTube等）\n・Java（[[JDBC]]）との親和性が高い\n・WindowsでもmacOSでもLinuxでも動作\n\n他の代表的なRDBMS:\n| 項目 | 説明 |\n|---|---|\n| PostgreSQL | 高機能。複雑なクエリに強い |\n| Oracle Database | 企業の基幹システムで多く使われる |\n| SQLite | ファイルベースの軽量DB。モバイルアプリに最適 |",
           "code": null,
           "note": "Java Gold試験ではJDBCの知識が出題されます。本章でDB基礎を固めておくと、後のJDBC学習がスムーズです。",
           "order": 4
@@ -192,7 +192,7 @@
           "lessonId": "ch10_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・CREATE TABLE文でテーブルを作成する方法\n・**主キー**（PRIMARY KEY）の役割\n・データ型（INT, VARCHAR, DATE等）の使い分け\n\nテーブル設計はアプリケーションの土台となる重要な作業です。",
+          "body": "このレッスンでは以下を学びます:\n\n・CREATE TABLE文でテーブルを作成する方法\n・**主キー**（PRIMARY KEY）の役割\n・[[データ型]]（INT, VARCHAR, DATE等）の使い分け\n\nテーブル設計はアプリケーションの土台となる重要な作業です。",
           "code": null,
           "note": null,
           "order": 1
@@ -653,7 +653,7 @@
           "lessonId": "ch10_04",
           "sectionType": "tip",
           "title": "WHERE句の比較演算子はJavaと少し違う",
-          "body": "SQLとJavaの比較演算子の違いに注意:\n\n| 目的 | Java | SQL |\n|---|---|---|\n| 等しい | == | = |\n| 等しくない | != | <> または != |\n| NULLチェック | obj == null | IS NULL |\n| NULLでない | obj != null | IS NOT NULL |\n\n特にNULLは = NULL では判定できません。IS NULL を使ってください。",
+          "body": "SQLとJavaの比較[[演算子]]の違いに注意:\n\n| 目的 | Java | SQL |\n|---|---|---|\n| 等しい | == | = |\n| 等しくない | != | <> または != |\n| NULLチェック | obj == null | IS NULL |\n| NULLでない | obj != null | IS NOT NULL |\n\n特にNULLは = NULL では判定できません。IS NULL を使ってください。",
           "code": null,
           "note": null,
           "order": 6
@@ -979,7 +979,7 @@
           "lessonId": "ch10_06",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・JDBC（Java Database Connectivity）でDBに接続\n・PreparedStatementで安全にSQLを実行\n・ResultSetで検索結果を取得・処理\n\nJavaからDBを操作する基本的な方法を身につけます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[JDBC]]（Java Database Connectivity）でDBに接続\n・[[PreparedStatement]]で安全にSQLを実行\n・[[ResultSet]]で検索結果を取得・処理\n\nJavaからDBを操作する基本的な方法を身につけます。",
           "code": null,
           "note": null,
           "order": 1
@@ -988,7 +988,7 @@
           "lessonId": "ch10_06",
           "sectionType": "rule",
           "title": "JDBCの処理フロー",
-          "body": "JDBCで**データベース**を操作する手順は4ステップです。\n\n1. 接続（Connection）\n   → DriverManager.getConnection() でDBに接続\n\n2. SQL準備（Statement / **PreparedStatement**）\n   → 実行するSQLを準備。パラメータ付きはPreparedStatement\n\n3. 実行（execute）\n   → SELECT → executeQuery() で ResultSet を取得\n   → INSERT/UPDATE/DELETE → executeUpdate() で影響行数を取得\n\n4. 終了（Close）\n   → try-with-resources で自動的にクローズ\n\nJDBCドライバ（mysql-connector-j）はプロジェクトの依存関係に追加します。Mavenなら pom.xml に記述します。",
+          "body": "JDBCで**データベース**を操作する手順は4ステップです。\n\n1. 接続（[[Connection]]）\n   → DriverManager.getConnection() でDBに接続\n\n2. SQL準備（Statement / **PreparedStatement**）\n   → 実行するSQLを準備。パラメータ付きはPreparedStatement\n\n3. 実行（execute）\n   → SELECT → executeQuery() で ResultSet を取得\n   → INSERT/UPDATE/DELETE → executeUpdate() で影響行数を取得\n\n4. 終了（Close）\n   → [[try-with-resources]] で自動的にクローズ\n\nJDBCドライバ（mysql-connector-j）はプロジェクトの依存関係に追加します。Mavenなら pom.xml に記述します。",
           "code": null,
           "note": "Java 6以降はJDBCドライバが自動検出されるため、Class.forName()によるドライバの手動ロードは不要です。",
           "order": 2
@@ -1015,7 +1015,7 @@
           "lessonId": "ch10_06",
           "sectionType": "tip",
           "title": "SQLインジェクションとは",
-          "body": "SQLインジェクションは、ユーザー入力を直接SQL文に埋め込むことで発生する重大なセキュリティ脆弱性です。\n\n危険な例（文字列結合でSQL構築）:\n  String sql = \"SELECT * FROM users WHERE name = '\" + userInput + \"'\";\n\nもし userInput に「' OR '1'='1」と入力されると:\n  SELECT * FROM users WHERE name = '' OR '1'='1'\n  → 全件取得されてしまう！\n\nさらに悪意ある入力で:\n  SELECT * FROM users WHERE name = ''; DROP TABLE users; --\n  → テーブル削除の可能性も！\n\n対策: 必ずPreparedStatementを使う\n  PreparedStatementは入力を自動的にエスケープするため、\n  SQLインジェクションを根本から防ぎます。\n  これはセキュリティの基本中の基本です。",
+          "body": "SQLインジェクションは、ユーザー入力を直接SQL文に埋め込むことで発生する重大なセキュリティ脆弱性です。\n\n危険な例（文字列結合でSQL構築）:\n  [[String]] sql = \"SELECT * FROM users WHERE name = '\" + userInput + \"'\";\n\nもし userInput に「' OR '1'='1」と入力されると:\n  SELECT * FROM users WHERE name = '' OR '1'='1'\n  → 全件取得されてしまう！\n\nさらに悪意ある入力で:\n  SELECT * FROM users WHERE name = ''; DROP TABLE users; --\n  → テーブル削除の可能性も！\n\n対策: 必ずPreparedStatementを使う\n  PreparedStatementは入力を自動的にエスケープするため、\n  SQLインジェクションを根本から防ぎます。\n  これはセキュリティの基本中の基本です。",
           "code": null,
           "note": null,
           "order": 5

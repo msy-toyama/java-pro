@@ -13,7 +13,7 @@
           "lessonId": "ch27_01",
           "sectionType": "overview",
           "title": "マルチスレッドとは",
-          "body": "このレッスンでは以下を学びます:\n\n・スレッドとは何か（プログラムの並行実行単位）\n・Threadクラスの継承とRunnableインターフェースの実装\n・start()とrun()メソッドの違い\n\n**並行処理**の基礎となるスレッドの概念を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[スレッド]]とは何か（プログラムの並行実行単位）\n・Threadクラスの[[継承]]と[[Runnable]][[インターフェース]]の実装\n・start()とrun()[[メソッド]]の違い\n\n**並行処理**の基礎となるスレッドの概念を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch27_01",
           "sectionType": "rule",
           "title": "Threadクラスの継承とRunnableインターフェース",
-          "body": "スレッドを作成する方法は主に2つあります。\n方法1：Threadクラスを継承してrun()メソッドをオーバーライドします。\n方法2：Runnableインターフェースを実装してrun()メソッドを定義し、Threadのコンストラクタに渡します。\nRunnableはSAM（Single Abstract Method）インターフェースなので、ラムダ式でも記述できます。\n一般的にはRunnableの実装が推奨されます（Javaは単一継承のため、Threadを継承すると他のクラスを継承できなくなる）。\nstart()を呼ぶとrun()が別スレッドで実行されます。run()を直接呼ぶと現在のスレッドで同期的に実行されるだけです。",
+          "body": "スレッドを作成する方法は主に2つあります。\n方法1：Threadクラスを継承してrun()メソッドを[[オーバーライド]]します。\n方法2：Runnableインターフェースを実装してrun()メソッドを定義し、Threadの[[コンストラクタ]]に渡します。\nRunnableはSAM（Single Abstract Method）インターフェースなので、[[ラムダ式]]でも記述できます。\n一般的にはRunnableの実装が推奨されます（Javaは単一継承のため、Threadを継承すると他のクラスを継承できなくなる）。\nstart()を呼ぶとrun()が別スレッドで実行されます。run()を直接呼ぶと現在のスレッドで同期的に実行されるだけです。",
           "code": "// 方法1：Threadクラスの継承\nclass MyThread extends Thread {\n    @Override\n    public void run() {\n        System.out.println(\"Thread: \" + getName());\n    }\n}\n\n// 方法2：Runnableインターフェース\nclass MyRunnable implements Runnable {\n    @Override\n    public void run() {\n        System.out.println(\"Runnable thread\");\n    }\n}\n\n// 起動\nMyThread t1 = new MyThread();\nt1.start();  // 別スレッドでrun()が実行される\n\nThread t2 = new Thread(new MyRunnable());\nt2.start();\n\n// ラムダ式\nThread t3 = new Thread(() -> System.out.println(\"Lambda thread\"));\nt3.start();\n\n// 注意：run()を直接呼ぶと同じスレッドで実行される\nt1.run(); // 別スレッドにはならない",
           "note": "start()とrun()の違いは試験で頻出です。start()は新しいスレッドを起動し、run()は現在のスレッドで実行します。",
           "order": 2
@@ -178,7 +178,7 @@
           "lessonId": "ch27_02",
           "sectionType": "overview",
           "title": "スレッド制御の概要",
-          "body": "このレッスンでは以下を学びます:\n\n・sleep()、join()、yield()によるスレッド制御\n・スレッドの状態遷移（NEW→RUNNABLE→TERMINATED等）\n・割り込み（interrupt()）の仕組み\n\nスレッドのライフサイクルを理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・sleep()、join()、yield()による[[スレッド]]制御\n・スレッドの状態遷移（NEW→RUNNABLE→TERMINATED等）\n・割り込み（interrupt()）の仕組み\n\nスレッドのライフサイクルを理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch27_02",
           "sectionType": "rule",
           "title": "sleep()とjoin()",
-          "body": "Thread.sleep(long millis)は現在のスレッドを指定ミリ秒間停止させます。staticメソッドです。\nsleep()中にinterrupt()が呼ばれるとInterruptedExceptionが発生します。\njoin()は呼び出されたスレッドの終了を待機します。インスタンスメソッドです。\njoin(long millis)でタイムアウト付きの待機もできます。\njoin()もInterruptedExceptionをスローする可能性があります。\nsleep()は現在のスレッドに対する操作であり、他のスレッドを停止させることはできません。",
+          "body": "Thread.sleep(long millis)は現在のスレッドを指定ミリ秒間停止させます。[[staticメソッド]]です。\nsleep()中にinterrupt()が呼ばれるとInterruptedExceptionが発生します。\njoin()は呼び出されたスレッドの終了を待機します。[[インスタンス]][[メソッド]]です。\njoin(long millis)でタイムアウト付きの待機もできます。\njoin()もInterruptedExceptionをスローする可能性があります。\nsleep()は現在のスレッドに対する操作であり、他のスレッドを停止させることはできません。",
           "code": "// sleep()の使用\nThread t = new Thread(() -> {\n    try {\n        System.out.println(\"Start\");\n        Thread.sleep(2000); // 2秒停止\n        System.out.println(\"End\");\n    } catch (InterruptedException e) {\n        System.out.println(\"Interrupted!\");\n    }\n});\nt.start();\n\n// join()の使用\nThread worker = new Thread(() -> {\n    System.out.println(\"Working...\");\n    try { Thread.sleep(1000); } catch (InterruptedException e) {}\n    System.out.println(\"Done\");\n});\nworker.start();\ntry {\n    worker.join(); // workerスレッドの完了を待機\n} catch (InterruptedException e) {}\nSystem.out.println(\"Worker finished\"); // Doneの後に出力される",
           "note": "sleep()はstaticメソッドで現在のスレッドを停止させます。join()はインスタンスメソッドで対象スレッドの終了を待ちます。",
           "order": 2
@@ -207,14 +207,14 @@
           "title": "デーモンスレッド",
           "body": "デーモンスレッドはバックグラウンドで動作するスレッドで、ガベージコレクタなどがその例です。\nsetDaemon(true)でデーモンスレッドに設定します。start()の前に設定する必要があります。\nすべてのユーザー（非デーモン）スレッドが終了すると、デーモンスレッドは強制的に停止しJVMが終了します。\nstart()後にsetDaemon()を呼ぶとIllegalThreadStateExceptionが発生します。\nデーモンスレッドから作成されたスレッドもデフォルトでデーモンスレッドになります。",
           "code": "Thread daemon = new Thread(() -> {\n    while (true) {\n        System.out.println(\"Daemon running\");\n        try { Thread.sleep(500); } catch (InterruptedException e) {}\n    }\n});\ndaemon.setDaemon(true); // start()の前に設定\ndaemon.start();\n\n// メインスレッドが終了するとデーモンスレッドも終了\nSystem.out.println(\"Main done\");\n// デーモンスレッドはメインスレッド終了後に停止する\n\n// isDaemon()で確認\nSystem.out.println(daemon.isDaemon()); // true",
-          "note": "デーモンスレッドではfinallyブロックの実行も保証されません。重要なクリーンアップ処理には使わないようにしましょう。",
+          "note": "デーモンスレッドでは[[finally]]ブロックの実行も保証されません。重要なクリーンアップ処理には使わないようにしましょう。",
           "order": 4
         },
         {
           "lessonId": "ch27_02",
           "sectionType": "tip",
           "title": "試験対策：スレッドの制御",
-          "body": "sleep()がstaticメソッドであり、常に現在のスレッドを停止させることを覚えましょう。\njoin()はインスタンスメソッドで、対象スレッドの終了を待つことに注意しましょう。\nsetDaemon()はstart()の前に呼ぶ必要があり、start()後に呼ぶと例外が発生します。\nyield()と優先度はスケジューラへのヒントであり、動作を保証するものではありません。\nInterruptedExceptionはchecked例外であり、sleep()やjoin()で必ず処理が必要です。",
+          "body": "sleep()がstaticメソッドであり、常に現在のスレッドを停止させることを覚えましょう。\njoin()はインスタンスメソッドで、対象スレッドの終了を待つことに注意しましょう。\nsetDaemon()はstart()の前に呼ぶ必要があり、start()後に呼ぶと[[例外]]が発生します。\nyield()と優先度はスケジューラへのヒントであり、動作を保証するものではありません。\nInterruptedExceptionはchecked例外であり、sleep()やjoin()で必ず処理が必要です。",
           "code": null,
           "note": null,
           "order": 5
@@ -404,7 +404,7 @@
           "lessonId": "ch27_03",
           "sectionType": "overview",
           "title": "同期化の必要性",
-          "body": "このレッスンでは以下を学びます:\n\n・synchronizedによる排他制御\n・**競合状態**（Race Condition）とその防止\n・wait(), notify(), notifyAll() によるスレッド間通信\n\n複数スレッドが安全にデータを共有する方法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[synchronized]]による排他制御\n・**競合状態**（Race Condition）とその防止\n・wait(), notify(), notifyAll() による[[スレッド]]間通信\n\n複数スレッドが安全にデータを共有する方法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -413,7 +413,7 @@
           "lessonId": "ch27_03",
           "sectionType": "rule",
           "title": "synchronizedメソッドとブロック",
-          "body": "synchronizedメソッドは、メソッド全体をロックの対象にします。\nインスタンスメソッドの場合、そのインスタンス（this）がロック対象になります。\nstaticメソッドの場合、そのクラスのClassオブジェクトがロック対象になります。\nsynchronizedブロックは、任意のオブジェクトをロック対象として指定できます。\nロックはブロックの開始時に取得され、ブロックの終了時（例外含む）に自動的に解放されます。\n同じロックを持つsynchronized領域には、同時に1つのスレッドだけがアクセスできます。",
+          "body": "synchronizedメソッドは、メソッド全体をロックの対象にします。\n[[インスタンス]]メソッドの場合、そのインスタンス（this）がロック対象になります。\n[[staticメソッド]]の場合、その[[クラス]]のClassオブジェクトがロック対象になります。\nsynchronizedブロックは、任意のオブジェクトをロック対象として指定できます。\nロックはブロックの開始時に取得され、ブロックの終了時（[[例外]]含む）に自動的に解放されます。\n同じロックを持つsynchronized領域には、同時に1つのスレッドだけがアクセスできます。",
           "code": "class Counter {\n    private int count = 0;\n\n    // synchronizedメソッド（thisでロック）\n    public synchronized void increment() {\n        count++;\n    }\n\n    // synchronizedブロック\n    public void decrement() {\n        synchronized (this) {\n            count--;\n        }\n    }\n\n    // staticメソッドのsynchronized（Classオブジェクトでロック）\n    private static int total = 0;\n    public static synchronized void addTotal(int n) {\n        total += n;\n    }\n\n    // 任意のオブジェクトでロック\n    private final Object lock = new Object();\n    public void safeOp() {\n        synchronized (lock) {\n            // lockオブジェクトでロック\n            count++;\n        }\n    }\n}",
           "note": "synchronizedメソッドはメソッド全体がロック対象です。synchronizedブロックはより細かい範囲をロックできます。",
           "order": 2
@@ -440,7 +440,7 @@
           "lessonId": "ch27_03",
           "sectionType": "tip",
           "title": "試験対策：同期化",
-          "body": "インスタンスメソッドのsynchronizedはthisでロック、staticメソッドのsynchronizedはClassオブジェクトでロックすることを区別しましょう。\n異なるインスタンスのsynchronizedメソッドは、異なるロック対象なので同時実行できます。\nsynchronizedブロックのロック対象にnullを指定するとNullPointerExceptionが発生します。\nvolatileキーワードは可視性を保証しますが、アトミック性は保証しません。\nGold試験では、レースコンディションが発生するかどうかを判断する問題が出ます。",
+          "body": "インスタンスメソッドのsynchronizedはthisでロック、staticメソッドのsynchronizedはClassオブジェクトでロックすることを区別しましょう。\n異なるインスタンスのsynchronizedメソッドは、異なるロック対象なので同時実行できます。\nsynchronizedブロックのロック対象にnullを指定すると[[NullPointerException]]が発生します。\n[[volatile]]キーワードは可視性を保証しますが、アトミック性は保証しません。\nGold試験では、レースコンディションが発生するかどうかを判断する問題が出ます。",
           "code": null,
           "note": null,
           "order": 5
@@ -617,7 +617,7 @@
           "lessonId": "ch27_04",
           "sectionType": "overview",
           "title": "並行コレクションの必要性",
-          "body": "このレッスンでは以下を学びます:\n\n・ConcurrentHashMap、CopyOnWriteArrayList等の並行コレクション\n・通常のコレクションとの違い\n・ConcurrentModificationExceptionの回避\n\n**スレッドセーフ**なコレクションで安全な**並行処理**を実現します。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[ConcurrentHashMap]]、CopyOnWriteArrayList等の並行コレクション\n・通常のコレクションとの違い\n・ConcurrentModificationExceptionの回避\n\n**スレッドセーフ**なコレクションで安全な**並行処理**を実現します。",
           "code": null,
           "note": null,
           "order": 1
@@ -626,7 +626,7 @@
           "lessonId": "ch27_04",
           "sectionType": "rule",
           "title": "ConcurrentHashMap",
-          "body": "ConcurrentHashMapは**スレッドセーフ**なHashMapの実装です。\n内部的なロック機構の最適化（バケット単位の細粒度ロックやCAS操作）により、高い並行性を実現しています。\nread操作はロックなしで実行され、write操作はバケット（ビン）単位でロックされます。\nnullキー・null値を許可しません（HashMapとの違い）。\nputIfAbsent()、replace()、compute()などのアトミック操作メソッドが用意されています。\nイテレータは弱一貫性（weakly consistent）であり、ConcurrentModificationExceptionをスローしません。",
+          "body": "ConcurrentHashMapは**スレッドセーフ**なHashMapの実装です。\n内部的なロック機構の最適化（バケット単位の細粒度ロックやCAS操作）により、高い並行性を実現しています。\nread操作はロックなしで実行され、write操作はバケット（ビン）単位でロックされます。\nnullキー・null値を許可しません（HashMapとの違い）。\nputIfAbsent()、replace()、compute()などのアトミック操作[[メソッド]]が用意されています。\nイテレータは弱一貫性（weakly consistent）であり、ConcurrentModificationExceptionをスローしません。",
           "code": "import java.util.concurrent.ConcurrentHashMap;\n\nConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\n\n// アトミック操作\nmap.putIfAbsent(\"C\", 3);  // キーCが存在しない場合のみ追加\nmap.replace(\"A\", 1, 10);  // 値が1の場合のみ10に置き換え\nmap.compute(\"B\", (k, v) -> v + 100); // アトミックに計算して更新\n\nSystem.out.println(map); // {A=10, B=102, C=3}\n\n// nullは許可されない\ntry {\n    map.put(\"D\", null); // NullPointerException\n} catch (NullPointerException e) {\n    System.out.println(\"null not allowed\");\n}\n\n// イテレーション中の変更も安全\nmap.forEach((k, v) -> {\n    if (v > 50) map.remove(k); // ConcurrentModificationExceptionは発生しない\n});",
           "note": "ConcurrentHashMapではnullキー・null値が禁止されています。HashMapとの違いに注意しましょう。",
           "order": 2
@@ -635,7 +635,7 @@
           "lessonId": "ch27_04",
           "sectionType": "code",
           "title": "CopyOnWriteArrayList",
-          "body": "CopyOnWriteArrayListは書き込み時に内部配列のコピーを作成する**スレッドセーフ**なListです。\n読み取り操作はロックなしで高速に行えます。\n書き込み操作（add、set、remove）のたびに内部配列全体のコピーが作成されるため、書き込みが少ない場面に適しています。\nイテレータは作成時のスナップショットを参照するため、イテレーション中の変更は反映されません。\nイテレータのremove()はUnsupportedOperationExceptionをスローします。",
+          "body": "CopyOnWriteArrayListは書き込み時に内部[[配列]]のコピーを作成する**スレッドセーフ**なListです。\n読み取り操作はロックなしで高速に行えます。\n書き込み操作（add、set、remove）のたびに内部配列全体のコピーが作成されるため、書き込みが少ない場面に適しています。\nイテレータは作成時のスナップショットを参照するため、イテレーション中の変更は反映されません。\nイテレータのremove()はUnsupportedOperationExceptionをスローします。",
           "code": "import java.util.concurrent.CopyOnWriteArrayList;\nimport java.util.Iterator;\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"A\");\nlist.add(\"B\");\nlist.add(\"C\");\n\n// イテレーション中の変更\nIterator<String> it = list.iterator();\nlist.add(\"D\"); // イテレータ作成後に追加\n// 条件が成り立つ間、繰り返す\nwhile (it.hasNext()) {\n    System.out.print(it.next() + \" \"); // A B C（Dは含まれない）\n}\nSystem.out.println();\nSystem.out.println(list); // [A, B, C, D]（リスト自体にはDがある）\n\n// イテレータのremove()は使えない\nIterator<String> it2 = list.iterator();\nit2.next();\n// 例外が発生する可能性がある処理\ntry {\n    it2.remove(); // UnsupportedOperationException\n} catch (UnsupportedOperationException e) {\n    System.out.println(\"Iterator remove not supported\");\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -644,7 +644,7 @@
           "lessonId": "ch27_04",
           "sectionType": "point",
           "title": "BlockingQueue",
-          "body": "BlockingQueueはスレッド間のデータ受け渡しに使うキューです。\nキューが空のとき、take()はデータが追加されるまでブロック（待機）します。\nキューが満杯のとき、put()はスペースが空くまでブロックします。\n主な実装にArrayBlockingQueue（固定サイズ）とLinkedBlockingQueue（可変サイズ）があります。\nプロデューサー・コンシューマーパターンの実装に最適です。\noffer()とpoll()はブロックしない代替メソッドです（タイムアウト指定も可能）。",
+          "body": "BlockingQueueは[[スレッド]]間のデータ受け渡しに使うキューです。\nキューが空のとき、take()はデータが追加されるまでブロック（待機）します。\nキューが満杯のとき、put()はスペースが空くまでブロックします。\n主な実装にArrayBlockingQueue（固定サイズ）とLinkedBlockingQueue（可変サイズ）があります。\nプロデューサー・コンシューマーパターンの実装に最適です。\noffer()とpoll()はブロックしない代替メソッドです（タイムアウト指定も可能）。",
           "code": "import java.util.concurrent.ArrayBlockingQueue;\nimport java.util.concurrent.BlockingQueue;\n\n// 容量3のBlockingQueue\nBlockingQueue<String> queue = new ArrayBlockingQueue<>(3);\n\n// プロデューサースレッド\nThread producer = new Thread(() -> {\n    try {\n        queue.put(\"Item1\");\n        queue.put(\"Item2\");\n        queue.put(\"Item3\");\n        System.out.println(\"Producer: 3 items added\");\n        queue.put(\"Item4\"); // キューが満杯なのでブロック\n        System.out.println(\"Producer: Item4 added\");\n    } catch (InterruptedException e) {}\n});\n\n// コンシューマースレッド\nThread consumer = new Thread(() -> {\n    try {\n        Thread.sleep(1000);\n        System.out.println(\"Consumer: \" + queue.take()); // Item1\n    } catch (InterruptedException e) {}\n});\n\nproducer.start();\nconsumer.start();",
           "note": "BlockingQueueはプロデューサー・コンシューマーパターンの基盤です。試験ではput/takeのブロック動作が問われます。",
           "order": 4
@@ -653,7 +653,7 @@
           "lessonId": "ch27_04",
           "sectionType": "tip",
           "title": "試験対策：並行コレクション",
-          "body": "ConcurrentHashMapではnullが禁止、CopyOnWriteArrayListのイテレータはスナップショット、BlockingQueueのput/takeはブロックする──これらの特徴を確実に覚えましょう。\nCollections.synchronizedList()は手動でラップしますが、イテレーション時には外部同期が必要です。\nCopyOnWriteArrayListは読み取りが多く書き込みが少ない場面に適しています。\nConcurrentHashMapのcompute()系メソッドの動作も試験で問われることがあります。\n並行コレクションのイテレータはConcurrentModificationExceptionをスローしないことも重要なポイントです。",
+          "body": "ConcurrentHashMapではnullが禁止、CopyOnWriteArrayListのイテレータはスナップショット、BlockingQueueのput/takeはブロックする──これらの特徴を確実に覚えましょう。\nCollections]].[[synchronizedList()は手動でラップしますが、イテレーション時には外部同期が必要です。\nCopyOnWriteArrayListは読み取りが多く書き込みが少ない場面に適しています。\nConcurrentHashMapのcompute()系メソッドの動作も試験で問われることがあります。\n並行コレクションのイテレータはConcurrentModificationExceptionをスローしないことも重要なポイントです。",
           "code": null,
           "note": null,
           "order": 5
@@ -782,7 +782,7 @@
           "lessonId": "ch27_05",
           "sectionType": "overview",
           "title": "ExecutorServiceの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・ExecutorServiceによるスレッドプール管理\n・Future<T>で非同期処理の結果を取得\n・スレッドプールの種類（fixed, cached, single等）\n\nスレッドを直接管理するよりも安全で効率的な方法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[ExecutorService]]による[[スレッド]]プール管理\n・[[Future]]<T>で非同期処理の結果を取得\n・**スレッドプール**の種類（fixed, cached, single等）\n\nスレッドを直接管理するよりも安全で効率的な方法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -800,7 +800,7 @@
           "lessonId": "ch27_05",
           "sectionType": "code",
           "title": "submit()とCallable/Future",
-          "body": "execute()はRunnable（戻り値なし）を受け取り、戻り値を返しません。\nsubmit()はRunnableまたはCallableを受け取り、Future<T>を返します。\nCallable<T>はcall()メソッドを持ち、結果を返すことができる関数型インターフェースです。\nFuture.get()で結果を取得できます。結果が出るまでブロックします。\nFuture.get(long timeout, TimeUnit unit)でタイムアウト付きの取得もできます。\nCallableのcall()はチェック例外をスローでき、ExecutionExceptionとしてラップされます。",
+          "body": "execute()は[[Runnable]]（戻り値なし）を受け取り、戻り値を返しません。\nsubmit()はRunnableまたは[[Callable]]を受け取り、Future<T>を返します。\nCallable<T>はcall()[[メソッド]]を持ち、結果を返すことができる[[関数型インターフェース]]です。\nFuture.get()で結果を取得できます。結果が出るまでブロックします。\nFuture.get(long timeout, TimeUnit unit)でタイムアウト付きの取得もできます。\nCallableのcall()は[[チェック例外]]をスローでき、ExecutionExceptionとしてラップされます。",
           "code": "import java.util.concurrent.*;\n\nExecutorService pool = Executors.newFixedThreadPool(2);\n\n// Callable：結果を返すタスク\nCallable<Integer> task = () -> {\n    Thread.sleep(1000);\n    return 42;\n};\n\nFuture<Integer> future = pool.submit(task);\nSystem.out.println(\"Task submitted\");\n\n// 例外が発生する可能性がある処理\ntry {\n    // get()は結果が出るまでブロック\n    Integer result = future.get();\n    System.out.println(\"Result: \" + result); // Result: 42\n} catch (InterruptedException | ExecutionException e) {\n    e.printStackTrace();\n}\n\n// isDone()で完了確認\nFuture<String> f2 = pool.submit(() -> \"Hello\");\n// 条件が成り立つ間、繰り返す\nwhile (!f2.isDone()) {\n    System.out.println(\"Waiting...\");\n}\nSystem.out.println(f2.get()); // Hello\n\npool.shutdown();",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -811,14 +811,14 @@
           "title": "shutdown()とshutdownNow()",
           "body": "| メソッド | 説明 |\n|---|---|\n| shutdown() | 新タスク受付停止。投入済みタスクは完了まで実行 |\n| shutdownNow() | 実行中タスクの中断を試み、待機中タスクのリストを返す |\n| awaitTermination() | プールの終了を指定時間待機 |\n| isShutdown() | shutdown()が呼ばれたかどうかを返す |\n| isTerminated() | すべてのタスクが完了したかどうかを返す |\nshutdown()後にタスクを投入するとRejectedExecutionExceptionが発生します。",
           "code": "import java.util.concurrent.*;\n\nExecutorService pool = Executors.newFixedThreadPool(2);\npool.submit(() -> {\n    try { Thread.sleep(5000); } catch (InterruptedException e) {}\n    System.out.println(\"Task done\");\n});\n\npool.shutdown(); // 新しいタスクの受付停止\nSystem.out.println(pool.isShutdown()); // true\n\n// shutdown後のタスク投入はエラー\ntry {\n    pool.submit(() -> System.out.println(\"New task\"));\n} catch (RejectedExecutionException e) {\n    System.out.println(\"Rejected!\");\n}\n\n// 終了を待機\ntry {\n    boolean done = pool.awaitTermination(10, TimeUnit.SECONDS);\n    System.out.println(\"All done: \" + done);\n} catch (InterruptedException e) {}\n\nSystem.out.println(pool.isTerminated()); // true",
-          "note": "shutdown()を忘れるとプログラムが終了しません。try-finallyで確実にshutdown()を呼びましょう。",
+          "note": "shutdown()を忘れるとプログラムが終了しません。try-[[finally]]で確実にshutdown()を呼びましょう。",
           "order": 4
         },
         {
           "lessonId": "ch27_05",
           "sectionType": "tip",
           "title": "試験対策：ExecutorService",
-          "body": "execute()とsubmit()の違い（戻り値の有無、受け取る型）を確実に覚えましょう。\nCallable<T>のcall()はチェック例外をスローできますが、Runnableのrun()はできません。\nFuture.get()はブロックするメソッドであり、InterruptedExceptionとExecutionExceptionを処理する必要があります。\nshutdown()とshutdownNow()の違い（graceful vs forceful）を理解しましょう。\nExecutorServiceを使い終わったら必ずshutdown()を呼ぶことが重要です。",
+          "body": "execute()とsubmit()の違い（戻り値の有無、受け取る型）を確実に覚えましょう。\nCallable<T>のcall()はチェック[[例外]]をスローできますが、Runnableのrun()はできません。\nFuture.get()はブロックするメソッドであり、InterruptedExceptionとExecutionExceptionを処理する必要があります。\nshutdown()とshutdownNow()の違い（graceful vs forceful）を理解しましょう。\nExecutorServiceを使い終わったら必ずshutdown()を呼ぶことが重要です。",
           "code": null,
           "note": null,
           "order": 5
@@ -984,7 +984,7 @@
           "lessonId": "ch27_06",
           "sectionType": "overview",
           "title": "アトミック操作とデッドロック",
-          "body": "このレッスンでは以下を学びます:\n\n・AtomicInteger等のアトミック操作クラス\n・CAS（Compare And Swap）の仕組み\n・**デッドロック**の発生条件と回避策\n\n高度な**並行処理**の問題と解決策を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・AtomicInteger等のアトミック操作[[クラス]]\n・CAS（Compare And Swap）の仕組み\n・**デッドロック**の発生条件と回避策\n\n高度な**並行処理**の問題と解決策を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -993,7 +993,7 @@
           "lessonId": "ch27_06",
           "sectionType": "rule",
           "title": "AtomicIntegerとAtomicReference",
-          "body": "AtomicIntegerはint値をアトミック（不可分）に操作できるクラスです。\nget()、set()、incrementAndGet()、decrementAndGet()、compareAndSet()などのメソッドがあります。\ncompareAndSet(expected, newValue)は現在の値がexpectedと一致する場合のみnewValueに更新します（CAS操作）。\nAtomicReference<T>は参照型をアトミックに操作できるクラスです。\nこれらはsynchronizedを使わずに**スレッドセーフ**な操作を実現できます。\nアトミック変数は単一の変数に対する操作をスレッドセーフにしますが、複合的な操作の原子性は保証しません。",
+          "body": "AtomicIntegerはint値をアトミック（不可分）に操作できるクラスです。\nget()、set()、incrementAndGet()、decrementAndGet()、compareAndSet()などの[[メソッド]]があります。\ncompareAndSet(expected, newValue)は現在の値がexpectedと一致する場合のみnewValueに更新します（CAS操作）。\nAtomicReference<T>は[[参照型]]をアトミックに操作できるクラスです。\nこれらは[[synchronized]]を使わずに**スレッドセーフ**な操作を実現できます。\nアトミック[[変数]]は単一の変数に対する操作を[[スレッド]]セーフにしますが、複合的な操作の原子性は保証しません。",
           "code": "import java.util.concurrent.atomic.AtomicInteger;\nimport java.util.concurrent.atomic.AtomicReference;\n\n// AtomicInteger\nAtomicInteger counter = new AtomicInteger(0);\ncounter.incrementAndGet(); // 1（++counterに相当）\ncounter.getAndIncrement(); // 1を返し、値は2に（counter++に相当）\ncounter.addAndGet(10);     // 12\ncounter.compareAndSet(12, 20); // true（12→20に更新）\nSystem.out.println(counter.get()); // 20\n\n// AtomicReference\nAtomicReference<String> ref = new AtomicReference<>(\"Hello\");\nref.set(\"World\");\nSystem.out.println(ref.get()); // World\nref.compareAndSet(\"World\", \"Java\"); // true\nSystem.out.println(ref.get()); // Java\n\n// スレッドセーフなカウンター（synchronizedなし）\nAtomicInteger safeCount = new AtomicInteger(0);\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> safeCount.incrementAndGet()).start();\n}",
           "note": "AtomicIntegerはsynchronizedよりも軽量で、単純なカウンターには最適です。",
           "order": 2
@@ -1002,7 +1002,7 @@
           "lessonId": "ch27_06",
           "sectionType": "code",
           "title": "デッドロック",
-          "body": "**デッドロック**は、2つ以上のスレッドが互いのロック解放を永遠に待ち続ける状態です。\nデッドロックの発生条件は4つあります：相互排他、保持と待機、横取り不可、循環待機。\n4つの条件がすべて揃うとデッドロックが発生する可能性があります。\n防止策として、ロックの取得順序を統一する方法が最も一般的です。\nデッドロックが発生するとプログラムはハングし、自動的には回復しません。",
+          "body": "**デッドロック**は、2つ以上のスレッドが互いのロック解放を永遠に待ち続ける状態です。\n[[デッドロック]]の発生条件は4つあります：相互排他、保持と待機、横取り不可、循環待機。\n4つの条件がすべて揃うとデッドロックが発生する可能性があります。\n防止策として、ロックの取得順序を統一する方法が最も一般的です。\nデッドロックが発生するとプログラムはハングし、自動的には回復しません。",
           "code": "// デッドロックの例\nObject lockA = new Object();\nObject lockB = new Object();\n\nThread t1 = new Thread(() -> {\n    synchronized (lockA) {\n        System.out.println(\"T1: lockA acquired\");\n        // 例外が発生する可能性がある処理\n        try { Thread.sleep(100); } catch (InterruptedException e) {}\n        synchronized (lockB) { // lockBを待つ\n            System.out.println(\"T1: lockB acquired\");\n        }\n    }\n});\n\nThread t2 = new Thread(() -> {\n    synchronized (lockB) {\n        System.out.println(\"T2: lockB acquired\");\n        // 例外が発生する可能性がある処理\n        try { Thread.sleep(100); } catch (InterruptedException e) {}\n        synchronized (lockA) { // lockAを待つ\n            System.out.println(\"T2: lockA acquired\");\n        }\n    }\n});\n\nt1.start();\nt2.start();\n// T1はlockB待ち、T2はlockA待ち → デッドロック！\n\n// 防止策：ロック順序を統一する\n// 両方のスレッドで lockA → lockB の順に取得する",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -1149,7 +1149,7 @@
           "lessonId": "ch27_07",
           "sectionType": "overview",
           "title": "CompletableFutureとは",
-          "body": "このレッスンでは以下を学びます:\n\n・CompletableFutureによる非同期処理チェーン\n・thenApply(), thenAccept(), thenCompose()の使い方\n・例外処理との組み合わせ（exceptionally, handle）\n\nモダンJavaの非同期プログラミングの標準的な方法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[CompletableFuture]]による非同期処理チェーン\n・thenApply(), thenAccept(), thenCompose()の使い方\n・[[例外]]処理との組み合わせ（exceptionally, handle）\n\nモダンJavaの非同期プログラミングの標準的な方法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -1158,16 +1158,16 @@
           "lessonId": "ch27_07",
           "sectionType": "rule",
           "title": "非同期処理の生成",
-          "body": "CompletableFutureの生成方法は主に3つあります。\n| メソッド | 説明 |\n|---|---|\n| supplyAsync | 戻り値ありの非同期処理を開始します。ForkJoinPool.commonPool()でデフォルト実行されます。 |\n| runAsync | 戻り値なし（Runnable）の非同期処理を開始します。 |\n| completedFuture | 既に完了した値をラップしてCompletableFutureを作ります（テストなどで便利）。 |\nsupplyAsyncとrunAsyncには、第2引数にExecutorを指定して実行スレッドプールを変更できます。",
+          "body": "CompletableFutureの生成方法は主に3つあります。\n| メソッド | 説明 |\n|---|---|\n| supplyAsync | 戻り値ありの非同期処理を開始します。ForkJoinPool.commonPool()でデフォルト実行されます。 |\n| runAsync | 戻り値なし（Runnable）の非同期処理を開始します。 |\n| completedFuture | 既に完了した値をラップしてCompletableFutureを作ります（テストなどで便利）。 |\nsupplyAsyncとrunAsyncには、第2引数にExecutorを指定して実行[[スレッド]]プールを変更できます。",
           "code": "import java.util.concurrent.CompletableFuture;\n\n// supplyAsync：戻り値あり\nCompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> {\n    // 別スレッドで実行される\n    return \"Hello from \" + Thread.currentThread().getName();\n});\nSystem.out.println(cf1.get()); // Hello from ForkJoinPool.commonPool-worker-1\n\n// runAsync：戻り値なし\nCompletableFuture<Void> cf2 = CompletableFuture.runAsync(() -> {\n    System.out.println(\"Running in: \" + Thread.currentThread().getName());\n});\ncf2.get(); // 完了を待つ\n\n// completedFuture：即座に完了した値\nCompletableFuture<Integer> cf3 = CompletableFuture.completedFuture(42);\nSystem.out.println(cf3.get()); // 42（ブロックしない）",
-          "note": "supplyAsync = Supplier（戻り値あり）、runAsync = Runnable（戻り値なし）と覚えましょう。",
+          "note": "supplyAsync = [[Supplier]]（戻り値あり）、runAsync = [[Runnable]]（戻り値なし）と覚えましょう。",
           "order": 2
         },
         {
           "lessonId": "ch27_07",
           "sectionType": "code",
           "title": "処理の連鎖（thenApply / thenAccept / thenRun）",
-          "body": "CompletableFutureの最大の特徴は、処理を連鎖できることです。\n| メソッド | 説明 |\n|---|---|\n| thenApply | 前の結果を受け取り、変換して新しい値を返します（mapに相当）。 |\n| thenAccept | 前の結果を受け取り、消費します（戻り値なし）。 |\n| thenRun | 前の結果を使わず、別の処理を実行します（戻り値なし）。 |\n| thenCompose | 前の結果を受け取り、新しいCompletableFutureを返します（flatMapに相当）。 |\n各メソッドにはAsync版（thenApplyAsyncなど）があり、別スレッドで実行させることもできます。",
+          "body": "CompletableFutureの最大の特徴は、処理を連鎖できることです。\n| メソッド | 説明 |\n|---|---|\n| thenApply | 前の結果を受け取り、変換して新しい値を返します（mapに相当）。 |\n| thenAccept | 前の結果を受け取り、消費します（戻り値なし）。 |\n| thenRun | 前の結果を使わず、別の処理を実行します（戻り値なし）。 |\n| thenCompose | 前の結果を受け取り、新しいCompletableFutureを返します（flatMapに相当）。 |\n各[[メソッド]]にはAsync版（thenApplyAsyncなど）があり、別スレッドで実行させることもできます。",
           "code": "CompletableFuture<String> result = CompletableFuture\n    .supplyAsync(() -> \"java\")\n    .thenApply(s -> s.toUpperCase())       // \"JAVA\"\n    .thenApply(s -> s + \" Programming\");  // \"JAVA Programming\"\nSystem.out.println(result.get()); // JAVA Programming\n\n// thenAccept：結果を消費（戻り値なし）\nCompletableFuture.supplyAsync(() -> 100)\n    .thenAccept(n -> System.out.println(\"Result: \" + n)); // Result: 100\n\n// thenCompose：CompletableFutureを返す処理の連鎖\nCompletableFuture<String> composed = CompletableFuture\n    .supplyAsync(() -> 1)\n    .thenCompose(id -> CompletableFuture.supplyAsync(\n        () -> \"User-\" + id  // idを使って別の非同期処理\n    ));\nSystem.out.println(composed.get()); // User-1",
           "note": "thenApplyはStream.map()、thenComposeはStream.flatMap()に対応すると覚えると理解しやすいです。",
           "order": 3
@@ -1176,7 +1176,7 @@
           "lessonId": "ch27_07",
           "sectionType": "tip",
           "title": "CompletableFutureの合成メソッド一覧",
-          "body": "| メソッド | 入力 | 出力 | 用途 |\n|---|---|---|---|\n| thenApply() | 前の結果 | 変換後の値 | 結果を変換 |\n| thenAccept() | 前の結果 | void | 結果を消費 |\n| thenRun() | なし | void | 後続処理を実行 |\n| thenCompose() | 前の結果 | CompletableFuture | 非同期処理の連結 |\n| exceptionally() | 例外 | 代替値 | エラー処理 |\n\nthenApply = map、thenCompose = flatMap と考えるとStream APIとの類似性が見えます。",
+          "body": "| メソッド | 入力 | 出力 | 用途 |\n|---|---|---|---|\n| thenApply() | 前の結果 | 変換後の値 | 結果を変換 |\n| thenAccept() | 前の結果 | void | 結果を消費 |\n| thenRun() | なし | void | 後続処理を実行 |\n| thenCompose() | 前の結果 | CompletableFuture | 非同期処理の連結 |\n| exceptionally() | 例外 | 代替値 | エラー処理 |\n\nthenApply = map、thenCompose = flatMap と考えると[[Stream API]]との類似性が見えます。",
           "code": null,
           "note": "Async付きのメソッド（thenApplyAsyncなど）は別スレッドで実行されます。",
           "order": 4
@@ -1194,7 +1194,7 @@
           "lessonId": "ch27_07",
           "sectionType": "point",
           "title": "例外処理と試験ポイント",
-          "body": "CompletableFutureの例外処理にはexceptionallyとhandleを使います。\n| メソッド | 説明 |\n|---|---|\n| exceptionally | 例外が発生した場合のみ代替値を返します。正常完了時は呼ばれません。 |\n| handle | 正常・異常両方のケースを処理します。第1引数が結果、第2引数が例外（nullの場合あり）です。 |\n| whenComplete | 結果・例外を受け取って副作用を実行しますが、値を変換しません。 |\n\n【Gold試験ポイント】\n• supplyAsync vs runAsync の戻り値型の違い\n• thenApply vs thenCompose の違い（Function vs Functionの戻り値がCF）\n• allOf の戻り値が **CompletableFuture**<Void> であること\n• get() は ExecutionException をスローすること（InterruptedExceptionも）\n• getNow(defaultValue) はブロックせずデフォルト値を返す",
+          "body": "CompletableFutureの例外処理にはexceptionallyとhandleを使います。\n| メソッド | 説明 |\n|---|---|\n| exceptionally | 例外が発生した場合のみ代替値を返します。正常完了時は呼ばれません。 |\n| handle | 正常・異常両方のケースを処理します。第1引数が結果、第2引数が例外（nullの場合あり）です。 |\n| whenComplete | 結果・例外を受け取って副作用を実行しますが、値を変換しません。 |\n\n【Gold試験ポイント】\n• supplyAsync vs runAsync の戻り値型の違い\n• thenApply vs thenCompose の違い（[[Function]] vs Functionの戻り値がCF）\n• allOf の戻り値が **CompletableFuture**<Void> であること\n• get() は ExecutionException をスローすること（InterruptedExceptionも）\n• getNow(defaultValue) はブロックせずデフォルト値を返す",
           "code": "CompletableFuture<String> cf = CompletableFuture\n    .supplyAsync(() -> {\n        if (true) throw new RuntimeException(\"Error!\");\n        return \"OK\";\n    })\n    .exceptionally(ex -> \"Recovered: \" + ex.getMessage());\nSystem.out.println(cf.get()); // Recovered: java.lang.RuntimeException: Error!\n\n// handle：正常/異常どちらも処理\nCompletableFuture<String> handled = CompletableFuture\n    .supplyAsync(() -> \"Data\")\n    .handle((result, ex) -> {\n        if (ex != null) return \"Error\";\n        return \"Success: \" + result;\n    });\nSystem.out.println(handled.get()); // Success: Data\n\n// getNow：ブロックせずにデフォルト値\nCompletableFuture<String> slow = CompletableFuture.supplyAsync(() -> {\n    try { Thread.sleep(5000); } catch (InterruptedException e) {}\n    return \"Done\";\n});\nSystem.out.println(slow.getNow(\"Not ready\")); // Not ready",
           "note": "exceptionallyの引数は元の例外ではなく、CompletionExceptionでラップされている場合があります。getMessage()にはネストした例外名も含まれます。",
           "order": 6

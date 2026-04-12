@@ -22,9 +22,9 @@
           "lessonId": "ch24_01",
           "sectionType": "rule",
           "title": "Streamパイプラインの構造",
-          "body": "Streamの処理は「ソース（生成）→ **中間操作** → **終端操作**」の3段階で構成されます。\nソースはStreamの元となるデータで、コレクション、配列、ファイルなどから生成します。\n中間操作はStreamを変換する処理で、filter()やmap()などがあり、新しいStreamを返します。\n終端操作はStreamの処理を実行して結果を返す処理で、forEach()やcollect()などがあります。\n中間操作は**遅延評価**されるため、終端操作が呼ばれるまで実際の処理は実行されません。\nStreamは一度消費すると再利用できないため、同じStreamに対して終端操作を2回呼ぶとIllegalStateExceptionが発生します。",
+          "body": "Streamの処理は「ソース（生成）→ **中間操作** → **終端操作**」の3段階で構成されます。\nソースはStreamの元となるデータで、コレクション、[[配列]]、ファイルなどから生成します。\n[[中間操作]]はStreamを変換する処理で、filter()やmap()などがあり、新しいStreamを返します。\n[[終端操作]]はStreamの処理を実行して結果を返す処理で、forEach()やcollect()などがあります。\n中間操作は**遅延評価**されるため、終端操作が呼ばれるまで実際の処理は実行されません。\nStreamは一度消費すると再利用できないため、同じStreamに対して終端操作を2回呼ぶとIllegalStateExceptionが発生します。",
           "code": "import java.util.List;\nimport java.util.stream.Stream;\n\nList<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"David\");\n\n// ソース → 中間操作 → 終端操作\nnames.stream()              // ソース：Listからstream生成\n     .filter(s -> s.length() > 3)  // 中間操作：長さ4以上\n     .map(String::toUpperCase)     // 中間操作：大文字変換\n     .forEach(System.out::println); // 終端操作：出力\n// 出力: ALICE, CHARLIE, DAVID",
-          "note": "Stream**パイプライン**は「何を処理するか」を宣言的に記述するスタイルです。従来のfor文は「どう処理するか」を記述する命令的スタイルです。",
+          "note": "Stream**パイプライン**は「何を処理するか」を宣言的に記述するスタイルです。従来の[[for文]]は「どう処理するか」を記述する命令的スタイルです。",
           "order": 2
         },
         {
@@ -40,7 +40,7 @@
           "lessonId": "ch24_01",
           "sectionType": "point",
           "title": "Streamの特徴と注意点",
-          "body": "Streamはデータを保持しません。**パイプライン**を通じてデータを処理するだけです。\nStreamは一度しか使えません。**終端操作**を実行した後に再度操作すると例外が発生します。\n**中間操作**は**遅延評価**されます。終端操作が呼ばれて初めて中間操作が実行されます。\nparallelStream()を使えば並列処理が可能ですが、スレッドセーフでない操作には注意が必要です。\nStreamはソースのデータを変更しません（非破壊的）。",
+          "body": "Streamはデータを保持しません。**パイプライン**を通じてデータを処理するだけです。\nStreamは一度しか使えません。**終端操作**を実行した後に再度操作すると[[例外]]が発生します。\n**中間操作**は**遅延評価**されます。終端操作が呼ばれて初めて中間操作が実行されます。\nparallelStream()を使えば並列処理が可能ですが、[[スレッド]]セーフでない操作には注意が必要です。\nStreamはソースのデータを変更しません（非破壊的）。",
           "code": "List<String> list = List.of(\"A\", \"B\", \"C\");\nStream<String> stream = list.stream();\n\n// 終端操作を実行\nstream.forEach(System.out::println);\n\n// 同じStreamを再利用しようとすると例外\ntry {\n    stream.forEach(System.out::println);\n} catch (IllegalStateException e) {\n    System.out.println(\"Streamは再利用できません\");\n    // 出力: Streamは再利用できません\n}",
           "note": "Streamを複数回使いたい場合は、そのたびに新しいStreamを生成する必要があります。",
           "order": 4
@@ -49,7 +49,7 @@
           "lessonId": "ch24_01",
           "sectionType": "tip",
           "title": "試験対策：Streamの基本",
-          "body": "Gold試験では、Streamの生成・**中間操作**・**終端操作**の区別が問われます。\nStream.of()にnullを渡した場合の動作や、Stream.of(配列)とArrays.stream(配列)の違いに注意しましょう。\nStream.of(配列)は配列全体を1つの要素として扱い、Arrays.stream(配列)は配列の各要素をStreamの要素とします。\nStream.iterate()は第3引数にPredicateを取るオーバーロード（Java 9以降）もあります。\n**遅延評価**を確認する問題では、peek()を使ったStreamの処理順序が頻出です。",
+          "body": "Gold試験では、Streamの生成・**中間操作**・**終端操作**の区別が問われます。\nStream.of()にnullを渡した場合の動作や、Stream.of(配列)とArrays.stream(配列)の違いに注意しましょう。\nStream.of(配列)は配列全体を1つの要素として扱い、Arrays.stream(配列)は配列の各要素をStreamの要素とします。\nStream.iterate()は第3引数に[[Predicate]]を取る[[オーバーロード]]（Java 9以降）もあります。\n**遅延評価**を確認する問題では、peek()を使ったStreamの処理順序が頻出です。",
           "code": "// Stream.of(配列) vs Arrays.stream(配列)\nString[] arr = {\"A\", \"B\", \"C\"};\n\nStream<String[]> s1 = Stream.of(arr);   // Stream<String[]>：要素数1\nStream<String> s2 = Arrays.stream(arr); // Stream<String>：要素数3\n\nSystem.out.println(Stream.of(arr).count());    // 1\nSystem.out.println(Arrays.stream(arr).count()); // 3\n\n// Java 9以降のiterate\nStream.iterate(1, n -> n <= 10, n -> n * 2)\n      .forEach(System.out::println); // 1, 2, 4, 8",
           "note": null,
           "order": 5
@@ -187,7 +187,7 @@
           "lessonId": "ch24_02",
           "sectionType": "code",
           "title": "filter()とmap()",
-          "body": "filter(Predicate<T>)は条件に一致する要素だけを通す**中間操作**です。\nPredicateのtest()がtrueを返す要素だけが残ります。\nmap(Function<T,R>)は各要素を別の値に変換する中間操作です。\nFunctionのapply()で変換され、変換後の型のStreamが返されます。\nfilter()とmap()はStream処理で最も頻繁に使われる中間操作です。\n組み合わせる順序によって処理効率が変わるため、filterを先にmap後にするのが一般的です。",
+          "body": "filter([[Predicate]]<T>)は条件に一致する要素だけを通す**中間操作**です。\nPredicateのtest()がtrueを返す要素だけが残ります。\nmap([[Function]]<T,R>)は各要素を別の値に変換する[[中間操作]]です。\nFunctionのapply()で変換され、変換後の型のStreamが返されます。\nfilter()とmap()はStream処理で最も頻繁に使われる中間操作です。\n組み合わせる順序によって処理効率が変わるため、filterを先にmap後にするのが一般的です。",
           "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eve\");\n\n// filter: 条件に一致する要素だけ残す\nnames.stream()\n     .filter(s -> s.length() >= 4)\n     .forEach(System.out::println);\n// 出力: Alice, Charlie, David\n\n// map: 各要素を変換する\nnames.stream()\n     .map(String::toUpperCase)\n     .forEach(System.out::println);\n// 出力: ALICE, BOB, CHARLIE, DAVID, EVE\n\n// filter + map の組み合わせ\nnames.stream()\n     .filter(s -> s.startsWith(\"C\"))\n     .map(String::toLowerCase)\n     .forEach(System.out::println);\n// 出力: charlie",
           "note": "filter()を先に適用してデータを絞り込んでからmap()で変換するほうが効率的です。",
           "order": 2
@@ -207,14 +207,14 @@
           "title": "distinct()、sorted()、peek()",
           "body": "| メソッド | 説明 |\n|---|---|\n| distinct() | 重複する要素を除去する中間操作です。equals()メソッドで等価性を判断します。 |\n| sorted() | 要素を自然順序でソートします。Comparatorを引数に取るオーバーロードもあります。 |\n| peek(Consumer<T>) | 各要素に対して副作用のある操作を行いますが、要素自体は変更せずに次へ渡します。デバッグ目的で使われることが多く、本番コードでの副作用のある処理には推奨されません。 |\ndistinct()とsorted()はステートフルな中間操作であり、内部で状態を保持します。",
           "code": "List<Integer> nums = List.of(3, 1, 4, 1, 5, 9, 2, 6, 5, 3);\n\n// distinct: 重複除去\nnums.stream()\n    .distinct()\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 3 1 4 5 9 2 6\n\nSystem.out.println();\n\n// sorted: ソート\nnums.stream()\n    .sorted()\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 1 1 2 3 3 4 5 5 6 9\n\nSystem.out.println();\n\n// peek: デバッグ用\nnums.stream()\n    .filter(n -> n > 3)\n    .peek(n -> System.out.println(\"filtered: \" + n))\n    .map(n -> n * 10)\n    .forEach(n -> System.out.println(\"result: \" + n));\n// filtered: 4 → result: 40, filtered: 5 → result: 50, ...",
-          "note": "sorted()にComparator.reverseOrder()を渡すと降順にソートできます。",
+          "note": "sorted()に[[Comparator]].reverseOrder()を渡すと降順にソートできます。",
           "order": 4
         },
         {
           "lessonId": "ch24_02",
           "sectionType": "tip",
           "title": "遅延評価の仕組み",
-          "body": "**中間操作**は**遅延評価**されるため、**終端操作**が呼ばれるまで一切処理が行われません。\nこの仕組みにより、不要な計算を省略してパフォーマンスを最適化できます。\npeek()を使うと遅延評価の動作を確認できます。終端操作がない場合、peek()も実行されません。\nまた、要素は1つずつ**パイプライン**を通過します（要素ごとに全中間操作を実行）。\nこれは「ループフュージョン」と呼ばれ、中間バッファを作らないため効率的です。\n短絡終端操作（findFirst等）と組み合わせると、必要な要素だけ処理して残りはスキップされます。",
+          "body": "**中間操作**は**遅延評価**されるため、**終端操作**が呼ばれるまで一切処理が行われません。\nこの仕組みにより、不要な計算を省略してパフォーマンスを最適化できます。\npeek()を使うと[[遅延評価]]の動作を確認できます。[[終端操作]]がない場合、peek()も実行されません。\nまた、要素は1つずつ**パイプライン**を通過します（要素ごとに全中間操作を実行）。\nこれは「ループフュージョン」と呼ばれ、中間バッファを作らないため効率的です。\n短絡終端操作（findFirst等）と組み合わせると、必要な要素だけ処理して残りはスキップされます。",
           "code": "// 遅延評価の確認\nStream<String> stream = List.of(\"A\", \"B\", \"C\").stream()\n    .peek(s -> System.out.println(\"peek: \" + s))\n    .filter(s -> s.equals(\"B\"));\n\nSystem.out.println(\"終端操作の前\");\n// ここまでpeekは実行されない\n\nstream.forEach(System.out::println);\n// 出力:\n// 終端操作の前\n// peek: A\n// peek: B\n// B\n// peek: C",
           "note": "**終端操作**なしではStream**パイプライン**は何も処理しないという点は試験でよく問われます。",
           "order": 5
@@ -352,7 +352,7 @@
           "lessonId": "ch24_03",
           "sectionType": "code",
           "title": "forEach()、count()、collect()",
-          "body": "| メソッド | 説明 |\n|---|---|\n| forEach(Consumer<T>) | 各要素に対してアクションを実行する終端操作で、戻り値はvoidです。 |\n| count() | Streamの要素数をlong型で返します。 |\n| collect(Collector) | Streamの要素をコレクションなどにまとめる最も汎用的な終端操作です。Collectorsクラスの各種メソッドと組み合わせて使います。 |\n| collect(Supplier, BiConsumer, BiConsumer) | 3引数版のcollect。可変コンテナへの蓄積を細かく制御します。 |\ntoArray()でStream要素を配列に変換することもできます。",
+          "body": "| メソッド | 説明 |\n|---|---|\n| forEach(Consumer<T>) | 各要素に対してアクションを実行する終端操作で、戻り値はvoidです。 |\n| count() | Streamの要素数をlong型で返します。 |\n| collect(Collector) | Streamの要素をコレクションなどにまとめる最も汎用的な終端操作です。Collectorsクラスの各種メソッドと組み合わせて使います。 |\n| collect(Supplier, BiConsumer, BiConsumer) | 3引数版のcollect。可変コンテナへの蓄積を細かく制御します。 |\ntoArray()でStream要素を[[配列]]に変換することもできます。",
           "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// forEach: 各要素に対してアクション実行\nnames.stream().forEach(System.out::println);\n// 出力: Alice, Bob, Charlie\n\n// count: 要素数を返す\nlong count = names.stream()\n                  .filter(s -> s.length() > 3)\n                  .count();\nSystem.out.println(count); // 2\n\n// collect: リストに収集\nList<String> upper = names.stream()\n                          .map(String::toUpperCase)\n                          .collect(Collectors.toList());\nSystem.out.println(upper); // [ALICE, BOB, CHARLIE]\n\n// toArray: 配列に変換\nString[] arr = names.stream().toArray(String[]::new);\nSystem.out.println(Arrays.toString(arr)); // [Alice, Bob, Charlie]",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -370,7 +370,7 @@
           "lessonId": "ch24_03",
           "sectionType": "rule",
           "title": "reduce()",
-          "body": "| メソッド | 説明 |\n|---|---|\n| reduce() | Streamの要素を1つの結果に集約する終端操作です。 |\n| reduce(BinaryOperator<T>) | 要素を順に結合し、結果をOptional<T>で返します。 |\n| reduce(T identity, BinaryOperator<T>) | 初期値を指定でき、結果はT型で返されます。 |\n初期値ありの場合、Streamが空でも初期値が返されるためOptionalにはなりません。\n3引数のreduce(identity, BiFunction, BinaryOperator)は並列処理用で、combinerを指定します。\nreduce()はsum()やmax()などの特殊な終端操作の基盤となる汎用的な操作です。",
+          "body": "| メソッド | 説明 |\n|---|---|\n| reduce() | Streamの要素を1つの結果に集約する終端操作です。 |\n| reduce(BinaryOperator<T>) | 要素を順に結合し、結果をOptional<T>で返します。 |\n| reduce(T identity, BinaryOperator<T>) | 初期値を指定でき、結果はT型で返されます。 |\n初期値ありの場合、Streamが空でも初期値が返されるため[[Optional]]にはなりません。\n3引数のreduce(identity, [[BiFunction]], [[BinaryOperator]])は並列処理用で、combinerを指定します。\nreduce()はsum()やmax()などの特殊な[[終端操作]]の基盤となる汎用的な操作です。",
           "code": "List<Integer> nums = List.of(1, 2, 3, 4, 5);\n\n// 初期値なし: Optional<Integer>を返す\nOptional<Integer> sum1 = nums.stream()\n    .reduce((a, b) -> a + b);\nSystem.out.println(sum1.get()); // 15\n\n// 初期値あり: int型を返す\nint sum2 = nums.stream()\n    .reduce(0, Integer::sum);\nSystem.out.println(sum2); // 15\n\n// 最大値\nOptional<Integer> max = nums.stream()\n    .reduce(Integer::max);\nSystem.out.println(max.get()); // 5\n\n// 文字列の結合\nString joined = List.of(\"A\", \"B\", \"C\").stream()\n    .reduce(\"\", (a, b) -> a + b);\nSystem.out.println(joined); // ABC",
           "note": "初期値ありのreduce()で空Streamを処理すると初期値がそのまま返されます。初期値なしの場合はOptional.empty()が返されます。",
           "order": 4
@@ -381,7 +381,7 @@
           "title": "試験対策：終端操作の戻り値",
           "body": "**終端操作**の戻り値の型は試験で頻出です。以下を正確に覚えましょう。\n| メソッド | 戻り値の型 |\n|---|---|\n| forEach() | void |\n| count() | long |\n| findFirst() / findAny() | Optional<T> |\n| anyMatch() / allMatch() / noneMatch() | boolean |\n| reduce(BinaryOperator) | Optional<T> |\n| reduce(identity, BinaryOperator) | T |\n| collect() | Collectorに応じた型 |",
           "code": null,
-          "note": "forEach()の戻り値がvoidであることから、forEach()を**パイプライン**の途中に書くとコンパイルエラーになります。**中間操作**ではなく**終端操作**です。",
+          "note": "forEach()の戻り値がvoidであることから、forEach()を**パイプライン**の途中に書くと[[コンパイル]]エラーになります。**中間操作**ではなく**終端操作**です。",
           "order": 5
         }
       ],
@@ -590,7 +590,7 @@
           "lessonId": "ch24_04",
           "sectionType": "overview",
           "title": "Collectorsクラスの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・Collectors.toList(), toSet(), toMap()の使い方\n・Collectors.groupingBy()でグルーピング\n・Collectors.joining()で文字列結合\n\ncollect()の引数に渡すCollectorの使い方を網羅します。",
+          "body": "このレッスンでは以下を学びます:\n\n・Collectors]].[[toList(), toSet(), toMap()の使い方\n・Collectors.groupingBy()でグルーピング\n・Collectors.joining()で文字列結合\n\ncollect()の引数に渡すCollectorの使い方を網羅します。",
           "code": null,
           "note": null,
           "order": 1
@@ -601,7 +601,7 @@
           "title": "toList()、toSet()、toMap()",
           "body": "Collectors.toList()はStreamの要素をListに変換します。\nCollectors.toSet()はStreamの要素をSetに変換します（重複は自動的に除去されます）。\nCollectors.toMap(keyMapper, valueMapper)はStreamの要素をMapに変換します。\ntoMap()でキーが重複するとIllegalStateExceptionが発生します。\n重複キーの処理にはmergeFunction（第3引数）を指定します。\nCollectors.toUnmodifiableList()等で不変コレクションを生成することもできます（Java 10以降）。",
           "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// toList()\nList<String> list = names.stream()\n    .filter(s -> s.length() > 3)\n    .collect(Collectors.toList());\nSystem.out.println(list); // [Alice, Charlie]\n\n// toSet()\nSet<Integer> lengths = names.stream()\n    .map(String::length)\n    .collect(Collectors.toSet());\nSystem.out.println(lengths); // [3, 5, 7]\n\n// toMap()\nMap<String, Integer> nameLength = names.stream()\n    .collect(Collectors.toMap(\n        s -> s,           // keyMapper\n        String::length    // valueMapper\n    ));\nSystem.out.println(nameLength);\n// {Alice=5, Bob=3, Charlie=7}\n\n// toMap() 重複キーの処理\nList<String> words = List.of(\"AA\", \"BB\", \"AB\");\nMap<Character, String> map = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0),       // キー\n        s -> s,                 // 値\n        (v1, v2) -> v1 + \",\" + v2  // 重複時のマージ\n    ));\nSystem.out.println(map); // {A=AA,AB, B=BB}",
-          "note": "Java 16以降では、Stream.toList()メソッドが追加され、collect(Collectors.toList())の代わりにstream().toList()と書けるようになりました。",
+          "note": "Java 16以降では、Stream.toList()[[メソッド]]が追加され、collect(Collectors.toList())の代わりにstream().toList()と書けるようになりました。",
           "order": 2
         },
         {
@@ -617,9 +617,9 @@
           "lessonId": "ch24_04",
           "sectionType": "rule",
           "title": "groupingBy()とpartitioningBy()",
-          "body": "Collectors.groupingBy(Function)は指定したキーに基づいて要素をグループ化し、Map<K, List<T>>を返します。\n第2引数にダウンストリームCollectorを指定して、グループ内の集計処理をカスタマイズできます。\nCollectors.partitioningBy(Predicate)は条件の真偽で要素を2グループに分け、Map<Boolean, List<T>>を返します。\npartitioningBy()のキーは必ずtrueとfalseの2つです（要素がなくても空リストが入ります）。\ngroupingBy()にCounting()やsumming()を組み合わせることで、グループごとの集計が可能です。",
+          "body": "Collectors.groupingBy(Function)は指定したキーに基づいて要素をグループ化し、Map<K, List<T>>を返します。\n第2引数にダウンストリームCollectorを指定して、グループ内の集計処理をカスタマイズできます。\nCollectors.partitioningBy([[Predicate]])は条件の真偽で要素を2グループに分け、Map<Boolean, List<T>>を返します。\npartitioningBy()のキーは必ずtrueとfalseの2つです（要素がなくても空リストが入ります）。\ngroupingBy()にCounting()やsumming()を組み合わせることで、グループごとの集計が可能です。",
           "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"Anna\", \"Brian\");\n\n// groupingBy: 頭文字でグループ化\nMap<Character, List<String>> grouped = names.stream()\n    .collect(Collectors.groupingBy(s -> s.charAt(0)));\nSystem.out.println(grouped);\n// {A=[Alice, Anna], B=[Bob, Brian], C=[Charlie]}\n\n// groupingBy + counting: グループごとの件数\nMap<Character, Long> counts = names.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()\n    ));\nSystem.out.println(counts); // {A=2, B=2, C=1}\n\n// partitioningBy: 条件で二分\nMap<Boolean, List<String>> partitioned = names.stream()\n    .collect(Collectors.partitioningBy(s -> s.length() > 3));\nSystem.out.println(partitioned);\n// {false=[Bob], true=[Alice, Charlie, Anna, Brian]}",
-          "note": "groupingBy()は3引数版もあり、生成されるMapの型（TreeMapなど）を指定できます。",
+          "note": "groupingBy()は3引数版もあり、生成されるMapの型（[[TreeMap]]など）を指定できます。",
           "order": 4
         },
         {
@@ -792,7 +792,7 @@
           "lessonId": "ch24_05",
           "sectionType": "overview",
           "title": "Optionalとは",
-          "body": "このレッスンでは以下を学びます:\n\n・Optional<T>でnull安全なコードを書く\n・isPresent(), ifPresent(), orElse(), orElseGet()の使い分け\n・map(), flatMap()によるOptionalの変換\n\nnullチェックの代わりにOptionalを使って安全なコードを書きましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[Optional]]<T>でnull安全なコードを書く\n・isPresent(), ifPresent(), orElse(), orElseGet()の使い分け\n・map(), flatMap()によるOptionalの変換\n\nnullチェックの代わりにOptionalを使って安全なコードを書きましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -801,7 +801,7 @@
           "lessonId": "ch24_05",
           "sectionType": "code",
           "title": "Optionalの生成メソッド",
-          "body": "Optional.of(value)は非nullの値を持つOptionalを生成します。nullを渡すとNullPointerExceptionが発生します。\nOptional.ofNullable(value)はnullかもしれない値からOptionalを生成します。nullの場合はempty()と同じです。\nOptional.empty()は空のOptionalを生成します。\nof()はnullが来ないことが確実な場合に使い、不確実な場合はofNullable()を使います。\n適切な生成メソッドの選択が、安全なOptionalの使用の第一歩です。",
+          "body": "Optional.of(value)は非nullの値を持つOptionalを生成します。nullを渡すと[[NullPointerException]]が発生します。\nOptional.ofNullable(value)はnullかもしれない値からOptionalを生成します。nullの場合はempty()と同じです。\nOptional.empty()は空のOptionalを生成します。\nof()はnullが来ないことが確実な場合に使い、不確実な場合はofNullable()を使います。\n適切な生成[[メソッド]]の選択が、安全なOptionalの使用の第一歩です。",
           "code": "// of(): 非nullの値を指定\nOptional<String> opt1 = Optional.of(\"Hello\");\nSystem.out.println(opt1); // Optional[Hello]\n\n// of()にnullを渡すとNPE\ntry {\n    Optional<String> opt2 = Optional.of(null);\n} catch (NullPointerException e) {\n    System.out.println(\"NPE発生\"); // NPE発生\n}\n\n// ofNullable(): nullかもしれない値を指定\nOptional<String> opt3 = Optional.ofNullable(\"World\");\nSystem.out.println(opt3); // Optional[World]\n\nOptional<String> opt4 = Optional.ofNullable(null);\nSystem.out.println(opt4); // Optional.empty\n\n// empty(): 空のOptional\nOptional<String> opt5 = Optional.empty();\nSystem.out.println(opt5); // Optional.empty",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -810,16 +810,16 @@
           "lessonId": "ch24_05",
           "sectionType": "rule",
           "title": "isPresent()、ifPresent()、get()",
-          "body": "| メソッド | 説明 |\n|---|---|\n| isPresent() | 値が存在すればtrue、空ならfalseを返します。 |\n| isEmpty() | Java 11で追加された、isPresent()の逆を返すメソッドです。 |\n| ifPresent(Consumer) | 値が存在する場合のみConsumerを実行します。 |\n| get() | 値を取得しますが、空のOptionalに対して呼ぶとNoSuchElementExceptionが発生します。 |\nget()を使う前にisPresent()で確認するか、orElse系メソッドを使うのが安全です。\nifPresentOrElse(Consumer, Runnable)はJava 9で追加された、値の有無に応じて処理を分岐するメソッドです。",
+          "body": "| メソッド | 説明 |\n|---|---|\n| isPresent() | 値が存在すればtrue、空ならfalseを返します。 |\n| isEmpty() | Java 11で追加された、isPresent()の逆を返すメソッドです。 |\n| ifPresent(Consumer) | 値が存在する場合のみConsumerを実行します。 |\n| get() | 値を取得しますが、空のOptionalに対して呼ぶとNoSuchElementExceptionが発生します。 |\nget()を使う前にisPresent()で確認するか、orElse系メソッドを使うのが安全です。\nifPresentOrElse([[Consumer]], [[Runnable]])はJava 9で追加された、値の有無に応じて処理を分岐するメソッドです。",
           "code": "Optional<String> opt = Optional.of(\"Java\");\nOptional<String> empty = Optional.empty();\n\n// isPresent()\nSystem.out.println(opt.isPresent());   // true\nSystem.out.println(empty.isPresent()); // false\n\n// ifPresent(): 値がある場合のみ実行\nopt.ifPresent(s -> System.out.println(\"値: \" + s));\n// 出力: 値: Java\n\nempty.ifPresent(s -> System.out.println(\"値: \" + s));\n// 何も出力されない\n\n// get(): 値を取得\nSystem.out.println(opt.get()); // Java\n\ntry {\n    empty.get();\n} catch (NoSuchElementException e) {\n    System.out.println(\"値なし\"); // 値なし\n}",
-          "note": "get()は空Optionalに対して例外をスローするため、orElse()やorElseGet()の使用が推奨されます。",
+          "note": "get()は空Optionalに対して[[例外]]をスローするため、orElse()やorElseGet()の使用が推奨されます。",
           "order": 3
         },
         {
           "lessonId": "ch24_05",
           "sectionType": "code",
           "title": "orElse()、orElseGet()、orElseThrow()",
-          "body": "| メソッド | 説明 |\n|---|---|\n| orElse(T other) | 値が存在すればその値を、なければ引数のデフォルト値を返します。 |\n| orElseGet(Supplier<T>) | 値が存在すればその値を、なければSupplierの結果を返します。 |\n| orElseThrow() | 値が存在すればその値を、なければNoSuchElementExceptionをスローします。 |\norElseThrow(Supplier<Exception>)で例外の種類をカスタマイズできます。\norElse()とorElseGet()の違いは、orElse()はデフォルト値を常に評価し、orElseGet()はOptionalが空の時だけ評価する点です。\nor(Supplier<Optional>)はJava 9で追加された、空の場合に別のOptionalを返すメソッドです。",
+          "body": "| メソッド | 説明 |\n|---|---|\n| orElse(T other) | 値が存在すればその値を、なければ引数のデフォルト値を返します。 |\n| orElseGet(Supplier<T>) | 値が存在すればその値を、なければSupplierの結果を返します。 |\n| orElseThrow() | 値が存在すればその値を、なければNoSuchElementExceptionをスローします。 |\norElseThrow([[Supplier]]<Exception>)で例外の種類をカスタマイズできます。\norElse()とorElseGet()の違いは、orElse()はデフォルト値を常に評価し、orElseGet()はOptionalが空の時だけ評価する点です。\nor(Supplier<Optional>)はJava 9で追加された、空の場合に別のOptionalを返すメソッドです。",
           "code": "Optional<String> opt = Optional.of(\"Java\");\nOptional<String> empty = Optional.empty();\n\n// orElse(): デフォルト値を指定\nSystem.out.println(opt.orElse(\"default\"));   // Java\nSystem.out.println(empty.orElse(\"default\")); // default\n\n// orElseGet(): Supplierでデフォルト値を生成\nSystem.out.println(empty.orElseGet(() -> \"generated\"));\n// 出力: generated\n\n// orElseThrow(): 値がなければ例外\nSystem.out.println(opt.orElseThrow()); // Java\ntry {\n    empty.orElseThrow(() -> new IllegalArgumentException(\"値なし\"));\n} catch (IllegalArgumentException e) {\n    System.out.println(e.getMessage()); // 値なし\n}\n\n// orElse vs orElseGet の違い\n// ※ heavyMethod() は時間のかかる処理を表す仮のメソッドです\nOptional<String> present = Optional.of(\"A\");\npresent.orElse(heavyMethod());      // heavyMethodは常に実行される\npresent.orElseGet(() -> heavyMethod()); // heavyMethodは実行されない",
           "note": "パフォーマンスが重要な場合やデフォルト値の生成にコストがかかる場合は、orElseGet()を使いましょう。",
           "order": 4
@@ -828,7 +828,7 @@
           "lessonId": "ch24_05",
           "sectionType": "tip",
           "title": "Optionalのmap()とflatMap()",
-          "body": "Optional.map(Function)は値が存在すれば関数を適用し、結果をOptionalでラップして返します。\n空のOptionalに対してmap()を呼ぶと、何もせずOptional.empty()を返します。\nOptional.flatMap(Function)はmap()と似ていますが、関数がOptionalを返す場合に二重ラップを防ぎます。\nmap()の関数はT→Rを返し、flatMap()の関数はT→Optional<R>を返します。\nstream()メソッド（Java 9以降）で、Optionalを0個または1個の要素を持つStreamに変換できます。",
+          "body": "Optional.map([[Function]])は値が存在すれば関数を適用し、結果をOptionalでラップして返します。\n空のOptionalに対してmap()を呼ぶと、何もせずOptional.empty()を返します。\nOptional.flatMap(Function)はmap()と似ていますが、関数がOptionalを返す場合に二重ラップを防ぎます。\nmap()の関数はT→Rを返し、flatMap()の関数はT→Optional<R>を返します。\nstream()メソッド（Java 9以降）で、Optionalを0個または1個の要素を持つStreamに変換できます。",
           "code": "Optional<String> opt = Optional.of(\"Hello\");\n\n// map: 値を変換\nOptional<Integer> len = opt.map(String::length);\nSystem.out.println(len); // Optional[5]\n\n// 空のOptionalにmap\nOptional<Integer> empty = Optional.<String>empty()\n    .map(String::length);\nSystem.out.println(empty); // Optional.empty\n\n// flatMap: Optionalを返す関数に使用\nOptional<String> result = opt.flatMap(\n    s -> s.length() > 3 ? Optional.of(s.toUpperCase()) : Optional.empty()\n);\nSystem.out.println(result); // Optional[HELLO]\n\n// mapだと二重ラップされる\nOptional<Optional<String>> doubled = opt.map(\n    s -> Optional.of(s.toUpperCase())\n);\nSystem.out.println(doubled); // Optional[Optional[HELLO]]",
           "note": "flatMap()はOptionalを返す関数を使う場合に必要です。map()を使うとOptional<Optional<T>>になってしまいます。",
           "order": 5
@@ -957,7 +957,7 @@
           "lessonId": "ch24_06",
           "sectionType": "overview",
           "title": "プリミティブStreamとは",
-          "body": "このレッスンでは以下を学びます:\n\n・IntStream, LongStream, DoubleStreamの生成方法\n・range(), rangeClosed()で連番のストリーム生成\n・sum(), average(), max()などの集約操作\n\nオートボクシングのオーバーヘッドを避けた効率的な数値処理です。",
+          "body": "このレッスンでは以下を学びます:\n\n・IntStream, LongStream, DoubleStreamの生成方法\n・range(), rangeClosed()で連番のストリーム生成\n・sum(), average(), max()などの集約操作\n\n[[オートボクシング]]のオーバーヘッドを避けた効率的な数値処理です。",
           "code": null,
           "note": null,
           "order": 1
@@ -966,7 +966,7 @@
           "lessonId": "ch24_06",
           "sectionType": "code",
           "title": "IntStream.range()とrangeClosed()",
-          "body": "IntStream.range(start, end)はstartからend-1までの連続した整数のStreamを生成します（endは含まない）。\nIntStream.rangeClosed(start, end)はstartからendまでの連続した整数のStreamを生成します（endを含む）。\nLongStream.range()とLongStream.rangeClosed()も同様に使えます。\nDoubleStreamにはrange()メソッドはありません。\nこれらはfor文のループに相当する処理を**Stream API**で記述する際に便利です。",
+          "body": "IntStream.range(start, end)はstartからend-1までの連続した整数のStreamを生成します（endは含まない）。\nIntStream.rangeClosed(start, end)はstartからendまでの連続した整数のStreamを生成します（endを含む）。\nLongStream.range()とLongStream.rangeClosed()も同様に使えます。\nDoubleStreamにはrange()[[メソッド]]はありません。\nこれらは[[for文]]のループに相当する処理を**Stream API**で記述する際に便利です。",
           "code": "import java.util.stream.IntStream;\n\n// range: 1から4まで（5は含まない）\nIntStream.range(1, 5)\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 1 2 3 4\n\nSystem.out.println();\n\n// rangeClosed: 1から5まで（5を含む）\nIntStream.rangeClosed(1, 5)\n    .forEach(n -> System.out.print(n + \" \"));\n// 出力: 1 2 3 4 5\n\nSystem.out.println();\n\n// range()で要素がゼロのケース\nSystem.out.println(IntStream.range(5, 5).count()); // 0\n\n// rangeClosed()で要素が1つのケース\nSystem.out.println(IntStream.rangeClosed(5, 5).count()); // 1",
           "note": "range(5, 5)は空のStreamですが、rangeClosed(5, 5)は要素5を1つ持つStreamです。この違いは試験でよく問われます。",
           "order": 2
@@ -977,14 +977,14 @@
           "title": "sum()、average()、max()、min()",
           "body": "| メソッド | 戻り値の型 | 説明 |\n|---|---|---|\n| sum() | int / long / double | 全要素の合計 |\n| average() | OptionalDouble | 全要素の平均。空Streamの場合はempty() |\n| max() / min() | OptionalInt等 | 最大値・最小値 |\n| count() | long | 要素数 |\n| summaryStatistics() | IntSummaryStatistics等 | count・sum・min・average・maxを一度に取得 |",
           "code": "IntStream nums = IntStream.of(10, 20, 30, 40, 50);\n\n// 注意: Streamは1回しか使えないのでそれぞれ新しく生成\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).sum());\n// 出力: 150\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).average());\n// 出力: OptionalDouble[30.0]\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).max());\n// 出力: OptionalInt[50]\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).min());\n// 出力: OptionalInt[10]\n\n// summaryStatistics: まとめて取得\nIntSummaryStatistics stats = IntStream.of(10, 20, 30, 40, 50)\n    .summaryStatistics();\nSystem.out.println(\"Count: \" + stats.getCount());   // 5\nSystem.out.println(\"Sum: \" + stats.getSum());       // 150\nSystem.out.println(\"Average: \" + stats.getAverage()); // 30.0",
-          "note": "sum()はプリミティブ値を直接返しますが、average()・max()・min()はOptional型で返す点に注意しましょう。",
+          "note": "sum()はプリミティブ値を直接返しますが、average()・max()・min()は[[Optional]]型で返す点に注意しましょう。",
           "order": 3
         },
         {
           "lessonId": "ch24_06",
           "sectionType": "code",
           "title": "mapToInt()とboxed()",
-          "body": "Stream<T>からプリミティブStreamへの変換にはmapToInt()、mapToLong()、mapToDouble()を使います。\n逆にプリミティブStreamからStream<T>への変換にはboxed()を使います。\nmapToObj()はプリミティブStreamから任意のオブジェクトStreamに変換します。\nasLongStream()やasDoubleStream()でプリミティブStream間の変換も可能です。\nboxed()はcollect(Collectors.toList())を使いたい場合などに必要になります。",
+          "body": "Stream<T>からプリミティブStreamへの変換にはmapToInt()、mapToLong()、mapToDouble()を使います。\n逆にプリミティブStreamからStream<T>への変換にはboxed()を使います。\nmapToObj()はプリミティブStreamから任意のオブジェクトStreamに変換します。\nasLongStream()やasDoubleStream()でプリミティブStream間の変換も可能です。\nboxed()はcollect(Collectors]].[[toList())を使いたい場合などに必要になります。",
           "code": "// Stream<String> → IntStream\nList<String> words = List.of(\"Java\", \"Go\", \"Python\");\nIntStream lengths = words.stream().mapToInt(String::length);\nSystem.out.println(lengths.sum()); // 12\n\n// IntStream → Stream<Integer> (boxed)\nList<Integer> boxed = IntStream.rangeClosed(1, 5)\n    .boxed()\n    .collect(Collectors.toList());\nSystem.out.println(boxed); // [1, 2, 3, 4, 5]\n\n// IntStream → Stream<String> (mapToObj)\nList<String> strs = IntStream.range(1, 4)\n    .mapToObj(n -> \"Item\" + n)\n    .collect(Collectors.toList());\nSystem.out.println(strs); // [Item1, Item2, Item3]\n\n// IntStream → LongStream → DoubleStream\nIntStream.range(1, 4)\n    .asDoubleStream()\n    .forEach(d -> System.out.print(d + \" \"));\n// 出力: 1.0 2.0 3.0",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4

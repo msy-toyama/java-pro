@@ -13,7 +13,7 @@
           "lessonId": "ch32_01",
           "sectionType": "overview",
           "title": "3種類のモジュール",
-          "body": "このレッスンでは以下を学びます:\n\n・名前付きモジュール、自動モジュール、無名モジュールの違い\n・クラスパスとモジュールパスの関係\n・モジュール種類による公開・アクセスのルール\n\nモジュール間の互換性を理解する重要なトピックです。",
+          "body": "このレッスンでは以下を学びます:\n\n・名前付き[[モジュール]]、自動モジュール、無名モジュールの違い\n・[[クラス]]パスとモジュールパスの関係\n・モジュール種類による公開・アクセスのルール\n\nモジュール間の互換性を理解する重要なトピックです。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch32_01",
           "sectionType": "rule",
           "title": "名前付きモジュール",
-          "body": "名前付きモジュールはmodule-info.javaでモジュールの依存関係とエクスポートを明示的に宣言します。\nexportsで公開するパッケージを指定し、requiresで依存するモジュールを宣言します。\nモジュールパス上に配置する必要があります。\n名前付きモジュールは他のモジュールから明示的にアクセスを制御できます。\nこれにより、強力なカプセル化が実現されます。",
+          "body": "名前付きモジュールはmodule-info.javaでモジュールの依存関係とエクスポートを明示的に宣言します。\n**exports**で公開するパッケージを指定し、**requires**で依存するモジュールを宣言します。\nモジュールパス上に配置する必要があります。\n名前付きモジュールは他のモジュールから明示的にアクセスを制御できます。\nこれにより、強力な[[カプセル化]]が実現されます。",
           "code": null,
           "note": null,
           "order": 2
@@ -183,7 +183,7 @@
           "lessonId": "ch32_02",
           "sectionType": "overview",
           "title": "サービスプロバイダとは",
-          "body": "このレッスンでは以下を学びます:\n\n・provides ... with によるサービスの提供\n・uses によるサービスの利用宣言\n・**ServiceLoader** による実装の動的な取得\n\nモジュール間の疎結合を実現するサービスプロバイダの仕組みです。",
+          "body": "このレッスンでは以下を学びます:\n\n・provides ... with によるサービスの提供\n・uses によるサービスの利用宣言\n・**ServiceLoader** による実装の動的な取得\n\n[[モジュール]]間の疎結合を実現するサービスプロバイダの仕組みです。",
           "code": null,
           "note": null,
           "order": 1
@@ -192,7 +192,7 @@
           "lessonId": "ch32_02",
           "sectionType": "rule",
           "title": "provides...withとusesディレクティブ",
-          "body": "providesディレクティブは、サービスインターフェースの実装を提供することを宣言します。\n構文は「provides サービスインターフェース with 実装クラス」です。\nusesディレクティブは、サービスを消費することを宣言します。\n構文は「uses サービスインターフェース」です。\nサービスの提供側と消費側は別のモジュールに分離できます。",
+          "body": "providesディレクティブは、サービス[[インターフェース]]の実装を提供することを宣言します。\n構文は「provides サービスインターフェース with 実装[[クラス]]」です。\nusesディレクティブは、サービスを消費することを宣言します。\n構文は「uses サービスインターフェース」です。\nサービスの提供側と消費側は別のモジュールに分離できます。",
           "code": null,
           "note": null,
           "order": 2
@@ -201,7 +201,7 @@
           "lessonId": "ch32_02",
           "sectionType": "code",
           "title": "サービスプロバイダの実装例",
-          "body": "サービスインターフェースモジュール、プロバイダモジュール、消費者モジュールの3つに分けて実装します。\nServiceLoaderを使ってサービスの実装を動的に取得します。",
+          "body": "サービスインターフェースモジュール、プロバイダモジュール、消費者モジュールの3つに分けて実装します。\n[[ServiceLoader]]を使ってサービスの実装を動的に取得します。",
           "code": "// サービスインターフェースモジュール\nmodule com.example.api {\n    exports com.example.api;\n}\n\n// サービスプロバイダモジュール\nmodule com.example.provider {\n    requires com.example.api;\n    provides com.example.api.Logger\n        with com.example.provider.FileLogger;\n}\n\n// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    uses com.example.api.Logger;\n}\n\n// ServiceLoaderでサービスを取得\nServiceLoader<Logger> loader = ServiceLoader.load(Logger.class);\nfor (Logger logger : loader) {\n    logger.log(\"Hello\");\n}",
           "note": null,
           "order": 3
@@ -210,7 +210,7 @@
           "lessonId": "ch32_02",
           "sectionType": "point",
           "title": "ServiceLoaderの動作",
-          "body": "**ServiceLoader**.load()はサービスインターフェースの実装を遅延ロードします。\n複数のプロバイダが存在する場合、すべてのプロバイダが順に返されます。\nfindFirst()で最初のプロバイダだけを取得することもできます。\nプロバイダクラスには引数なしのpublicコンストラクタまたはstatic provider()メソッドが必要です。\nstream()メソッドでプロバイダをストリームとして処理できます。",
+          "body": "**ServiceLoader**.load()はサービスインターフェースの実装を遅延ロードします。\n複数のプロバイダが存在する場合、すべてのプロバイダが順に返されます。\nfindFirst()で最初のプロバイダだけを取得することもできます。\nプロバイダクラスには引数なしのpublicコンストラクタまたはstatic provider()[[メソッド]]が必要です。\nstream()メソッドでプロバイダをストリームとして処理できます。",
           "code": null,
           "note": null,
           "order": 4
@@ -219,9 +219,9 @@
           "lessonId": "ch32_02",
           "sectionType": "tip",
           "title": "試験でのサービスプロバイダのポイント",
-          "body": "provides...withの実装クラスはエクスポートする必要がありません。\nuses宣言がないモジュールでServiceLoaderを使うとサービスが見つかりません。\nprovidesの実装クラスはサービスインターフェースを実装または継承している必要があります。\n1つのprovidesに対して複数の実装クラスをカンマ区切りで指定できます。",
+          "body": "provides...withの実装クラスはエクスポートする必要がありません。\nuses宣言がないモジュールでServiceLoaderを使うとサービスが見つかりません。\nprovidesの実装クラスはサービスインターフェースを実装または[[継承]]している必要があります。\n1つのprovidesに対して複数の実装クラスをカンマ区切りで指定できます。",
           "code": null,
-          "note": "provides...withの実装クラスを公開（exports）する必要がない点は試験で頻出です。",
+          "note": "provides...withの実装クラスを公開（**exports**）する必要がない点は試験で頻出です。",
           "order": 5
         }
       ],
@@ -409,7 +409,7 @@
           "lessonId": "ch32_03",
           "sectionType": "overview",
           "title": "リフレクションとモジュールシステム",
-          "body": "このレッスンでは以下を学びます:\n\n・opensディレクティブでリフレクションアクセスを許可\n・exportsとopensの違い\n・フレームワーク（Spring、JPA等）がopensを必要とする理由\n\n実務で重要なリフレクションとモジュールの関係です。",
+          "body": "このレッスンでは以下を学びます:\n\n・opensディレクティブで[[リフレクション]]アクセスを許可\n・**exports**とopensの違い\n・フレームワーク（Spring、JPA等）がopensを必要とする理由\n\n実務で重要なリフレクションと[[モジュール]]の関係です。",
           "code": null,
           "note": null,
           "order": 1
@@ -418,7 +418,7 @@
           "lessonId": "ch32_03",
           "sectionType": "rule",
           "title": "exportsとopensの違い",
-          "body": "exportsはコンパイル時と実行時のpublicアクセスを許可します。\nopensは実行時のリフレクションアクセス（private含む）を許可します。\nexportsされたパッケージでも、リフレクションでprivateメンバーにはアクセスできません。\nopensされたパッケージでは、setAccessible(true)でprivateメンバーにもアクセスできます。\nexportsとopensは同じパッケージに対して併用できます。",
+          "body": "exportsは[[コンパイル]]時と実行時のpublicアクセスを許可します。\n**opens**は実行時のリフレクションアクセス（private含む）を許可します。\nexportsされたパッケージでも、**リフレクション**でprivateメンバーにはアクセスできません。\nopensされたパッケージでは、setAccessible(true)でprivateメンバーにもアクセスできます。\nexportsとopensは同じパッケージに対して併用できます。",
           "code": null,
           "note": null,
           "order": 2
@@ -445,7 +445,7 @@
           "lessonId": "ch32_03",
           "sectionType": "tip",
           "title": "open moduleの注意点",
-          "body": "open moduleではすべてのパッケージが暗黙的にopensされます。\nopen moduleでもexportsは別途宣言する必要があります。\nopen module内で個別のopens宣言はコンパイルエラーになります。\nフレームワーク依存のアプリケーションではopen moduleが便利ですが、カプセル化は弱くなります。",
+          "body": "open moduleではすべてのパッケージが暗黙的にopensされます。\nopen moduleでもexportsは別途宣言する必要があります。\nopen module内で個別のopens宣言はコンパイルエラーになります。\nフレームワーク依存のアプリケーションではopen moduleが便利ですが、[[カプセル化]]は弱くなります。",
           "code": null,
           "note": "open moduleでは個別のopensは書けませんが、exportsは書けます。",
           "order": 5
@@ -574,7 +574,7 @@
           "lessonId": "ch32_04",
           "sectionType": "overview",
           "title": "モジュール移行の必要性",
-          "body": "このレッスンでは以下を学びます:\n\n・既存のクラスパスベースのプロジェクトをモジュール化する手順\n・ボトムアップ方式とトップダウン方式\n・自動モジュールを使った段階的な移行\n\nレガシーコードのモジュール化戦略を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・既存の[[クラス]]パスベースのプロジェクトを[[モジュール]]化する手順\n・ボトムアップ方式とトップダウン方式\n・自動モジュールを使った段階的な移行\n\nレガシーコードのモジュール化戦略を学びます。",
           "code": null,
           "note": null,
           "order": 1

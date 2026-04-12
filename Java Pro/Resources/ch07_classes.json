@@ -13,7 +13,7 @@
           "lessonId": "ch07_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・クラス（設計図）とオブジェクト（実体）の関係\n・フィールド（データ）とメソッド（動作）の定義\n・new演算子でオブジェクトを生成する方法\n\nオブジェクト指向の最も重要な基礎概念です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[クラス]]（設計図）とオブジェクト（実体）の関係\n・フィールド（データ）と[[メソッド]]（動作）の定義\n・new演算子でオブジェクトを生成する方法\n\nオブジェクト指向の最も重要な基礎概念です。",
           "code": null,
           "note": null,
           "order": 1
@@ -24,16 +24,16 @@
           "title": "クラスの定義とインスタンス化",
           "body": "クラスを定義し、newキーワードで**インスタンス**を作ります。",
           "code": "// クラスの定義（設計図）\nclass Car {\n    // フィールド（データ）\n    String name;\n    int speed;\n\n    // メソッド（動作）\n    void accelerate() {\n        speed += 10;\n        System.out.println(name + \"が加速: \" + speed + \"km/h\");\n    }\n}\n\n// インスタンスの作成（実体を作る）\nCar car1 = new Car();\ncar1.name = \"プリウス\";\ncar1.speed = 0;\ncar1.accelerate(); // プリウスが加速: 10km/h\ncar1.accelerate(); // プリウスが加速: 20km/h\n\n// 同じ設計図から複数の実体を作れる\nCar car2 = new Car();\ncar2.name = \"フェラーリ\";\ncar2.speed = 100;\ncar2.accelerate(); // フェラーリが加速: 110km/h\n\n// car1とcar2は別のオブジェクト（独立したデータを持つ）",
-          "note": "1つのクラスから何個でも**インスタンス**を作れます。各インスタンスは独立したフィールド値を持ちます。",
+          "note": "1つのクラスから何個でも**インスタンス**を作れます。各[[インスタンス]]は独立したフィールド値を持ちます。",
           "order": 2
         },
         {
           "lessonId": "ch07_01",
           "sectionType": "rule",
           "title": "クラスの構成要素",
-          "body": "クラスを構成する4つの要素:\n\n1. フィールド（Field）: データを保持する変数\n・**インスタンス**変数: 各オブジェクトが持つ値\n・クラス変数（static）: クラス全体で共有する値\n\n2. メソッド（Method）: 処理・動作を定義\n・インスタンスメソッド: オブジェクトに対する操作\n・クラスメソッド（static）: クラスに対する操作\n\n3. **コンストラクタ**（Constructor）: 初期化処理\n   ・new時に自動的に呼ばれる\n\n4. ネストクラス: クラスの中に定義するクラス（上級）\n\nフィールドのデフォルト値:\n| 型 | デフォルト値 |\n|---|---|\n| int, long | 0 |\n| double, float | 0.0 |\n| boolean | false |\n| 参照型 | null |\n※ローカル変数にはデフォルト値がないので注意！",
+          "body": "クラスを構成する4つの要素:\n\n1. フィールド（Field）: データを保持する[[変数]]\n・**インスタンス**変数: 各オブジェクトが持つ値\n・クラス変数（static）: クラス全体で共有する値\n\n2. メソッド（Method）: 処理・動作を定義\n・インスタンスメソッド: オブジェクトに対する操作\n・クラスメソッド（static）: クラスに対する操作\n\n3. **コンストラクタ**（Constructor）: 初期化処理\n   ・new時に自動的に呼ばれる\n\n4. ネストクラス: クラスの中に定義するクラス（上級）\n\nフィールドのデフォルト値:\n| 型 | デフォルト値 |\n|---|---|\n| int, long | 0 |\n| double, float | 0.0 |\n| boolean | false |\n| 参照型 | null |\n※ローカル変数にはデフォルト値がないので注意！",
           "code": null,
-          "note": "フィールドは宣言するだけでデフォルト値が入りますが、ローカル変数は初期化しないとコンパイルエラーになります。",
+          "note": "フィールドは宣言するだけでデフォルト値が入りますが、ローカル変数は初期化しないと[[コンパイル]]エラーになります。",
           "order": 3
         },
         {
@@ -178,7 +178,7 @@
           "lessonId": "ch07_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・thisキーワードで「自分自身のオブジェクト」を参照\n・フィールドとローカル変数の名前が同じときの区別方法\n・フィールドの初期化と操作\n\nthisを使いこなすことで、コードの意図が明確になります。",
+          "body": "このレッスンでは以下を学びます:\n\n・thisキーワードで「自分自身のオブジェクト」を参照\n・フィールドとローカル[[変数]]の名前が同じときの区別方法\n・フィールドの初期化と操作\n\nthisを使いこなすことで、コードの意図が明確になります。",
           "code": null,
           "note": null,
           "order": 1
@@ -196,7 +196,7 @@
           "lessonId": "ch07_02",
           "sectionType": "tip",
           "title": "thisの2つの使い方",
-          "body": "thisキーワードには主に2つの使い方があります。\n\n| 使い方 | 構文 | 目的 |\n|---|---|---|\n| フィールド参照 | this.name = name | 同名のローカル変数と区別 |\n| コンストラクタ呼出し | this(引数) | 同じクラスの別コンストラクタを呼ぶ |\n\nthis()はコンストラクタの最初の行に書く必要があります。",
+          "body": "thisキーワードには主に2つの使い方があります。\n\n| 使い方 | 構文 | 目的 |\n|---|---|---|\n| フィールド参照 | this.name = name | 同名のローカル変数と区別 |\n| コンストラクタ呼出し | this(引数) | 同じクラスの別コンストラクタを呼ぶ |\n\nthis()は[[コンストラクタ]]の最初の行に書く必要があります。",
           "code": null,
           "note": "this()とsuper()は同時に使えません。",
           "order": 3
@@ -205,7 +205,7 @@
           "lessonId": "ch07_02",
           "sectionType": "code",
           "title": "フィールドの初期化とnull",
-          "body": "参照型フィールドの扱いとNullPointerExceptionの防止。",
+          "body": "[[参照型]]フィールドの扱いと[[NullPointerException]]の防止。",
           "code": "// Profileクラスの定義\nclass Profile {\n    String name;    // デフォルト: null\n    int score;      // デフォルト: 0\n    boolean active; // デフォルト: false\n\n    // showNameメソッドの定義\n    void showName() {\n        // ⚠️ nameがnullの場合、length()でNullPointerException！\n        // System.out.println(name.length()); // 危険！\n\n        // 安全なnullチェック\n        // 条件分岐\n        if (name != null) {\n            System.out.println(name.length());\n        } else {\n            System.out.println(\"名前未設定\");\n        }\n    }\n}\n\nProfile p = new Profile();\nSystem.out.println(p.name);    // null\nSystem.out.println(p.score);   // 0\nSystem.out.println(p.active);  // false\np.showName();                  // 名前未設定\n\n// フィールドの初期値を宣言時に設定\n// Configクラスの定義\nclass Config {\n    // 変数の宣言と初期化\n    String lang = \"ja\";      // デフォルト値を指定\n    int maxRetry = 3;\n    boolean debug = false;\n}",
           "note": "フィールドは宣言時に初期値を指定できます。**コンストラクタ**で上書きすることも可能です。",
           "order": 4
@@ -214,7 +214,7 @@
           "lessonId": "ch07_02",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・this = 自分自身の**インスタンス**への参照\n・this.フィールド名でフィールドと引数を区別\n・thisなしだと引数（ローカル変数）が優先される\n・参照型フィールドのデフォルトはnull\n・null参照でメソッド呼び出し → NullPointerException\n・フィールドは宣言時に初期値を設定可能",
+          "body": "・this = 自分自身の**インスタンス**への参照\n・this.フィールド名でフィールドと引数を区別\n・thisなしだと引数（ローカル変数）が優先される\n・参照型フィールドのデフォルトはnull\n・null参照で[[メソッド]]呼び出し → NullPointerException\n・フィールドは宣言時に初期値を設定可能",
           "code": null,
           "note": null,
           "order": 5
@@ -343,7 +343,7 @@
           "lessonId": "ch07_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**コンストラクタ**の定義と呼び出しタイミング\n・引数付きコンストラクタでオブジェクトの初期化\n・コンストラクタのオーバーロードとthis()呼び出し\n\nコンストラクタで「オブジェクト作成時に必ず初期化する」仕組みを学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**コンストラクタ**の定義と呼び出しタイミング\n・引数付き[[コンストラクタ]]でオブジェクトの初期化\n・コンストラクタの[[オーバーロード]]とthis()呼び出し\n\nコンストラクタで「オブジェクト作成時に必ず初期化する」仕組みを学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -352,7 +352,7 @@
           "lessonId": "ch07_03",
           "sectionType": "code",
           "title": "コンストラクタの定義",
-          "body": "クラス名と同じ名前で、戻り値の型を書きません。",
+          "body": "[[クラス]]名と同じ名前で、戻り値の型を書きません。",
           "code": "class Person {\n    String name;\n    int age;\n\n    // コンストラクタ（クラス名と同じ、戻り値なし）\n    Person(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n\n    void display() {\n        System.out.println(name + \"(\" + age + \"歳)\");\n    }\n}\n\n// new時にコンストラクタが呼ばれる\nPerson p = new Person(\"太郎\", 25);\np.display(); // 太郎(25歳)\n\n// Person p2 = new Person(); // コンパイルエラー！\n// → 引数ありコンストラクタを定義すると、\n//   デフォルトコンストラクタは自動生成されない",
           "note": "**コンストラクタ**を1つも定義しない場合、Javaが引数なしのデフォルトコンストラクタを自動生成します。1つでも定義すると自動生成されません。",
           "order": 2
@@ -370,7 +370,7 @@
           "lessonId": "ch07_03",
           "sectionType": "tip",
           "title": "コンストラクタの特殊ルール",
-          "body": "**コンストラクタ**には通常のメソッドと異なるルールがあります。\n\n| ルール | 説明 |\n|---|---|\n| 名前はクラス名と同じ | Car クラスなら Car() |\n| 戻り値の型を書かない | void も書かない |\n| newの時だけ呼ばれる | 直接呼び出せない |\n| 書かなければ自動生成 | 引数なしのデフォルトコンストラクタ |\n\n注意: 引数付きコンストラクタを書くと、デフォルトコンストラクタは自動生成されなくなります。",
+          "body": "**コンストラクタ**には通常の[[メソッド]]と異なるルールがあります。\n\n| ルール | 説明 |\n|---|---|\n| 名前はクラス名と同じ | Car クラスなら Car() |\n| 戻り値の型を書かない | void も書かない |\n| newの時だけ呼ばれる | 直接呼び出せない |\n| 書かなければ自動生成 | 引数なしのデフォルトコンストラクタ |\n\n注意: 引数付きコンストラクタを書くと、デフォルトコンストラクタは自動生成されなくなります。",
           "code": null,
           "note": "試験では「デフォルト**コンストラクタ**が自動生成される/されない条件」が頻出です。",
           "order": 4
@@ -569,7 +569,7 @@
           "lessonId": "ch07_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**カプセル化**：データを外部から隠す設計手法\n・**アクセス修飾子**（public, private, protected, デフォルト）の違い\n・getter/setterメソッドによる安全なデータアクセス\n\nカプセル化は「バグを防ぎ、変更に強いコードを作る」ための重要な技術です。",
+          "body": "このレッスンでは以下を学びます:\n\n・**カプセル化**：データを外部から隠す設計手法\n・**アクセス修飾子**（public, private, protected, デフォルト）の違い\n・getter/setterメソッドによる安全なデータアクセス\n\n[[カプセル化]]は「バグを防ぎ、変更に強いコードを作る」ための重要な技術です。",
           "code": null,
           "note": null,
           "order": 1
@@ -589,7 +589,7 @@
           "title": "4つのアクセス修飾子",
           "body": "Javaには4段階の**アクセス修飾子**があります:\n\n| 修飾子 | 同クラス | 同パッケージ | 子クラス | 他パッケージ |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (なし)パッケージ | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\n使い分けの目安:\n\n| 対象 | 推奨レベル |\n|---|---|\n| フィールド | private（カプセル化） |\n| getter/setter | public |\n| 内部処理用メソッド | private |\n| 継承で使わせたいメソッド | protected |\n| API公開メソッド | public |\n\n原則: 最小限のアクセスレベルを選ぶ（情報隠蔽の原則）",
           "code": null,
-          "note": "トップレベルクラスに使えるのはpublicと(なし)のみです。privateやprotectedはネストクラスでのみ使えます。",
+          "note": "トップレベル[[クラス]]に使えるのはpublicと(なし)のみです。privateやprotectedはネストクラスでのみ使えます。",
           "order": 3
         },
         {
@@ -782,7 +782,7 @@
           "lessonId": "ch07_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・staticフィールド：全**インスタンス**で共有される変数\n・staticメソッド：インスタンス不要で呼べるメソッド\n・staticの使いどころと注意点\n\nMath.random() や Integer.parseInt() もstaticメソッドです。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[staticフィールド]]：全**インスタンス**で共有される[[変数]]\n・[[staticメソッド]]：[[インスタンス]]不要で呼べる[[メソッド]]\n・staticの使いどころと注意点\n\nMath.random() や Integer.parseInt() もstaticメソッドです。",
           "code": null,
           "note": null,
           "order": 1
@@ -791,7 +791,7 @@
           "lessonId": "ch07_05",
           "sectionType": "code",
           "title": "staticフィールドとメソッド",
-          "body": "staticメンバはクラス全体で1つだけ存在します。",
+          "body": "staticメンバは[[クラス]]全体で1つだけ存在します。",
           "code": "// Employeeクラスの定義\nclass Employee {\n    // staticフィールド（クラス変数）: 全インスタンスで共有\n    static int totalCount = 0;\n    static String company = \"テック株式会社\";\n\n    // インスタンスフィールド: 各オブジェクトごとに独立\n    String name;\n    int id;\n\n    Employee(String name) {\n        this.name = name;\n        totalCount++;  // インスタンス生成のたびにカウント\n        this.id = totalCount;\n    }\n\n    // staticメソッド: オブジェクトなしで呼べる\n    // getTotalメソッドの定義\n    static int getTotal() {\n        // this.name; // コンパイルエラー！staticからインスタンスメンバは不可\n        return totalCount;\n    }\n\n    // インスタンスメソッド: staticメンバにもアクセスできる\n    // showメソッドの定義\n    void show() {\n        System.out.println(company + \" \" + name + \" (ID:\" + id + \")\");\n    }\n}\n\nEmployee e1 = new Employee(\"太郎\");\nEmployee e2 = new Employee(\"花子\");\ne1.show(); // テック株式会社 太郎 (ID:1)\ne2.show(); // テック株式会社 花子 (ID:2)\nSystem.out.println(Employee.getTotal()); // 2",
           "note": "staticフィールドはクラスがロードされた時点で1度だけ作られます。JVMが終了するまでメモリに残ります。",
           "order": 2
@@ -800,7 +800,7 @@
           "lessonId": "ch07_05",
           "sectionType": "rule",
           "title": "staticの制約と使い分け",
-          "body": "staticメンバの制約:\n\n1. staticメソッドから**インスタンス**メンバに直接アクセスできない\n   → オブジェクトを作ってからアクセスする\n\n2. staticメソッドでthisは使えない\n   → thisは「自分のインスタンス」を指すため\n\n3. インスタンスメソッドからstaticメンバにはアクセスできる\n\nstaticの適切な使い方:\n| 用途 | 説明 |\n|---|---|\n| 定数 | static final double PI = 3.14159; |\n| ユーティリティメソッド | Math.max(), Integer.parseInt() |\n| カウンター | インスタンス数の管理 |\n| ファクトリメソッド | インスタンス生成方法の提供 |\n\n避けるべき使い方:\n・状態の多いstaticフィールド（テストやマルチスレッドで問題に）\n・なんでもstaticにする（オブジェクト指向の利点を失う）",
+          "body": "staticメンバの制約:\n\n1. staticメソッドから**インスタンス**メンバに直接アクセスできない\n   → オブジェクトを作ってからアクセスする\n\n2. staticメソッドでthisは使えない\n   → thisは「自分のインスタンス」を指すため\n\n3. インスタンスメソッドからstaticメンバにはアクセスできる\n\nstaticの適切な使い方:\n| 用途 | 説明 |\n|---|---|\n| 定数 | static final double PI = 3.14159; |\n| ユーティリティメソッド | Math.max(), Integer.parseInt() |\n| カウンター | インスタンス数の管理 |\n| ファクトリメソッド | インスタンス生成方法の提供 |\n\n避けるべき使い方:\n・状態の多いstaticフィールド（テストやマルチ[[スレッド]]で問題に）\n・なんでもstaticにする（オブジェクト指向の利点を失う）",
           "code": null,
           "note": null,
           "order": 3
@@ -811,7 +811,7 @@
           "title": "staticメソッドからインスタンスメンバにアクセスできない",
           "body": "staticメソッドは「クラスに属する」ため、特定の**インスタンス**の情報にアクセスできません。\n\n・staticメソッド内でthisは使えない\n・staticメソッドからインスタンスフィールドを直接参照できない\n・staticメソッドからインスタンスメソッドを直接呼べない\n\n逆に、インスタンスメソッドからstaticメンバにはアクセスできます。",
           "code": null,
-          "note": "mainメソッドもstaticなので、mainから直接**インスタンス**メソッドを呼べないのはこのルールのためです。",
+          "note": "[[mainメソッド]]もstaticなので、mainから直接**インスタンス**メソッドを呼べないのはこのルールのためです。",
           "order": 4
         },
         {
@@ -984,7 +984,7 @@
           "lessonId": "ch07_06",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・toString()：オブジェクトの文字列表現をカスタマイズ\n・equals()：論理的な等価比較を定義\n・hashCode()：ハッシュベースのコレクションで必要\n\nすべてのクラスが暗黙的に持つObjectクラスのメソッドを適切にオーバーライドしましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・toString()：オブジェクトの文字列表現をカスタマイズ\n・equals()：論理的な等価比較を定義\n・hashCode()：ハッシュベースのコレクションで必要\n\nすべての[[クラス]]が暗黙的に持つObjectクラスの[[メソッド]]を適切に[[オーバーライド]]しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -1004,14 +1004,14 @@
           "title": "equals()とhashCode()",
           "body": "オブジェクトの等価性を正しく判定するための実装です。",
           "code": "// Pointクラスの定義\nclass Point {\n    int x, y;\n\n    Point(int x, int y) {\n        this.x = x;\n        this.y = y;\n    }\n    @Override\n    // equalsメソッドの定義\n    public boolean equals(Object obj) {\n        // 1. 同一オブジェクトチェック\n        // 条件分岐\n        if (this == obj) return true;\n        // 2. null & 型チェック\n        if (!(obj instanceof Point)) return false;\n        // 3. フィールド比較\n        Point other = (Point) obj;\n        return this.x == other.x && this.y == other.y;\n    }\n    @Override\n    // hashCodeメソッドの定義\n    public int hashCode() {\n        // equalsがtrueなら同じhashCodeを返す必要あり\n        return 31 * x + y;\n    }\n    @Override\n    public String toString() {\n        return \"(\" + x + \", \" + y + \")\";\n    }\n}\nPoint p1 = new Point(3, 4);\nPoint p2 = new Point(3, 4);\nPoint p3 = new Point(1, 2);\n\nSystem.out.println(p1 == p2);      // false（参照が異なる）\nSystem.out.println(p1.equals(p2)); // true（値が同じ）\nSystem.out.println(p1.equals(p3)); // false",
-          "note": "equals()をオーバーライドしたらhashCode()も必ずオーバーライドします。HashMap/HashSetで正しく動くために、equalsがtrueなら同じhashCodeを返す契約があります。",
+          "note": "equals()をオーバーライドしたらhashCode()も必ずオーバーライドします。[[HashMap]]/[[HashSet]]で正しく動くために、equalsがtrueなら同じhashCodeを返す契約があります。",
           "order": 3
         },
         {
           "lessonId": "ch07_06",
           "sectionType": "rule",
           "title": "==とequals()の違い",
-          "body": "・== 演算子\n  → プリミティブ型: 値の比較\n  → 参照型: 参照（メモリ上のアドレス）の比較\n  → 同じオブジェクトかどうかを判定\n\n・equals() メソッド\n  → 参照型のみ使用可能\n  → オーバーライドしなければ==と同じ動作\n  → オーバーライドすると「論理的な等価性」を判定\n  → Stringクラスはequals()をオーバーライド済み\n\n注意: Stringの比較\n  String s1 = \"hello\";\n  String s2 = \"hello\";\n  s1 == s2;      // true（文字列プールにより同じ参照）\n  \n  String s3 = new String(\"hello\");\n  s1 == s3;      // false（異なるオブジェクト）\n  s1.equals(s3); // true（内容が同じ）\n  \n→ 文字列比較は常にequals()を使うべき",
+          "body": "・== [[演算子]]\n  → [[プリミティブ型]]: 値の比較\n  → [[参照型]]: 参照（メモリ上のアドレス）の比較\n  → 同じオブジェクトかどうかを判定\n\n・equals() メソッド\n  → 参照型のみ使用可能\n  → オーバーライドしなければ==と同じ動作\n  → オーバーライドすると「論理的な等価性」を判定\n  → Stringクラスはequals()をオーバーライド済み\n\n注意: Stringの比較\n  [[String]] s1 = \"hello\";\n  String s2 = \"hello\";\n  s1 == s2;      // true（文字列プールにより同じ参照）\n  \n  String s3 = new String(\"hello\");\n  s1 == s3;      // false（異なるオブジェクト）\n  s1.equals(s3); // true（内容が同じ）\n  \n→ 文字列比較は常にequals()を使うべき",
           "code": null,
           "note": null,
           "order": 4
@@ -1029,7 +1029,7 @@
           "lessonId": "ch07_06",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・すべてのクラスはObjectを暗黙的に継承\n| メソッド | 説明 |\n|---|---|\n| toString() | 文字列表現、printlnで自動呼び出し |\n| equals() | 論理的等価性の判定 |\n| hashCode() | equals()と一緒にオーバーライド |\n・== は参照比較、equals() は内容比較\n・文字列比較は必ずequals()を使う",
+          "body": "・すべてのクラスはObjectを暗黙的に[[継承]]\n| メソッド | 説明 |\n|---|---|\n| toString() | 文字列表現、printlnで自動呼び出し |\n| equals() | 論理的等価性の判定 |\n| hashCode() | equals()と一緒にオーバーライド |\n・== は参照比較、equals() は内容比較\n・文字列比較は必ずequals()を使う",
           "code": null,
           "note": null,
           "order": 6
@@ -1158,7 +1158,7 @@
           "lessonId": "ch07_07",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・パッケージでクラスを整理・名前の衝突を回避\n・import文の書き方と注意点\n・finalキーワードの3つの使い方（変数・メソッド・クラス）\n\nプロジェクトが大きくなったときに必須の知識です。",
+          "body": "このレッスンでは以下を学びます:\n\n・パッケージで[[クラス]]を整理・名前の衝突を回避\n・import文の書き方と注意点\n・finalキーワードの3つの使い方（[[変数]]・[[メソッド]]・クラス）\n\nプロジェクトが大きくなったときに必須の知識です。",
           "code": null,
           "note": null,
           "order": 1
@@ -1169,7 +1169,7 @@
           "title": "パッケージとimport",
           "body": "パッケージでクラスを分類し、importで他パッケージのクラスを使います。",
           "code": "// パッケージ宣言（ファイルの先頭に記述）\npackage com.example.model;\n\n// import文（他のパッケージのクラスを使う）\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.time.LocalDate; // 個別import\n// import java.util.*;      // ワイルドカードimport（全クラス）\n\npublic class User {\n    private String name;\n    private List<String> roles = new ArrayList<>();\n    private LocalDate createdAt = LocalDate.now();\n}\n\n// パッケージの命名規則:\n// ドメイン名を逆にした形式が慣例\n// com.example.app\n// jp.co.company.project\n\n// java.lang パッケージのクラスはimport不要\n// String, Integer, System, Math 等\n\n// 完全修飾名（import不要だがコードが長くなる）\njava.util.ArrayList<String> list = new java.util.ArrayList<>();",
-          "note": "java.langパッケージ（String, Math, Integer等）は自動的にimportされます。import文を書く必要はありません。",
+          "note": "java.langパッケージ（[[String]], Math, Integer等）は自動的にimportされます。import文を書く必要はありません。",
           "order": 2
         },
         {

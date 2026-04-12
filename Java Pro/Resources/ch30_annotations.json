@@ -13,7 +13,7 @@
           "lessonId": "ch30_01",
           "sectionType": "overview",
           "title": "アノテーションとは",
-          "body": "このレッスンでは以下を学びます:\n\n・**アノテーション**の役割（メタデータの付与）\n・@Override, @Deprecated, @SuppressWarnings等の標準アノテーション\n・アノテーションの記述位置と効果\n\n「コードに情報を付加する」仕組みを理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・**アノテーション**の役割（メタデータの付与）\n・@Override, @Deprecated, @SuppressWarnings等の標準[[アノテーション]]\n・アノテーションの記述位置と効果\n\n「コードに情報を付加する」仕組みを理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -40,9 +40,9 @@
           "lessonId": "ch30_01",
           "sectionType": "point",
           "title": "ElementTypeとRetentionPolicy",
-          "body": "ElementTypeは**アノテーション**の適用先を制限する列挙型です。\n複数のElementTypeを指定する場合は配列形式で記述します：@Target({ElementType.TYPE, ElementType.METHOD})。\nRetentionPolicyは3段階あり、SOURCEが最も短く、RUNTIMEが最も長い保持期間です。\n| ポリシー | 説明 |\n|---|---|\n| SOURCE | コンパイラが使用し、クラスファイルには含まれません（例：@Override）。 |\n| CLASS | クラスファイルに含まれますが、実行時にリフレクションで取得できません。 |\n| RUNTIME | 実行時にリフレクションで取得可能です（フレームワークで多用）。 |",
+          "body": "ElementTypeは**アノテーション**の適用先を制限する列挙型です。\n複数のElementTypeを指定する場合は[[配列]]形式で記述します：@Target({ElementType.TYPE, ElementType.METHOD})。\nRetentionPolicyは3段階あり、SOURCEが最も短く、RUNTIMEが最も長い保持期間です。\n| ポリシー | 説明 |\n|---|---|\n| SOURCE | コンパイラが使用し、クラスファイルには含まれません（例：@Override）。 |\n| CLASS | クラスファイルに含まれますが、実行時にリフレクションで取得できません。 |\n| RUNTIME | 実行時にリフレクションで取得可能です（フレームワークで多用）。 |",
           "code": null,
-          "note": "@Overrideは@Retention(SOURCE)なので、コンパイル後のクラスファイルには含まれません。",
+          "note": "@Overrideは@Retention(SOURCE)なので、[[コンパイル]]後の[[クラス]]ファイルには含まれません。",
           "order": 4
         },
         {
@@ -178,7 +178,7 @@
           "lessonId": "ch30_02",
           "sectionType": "overview",
           "title": "カスタムアノテーションの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・@interface で**カスタムアノテーション**を定義\n・要素（属性）の宣言とデフォルト値\n・@Retention, @Targetなどの**メタアノテーション**\n\n自分だけのアノテーションを設計できるようになります。",
+          "body": "このレッスンでは以下を学びます:\n\n・@interface で**カスタムアノテーション**を定義\n・要素（属性）の宣言とデフォルト値\n・@Retention, @Targetなどの**メタアノテーション**\n\n自分だけの[[アノテーション]]を設計できるようになります。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch30_02",
           "sectionType": "code",
           "title": "@interface構文によるアノテーション定義",
-          "body": "**アノテーション**は@interface キーワードで定義します（interfaceではありません）。\n要素は引数なしメソッドの形式で宣言し、実装本体はありません。\ndefaultキーワードでデフォルト値を指定できます。\n要素のないアノテーションをマーカーアノテーションと呼びます。\n要素が1つでその名前がvalue()の場合、使用時に要素名を省略できます（単一値アノテーション）。",
+          "body": "**アノテーション**は@interface キーワードで定義します（interfaceではありません）。\n要素は引数なし[[メソッド]]の形式で宣言し、実装本体はありません。\ndefaultキーワードでデフォルト値を指定できます。\n要素のないアノテーションをマーカーアノテーションと呼びます。\n要素が1つでその名前がvalue()の場合、使用時に要素名を省略できます（単一値アノテーション）。",
           "code": "import java.lang.annotation.*;\n\n// マーカーアノテーション（要素なし）\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Test {}\n\n// 単一値アノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Author {\n    String value();  // 要素名がvalueなら使用時に省略可能\n}\n\n// 複数要素のアノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Todo {\n    String description();\n    String assignee() default \"未定\";\n    int priority() default 3;\n}\n\n// 使用例\n@Author(\"Taro\")  // value()なので要素名省略可\n// MyAppクラスの定義\nclass MyApp {\n    @Test\n    // testMethodメソッドの定義\n    void testMethod() {}\n\n    @Todo(description = \"実装する\", priority = 1)\n    // futureMethodメソッドの定義\n    void futureMethod() {}\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -196,7 +196,7 @@
           "lessonId": "ch30_02",
           "sectionType": "rule",
           "title": "アノテーション要素のルール",
-          "body": "**アノテーション**要素の戻り値の型は以下に限定されます。\nプリミティブ型（int、double、boolean等）、String、Class<?>、列挙型、アノテーション型。\nおよびこれらの型の1次元配列。\nArrayListやMapなどのコレクション型は使えません。\nデフォルト値はコンパイル時定数でなければなりません。\nnullはデフォルト値として使えません。\n要素名にJavaの予約語は使えません。",
+          "body": "**アノテーション**要素の戻り値の型は以下に限定されます。\n[[プリミティブ型]]（int、double、boolean等）、[[String]]、Class<?>、列挙型、アノテーション型。\nおよびこれらの型の1次元[[配列]]。\n[[ArrayList]]やMapなどのコレクション型は使えません。\nデフォルト値は[[コンパイル]]時定数でなければなりません。\nnullはデフォルト値として使えません。\n要素名にJavaの予約語は使えません。",
           "code": "import java.lang.annotation.*;\n\n// 様々な型の要素\n@Retention(RetentionPolicy.RUNTIME)\n@interface Config {\n    int count() default 10;           // プリミティブ型\n    String name();                     // String\n    Class<?> type() default Object.class; // Class\n    DayOfWeek day() default DayOfWeek.MONDAY; // 列挙型\n    Author author();                   // アノテーション型\n    String[] tags() default {};        // 配列\n}\n\n// 配列要素の使用\n@interface Roles {\n    String[] value();\n}\n\n// 配列が1要素の場合、波括弧を省略可能\n@Roles(\"admin\")\n// @Roles({\"admin\"}) と同じ\nclass AdminService {}\n\n@Roles({\"admin\", \"manager\"})\nclass ManagerService {}\n\n// ★ コンパイルエラーの例\n// @interface Bad {\n//     Object obj();        // Objectは不可\n//     String s() default null; // nullは不可\n// }",
           "note": "**アノテーション**要素にnullをデフォルト値として指定するとコンパイルエラーになります。空文字列\"\"や空配列{}を代わりに使います。",
           "order": 3
@@ -453,7 +453,7 @@
           "lessonId": "ch30_03",
           "sectionType": "overview",
           "title": "アノテーション活用の概要",
-          "body": "このレッスンでは以下を学びます:\n\n・**リフレクション**で**アノテーション**情報を取得する方法\n・@Repeatable（繰り返しアノテーション）Java 8+\n・フレームワークでのアノテーション活用例\n\nアノテーションが実際に活用される場面を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**リフレクション**で**アノテーション**情報を取得する方法\n・@Repeatable（繰り返し[[アノテーション]]）Java 8+\n・フレームワークでのアノテーション活用例\n\nアノテーションが実際に活用される場面を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -462,7 +462,7 @@
           "lessonId": "ch30_03",
           "sectionType": "code",
           "title": "@Repeatableアノテーション",
-          "body": "@Repeatableを使うと、同じ**アノテーション**を同じ要素に複数回適用できます。\n@Repeatableには「格納用アノテーション（コンテナアノテーション）」を指定する必要があります。\nコンテナアノテーションにはvalue()要素が必要で、その型は繰り返し対象のアノテーションの配列です。\nコンテナアノテーションの@Retentionと@Targetは、繰り返し対象のアノテーションと合わせる必要があります。",
+          "body": "@Repeatableを使うと、同じ**アノテーション**を同じ要素に複数回適用できます。\n@Repeatableには「格納用アノテーション（コンテナアノテーション）」を指定する必要があります。\nコンテナアノテーションにはvalue()要素が必要で、その型は繰り返し対象のアノテーションの[[配列]]です。\nコンテナアノテーションの@Retentionと@Targetは、繰り返し対象のアノテーションと合わせる必要があります。",
           "code": "import java.lang.annotation.*;\n\n// 1. 繰り返し可能なアノテーション\n@Repeatable(Roles.class)  // コンテナを指定\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Role {\n    String value();\n}\n\n// 2. コンテナアノテーション\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Roles {\n    Role[] value();  // 繰り返し対象の配列\n}\n\n// 3. 使用例：同じアノテーションを複数回適用\n@Role(\"admin\")\n@Role(\"manager\")\n@Role(\"user\")\n// MultiRoleUserクラスの定義\nclass MultiRoleUser {\n}\n\n// コンテナアノテーションで直接書くことも可能\n@Roles({@Role(\"admin\"), @Role(\"manager\")})\n// AnotherUserクラスの定義\nclass AnotherUser {\n}",
           "note": "コンテナ**アノテーション**の@Retentionは、繰り返し対象と同じかそれ以上の保持期間が必要です。",
           "order": 2
@@ -482,7 +482,7 @@
           "title": "@Repeatableのリフレクション",
           "body": "@Repeatable**アノテーション**を**リフレクション**で取得する方法は2つあります。\ngetAnnotationsByType(Class)は@Repeatableアノテーションを直接配列で取得します。\ngetAnnotation(Class)でコンテナアノテーションを取得することもできます。\n@Repeatableを1回だけ適用した場合、コンテナアノテーションは生成されません。\n2回以上適用した場合は、コンテナアノテーションに格納されます。",
           "code": "import java.lang.annotation.*;\n\n// @Repeatableアノテーションの取得\n// @Role(\"admin\") @Role(\"manager\") が付いた MultiRoleUser\n\nClass<?> clazz = MultiRoleUser.class;\n\n// 方法1：getAnnotationsByType()で直接取得\nRole[] roles = clazz.getAnnotationsByType(Role.class);\nfor (Role r : roles) {\n    System.out.println(r.value());\n}\n// admin\n// manager\n// user\n\n// 方法2：コンテナアノテーション経由\nRoles container = clazz.getAnnotation(Roles.class);\nif (container != null) {\n    for (Role r : container.value()) {\n        System.out.println(r.value());\n    }\n}\n\n// 1回だけの場合\n// @Role(\"admin\") class SingleRoleUser {}\n// getAnnotation(Roles.class) → null\n// getAnnotation(Role.class) → @Role(\"admin\")\n// getAnnotationsByType(Role.class) → {@Role(\"admin\")}",
-          "note": "getAnnotationsByType()はJava 8で追加されたメソッドで、@Repeatableの有無に関係なく使えます。",
+          "note": "getAnnotationsByType()はJava 8で追加された[[メソッド]]で、@Repeatableの有無に関係なく使えます。",
           "order": 4
         },
         {

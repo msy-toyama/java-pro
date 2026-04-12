@@ -13,7 +13,7 @@
           "lessonId": "ch17_01",
           "sectionType": "overview",
           "title": "モジュールシステムが生まれた背景",
-          "body": "このレッスンでは以下を学びます:\n\n・モジュールシステム（JPMS）が導入された理由\n・モジュールの基本概念（依存関係の明示化）\n・クラスパスの問題とモジュールパスの違い\n\nJava 9で導入された大きな変革を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[モジュール]]システム（JPMS）が導入された理由\n・**モジュール**の基本概念（依存関係の明示化）\n・[[クラス]]パスの問題とモジュールパスの違い\n\nJava 9で導入された大きな変革を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,9 +22,9 @@
           "lessonId": "ch17_01",
           "sectionType": "rule",
           "title": "module-info.javaの役割",
-          "body": "モジュールを定義するには、ソースツリーのルートに**module-info.java**ファイルを配置します。\nこのファイルにはモジュール名、公開するパッケージ、依存するモジュールなどを宣言します。\nモジュール名は通常、パッケージ名と同様にドット区切りの逆ドメイン形式を使用します。\nmodule-info.javaはコンパイルされてmodule-info.classとなり、JARのルートに格納されます。\nこのファイルが存在しないJARは「無名モジュール（Unnamed Module）」として扱われます。",
+          "body": "モジュールを定義するには、ソースツリーのルートに**module-info.java**ファイルを配置します。\nこのファイルにはモジュール名、公開するパッケージ、依存するモジュールなどを宣言します。\nモジュール名は通常、パッケージ名と同様にドット区切りの逆ドメイン形式を使用します。\nmodule-info.javaは[[コンパイル]]されてmodule-info.classとなり、JARのルートに格納されます。\nこのファイルが存在しないJARは「無名モジュール（Unnamed Module）」として扱われます。",
           "code": "// module-info.java の基本構造\nmodule com.example.myapp {\n    requires java.sql;\n    exports com.example.myapp.api;\n}",
-          "note": "**module-info.java** はモジュールのルートディレクトリに配置します。パッケージの中には入れません。",
+          "note": "**module-info.java** はモジュールのルートディレクトリに配置します。**パッケージ**の中には入れません。",
           "order": 2
         },
         {
@@ -40,7 +40,7 @@
           "lessonId": "ch17_01",
           "sectionType": "point",
           "title": "モジュールシステムの利点",
-          "body": "モジュールシステムの主な利点は以下の通りです。\n1つ目は「強力なカプセル化」です。exports宣言していないパッケージは外部から完全に隠蔽されます。\n2つ目は「明示的な依存関係」です。requires宣言により、必要なモジュールがコンパイル時に検証されます。\n3つ目は「信頼性の向上」です。起動時にモジュールグラフが解決され、依存関係の欠落を早期に検出できます。\n4つ目は「カスタムランタイム」です。jlinkツールで必要なモジュールだけのランタイムを作成できます。",
+          "body": "モジュールシステムの主な利点は以下の通りです。\n1つ目は「強力な[[カプセル化]]」です。exports宣言していないパッケージは外部から完全に隠蔽されます。\n2つ目は「明示的な依存関係」です。requires宣言により、必要なモジュールがコンパイル時に検証されます。\n3つ目は「信頼性の向上」です。起動時にモジュールグラフが解決され、依存関係の欠落を早期に検出できます。\n4つ目は「カスタムランタイム」です。jlinkツールで必要なモジュールだけのランタイムを作成できます。",
           "code": null,
           "note": "モジュールシステムを使用することで、publicクラスであってもexportsされていなければ外部からアクセスできません。",
           "order": 4
@@ -178,7 +178,7 @@
           "lessonId": "ch17_02",
           "sectionType": "overview",
           "title": "モジュール定義の全体像",
-          "body": "このレッスンでは以下を学びます:\n\n・**module-info.java**の構文と配置場所\n・requires（依存宣言）とexports（公開宣言）\n・modulesコマンドでの操作方法\n\nモジュール定義の実践的な書き方を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**module-info.java**の構文と配置場所\n・requires（依存宣言）とexports（公開宣言）\n・modulesコマンドでの操作方法\n\n[[モジュール]]定義の実践的な書き方を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -214,7 +214,7 @@
           "lessonId": "ch17_02",
           "sectionType": "rule",
           "title": "opensディレクティブ",
-          "body": "opensディレクティブは、実行時のリフレクションアクセスを許可するために使用します。\nexportsがコンパイル時と実行時の両方でアクセスを許可するのに対し、opensは実行時のリフレクションのみを許可します。\nフレームワーク（JPA、Spring等）がリフレクションでクラスにアクセスする場合に必要になります。\nopen moduleとして宣言すると、モジュール全体をリフレクションに公開できます。\nただし、通常はopens宣言を使い、必要なパッケージのみを公開することが推奨されます。",
+          "body": "opensディレクティブは、実行時の[[リフレクション]]アクセスを許可するために使用します。\nexportsが[[コンパイル]]時と実行時の両方でアクセスを許可するのに対し、opensは実行時のリフレクションのみを許可します。\nフレームワーク（JPA、Spring等）がリフレクションで[[クラス]]にアクセスする場合に必要になります。\nopen moduleとして宣言すると、モジュール全体をリフレクションに公開できます。\nただし、通常はopens宣言を使い、必要なパッケージのみを公開することが推奨されます。",
           "code": "// パッケージ単位でリフレクションを許可\nmodule com.example.app {\n    opens com.example.app.model;\n    opens com.example.app.entity to hibernate.core;\n}\n\n// モジュール全体をリフレクションに公開\nopen module com.example.app {\n    exports com.example.app.api;\n}",
           "note": "exportsはコンパイル時+実行時のアクセス許可、opensは実行時のリフレクションアクセスのみを許可します。",
           "order": 5
@@ -471,7 +471,7 @@
           "lessonId": "ch17_03",
           "sectionType": "rule",
           "title": "java.baseモジュール",
-          "body": "java.baseはJavaプラットフォームの最も基本的なモジュールです。\nすべてのモジュールはjava.baseに暗黙的に依存するため、requires java.baseと書く必要はありません。\njava.baseに含まれる主なパッケージは以下の通りです。\njava.lang（String, Object, System等）、java.util（List, Map等）、java.io（File, InputStream等）が含まれます。\njava.math、java.net、java.nio、java.time等も含まれています。\nこれらのパッケージはrequires宣言なしで常に使用可能です。",
+          "body": "java.baseはJavaプラットフォームの最も基本的なモジュールです。\nすべてのモジュールはjava.baseに暗黙的に依存するため、requires java.baseと書く必要はありません。\njava.baseに含まれる主なパッケージは以下の通りです。\njava.lang（[[String]], Object, System等）、java.util（List, Map等）、java.io（File, [[InputStream]]等）が含まれます。\njava.math、java.net、java.nio、java.time等も含まれています。\nこれらのパッケージはrequires宣言なしで常に使用可能です。",
           "code": "// java.baseは自動的にrequiresされるため\n// 以下の2つは同じ意味\nmodule com.example.app {\n    // requires java.base; // 書かなくてよい（暗黙的）\n    requires java.sql;\n}\n\n// java.lang, java.util, java.io は\n// java.base に含まれるので常に使用可能\nimport java.util.List;      // OK\nimport java.io.IOException; // OK",
           "note": "java.baseはすべてのモジュールから暗黙的にrequiresされます。明示的に書いても構いませんが、冗長です。",
           "order": 2
@@ -480,7 +480,7 @@
           "lessonId": "ch17_03",
           "sectionType": "code",
           "title": "主要なJDKモジュール",
-          "body": "JDKには用途別にモジュールが用意されています。\njava.sqlはJDBC（データベースアクセス）関連のクラスを提供します。\njava.loggingはJavaの標準ロギングAPIを提供します。\njava.desktopはSwing/AWTなどのGUI関連クラスを含みます。\njava.netはHTTP Clientなどのネットワーク関連APIを提供します。\nこれらのモジュールを使用するには、**module-info.java**で明示的にrequiresを宣言する必要があります。",
+          "body": "JDKには用途別にモジュールが用意されています。\njava.sqlはJDBC（データベースアクセス）関連の[[クラス]]を提供します。\njava.loggingはJavaの標準ロギングAPIを提供します。\njava.desktopはSwing/AWTなどのGUI関連クラスを含みます。\njava.netはHTTP Clientなどのネットワーク関連APIを提供します。\nこれらのモジュールを使用するには、**module-info.java**で明示的にrequiresを宣言する必要があります。",
           "code": "module com.example.app {\n    // データベースアクセスに必要\n    requires java.sql;\n    // ロギング機能に必要\n    requires java.logging;\n    // GUI開発に必要\n    requires java.desktop;\n\n    exports com.example.app.api;\n}",
           "note": null,
           "order": 3

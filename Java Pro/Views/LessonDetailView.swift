@@ -24,6 +24,7 @@ struct LessonDetailView: View {
     @State private var headerAppeared = false
     @State private var quizButtonScale: CGFloat = 1.0
     @State private var navigateToNextLesson: String?
+    @State private var glossaryPopupEntry: GlossaryEntry?
 
     private var sortedSections: [LessonSection] {
         lesson.contents.sorted { $0.order < $1.order }
@@ -97,6 +98,18 @@ struct LessonDetailView: View {
                     )
                 }
             }
+            .sheet(item: $glossaryPopupEntry) { entry in
+                GlossaryPopupView(entry: entry)
+            }
+            .environment(\.openURL, OpenURLAction { url in
+                if url.scheme == RichBodyView.glossaryScheme,
+                   let term = url.host()?.removingPercentEncoding,
+                   let entry = ContentService.shared.getGlossaryEntry(term: term) {
+                    glossaryPopupEntry = entry
+                    return .handled
+                }
+                return .systemAction
+            })
             .onAppear {
                 let service = ProgressService(modelContext: modelContext)
                 // 既存の完了状態を反映（再訪問時にバッジ表示）

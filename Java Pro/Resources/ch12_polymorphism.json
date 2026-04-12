@@ -13,7 +13,7 @@
           "lessonId": "ch12_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**ポリモーフィズム**（**多態性**）の概念と定義\n・なぜポリモーフィズムが重要なのか\n・OOP三大要素との関係\n\nオブジェクト指向の最も強力な機能を理解する第一歩です。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ポリモーフィズム**（**多態性**）の概念と定義\n・なぜ[[ポリモーフィズム]]が重要なのか\n・OOP三大要素との関係\n\nオブジェクト指向の最も強力な機能を理解する第一歩です。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,9 +22,9 @@
           "lessonId": "ch12_01",
           "sectionType": "rule",
           "title": "ポリモーフィズムの基本ルール",
-          "body": "Javaにおける**ポリモーフィズム**は、大きく2種類に分けられます。\n\n① コンパイル時ポリモーフィズム（静的束縛）：メソッドのオーバーロードで実現されます。引数の型や個数でどのメソッドが呼ばれるかがコンパイル時に決まります。\n\n② 実行時ポリモーフィズム（動的束縛）：メソッドのオーバーライドで実現されます。親クラス型の変数にサブクラスのインスタンスを代入し、オーバーライドされたメソッドを呼び出すと、実際のオブジェクトの型に基づいてメソッドが選択されます。\n\nJava Silver試験では、特に実行時ポリモーフィズム（動的束縛）が重要です。",
+          "body": "Javaにおける**ポリモーフィズム**は、大きく2種類に分けられます。\n\n1. [[コンパイル]]時ポリモーフィズム（静的束縛）：[[メソッド]]の[[オーバーロード]]で実現されます。引数の型や個数でどのメソッドが呼ばれるかがコンパイル時に決まります。\n\n2. 実行時ポリモーフィズム（動的束縛）：メソッドの[[オーバーライド]]で実現されます。親[[クラス]]型の[[変数]]にサブクラスの[[インスタンス]]を代入し、オーバーライドされたメソッドを呼び出すと、実際のオブジェクトの型に基づいてメソッドが選択されます。\n\nJava Silver試験では、特に実行時ポリモーフィズム（動的束縛）が重要です。",
           "code": null,
-          "note": "staticメソッドやprivateメソッドはオーバーライドできないため、**ポリモーフィズム**の対象外です。",
+          "note": "[[staticメソッド]]やprivateメソッドはオーバーライドできないため、**ポリモーフィズム**の対象外です。",
           "order": 2
         },
         {
@@ -40,7 +40,7 @@
           "lessonId": "ch12_01",
           "sectionType": "tip",
           "title": "なぜポリモーフィズムが重要なのか",
-          "body": "**ポリモーフィズム**を使うと、コードの柔軟性と拡張性が大きく向上します。\n\n・新しいサブクラスを追加しても、既存のコードを変更する必要がありません（開放/閉鎖原則）。\n・メソッドの引数や戻り値を親クラス型にすることで、あらゆるサブクラスを統一的に扱えます。\n・条件分岐（if/switch）を減らし、クリーンなコードを実現できます。\n\n例えば、Animal型の配列にDog、Cat、Birdなどを格納し、ループで一括処理することが可能になります。",
+          "body": "**ポリモーフィズム**を使うと、コードの柔軟性と拡張性が大きく向上します。\n\n・新しいサブクラスを追加しても、既存のコードを変更する必要がありません（開放/閉鎖原則）。\n・メソッドの引数や戻り値を親クラス型にすることで、あらゆるサブクラスを統一的に扱えます。\n・条件分岐（if/switch）を減らし、クリーンなコードを実現できます。\n\n例えば、Animal型の[[配列]]にDog、Cat、Birdなどを格納し、ループで一括処理することが可能になります。",
           "code": null,
           "note": null,
           "order": 4
@@ -178,7 +178,7 @@
           "lessonId": "ch12_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・アップキャスト（子→親型）の自動変換\n・ダウンキャスト（親→子型）の明示的変換\n・ClassCastExceptionを防ぐinstanceofチェック\n\n型変換の仕組みを正確に理解することが**ポリモーフィズム**の基礎です。",
+          "body": "このレッスンでは以下を学びます:\n\n・アップ[[キャスト]]（子→親型）の自動変換\n・ダウンキャスト（親→子型）の明示的変換\n・[[ClassCastException]]を防ぐ[[instanceof]]チェック\n\n[[型変換]]の仕組みを正確に理解することが**ポリモーフィズム**の基礎です。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,9 +187,9 @@
           "lessonId": "ch12_02",
           "sectionType": "code",
           "title": "アップキャスト（自動変換）",
-          "body": "サブクラスのインスタンスを親クラス型の変数に代入することをアップキャストと呼びます。\nサブクラスは親クラスの機能をすべて持っているため、アップキャストは常に安全であり、明示的なキャストは不要です。\nただし、アップキャスト後はサブクラス独自のメソッドは呼び出せなくなります。コンパイラは変数の宣言型（親クラス型）のメソッドのみを認識するためです。",
+          "body": "サブ[[クラス]]の[[インスタンス]]を親クラス型の[[変数]]に代入することをアップキャストと呼びます。\nサブクラスは親クラスの機能をすべて持っているため、アップキャストは常に安全であり、明示的なキャストは不要です。\nただし、アップキャスト後はサブクラス独自の[[メソッド]]は呼び出せなくなります。コンパイラは変数の宣言型（親クラス型）のメソッドのみを認識するためです。",
           "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    @Override\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"ワンワン\");\n    }\n    void fetch() {\n        System.out.println(\"ボールを取ってきた！\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();  // アップキャスト（自動）\n        a.speak();   // OK → ワンワン（実行時の型Dogのメソッド）\n        // a.fetch(); // コンパイルエラー！ Animal型にfetch()はない\n    }\n}",
-          "note": "アップキャスト後も、オーバーライドされたメソッドは実際のオブジェクト型のものが呼ばれます。",
+          "note": "アップキャスト後も、[[オーバーライド]]されたメソッドは実際のオブジェクト型のものが呼ばれます。",
           "order": 2
         },
         {
@@ -205,7 +205,7 @@
           "lessonId": "ch12_02",
           "sectionType": "code",
           "title": "ダウンキャスト（明示的変換）",
-          "body": "親クラス型の変数をサブクラス型に変換することをダウンキャストと呼びます。\nダウンキャストは明示的にキャスト演算子を書く必要があります。\nただし、実際のオブジェクトがそのサブクラスのインスタンスでない場合、実行時にClassCastExceptionが発生するため注意が必要です。",
+          "body": "親クラス型の変数をサブクラス型に変換することをダウンキャストと呼びます。\nダウンキャストは明示的にキャスト[[演算子]]を書く必要があります。\nただし、実際のオブジェクトがそのサブクラスのインスタンスでない場合、実行時にClassCastExceptionが発生するため注意が必要です。",
           "code": "Animal a = new Dog();  // アップキャスト\nDog d = (Dog) a;       // ダウンキャスト（成功：元々Dogだから）\nd.fetch();             // OK → ボールを取ってきた！\n\nAnimal a2 = new Cat();\n// Dog d2 = (Dog) a2;  // 実行時エラー！ ClassCastException\n// a2は実際にはCatのインスタンスなのでDogにキャストできない",
           "note": "ダウンキャスト前にinstanceof演算子で型を確認するのが安全です。",
           "order": 4
@@ -413,7 +413,7 @@
           "lessonId": "ch12_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・メソッドのオーバーライドと動的束縛の関係\n・コンパイル時の型と実行時の型の違い\n・どのメソッドが呼ばれるかの判定ルール\n\n動的束縛は**ポリモーフィズム**の仕組みの核心です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[メソッド]]の[[オーバーライド]]と動的束縛の関係\n・[[コンパイル]]時の型と実行時の型の違い\n・どのメソッドが呼ばれるかの判定ルール\n\n動的束縛は**ポリモーフィズム**の仕組みの核心です。",
           "code": null,
           "note": null,
           "order": 1
@@ -424,7 +424,7 @@
           "title": "オーバーライドのルール",
           "body": "メソッドをオーバーライドするには、以下のルールを満たす必要があります。\n\n| ルール |\n| --- |\n| メソッド名と引数リスト（型・順番・個数）が親クラスと完全に一致すること |\n| 戻り値の型は親クラスと同じか、そのサブクラス型であること（共変戻り値型） |\n| アクセス修飾子は親クラスと同じか、より広いアクセスレベルであること（例：protectedをpublicに変更はOK、逆はNG） |\n| 親クラスのメソッドがfinalの場合はオーバーライドできない |\n| staticメソッドはオーバーライドではなく「隠蔽（hiding）」になる |\n\nこれらの条件を1つでも満たさないと、オーバーライドにはなりません。",
           "code": null,
-          "note": "アクセス修飾子の広さの順序：private < デフォルト < protected < public",
+          "note": "[[アクセス修飾子]]の広さの順序：private < デフォルト < protected < public",
           "order": 2
         },
         {
@@ -449,7 +449,7 @@
           "lessonId": "ch12_03",
           "sectionType": "code",
           "title": "動的束縛（ダイナミックディスパッチ）",
-          "body": "動的束縛とは、メソッド呼び出しの際に、変数の宣言型ではなく実行時のオブジェクトの型に基づいてメソッドが決定される仕組みです。\nフィールドアクセスは宣言型に基づく（静的束縛）のに対し、インスタンスメソッド呼び出しは動的束縛で解決される点に注意しましょう。\nこの違いはJava Silver試験でよく問われます。",
+          "body": "動的束縛とは、メソッド呼び出しの際に、[[変数]]の宣言型ではなく実行時のオブジェクトの型に基づいてメソッドが決定される仕組みです。\nフィールドアクセスは宣言型に基づく（静的束縛）のに対し、[[インスタンス]]メソッド呼び出しは動的束縛で解決される点に注意しましょう。\nこの違いはJava Silver試験でよく問われます。",
           "code": "// Parentクラスの定義\nclass Parent {\n    // 変数の宣言と初期化\n    String name = \"親\";\n    // greetメソッドの定義\n    void greet() {\n        System.out.println(\"こんにちは、\" + name);\n    }\n}\n\n// Childクラスの定義\nclass Child extends Parent {\n    String name = \"子\";\n    @Override\n    // greetメソッドの定義\n    void greet() {\n        System.out.println(\"やあ、\" + name);\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.name);  // 親（フィールドは静的束縛）\n        p.greet();                   // やあ、子（メソッドは動的束縛）\n    }\n}",
           "note": "フィールドは動的束縛の対象外です。変数の宣言型のフィールドが参照されます。",
           "order": 5
@@ -458,7 +458,7 @@
           "lessonId": "ch12_03",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・@Overrideアノテーションでコンパイラにオーバーライドを検証させる\n・戻り値の型は同じかサブクラス型（**共変戻り値型**）にできる\n・アクセス修飾子は同じかより広くする必要がある\n・インスタンスメソッドは動的束縛（実行時の型で決定）\n・フィールドアクセスは静的束縛（宣言型で決定）",
+          "body": "・@Overrideアノテーションでコンパイラにオーバーライドを検証させる\n・戻り値の型は同じかサブ[[クラス]]型（**共変戻り値型**）にできる\n・アクセス修飾子は同じかより広くする必要がある\n・インスタンスメソッドは動的束縛（実行時の型で決定）\n・フィールドアクセスは静的束縛（宣言型で決定）",
           "code": null,
           "note": null,
           "order": 6
@@ -624,7 +624,7 @@
           "lessonId": "ch12_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・インターフェース型を使った柔軟な設計\n・開放閉鎖原則（OCP）の考え方\n・新しいクラスを追加しても既存コードを変更しない設計\n\n**ポリモーフィズム**の真価は「変更に強い設計」にあります。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[インターフェース]]型を使った柔軟な設計\n・開放閉鎖原則（OCP）の考え方\n・新しい[[クラス]]を追加しても既存コードを変更しない設計\n\n**ポリモーフィズム**の真価は「変更に強い設計」にあります。",
           "code": null,
           "note": null,
           "order": 1
@@ -633,7 +633,7 @@
           "lessonId": "ch12_04",
           "sectionType": "code",
           "title": "ポリモーフィックな配列とコレクション",
-          "body": "親クラス型の配列やリストを使うと、異なるサブクラスのオブジェクトを一つのコレクションで管理できます。\nこれにより、ループ処理で統一的にメソッドを呼び出すことが可能になります。\n新しいサブクラスを追加しても、ループ処理のコードを変更する必要がないのが大きなメリットです。",
+          "body": "親クラス型の[[配列]]やリストを使うと、異なるサブクラスのオブジェクトを一つのコレクションで管理できます。\nこれにより、ループ処理で統一的に[[メソッド]]を呼び出すことが可能になります。\n新しいサブクラスを追加しても、ループ処理のコードを変更する必要がないのが大きなメリットです。",
           "code": "// Animalクラスの定義\nclass Animal {\n    String name;\n    Animal(String name) { this.name = name; }\n    // speakメソッドの定義\n    void speak() { System.out.println(name + \": ...\"); }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    Dog(String name) { super(name); }\n    @Override\n    // speakメソッドの定義\n    void speak() { System.out.println(name + \": ワンワン\"); }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    Cat(String name) { super(name); }\n    @Override\n    void speak() { System.out.println(name + \": ニャー\"); }\n}\n\n// Birdクラスの定義\nclass Bird extends Animal {\n    Bird(String name) { super(name); }\n    @Override\n    void speak() { System.out.println(name + \": チュンチュン\"); }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal[] animals = {\n            new Dog(\"ポチ\"),\n            new Cat(\"タマ\"),\n            new Bird(\"ピッピ\")\n        };\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Animal a : animals) {\n            a.speak();  // 各オブジェクトの型に応じたspeak()が呼ばれる\n        }\n    }\n}\n// 出力:\n// ポチ: ワンワン\n// タマ: ニャー\n// ピッピ: チュンチュン",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -642,7 +642,7 @@
           "lessonId": "ch12_04",
           "sectionType": "code",
           "title": "メソッドの引数にポリモーフィズムを活用",
-          "body": "メソッドの引数を親クラス型やインターフェース型にすると、任意のサブクラスのインスタンスを渡すことができます。\nこれにより、1つのメソッドで様々な型のオブジェクトに対応でき、コードの重複を排除できます。\n「実装ではなくインターフェースに対してプログラミングする」という原則の実践です。",
+          "body": "メソッドの引数を親クラス型やインターフェース型にすると、任意のサブクラスの[[インスタンス]]を渡すことができます。\nこれにより、1つのメソッドで様々な型のオブジェクトに対応でき、コードの重複を排除できます。\n「実装ではなくインターフェースに対してプログラミングする」という原則の実践です。",
           "code": "// Printerクラスの定義\nclass Printer {\n    // Animal型の引数 → Dog、Cat、Bird何でも受け取れる\n    // printAnimalSoundメソッドの定義\n    static void printAnimalSound(Animal animal) {\n        System.out.print(animal.name + \"の鳴き声: \");\n        animal.speak();\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        printAnimalSound(new Dog(\"ポチ\"));   // ポチの鳴き声: ポチ: ワンワン\n        printAnimalSound(new Cat(\"タマ\"));   // タマの鳴き声: タマ: ニャー\n        printAnimalSound(new Bird(\"ピッピ\")); // ピッピの鳴き声: ピッピ: チュンチュン\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -651,7 +651,7 @@
           "lessonId": "ch12_04",
           "sectionType": "tip",
           "title": "ストラテジーパターンの基礎",
-          "body": "ストラテジーパターンは、**ポリモーフィズム**を活用した有名なデザインパターンです。\nアルゴリズムや処理をインターフェースとして定義し、具体的な処理をクラスとして実装します。\n実行時に処理を切り替えることで、if/switchによる条件分岐を排除し、拡張性の高い設計を実現できます。\n\n例えば、支払い処理を「クレジットカード」「銀行振込」「電子マネー」で切り替える場合、\nPaymentStrategyインターフェースを定義し、各支払い方法をクラスとして実装します。\n新しい支払い方法を追加する際、既存のコードを変更する必要がありません。",
+          "body": "ストラテジーパターンは、**ポリモーフィズム**を活用した有名な[[デザインパターン]]です。\nアルゴリズムや処理をインターフェースとして定義し、具体的な処理をクラスとして実装します。\n実行時に処理を切り替えることで、if/switchによる条件分岐を排除し、拡張性の高い設計を実現できます。\n\n例えば、支払い処理を「クレジットカード」「銀行振込」「電子マネー」で切り替える場合、\nPaymentStrategyインターフェースを定義し、各支払い方法をクラスとして実装します。\n新しい支払い方法を追加する際、既存のコードを変更する必要がありません。",
           "code": null,
           "note": "ストラテジーパターンはJava Silver試験の出題範囲外ですが、**ポリモーフィズム**の活用法として理解しておくと良いでしょう。",
           "order": 4
@@ -794,7 +794,7 @@
           "lessonId": "ch12_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・支払いシステムでの**多態性**活用例\n・図形計算での**ポリモーフィズム**実践\n・テスト容易性を高める設計への応用\n\n実践的な例を通じて、ポリモーフィズムの活用力を身につけましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・支払いシステムでの**多態性**活用例\n・図形計算での**ポリモーフィズム**実践\n・テスト容易性を高める設計への応用\n\n実践的な例を通じて、[[ポリモーフィズム]]の活用力を身につけましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -803,7 +803,7 @@
           "lessonId": "ch12_05",
           "sectionType": "code",
           "title": "実践例：支払いシステム",
-          "body": "**ポリモーフィズム**の典型的な活用例として、支払いシステムを見てみましょう。\nPaymentインターフェースを定義し、各支払い方法を別クラスとして実装します。\n処理を呼び出す側はPayment型だけを意識すれば良く、具体的な支払い方法を知る必要がありません。\n新しい支払い方法を追加する場合も、Paymentインターフェースを実装した新クラスを作るだけで対応できます。",
+          "body": "**ポリモーフィズム**の典型的な活用例として、支払いシステムを見てみましょう。\nPaymentインターフェースを定義し、各支払い方法を別[[クラス]]として実装します。\n処理を呼び出す側はPayment型だけを意識すれば良く、具体的な支払い方法を知る必要がありません。\n新しい支払い方法を追加する場合も、Paymentインターフェースを実装した新クラスを作るだけで対応できます。",
           "code": "// Paymentインターフェースの定義\ninterface Payment {\n    void pay(int amount);\n}\n\n// CreditCardクラスの定義\nclass CreditCard implements Payment {\n    @Override\n    // payメソッドの定義\n    public void pay(int amount) {\n        System.out.println(\"クレジットカードで\" + amount + \"円支払い\");\n    }\n}\n\n// BankTransferクラスの定義\nclass BankTransfer implements Payment {\n    @Override\n    // payメソッドの定義\n    public void pay(int amount) {\n        System.out.println(\"銀行振込で\" + amount + \"円支払い\");\n    }\n}\n\n// EMoneyクラスの定義\nclass EMoney implements Payment {\n    @Override\n    public void pay(int amount) {\n        System.out.println(\"電子マネーで\" + amount + \"円支払い\");\n    }\n}\n\n// Shopクラスの定義\npublic class Shop {\n    static void checkout(Payment payment, int amount) {\n        payment.pay(amount);  // どの支払い方法でも同じ呼び出し\n    }\n\n    public static void main(String[] args) {\n        checkout(new CreditCard(), 5000);\n        checkout(new BankTransfer(), 3000);\n        checkout(new EMoney(), 1000);\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -821,7 +821,7 @@
           "lessonId": "ch12_05",
           "sectionType": "code",
           "title": "継承とポリモーフィズムの組み合わせ",
-          "body": "継承による共通処理の再利用と**ポリモーフィズム**による**多態性**を組み合わせることで、効率的で拡張性の高い設計ができます。\n抽象クラスで共通の処理を定義し、サブクラスで具体的な処理を実装するパターンは、実務でもよく使われます。",
+          "body": "[[継承]]による共通処理の再利用と**ポリモーフィズム**による**多態性**を組み合わせることで、効率的で拡張性の高い設計ができます。\n[[抽象クラス]]で共通の処理を定義し、サブクラスで具体的な処理を実装するパターンは、実務でもよく使われます。",
           "code": "// Employeeクラスの定義\nabstract class Employee {\n    String name;\n    int baseSalary;\n\n    Employee(String name, int baseSalary) {\n        this.name = name;\n        this.baseSalary = baseSalary;\n    }\n    abstract int calculateBonus();  // サブクラスで実装\n\n    // totalSalaryメソッドの定義\n    int totalSalary() {\n        return baseSalary + calculateBonus();  // 共通処理\n    }\n}\n\n// Managerクラスの定義\nclass Manager extends Employee {\n    Manager(String name) { super(name, 500000); }\n    @Override\n    // calculateBonusメソッドの定義\n    int calculateBonus() { return 200000; }\n}\n\n// Engineerクラスの定義\nclass Engineer extends Employee {\n    Engineer(String name) { super(name, 400000); }\n    @Override\n    int calculateBonus() { return 100000; }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Employee[] staff = { new Manager(\"田中\"), new Engineer(\"鈴木\") };\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Employee e : staff) {\n            System.out.println(e.name + \": \" + e.totalSalary() + \"円\");\n        }\n    }\n}\n// 出力:\n// 田中: 700000円\n// 鈴木: 500000円",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4
@@ -830,9 +830,9 @@
           "lessonId": "ch12_05",
           "sectionType": "rule",
           "title": "よくある落とし穴",
-          "body": "**ポリモーフィズム**に関して注意すべき落とし穴をまとめます。\n\n① フィールドは動的束縛されない：フィールドアクセスは変数の宣言型に基づきます。メソッドのように実行時の型では解決されません。\n\n② staticメソッドはオーバーライドされない：staticメソッドは隠蔽（hiding）であり、変数の宣言型のメソッドが呼ばれます。\n\n③ privateメソッドはオーバーライドできない：サブクラスで同名のメソッドを定義しても、それはオーバーライドではなく別の新しいメソッドになります。\n\n④ コンストラクタからオーバーライド可能なメソッドを呼ぶと危険：サブクラスのフィールドが初期化される前にオーバーライドされたメソッドが実行される可能性があります。",
+          "body": "**ポリモーフィズム**に関して注意すべき落とし穴をまとめます。\n\n1. フィールドは動的束縛されない：フィールドアクセスは[[変数]]の宣言型に基づきます。[[メソッド]]のように実行時の型では解決されません。\n\n2. [[staticメソッド]]は[[オーバーライド]]されない：staticメソッドは隠蔽（hiding）であり、変数の宣言型のメソッドが呼ばれます。\n\n3. privateメソッドはオーバーライドできない：サブクラスで同名のメソッドを定義しても、それはオーバーライドではなく別の新しいメソッドになります。\n\n4. [[コンストラクタ]]からオーバーライド可能なメソッドを呼ぶと危険：サブクラスのフィールドが初期化される前にオーバーライドされたメソッドが実行される可能性があります。",
           "code": null,
-          "note": "Java Silver試験では特に①と②の違いがよく問われます。",
+          "note": "Java Silver試験では特に1と2の違いがよく問われます。",
           "order": 5
         },
         {

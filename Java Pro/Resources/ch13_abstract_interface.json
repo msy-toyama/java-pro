@@ -13,7 +13,7 @@
           "lessonId": "ch13_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・abstractクラスの定義と制約\n・抽象メソッドで子クラスに実装を強制する仕組み\n・**抽象クラス**をインスタンス化できない理由\n\n「共通の設計図」としての抽象クラスの役割を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・abstractクラスの定義と制約\n・抽象[[メソッド]]で子クラスに実装を強制する仕組み\n・**抽象クラス**を[[インスタンス]]化できない理由\n\n「共通の設計図」としての[[抽象クラス]]の役割を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -24,14 +24,14 @@
           "title": "抽象クラスと抽象メソッドのルール",
           "body": "**抽象クラス**と抽象メソッドには以下のルールがあります。\n\n| ルール |\n| --- |\n| 抽象クラスはabstractキーワードを付けて宣言します。 |\n| 抽象メソッドはメソッド本体（{}）を持たず、セミコロンで終わります。 |\n| 抽象クラスはnewでインスタンス化できません。コンパイルエラーになります。 |\n| 抽象メソッドを1つでも含むクラスはabstractで宣言しなければなりません。 |\n| 抽象クラスを継承した具象クラス（abstractでないクラス）は、すべての抽象メソッドをオーバーライドして実装する必要があります。 |\n| 6 | 抽象クラス自体は具象メソッド（通常のメソッド）やフィールドを持つことができます。 |",
           "code": null,
-          "note": "abstractとfinalは同時に指定できません。finalはオーバーライドや継承を禁止し、abstractは継承・オーバーライドを前提とするため、矛盾するからです。",
+          "note": "abstractとfinalは同時に指定できません。finalは[[オーバーライド]]や[[継承]]を禁止し、abstractは継承・オーバーライドを前提とするため、矛盾するからです。",
           "order": 2
         },
         {
           "lessonId": "ch13_01",
           "sectionType": "code",
           "title": "抽象クラスの宣言と継承",
-          "body": "abstractキーワードでクラスとメソッドを宣言し、サブクラスで抽象メソッドを実装する基本的な例を見てみましょう。\n**抽象クラス**Shapeに抽象メソッドarea()を定義し、Circleクラスで具体的な計算を実装しています。",
+          "body": "abstractキーワードでクラスとメソッドを宣言し、サブクラスで抽象メソッドを実装する基本的な例を見てみましょう。\n抽象クラスShapeに抽象メソッドarea()を定義し、Circleクラスで具体的な計算を実装しています。",
           "code": "// Shapeクラスの定義\nabstract class Shape {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n\n    // 抽象メソッド：サブクラスが実装する\n    abstract double area();\n\n    // 具象メソッド：そのまま継承される\n    // printInfoメソッドの定義\n    void printInfo() {\n        System.out.println(name + \"の面積: \" + area());\n    }\n}\n\n// Circleクラスの定義\nclass Circle extends Shape {\n    double radius;\n\n    Circle(double radius) {\n        super(\"円\");\n        this.radius = radius;\n    }\n\n    @Override\n    // areaメソッドの定義\n    double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        // Shape s = new Shape(\"図形\"); // コンパイルエラー！\n        Shape s = new Circle(5.0);\n        s.printInfo();  // 円の面積: 78.53981633974483\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -40,7 +40,7 @@
           "lessonId": "ch13_01",
           "sectionType": "tip",
           "title": "抽象クラスを継承した抽象クラス",
-          "body": "**抽象クラス**を継承したクラスもabstractとして宣言することができます。\nその場合、親の抽象メソッドを実装しなくても構いません。実装の義務は最終的な具象クラスに渡されます。\n\n例えば、Shape → ClosedShape → Rectangleのように多段階の継承ができます。\nClosedShapeがabstractなら、Shape.area()の実装はRectangleまで先送りできます。\n\nこの仕組みにより、段階的に役割を分担した柔軟なクラス設計が可能になります。",
+          "body": "抽象クラスを継承したクラスもabstractとして宣言することができます。\nその場合、親の抽象メソッドを実装しなくても構いません。実装の義務は最終的な具象クラスに渡されます。\n\n例えば、Shape → ClosedShape → Rectangleのように多段階の継承ができます。\nClosedShapeがabstractなら、Shape.area()の実装はRectangleまで先送りできます。\n\nこの仕組みにより、段階的に役割を分担した柔軟なクラス設計が可能になります。",
           "code": null,
           "note": null,
           "order": 4
@@ -49,7 +49,7 @@
           "lessonId": "ch13_01",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**抽象クラス**はabstractキーワードで宣言し、直接インスタンス化できない\n・抽象メソッドはメソッド本体を持たず、サブクラスに実装を強制する\n・抽象メソッドを含むクラスは必ずabstractで宣言する\n・具象サブクラスはすべての抽象メソッドを実装しなければコンパイルエラーになる\n・abstractとfinalは同時に使えない",
+          "body": "・抽象クラスはabstractキーワードで宣言し、直接インスタンス化できない\n・抽象メソッドはメソッド本体を持たず、サブクラスに実装を強制する\n・抽象メソッドを含むクラスは必ずabstractで宣言する\n・具象サブクラスはすべての抽象メソッドを実装しなければ[[コンパイル]]エラーになる\n・abstractとfinalは同時に使えない",
           "code": null,
           "note": null,
           "order": 5
@@ -178,7 +178,7 @@
           "lessonId": "ch13_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**テンプレートメソッドパターン**の設計\n・**抽象クラス**で「処理の骨組み」を提供する方法\n・hookメソッドによるカスタマイズポイントの設計\n\n実践的な設計パターンで抽象クラスの真価を発揮させましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・**テンプレートメソッドパターン**の設計\n・**抽象クラス**で「処理の骨組み」を提供する方法\n・hookメソッドによるカスタマイズポイントの設計\n\n実践的な設計パターンで[[抽象クラス]]の真価を発揮させましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,9 +187,9 @@
           "lessonId": "ch13_02",
           "sectionType": "rule",
           "title": "テンプレートメソッドパターンのルール",
-          "body": "**テンプレートメソッドパターン**は、GoFデザインパターンの1つで、以下のように構成されます。\n\n| ルール |\n| --- |\n| 抽象クラスにfinalな具象メソッド（テンプレートメソッド）を定義し、処理の流れを固定します。 |\n| テンプレートメソッドの中から抽象メソッドを呼び出します。 |\n| サブクラスが抽象メソッドを実装することで、処理の一部だけをカスタマイズできます。 |\n\nテンプレートメソッドをfinalにすることで、サブクラスが処理の流れ自体を変更することを防ぎます。\nこのパターンにより、共通処理の重複を避けつつ、可変部分だけをサブクラスに任せる設計が実現できます。",
+          "body": "**テンプレートメソッドパターン**は、GoFデザインパターンの1つで、以下のように構成されます。\n\n| ルール |\n| --- |\n| 抽象クラスにfinalな具象メソッド（テンプレートメソッド）を定義し、処理の流れを固定します。 |\n| テンプレートメソッドの中から抽象メソッドを呼び出します。 |\n| サブクラスが抽象メソッドを実装することで、処理の一部だけをカスタマイズできます。 |\n\nテンプレートメソッドをfinalにすることで、サブ[[クラス]]が処理の流れ自体を変更することを防ぎます。\nこのパターンにより、共通処理の重複を避けつつ、可変部分だけをサブクラスに任せる設計が実現できます。",
           "code": null,
-          "note": "**テンプレートメソッドパターン**は「ハリウッドの原則（Don't call us, we'll call you）」とも呼ばれます。",
+          "note": "テンプレートメソッドパターンは「ハリウッドの原則（Don't call us, we'll call you）」とも呼ばれます。",
           "order": 2
         },
         {
@@ -205,7 +205,7 @@
           "lessonId": "ch13_02",
           "sectionType": "tip",
           "title": "テンプレートメソッドパターンの構造",
-          "body": "**テンプレートメソッドパターン**は、処理の「骨組み」を親クラスで定義し、「詳細」を子クラスに任せるパターンです。\n\n| 要素 | 場所 | 役割 |\n|---|---|---|\n| テンプレートメソッド | 親クラス（final） | 処理の流れを定義 |\n| 抽象メソッド | 親クラス（abstract） | 子クラスが必ず実装 |\n| hookメソッド | 親クラス（空実装） | 子クラスが必要に応じて実装 |\n\nフレームワークの内部設計でも多用されるパターンです。",
+          "body": "テンプレートメソッドパターンは、処理の「骨組み」を親クラスで定義し、「詳細」を子クラスに任せるパターンです。\n\n| 要素 | 場所 | 役割 |\n|---|---|---|\n| テンプレートメソッド | 親クラス（final） | 処理の流れを定義 |\n| 抽象メソッド | 親クラス（abstract） | 子クラスが必ず実装 |\n| hookメソッド | 親クラス（空実装） | 子クラスが必要に応じて実装 |\n\nフレームワークの内部設計でも多用されるパターンです。",
           "code": null,
           "note": null,
           "order": 4
@@ -214,7 +214,7 @@
           "lessonId": "ch13_02",
           "sectionType": "rule",
           "title": "抽象クラスのコンストラクタ",
-          "body": "**抽象クラス**は直接インスタンス化できませんが、コンストラクタを定義することができます。\nこのコンストラクタは、サブクラスのコンストラクタからsuper()で呼び出されます。\n\n抽象クラスのコンストラクタの主な用途は以下の通りです。\n| 用途 |\n| --- |\n| 共通フィールドの初期化 |\n| バリデーション（引数チェック） |\n| 初期化ロジックの共有 |\n\n抽象クラスに引数付きコンストラクタがあり、デフォルトコンストラクタがない場合、サブクラスは必ずsuper(引数)を呼び出す必要があります。\nこの点はJava Silver試験でよく出題されます。",
+          "body": "**抽象クラス**は直接[[インスタンス]]化できませんが、[[コンストラクタ]]を定義することができます。\nこのコンストラクタは、サブクラスのコンストラクタからsuper()で呼び出されます。\n\n抽象クラスのコンストラクタの主な用途は以下の通りです。\n| 用途 |\n| --- |\n| 共通フィールドの初期化 |\n| バリデーション（引数チェック） |\n| 初期化ロジックの共有 |\n\n抽象クラスに引数付きコンストラクタがあり、デフォルトコンストラクタがない場合、サブクラスは必ずsuper(引数)を呼び出す必要があります。\nこの点はJava Silver試験でよく出題されます。",
           "code": null,
           "note": null,
           "order": 5
@@ -223,7 +223,7 @@
           "lessonId": "ch13_02",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**テンプレートメソッドパターン**は処理の流れを固定し、一部をサブクラスに委ねる設計\n・テンプレートメソッドはfinalにすることで、流れの変更を防止できる\n・**抽象クラス**にもコンストラクタを定義でき、サブクラスからsuper()で呼び出す\n・抽象メソッドと具象メソッドを組み合わせることで柔軟な設計ができる\n・共通処理の重複を避け、コードの再利用性を高められる",
+          "body": "・テンプレートメソッドパターンは処理の流れを固定し、一部をサブクラスに委ねる設計\n・テンプレートメソッドはfinalにすることで、流れの変更を防止できる\n・抽象クラスにもコンストラクタを定義でき、サブクラスからsuper()で呼び出す\n・抽象メソッドと具象メソッドを組み合わせることで柔軟な設計ができる\n・共通処理の重複を避け、コードの再利用性を高められる",
           "code": null,
           "note": null,
           "order": 6
@@ -413,7 +413,7 @@
           "lessonId": "ch13_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**インターフェース**の定義構文（interface）\n・implementsで複数のインターフェースを実装\n・インターフェースの暗黙的なルール（public abstract）\n\n「何ができるか」の契約を定義する仕組みです。",
+          "body": "このレッスンでは以下を学びます:\n\n・**インターフェース**の定義構文（interface）\n・implementsで複数の[[インターフェース]]を実装\n・インターフェースの暗黙的なルール（public abstract）\n\n「何ができるか」の契約を定義する仕組みです。",
           "code": null,
           "note": null,
           "order": 1
@@ -424,14 +424,14 @@
           "title": "インターフェースの基本ルール",
           "body": "**インターフェース**には以下の重要なルールがあります。\n\n| ルール |\n| --- |\n| インターフェースはinterfaceキーワードで宣言します。 |\n| インターフェースのメソッドは暗黙的にpublic abstractです（Java 8より前）。 |\n| インターフェースのフィールドは暗黙的にpublic static finalです（定数のみ）。 |\n| クラスはimplementsキーワードでインターフェースを実装します。 |\n| 実装クラスはインターフェースのすべての抽象メソッドを実装する必要があります。 |\n| 1つのクラスが複数のインターフェースを実装できます（カンマ区切り）。 |\n| 7 | インターフェースはextendsで他のインターフェースを継承できます。 |",
           "code": null,
-          "note": "**インターフェース**は暗黙的にabstractなので、abstractキーワードは省略可能（付けても問題なし）です。",
+          "note": "インターフェースは暗黙的にabstractなので、abstractキーワードは省略可能（付けても問題なし）です。",
           "order": 2
         },
         {
           "lessonId": "ch13_03",
           "sectionType": "code",
           "title": "インターフェースの定義と実装",
-          "body": "**インターフェース**を定義し、クラスで実装する基本的な例です。\nPrintableとResizableの2つのインターフェースをDocumentクラスが同時に実装しています。\nこれにより、Documentは「印刷できる」かつ「リサイズできる」という2つの能力を持つことを表現しています。",
+          "body": "インターフェースを定義し、[[クラス]]で実装する基本的な例です。\nPrintableとResizableの2つのインターフェースをDocumentクラスが同時に実装しています。\nこれにより、Documentは「印刷できる」かつ「リサイズできる」という2つの能力を持つことを表現しています。",
           "code": "// Printableインターフェースの定義\ninterface Printable {\n    void print();  // public abstractが暗黙的に付く\n}\n\n// Resizableインターフェースの定義\ninterface Resizable {\n    void resize(int width, int height);\n}\n\n// 複数のインターフェースを実装\n// Documentクラスの定義\nclass Document implements Printable, Resizable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n    @Override\n    // printメソッドの定義\n    public void print() {\n        System.out.println(\"印刷: \" + content);\n    }\n    @Override\n    // resizeメソッドの定義\n    public void resize(int width, int height) {\n        System.out.println(\"サイズ変更: \" + width + \"x\" + height);\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Document doc = new Document(\"レポート\");\n        doc.print();                // 印刷: レポート\n        doc.resize(800, 600);       // サイズ変更: 800x600\n\n        Printable p = doc;          // インターフェース型で参照\n        p.print();                  // 印刷: レポート\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -440,7 +440,7 @@
           "lessonId": "ch13_03",
           "sectionType": "tip",
           "title": "インターフェースの定数とメソッドの修飾子",
-          "body": "**インターフェース**に定義するフィールドは自動的にpublic static finalになります。\nそのため、初期化が必須で、後から値を変更することはできません。\n\nまた、インターフェースの抽象メソッドは暗黙的にpublicです。\n実装クラスでオーバーライドする際は、publicを明示的に付ける必要があります。\npublicを付けないとアクセス修飾子を狭めることになり、コンパイルエラーが発生します。\nJava Silver試験ではこのルールが頻繁に出題されるので注意しましょう。",
+          "body": "インターフェースに定義するフィールドは自動的にpublic static finalになります。\nそのため、初期化が必須で、後から値を変更することはできません。\n\nまた、インターフェースの抽象[[メソッド]]は暗黙的にpublicです。\n実装クラスで[[オーバーライド]]する際は、publicを明示的に付ける必要があります。\npublicを付けないと[[アクセス修飾子]]を狭めることになり、[[コンパイル]]エラーが発生します。\nJava Silver試験ではこのルールが頻繁に出題されるので注意しましょう。",
           "code": null,
           "note": "interface内の「int MAX = 100;」は「public static final int MAX = 100;」と同じ意味です。",
           "order": 4
@@ -449,7 +449,7 @@
           "lessonId": "ch13_03",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**インターフェース**はinterfaceキーワードで宣言し、implementsで実装する\n・メソッドは暗黙的にpublic abstract、フィールドは暗黙的にpublic static final\n・1つのクラスで複数のインターフェースを実装できる\n・実装クラスはすべての抽象メソッドをpublicでオーバーライドする必要がある\n・インターフェース型の変数で実装クラスのインスタンスを参照できる（ポリモーフィズム）",
+          "body": "・インターフェースはinterfaceキーワードで宣言し、implementsで実装する\n・メソッドは暗黙的にpublic abstract、フィールドは暗黙的にpublic static final\n・1つのクラスで複数のインターフェースを実装できる\n・実装クラスはすべての抽象メソッドをpublicでオーバーライドする必要がある\n・インターフェース型の[[変数]]で実装クラスの[[インスタンス]]を参照できる（[[ポリモーフィズム]]）",
           "code": null,
           "note": null,
           "order": 5
@@ -578,7 +578,7 @@
           "lessonId": "ch13_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・defaultメソッド：実装を持つ**インターフェース**メソッド\n・staticメソッド：インターフェースのユーティリティメソッド\n・既存インターフェースに後からメソッドを追加する方法\n\nJava 8以降の重要な進化を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・defaultメソッド：実装を持つ**インターフェース**メソッド\n・[[staticメソッド]]：[[インターフェース]]のユーティリティメソッド\n・既存インターフェースに後からメソッドを追加する方法\n\nJava 8以降の重要な進化を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -596,7 +596,7 @@
           "lessonId": "ch13_04",
           "sectionType": "code",
           "title": "デフォルトメソッドとstaticメソッドの例",
-          "body": "**デフォルトメソッド**とstaticメソッドを含む**インターフェース**の定義例です。\nデフォルトメソッドlog()は実装クラスがそのまま使え、staticメソッドcreateTimestamp()はインターフェース名で呼び出します。",
+          "body": "デフォルトメソッドとstaticメソッドを含むインターフェースの定義例です。\nデフォルトメソッドlog()は実装[[クラス]]がそのまま使え、staticメソッドcreateTimestamp()はインターフェース名で呼び出します。",
           "code": "// Loggerインターフェースの定義\ninterface Logger {\n    void write(String message);  // 抽象メソッド\n\n    // デフォルトメソッド\n    default void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n        write(message);\n    }\n\n    // staticメソッド\n    // createTimestampメソッドの定義\n    static String createTimestamp() {\n        return java.time.LocalDateTime.now().toString();\n    }\n}\n\n// ConsoleLoggerクラスの定義\nclass ConsoleLogger implements Logger {\n    @Override\n    // writeメソッドの定義\n    public void write(String message) {\n        System.out.println(\"Console: \" + message);\n    }\n    // log()はオーバーライドしなくても使える\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        ConsoleLogger logger = new ConsoleLogger();\n        logger.log(\"テスト\");\n        // [LOG] テスト\n        // Console: テスト\n\n        // 変数の宣言と初期化\n        String ts = Logger.createTimestamp(); // static呼び出し\n        System.out.println(ts);\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -605,7 +605,7 @@
           "lessonId": "ch13_04",
           "sectionType": "tip",
           "title": "defaultメソッドの菱形継承問題",
-          "body": "2つの**インターフェース**が同じシグネチャのdefaultメソッドを持つ場合、実装クラスでの解決が必要です。\n\n・同じdefaultメソッドが衝突 → 実装クラスでオーバーライドが必須\n・InterfaceA.super.method() で特定のdefault実装を呼び出せる\n・クラスのメソッドがインターフェースのdefaultメソッドより優先される\n\nこれは試験で頻出のトピックです。",
+          "body": "2つのインターフェースが同じシグネチャのdefaultメソッドを持つ場合、実装クラスでの解決が必要です。\n\n・同じdefaultメソッドが衝突 → 実装クラスで[[オーバーライド]]が必須\n・InterfaceA.super.method() で特定のdefault実装を呼び出せる\n・クラスのメソッドがインターフェースのdefaultメソッドより優先される\n\nこれは試験で頻出のトピックです。",
           "code": null,
           "note": null,
           "order": 4
@@ -614,16 +614,16 @@
           "lessonId": "ch13_04",
           "sectionType": "rule",
           "title": "ダイヤモンド問題の解決",
-          "body": "2つの**インターフェース**が同名の**デフォルトメソッド**を持つ場合、実装クラスはどちらを使うか曖昧になります。\nこれを「ダイヤモンド問題」と呼びます。\n\nJavaでは、この場合実装クラスが該当メソッドを明示的にオーバーライドしなければコンパイルエラーになります。\nオーバーライド内で特定のインターフェースのデフォルトメソッドを呼び出すには、「インターフェース名.super.メソッド名()」という構文を使います。\n\n例: InterfaceA.super.hello() のように記述します。\nこの解決方法はJava Silver試験で頻出なので、しっかり覚えましょう。",
+          "body": "2つのインターフェースが同名のデフォルトメソッドを持つ場合、実装クラスはどちらを使うか曖昧になります。\nこれを「ダイヤモンド問題」と呼びます。\n\nJavaでは、この場合実装クラスが該当メソッドを明示的にオーバーライドしなければ[[コンパイル]]エラーになります。\nオーバーライド内で特定のインターフェースのデフォルトメソッドを呼び出すには、「インターフェース名.super.メソッド名()」という構文を使います。\n\n例: InterfaceA.super.hello() のように記述します。\nこの解決方法はJava Silver試験で頻出なので、しっかり覚えましょう。",
           "code": null,
-          "note": "クラスのメソッドと**インターフェース**の**デフォルトメソッド**が競合する場合、クラスのメソッドが常に優先されます（クラス優先の原則）。",
+          "note": "クラスのメソッドとインターフェースのデフォルトメソッドが競合する場合、クラスのメソッドが常に優先されます（クラス優先の原則）。",
           "order": 5
         },
         {
           "lessonId": "ch13_04",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**デフォルトメソッド**はdefaultキーワードで宣言し、実装を持つ\n・staticメソッドは**インターフェース**名.メソッド名()で呼び出し、継承されない\n・同名デフォルトメソッドが複数ある場合、実装クラスで明示的にオーバーライドが必要\n・ダイヤモンド問題は「インターフェース名.super.メソッド名()」で解決\n・クラスのメソッドはインターフェースのデフォルトメソッドより優先される",
+          "body": "・デフォルトメソッドはdefaultキーワードで宣言し、実装を持つ\n・staticメソッドはインターフェース名.メソッド名()で呼び出し、[[継承]]されない\n・同名デフォルトメソッドが複数ある場合、実装クラスで明示的にオーバーライドが必要\n・ダイヤモンド問題は「インターフェース名.super.メソッド名()」で解決\n・クラスのメソッドはインターフェースのデフォルトメソッドより優先される",
           "code": null,
           "note": null,
           "order": 6
@@ -798,7 +798,7 @@
           "lessonId": "ch13_05",
           "sectionType": "rule",
           "title": "抽象クラスとインターフェースの違い",
-          "body": "**抽象クラス**と**インターフェース**の主な違いは以下の通りです。\n\n【抽象クラス】\n・extendsで継承（単一継承のみ）\n・コンストラクタを持てる\n・インスタンスフィールド（状態）を持てる\n・アクセス修飾子を自由に指定できる（public/protected/private）\n・具象メソッドと抽象メソッドを混在できる\n\n【インターフェース】\n・implementsで実装（複数実装可能）\n・コンストラクタを持てない\n・フィールドはpublic static final（定数）のみ\n・メソッドは暗黙的にpublic\n・Java 8以降はdefaultメソッドとstaticメソッドも持てる",
+          "body": "**抽象クラス**と**インターフェース**の主な違いは以下の通りです。\n\n【[[抽象クラス]]】\n・extendsで[[継承]]（単一継承のみ）\n・[[コンストラクタ]]を持てる\n・[[インスタンス]]フィールド（状態）を持てる\n・[[アクセス修飾子]]を自由に指定できる（public/protected/private）\n・具象[[メソッド]]と抽象メソッドを混在できる\n\n【[[インターフェース]]】\n・implementsで実装（複数実装可能）\n・コンストラクタを持てない\n・フィールドはpublic static final（定数）のみ\n・メソッドは暗黙的にpublic\n・Java 8以降はdefaultメソッドと[[staticメソッド]]も持てる",
           "code": null,
           "note": null,
           "order": 2
@@ -807,16 +807,16 @@
           "lessonId": "ch13_05",
           "sectionType": "rule",
           "title": "IS-A関係とCAN-DO関係",
-          "body": "設計の指針として、以下の考え方が広く使われています。\n\n【IS-A関係 → **抽象クラス**】\n「犬は動物である」「円は図形である」のような分類上の関係を表す場合に使います。\n共通の状態（フィールド）や共通の振る舞い（具象メソッド）を持つクラス群の基底として適しています。\n\n【CAN-DO関係 → **インターフェース**】\n「比較できる（Comparable）」「直列化できる（Serializable）」のような能力・機能を表す場合に使います。\n異なる継承階層のクラスに共通の能力を付与できます。\n\n実際の開発では、抽象クラスで共通の実装を提供し、インターフェースで共通の契約を定義するという組み合わせが多く見られます。",
+          "body": "設計の指針として、以下の考え方が広く使われています。\n\n【IS-A関係 → 抽象クラス】\n「犬は動物である」「円は図形である」のような分類上の関係を表す場合に使います。\n共通の状態（フィールド）や共通の振る舞い（具象メソッド）を持つ[[クラス]]群の基底として適しています。\n\n【CAN-DO関係 → インターフェース】\n「比較できる（[[Comparable]]）」「[[直列化]]できる（[[Serializable]]）」のような能力・機能を表す場合に使います。\n異なる継承階層のクラスに共通の能力を付与できます。\n\n実際の開発では、抽象クラスで共通の実装を提供し、インターフェースで共通の契約を定義するという組み合わせが多く見られます。",
           "code": null,
-          "note": "Java標準ライブラリのAbstractListクラスは、List**インターフェース**を実装した**抽象クラス**の好例です。",
+          "note": "Java標準ライブラリのAbstractListクラスは、Listインターフェースを実装した抽象クラスの好例です。",
           "order": 3
         },
         {
           "lessonId": "ch13_05",
           "sectionType": "code",
           "title": "抽象クラスとインターフェースの組み合わせ",
-          "body": "実際の設計では、**抽象クラス**と**インターフェース**を組み合わせて使うことが多いです。\n以下の例では、Comparableインターフェースで比較能力を定義し、抽象クラスShapeで図形の共通部分を実装しています。",
+          "body": "実際の設計では、抽象クラスとインターフェースを組み合わせて使うことが多いです。\n以下の例では、Comparableインターフェースで比較能力を定義し、抽象クラスShapeで図形の共通部分を実装しています。",
           "code": "// Measurableインターフェースの定義\ninterface Measurable {\n    double getMeasure();\n}\n\n// Shapeクラスの定義\nabstract class Shape implements Measurable {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n    abstract double area();\n\n    @Override\n    // getMeasureメソッドの定義\n    public double getMeasure() {\n        return area();  // 面積を測定値として返す\n    }\n    @Override\n    // toStringメソッドの定義\n    public String toString() {\n        return name + \"(面積: \" + area() + \")\";\n    }\n}\n\n// Rectangleクラスの定義\nclass Rectangle extends Shape {\n    double width, height;\n\n    Rectangle(double w, double h) {\n        super(\"長方形\");\n        this.width = w;\n        this.height = h;\n    }\n    @Override\n    double area() {\n        return width * height;\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Rectangle(3, 4);\n        System.out.println(s);               // 長方形(面積: 12.0)\n        System.out.println(s.getMeasure());   // 12.0\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4
@@ -825,7 +825,7 @@
           "lessonId": "ch13_05",
           "sectionType": "tip",
           "title": "使い分けの判断フロー",
-          "body": "迷ったときの判断フロー:\n\n1. 「is-a」関係がある？ → **抽象クラス**を検討\n2. 共通のフィールドやコンストラクタが必要？ → 抽象クラス\n3. 複数の型に同じ能力を持たせたい？ → **インターフェース**\n4. **多重実装**が必要？ → インターフェース（Javaは単一継承のみ）\n\n実務では「基本はインターフェース、共通実装が多い場合は抽象クラス」が一般的です。",
+          "body": "迷ったときの判断フロー:\n\n1. 「is-a」関係がある？ → 抽象クラスを検討\n2. 共通のフィールドやコンストラクタが必要？ → 抽象クラス\n3. 複数の型に同じ能力を持たせたい？ → インターフェース\n4. **多重実装**が必要？ → インターフェース（Javaは単一継承のみ）\n\n実務では「基本はインターフェース、共通実装が多い場合は抽象クラス」が一般的です。",
           "code": null,
           "note": null,
           "order": 5
@@ -834,7 +834,7 @@
           "lessonId": "ch13_05",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・IS-A関係（分類）には**抽象クラス**、CAN-DO関係（能力）には**インターフェース**を使う\n・抽象クラスは状態（フィールド）を持てるが、インターフェースは定数のみ\n・抽象クラスは単一継承、インターフェースは複数実装が可能\n・Comparable、Serializable、Iterableなどは代表的なインターフェース\n・抽象クラスとインターフェースを組み合わせた設計が実践的",
+          "body": "・IS-A関係（分類）には抽象クラス、CAN-DO関係（能力）にはインターフェースを使う\n・抽象クラスは状態（フィールド）を持てるが、インターフェースは定数のみ\n・抽象クラスは単一継承、インターフェースは複数実装が可能\n・Comparable、Serializable、Iterableなどは代表的なインターフェース\n・抽象クラスとインターフェースを組み合わせた設計が実践的",
           "code": null,
           "note": null,
           "order": 6

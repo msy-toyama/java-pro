@@ -13,7 +13,7 @@
           "lessonId": "ch26_01",
           "sectionType": "overview",
           "title": "日付・時刻APIの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・java.timeパッケージの設計思想（不変・スレッドセーフ）\n・**LocalDate**, **LocalTime**, LocalDateTimeの違い\n・now(), of()による生成方法\n\n従来のDate/Calendarの問題を解決した新しいAPIです。",
+          "body": "このレッスンでは以下を学びます:\n\n・java.timeパッケージの設計思想（不変・[[スレッド]]セーフ）\n・**LocalDate**, **LocalTime**, [[LocalDateTime]]の違い\n・now(), of()による生成方法\n\n従来のDate/Calendarの問題を解決した新しいAPIです。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch26_01",
           "sectionType": "rule",
           "title": "LocalDate・LocalTime・LocalDateTime",
-          "body": "| クラス | 説明 |\n|---|---|\n| LocalDate | 年・月・日のみを表し、時刻情報を持ちません。ISO 8601形式（yyyy-MM-dd）で表現されます。 |\n| LocalTime | 時・分・秒・ナノ秒を表し、日付情報を持ちません。 |\n| LocalDateTime | 日付と時刻の両方を表します。 |\nいずれも**イミュータブル**であり、操作メソッドは新しいインスタンスを返します。\n元のオブジェクトは変更されないため、戻り値を受け取らないと変更は反映されません。\nコンストラクタはprivateなので、new LocalDate()のようなコードはコンパイルエラーになります。",
+          "body": "| クラス | 説明 |\n|---|---|\n| LocalDate | 年・月・日のみを表し、時刻情報を持ちません。ISO 8601形式（yyyy-MM-dd）で表現されます。 |\n| LocalTime | 時・分・秒・ナノ秒を表し、日付情報を持ちません。 |\n| LocalDateTime | 日付と時刻の両方を表します。 |\nいずれも**イミュータブル**であり、操作[[メソッド]]は新しい[[インスタンス]]を返します。\n元のオブジェクトは変更されないため、戻り値を受け取らないと変更は反映されません。\n[[コンストラクタ]]はprivateなので、new LocalDate()のようなコードは[[コンパイル]]エラーになります。",
           "code": "import java.time.LocalDate;\nimport java.time.LocalTime;\nimport java.time.LocalDateTime;\n\n// 現在の日付・時刻\nLocalDate today = LocalDate.now();\nLocalTime now = LocalTime.now();\nLocalDateTime dateTime = LocalDateTime.now();\n\nSystem.out.println(today);    // 例: 2024-04-01\nSystem.out.println(now);      // 例: 14:30:15.123\nSystem.out.println(dateTime); // 例: 2024-04-01T14:30:15.123\n\n// イミュータブルの確認\nLocalDate d = LocalDate.of(2024, 1, 1);\nd.plusDays(10);  // 戻り値を受け取っていない！\nSystem.out.println(d); // 2024-01-01（変更されない）\n\nLocalDate d2 = d.plusDays(10); // 新しいインスタンスを受け取る\nSystem.out.println(d2); // 2024-01-11",
           "note": "操作メソッドの戻り値を受け取らないと変更が反映されない点は、試験で頻出のひっかけです。",
           "order": 2
@@ -178,7 +178,7 @@
           "lessonId": "ch26_02",
           "sectionType": "overview",
           "title": "日付・時刻の操作方法",
-          "body": "このレッスンでは以下を学びます:\n\n・plus/minus系メソッドによる日付・時刻の加減算\n・with系メソッドによる特定フィールドの変更\n・Period（日付間隔）とDuration（時刻間隔）の使い分け\n\n不変オブジェクトの操作メソッドは新しいオブジェクトを返します。",
+          "body": "このレッスンでは以下を学びます:\n\n・plus/minus系[[メソッド]]による日付・時刻の加減算\n・with系メソッドによる特定フィールドの変更\n・[[Period]]（日付間隔）と[[Duration]]（時刻間隔）の使い分け\n\n[[不変オブジェクト]]の操作メソッドは新しいオブジェクトを返します。",
           "code": null,
           "note": null,
           "order": 1
@@ -196,7 +196,7 @@
           "lessonId": "ch26_02",
           "sectionType": "code",
           "title": "withメソッドとTemporalAdjusters",
-          "body": "with系メソッドは特定のフィールドを指定した値に変更した新しいインスタンスを返します。\nwithDayOfMonth()、withMonth()、withYear()などがあります。\n不正な値を指定するとDateTimeExceptionがスローされます。\nTemporalAdjustersクラスを使うと、「次の月曜日」や「月の最終日」などの複雑な調整が簡単に行えます。",
+          "body": "with系メソッドは特定のフィールドを指定した値に変更した新しい[[インスタンス]]を返します。\nwithDayOfMonth()、withMonth()、withYear()などがあります。\n不正な値を指定するとDateTimeExceptionがスローされます。\nTemporalAdjustersクラスを使うと、「次の月曜日」や「月の最終日」などの複雑な調整が簡単に行えます。",
           "code": "import java.time.LocalDate;\nimport java.time.temporal.TemporalAdjusters;\nimport java.time.DayOfWeek;\n\nLocalDate d = LocalDate.of(2024, 3, 15);\n\n// withメソッド\nSystem.out.println(d.withDayOfMonth(1));  // 2024-03-01\nSystem.out.println(d.withMonth(6));       // 2024-06-15\nSystem.out.println(d.withYear(2025));     // 2025-03-15\n\n// TemporalAdjusters\nSystem.out.println(d.with(TemporalAdjusters.firstDayOfMonth()));  // 2024-03-01\nSystem.out.println(d.with(TemporalAdjusters.lastDayOfMonth()));   // 2024-03-31\nSystem.out.println(d.with(TemporalAdjusters.next(DayOfWeek.MONDAY))); // 次の月曜\nSystem.out.println(d.with(TemporalAdjusters.firstDayOfNextMonth())); // 2024-04-01",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -205,7 +205,7 @@
           "lessonId": "ch26_02",
           "sectionType": "point",
           "title": "PeriodとDuration",
-          "body": "Periodは年・月・日単位の期間を表し、LocalDateと共に使用します。\nDurationは時・分・秒・ナノ秒単位の期間を表し、LocalTimeやLocalDateTimeと共に使用します。\nPeriod.between()で2つの日付間の期間を計算できます。\nDuration.between()で2つの時刻間の期間を計算できます。\nPeriodをLocalTimeに、DurationをLocalDateに適用するとUnsupportedTemporalTypeExceptionが発生します。",
+          "body": "Periodは年・月・日単位の期間を表し、LocalDateと共に使用します。\nDurationは時・分・秒・ナノ秒単位の期間を表し、LocalTimeや[[LocalDateTime]]と共に使用します。\nPeriod.between()で2つの日付間の期間を計算できます。\nDuration.between()で2つの時刻間の期間を計算できます。\nPeriodをLocalTimeに、DurationをLocalDateに適用するとUnsupportedTemporalTypeExceptionが発生します。",
           "code": "import java.time.*;\n\n// Period（年月日の期間）\nPeriod p1 = Period.of(1, 2, 3);  // 1年2ヶ月3日\nPeriod p2 = Period.ofMonths(6);   // 6ヶ月\nPeriod p3 = Period.between(\n    LocalDate.of(2024, 1, 1),\n    LocalDate.of(2024, 4, 15)\n); // 3ヶ月14日\n\nLocalDate d = LocalDate.of(2024, 1, 1);\nSystem.out.println(d.plus(p1)); // 2025-03-04\n\n// Duration（時間の期間）\nDuration d1 = Duration.ofHours(5);    // 5時間\nDuration d2 = Duration.ofMinutes(90); // 90分\nDuration d3 = Duration.between(\n    LocalTime.of(10, 0),\n    LocalTime.of(14, 30)\n); // 4時間30分\n\nLocalTime t = LocalTime.of(10, 0);\nSystem.out.println(t.plus(d1)); // 15:00\n\n// 型の不一致 → 例外\n// LocalTime.now().plus(p1); // UnsupportedTemporalTypeException",
           "note": "PeriodはLocalDateに、DurationはLocalTimeに使うことを覚えましょう。混同は試験で問われます。",
           "order": 4
@@ -404,7 +404,7 @@
           "lessonId": "ch26_03",
           "sectionType": "overview",
           "title": "DateTimeFormatterとは",
-          "body": "このレッスンでは以下を学びます:\n\n・DateTimeFormatterの事前定義フォーマッタ\n・ofPattern()でカスタムフォーマットを作成\n・parse()で文字列から日時オブジェクトに変換\n\n日時と文字列の相互変換は実務で頻繁に使います。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[DateTimeFormatter]]の事前定義フォーマッタ\n・ofPattern()でカスタムフォーマットを作成\n・parse()で文字列から日時オブジェクトに変換\n\n日時と文字列の相互変換は実務で頻繁に使います。",
           "code": null,
           "note": null,
           "order": 1
@@ -422,7 +422,7 @@
           "lessonId": "ch26_03",
           "sectionType": "code",
           "title": "カスタムパターン（ofPattern）",
-          "body": "**DateTimeFormatter**.ofPattern()でカスタムフォーマットパターンを指定できます。\n主なパターン文字：y（年）、M（月）、d（日）、H（時24h）、h（時12h）、m（分）、s（秒）\n大文字と小文字の違いに注意してください（Mは月、mは分、Hは24時間制、hは12時間制）。\nパターン文字の繰り返し回数で出力の桁数が決まります（yyは2桁年、yyyyは4桁年）。\nシングルクォートで囲んだ文字はリテラルとして出力されます。",
+          "body": "**DateTimeFormatter**.ofPattern()でカスタムフォーマットパターンを指定できます。\n主なパターン文字：y（年）、M（月）、d（日）、H（時24h）、h（時12h）、m（分）、s（秒）\n大文字と小文字の違いに注意してください（Mは月、mは分、Hは24時間制、hは12時間制）。\nパターン文字の繰り返し回数で出力の桁数が決まります（yyは2桁年、yyyyは4桁年）。\nシングルクォートで囲んだ文字は[[リテラル]]として出力されます。",
           "code": "import java.time.LocalDateTime;\nimport java.time.format.DateTimeFormatter;\n\nLocalDateTime dt = LocalDateTime.of(2024, 3, 15, 14, 30, 45);\n\n// カスタムパターン\nDateTimeFormatter f1 = DateTimeFormatter.ofPattern(\"yyyy/MM/dd\");\nSystem.out.println(dt.format(f1)); // 2024/03/15\n\nDateTimeFormatter f2 = DateTimeFormatter.ofPattern(\"yyyy年MM月dd日 HH時mm分\");\nSystem.out.println(dt.format(f2)); // 2024年03月15日 14時30分\n\nDateTimeFormatter f3 = DateTimeFormatter.ofPattern(\"MM-dd-yyyy\");\nSystem.out.println(dt.format(f3)); // 03-15-2024\n\n// 注意：LocalDateに時刻パターンを使うとエラー\nLocalDate d = LocalDate.of(2024, 3, 15);\nDateTimeFormatter f4 = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\n// d.format(f4); // UnsupportedTemporalTypeException",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -431,7 +431,7 @@
           "lessonId": "ch26_03",
           "sectionType": "point",
           "title": "parse()メソッドの使い方",
-          "body": "parse()メソッドで文字列から日付・時刻オブジェクトを生成できます。\n**LocalDate**.parse(文字列, フォーマッター)の形式で使います。\nフォーマッターを省略すると、ISO標準形式（yyyy-MM-dd等）でパースします。\nパターンに一致しない文字列を渡すとDateTimeParseExceptionがスローされます。\nフォーマッターのパターンと文字列のフォーマットは完全に一致する必要があります。",
+          "body": "parse()[[メソッド]]で文字列から日付・時刻オブジェクトを生成できます。\n**LocalDate**.parse(文字列, フォーマッター)の形式で使います。\nフォーマッターを省略すると、ISO標準形式（yyyy-MM-dd等）でパースします。\nパターンに一致しない文字列を渡すとDateTimeParseExceptionがスローされます。\nフォーマッターのパターンと文字列のフォーマットは完全に一致する必要があります。",
           "code": "import java.time.LocalDate;\nimport java.time.LocalDateTime;\nimport java.time.format.DateTimeFormatter;\n\n// デフォルト形式でパース\nLocalDate d1 = LocalDate.parse(\"2024-03-15\");\nSystem.out.println(d1); // 2024-03-15\n\n// カスタムパターンでパース\nDateTimeFormatter f = DateTimeFormatter.ofPattern(\"yyyy/MM/dd\");\nLocalDate d2 = LocalDate.parse(\"2024/03/15\", f);\nSystem.out.println(d2); // 2024-03-15\n\n// パースエラー\ntry {\n    LocalDate.parse(\"2024/03/15\"); // ISO形式でないためエラー\n} catch (Exception e) {\n    System.out.println(\"DateTimeParseException\");\n}\n\n// LocalDateTimeのパース\nDateTimeFormatter dtf = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\nLocalDateTime dt = LocalDateTime.parse(\"2024/03/15 14:30\", dtf);\nSystem.out.println(dt); // 2024-03-15T14:30",
           "note": "parse()とformat()は逆の操作です。同じフォーマッターでformat→parseを往復できます。",
           "order": 4
@@ -618,7 +618,7 @@
           "lessonId": "ch26_04",
           "sectionType": "overview",
           "title": "タイムゾーンとInstant",
-          "body": "このレッスンでは以下を学びます:\n\n・ZonedDateTimeでタイムゾーン付き日時を扱う\n・Instantでエポック秒から日時を生成\n・各クラス間の変換方法\n\nグローバルなアプリケーションで必須の知識です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[ZonedDateTime]]でタイムゾーン付き日時を扱う\n・[[Instant]]でエポック秒から日時を生成\n・各[[クラス]]間の変換方法\n\nグローバルなアプリケーションで必須の知識です。",
           "code": null,
           "note": null,
           "order": 1
@@ -627,7 +627,7 @@
           "lessonId": "ch26_04",
           "sectionType": "rule",
           "title": "ZoneIdとZonedDateTime",
-          "body": "ZoneIdはタイムゾーンを表すクラスで、ZoneId.of(\"Asia/Tokyo\")のように生成します。\nZonedDateTimeはLocalDateTimeにZoneIdを加えたものです。\n**ZonedDateTime**.now()で現在のタイムゾーン付き日時を取得できます。\nLocalDateTimeとZoneIdからZonedDateTimeを生成できます（atZone()メソッド）。\nZonedDateTimeのtoString()にはタイムゾーン情報（オフセットとゾーンID）が含まれます。\nZoneId.getAvailableZoneIds()で利用可能なタイムゾーンIDの一覧を取得できます。",
+          "body": "ZoneIdはタイムゾーンを表すクラスで、ZoneId.of(\"Asia/Tokyo\")のように生成します。\nZonedDateTimeは[[LocalDateTime]]にZoneIdを加えたものです。\n**ZonedDateTime**.now()で現在のタイムゾーン付き日時を取得できます。\nLocalDateTimeとZoneIdからZonedDateTimeを生成できます（atZone()[[メソッド]]）。\nZonedDateTimeのtoString()にはタイムゾーン情報（オフセットとゾーンID）が含まれます。\nZoneId.getAvailableZoneIds()で利用可能なタイムゾーンIDの一覧を取得できます。",
           "code": "import java.time.*;\n\n// ZoneIdの取得\nZoneId tokyo = ZoneId.of(\"Asia/Tokyo\");\nZoneId utc = ZoneId.of(\"UTC\");\nZoneId ny = ZoneId.of(\"America/New_York\");\n\n// ZonedDateTimeの生成\nZonedDateTime zdt1 = ZonedDateTime.now(tokyo);\nSystem.out.println(zdt1); // 例: 2024-03-15T14:30:00+09:00[Asia/Tokyo]\n\n// LocalDateTimeからZonedDateTimeへ\nLocalDateTime ldt = LocalDateTime.of(2024, 3, 15, 14, 30);\nZonedDateTime zdt2 = ldt.atZone(tokyo);\nSystem.out.println(zdt2); // 2024-03-15T14:30+09:00[Asia/Tokyo]\n\n// タイムゾーンの変換\nZonedDateTime zdtNY = zdt2.withZoneSameInstant(ny);\nSystem.out.println(zdtNY); // 2024-03-15T01:30-04:00[America/New_York]",
           "note": "withZoneSameInstant()は同じ瞬間を別のタイムゾーンで表現します。withZoneSameLocal()はローカル時刻を維持してゾーンだけ変更します。",
           "order": 2
@@ -636,7 +636,7 @@
           "lessonId": "ch26_04",
           "sectionType": "code",
           "title": "Instantクラス",
-          "body": "Instantはエポック（1970-01-01T00:00:00Z）からの経過時間で時点を表します。\nInstant.now()で現在の瞬間を取得し、Instant.ofEpochSecond()でエポック秒から生成します。\nInstantはタイムゾーンの概念を持たず、常にUTCベースです。\nInstantとZonedDateTimeは相互変換できます。\nDuration.between()でInstant間の時間差を計算できます。",
+          "body": "Instantはエポック（1970-01-01T00:00:00Z）からの経過時間で時点を表します。\nInstant.now()で現在の瞬間を取得し、Instant.ofEpochSecond()でエポック秒から生成します。\nInstantはタイムゾーンの概念を持たず、常にUTCベースです。\nInstantとZonedDateTimeは相互変換できます。\n[[Duration]].between()でInstant間の時間差を計算できます。",
           "code": "import java.time.*;\n\n// Instantの生成\nInstant now = Instant.now();\nSystem.out.println(now); // 例: 2024-03-15T05:30:00.123Z\n\n// エポック秒から生成\nInstant epoch = Instant.ofEpochSecond(0);\nSystem.out.println(epoch); // 1970-01-01T00:00:00Z\n\nInstant i = Instant.ofEpochSecond(1000000);\nSystem.out.println(i); // 1970-01-12T13:46:40Z\n\n// ZonedDateTimeとの変換\nZonedDateTime zdt = now.atZone(ZoneId.of(\"Asia/Tokyo\"));\nSystem.out.println(zdt); // UTC+9で表示\n\nInstant fromZdt = zdt.toInstant();\nSystem.out.println(fromZdt.equals(now)); // true\n\n// Instant間の期間\nInstant i1 = Instant.parse(\"2024-01-01T00:00:00Z\");\nInstant i2 = Instant.parse(\"2024-01-02T12:00:00Z\");\nDuration d = Duration.between(i1, i2);\nSystem.out.println(d.toHours()); // 36",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -654,7 +654,7 @@
           "lessonId": "ch26_04",
           "sectionType": "tip",
           "title": "試験対策：ZonedDateTimeとInstant",
-          "body": "・Gold試験ではwithZoneSameInstant()とwithZoneSameLocal()の違いが問われます。\n・withZoneSameInstant()は同じ瞬間を別ゾーンで表現（時刻が変わる）、withZoneSameLocal()はローカル時刻を維持してゾーンだけ変更（瞬間が変わる）です。\n・InstantにはplusDays()等のメソッドがなく、plus(Duration)で操作することに注意しましょう。\n\n型変換の経路を図で整理しておくと理解が深まります。\nZoneId.of()に不正なゾーンIDを渡すとZoneRulesExceptionが発生します。",
+          "body": "・Gold試験ではwithZoneSameInstant()とwithZoneSameLocal()の違いが問われます。\n・withZoneSameInstant()は同じ瞬間を別ゾーンで表現（時刻が変わる）、withZoneSameLocal()はローカル時刻を維持してゾーンだけ変更（瞬間が変わる）です。\n・InstantにはplusDays()等のメソッドがなく、plus(Duration)で操作することに注意しましょう。\n\n[[型変換]]の経路を図で整理しておくと理解が深まります。\nZoneId.of()に不正なゾーンIDを渡すとZoneRulesExceptionが発生します。",
           "code": null,
           "note": null,
           "order": 5

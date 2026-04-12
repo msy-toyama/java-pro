@@ -13,7 +13,7 @@
           "lessonId": "ch15_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**ラッパークラス**（Integer, Double等）の役割\n・valueOf()とparseXxx()メソッドの違い\n・**オートボクシング**と**アンボクシング**の動作\n\n基本型とオブジェクト型を橋渡しする重要なクラスです。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ラッパークラス**（Integer, Double等）の役割\n・valueOf()とparseXxx()[[メソッド]]の違い\n・**オートボクシング**と**アンボクシング**の動作\n\n基本型とオブジェクト型を橋渡しする重要な[[クラス]]です。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch15_01",
           "sectionType": "rule",
           "title": "基本データ型とラッパークラスの対応",
-          "body": "Javaの8つの基本データ型には、それぞれ対応する**ラッパークラス**があります。\n\n| プリミティブ型 | ラッパークラス |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\n注意すべきは、intに対応するのがIntegerであり、charに対応するのがCharacterである点です。\nそれ以外は基本データ型の頭文字を大文字にしたものがラッパークラス名になります。\nラッパークラスはすべてjava.langパッケージに属しており、importなしで使用できます。",
+          "body": "Javaの8つの基本[[データ型]]には、それぞれ対応する**ラッパークラス**があります。\n\n| プリミティブ型 | ラッパークラス |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\n注意すべきは、intに対応するのがIntegerであり、charに対応するのがCharacterである点です。\nそれ以外は基本データ型の頭文字を大文字にしたものがラッパークラス名になります。\nラッパークラスはすべてjava.langパッケージに属しており、importなしで使用できます。",
           "code": null,
           "note": "Integer（intではなくInteger）とCharacter（charではなくCharacter）のスペルに注意しましょう。",
           "order": 2
@@ -51,7 +51,7 @@
           "title": "parseメソッドとvalueOfメソッド",
           "body": "**ラッパークラス**には文字列を数値に変換するparseメソッドと、ラッパーオブジェクトを返すvalueOfメソッドがあります。\nInteger.parseIntは文字列をint（基本データ型）に変換します。\nInteger.valueOfは文字列をInteger（ラッパーオブジェクト）に変換します。\n数値に変換できない文字列を渡すとNumberFormatExceptionがスローされます。\n各ラッパークラスに同様のメソッドが用意されています。",
           "code": "public class Main {\n    public static void main(String[] args) {\n        // 文字列 → 基本データ型\n        int a = Integer.parseInt(\"123\");\n        double b = Double.parseDouble(\"3.14\");\n        boolean c = Boolean.parseBoolean(\"true\");\n\n        // 文字列 → ラッパーオブジェクト\n        Integer d = Integer.valueOf(\"456\");\n        Double e = Double.valueOf(\"2.71\");\n\n        System.out.println(a);  // 123\n        System.out.println(b);  // 3.14\n        System.out.println(c);  // true\n        System.out.println(d);  // 456\n        System.out.println(e);  // 2.71\n\n        // NumberFormatException発生例\n        // int f = Integer.parseInt(\"abc\");  // 実行時エラー\n    }\n}",
-          "note": "Boolean.parseBooleanは\"true\"（大文字小文字無関係）の場合のみtrueを返し、それ以外はすべてfalseを返します。例外はスローされません。",
+          "note": "Boolean.parseBooleanは\"true\"（大文字小文字無関係）の場合のみtrueを返し、それ以外はすべてfalseを返します。[[例外]]はスローされません。",
           "order": 5
         },
         {
@@ -187,7 +187,7 @@
           "lessonId": "ch15_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・Stringの不変性（**イミュータブル**）の意味\n・charAt, substring, indexOf, replace等の主要メソッド\n・文字列比較（equals vs ==）の正しい使い方\n\n試験でも実務でも最も頻出するAPI群です。",
+          "body": "このレッスンでは以下を学びます:\n\n・Stringの不変性（**イミュータブル**）の意味\n・charAt, substring, indexOf, replace等の主要[[メソッド]]\n・文字列比較（equals vs ==）の正しい使い方\n\n試験でも実務でも最も頻出するAPI群です。",
           "code": null,
           "note": null,
           "order": 1
@@ -205,7 +205,7 @@
           "lessonId": "ch15_02",
           "sectionType": "tip",
           "title": "Stringの不変性を理解する",
-          "body": "Stringオブジェクトは一度作成されると、中身を変更できません。\n\n・str.toUpperCase() → 新しいStringを返す（元のstrは変わらない）\n・str.replace(\"a\", \"b\") → 新しいStringを返す（元のstrは変わらない）\n・str + \"追加\" → 新しいStringを返す（元のstrは変わらない）\n\n戻り値を変数に再代入しないと、操作結果が失われます。",
+          "body": "Stringオブジェクトは一度作成されると、中身を変更できません。\n\n・str.toUpperCase() → 新しいStringを返す（元のstrは変わらない）\n・str.replace(\"a\", \"b\") → 新しいStringを返す（元のstrは変わらない）\n・str + \"追加\" → 新しいStringを返す（元のstrは変わらない）\n\n戻り値を[[変数]]に再代入しないと、操作結果が失われます。",
           "code": null,
           "note": "試験でString str = \"hello\"; str.toUpperCase(); の後にstrの値を聞く問題が頻出（答え: \"hello\"のまま）。",
           "order": 3
@@ -214,7 +214,7 @@
           "lessonId": "ch15_02",
           "sectionType": "rule",
           "title": "equals()と==の違い",
-          "body": "Stringの比較では、equals()と==の違いを正確に理解する必要があります。\n==演算子はオブジェクトの「参照」が同じかどうかを比較します。\nequals()メソッドは文字列の「内容」が同じかどうかを比較します。\nリテラルで作成した文字列は文字列プールに格納されるため==でもtrueになることがありますが、\nnew String()で作成した場合は異なる参照になるため==はfalseになります。\n文字列の内容を比較する場合は常にequals()を使うのが正しい方法です。\ncompareToメソッドは辞書順で比較し、等しければ0、小さければ負、大きければ正の値を返します。",
+          "body": "Stringの比較では、equals()と==の違いを正確に理解する必要があります。\n==[[演算子]]はオブジェクトの「参照」が同じかどうかを比較します。\nequals()メソッドは文字列の「内容」が同じかどうかを比較します。\n[[リテラル]]で作成した文字列は文字列プールに格納されるため==でもtrueになることがありますが、\nnew String()で作成した場合は異なる参照になるため==はfalseになります。\n文字列の内容を比較する場合は常にequals()を使うのが正しい方法です。\ncompareToメソッドは辞書順で比較し、等しければ0、小さければ負、大きければ正の値を返します。",
           "code": null,
           "note": "試験では==とequals()の違いを問う問題が頻出です。文字列比較は必ずequals()を使いましょう。",
           "order": 4
@@ -225,7 +225,7 @@
           "title": "Stringの不変性（immutability）",
           "body": "Stringオブジェクトは一度作成されると内容を変更できません。\ntoUpperCase()やreplace()などのメソッドを呼んでも元の文字列は変わらず、新しいStringオブジェクトが返されます。\nこの性質を「不変（immutable）」と呼びます。\n変更後の文字列を使いたい場合は、戻り値を変数に代入する必要があります。",
           "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 変数の宣言と初期化\n        String s = \"Hello\";\n        s.toUpperCase();  // 新しい文字列が作られるが、sは変わらない\n        System.out.println(s);  // Hello（元のまま）\n\n        String upper = s.toUpperCase();  // 戻り値を受け取る\n        System.out.println(upper);  // HELLO\n\n        String s2 = s.replace('l', 'r');\n        System.out.println(s);   // Hello（元のまま）\n        System.out.println(s2);  // Herro\n\n        String s3 = s.concat(\" World\");\n        System.out.println(s);   // Hello（元のまま）\n        System.out.println(s3);  // Hello World\n    }\n}",
-          "note": "【実務Tips】業務アプリではStringの不変性を活かしてHashMapのキーやスレッド間共有に安全に使えます。大量の文字列連結にはStringBuilderを使い、パフォーマンスを意識するのが現場の基本です。",
+          "note": "【実務Tips】業務アプリではStringの不変性を活かして[[HashMap]]のキーや[[スレッド]]間共有に安全に使えます。大量の文字列連結には[[StringBuilder]]を使い、パフォーマンスを意識するのが現場の基本です。",
           "order": 5
         },
         {
@@ -422,7 +422,7 @@
           "lessonId": "ch15_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・StringBuilderの役割（可変な文字列操作）\n・append, insert, delete, reverseメソッド\n・Stringとの使い分けの判断基準\n\n大量の文字列連結ではStringBuilderが圧倒的に高速です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[StringBuilder]]の役割（可変な文字列操作）\n・append, insert, delete, reverseメソッド\n・Stringとの使い分けの判断基準\n\n大量の文字列連結ではStringBuilderが圧倒的に高速です。",
           "code": null,
           "note": null,
           "order": 1
@@ -449,7 +449,7 @@
           "lessonId": "ch15_03",
           "sectionType": "tip",
           "title": "StringとStringBuilderの使い分け",
-          "body": "StringとStringBuilderは場面によって使い分ける必要があります。\n\n【Stringが適している場面】\n・文字列をほとんど変更しない場合\n・スレッドセーフが必要な場合（Stringは不変なのでスレッドセーフ）\n・少数の文字列連結で済む場合\n\n【StringBuilderが適している場面】\n・ループ内で文字列を繰り返し連結する場合\n・文字列を頻繁に挿入・削除する場合\n・パフォーマンスが重要な場面\n\nなお、StringBufferというクラスもあります。StringBuilderと同じ機能ですがスレッドセーフです。\n認定試験ではStringBuilderの方が出題されやすいです。",
+          "body": "StringとStringBuilderは場面によって使い分ける必要があります。\n\n【Stringが適している場面】\n・文字列をほとんど変更しない場合\n・[[スレッド]]セーフが必要な場合（Stringは不変なのでスレッドセーフ）\n・少数の文字列連結で済む場合\n\n【StringBuilderが適している場面】\n・ループ内で文字列を繰り返し連結する場合\n・文字列を頻繁に挿入・削除する場合\n・パフォーマンスが重要な場面\n\nなお、StringBufferという[[クラス]]もあります。StringBuilderと同じ機能ですがスレッドセーフです。\n認定試験ではStringBuilderの方が出題されやすいです。",
           "code": null,
           "note": "StringBuilderはスレッドセーフではありません。マルチスレッド環境ではStringBufferを使います。",
           "order": 4
@@ -672,7 +672,7 @@
           "lessonId": "ch15_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・ArrayListの主要操作（add, get, set, remove）\n・Iteratorによる安全な要素削除\n・for-each文で反復処理中に要素を削除する危険性\n\nArrayListは実務で最も使うコレクションです。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[ArrayList]]の主要操作（add, get, set, remove）\n・[[Iterator]]による安全な要素削除\n・for-each文で反復処理中に要素を削除する危険性\n\nArrayListは実務で最も使うコレクションです。",
           "code": null,
           "note": null,
           "order": 1
@@ -681,7 +681,7 @@
           "lessonId": "ch15_04",
           "sectionType": "code",
           "title": "ArrayListの基本操作",
-          "body": "ArrayListの生成と基本的なメソッドを確認します。\nadd()で要素を追加し、get()でインデックス指定で取得します。\nset()は指定位置の要素を置換し、remove()は要素を削除します。\nsize()は現在の要素数を返します。",
+          "body": "ArrayListの生成と基本的な[[メソッド]]を確認します。\nadd()で要素を追加し、get()でインデックス指定で取得します。\nset()は指定位置の要素を置換し、remove()は要素を削除します。\nsize()は現在の要素数を返します。",
           "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> list = new ArrayList<>();\n\n        // add: 要素の追加\n        list.add(\"Java\");\n        list.add(\"Python\");\n        list.add(\"C++\");\n        System.out.println(list);  // [Java, Python, C++]\n\n        // get: インデックスで取得\n        System.out.println(list.get(0));  // Java\n\n        // set: 指定位置の要素を置換\n        list.set(1, \"Ruby\");\n        System.out.println(list);  // [Java, Ruby, C++]\n\n        // remove: 要素の削除（インデックス指定）\n        list.remove(2);\n        System.out.println(list);  // [Java, Ruby]\n\n        // size: 要素数\n        System.out.println(list.size());  // 2\n    }\n}",
           "note": "remove()にint値を渡すとインデックス指定、オブジェクトを渡すと値指定での削除になります。",
           "order": 2
@@ -690,7 +690,7 @@
           "lessonId": "ch15_04",
           "sectionType": "tip",
           "title": "for-each文の中でremoveしてはいけない",
-          "body": "以下のコードはConcurrentModificationExceptionを引き起こします。\n\nfor (String s : list) { if (条件) list.remove(s); }\n\n安全な削除方法:\n・Iteratorのremove()メソッドを使う\n・list.removeIf(条件) を使う（Java 8+、最も推奨）\n・逆順のインデックスループで削除する\n\nremoveIf() はラムダ式で条件を指定でき、最も簡潔です。",
+          "body": "以下のコードはConcurrentModificationExceptionを引き起こします。\n\nfor ([[String]] s : list) { if (条件) list.remove(s); }\n\n安全な削除方法:\n・Iteratorのremove()メソッドを使う\n・list.removeIf(条件) を使う（Java 8+、最も推奨）\n・逆順のインデックスループで削除する\n\nremoveIf() は[[ラムダ式]]で条件を指定でき、最も簡潔です。",
           "code": null,
           "note": null,
           "order": 3
@@ -699,7 +699,7 @@
           "lessonId": "ch15_04",
           "sectionType": "code",
           "title": "拡張for文（for-each）でのArrayList操作",
-          "body": "拡張for文を使うと、ArrayListの全要素を簡潔に反復処理できます。\nインデックスを意識せずに各要素にアクセスでき、コードが読みやすくなります。\nただし、反復中にリストを変更する（要素の追加・削除）とConcurrentModificationExceptionが発生します。\n通常のfor文ならインデックスを使った柔軟な操作が可能です。",
+          "body": "[[拡張for文]]を使うと、ArrayListの全要素を簡潔に反復処理できます。\nインデックスを意識せずに各要素にアクセスでき、コードが読みやすくなります。\nただし、反復中にリストを変更する（要素の追加・削除）とConcurrentModificationExceptionが発生します。\n通常の[[for文]]ならインデックスを使った柔軟な操作が可能です。",
           "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> fruits = new ArrayList<>();\n        fruits.add(\"Apple\");\n        fruits.add(\"Banana\");\n        fruits.add(\"Cherry\");\n\n        // 拡張for文\n        for (String fruit : fruits) {\n            System.out.println(fruit);\n        }\n        // Apple\n        // Banana\n        // Cherry\n\n        // 通常のfor文（インデックスあり）\n        for (int i = 0; i < fruits.size(); i++) {\n            System.out.println(i + \": \" + fruits.get(i));\n        }\n        // 0: Apple\n        // 1: Banana\n        // 2: Cherry\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4
@@ -708,7 +708,7 @@
           "lessonId": "ch15_04",
           "sectionType": "rule",
           "title": "ジェネリクスの基本",
-          "body": "ArrayListにはジェネリクス（型パラメータ）を指定して、格納する要素の型を制限できます。\nArrayList<String>と宣言すると、String型の要素だけを格納できます。\n型パラメータには基本データ型（intやdoubleなど）は指定できません。\n代わりに**ラッパークラス**（IntegerやDoubleなど）を使用します。\nジェネリクスを指定することで、コンパイル時に型の安全性が保証され、取得時にキャストが不要になります。\nダイヤモンド演算子<>を使うと、右辺の型パラメータを省略できます。",
+          "body": "ArrayListには[[ジェネリクス]]（型パラメータ）を指定して、格納する要素の型を制限できます。\nArrayList<String>と宣言すると、String型の要素だけを格納できます。\n型パラメータには基本[[データ型]]（intやdoubleなど）は指定できません。\n代わりに**ラッパークラス**（IntegerやDoubleなど）を使用します。\nジェネリクスを指定することで、[[コンパイル]]時に型の安全性が保証され、取得時に[[キャスト]]が不要になります。\n[[ダイヤモンド演算子]]<>を使うと、右辺の型パラメータを省略できます。",
           "code": null,
           "note": "ArrayList<int>はコンパイルエラーです。ArrayList<Integer>と書く必要があります。",
           "order": 5
@@ -846,7 +846,7 @@
           "lessonId": "ch15_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・LocalDate（日付のみ）、LocalTime（時刻のみ）、LocalDateTime（両方）\n・日時の生成・加算・比較・フォーマットの方法\n・DateTimeFormatterによる表示形式の変換\n\nJava 8以降の新しい日時APIの基本を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・LocalDate（日付のみ）、LocalTime（時刻のみ）、[[LocalDateTime]]（両方）\n・日時の生成・加算・比較・フォーマットの方法\n・[[DateTimeFormatter]]による表示形式の変換\n\nJava 8以降の新しい日時APIの基本を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -855,7 +855,7 @@
           "lessonId": "ch15_05",
           "sectionType": "code",
           "title": "LocalDateの生成と主要メソッド",
-          "body": "LocalDateは年月日を表すクラスです。\nnow()で現在の日付、of()で任意の日付を作成できます。\ngetYear()、getMonthValue()、getDayOfMonth()で各値を取得できます。\nplusDays()やminusMonths()で日付の加減算が可能です。\nStringと同様に不変（immutable）なため、操作の結果は新しいオブジェクトとして返されます。",
+          "body": "LocalDateは年月日を表す[[クラス]]です。\nnow()で現在の日付、of()で任意の日付を作成できます。\ngetYear()、getMonthValue()、getDayOfMonth()で各値を取得できます。\nplusDays()やminusMonths()で日付の加減算が可能です。\nStringと同様に不変（immutable）なため、操作の結果は新しいオブジェクトとして返されます。",
           "code": "import java.time.LocalDate;\n\npublic class Main {\n    public static void main(String[] args) {\n        // 現在の日付\n        LocalDate today = LocalDate.now();\n        System.out.println(today);  // 例: 2026-04-07\n\n        // 任意の日付を指定\n        LocalDate date = LocalDate.of(2025, 1, 15);\n        System.out.println(date);  // 2025-01-15\n\n        // 各値の取得\n        System.out.println(date.getYear());        // 2025\n        System.out.println(date.getMonthValue());  // 1\n        System.out.println(date.getDayOfMonth());  // 15\n\n        // 日付の加減算（元のオブジェクトは変わらない）\n        LocalDate nextWeek = date.plusDays(7);\n        System.out.println(nextWeek);  // 2025-01-22\n\n        LocalDate lastMonth = date.minusMonths(1);\n        System.out.println(lastMonth);  // 2024-12-15\n    }\n}",
           "note": "LocalDate.of()の月は1〜12の数値で指定します（0始まりではありません）。",
           "order": 2
@@ -864,7 +864,7 @@
           "lessonId": "ch15_05",
           "sectionType": "tip",
           "title": "LocalDateは不変（immutable）で設計されている",
-          "body": "Stringと同様に、LocalDateのメソッドは元のオブジェクトを変更しません。\n\n・date.plusDays(1) → 新しいLocalDateを返す\n・date.withMonth(12) → 新しいLocalDateを返す\n\n戻り値を受け取らないと、操作結果が失われる点に注意しましょう。\n\nまた、コンストラクタは使えず、of()やnow()で生成します。",
+          "body": "Stringと同様に、LocalDateの[[メソッド]]は元のオブジェクトを変更しません。\n\n・date.plusDays(1) → 新しいLocalDateを返す\n・date.withMonth(12) → 新しいLocalDateを返す\n\n戻り値を受け取らないと、操作結果が失われる点に注意しましょう。\n\nまた、[[コンストラクタ]]は使えず、of()やnow()で生成します。",
           "code": null,
           "note": null,
           "order": 3
@@ -873,7 +873,7 @@
           "lessonId": "ch15_05",
           "sectionType": "code",
           "title": "LocalDateTimeの操作",
-          "body": "LocalDateTimeは日付と時刻の両方を持つクラスです。\nof()メソッドで年・月・日・時・分・秒を指定してインスタンスを生成します。\nplusHours()やminusMinutes()で時刻の加減算もできます。\nLocalDateと同様に不変（immutable）です。",
+          "body": "LocalDateTimeは日付と時刻の両方を持つクラスです。\nof()メソッドで年・月・日・時・分・秒を指定して[[インスタンス]]を生成します。\nplusHours()やminusMinutes()で時刻の加減算もできます。\nLocalDateと同様に不変（immutable）です。",
           "code": "import java.time.LocalDateTime;\n\npublic class Main {\n    public static void main(String[] args) {\n        // 現在の日時\n        LocalDateTime now = LocalDateTime.now();\n        System.out.println(now);  // 例: 2026-04-07T14:30:15.123\n\n        // 任意の日時を指定\n        LocalDateTime dt = LocalDateTime.of(2025, 6, 15, 10, 30, 0);\n        System.out.println(dt);  // 2025-06-15T10:30\n\n        // 日時の加減算\n        LocalDateTime later = dt.plusHours(3);\n        System.out.println(later);  // 2025-06-15T13:30\n\n        LocalDateTime earlier = dt.minusDays(2).minusMinutes(15);\n        System.out.println(earlier);  // 2025-06-13T10:15\n\n        // LocalDateTimeは不変\n        dt.plusYears(1);  // 新しいオブジェクトが返されるがdtは変わらない\n        System.out.println(dt);  // 2025-06-15T10:30\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4

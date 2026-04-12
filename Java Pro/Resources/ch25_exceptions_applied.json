@@ -13,7 +13,7 @@
           "lessonId": "ch25_01",
           "sectionType": "overview",
           "title": "try-with-resourcesの概要",
-          "body": "このレッスンでは以下を学びます:\n\n・**try-with-resources** の詳細なルール\n・Java 9以降の事実上finalなリソース変数\n・複数リソースの同時管理\n\nリソース自動管理の仕様を正確に理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・**try-with-resources** の詳細なルール\n・Java 9以降の事実上finalなリソース[[変数]]\n・複数リソースの同時管理\n\nリソース自動管理の仕様を正確に理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch25_01",
           "sectionType": "rule",
           "title": "AutoCloseableとCloseable",
-          "body": "AutoCloseableインターフェースはjava.langパッケージに属し、close()メソッドを宣言しています。\nCloseableインターフェースはjava.ioパッケージに属し、AutoCloseableのサブインターフェースです。\nAutoCloseableのclose()はExceptionをスローできますが、Closeableのclose()はIOExceptionのみをスローします。\n**try-with-resources**で使えるのはAutoCloseableを実装したクラスです。\nCloseableはAutoCloseableを継承しているため、当然try-with-resourcesで使えます。\nJava 9以降では、tryブロックの外で宣言した実質的にfinalな変数もtry-with-resourcesで使えます。",
+          "body": "[[AutoCloseable]][[インターフェース]]はjava.langパッケージに属し、close()[[メソッド]]を宣言しています。\nCloseableインターフェースはjava.ioパッケージに属し、AutoCloseableのサブインターフェースです。\nAutoCloseableのclose()はExceptionをスローできますが、Closeableのclose()はIOExceptionのみをスローします。\n**try-with-resources**で使えるのはAutoCloseableを実装した[[クラス]]です。\nCloseableはAutoCloseableを[[継承]]しているため、当然[[try-with-resources]]で使えます。\nJava 9以降では、tryブロックの外で宣言した実質的にfinalな変数もtry-with-resourcesで使えます。",
           "code": "// AutoCloseableを実装したカスタムリソース\nclass MyResource implements AutoCloseable {\n    String name;\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n    @Override\n    public void close() throws Exception {\n        System.out.println(name + \" closed\");\n    }\n}\n\n// try-with-resourcesで使用\ntry (MyResource r = new MyResource(\"Resource1\")) {\n    System.out.println(\"Using \" + r.name);\n}\n// 出力:\n// Resource1 opened\n// Using Resource1\n// Resource1 closed",
           "note": "CloseableはAutoCloseableのサブインターフェースです。型の階層を問う問題に注意しましょう。",
           "order": 2
@@ -31,7 +31,7 @@
           "lessonId": "ch25_01",
           "sectionType": "code",
           "title": "複数リソースとクローズ順序",
-          "body": "**try-with-resources**では、セミコロンで区切って複数のリソースを宣言できます。\nリソースは宣言された順とは逆の順序でクローズされます（スタックのLIFO方式）。\nこれはリソース間の依存関係を正しく解消するための仕組みです。\n例えば、先に開いたコネクションの上に作られたステートメントは、先にクローズされるべきです。\nクローズ中に例外が発生しても、他のリソースのクローズは引き続き試みられます。",
+          "body": "**try-with-resources**では、セミコロンで区切って複数のリソースを宣言できます。\nリソースは宣言された順とは逆の順序でクローズされます（[[スタック]]のLIFO方式）。\nこれはリソース間の依存関係を正しく解消するための仕組みです。\n例えば、先に開いたコネクションの上に作られたステートメントは、先にクローズされるべきです。\nクローズ中に[[例外]]が発生しても、他のリソースのクローズは引き続き試みられます。",
           "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\ntry (Res r1 = new Res(\"A\"); Res r2 = new Res(\"B\"); Res r3 = new Res(\"C\")) {\n    System.out.println(\"Processing\");\n}\n// 出力:\n// A opened\n// B opened\n// C opened\n// Processing\n// C closed（逆順）\n// B closed\n// A closed",
           "note": null,
           "order": 3
@@ -40,7 +40,7 @@
           "lessonId": "ch25_01",
           "sectionType": "point",
           "title": "Java 9以降の改善",
-          "body": "Java 9以降では、tryブロックの外で宣言された実質的にfinal（effectively final）な変数を直接tryの丸括弧に記述できます。\nこれにより、既に生成済みのリソースを**try-with-resources**で管理する際のコードが簡潔になりました。\n変数は再代入されていない必要があります（effectively final）。\n再代入された変数をtryの丸括弧に渡すとコンパイルエラーになります。",
+          "body": "Java 9以降では、tryブロックの外で宣言された実質的にfinal（effectively final）な変数を直接tryの丸括弧に記述できます。\nこれにより、既に生成済みのリソースを**try-with-resources**で管理する際のコードが簡潔になりました。\n変数は再代入されていない必要があります（effectively final）。\n再代入された変数をtryの丸括弧に渡すと[[コンパイル]]エラーになります。",
           "code": "// Java 9以降\nMyResource r1 = new MyResource(\"R1\");\nMyResource r2 = new MyResource(\"R2\");\n\ntry (r1; r2) {  // 外部で宣言した変数を直接参照\n    System.out.println(\"Using resources\");\n}\n// r1, r2は自動的にクローズされる\n\n// 注意：再代入するとコンパイルエラー\nMyResource r3 = new MyResource(\"R3\");\nr3 = new MyResource(\"R3b\"); // 再代入\n// try (r3) { } // コンパイルエラー！（effectively finalでない）",
           "note": "Java 9の改善は試験でも出題されます。effectively finalの条件をしっかり理解しましょう。",
           "order": 4
@@ -49,7 +49,7 @@
           "lessonId": "ch25_01",
           "sectionType": "tip",
           "title": "試験対策：リソース管理",
-          "body": "Gold試験では、リソースのクローズ順序を問う問題が頻出です。\n宣言の逆順でクローズされることを覚えておきましょう。\ntryブロック内で例外が発生した場合でもリソースはクローズされます。\nリソースの宣言時（コンストラクタ）に例外が発生した場合、それまでに生成されたリソースのみクローズされます。\ncatch/finallyブロックはリソースがクローズされた後に実行されます。",
+          "body": "Gold試験では、リソースのクローズ順序を問う問題が頻出です。\n宣言の逆順でクローズされることを覚えておきましょう。\ntryブロック内で例外が発生した場合でもリソースはクローズされます。\nリソースの宣言時（[[コンストラクタ]]）に例外が発生した場合、それまでに生成されたリソースのみクローズされます。\ncatch/[[finally]]ブロックはリソースがクローズされた後に実行されます。",
           "code": null,
           "note": null,
           "order": 5
@@ -187,7 +187,7 @@
           "lessonId": "ch25_02",
           "sectionType": "rule",
           "title": "抑制された例外の仕組み",
-          "body": "tryブロックで例外Aが発生し、close()で例外Bが発生した場合、例外Aがスローされ例外Bは抑制されます。\n抑制された例外はプライマリ例外のgetSuppressed()メソッドで取得できます。\ngetSuppressed()はThrowable[]を返します。\n複数のリソースのclose()で例外が発生した場合、すべて抑制された例外として追加されます。\ntryブロックで例外が発生せず、close()でのみ例外が発生した場合は、そのclose()の例外がそのままスローされます（抑制ではなく通常の例外）。",
+          "body": "tryブロックで例外Aが発生し、close()で例外Bが発生した場合、例外Aがスローされ例外Bは抑制されます。\n抑制された例外はプライマリ例外のgetSuppressed()[[メソッド]]で取得できます。\ngetSuppressed()はThrowable[]を返します。\n複数のリソースのclose()で例外が発生した場合、すべて抑制された例外として追加されます。\ntryブロックで例外が発生せず、close()でのみ例外が発生した場合は、そのclose()の例外がそのままスローされます（抑制ではなく通常の例外）。",
           "code": "class FailClose implements AutoCloseable {\n    public void close() {\n        throw new RuntimeException(\"close error\");\n    }\n}\n\ntry (FailClose fc = new FailClose()) {\n    throw new RuntimeException(\"try error\");\n} catch (RuntimeException e) {\n    System.out.println(\"Primary: \" + e.getMessage());\n    for (Throwable t : e.getSuppressed()) {\n        System.out.println(\"Suppressed: \" + t.getMessage());\n    }\n}\n// 出力:\n// Primary: try error\n// Suppressed: close error",
           "note": "tryブロックの例外がプライマリ、close()の例外がサプレスドになるという優先順位を覚えましょう。",
           "order": 2
@@ -196,7 +196,7 @@
           "lessonId": "ch25_02",
           "sectionType": "code",
           "title": "複数リソースと抑制された例外",
-          "body": "複数のリソースが宣言されている場合、各リソースのclose()で発生した例外はすべて抑制された例外になります。\nリソースは逆順にクローズされるので、最後に宣言されたリソースから順にclose()が呼ばれます。\n各close()の例外はgetSuppressed()配列に追加されていきます。\ntryブロックで例外が発生しなくても、最初のclose()で例外が発生した場合、それがプライマリ例外となり、残りのclose()例外は抑制されます。",
+          "body": "複数のリソースが宣言されている場合、各リソースのclose()で発生した例外はすべて抑制された例外になります。\nリソースは逆順にクローズされるので、最後に宣言されたリソースから順にclose()が呼ばれます。\n各close()の例外はgetSuppressed()[[配列]]に追加されていきます。\ntryブロックで例外が発生しなくても、最初のclose()で例外が発生した場合、それがプライマリ例外となり、残りのclose()例外は抑制されます。",
           "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) { this.name = name; }\n    public void close() {\n        throw new RuntimeException(name + \" close fail\");\n    }\n}\n\ntry (Res a = new Res(\"A\"); Res b = new Res(\"B\")) {\n    throw new RuntimeException(\"main error\");\n} catch (RuntimeException e) {\n    System.out.println(\"Primary: \" + e.getMessage());\n    for (Throwable t : e.getSuppressed()) {\n        System.out.println(\"Suppressed: \" + t.getMessage());\n    }\n}\n// 出力:\n// Primary: main error\n// Suppressed: B close fail（逆順でBが先にclose）\n// Suppressed: A close fail",
           "note": null,
           "order": 3
@@ -214,7 +214,7 @@
           "lessonId": "ch25_02",
           "sectionType": "tip",
           "title": "試験対策：抑制された例外",
-          "body": "Gold試験では、tryブロック・close()・catch・finallyの実行順序と例外の関係が問われます。\n**try-with-resources**の実行順序は「tryブロック → close()（逆順） → catch → finally」です。\ntryブロックとclose()の両方で例外が発生した場合、catchで受け取るのはtryブロックの例外です。\nclose()のみで例外が発生した場合は、その例外がそのままcatchに渡されます。\n従来のtry-finallyとの違いを比較する問題にも注意しましょう。",
+          "body": "Gold試験では、tryブロック・close()・catch・[[finally]]の実行順序と例外の関係が問われます。\n**try-with-resources**の実行順序は「tryブロック → close()（逆順） → catch → finally」です。\ntryブロックとclose()の両方で例外が発生した場合、catchで受け取るのはtryブロックの例外です。\nclose()のみで例外が発生した場合は、その例外がそのままcatchに渡されます。\n従来のtry-finallyとの違いを比較する問題にも注意しましょう。",
           "code": null,
           "note": null,
           "order": 5
@@ -459,7 +459,7 @@
           "lessonId": "ch25_03",
           "sectionType": "overview",
           "title": "アサーションとは",
-          "body": "このレッスンでは以下を学びます:\n\n・assert文の構文と使い方\n・アサーションの有効化（-ea オプション）\n・アサーションを使うべき場所と使ってはいけない場所\n\n開発時のバグ検出ツールとしてのアサーションを学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・assert文の構文と使い方\n・[[アサーション]]の有効化（-ea オプション）\n・アサーションを使うべき場所と使ってはいけない場所\n\n開発時のバグ検出ツールとしてのアサーションを学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -468,7 +468,7 @@
           "lessonId": "ch25_03",
           "sectionType": "rule",
           "title": "assert文の構文",
-          "body": "assert文には2つの形式があります。\n第1形式：「assert 条件式;」条件がfalseの場合、メッセージなしのAssertionErrorがスローされます。\n第2形式：「assert 条件式 : エラーメッセージ;」条件がfalseの場合、指定したメッセージ付きのAssertionErrorがスローされます。\nエラーメッセージには任意の式を指定でき、toString()で文字列に変換されます。\n条件式はboolean型でなければなりません。\nAssertionErrorはErrorのサブクラスであり、通常はcatchすべきではありません。",
+          "body": "assert文には2つの形式があります。\n第1形式：「assert 条件式;」条件がfalseの場合、メッセージなしのAssertionErrorがスローされます。\n第2形式：「assert 条件式 : エラーメッセージ;」条件がfalseの場合、指定したメッセージ付きのAssertionErrorがスローされます。\nエラーメッセージには任意の式を指定でき、toString()で文字列に変換されます。\n条件式はboolean型でなければなりません。\nAssertionErrorはErrorのサブ[[クラス]]であり、通常はcatchすべきではありません。",
           "code": "int age = -5;\n\n// 第1形式：条件のみ\nassert age >= 0;\n// age が負の場合 → AssertionError（メッセージなし）\n\n// 第2形式：条件 + メッセージ\nassert age >= 0 : \"年齢が不正です: \" + age;\n// age が負の場合 → AssertionError: 年齢が不正です: -5\n\n// エラーメッセージに式を指定\nassert age >= 0 : age;\n// AssertionError: -5",
           "note": "assert条件式の後にコロン（:）でメッセージを指定できます。これはGold試験で頻出の構文です。",
           "order": 2
@@ -486,7 +486,7 @@
           "lessonId": "ch25_03",
           "sectionType": "point",
           "title": "アサーションの適切な使用場面",
-          "body": "アサーションはメソッドの事前条件（precondition）のチェックに使えますが、publicメソッドの引数チェックには不適切です。\npublicメソッドの引数チェックにはIllegalArgumentExceptionなどを使うべきです。\nprivateメソッドの引数チェックにはアサーションが適しています（呼び出し元が自クラスに限定されるため）。\n事後条件（postcondition）の検証、つまりメソッドの処理結果が期待通りかの確認に適しています。\nクラス不変条件の検証にも使えます。\n制御フロー上到達しないはずの箇所（switch文のdefaultなど）の検証にも使えます。",
+          "body": "アサーションは[[メソッド]]の事前条件（precondition）のチェックに使えますが、publicメソッドの引数チェックには不適切です。\npublicメソッドの引数チェックにはIllegalArgumentExceptionなどを使うべきです。\nprivateメソッドの引数チェックにはアサーションが適しています（呼び出し元が自クラスに限定されるため）。\n事後条件（postcondition）の検証、つまりメソッドの処理結果が期待通りかの確認に適しています。\nクラス不変条件の検証にも使えます。\n制御フロー上到達しないはずの箇所（[[switch文]]のdefaultなど）の検証にも使えます。",
           "code": "// 適切な使用例\nprivate void setSpeed(int speed) {\n    assert speed >= 0 && speed <= 200 : \"不正な速度: \" + speed;\n    this.speed = speed;\n}\n\n// 到達不能箇所の検証\nswitch (suit) {\n    case HEARTS: return Color.RED;\n    case DIAMONDS: return Color.RED;\n    case CLUBS: return Color.BLACK;\n    case SPADES: return Color.BLACK;\n    default: assert false : \"未知のスート: \" + suit;\n}\n\n// 不適切な使用例（publicメソッドの引数チェック）\npublic void withdraw(int amount) {\n    // assert amount > 0;  // NG：publicメソッドにassertは不適切\n    if (amount <= 0) throw new IllegalArgumentException(); // OK\n}",
           "note": "publicメソッドの引数チェックにassertを使わない理由は、アサーションが無効の場合にチェックが行われないためです。",
           "order": 4
@@ -495,7 +495,7 @@
           "lessonId": "ch25_03",
           "sectionType": "tip",
           "title": "試験対策：アサーション",
-          "body": "Gold試験では、assert文の構文（コロンの後のメッセージ）が正しいかを判断する問題が出ます。\nassert文の条件式はboolean型でなければならず、void型のメソッド呼び出しはエラーメッセージ部分に書けません。\nアサーションは副作用のある処理に使うべきではありません（無効時に実行されないため）。\nassert文のメッセージ部分にvoid型メソッドを指定するとコンパイルエラーになります。\nAssertionErrorはErrorクラスを継承しており、checkedではないことを覚えておきましょう。",
+          "body": "Gold試験では、assert文の構文（コロンの後のメッセージ）が正しいかを判断する問題が出ます。\nassert文の条件式はboolean型でなければならず、void型のメソッド呼び出しはエラーメッセージ部分に書けません。\nアサーションは副作用のある処理に使うべきではありません（無効時に実行されないため）。\nassert文のメッセージ部分にvoid型メソッドを指定すると[[コンパイル]]エラーになります。\nAssertionErrorはErrorクラスを[[継承]]しており、checkedではないことを覚えておきましょう。",
           "code": null,
           "note": null,
           "order": 5
@@ -673,7 +673,7 @@
           "lessonId": "ch25_04",
           "sectionType": "overview",
           "title": "マルチキャッチの詳細",
-          "body": "このレッスンでは以下を学びます:\n\n・マルチキャッチ（catch(A | B e)）の構文と制約\n・リスロー（throw e）時の型推論\n・Java 7以降の例外処理の進化\n\n高度な例外処理テクニックを身につけましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・マルチキャッチ（catch(A | B e)）の構文と制約\n・リスロー（throw e）時の[[型推論]]\n・Java 7以降の[[例外]]処理の進化\n\n高度な例外処理テクニックを身につけましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -682,7 +682,7 @@
           "lessonId": "ch25_04",
           "sectionType": "rule",
           "title": "マルチキャッチの制約",
-          "body": "マルチキャッチで指定する例外型に継承関係があるとコンパイルエラーになります。\n例えば、catch (IOException | Exception e) は不正です（IOExceptionはExceptionのサブクラス）。\nマルチキャッチの例外変数は暗黙的にfinalとなり、再代入できません。\n単一のcatch節の例外変数は再代入可能です。\nマルチキャッチの例外変数の型は、指定した例外型の共通の親型として扱われます。",
+          "body": "マルチキャッチで指定する例外型に[[継承]]関係があると[[コンパイル]]エラーになります。\n例えば、catch (IOException | Exception e) は不正です（IOExceptionはExceptionのサブ[[クラス]]）。\nマルチキャッチの例外[[変数]]は暗黙的にfinalとなり、再代入できません。\n単一のcatch節の例外変数は再代入可能です。\nマルチキャッチの例外変数の型は、指定した例外型の共通の親型として扱われます。",
           "code": "try {\n    // ...\n} catch (IOException | SQLException e) {\n    // OK：継承関係がない\n    // e = new IOException(); // コンパイルエラー：再代入不可\n    System.out.println(e.getMessage());\n}\n\n// コンパイルエラーの例\ntry {\n    // ...\n} catch (FileNotFoundException | IOException e) { // エラー！\n    // FileNotFoundExceptionはIOExceptionのサブクラス\n}\n\n// 単一catchは再代入可能\ntry {\n    // ...\n} catch (IOException e) {\n    e = new IOException(\"wrapped\"); // OK\n}",
           "note": "マルチキャッチの変数がfinalである点は頻出です。必ず覚えておきましょう。",
           "order": 2
@@ -691,7 +691,7 @@
           "lessonId": "ch25_04",
           "sectionType": "code",
           "title": "例外の再スロー（Rethrow）",
-          "body": "Java 7以降、コンパイラはcatchブロック内で再スローされる例外の型をより正確に推論できるようになりました。\ncatch節でExceptionをキャッチしても、tryブロックで実際にスローされる例外の型に基づいて、メソッドのthrows宣言をより具体的にできます。\nただし、この型推論が働くのは例外変数に再代入していない場合のみです。\n例外変数に再代入すると、コンパイラは正確な型推論ができなくなります。",
+          "body": "Java 7以降、コンパイラはcatchブロック内で再スローされる例外の型をより正確に推論できるようになりました。\ncatch節でExceptionをキャッチしても、tryブロックで実際にスローされる例外の型に基づいて、[[メソッド]]のthrows宣言をより具体的にできます。\nただし、この型推論が働くのは例外変数に再代入していない場合のみです。\n例外変数に再代入すると、コンパイラは正確な型推論ができなくなります。",
           "code": "// Java 7以降の再スロー型推論\npublic void process() throws IOException, SQLException {\n    try {\n        // IOExceptionまたはSQLExceptionをスローする可能性\n        callMethod();\n    } catch (Exception e) {\n        // eの型はExceptionだが、コンパイラは実際のスロー型を追跡\n        // throws句にはIOException, SQLExceptionのみ宣言すればOK\n        System.out.println(\"Error: \" + e.getMessage());\n        throw e; // コンパイラがより具体的な型として扱う\n    }\n}\n\n// 再代入すると型推論が効かない\npublic void process2() throws Exception { // Exceptionが必要\n    try {\n        callMethod();\n    } catch (Exception e) {\n        e = new Exception(\"changed\"); // 再代入\n        throw e; // Exceptionとしてしか推論できない\n    }\n}",
           "note": null,
           "order": 3
@@ -700,7 +700,7 @@
           "lessonId": "ch25_04",
           "sectionType": "point",
           "title": "例外のラッピングパターン",
-          "body": "例外のラッピング（wrapping）とは、キャッチした例外を別の例外でくるんで再スローするパターンです。\n元の例外をcause（原因）として新しい例外のコンストラクタに渡します。\nこれにより、レイヤー間で適切な抽象度の例外を使いながら、元の例外情報を保持できます。\ngetCause()メソッドで元の例外を取得できます。\nこのパターンは実務でも非常に重要です。",
+          "body": "例外のラッピング（wrapping）とは、キャッチした例外を別の例外でくるんで再スローするパターンです。\n元の例外をcause（原因）として新しい例外の[[コンストラクタ]]に渡します。\nこれにより、レイヤー間で適切な抽象度の例外を使いながら、元の例外情報を保持できます。\ngetCause()メソッドで元の例外を取得できます。\nこのパターンは実務でも非常に重要です。",
           "code": "public class ServiceException extends Exception {\n    public ServiceException(String msg, Throwable cause) {\n        super(msg, cause);\n    }\n}\n\npublic void processData() throws ServiceException {\n    try {\n        // データベース操作\n        connectDB();\n    } catch (SQLException e) {\n        // SQLExceptionをServiceExceptionでラップ\n        throw new ServiceException(\"データ処理エラー\", e);\n    }\n}\n\n// 呼び出し側で原因を取得\ntry {\n    processData();\n} catch (ServiceException e) {\n    System.out.println(e.getMessage()); // データ処理エラー\n    System.out.println(e.getCause());   // java.sql.SQLException: ...\n}",
           "note": "例外のラッピングは、下位レイヤーの実装詳細を上位レイヤーに漏らさないための重要なパターンです。",
           "order": 4

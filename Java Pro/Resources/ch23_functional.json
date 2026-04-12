@@ -13,7 +13,7 @@
           "lessonId": "ch23_01",
           "sectionType": "overview",
           "title": "Predicate<T>とは",
-          "body": "このレッスンでは以下を学びます:\n\n・Predicate<T>の基本（条件判定を行う関数）\n・test()メソッドによる判定実行\n・and(), or(), negate() による条件の合成\n\n「条件」を値として扱える**関数型プログラミング**の第一歩です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[Predicate]]<T>の基本（条件判定を行う関数）\n・test()[[メソッド]]による判定実行\n・and(), or(), negate() による条件の合成\n\n「条件」を値として扱える**関数型プログラミング**の第一歩です。",
           "code": null,
           "note": null,
           "order": 1
@@ -22,7 +22,7 @@
           "lessonId": "ch23_01",
           "sectionType": "rule",
           "title": "test()メソッドの基本",
-          "body": "Predicate<T>の抽象メソッドはtest(T t)で、引数を1つ受け取りbooleanを返します。\n関数型インターフェースなので、ラムダ式やメソッド参照で実装できます。\nPredicate<String>なら文字列を受け取って条件判定を行い、Predicate<Integer>なら整数に対する判定を行います。\n型パラメータTにはプリミティブ型は指定できず、ラッパークラスを使用します。\nIntPredicate、LongPredicate、DoublePredicateというプリミティブ特殊化版も用意されています。",
+          "body": "Predicate<T>の抽象メソッドはtest(T t)で、引数を1つ受け取りbooleanを返します。\n[[関数型インターフェース]]なので、[[ラムダ式]]や[[メソッド参照]]で実装できます。\nPredicate<String>なら文字列を受け取って条件判定を行い、Predicate<Integer>なら整数に対する判定を行います。\n型パラメータTには[[プリミティブ型]]は指定できず、ラッパー[[クラス]]を使用します。\nIntPredicate、LongPredicate、DoublePredicateというプリミティブ特殊化版も用意されています。",
           "code": "import java.util.function.Predicate;\n\n// 文字列が空でないかを判定\nPredicate<String> isNotEmpty = s -> !s.isEmpty();\nSystem.out.println(isNotEmpty.test(\"Hello\"));  // true\nSystem.out.println(isNotEmpty.test(\"\"));        // false\n\n// 数値が正かどうかを判定\nPredicate<Integer> isPositive = n -> n > 0;\nSystem.out.println(isPositive.test(5));   // true\nSystem.out.println(isPositive.test(-3));  // false\n\n// メソッド参照での指定\nPredicate<String> isBlank = String::isBlank;\nSystem.out.println(isBlank.test(\"  \"));  // true",
           "note": "Predicate<T>はStream.filter()やCollection.removeIf()の引数として使われます。",
           "order": 2
@@ -31,7 +31,7 @@
           "lessonId": "ch23_01",
           "sectionType": "code",
           "title": "and(), or(), negate()による合成",
-          "body": "Predicateにはand()、or()、negate()の3つのデフォルトメソッドがあります。\n| メソッド | 説明 |\n|---|---|\n| and() | 論理積（&&）に相当し、両方の条件を満たす場合にtrueを返します。 |\n| or() | 論理和（\\ \\ ）に相当し、いずれかの条件を満たす場合にtrueを返します。 |\n| negate() | 否定（!）に相当し、条件の真偽を反転させます。 |\nこれらのメソッドはPredicateを返すため、チェーンして複雑な条件を構築できます。\n評価は短絡評価（short-circuit）で行われ、and()は最初のfalseで、or()は最初のtrueで評価を打ち切ります。",
+          "body": "**Predicate**にはand()、or()、negate()の3つのデフォルトメソッドがあります。\n| メソッド | 説明 |\n|---|---|\n| and() | 論理積（&&）に相当し、両方の条件を満たす場合にtrueを返します。 |\n| or() | 論理和（\\ \\ ）に相当し、いずれかの条件を満たす場合にtrueを返します。 |\n| negate() | 否定（!）に相当し、条件の真偽を反転させます。 |\nこれらのメソッドはPredicateを返すため、チェーンして複雑な条件を構築できます。\n評価は短絡評価（short-circuit）で行われ、and()は最初のfalseで、or()は最初のtrueで評価を打ち切ります。",
           "code": "Predicate<String> hasA = s -> s.contains(\"A\");\nPredicate<String> lengthOver3 = s -> s.length() > 3;\n\n// and(): 両方の条件を満たす\nPredicate<String> combined = hasA.and(lengthOver3);\nSystem.out.println(combined.test(\"ABCD\"));  // true\nSystem.out.println(combined.test(\"AB\"));    // false（長さ不足）\nSystem.out.println(combined.test(\"BCDE\"));  // false（Aなし）\n\n// or(): いずれかの条件を満たす\nPredicate<String> either = hasA.or(lengthOver3);\nSystem.out.println(either.test(\"A\"));     // true\nSystem.out.println(either.test(\"BCDE\"));  // true\n\n// negate(): 条件の否定\nPredicate<String> noA = hasA.negate();\nSystem.out.println(noA.test(\"BCD\"));  // true\nSystem.out.println(noA.test(\"ABC\"));  // false",
           "note": null,
           "order": 3
@@ -178,7 +178,7 @@
           "lessonId": "ch23_02",
           "sectionType": "overview",
           "title": "Function<T,R>とは",
-          "body": "このレッスンでは以下を学びます:\n\n・Function<T,R>（型変換を行う関数）の使い方\n・UnaryOperator<T>（同じ型の変換）との違い\n・andThen(), compose() による関数の連結\n\nデータを変換するパイプラインを構築できます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[Function]]<T,R>（[[型変換]]を行う関数）の使い方\n・[[UnaryOperator]]<T>（同じ型の変換）との違い\n・andThen(), compose() による関数の連結\n\nデータを変換するパイプラインを構築できます。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch23_02",
           "sectionType": "rule",
           "title": "apply()メソッドの基本",
-          "body": "Function<T,R>の抽象メソッドはapply(T t)で、型Tの引数を受け取り型Rの結果を返します。\n例えばFunction<String, Integer>は文字列を受け取り整数を返す関数です。\nラムダ式やメソッド参照で実装でき、String::lengthのようにメソッド参照で簡潔に書けます。\nプリミティブ特殊化としてIntFunction<R>、ToIntFunction<T>、IntToDoubleFunction等が用意されています。\nこれらの特殊化版を使うことで、オートボクシングのコストを回避できます。",
+          "body": "Function<T,R>の抽象[[メソッド]]はapply(T t)で、型Tの引数を受け取り型Rの結果を返します。\n例えばFunction<String, Integer>は文字列を受け取り整数を返す関数です。\n[[ラムダ式]]や[[メソッド参照]]で実装でき、String::lengthのようにメソッド参照で簡潔に書けます。\nプリミティブ特殊化としてIntFunction<R>、ToIntFunction<T>、IntToDoubleFunction等が用意されています。\nこれらの特殊化版を使うことで、[[オートボクシング]]のコストを回避できます。",
           "code": "import java.util.function.Function;\n\n// 文字列の長さを返す関数\nFunction<String, Integer> strLength = String::length;\nSystem.out.println(strLength.apply(\"Hello\"));  // 5\nSystem.out.println(strLength.apply(\"\"));       // 0\n\n// 整数を2倍にする関数\nFunction<Integer, Integer> doubleIt = n -> n * 2;\nSystem.out.println(doubleIt.apply(5));  // 10\n\n// 文字列を大文字に変換する関数\nFunction<String, String> toUpper = String::toUpperCase;\nSystem.out.println(toUpper.apply(\"java\"));  // JAVA",
           "note": null,
           "order": 2
@@ -205,16 +205,16 @@
           "lessonId": "ch23_02",
           "sectionType": "point",
           "title": "Function.identity()とUnaryOperator<T>",
-          "body": "Function.identity()は、引数をそのまま返す恒等関数を返すスタティックメソッドです。\nStream.toMap()のvalueMapperなどで、値をそのまま使いたいときに便利です。\nUnaryOperator<T>はFunction<T,T>を継承したインターフェースで、入力と出力が同じ型の場合に使います。\nUnaryOperatorはFunction<T,T>のサブインターフェースなので、apply()メソッドを継承しています。\nList.replaceAll()の引数にはUnaryOperator<E>が使われます。",
+          "body": "Function.identity()は、引数をそのまま返す恒等関数を返すスタティックメソッドです。\nStream.toMap()のvalueMapperなどで、値をそのまま使いたいときに便利です。\nUnaryOperator<T>はFunction<T,T>を[[継承]]した[[インターフェース]]で、入力と出力が同じ型の場合に使います。\nUnaryOperatorはFunction<T,T>のサブインターフェースなので、apply()メソッドを継承しています。\nList.replaceAll()の引数にはUnaryOperator<E>が使われます。",
           "code": "import java.util.function.UnaryOperator;\n\n// UnaryOperator: 入力と出力が同じ型\nUnaryOperator<String> toUpper = String::toUpperCase;\nSystem.out.println(toUpper.apply(\"hello\"));  // HELLO\n\n// Function.identity(): 引数をそのまま返す\nFunction<String, String> identity = Function.identity();\nSystem.out.println(identity.apply(\"test\"));  // test\n\n// List.replaceAll()での使用\nList<String> list = new ArrayList<>(List.of(\"a\", \"b\", \"c\"));\nlist.replaceAll(String::toUpperCase);\nSystem.out.println(list);  // [A, B, C]\n\n// Stream.toMap()でのidentity使用\nList<String> words = List.of(\"apple\", \"banana\", \"cherry\");\nMap<Integer, String> map = words.stream()\n    .collect(Collectors.toMap(String::length, Function.identity()));",
-          "note": "UnaryOperator<T>はFunction<T,T>を継承しているため、Functionが必要な場所でも使えます。",
+          "note": "UnaryOperator<T>はFunction<T,T>を継承しているため、**Function**が必要な場所でも使えます。",
           "order": 4
         },
         {
           "lessonId": "ch23_02",
           "sectionType": "tip",
           "title": "合成関数の活用パターン",
-          "body": "関数合成を活用すると、データ変換のパイプラインを宣言的に構築できます。\n複数のFunctionをandThen()で連結すれば、段階的な変換処理を見通しよく記述できます。\nStream.map()に合成した関数を渡すことで、中間操作の数を減らすこともできます。\n合成は遅延評価されるため、apply()を呼び出すまで実際の計算は行われません。\n関数の再利用性が高まり、テストも容易になるのが関数合成のメリットです。",
+          "body": "[[関数合成]]を活用すると、データ変換のパイプラインを宣言的に構築できます。\n複数のFunctionをandThen()で連結すれば、段階的な変換処理を見通しよく記述できます。\nStream.map()に合成した関数を渡すことで、[[中間操作]]の数を減らすこともできます。\n**合成**は[[遅延評価]]されるため、apply()を呼び出すまで実際の計算は行われません。\n関数の再利用性が高まり、テストも容易になるのが関数合成のメリットです。",
           "code": "// データ変換パイプラインの例\nFunction<String, String> trim = String::trim;\nFunction<String, String> lower = String::toLowerCase;\nFunction<String, String> normalize = trim.andThen(lower);\n\nSystem.out.println(normalize.apply(\"  HELLO  \"));  // hello\n\n// Streamでの合成利用\nList<String> data = List.of(\" Java \", \" Python \", \" Go \");\ndata.stream()\n    .map(normalize)\n    .forEach(System.out::println);\n// java\n// python\n// go",
           "note": null,
           "order": 5
@@ -404,7 +404,7 @@
           "lessonId": "ch23_03",
           "sectionType": "overview",
           "title": "ConsumerとSupplierの役割",
-          "body": "このレッスンでは以下を学びます:\n\n・Consumer<T>（値を消費する関数）の使い方\n・Supplier<T>（値を供給する関数）の使い方\n・forEach() との組み合わせ\n\n副作用を持つ処理と値の生成を関数として表現します。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[Consumer]]<T>（値を消費する関数）の使い方\n・[[Supplier]]<T>（値を供給する関数）の使い方\n・forEach() との組み合わせ\n\n**副作用**を持つ処理と値の生成を関数として表現します。",
           "code": null,
           "note": null,
           "order": 1
@@ -413,7 +413,7 @@
           "lessonId": "ch23_03",
           "sectionType": "rule",
           "title": "Consumer<T>のaccept()とandThen()",
-          "body": "Consumer<T>の抽象メソッドはaccept(T t)で、引数を受け取って処理を行いますが、戻り値はありません（void）。\nIterable.forEach()やStream.forEach()の引数としてConsumerが使用されます。\nデフォルトメソッドandThen()で複数のConsumerを連結できます。\nConsumer<T>にはor()やnegate()はありません。戻り値がないため論理演算は不可能です。\nIntConsumer、LongConsumer、DoubleConsumerというプリミティブ特殊化版もあります。",
+          "body": "Consumer<T>の抽象[[メソッド]]はaccept(T t)で、引数を受け取って処理を行いますが、戻り値はありません（void）。\nIterable.forEach()やStream.forEach()の引数としてConsumerが使用されます。\nデフォルトメソッドandThen()で複数のConsumerを連結できます。\nConsumer<T>にはor()やnegate()はありません。戻り値がないため論理演算は不可能です。\nIntConsumer、LongConsumer、DoubleConsumerというプリミティブ特殊化版もあります。",
           "code": "import java.util.function.Consumer;\n\n// 出力するConsumer\nConsumer<String> print = System.out::println;\nprint.accept(\"Hello\");  // Hello\n\n// 大文字変換して出力するConsumer\nConsumer<String> shout = s -> System.out.println(s.toUpperCase());\nshout.accept(\"hello\");  // HELLO\n\n// andThen()で連結\nConsumer<String> printThenShout = print.andThen(shout);\nprintThenShout.accept(\"java\");\n// java\n// JAVA\n\n// forEachで使用\nList<String> list = List.of(\"A\", \"B\", \"C\");\nlist.forEach(print);  // A B C（各行に出力）",
           "note": "Consumer<T>にはor()やnegate()はありません。andThen()のみです。",
           "order": 2
@@ -422,16 +422,16 @@
           "lessonId": "ch23_03",
           "sectionType": "code",
           "title": "Supplier<T>のget()メソッド",
-          "body": "Supplier<T>の抽象メソッドはget()で、引数なしで型Tの値を返します。\nオブジェクトの生成やデフォルト値の提供に使われます。\n**Optional**.orElseGet()の引数としてSupplierが使用され、遅延評価でデフォルト値を生成します。\nコンストラクタ参照（例：ArrayList::new）はSupplierとして使えます。\norElse()ではなくorElseGet()を使うことで、値が存在する場合に不要な計算を避けられます。",
+          "body": "Supplier<T>の抽象メソッドはget()で、引数なしで型Tの値を返します。\nオブジェクトの生成やデフォルト値の提供に使われます。\n**Optional**.orElseGet()の引数としてSupplierが使用され、[[遅延評価]]でデフォルト値を生成します。\n[[コンストラクタ]]参照（例：[[ArrayList]]::new）はSupplierとして使えます。\norElse()ではなくorElseGet()を使うことで、値が存在する場合に不要な計算を避けられます。",
           "code": "import java.util.function.Supplier;\n\n// 文字列を供給するSupplier\nSupplier<String> greeting = () -> \"Hello, World!\";\nSystem.out.println(greeting.get());  // Hello, World!\n\n// コンストラクタ参照でオブジェクト生成\nSupplier<List<String>> listFactory = ArrayList::new;\nList<String> newList = listFactory.get();\nnewList.add(\"Java\");\nSystem.out.println(newList);  // [Java]\n\n// Optionalでの遅延評価\nOptional<String> opt = Optional.empty();\nString result = opt.orElseGet(() -> \"デフォルト値\");\nSystem.out.println(result);  // デフォルト値\n\n// orElse vs orElseGet の違い\n// orElse(heavyCompute())     → 常にheavyCompute()が実行される\n// orElseGet(() -> heavyCompute()) → 値がない場合のみ実行される",
-          "note": "orElseGet(Supplier)を使うと、値が存在する場合の無駄な計算を避けられます。",
+          "note": "orElseGet(**Supplier**)を使うと、値が存在する場合の無駄な計算を避けられます。",
           "order": 3
         },
         {
           "lessonId": "ch23_03",
           "sectionType": "point",
           "title": "ConsumerとSupplierの実践的な使い方",
-          "body": "Consumerはコレクションの各要素に対する処理（ログ出力、DBへの保存等）に使います。\nSupplierは遅延初期化パターンで威力を発揮し、必要になるまでオブジェクト生成を遅らせます。\nStream.generate(Supplier)で無限ストリームを生成できます。\nObjects.requireNonNull(obj, Supplier)でnull時のエラーメッセージを遅延生成できます。\nLogger.info(() -> \"高コストなメッセージ生成\")のように、ログレベルが有効な場合のみメッセージを生成する使い方もあります。",
+          "body": "**Consumer**はコレクションの各要素に対する処理（ログ出力、DBへの保存等）に使います。\nSupplierは遅延初期化パターンで威力を発揮し、必要になるまでオブジェクト生成を遅らせます。\nStream.generate(Supplier)で無限ストリームを生成できます。\nObjects.requireNonNull(obj, Supplier)でnull時のエラーメッセージを遅延生成できます。\nLogger.info(() -> \"高コストなメッセージ生成\")のように、ログレベルが有効な場合のみメッセージを生成する使い方もあります。",
           "code": "// Stream.generateでの使用\nSupplier<Double> randomSupplier = Math::random;\nStream.generate(randomSupplier)\n      .limit(3)\n      .forEach(System.out::println);\n// 0.123... 0.456... 0.789... (ランダムな値)\n\n// Objects.requireNonNullでのSupplier活用\nString name = null;\ntry {\n    Objects.requireNonNull(name, () -> \"nameは\" + \"nullです\");\n} catch (NullPointerException e) {\n    System.out.println(e.getMessage());  // nameはnullです\n}\n\n// Consumerの実践例: 処理の分離\nConsumer<String> log = s -> System.out.println(\"[LOG] \" + s);\nConsumer<String> save = s -> System.out.println(\"[SAVE] \" + s);\nConsumer<String> process = log.andThen(save);\nprocess.accept(\"data\");\n// [LOG] data\n// [SAVE] data",
           "note": null,
           "order": 4
@@ -440,7 +440,7 @@
           "lessonId": "ch23_03",
           "sectionType": "tip",
           "title": "関数型インターフェースの対応表",
-          "body": "java.util.functionパッケージの主要な関数型インターフェースを整理しておきましょう。\n| インターフェース | 説明 |\n|---|---|\n| Predicate<T> | T → boolean（条件判定）、抽象メソッドはtest()。 |\n| Function<T,R> | T → R（変換）、抽象メソッドはapply()。 |\n| Consumer<T> | T → void（消費）、抽象メソッドはaccept()。 |\n| Supplier<T> | () → T（供給）、抽象メソッドはget()。 |\n各インターフェースのメソッド名と引数・戻り値の組み合わせを正確に覚えることがGold試験突破の鍵です。",
+          "body": "java.util.functionパッケージの主要な[[関数型インターフェース]]を整理しておきましょう。\n| インターフェース | 説明 |\n|---|---|\n| Predicate<T> | T → boolean（条件判定）、抽象メソッドはtest()。 |\n| Function<T,R> | T → R（変換）、抽象メソッドはapply()。 |\n| Consumer<T> | T → void（消費）、抽象メソッドはaccept()。 |\n| Supplier<T> | () → T（供給）、抽象メソッドはget()。 |\n各[[インターフェース]]のメソッド名と引数・戻り値の組み合わせを正確に覚えることがGold試験突破の鍵です。",
           "code": "// 主要な関数型インターフェースの対応表\n// Predicate<T>   : T → boolean  | test(T)      | filter, removeIf\n// Function<T,R>  : T → R        | apply(T)     | map, Stream.toMap\n// Consumer<T>    : T → void     | accept(T)    | forEach, peek\n// Supplier<T>    : () → T       | get()         | orElseGet, generate\n// UnaryOperator<T>  : T → T     | apply(T)     | replaceAll\n// BinaryOperator<T> : (T,T) → T | apply(T,T)   | reduce, merge",
           "note": "試験では各インターフェースの抽象メソッド名を正確に覚えておく必要があります。",
           "order": 5
@@ -569,7 +569,7 @@
           "lessonId": "ch23_04",
           "sectionType": "overview",
           "title": "Bi系インターフェースとは",
-          "body": "このレッスンでは以下を学びます:\n\n・BiFunction<T,U,R>（2引数の変換関数）\n・BiPredicate<T,U>（2引数の条件判定）\n・BiConsumer<T,U>（2引数の消費関数）\n\n引数が2つ必要な場面に対応する関数型インターフェースです。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[BiFunction]]<T,U,R>（2引数の変換関数）\n・BiPredicate<T,U>（2引数の条件判定）\n・BiConsumer<T,U>（2引数の消費関数）\n\n引数が2つ必要な場面に対応する[[関数型インターフェース]]です。",
           "code": null,
           "note": null,
           "order": 1
@@ -578,7 +578,7 @@
           "lessonId": "ch23_04",
           "sectionType": "rule",
           "title": "BiFunction<T,U,R>の基本",
-          "body": "BiFunction<T,U,R>の抽象メソッドはapply(T t, U u)で、2つの引数を受け取り型Rの結果を返します。\nandThen()デフォルトメソッドで結果にさらに変換を適用できます。\nBiFunctionにはcompose()メソッドはありません（引数が2つあるため合成の方向が曖昧になるため）。\nMap.compute()、Map.merge()、Map.replaceAll()の引数としてBiFunctionが使用されます。\nBiPredicate<T,U>はtest(T t, U u)メソッドを持ち、and()、or()、negate()で合成できます。",
+          "body": "BiFunction<T,U,R>の抽象[[メソッド]]はapply(T t, U u)で、2つの引数を受け取り型Rの結果を返します。\nandThen()デフォルトメソッドで結果にさらに変換を適用できます。\nBiFunctionにはcompose()メソッドはありません（引数が2つあるため合成の方向が曖昧になるため）。\nMap.compute()、Map.merge()、Map.replaceAll()の引数としてBiFunctionが使用されます。\nBiPredicate<T,U>はtest(T t, U u)メソッドを持ち、and()、or()、negate()で合成できます。",
           "code": "import java.util.function.BiFunction;\nimport java.util.function.BiPredicate;\n\n// 2つの引数から結果を生成\nBiFunction<String, Integer, String> repeat = (s, n) -> s.repeat(n);\nSystem.out.println(repeat.apply(\"Ha\", 3));  // HaHaHa\n\n// andThenで変換を追加\nBiFunction<Integer, Integer, Integer> add = Integer::sum;\nFunction<Integer, String> toStr = n -> \"合計: \" + n;\nBiFunction<Integer, Integer, String> addAndFormat = add.andThen(toStr);\nSystem.out.println(addAndFormat.apply(3, 7));  // 合計: 10\n\n// BiPredicate: 2つの引数で条件判定\nBiPredicate<String, Integer> lengthCheck = (s, n) -> s.length() > n;\nSystem.out.println(lengthCheck.test(\"Java\", 3));  // true\nSystem.out.println(lengthCheck.test(\"Go\", 3));    // false",
           "note": "BiFunctionにはcompose()メソッドがありません。andThen()のみ使用できます。",
           "order": 2
@@ -596,7 +596,7 @@
           "lessonId": "ch23_04",
           "sectionType": "point",
           "title": "BinaryOperator<T>",
-          "body": "BinaryOperator<T>はBiFunction<T,T,T>を継承したインターフェースで、2つの同じ型の引数を受け取り同じ型の結果を返します。\nStream.reduce()の引数としてBinaryOperatorが使用されます。\nBinaryOperator.minBy(Comparator)とmaxBy(Comparator)のスタティックメソッドが用意されています。\nminBy()は2つの値のうち小さい方を返すBinaryOperatorを、maxBy()は大きい方を返すBinaryOperatorをそれぞれ返します。\nMap.merge()の第3引数（衝突時の処理）にもBinaryOperatorが使われます。",
+          "body": "[[BinaryOperator]]<T>はBiFunction<T,T,T>を[[継承]]した[[インターフェース]]で、2つの同じ型の引数を受け取り同じ型の結果を返します。\nStream.reduce()の引数としてBinaryOperatorが使用されます。\nBinaryOperator.minBy([[Comparator]])とmaxBy(Comparator)のスタティックメソッドが用意されています。\nminBy()は2つの値のうち小さい方を返すBinaryOperatorを、maxBy()は大きい方を返すBinaryOperatorをそれぞれ返します。\nMap.merge()の第3引数（衝突時の処理）にもBinaryOperatorが使われます。",
           "code": "import java.util.function.BinaryOperator;\n\n// BinaryOperator: 同じ型の2引数を取り同じ型を返す\nBinaryOperator<Integer> add = Integer::sum;\nSystem.out.println(add.apply(3, 5));  // 8\n\n// Stream.reduceでの使用\nList<Integer> nums = List.of(1, 2, 3, 4, 5);\nint sum = nums.stream().reduce(0, Integer::sum);\nSystem.out.println(sum);  // 15\n\n// minBy / maxBy\nBinaryOperator<String> shorter = \n    BinaryOperator.minBy(Comparator.comparingInt(String::length));\nSystem.out.println(shorter.apply(\"Java\", \"Go\"));  // Go\n\nBinaryOperator<String> longer = \n    BinaryOperator.maxBy(Comparator.comparingInt(String::length));\nSystem.out.println(longer.apply(\"Java\", \"Go\"));   // Java\n\n// Map.mergeでの使用（衝突時に値を加算）\nMap<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 10);\nmap.merge(\"A\", 5, Integer::sum);\nSystem.out.println(map.get(\"A\"));  // 15",
           "note": "BinaryOperator<T>はBiFunction<T,T,T>のサブインターフェースです。",
           "order": 4
@@ -734,7 +734,7 @@
           "lessonId": "ch23_05",
           "sectionType": "overview",
           "title": "関数合成の考え方",
-          "body": "このレッスンでは以下を学びます:\n\n・andThen()で関数を順番に適用する方法\n・compose()で関数を逆順に適用する方法\n・Predicateの合成（and, or, negate）\n\n小さな関数を組み合わせて複雑な処理を構築する手法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・andThen()で関数を順番に適用する方法\n・compose()で関数を逆順に適用する方法\n・[[Predicate]]の合成（and, or, negate）\n\n小さな関数を組み合わせて複雑な処理を構築する手法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -743,7 +743,7 @@
           "lessonId": "ch23_05",
           "sectionType": "rule",
           "title": "Functionチェーンの構築",
-          "body": "andThen()を連続して呼び出すことで、複数段階のデータ変換パイプラインを構築できます。\n各段階の関数は独立してテスト可能で、再利用もできます。\n合成した関数をStream.map()に渡すことで、複数のmap()呼び出しを1つにまとめられます。\n合成は型の整合性が必要で、前の関数の出力型と次の関数の入力型が一致する必要があります。\n型が合わない場合はコンパイルエラーとなるため、型安全性が保証されます。",
+          "body": "andThen()を連続して呼び出すことで、複数段階のデータ変換パイプラインを構築できます。\n各段階の関数は独立してテスト可能で、再利用もできます。\n合成した関数をStream.map()に渡すことで、複数のmap()呼び出しを1つにまとめられます。\n**合成**は型の整合性が必要で、前の関数の出力型と次の関数の入力型が一致する必要があります。\n型が合わない場合は[[コンパイル]]エラーとなるため、型安全性が保証されます。",
           "code": "// 複数段のFunction合成\nFunction<String, String> trim = String::trim;\nFunction<String, String> lower = String::toLowerCase;\nFunction<String, String> removeSpaces = s -> s.replace(\" \", \"\");\n\n// パイプライン: トリム → 小文字化 → スペース除去\nFunction<String, String> normalize = \n    trim.andThen(lower).andThen(removeSpaces);\n\nSystem.out.println(normalize.apply(\"  Hello World  \"));\n// helloworld\n\n// Streamで使用（map1つで済む）\nList<String> inputs = List.of(\" Java \", \" Python \", \"  Go  \");\nList<String> results = inputs.stream()\n    .map(normalize)\n    .collect(Collectors.toList());\nSystem.out.println(results);  // [java, python, go]",
           "note": null,
           "order": 2
@@ -752,7 +752,7 @@
           "lessonId": "ch23_05",
           "sectionType": "code",
           "title": "Predicateチェーンによる複合条件",
-          "body": "Predicateのand()、or()、negate()を組み合わせると、複雑なフィルタリング条件を宣言的に構築できます。\n個々の条件をPredicate変数として切り出すことで、条件の再利用とテストが容易になります。\n複数条件のand()チェーンはすべての条件を満たす場合にtrue（論理積）、or()チェーンはいずれかを満たす場合にtrue（論理和）になります。\n括弧の代わりにand()とor()の呼び出し順序で評価順を制御します。\nand()はor()より結合が強いわけではないので、意図した順序で合成する必要があります。",
+          "body": "**Predicate**のand()、or()、negate()を組み合わせると、複雑なフィルタリング条件を宣言的に構築できます。\n個々の条件をPredicate変数として切り出すことで、条件の再利用とテストが容易になります。\n複数条件のand()チェーンはすべての条件を満たす場合にtrue（論理積）、or()チェーンはいずれかを満たす場合にtrue（論理和）になります。\n括弧の代わりにand()とor()の呼び出し順序で評価順を制御します。\nand()はor()より結合が強いわけではないので、意図した順序で合成する必要があります。",
           "code": "// 複合条件のPredicateチェーン\nPredicate<String> notEmpty = s -> !s.isEmpty();\nPredicate<String> startsWithJ = s -> s.startsWith(\"J\");\nPredicate<String> lengthOver3 = s -> s.length() > 3;\n\n// 「空でない」かつ「Jで始まる」かつ「長さ3超」\nPredicate<String> filter = notEmpty\n    .and(startsWithJ)\n    .and(lengthOver3);\n\nList<String> langs = List.of(\"Java\", \"JavaScript\", \"Go\", \"Jython\", \"\", \"J\");\nlangs.stream()\n     .filter(filter)\n     .forEach(System.out::println);\n// Java\n// JavaScript\n// Jython\n\n// or()との組み合わせ\nPredicate<String> startsWithP = s -> s.startsWith(\"P\");\nPredicate<String> jOrP = startsWithJ.or(startsWithP);\n\nList.of(\"Java\", \"Python\", \"Go\", \"PHP\").stream()\n    .filter(jOrP)\n    .forEach(System.out::println);\n// Java\n// Python\n// PHP",
           "note": "and()とor()の結合優先度はJavaの&&や||とは異なり、呼び出し順に従います。",
           "order": 3
@@ -761,7 +761,7 @@
           "lessonId": "ch23_05",
           "sectionType": "point",
           "title": "バリデーションパイプラインの構築",
-          "body": "関数合成を使って、入力値を段階的に検証するバリデーションパイプラインを構築できます。\nPredicateチェーンで複数の検証条件を定義し、Functionチェーンでデータ変換を行うパターンです。\n検証と変換を分離することで、各処理の責務が明確になります。\nStream APIと組み合わせることで、大量データの一括検証・変換も宣言的に記述できます。\n実務では、ユーザー入力の検証やAPIリクエストのバリデーションに活用されます。",
+          "body": "[[関数合成]]を使って、入力値を段階的に検証するバリデーションパイプラインを構築できます。\nPredicateチェーンで複数の検証条件を定義し、[[Function]]チェーンでデータ変換を行うパターンです。\n検証と変換を分離することで、各処理の責務が明確になります。\n[[Stream API]]と組み合わせることで、大量データの一括検証・変換も宣言的に記述できます。\n実務では、ユーザー入力の検証やAPIリクエストのバリデーションに活用されます。",
           "code": "// バリデーションパイプラインの例\nPredicate<String> notNull = Objects::nonNull;\nPredicate<String> notBlank = s -> !s.isBlank();\nPredicate<String> validLength = s -> s.length() >= 3 && s.length() <= 20;\nPredicate<String> alphaNumeric = s -> s.matches(\"[a-zA-Z0-9]+\");\n\n// 全条件をチェーン\nPredicate<String> isValidUsername = notNull\n    .and(notBlank)\n    .and(validLength)\n    .and(alphaNumeric);\n\n// 変換パイプライン\nFunction<String, String> sanitize = \n    ((Function<String, String>) String::trim)\n    .andThen(String::toLowerCase);\n\n// 検証と変換の統合\nList<String> inputs = List.of(\"Alice\", \"  \", \"Bo\", \"Charlie123\", \"@invalid\");\ninputs.stream()\n     .filter(isValidUsername)\n     .map(sanitize)\n     .forEach(System.out::println);\n// alice\n// charlie123",
           "note": null,
           "order": 4

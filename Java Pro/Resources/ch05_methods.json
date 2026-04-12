@@ -13,7 +13,7 @@
           "lessonId": "ch05_01",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・メソッドとは何か（処理をまとめた部品）\n・メソッドの定義と呼び出しの構文\n・なぜメソッドに分けるのか（コードの再利用性）\n\nメソッドを使うと、同じ処理を何度も書かずに済みます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[メソッド]]とは何か（処理をまとめた部品）\n・メソッドの定義と呼び出しの構文\n・なぜメソッドに分けるのか（コードの再利用性）\n\nメソッドを使うと、同じ処理を何度も書かずに済みます。",
           "code": null,
           "note": null,
           "order": 1
@@ -24,7 +24,7 @@
           "title": "メソッドの定義と呼び出し",
           "body": "メソッドの構文と基本的な使い方です。",
           "code": "// メソッドの構文\n// アクセス修飾子 static 戻り値の型 メソッド名(引数) {\n//     処理\n//     return 戻り値;\n// }\n\npublic class Main {\n\n    // 戻り値なし（void）のメソッド\n    static void greet() {\n        System.out.println(\"こんにちは！\");\n    }\n\n    // 引数ありのメソッド\n    static void greetPerson(String name) {\n        System.out.println(\"こんにちは、\" + name + \"さん！\");\n    }\n\n    // 戻り値ありのメソッド\n    static int add(int a, int b) {\n        return a + b;\n    }\n\n    public static void main(String[] args) {\n        greet();                     // こんにちは！\n        greetPerson(\"太郎\");         // こんにちは、太郎さん！\n        int result = add(3, 5);      // 8\n        System.out.println(result);\n    }\n}",
-          "note": "mainメソッドもメソッドの一種です。Javaプログラムの実行はmainメソッドから始まります。",
+          "note": "[[mainメソッド]]もメソッドの一種です。Javaプログラムの実行はmainメソッドから始まります。",
           "order": 2
         },
         {
@@ -33,7 +33,7 @@
           "title": "メソッドを使う理由",
           "body": "メソッドの利点:\n\n1. 再利用性: 同じ処理を何度でも呼び出せる\n2. 可読性: 処理に名前が付き、コードが読みやすくなる\n3. 保守性: 修正箇所が1か所で済む\n4. テスト容易性: 小さな単位でテストできる\n\nメソッド名の命名規則:\n| 項目 | 説明 |\n|---|---|\n| 動詞で始める | calculateTotal, displayMenu, isValid |\n| キャメルケース | getMaxValue（先頭小文字） |\n| boolean型の戻り値 | is, has, can で始める |\n  例: isEmpty(), hasNext(), canExecute()\n\n戻り値のルール:\n・戻り値は1つだけ返せる\n・voidのメソッドはreturn文を省略できる\n・return文を実行すると、その時点でメソッドを抜ける",
           "code": null,
-          "note": "複数の値を返したい場合は、配列、List、または独自クラスを使います。",
+          "note": "複数の値を返したい場合は、[[配列]]、List、または独自[[クラス]]を使います。",
           "order": 3
         },
         {
@@ -178,7 +178,7 @@
           "lessonId": "ch05_02",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・引数（パラメータ）の受け渡し方\n・複数の引数を持つメソッド\n・実引数と仮引数の違い\n\nメソッドにデータを渡す方法を理解しましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・引数（パラメータ）の受け渡し方\n・複数の引数を持つ[[メソッド]]\n・実引数と仮引数の違い\n\nメソッドにデータを渡す方法を理解しましょう。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,9 +187,9 @@
           "lessonId": "ch05_02",
           "sectionType": "code",
           "title": "値渡し（Pass by Value）",
-          "body": "Javaではすべての引数が「**値渡し**」です。プリミティブ型と参照型で挙動が異なります。",
+          "body": "Javaではすべての引数が「**値渡し**」です。[[プリミティブ型]]と[[参照型]]で挙動が異なります。",
           "code": "// プリミティブ型: 値のコピーが渡される\n// changeValueメソッドの定義\nstatic void changeValue(int x) {\n    x = 100; // コピーを変更しても元に影響なし\n}\n// 変数の宣言と初期化\nint num = 10;\nchangeValue(num);\nSystem.out.println(num); // 10（変わらない）\n\n// 参照型（配列）: 参照のコピーが渡される\n// changeArrayメソッドの定義\nstatic void changeArray(int[] arr) {\n    arr[0] = 999; // 同じ配列を操作→反映される\n}\nint[] data = {1, 2, 3};\nchangeArray(data);\nSystem.out.println(data[0]); // 999（変わる！）\n\n// ただし参照自体の再代入は反映されない\nstatic void replaceArray(int[] arr) {\n    arr = new int[]{10, 20, 30}; // 参照のコピーを差し替えただけ\n}\nint[] original = {1, 2, 3};\nreplaceArray(original);\nSystem.out.println(original[0]); // 1（変わらない！）",
-          "note": "Javaに「参照渡し」はありません。参照型でもあくまで「参照の値（アドレスのコピー）」が渡されます。そのため、参照先のオブジェクトは操作できますが、参照自体の差し替えは元の変数に影響しません。",
+          "note": "Javaに「参照渡し」はありません。参照型でもあくまで「参照の値（アドレスのコピー）」が渡されます。そのため、参照先のオブジェクトは操作できますが、参照自体の差し替えは元の[[変数]]に影響しません。",
           "order": 2
         },
         {
@@ -207,14 +207,14 @@
           "title": "複数の戻り値を返すパターン",
           "body": "Javaのメソッドは戻り値を1つしか返せませんが、工夫次第で複数の値を返せます。",
           "code": "// パターン1: 配列で返す\nstatic int[] minMax(int[] nums) {\n    // 変数の宣言と初期化\n    int min = Integer.MAX_VALUE;\n    int max = Integer.MIN_VALUE;\n    // 繰り返し処理（for文）\n    for (int i = 0; i < nums.length; i++) {\n        // 条件分岐\n        if (nums[i] < min) min = nums[i];\n        if (nums[i] > max) max = nums[i];\n    }\n    return new int[]{min, max};\n}\nint[] result = minMax(new int[]{5, 2, 8, 1});\nSystem.out.println(\"最小: \" + result[0] + \", 最大: \" + result[1]);\n\n// パターン2: 独自クラスで返す\n// Resultクラスの定義\nclass Result {\n    String name;\n    int score;\n    Result(String name, int score) {\n        this.name = name;\n        this.score = score;\n    }\n}",
-          "note": "Java 14以降のRecordを使うと、パターン2のような値保持クラスをより簡潔に定義できます。",
+          "note": "Java 14以降のRecordを使うと、パターン2のような値保持[[クラス]]をより簡潔に定義できます。",
           "order": 4
         },
         {
           "lessonId": "ch05_02",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・Javaの引数はすべて「**値渡し**」\n・プリミティブ型: 値のコピーが渡される → 元に影響なし\n・参照型: 参照のコピーが渡される → オブジェクト操作は反映される\n・参照自体の再代入（= new ...）は反映されない\n・戻り値は1つだけ → 複数返すには配列やクラスを使う",
+          "body": "・Javaの引数はすべて「**値渡し**」\n・プリミティブ型: 値のコピーが渡される → 元に影響なし\n・参照型: 参照のコピーが渡される → オブジェクト操作は反映される\n・参照自体の再代入（= new ...）は反映されない\n・戻り値は1つだけ → 複数返すには[[配列]]やクラスを使う",
           "code": null,
           "note": null,
           "order": 5
@@ -343,7 +343,7 @@
           "lessonId": "ch05_03",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・戻り値（return文）の使い方\n・void型メソッドとの違い\n・メソッドの結果を変数に受け取る方法\n\nメソッドから計算結果を返す方法を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・戻り値（return文）の使い方\n・void型[[メソッド]]との違い\n・メソッドの結果を[[変数]]に受け取る方法\n\nメソッドから計算結果を返す方法を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -354,7 +354,7 @@
           "title": "オーバーロードの基本",
           "body": "同名メソッドを引数の「型」「数」「順序」が異なるように定義できます。",
           "code": "// 引数の数で区別\nstatic int add(int a, int b) {\n    return a + b;\n}\nstatic int add(int a, int b, int c) {\n    return a + b + c;\n}\n\n// 引数の型で区別\nstatic double add(double a, double b) {\n    return a + b;\n}\n\n// 呼び出し時に引数の型・数で自動判別\nSystem.out.println(add(1, 2));       // int版: 3\nSystem.out.println(add(1, 2, 3));    // 3引数版: 6\nSystem.out.println(add(1.5, 2.5));   // double版: 4.0\n\n// ⚠️ 戻り値の型だけが異なるのはオーバーロードにならない！\n// static int  calc(int a) { return a; }\n// static double calc(int a) { return a; } // コンパイルエラー！\n// → 呼び出し時にどちらか判別できないため",
-          "note": "**オーバーロード**の判定基準は「引数リスト（型・数・順序）」です。戻り値の型やアクセス修飾子は関係ありません。",
+          "note": "**オーバーロード**の判定基準は「引数リスト（型・数・順序）」です。戻り値の型や[[アクセス修飾子]]は関係ありません。",
           "order": 2
         },
         {
@@ -370,7 +370,7 @@
           "lessonId": "ch05_03",
           "sectionType": "rule",
           "title": "オーバーロードと型変換の優先順位",
-          "body": "引数の型がぴったり一致しない場合、Javaは以下の優先順位で一致するメソッドを探します。\n\n1. 完全一致: 引数の型がメソッド定義と一致\n2. 型の拡大変換（Widening）: int → long → float → double\n3. オートボクシング: int → Integer\n4. **可変長引数**（varargs）: int...\n\n例:\n  static void test(int n)     { ... }  // A\n  static void test(long n)    { ... }  // B\n  static void test(Integer n) { ... }  // C\n  static void test(int... n)  { ... }  // D\n\n  test(10);\n  // → A（完全一致）が呼ばれる\n  // Aがなければ B（拡大変換）\n  // Bもなければ C（オートボクシング）\n  // Cもなければ D（varargs）",
+          "body": "引数の型がぴったり一致しない場合、Javaは以下の優先順位で一致するメソッドを探します。\n\n1. 完全一致: 引数の型がメソッド定義と一致\n2. 型の拡大変換（Widening）: int → long → float → double\n3. [[オートボクシング]]: int → Integer\n4. **可変長引数**（varargs）: int...\n\n例:\n  static void test(int n)     { ... }  // A\n  static void test(long n)    { ... }  // B\n  static void test(Integer n) { ... }  // C\n  static void test(int... n)  { ... }  // D\n\n  test(10);\n  // → A（完全一致）が呼ばれる\n  // Aがなければ B（拡大変換）\n  // Bもなければ C（オートボクシング）\n  // Cもなければ D（varargs）",
           "code": null,
           "note": "試験では型の拡大変換とオートボクシングの優先順位を問う問題が頻出です。拡大変換が優先されることを覚えましょう。",
           "order": 4
@@ -379,7 +379,7 @@
           "lessonId": "ch05_03",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**オーバーロード**: 同名メソッドを引数の型・数・順序で区別\n・戻り値の型だけの違いではオーバーロードにならない\n・型の優先順位: 完全一致 > 拡大変換 > オートボクシング > varargs\n・printlnはオーバーロードの代表例",
+          "body": "・**オーバーロード**: 同名メソッドを引数の型・数・順序で区別\n・戻り値の型だけの違いでは[[オーバーロード]]にならない\n・型の優先順位: 完全一致 > 拡大変換 > オートボクシング > varargs\n・printlnはオーバーロードの代表例",
           "code": null,
           "note": null,
           "order": 5
@@ -569,7 +569,7 @@
           "lessonId": "ch05_04",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・メソッドの**オーバーロード**（名前が同じで引数が異なるメソッド）\n・コンパイラが呼び出すメソッドを決める仕組み\n・オーバーロードのルールと注意点\n\n同じ名前のメソッドを目的に応じて使い分ける方法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[メソッド]]の**オーバーロード**（名前が同じで引数が異なるメソッド）\n・コンパイラが呼び出すメソッドを決める仕組み\n・[[オーバーロード]]のルールと注意点\n\n同じ名前のメソッドを目的に応じて使い分ける方法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -580,16 +580,16 @@
           "title": "可変長引数（varargs）",
           "body": "型名の後に...を付けると、0個以上の引数を受け取れます。",
           "code": "// 可変長引数: 型... 変数名\nstatic int sum(int... numbers) {\n    int total = 0;\n    for (int n : numbers) {\n        total += n;\n    }\n    return total;\n}\n\n// 引数の数を自由に変えられる\nSystem.out.println(sum());          // 0\nSystem.out.println(sum(1, 2));      // 3\nSystem.out.println(sum(1, 2, 3, 4)); // 10\n\n// 配列を渡すことも可能\nint[] data = {10, 20, 30};\nSystem.out.println(sum(data)); // 60\n\n// ルール:\n// 1. 可変長引数はメソッドの最後の引数のみ\n// 2. 1つのメソッドに可変長引数は1つだけ\n\n// OK: 通常引数 + 可変長引数\nstatic String format(String prefix, String... items) {\n    return prefix + \": \" + String.join(\", \", items);\n}\nSystem.out.println(format(\"果物\", \"りんご\", \"みかん\"));\n// → 果物: りんご, みかん\n\n// NG: 可変長引数が最後でない\n// static void bad(int... a, String b) {} // コンパイルエラー！",
-          "note": "**可変長引数**はコンパイラによって内部的に配列に変換されます。int... は int[] と同じですが、呼び出し側で配列を明示的に作る必要がありません。",
+          "note": "**可変長引数**はコンパイラによって内部的に[[配列]]に変換されます。int... は int[] と同じですが、呼び出し側で配列を明示的に作る必要がありません。",
           "order": 2
         },
         {
           "lessonId": "ch05_04",
           "sectionType": "code",
           "title": "staticメソッドとインスタンスメソッド",
-          "body": "staticメソッドはクラスに属し、インスタンスメソッドはオブジェクトに属します。",
+          "body": "[[staticメソッド]]は[[クラス]]に属し、[[インスタンス]]メソッドはオブジェクトに属します。",
           "code": "public class Calculator {\n    private int memory = 0; // インスタンス変数\n\n    // staticメソッド: クラスに属する\n    // → オブジェクトを作らず呼べる\n    // → インスタンス変数にアクセスできない\n    static int add(int a, int b) {\n        return a + b;\n    }\n\n    // インスタンスメソッド: オブジェクトに属する\n    // → オブジェクトを作って呼ぶ\n    // → インスタンス変数にアクセスできる\n    void addToMemory(int value) {\n        this.memory += value; // インスタンス変数を使用\n    }\n\n    int getMemory() {\n        return memory;\n    }\n}\n\n// staticメソッドの呼び出し（オブジェクト不要）\nint result = Calculator.add(3, 5); // 8\n\n// インスタンスメソッドの呼び出し（オブジェクト必要）\nCalculator calc = new Calculator();\ncalc.addToMemory(10);\nSystem.out.println(calc.getMemory()); // 10\n\n// 代表的なstaticメソッド:\n// Math.max(a, b), Integer.parseInt(\"123\")\n// Arrays.sort(arr), Collections.sort(list)",
-          "note": "mainメソッドがstaticなのは、プログラム開始時にはまだオブジェクトが存在しないためです。",
+          "note": "[[mainメソッド]]がstaticなのは、プログラム開始時にはまだオブジェクトが存在しないためです。",
           "order": 3
         },
         {
@@ -605,7 +605,7 @@
           "lessonId": "ch05_04",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・**可変長引数**: 型... で0個以上の引数を受け取る\n・可変長引数はメソッドの最後の引数のみ、1つだけ\n・内部的には配列に変換される\n・staticメソッド: クラス名.メソッド名() で呼ぶ\n・インスタンスメソッド: オブジェクト.メソッド名() で呼ぶ\n・staticメソッドからインスタンス変数にはアクセス不可",
+          "body": "・**可変長引数**: 型... で0個以上の引数を受け取る\n・[[可変長引数]]はメソッドの最後の引数のみ、1つだけ\n・内部的には配列に変換される\n・staticメソッド: クラス名.メソッド名() で呼ぶ\n・インスタンスメソッド: オブジェクト.メソッド名() で呼ぶ\n・staticメソッドからインスタンス[[変数]]にはアクセス不可",
           "code": null,
           "note": null,
           "order": 5
@@ -826,7 +826,7 @@
           "lessonId": "ch05_05",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・変数のスコープ（有効範囲）とは\n・ローカル変数の寿命\n・ブロックスコープの仕組み\n\n変数が使える範囲を理解することで、バグを防げます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[変数]]の[[スコープ]]（有効範囲）とは\n・ローカル変数の寿命\n・ブロックスコープの仕組み\n\n変数が使える範囲を理解することで、バグを防げます。",
           "code": null,
           "note": null,
           "order": 1
@@ -837,14 +837,14 @@
           "title": "変数のスコープ",
           "body": "変数が使える範囲はブロック（{}）によって決まります。",
           "code": "public class ScopeExample {\n    static int classVar = 100; // クラス変数（どこからでも参照可能）\n\n    static void method() {\n        int localVar = 10; // ローカル変数（このメソッド内のみ）\n\n        if (localVar > 5) {\n            int blockVar = 20; // ブロック変数（if内のみ）\n            System.out.println(localVar);  // OK\n            System.out.println(blockVar);  // OK\n        }\n        // System.out.println(blockVar); // コンパイルエラー！\n\n        for (int i = 0; i < 3; i++) {\n            // i はこのforブロック内のみ有効\n        }\n        // System.out.println(i); // コンパイルエラー！\n    }\n\n    static void anotherMethod() {\n        // System.out.println(localVar); // コンパイルエラー！\n        System.out.println(classVar);     // OK\n    }\n}\n\n// スコープの範囲:\n// クラス変数 → クラス全体\n// ローカル変数 → 宣言されたメソッド内\n// ブロック変数 → 宣言されたブロック{} 内\n// for変数 → forブロック内",
-          "note": "ローカル変数はデフォルト値で初期化されません。使う前に必ず値を代入する必要があります（代入しないとコンパイルエラー）。",
+          "note": "ローカル変数はデフォルト値で初期化されません。使う前に必ず値を代入する必要があります（代入しないと[[コンパイル]]エラー）。",
           "order": 2
         },
         {
           "lessonId": "ch05_05",
           "sectionType": "tip",
           "title": "スコープの基本ルール",
-          "body": "変数のスコープ（有効範囲）は、変数が宣言されたブロック {} 内に限られます。\n\n・メソッド内で宣言 → そのメソッド内でのみ有効\n・for文の初期化で宣言 → そのfor文内でのみ有効\n・if文のブロック内で宣言 → そのif文のブロック内でのみ有効\n\nスコープの外から変数にアクセスしようとすると、コンパイルエラーになります。",
+          "body": "変数のスコープ（有効範囲）は、変数が宣言されたブロック {} 内に限られます。\n\n・[[メソッド]]内で宣言 → そのメソッド内でのみ有効\n・[[for文]]の初期化で宣言 → そのfor文内でのみ有効\n・[[if文]]のブロック内で宣言 → そのif文のブロック内でのみ有効\n\nスコープの外から変数にアクセスしようとすると、コンパイルエラーになります。",
           "code": null,
           "note": "変数のスコープは必要最小限にするのが良い設計です。",
           "order": 3
@@ -855,14 +855,14 @@
           "title": "再帰メソッド",
           "body": "メソッドが自分自身を呼び出す仕組みが**再帰**です。",
           "code": "// 階乗: n! = n × (n-1) × ... × 1\nstatic int factorial(int n) {\n    // ベースケース（終了条件）: 必ず必要！\n    if (n <= 1) return 1;\n    // 再帰呼び出し\n    return n * factorial(n - 1);\n}\n// factorial(4) → 4 * factorial(3)\n//              → 4 * 3 * factorial(2)\n//              → 4 * 3 * 2 * factorial(1)\n//              → 4 * 3 * 2 * 1 = 24\n\nSystem.out.println(factorial(5)); // 120\n\n// フィボナッチ数列: 0, 1, 1, 2, 3, 5, 8, 13, ...\nstatic int fibonacci(int n) {\n    if (n <= 0) return 0;\n    if (n == 1) return 1;\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\nSystem.out.println(fibonacci(7)); // 13\n\n// ⚠️ ベースケースがないと無限ループ → StackOverflowError\n// static int bad(int n) {\n//     return n * bad(n - 1); // 終了条件なし！\n// }",
-          "note": "**再帰**には必ず「ベースケース（終了条件）」が必要です。ベースケースがないとStackOverflowErrorが発生します。再帰が深いとメモリを多く消費するため、大きな値にはループの方が適しています。",
+          "note": "**再帰**には必ず「ベースケース（終了条件）」が必要です。ベースケースがないと[[StackOverflowError]]が発生します。再帰が深いとメモリを多く消費するため、大きな値にはループの方が適しています。",
           "order": 4
         },
         {
           "lessonId": "ch05_05",
           "sectionType": "point",
           "title": "ポイント",
-          "body": "・スコープ: クラス変数 > ローカル変数 > ブロック変数\n・ローカル変数はデフォルト値なし（初期化必須）\n・**再帰**: メソッドが自分自身を呼び出す\n・再帰には必ずベースケース（終了条件）が必要\n・ベースケースなし → StackOverflowError\n・再帰は深い呼び出しでメモリを消費する",
+          "body": "・スコープ: [[クラス]]変数 > ローカル変数 > ブロック変数\n・ローカル変数はデフォルト値なし（初期化必須）\n・**再帰**: メソッドが自分自身を呼び出す\n・再帰には必ずベースケース（終了条件）が必要\n・ベースケースなし → StackOverflowError\n・再帰は深い呼び出しでメモリを消費する",
           "code": null,
           "note": null,
           "order": 5
@@ -991,7 +991,7 @@
           "lessonId": "ch05_06",
           "sectionType": "overview",
           "title": "このレッスンで学ぶこと",
-          "body": "このレッスンでは以下を学びます:\n\n・**再帰**（メソッドが自分自身を呼ぶ）の仕組み\n・再帰の終了条件（ベースケース）\n・階乗やフィボナッチ数列の再帰的解法\n\n再帰は難しい概念ですが、特定の問題を美しく解ける強力な手法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・**再帰**（[[メソッド]]が自分自身を呼ぶ）の仕組み\n・再帰の終了条件（ベースケース）\n・階乗やフィボナッチ数列の再帰的解法\n\n再帰は難しい概念ですが、特定の問題を美しく解ける強力な手法です。",
           "code": null,
           "note": null,
           "order": 1
@@ -1000,9 +1000,9 @@
           "lessonId": "ch05_06",
           "sectionType": "rule",
           "title": "メソッド設計の原則",
-          "body": "良いメソッドの条件:\n\n1. 単一責任: 1つのメソッドは1つの仕事だけ行う\n   ○ calculateTax(int price)\n   × processOrderAndSendEmail()\n\n2. 適切な命名: メソッド名だけで何をするか分かる\n   ○ isAdult(int age)\n   × check(int n)\n\n3. 引数は少なく: 理想は0〜2個、最大でも3個\n   → 多い場合はオブジェクトにまとめる\n\n4. 副作用を避ける: 引数や外部状態を変更しない\n   ○ int add(int a, int b) → 計算結果を返すだけ\n   × void add(int[] arr, int val) → 配列を変更\n\n5. 早期リターン: エラー条件を先にチェックして返す\n   → ネスト（入れ子）が浅くなり読みやすい",
+          "body": "良いメソッドの条件:\n\n1. 単一責任: 1つのメソッドは1つの仕事だけ行う\n   ○ calculateTax(int price)\n   × processOrderAndSendEmail()\n\n2. 適切な命名: メソッド名だけで何をするか分かる\n   ○ isAdult(int age)\n   × check(int n)\n\n3. 引数は少なく: 理想は0〜2個、最大でも3個\n   → 多い場合はオブジェクトにまとめる\n\n4. 副作用を避ける: 引数や外部状態を変更しない\n   ○ int add(int a, int b) → 計算結果を返すだけ\n   × void add(int[] arr, int val) → [[配列]]を変更\n\n5. 早期リターン: エラー条件を先にチェックして返す\n   → ネスト（入れ子）が浅くなり読みやすい",
           "code": null,
-          "note": "「単一責任の原則」はオブジェクト指向設計（SOLID原則）の基本です。クラス設計にも同じ考え方が適用されます。",
+          "note": "「単一責任の原則」はオブジェクト指向設計（SOLID原則）の基本です。[[クラス]]設計にも同じ考え方が適用されます。",
           "order": 2
         },
         {
@@ -1018,7 +1018,7 @@
           "lessonId": "ch05_06",
           "sectionType": "tip",
           "title": "再帰の落とし穴 — スタックオーバーフロー",
-          "body": "**再帰**メソッドには必ず「終了条件（ベースケース）」が必要です。\n\n終了条件がないと:\n・メソッドが無限に自分自身を呼び続ける\n・呼び出しスタックが溢れてStackOverflowError\n・プログラムが異常終了\n\n再帰の設計: ①ベースケース（再帰を止める条件）→ ②再帰ケース（自分自身を呼ぶ）の順で考えましょう。",
+          "body": "**再帰**メソッドには必ず「終了条件（ベースケース）」が必要です。\n\n終了条件がないと:\n・メソッドが無限に自分自身を呼び続ける\n・呼び出し[[スタック]]が溢れて[[StackOverflowError]]\n・プログラムが異常終了\n\n再帰の設計手順:\n1. **ベースケース**（再帰を止める条件）を決める\n2. **再帰ケース**（自分自身を呼ぶ処理）を書く\n\nこの順番で設計することが重要です。",
           "code": null,
           "note": null,
           "order": 4

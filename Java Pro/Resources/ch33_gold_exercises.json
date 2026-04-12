@@ -13,7 +13,7 @@
           "lessonId": "ch33_01",
           "sectionType": "overview",
           "title": "ジェネリクス応用のポイント",
-          "body": "このレッスンでは以下を学びます:\n\n・ジェネリクスのワイルドカード境界問題\n・コレクション操作の複合問題\n・Comparable/Comparator を使ったソート応用\n\nGold試験で頻出するジェネリクス・コレクション分野の応用演習です。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[ジェネリクス]]の[[ワイルドカード]]境界問題\n・コレクション操作の複合問題\n・[[Comparable]]/[[Comparator]] を使ったソート応用\n\nGold試験で頻出するジェネリクス・コレクション分野の応用演習です。",
           "code": null,
           "note": null,
           "order": 1
@@ -31,7 +31,7 @@
           "lessonId": "ch33_01",
           "sectionType": "code",
           "title": "型推論とダイヤモンド演算子",
-          "body": "Java 7以降のダイヤモンド演算子は左辺から型を推論します。\nジェネリックメソッドの型推論では、引数の型と戻り値の型の両方が考慮されます。\n型推論が解決できない場合、Object型にフォールバックすることがあります。",
+          "body": "Java 7以降の[[ダイヤモンド演算子]]は左辺から型を推論します。\nジェネリック[[メソッド]]の[[型推論]]では、引数の型と戻り値の型の両方が考慮されます。\n型推論が解決できない場合、Object型にフォールバックすることがあります。",
           "code": "// ダイヤモンド演算子\nList<String> list = new ArrayList<>(); // OK\nvar list2 = new ArrayList<>(); // ArrayList<Object>と推論される\n\n// ジェネリックメソッドの型推論\npublic static <T> List<T> of(T... elements) {\n    return Arrays.asList(elements);\n}\n\nList<String> names = of(\"a\", \"b\"); // T=String\nList<Object> mixed = of(\"a\", 1);   // T=Object（共通の型）",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -40,7 +40,7 @@
           "lessonId": "ch33_01",
           "sectionType": "point",
           "title": "コレクションのエッジケース",
-          "body": "List.of()やMap.of()で生成される不変コレクションにはnullを格納できません。\nCollections.unmodifiableList()で生成されたリストは元のリストの変更が反映されます。\nList.copyOf()は元のリストの変更が反映されない独立したコピーを作成します。\nTreeSetに追加する要素はComparableを実装しているか、Comparatorを提供する必要があります。\nArrays.asList()は固定サイズですが要素の変更は可能です。",
+          "body": "List.of()やMap.of()で生成される不変コレクションにはnullを格納できません。\n[[Collections]].unmodifiableList()で生成されたリストは元のリストの変更が反映されます。\nList.copyOf()は元のリストの変更が反映されない独立したコピーを作成します。\n[[TreeSet]]に追加する要素はComparableを実装しているか、Comparatorを提供する必要があります。\nArrays.asList()は固定サイズですが要素の変更は可能です。",
           "code": null,
           "note": null,
           "order": 4
@@ -49,7 +49,7 @@
           "lessonId": "ch33_01",
           "sectionType": "tip",
           "title": "試験の引っかけパターン",
-          "body": "List<Object>はList<String>のスーパータイプではありません（ジェネリクスは不変）。\nArrays.asList()のリストにadd()を呼ぶとUnsupportedOperationExceptionがスローされます。\nList.of()のリストにset()を呼んでもUnsupportedOperationExceptionがスローされます。\nこれらの例外は実行時例外なので、コンパイルは成功する点に注意しましょう。",
+          "body": "List<Object>はList<String>のスーパータイプではありません（ジェネリクスは不変）。\nArrays.asList()のリストにadd()を呼ぶとUnsupportedOperationExceptionがスローされます。\nList.of()のリストにset()を呼んでもUnsupportedOperationExceptionがスローされます。\nこれらの[[例外]]は実行時例外なので、[[コンパイル]]は成功する点に注意しましょう。",
           "code": null,
           "note": "コンパイルが通るかどうかと、実行時に例外が出るかどうかを区別する問題が多く出題されます。",
           "order": 5
@@ -178,7 +178,7 @@
           "lessonId": "ch33_02",
           "sectionType": "overview",
           "title": "Stream API応用のポイント",
-          "body": "このレッスンでは以下を学びます:\n\n・複雑なStreamパイプラインのトレース\n・Collectorsのグルーピング・パーティショニング応用\n・Optional のチェーン操作\n\nStream API分野はGold試験の最重要トピックの1つです。",
+          "body": "このレッスンでは以下を学びます:\n\n・複雑なStreamパイプラインのトレース\n・[[Collectors]]のグルーピング・パーティショニング応用\n・[[Optional]] のチェーン操作\n\n[[Stream API]]分野はGold試験の最重要トピックの1つです。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch33_02",
           "sectionType": "code",
           "title": "Collectorsの応用",
-          "body": "groupingByの下流コレクタを組み合わせることで複雑な集計が可能です。\npartitioningByはPredicate条件でtrue/falseの2グループに分割します。\nCollectors.toMap()でキーの衝突が起きるとIllegalStateExceptionがスローされます。",
+          "body": "[[groupingBy]]の下流コレクタを組み合わせることで複雑な集計が可能です。\n[[partitioningBy]]は[[Predicate]]条件でtrue/falseの2グループに分割します。\nCollectors.toMap()でキーの衝突が起きるとIllegalStateExceptionがスローされます。",
           "code": "List<String> words = List.of(\"apple\", \"banana\", \"avocado\", \"blueberry\", \"cherry\");\n\n// groupingBy + counting()\nMap<Character, Long> countByInitial = words.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()));\n// {a=2, b=2, c=1}\n\n// toMap() でキー衝突 → 例外\n// words.stream().collect(Collectors.toMap(\n//     s -> s.charAt(0), s -> s)); // IllegalStateException\n\n// toMap() でマージ関数を指定\nMap<Character, String> merged = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0), s -> s,\n        (s1, s2) -> s1 + \",\" + s2));\n// {a=apple,avocado, b=banana,blueberry, c=cherry}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -196,7 +196,7 @@
           "lessonId": "ch33_02",
           "sectionType": "code",
           "title": "flatMapとOptional",
-          "body": "flatMap()はストリームのストリームを平坦化するために使います。\nOptional.flatMap()はOptionalのネストを防ぐために使います。\nOptionalのor()メソッドはJava 9以降で利用可能です。",
+          "body": "flatMap()はストリームのストリームを平坦化するために使います。\nOptional.flatMap()はOptionalのネストを防ぐために使います。\nOptionalのor()[[メソッド]]はJava 9以降で利用可能です。",
           "code": "// flatMapでネストされたリストを平坦化\nList<List<Integer>> nested = List.of(\n    List.of(1, 2), List.of(3, 4), List.of(5));\nList<Integer> flat = nested.stream()\n    .flatMap(Collection::stream)\n    .collect(Collectors.toList());\n// [1, 2, 3, 4, 5]\n\n// Optional.flatMapの使い方\nOptional<String> name = Optional.of(\"Java\");\nOptional<String> result = name\n    .map(String::toUpperCase)              // Optional<String>\n    .flatMap(s -> s.equals(\"JAVA\")\n        ? Optional.of(s) : Optional.empty()); // Optional<String>\nSystem.out.println(result); // Optional[JAVA]",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -205,7 +205,7 @@
           "lessonId": "ch33_02",
           "sectionType": "point",
           "title": "遅延評価と短絡操作",
-          "body": "ストリームの中間操作は遅延評価されます（終端操作が呼ばれるまで実行されません）。\nfindFirst()やanyMatch()は短絡操作で、条件を満たした時点で処理を終了します。\nlimit()も短絡操作であり、必要な要素数に達すると上流の処理を停止します。\npeek()を使うと中間操作の実行タイミングを確認でき、遅延評価の理解に役立ちます。\nforEach()内でストリームの状態を変更する操作は副作用として問題になることがあります。",
+          "body": "ストリームの[[中間操作]]は[[遅延評価]]されます（[[終端操作]]が呼ばれるまで実行されません）。\nfindFirst()やanyMatch()は短絡操作で、条件を満たした時点で処理を終了します。\nlimit()も短絡操作であり、必要な要素数に達すると上流の処理を停止します。\npeek()を使うと中間操作の実行タイミングを確認でき、遅延評価の理解に役立ちます。\nforEach()内でストリームの状態を変更する操作は副作用として問題になることがあります。",
           "code": null,
           "note": null,
           "order": 4
@@ -214,7 +214,7 @@
           "lessonId": "ch33_02",
           "sectionType": "tip",
           "title": "試験の出題パターン",
-          "body": "reduce()の初期値あり/なしで戻り値の型が変わる点に注意してください。\n初期値ありのreduce(identity, accumulator)はT型を返します。\n初期値なしのreduce(accumulator)はOptional<T>型を返します。\nCollectors.joining()は文字列の結合に特化したCollectorです。\n並列ストリームでforEach()を使うと順序が保証されない点も試験で問われます。",
+          "body": "reduce()の初期値あり/なしで戻り値の型が変わる点に注意してください。\n初期値ありのreduce(identity, accumulator)はT型を返します。\n初期値なしのreduce(accumulator)はOptional<T>型を返します。\nCollectors.joining()は文字列の結合に特化したCollectorです。\n[[並列ストリーム]]でforEach()を使うと順序が保証されない点も試験で問われます。",
           "code": null,
           "note": "並列ストリームで順序を保証するにはforEachOrdered()を使います。",
           "order": 5
@@ -404,7 +404,7 @@
           "lessonId": "ch33_03",
           "sectionType": "overview",
           "title": "並行処理とI/O応用のポイント",
-          "body": "このレッスンでは以下を学びます:\n\n・スレッドの同期化とデッドロックの問題\n・ExecutorService/CompletableFutureの動作理解\n・NIO.2のファイル操作とStream連携\n\n実践的な並行処理・I/O問題で総合力を鍛えます。",
+          "body": "このレッスンでは以下を学びます:\n\n・[[スレッド]]の同期化と[[デッドロック]]の問題\n・[[ExecutorService]]/[[CompletableFuture]]の動作理解\n・NIO.2のファイル操作とStream連携\n\n実践的な並行処理・I/O問題で総合力を鍛えます。",
           "code": null,
           "note": null,
           "order": 1
@@ -413,7 +413,7 @@
           "lessonId": "ch33_03",
           "sectionType": "code",
           "title": "スレッドセーフティの問題パターン",
-          "body": "スレッドセーフでないコレクションを複数スレッドで操作するとConcurrentModificationExceptionやデータ不整合が起きます。\natomic変数やsynchronizedブロックによる対策を理解しましょう。",
+          "body": "スレッドセーフでないコレクションを複数スレッドで操作するとConcurrentModificationExceptionやデータ不整合が起きます。\natomic変数や[[synchronized]]ブロックによる対策を理解しましょう。",
           "code": "// 問題のあるコード\nList<Integer> list = new ArrayList<>();\nExecutorService exec = Executors.newFixedThreadPool(3);\nfor (int i = 0; i < 1000; i++) {\n    final int val = i;\n    exec.submit(() -> list.add(val)); // スレッドセーフでない\n}\nexec.shutdown();\nexec.awaitTermination(10, TimeUnit.SECONDS);\n// list.size()は1000未満になる可能性がある\n\n// 修正: スレッドセーフなコレクションを使用\nList<Integer> safeList = Collections.synchronizedList(new ArrayList<>());\n// または\nList<Integer> cowList = new CopyOnWriteArrayList<>();",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -431,7 +431,7 @@
           "lessonId": "ch33_03",
           "sectionType": "point",
           "title": "CyclicBarrierとConcurrentHashMap",
-          "body": "CyclicBarrierは指定数のスレッドが揃うまで待機するバリアです。\nawait()を呼んだスレッドはバリアポイントに達し、全スレッドが揃うと一斉に再開します。\nConcurrentHashMapのcompute()やmerge()はアトミック操作として実行されます。\nforEach()を並列で実行するparallelismThresholdを指定できるのもConcurrentHashMapの特徴です。",
+          "body": "CyclicBarrierは指定数のスレッドが揃うまで待機するバリアです。\nawait()を呼んだスレッドはバリアポイントに達し、全スレッドが揃うと一斉に再開します。\n[[ConcurrentHashMap]]のcompute()やmerge()はアトミック操作として実行されます。\nforEach()を並列で実行するparallelismThresholdを指定できるのもConcurrentHashMapの特徴です。",
           "code": null,
           "note": null,
           "order": 4
@@ -440,7 +440,7 @@
           "lessonId": "ch33_03",
           "sectionType": "tip",
           "title": "試験でのI/O問題の注意点",
-          "body": "Files.lines()はStreamを返すため、try-with-resourcesで閉じる必要があります。\nFiles.readAllLines()はList<String>を返し、ストリームのクローズは不要です。\nFiles.walk()はデフォルトでシンボリックリンクをたどりません。\nrelativize()は両方のパスが同じ種類（絶対/相対）でないとIllegalArgumentExceptionがスローされます。",
+          "body": "Files.lines()はStreamを返すため、[[try-with-resources]]で閉じる必要があります。\nFiles.readAllLines()はList<String>を返し、ストリームのクローズは不要です。\nFiles.walk()はデフォルトでシンボリックリンクをたどりません。\nrelativize()は両方のパスが同じ種類（絶対/相対）でないとIllegalArgumentExceptionがスローされます。",
           "code": null,
           "note": "Files.walk()でシンボリックリンクをたどるにはFileVisitOption.FOLLOW_LINKSを指定します。",
           "order": 5
@@ -627,7 +627,7 @@
           "lessonId": "ch33_04",
           "sectionType": "code",
           "title": "例外処理と継承の組み合わせ",
-          "body": "メソッドのオーバーライドでは、チェック例外に関する制約があります。\nサブクラスのメソッドは、スーパークラスのメソッドと同じかより狭い範囲のチェック例外しかスローできません。\nこの制約は非チェック例外には適用されません。",
+          "body": "[[メソッド]]の[[オーバーライド]]では、[[チェック例外]]に関する制約があります。\nサブ[[クラス]]のメソッドは、スーパークラスのメソッドと同じかより狭い範囲のチェック[[例外]]しかスローできません。\nこの制約は非チェック例外には適用されません。",
           "code": "class Parent {\n    void doWork() throws IOException {\n        throw new IOException();\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    void doWork() throws FileNotFoundException {\n        // OK: FileNotFoundExceptionはIOExceptionのサブクラス\n        throw new FileNotFoundException();\n    }\n}\n\nclass BadChild extends Parent {\n    // @Override\n    // void doWork() throws Exception { // コンパイルエラー！\n    //     ExceptionはIOExceptionのスーパークラス\n    // }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -636,7 +636,7 @@
           "lessonId": "ch33_04",
           "sectionType": "code",
           "title": "ジェネリクスと継承の組み合わせ",
-          "body": "ジェネリッククラスの継承では型パラメータの扱いに注意が必要です。\n具象型を指定してインスタンス化する場合と、型パラメータを引き継ぐ場合があります。\n型消去によりランタイムではジェネリクスの型情報が失われます。",
+          "body": "ジェネリッククラスの[[継承]]では型パラメータの扱いに注意が必要です。\n具象型を指定して[[インスタンス]]化する場合と、型パラメータを引き継ぐ場合があります。\n[[型消去]]によりランタイムでは[[ジェネリクス]]の型情報が失われます。",
           "code": "// Containerクラスの定義\nabstract class Container<T> {\n    abstract T getValue();\n    abstract void setValue(T value);\n}\n\n// StringContainerクラスの定義\nclass StringContainer extends Container<String> {\n    private String value;\n    @Override\n    // getValueメソッドの定義\n    String getValue() { return value; }\n    @Override\n    // setValueメソッドの定義\n    void setValue(String value) { this.value = value; }\n}\n\n// GenericPairクラスの定義\nclass GenericPair<A, B> extends Container<A> {\n    private A first;\n    private B second;\n    @Override\n    A getValue() { return first; }\n    @Override\n    void setValue(A value) { this.first = value; }\n    B getSecond() { return second; }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -645,7 +645,7 @@
           "lessonId": "ch33_04",
           "sectionType": "point",
           "title": "アノテーションとモジュールの関連",
-          "body": "@Deprecatedと@SuppressWarnings(\"deprecation\")の使い方を理解しましょう。\n@Deprecated(since=\"9\", forRemoval=true)はJava 9以降で利用可能な属性です。\nモジュールではrequires transitive宣言で推移的な依存関係を指定できます。\nrequires staticはコンパイル時のみの依存関係を表し、実行時には不要です。\nこれらの知識を組み合わせた問題が出題されることがあります。",
+          "body": "@Deprecatedと@SuppressWarnings(\"deprecation\")の使い方を理解しましょう。\n@Deprecated(since=\"9\", forRemoval=true)はJava 9以降で利用可能な属性です。\n[[モジュール]]ではrequires transitive宣言で推移的な依存関係を指定できます。\nrequires staticは[[コンパイル]]時のみの依存関係を表し、実行時には不要です。\nこれらの知識を組み合わせた問題が出題されることがあります。",
           "code": null,
           "note": null,
           "order": 4
@@ -654,7 +654,7 @@
           "lessonId": "ch33_04",
           "sectionType": "tip",
           "title": "総合問題の解法戦略",
-          "body": "まずコンパイルエラーの有無を確認しましょう。コンパイルが通らなければ実行結果を考える必要はありません。\n次にランタイム例外の可能性をチェックします。\ncatch節の順序やmulti-catchの制約（サブクラス関係の例外はmulti-catchできない）も確認しましょう。\nジェネリクスの型の互換性は慎重に検討する必要があります。\n時間がかかる問題は後回しにして、確実に取れる問題から解くのが合格の戦略です。",
+          "body": "まずコンパイルエラーの有無を確認しましょう。コンパイルが通らなければ実行結果を考える必要はありません。\n次にランタイム例外の可能性をチェックします。\ncatch節の順序や[[multi-catch]]の制約（サブクラス関係の例外はmulti-catchできない）も確認しましょう。\nジェネリクスの型の互換性は慎重に検討する必要があります。\n時間がかかる問題は後回しにして、確実に取れる問題から解くのが合格の戦略です。",
           "code": null,
           "note": "試験では1問あたり約2分が目安です。迷ったらマークして先に進みましょう。",
           "order": 5

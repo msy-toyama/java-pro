@@ -26,6 +26,8 @@ struct RichBodyView: View {
                     MarkdownTableView(table: table)
                 case .bulletList(let items):
                     BulletListView(items: items)
+                case .numberedList(let items):
+                    NumberedListView(items: items)
                 }
             }
         }
@@ -33,36 +35,94 @@ struct RichBodyView: View {
 
     // MARK: - インライン強調テキストレンダリング
 
-    /// `**太字**` マークアップをパースし、強調スタイル付きのTextを生成する。
-    static func styledText(_ content: String) -> Text {
-        let pattern = /\*\*(.+?)\*\*/
-        var result = Text("")
-        var remaining = content[...]
+    /// 用語リンクのURLスキーム。
+    static let glossaryScheme = "prpro-glossary"
 
-        while let match = remaining.firstMatch(of: pattern) {
-            // マッチ前の通常テキスト
-            let before = remaining[remaining.startIndex..<match.range.lowerBound]
-            if !before.isEmpty {
-                result = result + Text(String(before))
+    /// `**太字**` と `[[用語]]` マークアップをパースし、
+    /// 強調スタイルおよび用語リンク付きの `Text` を生成する。
+    /// - `**text**` → 太字 + アクセントカラー
+    /// - `[[term]]` → タップ可能な用語リンク（下線 + リンクカラー）
+    static func styledText(_ content: String) -> Text {
+        let attributed = buildAttributedString(content)
+        return Text(attributed)
+    }
+
+    /// マークアップ付き文字列を `AttributedString` に変換する。
+    private static func buildAttributedString(_ content: String) -> AttributedString {
+        var result = AttributedString()
+        var buffer = ""
+        let chars = Array(content)
+        var i = 0
+
+        func flushBuffer() {
+            if !buffer.isEmpty {
+                result += AttributedString(buffer)
+                buffer = ""
             }
-            // 強調テキスト（太字 + アクセントカラー）
-            let emphasized = String(match.output.1)
-            result = result + Text(emphasized)
-                .bold()
-                .foregroundColor(AppColor.primary)
-            remaining = remaining[match.range.upperBound...]
         }
-        // 残りの通常テキスト
-        if !remaining.isEmpty {
-            result = result + Text(String(remaining))
+
+        while i < chars.count {
+            // **太字** パターンの検出
+            if i + 1 < chars.count && chars[i] == "*" && chars[i + 1] == "*" {
+                if let endIdx = findClosingMarker(chars, from: i + 2, marker: "**") {
+                    flushBuffer()
+                    let boldText = String(chars[(i + 2)..<endIdx])
+                    var attr = AttributedString(boldText)
+                    attr.inlinePresentationIntent = .stronglyEmphasized
+                    attr.foregroundColor = AppColor.primary
+                    result += attr
+                    i = endIdx + 2
+                    continue
+                }
+            }
+
+            // [[用語]] パターンの検出
+            if i + 1 < chars.count && chars[i] == "[" && chars[i + 1] == "[" {
+                if let endIdx = findClosingMarker(chars, from: i + 2, marker: "]]") {
+                    flushBuffer()
+                    let term = String(chars[(i + 2)..<endIdx])
+                    var attr = AttributedString(term)
+                    let encoded = term.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? term
+                    attr.link = URL(string: "\(glossaryScheme)://\(encoded)")
+                    attr.underlineStyle = .single
+                    result += attr
+                    i = endIdx + 2
+                    continue
+                }
+            }
+
+            buffer.append(chars[i])
+            i += 1
         }
+
+        flushBuffer()
         return result
+    }
+
+    /// 指定位置以降で閉じマーカーの開始位置を返す（見つからなければ nil）。
+    private static func findClosingMarker(_ chars: [Character], from start: Int, marker: String) -> Int? {
+        let markerChars = Array(marker)
+        guard markerChars.count > 0 else { return nil }
+        var j = start
+        while j + markerChars.count - 1 < chars.count {
+            var matched = true
+            for k in 0..<markerChars.count {
+                if chars[j + k] != markerChars[k] {
+                    matched = false
+                    break
+                }
+            }
+            if matched { return j }
+            j += 1
+        }
+        return nil
     }
 
     enum Segment {
         case text(String)
         case table(ParsedTable)
         case bulletList([String])
+        case numberedList([String])
     }
 
     struct ParsedTable {
@@ -70,15 +130,48 @@ struct RichBodyView: View {
         let rows: [[String]]
     }
 
-    /// テキストをテーブル・箇条書き・通常テキストのセグメントに分割する。
+    /// テキストをテーブル・箇条書き・番号リスト・通常テキストのセグメントに分割する。
     static func parseSegments(_ text: String) -> [Segment] {
         let lines = text.components(separatedBy: "\n")
         var segments: [Segment] = []
         var textBuffer: [String] = []
         var tableBuffer: [String] = []
         var bulletBuffer: [String] = []
+        var numberedBuffer: [String] = []
         var inTable = false
         var inBullet = false
+        var inNumbered = false
+
+        /// 番号リスト行の判定（"1. テキスト" 形式）
+        func isNumberedLine(_ s: String) -> Bool {
+            guard let dotIndex = s.firstIndex(of: ".") else { return false }
+            let prefix = s[s.startIndex..<dotIndex]
+            guard !prefix.isEmpty, prefix.allSatisfy(\.isNumber) else { return false }
+            let afterDot = s[s.index(after: dotIndex)...]
+            return afterDot.first == " " || afterDot.first == "\u{3000}"
+        }
+
+        /// 番号リスト行からテキスト部分を取得
+        func numberedContent(_ s: String) -> String {
+            guard let dotIndex = s.firstIndex(of: ".") else { return s }
+            let afterDot = s[s.index(after: dotIndex)...]
+            return String(afterDot).trimmingCharacters(in: .whitespaces)
+        }
+
+        /// 番号リストの継続行（字下げされた補足行）判定
+        func isNumberedContinuation(_ s: String, original: String) -> Bool {
+            guard inNumbered else { return false }
+            // 空行でない、テーブルでない、箇条書きでない、番号行でない、
+            // かつ先頭がスペースで始まるか「→」「○」「×」で始まる場合は継続行
+            let trimmed = s.trimmingCharacters(in: .whitespaces)
+            if trimmed.isEmpty { return false }
+            if trimmed.hasPrefix("|") { return false }
+            if trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}") { return false }
+            if isNumberedLine(trimmed) { return false }
+            // 元の行が先頭スペースを持つ（字下げ）場合は継続行
+            let leadingSpaces = original.prefix(while: { $0 == " " || $0 == "\u{3000}" })
+            return leadingSpaces.count >= 2 || trimmed.hasPrefix("→") || trimmed.hasPrefix("○") || trimmed.hasPrefix("×")
+        }
 
         func flushText() {
             let joined = textBuffer.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
@@ -102,13 +195,24 @@ struct RichBodyView: View {
             bulletBuffer.removeAll()
         }
 
+        func flushNumbered() {
+            if !numberedBuffer.isEmpty {
+                segments.append(.numberedList(numberedBuffer))
+            }
+            numberedBuffer.removeAll()
+        }
+
         for line in lines {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             let isTableLine = trimmed.hasPrefix("|") && trimmed.hasSuffix("|") && trimmed.filter({ $0 == "|" }).count >= 2
-            let isBulletLine = trimmed.hasPrefix("\u{30FB}") // ・
+            // ・(U+30FB) と •(U+2022) の両方を箇条書きとして認識
+            let isBulletLine = trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}")
+            let isNumLine = isNumberedLine(trimmed)
+            let isContinuation = isNumberedContinuation(trimmed, original: line)
 
             if isTableLine {
                 if inBullet { flushBullet(); inBullet = false }
+                if inNumbered { flushNumbered(); inNumbered = false }
                 if !inTable {
                     flushText()
                     inTable = true
@@ -116,22 +220,38 @@ struct RichBodyView: View {
                 tableBuffer.append(trimmed)
             } else if isBulletLine {
                 if inTable { flushTable(); inTable = false }
+                if inNumbered { flushNumbered(); inNumbered = false }
                 if !inBullet {
                     flushText()
                     inBullet = true
                 }
-                // 「・」を除去してテキスト部分のみ格納
+                // 「・」または「•」を除去してテキスト部分のみ格納
                 let content = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
                 bulletBuffer.append(content)
+            } else if isNumLine {
+                if inTable { flushTable(); inTable = false }
+                if inBullet { flushBullet(); inBullet = false }
+                if !inNumbered {
+                    flushText()
+                    inNumbered = true
+                }
+                numberedBuffer.append(numberedContent(trimmed))
+            } else if isContinuation {
+                // 番号リスト内の継続行（字下げ補足）→ 直前の項目に結合
+                if !numberedBuffer.isEmpty {
+                    numberedBuffer[numberedBuffer.count - 1] += "\n" + trimmed
+                }
             } else {
                 if inTable { flushTable(); inTable = false }
                 if inBullet { flushBullet(); inBullet = false }
+                if inNumbered { flushNumbered(); inNumbered = false }
                 textBuffer.append(line)
             }
         }
 
         if inTable { flushTable() }
         else if inBullet { flushBullet() }
+        else if inNumbered { flushNumbered() }
         else { flushText() }
 
         return segments
@@ -188,6 +308,50 @@ struct BulletListView: View {
                         .foregroundStyle(AppColor.textPrimary)
                         .lineSpacing(4)
                         .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .padding(.leading, 4)
+    }
+}
+
+/// 番号付きリスト（1. 2. 3.）をスタイリッシュに描画するView。
+struct NumberedListView: View {
+    let items: [String]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                let lines = item.components(separatedBy: "\n")
+                let mainText = lines.first ?? item
+                let subLines = lines.dropFirst()
+
+                HStack(alignment: .top, spacing: 10) {
+                    // 番号バッジ
+                    Text("\(index + 1)")
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundStyle(.white)
+                        .frame(width: 22, height: 22)
+                        .background(AppColor.primary.opacity(0.75), in: Circle())
+                        .padding(.top, 1)
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        RichBodyView.styledText(mainText)
+                            .font(AppFont.body)
+                            .foregroundStyle(AppColor.textPrimary)
+                            .lineSpacing(4)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        // 継続行（字下げ補足）の表示
+                        ForEach(Array(subLines.enumerated()), id: \.offset) { _, subLine in
+                            RichBodyView.styledText(subLine)
+                                .font(AppFont.caption)
+                                .foregroundStyle(AppColor.textSecondary)
+                                .lineSpacing(3)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.leading, 2)
+                        }
+                    }
                 }
             }
         }

@@ -13,16 +13,16 @@
           "lessonId": "ch20_01",
           "sectionType": "overview",
           "title": "ネストクラスとは",
-          "body": "このレッスンでは以下を学びます:\n\n・ネストされたクラスの4種類の概要\n・内部クラス（インナークラス）の定義と使い方\n・外部クラスのメンバへのアクセス方法\n\nクラスの中にクラスを定義する仕組みを学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・ネストされた[[クラス]]の4種類の概要\n・内部クラス（[[インナークラス]]）の定義と使い方\n・外部クラスのメンバへのアクセス方法\n\nクラスの中にクラスを定義する仕組みを学びます。",
           "code": null,
-          "note": "実務Tips: ネストクラスは「そのクラスの内部でしか使わない補助的な型」を定義するときに使います。例えば HashMap 内部の Node クラスや、Builderパターンの Builder クラスが代表例です。",
+          "note": "実務Tips: **ネストクラス**は「そのクラスの内部でしか使わない補助的な型」を定義するときに使います。例えば [[HashMap]] 内部の Node クラスや、Builderパターンの Builder クラスが代表例です。",
           "order": 1
         },
         {
           "lessonId": "ch20_01",
           "sectionType": "rule",
           "title": "4種類のネストクラス",
-          "body": "| 種類 | 定義場所 | static | 外部クラス参照 | 主な用途 |\n|---|---|---|---|---|\n| staticネストクラス | クラス直下 | ✅ | ❌ | ヘルパークラス |\n| メンバークラス（inner class） | クラス直下 | ❌ | ✅ | 外部状態に依存する処理 |\n| ローカルクラス | メソッド内 | ❌ | ✅ | メソッド内の一時的な型 |\n| 匿名クラス（anonymous class） | 式の中 | ❌ | ✅ | インターフェースの一回限りの実装 |\n\n重要な違い: staticネストクラスは外部クラスのインスタンスなしで使えますが、内部クラス（非static）は外部クラスのインスタンスが必要です。",
+          "body": "| 種類 | 定義場所 | static | 外部クラス参照 | 主な用途 |\n|---|---|---|---|---|\n| staticネストクラス | クラス直下 | ✅ | ❌ | ヘルパークラス |\n| メンバークラス（inner class） | クラス直下 | ❌ | ✅ | 外部状態に依存する処理 |\n| ローカルクラス | メソッド内 | ❌ | ✅ | メソッド内の一時的な型 |\n| 匿名クラス（anonymous class） | 式の中 | ❌ | ✅ | インターフェースの一回限りの実装 |\n\n重要な違い: staticネストクラスは外部クラスの[[インスタンス]]なしで使えますが、内部クラス（非static）は外部クラスのインスタンスが必要です。",
           "code": null,
           "note": null,
           "order": 2
@@ -31,7 +31,7 @@
           "lessonId": "ch20_01",
           "sectionType": "code",
           "title": "4種類の簡単な例",
-          "body": "以下のコード例を確認しましょう。\n\n実際の使用場面:\n• staticネスト: `Map.Entry`, `Builderパターン`\n• メンバークラス: `Iterator`実装, `ViewHolder`\n• ローカルクラス: 現代ではほぼ使われない\n• 匿名クラス: GUIイベントリスナー、コールバック",
+          "body": "以下のコード例を確認しましょう。\n\n実際の使用場面:\n• staticネスト: `Map.Entry`, `Builderパターン`\n• メンバークラス: `Iterator`実装, `ViewHolder`\n• **ローカルクラス**: 現代ではほぼ使われない\n• [[匿名クラス]]: GUIイベントリスナー、コールバック",
           "code": "// Outerクラスの定義\npublic class Outer {\n    private int value = 10;\n\n    // 1. staticネストクラス\n    static class StaticNested {\n        // showメソッドの定義\n        void show() {\n            // value にアクセス不可（staticなので）\n            System.out.println(\"static nested\");\n        }\n    }\n\n    // 2. メンバークラス（inner class）\n    // Innerクラスの定義\n    class Inner {\n        // showメソッドの定義\n        void show() {\n            // 外部クラスのフィールドにアクセス可能\n            System.out.println(\"inner: \" + value);\n        }\n    }\n\n    void method() {\n        // 3. ローカルクラス\n        // Localクラスの定義\n        class Local {\n            void show() {\n                System.out.println(\"local: \" + value);\n            }\n        }\n        new Local().show();\n\n        // 4. 匿名クラス\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(\"anonymous: \" + value);\n            }\n        };\n        r.run();\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -40,7 +40,7 @@
           "lessonId": "ch20_01",
           "sectionType": "tip",
           "title": "ネストされたクラスの4種類を整理",
-          "body": "| 種類 | 場所 | static | 外部インスタンス |\n|---|---|---|---|\n| 内部クラス | クラス内 | なし | 必要 |\n| staticネストクラス | クラス内 | あり | 不要 |\n| ローカルクラス | メソッド内 | なし | - |\n| 匿名クラス | 式の中 | なし | - |\n\n最もよく使うのはstaticネストクラスです。内部クラスは外部インスタンスへの暗黙参照を持つため、メモリリークの原因になることがあります。",
+          "body": "| 種類 | 場所 | static | 外部インスタンス |\n|---|---|---|---|\n| 内部クラス | クラス内 | なし | 必要 |\n| staticネストクラス | クラス内 | あり | 不要 |\n| ローカルクラス | メソッド内 | なし | - |\n| 匿名クラス | 式の中 | なし | - |\n\n最もよく使うのはstaticネストクラスです。**内部クラス**は外部インスタンスへの暗黙参照を持つため、メモリリークの原因になることがあります。",
           "code": null,
           "note": "Java 16以降、内部クラスにstaticメンバを持てるように緩和されました。",
           "order": 4
@@ -176,7 +176,7 @@
           "lessonId": "ch20_02",
           "sectionType": "overview",
           "title": "staticネストクラス vs メンバークラス",
-          "body": "このレッスンでは以下を学びます:\n\n・staticネストクラスの定義と特徴\n・内部クラスとの違い（外部クラスインスタンス不要）\n・staticネストクラスの適切な使いどころ\n\nstaticを付けるかどうかで動作が大きく変わります。",
+          "body": "このレッスンでは以下を学びます:\n\n・staticネスト[[クラス]]の定義と特徴\n・**内部クラス**との違い（外部クラス[[インスタンス]]不要）\n・staticネストクラスの適切な使いどころ\n\nstaticを付けるかどうかで動作が大きく変わります。",
           "code": null,
           "note": null,
           "order": 1
@@ -203,7 +203,7 @@
           "lessonId": "ch20_02",
           "sectionType": "code",
           "title": "メンバークラス（inner class）の詳細",
-          "body": "以下のコード例を確認しましょう。\n\n実務での使用例: コレクションのIterator実装では、メンバークラスとして定義するのが定石です。外部クラスの内部データに直接アクセスできるため、効率的に要素を走査できます。またAndroid開発のRecyclerView.ViewHolderも近いパターンです。",
+          "body": "以下のコード例を確認しましょう。\n\n実務での使用例: コレクションの[[Iterator]]実装では、メンバークラスとして定義するのが定石です。外部クラスの内部データに直接アクセスできるため、効率的に要素を走査できます。またAndroid開発のRecyclerView.ViewHolderも近いパターンです。",
           "code": "// Outerクラスの定義\npublic class Outer {\n    private int value = 42;\n\n    // Innerクラスの定義\n    class Inner {\n        private int value = 99;\n\n        // showメソッドの定義\n        void show() {\n            System.out.println(value);            // 99（Inner.this.value）\n            System.out.println(this.value);        // 99（this = Inner）\n            System.out.println(Outer.this.value);  // 42（外部クラス参照）\n        }\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // メンバークラスのインスタンス化\n        // 外部クラスのインスタンスが必要！\n        Outer outer = new Outer();\n        Outer.Inner inner = outer.new Inner();\n        //                    ↑ outer.new の構文に注意\n        inner.show();\n\n        // 1行で書く場合\n        Outer.Inner inner2 = new Outer().new Inner();\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 4
@@ -349,9 +349,9 @@
           "lessonId": "ch20_03",
           "sectionType": "overview",
           "title": "メソッド内のクラス定義",
-          "body": "このレッスンでは以下を学びます:\n\n・ローカルクラス（メソッド内で定義するクラス）\n・匿名クラス（名前のないクラス）の構文\n・ラムダ式との関係と使い分け\n\n特定のスコープでのみ使うクラスを定義する方法です。",
+          "body": "このレッスンでは以下を学びます:\n\n・ローカル[[クラス]]（[[メソッド]]内で定義するクラス）\n・[[匿名クラス]]（名前のないクラス）の構文\n・[[ラムダ式]]との関係と使い分け\n\n特定の[[スコープ]]でのみ使うクラスを定義する方法です。",
           "code": null,
-          "note": "実務Tips: ローカルクラスは現代のJava開発ではほとんど使われません。匿名クラスはGUIアプリ（Swing/JavaFX）のイベントリスナーや、スレッド生成（new Thread(new Runnable() {...})）で使われていましたが、Java 8以降はラムダ式に置き換えられています。",
+          "note": "実務Tips: **ローカルクラス**は現代のJava開発ではほとんど使われません。**匿名クラス**はGUIアプリ（Swing/JavaFX）のイベントリスナーや、スレッド]]生成（new Thread(new [[Runnable() {...})）で使われていましたが、Java 8以降はラムダ式に置き換えられています。",
           "order": 1
         },
         {
@@ -367,7 +367,7 @@
           "lessonId": "ch20_03",
           "sectionType": "tip",
           "title": "匿名クラスとラムダ式の違い",
-          "body": "ラムダ式は匿名クラスの短縮記法ですが、いくつかの違いがあります。\n\n| 項目 | 匿名クラス | ラムダ式 |\n|---|---|---|\n| 対象 | どんなインターフェース/クラス | 関数型インターフェースのみ |\n| this | 匿名クラス自身 | 外側のクラス |\n| 状態 | フィールドを持てる | 持てない |\n| 読みやすさ | 冗長 | 簡潔 |\n\n関数型インターフェースの場合は、ラムダ式を使うのが推奨です。",
+          "body": "ラムダ式は匿名クラスの短縮記法ですが、いくつかの違いがあります。\n\n| 項目 | 匿名クラス | ラムダ式 |\n|---|---|---|\n| 対象 | どんなインターフェース/クラス | 関数型インターフェースのみ |\n| this | 匿名クラス自身 | 外側のクラス |\n| 状態 | フィールドを持てる | 持てない |\n| 読みやすさ | 冗長 | 簡潔 |\n\n[[関数型インターフェース]]の場合は、ラムダ式を使うのが推奨です。",
           "code": null,
           "note": null,
           "order": 3
@@ -385,7 +385,7 @@
           "lessonId": "ch20_03",
           "sectionType": "rule",
           "title": "匿名クラスの制約",
-          "body": "1. 名前がない — 型名として参照できない（再利用不可）\n2. コンストラクタを定義できない — 名前がないため\n3. 1つのスーパークラスまたはインターフェースのみ — 同時に複数implementsは不可\n4. 実質的にfinalなローカル変数のみ参照可能\n5. extendsとimplementsを同時にはできない\n\n実質的にfinal（effectively final）とは:\n宣言後に一度も値が変更されない変数のこと。Java 8以降、明示的なfinalキーワードがなくても、再代入がなければ実質的にfinalとして扱われます。",
+          "body": "1. 名前がない — 型名として参照できない（再利用不可）\n2. [[コンストラクタ]]を定義できない — 名前がないため\n3. 1つのスーパークラスまたは[[インターフェース]]のみ — 同時に複数implementsは不可\n4. 実質的にfinalなローカル[[変数]]のみ参照可能\n5. extendsとimplementsを同時にはできない\n\n実質的にfinal（effectively final）とは:\n宣言後に一度も値が変更されない変数のこと。Java 8以降、明示的なfinalキーワードがなくても、再代入がなければ実質的にfinalとして扱われます。",
           "code": null,
           "note": null,
           "order": 5
@@ -394,7 +394,7 @@
           "lessonId": "ch20_03",
           "sectionType": "point",
           "title": "まとめ",
-          "body": "• ローカルクラス — メソッド内で定義、そのメソッド内でのみ使用可能\n• 匿名クラス — 名前なし、クラス定義とインスタンス化を同時に行う\n• 両方とも実質的にfinalなローカル変数にのみアクセス可能\n• 匿名クラスはコンストラクタを定義できない\n• 匿名クラスは1つのインターフェースまたは1つのクラスのみ継承/実装可能\n• Java 8以降: 匿名クラスの多くはラムダ式で代替可能（関数型インターフェースの場合）",
+          "body": "• ローカルクラス — メソッド内で定義、そのメソッド内でのみ使用可能\n• 匿名クラス — 名前なし、クラス定義と[[インスタンス]]化を同時に行う\n• 両方とも実質的にfinalなローカル変数にのみアクセス可能\n• 匿名クラスはコンストラクタを定義できない\n• 匿名クラスは1つのインターフェースまたは1つのクラスのみ[[継承]]/実装可能\n• Java 8以降: 匿名クラスの多くはラムダ式で代替可能（関数型インターフェースの場合）",
           "code": null,
           "note": null,
           "order": 6
@@ -522,9 +522,9 @@
           "lessonId": "ch20_04",
           "sectionType": "overview",
           "title": "匿名クラスとラムダ式の関係",
-          "body": "このレッスンでは以下を学びます:\n\n・ネストされたクラスの使い分け判断基準\n・各種ネストクラスのアクセスルールの比較\n・実務での活用パターン（Builder, Iterator等）\n\n適切な種類のネストクラスを選べるようになりましょう。",
+          "body": "このレッスンでは以下を学びます:\n\n・ネストされた[[クラス]]の使い分け判断基準\n・各種ネストクラスのアクセスルールの比較\n・実務での活用パターン（Builder, [[Iterator]]等）\n\n適切な種類のネストクラスを選べるようになりましょう。",
           "code": null,
-          "note": "実務Tips: Spring FrameworkやJUnit 5などモダンなフレームワークでは関数型インターフェースを多用するため、ラムダ式が日常的に使われます。例: assertThrows(Exception.class, () -> service.process());  匿名クラスをラムダ式に置き換えるリファクタリングは、レガシーコードのモダナイズでもよく行われます。",
+          "note": "実務Tips: Spring FrameworkやJUnit 5などモダンなフレームワークでは[[関数型インターフェース]]を多用するため、[[ラムダ式]]が日常的に使われます。例: assertThrows(Exception.class, () -> service.process());  [[匿名クラス]]をラムダ式に置き換えるリファクタリングは、レガシーコードのモダナイズでもよく行われます。",
           "order": 1
         },
         {
@@ -540,7 +540,7 @@
           "lessonId": "ch20_04",
           "sectionType": "tip",
           "title": "匿名クラスからラムダ式への移行",
-          "body": "Java 8以降、関数型インターフェースの実装は匿名クラスからラムダ式に置き換えられます。\n\n・匿名クラス: new Comparator<String>() { public int compare(String a, String b) { return a.compareTo(b); } }\n・ラムダ式: (a, b) -> a.compareTo(b)\n・メソッド参照: String::compareTo\n\nコードが劇的に簡潔になるため、関数型インターフェースには積極的にラムダ式を使いましょう。",
+          "body": "Java 8以降、関数型[[インターフェース]]の実装は匿名クラスからラムダ式に置き換えられます。\n\n・**匿名クラス**: new [[Comparator]]<String>() { public int compare(String a, String b) { return a.compareTo(b); } }\n・ラムダ式: (a, b) -> a.compareTo(b)\n・[[メソッド参照]]: String::compareTo\n\nコードが劇的に簡潔になるため、関数型インターフェースには積極的にラムダ式を使いましょう。",
           "code": null,
           "note": null,
           "order": 3
@@ -549,7 +549,7 @@
           "lessonId": "ch20_04",
           "sectionType": "rule",
           "title": "匿名クラスとラムダ式の決定的な違い",
-          "body": "| 観点 | 匿名クラス | ラムダ式 |\n|---|---|---|\n| 対象 | クラス・インターフェース全般 | 関数型インターフェースのみ |\n| thisの参照先 | 匿名クラス自身 | 外部クラス（囲むクラス） |\n| 抽象メソッド数 | 複数可 | 1つのみ |\n| コンストラクタ | 定義不可 | N/A |\n| フィールド定義 | 可能 | 不可 |\n| クラスファイル | 別途生成（Outer$1.class） | invokedynamic |\n\n特に重要: ラムダ式内の`this`は外部クラスのインスタンスを指す。匿名クラス内の`this`は匿名クラス自身のインスタンスを指す。",
+          "body": "| 観点 | 匿名クラス | ラムダ式 |\n|---|---|---|\n| 対象 | クラス・インターフェース全般 | 関数型インターフェースのみ |\n| thisの参照先 | 匿名クラス自身 | 外部クラス（囲むクラス） |\n| 抽象メソッド数 | 複数可 | 1つのみ |\n| コンストラクタ | 定義不可 | N/A |\n| フィールド定義 | 可能 | 不可 |\n| クラスファイル | 別途生成（Outer$1.class） | invokedynamic |\n\n特に重要: ラムダ式内の`this`は外部クラスの[[インスタンス]]を指す。匿名クラス内の`this`は匿名クラス自身のインスタンスを指す。",
           "code": null,
           "note": null,
           "order": 4
@@ -567,7 +567,7 @@
           "lessonId": "ch20_04",
           "sectionType": "point",
           "title": "ネストクラスの使い分けまとめ",
-          "body": "使い分けの指針:\n• staticネストクラス — 外部インスタンス不要。ヘルパー型（Builder、Entry等）\n• メンバークラス — 外部状態が必要（Iterator実装など）。ただし可能ならstatic推奨\n• ローカルクラス — メソッド内で一時的に使う型。稀に使用\n• 匿名クラス — 1回限りの実装。関数型IFならラムダ式推奨\n• ラムダ式 — 関数型IFの簡潔な実装。thisが外部クラスを指す点に注意\n\nEffective Java推奨: 「ネストクラスは可能な限りstaticにせよ」（メモリリーク防止）",
+          "body": "使い分けの指針:\n• staticネストクラス — 外部インスタンス不要。ヘルパー型（Builder、Entry等）\n• メンバークラス — 外部状態が必要（Iterator実装など）。ただし可能ならstatic推奨\n• **ローカルクラス** — [[メソッド]]内で一時的に使う型。稀に使用\n• 匿名クラス — 1回限りの実装。関数型IFならラムダ式推奨\n• ラムダ式 — 関数型IFの簡潔な実装。thisが外部クラスを指す点に注意\n\nEffective Java推奨: 「**ネストクラス**は可能な限りstaticにせよ」（メモリリーク防止）",
           "code": null,
           "note": null,
           "order": 6

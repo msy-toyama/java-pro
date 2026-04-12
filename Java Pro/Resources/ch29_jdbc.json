@@ -22,7 +22,7 @@
           "lessonId": "ch29_01",
           "sectionType": "rule",
           "title": "JDBCアーキテクチャとドライバ",
-          "body": "JDBCアーキテクチャは4つの層で構成されます：アプリケーション、JDBCドライバマネージャ、JDBCドライバ、データベース。\n**JDBC** URLはデータベースへの接続先を指定する文字列で、形式は jdbc:サブプロトコル:サブネーム です。\n例：jdbc:mysql://localhost:3306/mydb、jdbc:postgresql://localhost/testdb\nDriverManagerクラスがドライバの管理と接続の確立を担当します。\nJDBC 4.0以降、META-INF/services配下のサービスプロバイダ設定により自動的にドライバが検出されます。\nClass.forName()による明示的なドライバのロードは不要ですが、試験では知識として問われることがあります。",
+          "body": "JDBCアーキテクチャは4つの層で構成されます：アプリケーション、JDBCドライバマネージャ、JDBCドライバ、データベース。\n**JDBC** URLはデータベースへの接続先を指定する文字列で、形式は jdbc:サブプロトコル:サブネーム です。\n例：jdbc:mysql://localhost:3306/mydb、jdbc:postgresql://localhost/testdb\nDriverManagerクラスがドライバの管理と接続の確立を担当します。\n[[JDBC]] 4.0以降、META-INF/services配下のサービスプロバイダ設定により自動的にドライバが検出されます。\nClass.forName()による明示的なドライバのロードは不要ですが、試験では知識として問われることがあります。",
           "code": null,
           "note": "**JDBC** URLの形式はデータベースベンダーごとに異なります。試験ではURLの基本形式が問われます。",
           "order": 2
@@ -31,7 +31,7 @@
           "lessonId": "ch29_01",
           "sectionType": "code",
           "title": "データベースへの接続",
-          "body": "DriverManager.getConnection()でデータベースに接続します。\n引数にJDBC URL、ユーザー名、パスワードを指定します。\n戻り値はConnectionオブジェクトで、データベースへの接続を表します。\nConnectionはAutoCloseableを実装しているため、try-with-resourcesで使えます。\n接続が失敗するとSQLExceptionがスローされます。",
+          "body": "DriverManager.getConnection()でデータベースに接続します。\n引数にJDBC URL、ユーザー名、パスワードを指定します。\n戻り値はConnectionオブジェクトで、データベースへの接続を表します。\nConnectionは[[AutoCloseable]]を実装しているため、[[try-with-resources]]で使えます。\n接続が失敗するとSQLExceptionがスローされます。",
           "code": "import java.sql.*;\n\n// 基本的な接続\n// 変数の宣言と初期化\nString url = \"jdbc:mysql://localhost:3306/mydb\";\nString user = \"root\";\nString password = \"password\";\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(\n        url, user, password)) {\n    System.out.println(\"接続成功\");\n    System.out.println(\"DB: \" + conn.getMetaData()\n        .getDatabaseProductName());\n} catch (SQLException e) {\n    System.err.println(\"接続失敗: \" + e.getMessage());\n}\n\n// Propertiesを使った接続\nimport java.util.Properties;\nProperties props = new Properties();\nprops.setProperty(\"user\", \"root\");\nprops.setProperty(\"password\", \"password\");\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(\n        url, props)) {\n    // 接続処理\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 3
@@ -40,7 +40,7 @@
           "lessonId": "ch29_01",
           "sectionType": "code",
           "title": "Statement と ResultSet",
-          "body": "StatementはSQLを実行するためのオブジェクトで、Connection.createStatement()で取得します。\nexecuteQuery()はSELECT文を実行し、ResultSetを返します。\nexecuteUpdate()はINSERT、UPDATE、DELETEを実行し、影響を受けた行数を返します。\nResultSetは検索結果のカーソルで、next()で次の行に移動します。\nnext()がfalseを返すと結果がありません。getString()、getInt()などで列の値を取得します。",
+          "body": "StatementはSQLを実行するためのオブジェクトで、Connection.createStatement()で取得します。\nexecuteQuery()はSELECT文を実行し、[[ResultSet]]を返します。\nexecuteUpdate()はINSERT、UPDATE、DELETEを実行し、影響を受けた行数を返します。\nResultSetは検索結果のカーソルで、next()で次の行に移動します。\nnext()がfalseを返すと結果がありません。getString()、getInt()などで列の値を取得します。",
           "code": "import java.sql.*;\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // SELECT文の実行\n    ResultSet rs = stmt.executeQuery(\n        \"SELECT id, name, age FROM users\");\n    // 条件が成り立つ間、繰り返す\n    while (rs.next()) {\n        // 変数の宣言と初期化\n        int id = rs.getInt(\"id\");         // 列名で取得\n        String name = rs.getString(\"name\");\n        int age = rs.getInt(2);           // 列番号で取得（1始まり）\n        System.out.println(id + \": \" + name + \" (\" + age + \")\");\n    }\n\n    // INSERT文の実行\n    int rows = stmt.executeUpdate(\n        \"INSERT INTO users (name, age) VALUES ('Taro', 25)\");\n    System.out.println(rows + \"行挿入\"); // 1行挿入\n}",
           "note": "ResultSetの列番号は1始まりです。0を指定するとSQLExceptionが発生します。",
           "order": 4
@@ -178,7 +178,7 @@
           "lessonId": "ch29_02",
           "sectionType": "overview",
           "title": "SQL実行の全体像",
-          "body": "このレッスンでは以下を学びます:\n\n・Statement でSQLを実行する方法\n・executeQuery()（SELECT）とexecuteUpdate()（INSERT/UPDATE/DELETE）の使い分け\n・ResultSetから結果を取得する方法\n\nSQL実行の基本的な流れを学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・Statement でSQLを実行する方法\n・executeQuery()（SELECT）とexecuteUpdate()（INSERT/UPDATE/DELETE）の使い分け\n・[[ResultSet]]から結果を取得する方法\n\nSQL実行の基本的な流れを学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch29_02",
           "sectionType": "code",
           "title": "executeQuery()によるSELECT",
-          "body": "executeQuery()はSELECT文を実行し、ResultSetを返します。\nResultSetのnext()メソッドでカーソルを次の行に移動します。\nデータがあればtrue、なければfalseを返すため、whileループで全行を処理できます。\ngetString()、getInt()、getDouble()など型別の取得メソッドがあります。\n列名または列番号（1始まり）でカラムの値を取得します。",
+          "body": "executeQuery()はSELECT文を実行し、ResultSetを返します。\nResultSetのnext()[[メソッド]]でカーソルを次の行に移動します。\nデータがあればtrue、なければfalseを返すため、whileループで全行を処理できます。\ngetString()、getInt()、getDouble()など型別の取得メソッドがあります。\n列名または列番号（1始まり）でカラムの値を取得します。",
           "code": "import java.sql.*;\n\n// 例外が発生する可能性がある処理\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // SELECT文の実行\n    // 変数の宣言と初期化\n    String sql = \"SELECT id, name, price FROM products \" +\n                 \"WHERE price > 1000 ORDER BY price\";\n    ResultSet rs = stmt.executeQuery(sql);\n\n    // 結果の処理\n    // 条件が成り立つ間、繰り返す\n    while (rs.next()) {\n        int id = rs.getInt(\"id\");\n        String name = rs.getString(\"name\");\n        double price = rs.getDouble(\"price\");\n        System.out.printf(\"ID=%d, 商品名=%s, 価格=%.0f%n\",\n            id, name, price);\n    }\n\n    // 結果がない場合\n    rs = stmt.executeQuery(\n        \"SELECT * FROM products WHERE id = -1\");\n    // 条件分岐\n    if (!rs.next()) {\n        System.out.println(\"データなし\");\n    }\n}",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -413,7 +413,7 @@
           "lessonId": "ch29_03",
           "sectionType": "code",
           "title": "パラメータ化クエリの使い方",
-          "body": "PreparedStatementではSQL文中の?がプレースホルダとなります。\nsetString()、setInt()、setDouble()、setDate()などでパラメータに値をバインドします。\nパラメータのインデックスは1始まりです。\nバインドした後、executeQuery()またはexecuteUpdate()で実行します。\n同じPreparedStatementオブジェクトを再利用して異なるパラメータで実行できます。",
+          "body": "[[PreparedStatement]]ではSQL文中の?がプレースホルダとなります。\nsetString()、setInt()、setDouble()、setDate()などでパラメータに値をバインドします。\nパラメータのインデックスは1始まりです。\nバインドした後、executeQuery()またはexecuteUpdate()で実行します。\n同じPreparedStatementオブジェクトを再利用して異なるパラメータで実行できます。",
           "code": "import java.sql.*;\n\n// PreparedStatementの作成と使用\nString sql = \"SELECT * FROM users WHERE age >= ? AND city = ?\";\ntry (PreparedStatement pstmt = conn.prepareStatement(sql)) {\n    // パラメータのバインド（1始まり）\n    pstmt.setInt(1, 20);           // 1番目の?\n    pstmt.setString(2, \"Tokyo\");   // 2番目の?\n\n    ResultSet rs = pstmt.executeQuery();\n    while (rs.next()) {\n        System.out.println(rs.getString(\"name\"));\n    }\n}\n\n// INSERT文でのPreparedStatement\nString insertSql = \"INSERT INTO users (name, age) VALUES (?, ?)\";\ntry (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {\n    // 1件目\n    pstmt.setString(1, \"Taro\");\n    pstmt.setInt(2, 25);\n    pstmt.executeUpdate();\n\n    // 2件目（パラメータを再設定して再利用）\n    pstmt.setString(1, \"Hanako\");\n    pstmt.setInt(2, 30);\n    pstmt.executeUpdate();\n}",
           "note": "パラメータのインデックスは1始まりです。0を指定するとSQLExceptionが発生します。",
           "order": 2
@@ -440,7 +440,7 @@
           "lessonId": "ch29_03",
           "sectionType": "tip",
           "title": "試験対策：PreparedStatement",
-          "body": "PreparedStatementのパラメータインデックスは1始まりです。\nsetXxx()で設定するパラメータの型とデータベースの列型の対応を覚えましょう。\nPreparedStatementは再利用でき、パラメータを再設定して何度でも実行できます。\nexecuteQuery()にSQL文字列を渡すとSQLExceptionになります（Statementから継承したメソッドではなく、引数なしを使う）。\n**SQLインジェクション**防止の仕組みが問われることがあります。",
+          "body": "PreparedStatementのパラメータインデックスは1始まりです。\nsetXxx()で設定するパラメータの型とデータベースの列型の対応を覚えましょう。\nPreparedStatementは再利用でき、パラメータを再設定して何度でも実行できます。\nexecuteQuery()にSQL文字列を渡すとSQLExceptionになります（Statementから[[継承]]したメソッドではなく、引数なしを使う）。\n**SQLインジェクション**防止の仕組みが問われることがあります。",
           "code": null,
           "note": null,
           "order": 5
@@ -618,7 +618,7 @@
           "lessonId": "ch29_04",
           "sectionType": "overview",
           "title": "トランザクション管理の概要",
-          "body": "このレッスンでは以下を学びます:\n\n・**トランザクション**の概念（ACID特性）\n・setAutoCommit(false)、commit()、rollback()の使い方\n・トランザクションとtry-with-resourcesの組み合わせ\n\nデータの整合性を保つための重要な仕組みです。",
+          "body": "このレッスンでは以下を学びます:\n\n・**トランザクション**の概念（ACID特性）\n・setAutoCommit(false)、commit()、rollback()の使い方\n・[[トランザクション]]と[[try-with-resources]]の組み合わせ\n\nデータの整合性を保つための重要な仕組みです。",
           "code": null,
           "note": null,
           "order": 1
@@ -627,7 +627,7 @@
           "lessonId": "ch29_04",
           "sectionType": "code",
           "title": "commit()とrollback()",
-          "body": "手動**トランザクション**管理では、まずsetAutoCommit(false)を呼びます。\n一連のSQL操作が成功したらcommit()で確定、失敗したらrollback()で取り消します。\nrollback()を呼ぶと、最後のcommit()以降のすべての変更が取り消されます。\ntry-catch-finallyパターンを使ってエラー時に確実にrollback()するのが一般的です。\n処理完了後はsetAutoCommit(true)に戻すことが推奨されます。",
+          "body": "手動**トランザクション**管理では、まずsetAutoCommit(false)を呼びます。\n一連のSQL操作が成功したらcommit()で確定、失敗したらrollback()で取り消します。\nrollback()を呼ぶと、最後のcommit()以降のすべての変更が取り消されます。\ntry-catch-[[finally]]パターンを使ってエラー時に確実にrollback()するのが一般的です。\n処理完了後はsetAutoCommit(true)に戻すことが推奨されます。",
           "code": "import java.sql.*;\n\ntry (Connection conn = DriverManager.getConnection(url, user, pw)) {\n    // 自動コミットを無効化\n    conn.setAutoCommit(false);\n\n    try (Statement stmt = conn.createStatement()) {\n        // 送金処理：Aから引き出し\n        stmt.executeUpdate(\n            \"UPDATE accounts SET balance = balance - 10000 \" +\n            \"WHERE name = 'A'\");\n\n        // 送金処理：Bに入金\n        stmt.executeUpdate(\n            \"UPDATE accounts SET balance = balance + 10000 \" +\n            \"WHERE name = 'B'\");\n\n        // すべて成功したらコミット\n        conn.commit();\n        System.out.println(\"送金完了\");\n\n    } catch (SQLException e) {\n        // エラー時はロールバック\n        conn.rollback();\n        System.err.println(\"送金失敗、ロールバック実行\");\n        throw e;\n    }\n}",
           "note": "setAutoCommit(false)を呼ばないと、各SQL文が個別に自動コミットされます。",
           "order": 2
@@ -636,7 +636,7 @@
           "lessonId": "ch29_04",
           "sectionType": "rule",
           "title": "Savepoint",
-          "body": "Savepointは**トランザクション**内に設定できる中間地点です。\nConnection.setSavepoint()でSavepointを作成します。\nrollback(Savepoint)で指定したSavepointまで部分的にロールバックできます。\nSavepointまでロールバックしても、トランザクション自体は終了しません。\nreleaseSavepoint()でSavepointを解放できます。\n名前付きSavepointはsetSavepoint(String name)で作成します。",
+          "body": "Savepointは**トランザクション**内に設定できる中間地点です。\n[[Connection]].setSavepoint()でSavepointを作成します。\nrollback(Savepoint)で指定したSavepointまで部分的にロールバックできます。\nSavepointまでロールバックしても、トランザクション自体は終了しません。\nreleaseSavepoint()でSavepointを解放できます。\n名前付きSavepointはsetSavepoint([[String]] name)で作成します。",
           "code": "import java.sql.*;\n\ntry (Connection conn = DriverManager.getConnection(url, user, pw)) {\n    conn.setAutoCommit(false);\n    Statement stmt = conn.createStatement();\n\n    // 操作1\n    stmt.executeUpdate(\n        \"INSERT INTO logs (msg) VALUES ('操作1')\");\n\n    // Savepointを設定\n    Savepoint sp = conn.setSavepoint(\"after_op1\");\n\n    try {\n        // 操作2（失敗する可能性あり）\n        stmt.executeUpdate(\n            \"INSERT INTO logs (msg) VALUES ('操作2')\");\n        // エラー発生！\n        throw new SQLException(\"操作2でエラー\");\n    } catch (SQLException e) {\n        // Savepointまでロールバック（操作1は保持される）\n        conn.rollback(sp);\n        System.out.println(\"操作2のみロールバック\");\n    }\n\n    // 操作1のみコミット\n    conn.commit();\n}",
           "note": "Savepointまでrollback()した後も**トランザクション**は継続します。最終的にcommit()またはrollback()が必要です。",
           "order": 3

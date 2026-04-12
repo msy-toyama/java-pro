@@ -13,7 +13,7 @@
           "lessonId": "ch31_01",
           "sectionType": "overview",
           "title": "Localeとは",
-          "body": "このレッスンでは以下を学びます:\n\n・**Locale** クラスの役割（言語・地域の設定）\n・Locale の生成方法（コンストラクタ、定数、ビルダー）\n・Locale.getDefault() とシステムロケール\n\n**国際化**対応の第一歩はロケールの理解から始まります。",
+          "body": "このレッスンでは以下を学びます:\n\n・**Locale** [[クラス]]の役割（言語・地域の設定）\n・[[Locale]] の生成方法（[[コンストラクタ]]、定数、ビルダー）\n・Locale.getDefault() とシステムロケール\n\n**国際化**対応の第一歩はロケールの理解から始まります。",
           "code": null,
           "note": null,
           "order": 1
@@ -40,7 +40,7 @@
           "lessonId": "ch31_01",
           "sectionType": "point",
           "title": "Locale.Builderの特徴",
-          "body": "**Locale**.Builderはビルダーパターンで安全にLocaleを生成できます。\nsetLanguage()で言語コード（ISO 639）を、setRegion()で国コード（ISO 3166）を設定します。\n不正な値を設定するとIllFormedLocaleExceptionがスローされます。\nbuild()メソッドで最終的なLocaleオブジェクトが生成されます。\nLocale.Builderはメソッドチェーンで記述でき、可読性が高いのが特徴です。",
+          "body": "**Locale**.Builderはビルダーパターンで安全にLocaleを生成できます。\nsetLanguage()で言語コード（ISO 639）を、setRegion()で国コード（ISO 3166）を設定します。\n不正な値を設定するとIllFormedLocaleExceptionがスローされます。\nbuild()[[メソッド]]で最終的なLocaleオブジェクトが生成されます。\nLocale.Builderはメソッドチェーンで記述でき、可読性が高いのが特徴です。",
           "code": null,
           "note": null,
           "order": 4
@@ -51,7 +51,7 @@
           "title": "デフォルトLocaleの取得と設定",
           "body": "**Locale**.getDefault()で現在のデフォルトLocaleを取得できます。\nLocale.setDefault(Locale)でデフォルトLocaleを変更できます。\nデフォルトLocaleの変更はJVM全体に影響するため、注意が必要です。\n試験では、デフォルトLocaleの変更が他の処理にどう影響するかが問われることがあります。",
           "code": null,
-          "note": "**Locale**.setDefault()はstaticメソッドであり、JVM全体に影響します。",
+          "note": "**Locale**.setDefault()は[[staticメソッド]]であり、JVM全体に影響します。",
           "order": 5
         }
       ],
@@ -178,7 +178,7 @@
           "lessonId": "ch31_02",
           "sectionType": "overview",
           "title": "ResourceBundleとは",
-          "body": "このレッスンでは以下を学びます:\n\n・**ResourceBundle** でロケールごとのメッセージを管理\n・プロパティファイルの命名規則（basename_ja_JP.properties）\n・ResourceBundleの探索順序\n\n多言語対応の実装方法を学びます。",
+          "body": "このレッスンでは以下を学びます:\n\n・**ResourceBundle** でロケールごとのメッセージを管理\n・プロパティファイルの命名規則（basename_ja_JP.properties）\n・[[ResourceBundle]]の探索順序\n\n多言語対応の実装方法を学びます。",
           "code": null,
           "note": null,
           "order": 1
@@ -187,7 +187,7 @@
           "lessonId": "ch31_02",
           "sectionType": "rule",
           "title": "プロパティファイルの命名規則",
-          "body": "プロパティファイルはベース名_言語コード_国コード.propertiesの形式で命名します。\n例えば、messages.propertiesがデフォルト、messages_ja.propertiesが日本語用です。\nmessages_ja_JP.propertiesは日本語（日本）用のファイルです。\nファイルはクラスパス上に配置する必要があります。\nベース名のみのファイル（messages.properties）はデフォルトバンドルとして機能します。",
+          "body": "プロパティファイルはベース名_言語コード_国コード.propertiesの形式で命名します。\n例えば、messages.propertiesがデフォルト、messages_ja.propertiesが日本語用です。\nmessages_ja_JP.propertiesは日本語（日本）用のファイルです。\nファイルは[[クラス]]パス上に配置する必要があります。\nベース名のみのファイル（messages.properties）はデフォルトバンドルとして機能します。",
           "code": null,
           "note": null,
           "order": 2
@@ -214,7 +214,7 @@
           "lessonId": "ch31_02",
           "sectionType": "tip",
           "title": "ResourceBundleの便利メソッド",
-          "body": "keySet()でバンドル内のすべてのキーをSet<String>として取得できます。\ncontainsKey()で特定のキーが存在するかを確認できます。\ngetBaseBundleName()でバンドルのベース名を取得できます。\nこれらのメソッドは試験でも頻出です。",
+          "body": "keySet()でバンドル内のすべてのキーをSet<String>として取得できます。\ncontainsKey()で特定のキーが存在するかを確認できます。\ngetBaseBundleName()でバンドルのベース名を取得できます。\nこれらの[[メソッド]]は試験でも頻出です。",
           "code": null,
           "note": null,
           "order": 5
@@ -404,7 +404,7 @@
           "lessonId": "ch31_03",
           "sectionType": "overview",
           "title": "ロケール対応のフォーマット",
-          "body": "このレッスンでは以下を学びます:\n\n・NumberFormat, DecimalFormat で数値をロケール依存でフォーマット\n・DateTimeFormatterのロケール対応\n・通貨フォーマットの**国際化**\n\nロケールに応じた適切な表示形式を実現します。",
+          "body": "このレッスンでは以下を学びます:\n\n・NumberFormat, DecimalFormat で数値をロケール依存でフォーマット\n・[[DateTimeFormatter]]のロケール対応\n・通貨フォーマットの**国際化**\n\nロケールに応じた適切な表示形式を実現します。",
           "code": null,
           "note": null,
           "order": 1
@@ -413,7 +413,7 @@
           "lessonId": "ch31_03",
           "sectionType": "code",
           "title": "NumberFormatの使い方",
-          "body": "NumberFormat.getInstance()でロケール対応の数値フォーマッタを取得します。\ngetCurrencyInstance()で通貨フォーマッタを取得できます。\nformat()メソッドで数値を文字列に変換し、parse()で文字列を数値に戻します。",
+          "body": "NumberFormat.getInstance()でロケール対応の数値フォーマッタを取得します。\ngetCurrencyInstance()で通貨フォーマッタを取得できます。\nformat()[[メソッド]]で数値を文字列に変換し、parse()で文字列を数値に戻します。",
           "code": "import java.text.NumberFormat;\nimport java.util.Locale;\n\n// 変数の宣言と初期化\ndouble amount = 1234567.89;\n\nNumberFormat nfJP = NumberFormat.getInstance(Locale.JAPAN);\nSystem.out.println(nfJP.format(amount)); // 1,234,567.89\n\nNumberFormat nfDE = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nfDE.format(amount)); // 1.234.567,89\n\nNumberFormat cfJP = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nSystem.out.println(cfJP.format(amount)); // ￥1,234,568\n\nNumberFormat cfUS = NumberFormat.getCurrencyInstance(Locale.US);\nSystem.out.println(cfUS.format(amount)); // $1,234,567.89",
           "note": "コード中の「//」はコメント（説明文）です。プログラムの実行には影響しません。",
           "order": 2
@@ -431,7 +431,7 @@
           "lessonId": "ch31_03",
           "sectionType": "point",
           "title": "NumberFormatの注意点",
-          "body": "NumberFormatのparse()メソッドはParseExceptionをスローする可能性があります。\nparse()はチェック例外なので、try-catchまたはthrowsで処理が必要です。\ngetCurrencyInstance()で通貨をフォーマットすると、ロケールに応じた通貨記号が付きます。\n日本円の場合は小数点以下が切り捨てられ、ドルの場合は小数点以下2桁が表示されます。\nNumberFormatはabstractクラスであり、new NumberFormat()ではインスタンスを生成できません。",
+          "body": "NumberFormatのparse()メソッドはParseExceptionをスローする可能性があります。\nparse()は[[チェック例外]]なので、try-catchまたはthrowsで処理が必要です。\ngetCurrencyInstance()で通貨をフォーマットすると、ロケールに応じた通貨記号が付きます。\n日本円の場合は小数点以下が切り捨てられ、ドルの場合は小数点以下2桁が表示されます。\nNumberFormatはabstractクラスであり、new NumberFormat()では[[インスタンス]]を生成できません。",
           "code": null,
           "note": null,
           "order": 4
