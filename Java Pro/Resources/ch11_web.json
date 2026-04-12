@@ -793,7 +793,7 @@
           "lessonId": "ch11_05",
           "sectionType": "rule",
           "title": "RESTful設計の原則",
-          "body": "REST（Representational State Transfer）はAPIの設計スタイルです。以下の原則に従います。\n\n1. リソース指向: URLはリソース（名詞）を表す\n   ○ /api/users（ユーザー一覧）\n   ○ /api/users/1（ID:1のユーザー）\n   × /api/getUser?id=1（動詞はNG）\n\n2. HTTPメソッドで操作を表す:\n| HTTPメソッド + パス | 操作 |\n|---|---|\n| GET /api/users | ユーザー一覧取得 |\n| GET /api/users/1 | ID:1のユーザー取得 |\n| POST /api/users | ユーザー新規作成 |\n| PUT /api/users/1 | ID:1のユーザー更新 |\n| DELETE /api/users/1 | ID:1のユーザー削除 |\n\n3. ステートレス: サーバーはセッション状態を保持しない\n   → 認証はトークン（JWT等）をリクエストに含める\n\n4. 適切な**ステータスコード**: 200, 201, 404, 500等を正しく返す",
+          "body": "REST（Representational State Transfer）はAPIの設計スタイルです。以下の原則に従います。\n\n1. リソース指向: URLはリソース（名詞）を表す\n   ○ /api/users（ユーザー一覧）\n   ○ /api/users/1（ID:1のユーザー）\n   × /api/getUser?id=1（動詞はNG）\n\n2. HTTPメソッドで操作を表す（下表参照）\n\n3. ステートレス: サーバーはセッション状態を保持しない\n   → 認証はトークン（JWT等）をリクエストに含める\n\n4. 適切な**ステータスコード**: 200, 201, 404, 500等を正しく返す\n\n| HTTPメソッド + パス | 操作 |\n|---|---|\n| GET /api/users | ユーザー一覧取得 |\n| GET /api/users/1 | ID:1のユーザー取得 |\n| POST /api/users | ユーザー新規作成 |\n| PUT /api/users/1 | ID:1のユーザー更新 |\n| DELETE /api/users/1 | ID:1のユーザー削除 |",
           "code": null,
           "note": "**REST API**はDBのCRUD操作とHTTPメソッドが自然に対応します。POST=Create, GET=Read, PUT=Update, DELETE=Delete。",
           "order": 2

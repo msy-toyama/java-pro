@@ -516,7 +516,7 @@ loadAllContentAsync()
 ```
 StoreService (StoreKit 2)
     │
-    ├── 商品: com.javapro.fullaccess (Non-Consumable / 買い切り ¥980)
+    ├── 商品: com.javapro.fullaccess (Non-Consumable / 買い切り ¥480)
     │
     ├── purchase(_:)
     │   ├── Product.purchase() 呼び出し

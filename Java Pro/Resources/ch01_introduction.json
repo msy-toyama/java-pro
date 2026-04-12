@@ -377,7 +377,7 @@
           "lessonId": "ch01_03",
           "sectionType": "rule",
           "title": "プログラムの構造",
-          "body": "1. public class Hello\nJavaのプログラムは必ず「クラス」の中に書きます。ファイル名とクラス名は一致させる必要があります（Hello.java）。\n\n2. public static void main(String[] args)\nこれが「メインメソッド」です。Javaプログラムは必ずここから実行が始まります。おまじないとして覚えましょう。\n\n3. System.out.println(\"Hello, World!\");\n画面に文字を表示する命令です。文の末尾には必ずセミコロン（;）を付けます。",
+          "body": "1. public class Hello\n   Javaのプログラムは必ず「クラス」の中に書きます。ファイル名とクラス名は一致させる必要があります（Hello.java）。\n\n2. public static void main(String[] args)\n   これが「メインメソッド」です。Javaプログラムは必ずここから実行が始まります。おまじないとして覚えましょう。\n\n3. System.out.println(\"Hello, World!\");\n   画面に文字を表示する命令です。文の末尾には必ずセミコロン（;）を付けます。",
           "code": null,
           "note": "Javaでは大文字・小文字が区別されます。Systemのsは大文字です。",
           "order": 4

@@ -269,7 +269,7 @@
 | 要件ID | 要件 |
 |---|---|
 | BIZ-101 | 買い切り型の課金モデルを採用する（商品ID: `com.javapro.fullaccess`） |
-| BIZ-102 | 想定価格: ¥980 |
+| BIZ-102 | 想定価格: ¥480 |
 | BIZ-103 | 購入により全コンテンツ（Silver/Gold レッスン + 7 模擬試験 + 実践演習の有料部分）が永久に解放される |
 | BIZ-104 | Apple の Small Business Program (手数料 15%) を適用する |
 

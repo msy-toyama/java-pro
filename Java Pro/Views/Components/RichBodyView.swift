@@ -168,7 +168,7 @@ struct RichBodyView: View {
         }
 
         /// 番号リストの継続行（字下げされた補足行）判定
-        func isNumberedContinuation(_ s: String, original: String) -> Bool {
+        func isNumberedContinuation(_ s: String, original: String, lineIndex: Int) -> Bool {
             guard inNumbered else { return false }
             // 空行でない、テーブルでない、箇条書きでない、番号行でない、
             // かつ先頭がスペースで始まるか「→」「○」「×」で始まる場合は継続行
@@ -179,7 +179,11 @@ struct RichBodyView: View {
             if isNumberedLine(trimmed) { return false }
             // 元の行が先頭スペースを持つ（字下げ）場合は継続行
             let leadingSpaces = original.prefix(while: { $0 == " " || $0 == "\u{3000}" })
-            return leadingSpaces.count >= 2 || trimmed.hasPrefix("→") || trimmed.hasPrefix("○") || trimmed.hasPrefix("×")
+            if leadingSpaces.count >= 2 || trimmed.hasPrefix("→") || trimmed.hasPrefix("○") || trimmed.hasPrefix("×") {
+                return true
+            }
+            // 字下げなしでも、後続に番号行がある場合は継続行として扱う
+            return hasUpcomingNumberedLine(after: lineIndex)
         }
 
         func flushText() {
@@ -211,13 +215,39 @@ struct RichBodyView: View {
             numberedBuffer.removeAll()
         }
 
-        for line in lines {
+        /// 番号リスト中の空行で、後続に番号行が続く場合はリストを分断しない。
+        /// 先読みして次の非空行が番号行か継続行かを判定する。
+        func nextNonEmptyLineIsNumbered(after idx: Int) -> Bool {
+            for j in (idx + 1)..<lines.count {
+                let t = lines[j].trimmingCharacters(in: .whitespaces)
+                if t.isEmpty { continue }
+                return isNumberedLine(t)
+            }
+            return false
+        }
+
+        /// 後続行に番号行が存在するかを先読みする（テキスト・テーブル・空行を跨ぐ）。
+        func hasUpcomingNumberedLine(after idx: Int) -> Bool {
+            for j in (idx + 1)..<lines.count {
+                let t = lines[j].trimmingCharacters(in: .whitespaces)
+                if t.isEmpty { continue }
+                if isNumberedLine(t) { return true }
+                // テーブル行やその他のテキスト行は跨いで探す
+                // ただし箇条書き開始は番号リスト外とみなす
+                if t.hasPrefix("\u{30FB}") || t.hasPrefix("\u{2022}") { continue }
+                if t.hasPrefix("|") { continue }  // テーブル行をスキップ
+                continue
+            }
+            return false
+        }
+
+        for (lineIndex, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             let isTableLine = trimmed.hasPrefix("|") && trimmed.hasSuffix("|") && trimmed.filter({ $0 == "|" }).count >= 2
             // ・(U+30FB) と •(U+2022) の両方を箇条書きとして認識
             let isBulletLine = trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}")
             let isNumLine = isNumberedLine(trimmed)
-            let isContinuation = isNumberedContinuation(trimmed, original: line)
+            let isContinuation = isNumberedContinuation(trimmed, original: line, lineIndex: lineIndex)
 
             if isTableLine {
                 if inBullet { flushBullet(); inBullet = false }
@@ -229,14 +259,21 @@ struct RichBodyView: View {
                 tableBuffer.append(trimmed)
             } else if isBulletLine {
                 if inTable { flushTable(); inTable = false }
-                if inNumbered { flushNumbered(); inNumbered = false }
-                if !inBullet {
-                    flushText()
-                    inBullet = true
+                if inNumbered {
+                    // 番号リスト項目の子箇条書き → 直前の項目に結合
+                    if !numberedBuffer.isEmpty {
+                        let content = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
+                        numberedBuffer[numberedBuffer.count - 1] += "\n・" + content
+                    }
+                } else {
+                    if !inBullet {
+                        flushText()
+                        inBullet = true
+                    }
+                    // 「・」または「•」を除去してテキスト部分のみ格納
+                    let content = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
+                    bulletBuffer.append(content)
                 }
-                // 「・」または「•」を除去してテキスト部分のみ格納
-                let content = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
-                bulletBuffer.append(content)
             } else if isNumLine {
                 if inTable { flushTable(); inTable = false }
                 if inBullet { flushBullet(); inBullet = false }
@@ -250,6 +287,9 @@ struct RichBodyView: View {
                 if !numberedBuffer.isEmpty {
                     numberedBuffer[numberedBuffer.count - 1] += "\n" + trimmed
                 }
+            } else if trimmed.isEmpty && inNumbered && nextNonEmptyLineIsNumbered(after: lineIndex) {
+                // 番号リスト中の空行だが後続に番号行がある → リストを分断しない
+                continue
             } else {
                 if inTable { flushTable(); inTable = false }
                 if inBullet { flushBullet(); inBullet = false }

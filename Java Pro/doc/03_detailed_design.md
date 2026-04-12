@@ -822,7 +822,7 @@ struct CertProgress {
 
 ```swift
 enum StoreProductID: String {
-    case fullAccess = "com.javapro.fullaccess"  // Non-Consumable ¥980
+    case fullAccess = "com.javapro.fullaccess"  // Non-Consumable ¥480
 }
 ```
 
@@ -1398,7 +1398,7 @@ CourseListView の `.practice` モードで表示。
 | ProfileView | `ProfileView.swift` | プロフィール / 統計 / バッジ / 設定リンク |
 | SettingsView | `SettingsView.swift` | 設定画面 (SettingsViewModel) |
 | BadgeListView | `BadgeListView.swift` | 全 32 バッジ一覧 |
-| PaywallView | `PaywallView.swift` | 課金画面 (フルアクセス ¥980) |
+| PaywallView | `PaywallView.swift` | 課金画面 (フルアクセス ¥480) |
 | OnboardingView | `OnboardingView.swift` | 初回オンボーディング (5 ページ) |
 | LessonListView | `LessonListView.swift` | コース内レッスン一覧 (ステップコネクタ + 進捗表示) |
 | CodeExecutionView | `CodeExecutionView.swift` | コード実行結果のターミナル風表示 (タイプライターアニメーション) |

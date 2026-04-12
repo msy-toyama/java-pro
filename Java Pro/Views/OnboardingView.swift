@@ -529,7 +529,7 @@ private struct GoalSettingPage: View {
     let onComplete: (_ dailyMinutes: Int, _ enableNotifications: Bool) -> Void
 
     @State private var selectedGoal: DailyGoal = .normal
-    @State private var notificationsEnabled = false
+    @State private var notificationsEnabled = true
     @State private var showStart = false
 
     var body: some View {
