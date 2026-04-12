@@ -658,7 +658,7 @@
   "quiz.question_accessibility": "問%d: %@",
   "quiz_answer.tap_to_add": "タップして並び順に追加",
   "quiz.xp_earned_accessibility": "+%d XP獲得",
-  "quiz_result.practice_count": "%@ の実践演習 %d啎",
+  "quiz_result.practice_count": "%@ の実践演習 %d問",
   "weak.correct_detail": "正解: %d/%d問  (%d%%)",
   "weak.tip.run_code": "コード実行で実際に動作を確認しましょう",
   "weak.tip.note_mistakes": "間違えた問題はメモして定期的に復習しましょう",
@@ -693,5 +693,7 @@
   "execution.correct_choice_label": "正解: %@",
   "level_up.accessibility_label": "レベルアップ！レベル%d、%@",
   "section.note_label": "ポイント",
-  "common.progress": "進捗"
+  "common.progress": "進捗",
+  "level_up.title": "LEVEL UP!",
+  "level_up.level": "Level %d"
 }

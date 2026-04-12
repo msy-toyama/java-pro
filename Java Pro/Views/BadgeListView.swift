@@ -14,13 +14,12 @@ struct BadgeListView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var earnedBadges: [UserBadge] = []
 
-    private static let badgeDateFormatter: DateFormatter = {
+    private var badgeDateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        let format = LanguageManager.shared.l("badges.date_format")
-        formatter.dateFormat = format
+        formatter.dateFormat = lang.l("badges.date_format")
         formatter.calendar = Calendar(identifier: .gregorian)
         return formatter
-    }()
+    }
     @State private var selectedBadge: BadgeDetail?
     private var lang: LanguageManager { LanguageManager.shared }
 
@@ -214,7 +213,7 @@ struct BadgeListView: View {
                 .multilineTextAlignment(.center)
 
             if detail.earned, let date = detail.earnedAt {
-                Text(lang.l("badges.earned_at_date", Self.badgeDateFormatter.string(from: date)))
+                Text(lang.l("badges.earned_at_date", badgeDateFormatter.string(from: date)))
                     .font(AppFont.caption)
                     .foregroundStyle(AppColor.textTertiary)
             } else {

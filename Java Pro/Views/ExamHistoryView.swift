@@ -17,13 +17,13 @@ struct ExamHistoryView: View {
 
     private var lang: LanguageManager { LanguageManager.shared }
 
-    private static let dateFormatter: DateFormatter = {
+    private var dateFormatter: DateFormatter {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "ja_JP")
+        f.locale = Locale(identifier: lang.isJapanese ? "ja_JP" : "en_US")
         f.calendar = Calendar(identifier: .gregorian)
-        f.dateFormat = "yyyy/MM/dd HH:mm"
+        f.dateFormat = lang.isJapanese ? "yyyy/MM/dd HH:mm" : "MMM d, yyyy h:mm a"
         return f
-    }()
+    }
 
     var body: some View {
         Group {
@@ -195,7 +195,7 @@ struct ExamHistoryView: View {
                         .font(AppFont.headline)
                         .foregroundStyle(result.passed ? AppColor.success : AppColor.error)
                     Spacer()
-                    Text(Self.dateFormatter.string(from: result.completedAt))
+                    Text(self.dateFormatter.string(from: result.completedAt))
                         .font(AppFont.caption)
                         .foregroundStyle(AppColor.textTertiary)
                 }

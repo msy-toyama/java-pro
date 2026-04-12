@@ -61,7 +61,7 @@ struct LevelUpOverlayView: View {
                                 .foregroundStyle(AppColor.levelPurple)
                                 .accessibilityHidden(true)
 
-                            Text("LEVEL UP!")
+                            Text(lang.l("level_up.title"))
                                 .font(.system(size: 20, weight: .heavy, design: .rounded))
                                 .foregroundStyle(AppColor.levelPurple)
                         }
@@ -70,7 +70,7 @@ struct LevelUpOverlayView: View {
                     }
 
                     // レベル表示
-                    Text("Level \(level)")
+                    Text(lang.l("level_up.level", level))
                         .font(.system(size: 56, weight: .bold, design: .rounded))
                         .foregroundStyle(
                             LinearGradient(
@@ -118,11 +118,11 @@ struct LevelUpOverlayView: View {
     }
 
     private var levelTitle: String {
-        var title = lang.l("home.default_title")
-        for (lv, t) in GamificationService.levelTitles.sorted(by: { $0.key < $1.key }) {
-            if level >= lv { title = t }
+        var titleKey = "home.default_title"
+        for (lv, key) in GamificationService.levelTitles.sorted(by: { $0.key < $1.key }) {
+            if level >= lv { titleKey = key }
         }
-        return title
+        return lang.l(titleKey)
     }
 
     private func startAnimation() {

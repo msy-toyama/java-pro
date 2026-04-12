@@ -18,7 +18,7 @@ extension Date {
     private static let dateStringFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
-        f.locale = Locale(identifier: "ja_JP")
+        f.locale = Locale(identifier: "en_US_POSIX")
         f.timeZone = .current
         return f
     }()
@@ -70,10 +70,11 @@ extension Date {
         return Self.shortDisplayFormatter.string(from: self)
     }
 
-    private static let shortDisplayFormatter: DateFormatter = {
+    private static var shortDisplayFormatter: DateFormatter {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "ja_JP")
-        f.dateFormat = "M/d"
+        let lang = LanguageManager.shared
+        f.locale = Locale(identifier: lang.isJapanese ? "ja_JP" : "en_US")
+        f.dateFormat = lang.isJapanese ? "M/d" : "MMM d"
         return f
-    }()
+    }
 }

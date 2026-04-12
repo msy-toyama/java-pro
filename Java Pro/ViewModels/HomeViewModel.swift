@@ -21,7 +21,7 @@ final class HomeViewModel {
     var totalCompleted = 0
     var totalLessons = 0
     var userLevel = 1
-    var levelTitle = "Java見習い"
+    var levelTitle = ""
     var levelProgress: Double = 0
     var totalXP = 0
     var recentBadges: [UserBadge] = []
