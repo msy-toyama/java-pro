@@ -1366,5 +1366,375 @@
     "correctOrder": null,
     "certificationTopic": "pattern_matching",
     "difficulty": "hard"
+  },
+  {
+    "id": "se17g1_q081",
+    "lessonId": "exam_se17_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    static class Res implements AutoCloseable {\n        String id;\n        Res(String id) { this.id = id; }\n        public void close() throws Exception {\n            System.out.print(\"C\" + id + \" \");\n            throw new Exception(\"close \" + id);\n        }\n    }\n    public static void main(String[] args) {\n        try (Res r1 = new Res(\"1\"); Res r2 = new Res(\"2\")) {\n            System.out.print(\"T \");\n        } catch (Exception e) {\n            System.out.print(e.getMessage() + \" \");\n            System.out.print(e.getSuppressed().length);\n        }\n    }\n}",
+    "explanation": "tryブロックの\"T \"の後、リソースは逆順でクローズされます。r2.close()で\"C2 \"とException(\"close 2\")、r1.close()で\"C1 \"とException(\"close 1\")。最初のclose例外（close 2）が主例外となり、2番目（close 1）がサプレスされた例外として追加されます。catchではe.getMessage()=\"close 2\"、getSuppressed().length=1。結果は\"T C2 C1 close 2 1\"。",
+    "choices": [
+      {
+        "id": "se17g1_q081_a",
+        "text": "T C2 C1 close 2 1",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q081_b",
+        "text": "T C2 C1 close 1 1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q081_c",
+        "text": "T C1 C2 close 1 1",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q081_d",
+        "text": "T C2 C1 close 2 0",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g1_q082",
+    "lessonId": "exam_se17_gold_1",
+    "type": "fourChoice",
+    "question": "カスタム例外クラスについて正しい説明はどれですか？",
+    "code": "public class AppException extends Exception {\n    private final int errorCode;\n    public AppException(String message, int errorCode) {\n        super(message);\n        this.errorCode = errorCode;\n    }\n    public AppException(String message, int errorCode, Throwable cause) {\n        super(message, cause);\n        this.errorCode = errorCode;\n    }\n    public int getErrorCode() { return errorCode; }\n}",
+    "explanation": "カスタムチェック例外はExceptionを継承して作成します。causeパラメータを受け取るコンストラクタを用意することで例外チェーンをサポートできます。super(message, cause)でスーパークラスのコンストラクタに原因例外を渡すことで、getCause()で元の例外を取得できるようになります。",
+    "choices": [
+      {
+        "id": "se17g1_q082_a",
+        "text": "例外チェーンをサポートするためThrowableを引数に取るコンストラクタを定義している",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q082_b",
+        "text": "このクラスは非検査例外（unchecked exception）である",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q082_c",
+        "text": "カスタム例外にはデフォルトコンストラクタが必須である",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q082_d",
+        "text": "errorCodeフィールドがfinalでないためコンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g1_q083",
+    "lessonId": "exam_se17_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。原因はどれですか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            System.out.println(\"try\");\n        } catch (IOException | SQLException e) {\n            e = new IOException(\"retry\");\n            throw e;\n        }\n    }\n}",
+    "explanation": "マルチキャッチのパラメータ変数eは暗黙的にfinalです。そのため、catch句の中でeに新しい例外オブジェクトを代入することはできません。単一のcatch句（例：catch (IOException e)）の場合はeへの再代入が可能です。",
+    "choices": [
+      {
+        "id": "se17g1_q083_a",
+        "text": "マルチキャッチのパラメータ変数eは暗黙的にfinalであり再代入できない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q083_b",
+        "text": "IOExceptionとSQLExceptionは同時にキャッチできない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q083_c",
+        "text": "tryブロック内でchecked例外がスローされていない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q083_d",
+        "text": "throw eの型が不正であるため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g1_q084",
+    "lessonId": "exam_se17_gold_1",
+    "type": "fourChoice",
+    "question": "assert文の使い方として適切でないものはどれですか？",
+    "code": null,
+    "explanation": "assert文はpublicメソッドの引数チェックには使用すべきではありません。なぜなら、assertはデフォルトで無効であり、-eaオプションがないと引数チェックがスキップされてしまうためです。publicメソッドの引数チェックにはIllegalArgumentExceptionやNullPointerExceptionをスローすべきです。privateメソッドの事前条件チェックやクラス不変条件の検証にはassertが適切です。",
+    "choices": [
+      {
+        "id": "se17g1_q084_a",
+        "text": "publicメソッドの引数が正しいかチェックする",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q084_b",
+        "text": "privateメソッドの事前条件を検証する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q084_c",
+        "text": "到達不能コードを検出する（default句など）",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q084_d",
+        "text": "ループ終了後の不変条件を確認する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g1_q085",
+    "lessonId": "exam_se17_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            try {\n                throw new RuntimeException(\"inner\");\n            } finally {\n                System.out.print(\"F1 \");\n            }\n        } catch (RuntimeException e) {\n            System.out.print(e.getMessage() + \" \");\n        } finally {\n            System.out.print(\"F2\");\n        }\n    }\n}",
+    "explanation": "内側のtryでRuntimeExceptionがスローされ、内側のfinallyで\"F1 \"が出力されます。内側にcatchがないため例外は外側のtry-catchに伝播し、catch句で\"inner \"が出力されます。最後に外側のfinallyで\"F2\"が出力されます。結果は\"F1 inner F2\"です。",
+    "choices": [
+      {
+        "id": "se17g1_q085_a",
+        "text": "F1 inner F2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q085_b",
+        "text": "inner F1 F2",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q085_c",
+        "text": "F1 F2 inner",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q085_d",
+        "text": "F1 F2",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g1_q086",
+    "lessonId": "exam_se17_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String json = \"\"\"\n                {\n                    \"name\": \"Java\",\n                    \"version\": 17\n                }\n                \"\"\";\n        System.out.println(json.lines().count());\n        System.out.println(json.stripIndent().startsWith(\"{\"));\n    }\n}",
+    "explanation": "テキストブロック内の文字列は改行を含むため、lines()で行数をカウントすると4行（{、name行、version行、}）になります。ただし終端区切り文字列\"\"\"の前の改行もカウントされるため、実際にはjson文字列は改行で始まり4行の内容+最後の空行で合計5行です。stripIndent()は共通のインデントを除去し、結果の先頭文字は改行なのでstartsWith(\"{\")はfalseです。実際の出力は\"4\"と\"true\"です。テキストブロックは開始\"\"\"の直後の改行から内容が始まり、終端\"\"\"のインデント位置で共通インデントが決まります。この場合lines().count()は4、stripIndent()後は先頭が{で始まるためtrueです。",
+    "choices": [
+      {
+        "id": "se17g1_q086_a",
+        "text": "4\ntrue",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q086_b",
+        "text": "5\nfalse",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q086_c",
+        "text": "4\nfalse",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q086_d",
+        "text": "6\ntrue",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g1_q087",
+    "lessonId": "exam_se17_gold_1",
+    "type": "fourChoice",
+    "question": "recordの制約について正しいものはどれですか？",
+    "code": "public record Point(int x, int y) {\n    // カスタムコンストラクタ\n    public Point {\n        if (x < 0 || y < 0) throw new IllegalArgumentException();\n    }\n}",
+    "explanation": "recordのコンパクトコンストラクタ（canonical constructor）はパラメータリストを省略した形式で記述できます。コンパクトコンストラクタ内ではthis.x = xのようなフィールド代入を明示的に行う必要はなく、コンストラクタの末尾で自動的に行われます。recordクラスは暗黙的にfinalであり継承できません。",
+    "choices": [
+      {
+        "id": "se17g1_q087_a",
+        "text": "コンパクトコンストラクタでは引数の検証ができ、フィールド代入は自動で行われる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q087_b",
+        "text": "recordは他のrecordを継承できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q087_c",
+        "text": "recordにはインスタンスフィールドを追加できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q087_d",
+        "text": "コンパクトコンストラクタではthis.x = xを明示的に記述しなければならない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g1_q088",
+    "lessonId": "exam_se17_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    sealed interface Shape permits Circle, Rectangle {}\n    record Circle(double r) implements Shape {}\n    record Rectangle(double w, double h) implements Shape {}\n\n    static String describe(Shape s) {\n        return switch (s) {\n            case Circle c -> \"Circle r=\" + c.r();\n            case Rectangle r -> \"Rect \" + r.w() + \"x\" + r.h();\n        };\n    }\n\n    public static void main(String[] args) {\n        System.out.println(describe(new Circle(5)));\n    }\n}",
+    "explanation": "Java 21で正式導入されたswitch式のパターンマッチングを使用しています（Java 17ではプレビュー機能）。sealedインターフェースShapeのすべてのサブタイプ（Circle、Rectangle）をcase句で網羅しているため、default句は不要です。new Circle(5)はcase Circle cにマッチし、c.r()=5.0なので\"Circle r=5.0\"が出力されます。",
+    "choices": [
+      {
+        "id": "se17g1_q088_a",
+        "text": "Circle r=5.0",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q088_b",
+        "text": "Circle r=5",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q088_c",
+        "text": "コンパイルエラー: default句が必要",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q088_d",
+        "text": "コンパイルエラー: switch式でパターンマッチングは使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g1_q089",
+    "lessonId": "exam_se17_gold_1",
+    "type": "fourChoice",
+    "question": "テキストブロックにおけるエスケープシーケンスについて正しいものはどれですか？",
+    "code": "String s = \"\"\"\n        Hello \\s\\\n        World\\\n        !\n        \"\"\";",
+    "explanation": "テキストブロック固有のエスケープシーケンスとして、\\s（スペース1文字、末尾の空白除去を防ぐ）と\\（行末の改行を抑制して次の行と連結する）があります。この例では\"Hello \\s\"の\\sはスペース1文字になり、\\で行が連結されるため、\"Hello  World!\\n\"という文字列になります。",
+    "choices": [
+      {
+        "id": "se17g1_q089_a",
+        "text": "\\sはスペース1文字を表し、行末の\\は改行を抑制して行を連結する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q089_b",
+        "text": "\\sは改行を表し、\\はタブを表す",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q089_c",
+        "text": "テキストブロック内ではエスケープシーケンスは使用できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q089_d",
+        "text": "\\sと\\はテキストブロック以外の通常文字列でも使用できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g1_q090",
+    "lessonId": "exam_se17_gold_1",
+    "type": "outputPredict",
+    "question": "次のswitch式を実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int day = 3;\n        String type = switch (day) {\n            case 1, 7 -> \"weekend\";\n            case 2, 3, 4, 5, 6 -> {\n                String result = \"weekday\";\n                yield result.toUpperCase();\n            }\n            default -> \"unknown\";\n        };\n        System.out.println(type);\n    }\n}",
+    "explanation": "day=3はcase 2, 3, 4, 5, 6にマッチします。アロー構文（->）のブロック内ではyield文で値を返します。result.toUpperCase()は\"WEEKDAY\"を返すので、type=\"WEEKDAY\"となり、\"WEEKDAY\"が出力されます。switch式のアロー構文ではブロック{}を使う場合にyieldが必要です。",
+    "choices": [
+      {
+        "id": "se17g1_q090_a",
+        "text": "WEEKDAY",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g1_q090_b",
+        "text": "weekday",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g1_q090_c",
+        "text": "unknown",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g1_q090_d",
+        "text": "コンパイルエラー: yieldは使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "normal"
   }
 ]

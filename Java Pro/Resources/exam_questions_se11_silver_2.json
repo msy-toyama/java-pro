@@ -1448,7 +1448,7 @@
     "type": "errorFind",
     "question": "次のコードには問題があります。原因はどれですか？",
     "code": "public class Main {\n    public static void main(String[] args) {\n        String s = null;\n        switch (s) {\n            case \"hello\":\n                System.out.println(\"Found\");\n                break;\n            default:\n                System.out.println(\"Not found\");\n        }\n    }\n}",
-    "explanation": "このコードはコンパイルは通りますが、実行時にNullPointerExceptionが発生します。switch文でnullの文字列を使うとNPEが発生します。ただし設問はコンパイルエラーを問うていますが、実行時例外が正解の観点です。",
+    "explanation": "このコードはコンパイルは通りますが、実行時にNullPointerExceptionが発生します。switch文の式にnullが渡されると、JVMがnull参照に対してハッシュコードを取得しようとするためNPEがスローされます。switch文自体にString型を使うことは問題ありません（Java 7以降対応）。",
     "choices": [
       {
         "id": "se11s2_q040_a",
@@ -2962,5 +2962,191 @@
     "correctOrder": null,
     "certificationTopic": "control_flow",
     "difficulty": "hard"
+  },
+  {
+    "id": "se11s2_q081",
+    "lessonId": "exam_se11_silver_2",
+    "type": "fourChoice",
+    "question": "module-info.javaファイルの配置場所として正しいものはどれですか？",
+    "code": null,
+    "explanation": "module-info.javaはモジュールのソースルートディレクトリ（トップレベル）に配置します。パッケージ内ではなく、ソースディレクトリの直下に置きます。コンパイル時にmodule-info.classが生成され、モジュールの定義情報が含まれます。",
+    "choices": [
+      {
+        "id": "se11s2_q081_a",
+        "text": "モジュールのソースルートディレクトリに配置する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s2_q081_b",
+        "text": "META-INFディレクトリ内に配置する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s2_q081_c",
+        "text": "任意のパッケージディレクトリ内に配置できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s2_q081_d",
+        "text": "JARファイルのルートにのみ配置できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11s2_q082",
+    "lessonId": "exam_se11_silver_2",
+    "type": "fourChoice",
+    "question": "requires transitiveディレクティブについて正しい説明はどれですか？",
+    "code": "module com.example.app {\n    requires transitive com.example.utils;\n}",
+    "explanation": "requires transitiveは推移的な依存関係を宣言します。com.example.appがrequires transitive com.example.utilsと宣言すると、com.example.appに依存するモジュールも自動的にcom.example.utilsにアクセスできるようになります。これにより、依存モジュールの型をAPIで使用する場合に利用者側で再度requiresする必要がなくなります。",
+    "choices": [
+      {
+        "id": "se11s2_q082_a",
+        "text": "このモジュールに依存するモジュールも自動的にcom.example.utilsにアクセスできる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s2_q082_b",
+        "text": "com.example.utilsの全パッケージが自動的にexportsされる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s2_q082_c",
+        "text": "transitiveはコンパイル時のみ有効で実行時には無視される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s2_q082_d",
+        "text": "transitiveキーワードはJava 11で追加された機能である",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11s2_q083",
+    "lessonId": "exam_se11_silver_2",
+    "type": "fillBlank",
+    "question": "module-info.javaの空欄を埋めてください。特定のモジュールにのみパッケージを公開します。\n\nmodule com.example.lib {\n    exports com.example.lib.internal ___ com.example.app;\n}",
+    "code": null,
+    "explanation": "exports ... to構文は、限定的なエクスポート（qualified export）を行います。指定されたモジュール（この場合com.example.app）のみがcom.example.lib.internalパッケージにアクセスできます。他のモジュールからはアクセスできません。",
+    "choices": [
+      {
+        "id": "se11s2_q083_a",
+        "text": "to",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s2_q083_b",
+        "text": "for",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s2_q083_c",
+        "text": "only",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s2_q083_d",
+        "text": "restrict",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11s2_q084",
+    "lessonId": "exam_se11_silver_2",
+    "type": "errorFind",
+    "question": "モジュールAからモジュールBのクラスを使おうとしています。次の構成でコンパイルエラーが発生する原因はどれですか？",
+    "code": "// module-info.java (モジュールB)\nmodule com.example.b {\n    // exports宣言なし\n}\n\n// module-info.java (モジュールA)\nmodule com.example.a {\n    requires com.example.b;\n}\n\n// モジュールA内のコード\nimport com.example.b.util.Helper; // コンパイルエラー",
+    "explanation": "モジュールBはexportsディレクティブでパッケージを公開していないため、たとえモジュールAがrequires com.example.bと宣言していても、モジュールB内のパッケージにはアクセスできません。モジュールシステムでは、publicクラスであってもexportsされていないパッケージのクラスは他のモジュールから参照できません。",
+    "choices": [
+      {
+        "id": "se11s2_q084_a",
+        "text": "モジュールBがcom.example.b.utilパッケージをexportsしていないため",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s2_q084_b",
+        "text": "import文の構文が間違っているため",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s2_q084_c",
+        "text": "requires宣言だけではモジュールを参照できないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s2_q084_d",
+        "text": "モジュール名にドット（.）を使用しているため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11s2_q085",
+    "lessonId": "exam_se11_silver_2",
+    "type": "multiChoice",
+    "question": "Javaモジュールシステムの利点として正しいものをすべて選んでください。",
+    "code": null,
+    "explanation": "モジュールシステムの主な利点は、(1)強力なカプセル化：exportsしていないパッケージへのアクセスを防止、(2)信頼性の高い構成：requiresによりコンパイル時に依存関係を検証、(3)セキュリティの向上：内部APIへの不正アクセスを制限。JITコンパイルの高速化はモジュールシステムの直接的な利点ではありません。",
+    "choices": [
+      {
+        "id": "se11s2_q085_a",
+        "text": "強力なカプセル化により内部実装を隠蔽できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s2_q085_b",
+        "text": "コンパイル時に依存関係の欠落を検出できる",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11s2_q085_c",
+        "text": "JITコンパイルの速度が向上する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s2_q085_d",
+        "text": "セキュリティが向上する",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 3,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
   }
 ]

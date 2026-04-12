@@ -2964,5 +2964,190 @@
     "requiredSelections": 2,
     "certificationTopic": "modules",
     "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q081",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try (AutoCloseable r1 = () -> System.out.print(\"C1 \");\n             AutoCloseable r2 = () -> System.out.print(\"C2 \")) {\n            System.out.print(\"T \");\n        } catch (Exception e) {\n            System.out.print(\"E \");\n        } finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
+    "explanation": "try-with-resources文では、リソースは宣言と逆の順序でクローズされます。まずtryブロック内の\"T \"が出力され、次にr2のclose()で\"C2 \"、r1のclose()で\"C1 \"が出力されます。例外は発生しないのでcatchは実行されず、最後にfinallyブロックの\"F\"が出力されます。結果は\"T C2 C1 F\"です。",
+    "choices": [
+      {
+        "id": "se11g1_q081_a",
+        "text": "T C1 C2 F",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q081_b",
+        "text": "T C2 C1 F",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q081_c",
+        "text": "T F C2 C1",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q081_d",
+        "text": "T C2 C1 E F",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q082",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "サプレスされた例外（suppressed exception）について正しい説明はどれですか？",
+    "code": "public class Main {\n    static class MyResource implements AutoCloseable {\n        public void close() throws Exception {\n            throw new Exception(\"Close error\");\n        }\n    }\n    public static void main(String[] args) {\n        try (MyResource r = new MyResource()) {\n            throw new Exception(\"Try error\");\n        } catch (Exception e) {\n            System.out.println(e.getMessage());\n            System.out.println(e.getSuppressed().length);\n        }\n    }\n}",
+    "explanation": "try-with-resources文でtryブロックとclose()の両方で例外が発生した場合、tryブロックの例外が主例外となり、close()の例外はサプレスされた例外として主例外に追加されます。e.getMessage()は\"Try error\"、e.getSuppressed().lengthは1（close()の例外が1つ）を返します。",
+    "choices": [
+      {
+        "id": "se11g1_q082_a",
+        "text": "Try error と 1 が出力される",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q082_b",
+        "text": "Close error と 1 が出力される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q082_c",
+        "text": "Try error と 0 が出力される",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q082_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g1_q083",
+    "lessonId": "exam_se11_gold_1",
+    "type": "fourChoice",
+    "question": "assert文について正しい説明はどれですか？",
+    "code": null,
+    "explanation": "assert文はデバッグ目的で使用され、条件がfalseの場合にAssertionErrorをスローします。assertはデフォルトで無効であり、-eaオプション（enable assertions）をJVM起動時に指定する必要があります。AssertionErrorはErrorクラスのサブクラスであり、通常キャッチすべきではありません。",
+    "choices": [
+      {
+        "id": "se11g1_q083_a",
+        "text": "assertはデフォルトで無効であり、-eaオプションで有効にする",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q083_b",
+        "text": "assertの条件がfalseの場合、RuntimeExceptionがスローされる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q083_c",
+        "text": "assertはデフォルトで有効であり、-daオプションで無効にする",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q083_d",
+        "text": "assert文はpublicメソッドの引数チェックに推奨される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q084",
+    "lessonId": "exam_se11_gold_1",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    static class CustomException extends Exception {\n        CustomException(String msg) { super(msg); }\n    }\n    static class SpecificException extends CustomException {\n        SpecificException(String msg) { super(msg); }\n    }\n    public static void main(String[] args) {\n        try {\n            throw new SpecificException(\"test\");\n        } catch (SpecificException e) {\n            System.out.print(\"A \");\n        } catch (CustomException e) {\n            System.out.print(\"B \");\n        } finally {\n            System.out.print(\"C\");\n        }\n    }\n}",
+    "explanation": "SpecificExceptionはCustomExceptionのサブクラスです。throw new SpecificException(\"test\")は最初のcatch節（SpecificException）にマッチするため\"A \"が出力されます。より具体的な例外型から順にcatch句を配置するのが正しい順序です。最後にfinallyブロックの\"C\"が出力され、結果は\"A C\"です。",
+    "choices": [
+      {
+        "id": "se11g1_q084_a",
+        "text": "A C",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q084_b",
+        "text": "B C",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q084_c",
+        "text": "A B C",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q084_d",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g1_q085",
+    "lessonId": "exam_se11_gold_1",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。原因はどれですか？",
+    "code": "public class Main {\n    static class ResA implements AutoCloseable {\n        public void close() { System.out.println(\"A closed\"); }\n    }\n    public static void main(String[] args) {\n        ResA a = new ResA();\n        a = new ResA();\n        try (a) {\n            System.out.println(\"using\");\n        }\n    }\n}",
+    "explanation": "Java 9以降、try-with-resources文で既存の変数を使用できますが、その変数はeffectively final（実質的にfinal）でなければなりません。このコードでは変数aが2行目で再代入されているため、effectively finalではありません。そのためtry (a)でコンパイルエラーが発生します。",
+    "choices": [
+      {
+        "id": "se11g1_q085_a",
+        "text": "変数aがeffectively finalでないためtry-with-resourcesで使用できない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g1_q085_b",
+        "text": "ResAクラスのclose()がthrows宣言をしていないため",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g1_q085_c",
+        "text": "try-with-resourcesで既存の変数を使用することは一切できないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g1_q085_d",
+        "text": "AutoCloseableではなくCloseableを実装すべきため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
   }
 ]

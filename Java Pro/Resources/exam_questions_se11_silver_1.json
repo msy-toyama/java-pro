@@ -2962,5 +2962,190 @@
     "correctOrder": null,
     "certificationTopic": "exceptions",
     "difficulty": "hard"
+  },
+  {
+    "id": "se11s1_q081",
+    "lessonId": "exam_se11_silver_1",
+    "type": "fourChoice",
+    "question": "Javaモジュールシステムの基本について正しい説明はどれですか？",
+    "code": null,
+    "explanation": "Java 9で導入されたモジュールシステム（JPMS: Java Platform Module System）では、module-info.javaファイルをモジュールのルートディレクトリに配置してモジュールを定義します。このファイルにrequires（依存モジュール）やexports（公開パッケージ）を記述して、モジュール間のアクセス制御を行います。",
+    "choices": [
+      {
+        "id": "se11s1_q081_a",
+        "text": "モジュール定義はmodule-info.javaファイルに記述する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s1_q081_b",
+        "text": "モジュール定義はMANIFEST.MFファイルに記述する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s1_q081_c",
+        "text": "モジュールシステムはJava 11で初めて導入された",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s1_q081_d",
+        "text": "モジュール名にはハイフン（-）を使用できる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11s1_q082",
+    "lessonId": "exam_se11_silver_1",
+    "type": "fillBlank",
+    "question": "module-info.javaの空欄を埋めてください。\n\nmodule com.example.app {\n    ___ com.example.utils;\n}",
+    "code": null,
+    "explanation": "requiresディレクティブは、モジュールが依存する他のモジュールを宣言します。この例では、com.example.appモジュールがcom.example.utilsモジュールに依存することを示しています。requiresで宣言されたモジュールがモジュールパス上にない場合、コンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se11s1_q082_a",
+        "text": "requires",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s1_q082_b",
+        "text": "imports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s1_q082_c",
+        "text": "uses",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s1_q082_d",
+        "text": "depends",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11s1_q083",
+    "lessonId": "exam_se11_silver_1",
+    "type": "fourChoice",
+    "question": "exportsディレクティブについて正しい説明はどれですか？",
+    "code": "module com.example.lib {\n    exports com.example.lib.api;\n}",
+    "explanation": "exportsディレクティブは、モジュール内の指定パッケージを他のモジュールからアクセス可能にします。exportsされていないパッケージ内のpublicクラスであっても、他のモジュールからはアクセスできません。これにより、モジュールの内部実装を隠蔽できます。",
+    "choices": [
+      {
+        "id": "se11s1_q083_a",
+        "text": "exports宣言されたパッケージのpublicクラスのみ他モジュールからアクセスできる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s1_q083_b",
+        "text": "exportsはクラス単位で公開を制御する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s1_q083_c",
+        "text": "exportsされていないパッケージでもpublicクラスは他モジュールからアクセスできる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s1_q083_d",
+        "text": "exportsはサブパッケージも自動的に公開する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11s1_q084",
+    "lessonId": "exam_se11_silver_1",
+    "type": "errorFind",
+    "question": "次のmodule-info.javaにはコンパイルエラーがあります。エラーの原因はどれですか？",
+    "code": "module my-app {\n    requires java.base;\n    exports com.example.api;\n}",
+    "explanation": "モジュール名にハイフン（-）を使用することはできません。モジュール名はJavaの識別子規則に従い、ドット（.）で区切ったパッケージ名の形式で記述します。正しくはmodule myapp やmodule my.appのようにします。なお、java.baseモジュールは暗黙的にrequiresされるため明示的な宣言は不要ですが、記述してもエラーにはなりません。",
+    "choices": [
+      {
+        "id": "se11s1_q084_a",
+        "text": "java.baseは明示的にrequiresできない",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11s1_q084_b",
+        "text": "モジュール名にハイフン（-）を使用できない",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11s1_q084_c",
+        "text": "exportsとrequiresは同時に使用できない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s1_q084_d",
+        "text": "module宣言にはpackage宣言が必要",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11s1_q085",
+    "lessonId": "exam_se11_silver_1",
+    "type": "fourChoice",
+    "question": "Javaモジュールシステムにおいて、java.baseモジュールについて正しい説明はどれですか？",
+    "code": null,
+    "explanation": "java.baseモジュールはJavaプラットフォームの基盤となるモジュールで、java.lang、java.util、java.ioなどの基本パッケージを含みます。すべてのモジュールはjava.baseを暗黙的にrequiresするため、module-info.javaに明示的に記述する必要はありません。",
+    "choices": [
+      {
+        "id": "se11s1_q085_a",
+        "text": "java.baseはすべてのモジュールが暗黙的に依存している",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11s1_q085_b",
+        "text": "java.baseを使用するには明示的にrequires宣言が必要",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11s1_q085_c",
+        "text": "java.baseにはjava.sqlパッケージが含まれる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11s1_q085_d",
+        "text": "java.baseモジュールはJava 11で追加された",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
   }
 ]

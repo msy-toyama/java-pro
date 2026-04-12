@@ -2697,7 +2697,7 @@
       },
       {
         "id": "se17g2_q073_d",
-        "text": "permitsで指定されたサブクラスは別のパッケージに定義できる（Java 17）",
+        "text": "permitsで指定されたサブクラスは別のモジュールに定義できる",
         "isCorrect": false,
         "order": 4
       }
@@ -2965,5 +2965,375 @@
     "correctOrder": null,
     "certificationTopic": "pattern_matching",
     "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q081",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            System.out.print(\"A \");\n            throw new IllegalStateException(\"error\");\n        } catch (IllegalStateException e) {\n            System.out.print(\"B \");\n            throw new RuntimeException(\"wrap\", e);\n        } finally {\n            System.out.print(\"C \");\n        }\n    }\n}",
+    "explanation": "tryブロックで\"A \"が出力され、catch句で\"B \"が出力されます。catch句でnew RuntimeExceptionをスローしますが、その前にfinally句の\"C \"が実行されます。その後、RuntimeException(\"wrap\")がスローされ、キャッチされないためスタックトレースが出力されます。結果は\"A B C \"の後にスタックトレースです。",
+    "choices": [
+      {
+        "id": "se17g2_q081_a",
+        "text": "A B C の後にRuntimeExceptionのスタックトレース",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q081_b",
+        "text": "A B のみ出力される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q081_c",
+        "text": "A C の後にIllegalStateExceptionのスタックトレース",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q081_d",
+        "text": "A B C のみ出力される（例外はfinallyで消える）",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q082",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "例外チェーン（exception chaining）について正しい説明はどれですか？",
+    "code": "try {\n    callDatabase();\n} catch (SQLException e) {\n    throw new ServiceException(\"DB error\", e);\n}",
+    "explanation": "例外チェーンとは、低レベルの例外を高レベルの例外でラップする技法です。コンストラクタにcause（原因例外）を渡すことで、getCause()メソッドで元の例外を取得できます。これにより抽象化レベルに適した例外をスローしつつ、デバッグのために根本原因を保持できます。",
+    "choices": [
+      {
+        "id": "se17g2_q082_a",
+        "text": "低レベル例外を高レベル例外でラップしgetCause()で原因を取得できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q082_b",
+        "text": "例外チェーンでは元の例外は自動的にログに記録される",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q082_c",
+        "text": "checked例外をunchecked例外でラップすることはできない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q082_d",
+        "text": "例外チェーンを使うとサプレスされた例外として追加される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q083",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のコードにはコンパイルエラーがあります。原因はどれですか？",
+    "code": "public class Main {\n    static void process() throws Exception {\n        throw new Exception(\"error\");\n    }\n    public static void main(String[] args) {\n        try {\n            process();\n        } catch (Exception | RuntimeException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+    "explanation": "マルチキャッチではRuntimeExceptionはExceptionのサブクラスであるため、catch (Exception | RuntimeException e)は冗長です。RuntimeExceptionはExceptionに含まれるため、マルチキャッチで継承関係にある例外型を同時にキャッチすることはコンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se17g2_q083_a",
+        "text": "RuntimeExceptionはExceptionのサブクラスであり継承関係の例外をマルチキャッチできない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q083_b",
+        "text": "process()メソッドがstaticであるため",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q083_c",
+        "text": "mainメソッドにthrows宣言がないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q083_d",
+        "text": "マルチキャッチでは最大2つの例外型しか指定できないため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q084",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "AutoCloseableとCloseableインターフェースの違いについて正しいものはどれですか？",
+    "code": null,
+    "explanation": "CloseableはAutoCloseableのサブインターフェースです。Closeableのclose()はIOExceptionをスローすると宣言されていますが、AutoCloseableのclose()はExceptionをスローすると宣言されています。CloseableはI/O関連のリソースに使用され、AutoCloseableはより汎用的なリソースに使用されます。",
+    "choices": [
+      {
+        "id": "se17g2_q084_a",
+        "text": "CloseableはAutoCloseableのサブインターフェースである",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q084_b",
+        "text": "AutoCloseableはCloseableのサブインターフェースである",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q084_c",
+        "text": "両者に継承関係はなく独立したインターフェースである",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q084_d",
+        "text": "Closeableのclose()はExceptionをスローし、AutoCloseableのclose()はIOExceptionをスローする",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q085",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    static int count = 0;\n    static int divide(int a, int b) {\n        try {\n            return a / b;\n        } catch (ArithmeticException e) {\n            return -1;\n        } finally {\n            count++;\n        }\n    }\n    public static void main(String[] args) {\n        System.out.print(divide(10, 2) + \" \");\n        System.out.print(divide(10, 0) + \" \");\n        System.out.print(count);\n    }\n}",
+    "explanation": "divide(10, 2)：正常に10/2=5を返し、finallyでcount=1。divide(10, 0)：ArithmeticException発生、catchで-1を返し、finallyでcount=2。結果は\"5 -1 2\"です。finallyブロックは正常終了でも例外発生時でも必ず実行されます。",
+    "choices": [
+      {
+        "id": "se17g2_q085_a",
+        "text": "5 -1 2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q085_b",
+        "text": "5 -1 1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q085_c",
+        "text": "5 0 2",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q085_d",
+        "text": "5 の後にArithmeticExceptionがスローされる",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q086",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String html = \"\"\"\n                <html>\n                    <body>Hello</body>\n                </html>\n                \"\"\";\n        System.out.println(html.strip().startsWith(\"<html>\"));\n        System.out.println(html.lines().count());\n    }\n}",
+    "explanation": "テキストブロックは開始\"\"\"直後の改行から内容が始まります。終端\"\"\"のインデント位置（16スペース）が共通インデントとして除去されます。strip()で前後の空白を除去すると先頭は\"<html>\"で始まるためtrueです。lines()は3行（<html>、<body>Hello</body>、</html>）をカウントするため3です。",
+    "choices": [
+      {
+        "id": "se17g2_q086_a",
+        "text": "true\n3",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q086_b",
+        "text": "false\n3",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q086_c",
+        "text": "true\n5",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q086_d",
+        "text": "false\n5",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q087",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "recordクラスとStream APIの組み合わせについて、正しい出力はどれですか？",
+    "code": "import java.util.List;\n\npublic class Main {\n    record Employee(String name, int salary) {}\n\n    public static void main(String[] args) {\n        var employees = List.of(\n            new Employee(\"Alice\", 500),\n            new Employee(\"Bob\", 300),\n            new Employee(\"Carol\", 400)\n        );\n        employees.stream()\n            .filter(e -> e.salary() > 350)\n            .map(Employee::name)\n            .sorted()\n            .forEach(n -> System.out.print(n + \" \"));\n    }\n}",
+    "explanation": "List.of()で3件のEmployeeレコードを作成。filter()でsalary>350のAlice(500)とCarol(400)を選択。map()でname()を取得し、sorted()でアルファベット順にソートすると\"Alice Carol\"。forEach()で\"Alice Carol \"が出力されます。recordのアクセサメソッド名はフィールド名と同じ（name()、salary()）です。",
+    "choices": [
+      {
+        "id": "se17g2_q087_a",
+        "text": "Alice Carol",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q087_b",
+        "text": "Carol Alice",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q087_c",
+        "text": "Alice Bob Carol",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q087_d",
+        "text": "コンパイルエラー",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q088",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "次のswitch式を実行すると何が出力されますか？",
+    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat, Bird {}\n    record Dog(String name) implements Animal {}\n    record Cat(String name) implements Animal {}\n    record Bird(String name) implements Animal {}\n\n    static String sound(Animal a) {\n        return switch (a) {\n            case Dog d -> d.name() + \": Woof\";\n            case Cat c -> c.name() + \": Meow\";\n            case Bird b -> b.name() + \": Tweet\";\n        };\n    }\n\n    public static void main(String[] args) {\n        System.out.println(sound(new Cat(\"Tama\")));\n    }\n}",
+    "explanation": "switch式のパターンマッチングでsealedインターフェースAnimalの全サブタイプを網羅しています。new Cat(\"Tama\")はcase Cat cにマッチし、c.name()=\"Tama\"なので\"Tama: Meow\"が返されます。sealedインターフェースの全permitsをcase句で網羅しているためdefault不要です。",
+    "choices": [
+      {
+        "id": "se17g2_q088_a",
+        "text": "Tama: Meow",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q088_b",
+        "text": "Cat: Meow",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q088_c",
+        "text": "コンパイルエラー: default句が必要",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q088_d",
+        "text": "コンパイルエラー: recordはsealedインターフェースを実装できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q089",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "次のrecordの定義にはコンパイルエラーがあります。原因はどれですか？",
+    "code": "public record MutablePoint(int x, int y) {\n    public void setX(int x) {\n        this.x = x;\n    }\n}",
+    "explanation": "recordのコンポーネント（x, y）は暗黙的にprivate finalフィールドとして宣言されます。そのため、setX()メソッド内でthis.x = xとしてfinalフィールドに再代入しようとするとコンパイルエラーになります。recordは不変（immutable）として設計されており、フィールドの変更はできません。",
+    "choices": [
+      {
+        "id": "se17g2_q089_a",
+        "text": "recordのフィールドは暗黙的にfinalであり再代入できない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q089_b",
+        "text": "recordにメソッドを追加できない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q089_c",
+        "text": "setXの引数名がコンポーネント名と同じため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q089_d",
+        "text": "recordにはpublicメソッドを定義できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q090",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "テキストブロックの formatted() メソッドについて正しいものはどれですか？",
+    "code": "String sql = \"\"\"\n        SELECT * FROM %s\n        WHERE id = %d\n        \"\"\".formatted(\"users\", 42);\nSystem.out.println(sql.strip());",
+    "explanation": "テキストブロックのformatted()メソッドはString.format()と同等の機能を提供します。%sに\"users\"、%dに42が埋め込まれ、結果は\"SELECT * FROM users\\nWHERE id = 42\"になります。strip()で前後の空白を除去して出力されます。formatted()はJava 15で追加されたインスタンスメソッドです。",
+    "choices": [
+      {
+        "id": "se17g2_q090_a",
+        "text": "SELECT * FROM users\nWHERE id = 42",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q090_b",
+        "text": "SELECT * FROM %s\nWHERE id = %d",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q090_c",
+        "text": "コンパイルエラー: formatted()は存在しない",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q090_d",
+        "text": "SELECT * FROM \"users\"\nWHERE id = \"42\"",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
   }
 ]

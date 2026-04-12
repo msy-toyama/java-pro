@@ -2965,5 +2965,191 @@
     "requiredSelections": 2,
     "certificationTopic": "modules",
     "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q081",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    static class Res implements AutoCloseable {\n        String name;\n        Res(String name) {\n            this.name = name;\n            System.out.print(\"O\" + name + \" \");\n        }\n        public void close() {\n            System.out.print(\"C\" + name + \" \");\n        }\n    }\n    public static void main(String[] args) {\n        try (Res a = new Res(\"1\"); Res b = new Res(\"2\")) {\n            System.out.print(\"T \");\n            throw new RuntimeException();\n        } catch (Exception e) {\n            System.out.print(\"E \");\n        }\n    }\n}",
+    "explanation": "リソースの初期化順序はO1→O2、tryブロックでT、例外発生後リソースは逆順でクローズされるためC2→C1、最後にcatch句のE。結果は\"O1 O2 T C2 C1 E\"です。close()はcatch句の前に実行されます。",
+    "choices": [
+      {
+        "id": "se11g2_q081_a",
+        "text": "O1 O2 T C2 C1 E",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q081_b",
+        "text": "O1 O2 T E C2 C1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q081_c",
+        "text": "O1 O2 T C1 C2 E",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q081_d",
+        "text": "O1 O2 T E",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q082",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "マルチキャッチ（multi-catch）についてコンパイルエラーになるケースはどれですか？",
+    "code": null,
+    "explanation": "マルチキャッチ（catch (A | B e)）では、列挙する例外型に継承関係があってはなりません。FileNotFoundExceptionはIOExceptionのサブクラスであるため、catch (IOException | FileNotFoundException e)はコンパイルエラーになります。サブクラスの例外は親クラスの例外に含まれるため、冗長だからです。",
+    "choices": [
+      {
+        "id": "se11g2_q082_a",
+        "text": "catch (IOException | FileNotFoundException e)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q082_b",
+        "text": "catch (IOException | SQLException e)",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q082_c",
+        "text": "catch (ClassNotFoundException | NoSuchMethodException e)",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q082_d",
+        "text": "catch (ArithmeticException | NullPointerException e)",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q083",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "assert文の2つの形式について正しいものはどれですか？",
+    "code": "assert x > 0;\nassert x > 0 : \"xは正の数でなければなりません\";",
+    "explanation": "assert文には2つの形式があります。(1) assert 条件式; — 条件がfalseのときAssertionErrorをスロー。(2) assert 条件式 : メッセージ式; — 条件がfalseのときメッセージ式の値をAssertionErrorのコンストラクタに渡します。メッセージ式にはvoid型以外の任意の値を指定できます。",
+    "choices": [
+      {
+        "id": "se11g2_q083_a",
+        "text": "assert 条件式 : メッセージ式 の形式では、メッセージ式にvoid以外の任意の型を指定できる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q083_b",
+        "text": "assert文は条件がfalseのときRuntimeExceptionをスローする",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q083_c",
+        "text": "assert文のメッセージ式にはString型のみ指定できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q083_d",
+        "text": "assert文はJVMオプション不要でデフォルトで有効である",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q084",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "次のコードを実行すると何が出力されますか？",
+    "code": "public class Main {\n    public static int getValue() {\n        try {\n            return 1;\n        } finally {\n            return 2;\n        }\n    }\n    public static void main(String[] args) {\n        System.out.println(getValue());\n    }\n}",
+    "explanation": "finally句のreturn文はtry句のreturn文を上書き（override）します。try句でreturn 1が実行されようとしますが、finally句が必ず実行されるため、finally句のreturn 2が最終的な戻り値になります。出力は\"2\"です。なお、finally句でreturnすることは推奨されません（コンパイラ警告が出ます）。",
+    "choices": [
+      {
+        "id": "se11g2_q084_a",
+        "text": "1",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q084_b",
+        "text": "2",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q084_c",
+        "text": "コンパイルエラーが発生する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q084_d",
+        "text": "実行時例外が発生する",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q085",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "try-with-resources文について正しい説明をすべて選んでください。",
+    "code": null,
+    "explanation": "try-with-resources文のリソースはAutoCloseableインターフェースを実装する必要があります。複数リソースはセミコロンで区切って宣言でき、逆順でクローズされます。Java 9以降、effectively finalな既存変数もtry()内で使用可能です。catch句やfinally句は省略できます。",
+    "choices": [
+      {
+        "id": "se11g2_q085_a",
+        "text": "リソースはAutoCloseableまたはCloseableインターフェースを実装する必要がある",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q085_b",
+        "text": "リソースは宣言順にクローズされる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q085_c",
+        "text": "catch句やfinally句は省略できる",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q085_d",
+        "text": "Java 9以降、effectively finalな変数をtry()内で指定できる",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 3,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
   }
 ]

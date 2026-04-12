@@ -2553,7 +2553,7 @@
       },
       {
         "id": "se17s1_q069_d",
-        "text": "Reader",
+        "text": "FileReader",
         "isCorrect": false,
         "order": 4
       }
@@ -2670,7 +2670,7 @@
       }
     ],
     "correctOrder": null,
-    "certificationTopic": "var_type_inference",
+    "certificationTopic": "java_api",
     "difficulty": "normal"
   },
   {
@@ -2976,5 +2976,190 @@
     "requiredSelections": 2,
     "certificationTopic": "switch_expressions",
     "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q081",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "module-info.javaに記述できるディレクティブとして正しくないものはどれですか？",
+    "code": null,
+    "explanation": "module-info.javaに記述できるディレクティブは、requires（依存宣言）、exports（パッケージ公開）、opens（リフレクション公開）、uses（サービス利用）、provides（サービス提供）の5種類です。importsはモジュールディレクティブではなく、通常のJavaソースファイルで使用するimport文です。",
+    "choices": [
+      {
+        "id": "se17s1_q081_a",
+        "text": "requires",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q081_b",
+        "text": "exports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q081_c",
+        "text": "imports",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q081_d",
+        "text": "opens",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q082",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "次の構成でコンパイルエラーが発生します。原因はどれですか？",
+    "code": "// module-info.java\nmodule com.app {\n    requires com.lib;\n}\n\n// App.java\npackage com.app;\nimport com.lib.internal.Helper;\n\npublic class App {\n    public static void main(String[] args) {\n        Helper.doWork();\n    }\n}\n\n// com.libのmodule-info.java\nmodule com.lib {\n    exports com.lib.api;\n    // com.lib.internal はexportsされていない\n}",
+    "explanation": "com.libモジュールはcom.lib.apiパッケージのみexportsしており、com.lib.internalパッケージはexportsされていません。モジュールシステムでは、exportsされていないパッケージのクラスはpublicであっても他のモジュールからアクセスできないため、import文でコンパイルエラーが発生します。",
+    "choices": [
+      {
+        "id": "se17s1_q082_a",
+        "text": "com.lib.internalパッケージがexportsされていないため",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q082_b",
+        "text": "requires com.libの宣言が不正であるため",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q082_c",
+        "text": "Helperクラスがpublicでないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q082_d",
+        "text": "mainメソッドのシグネチャが間違っているため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q083",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "module-info.javaの空欄を埋めてください。モジュールのパッケージを公開します。\n\nmodule com.example.lib {\n    ___ com.example.lib.api;\n}",
+    "code": null,
+    "explanation": "exportsディレクティブは、モジュール内の指定パッケージを他のモジュールからアクセス可能にします。exportsされたパッケージのpublic型のみが他のモジュールから利用できます。",
+    "choices": [
+      {
+        "id": "se17s1_q083_a",
+        "text": "exports",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q083_b",
+        "text": "opens",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q083_c",
+        "text": "provides",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q083_d",
+        "text": "public",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q084",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "名前なしモジュール（unnamed module）について正しい説明はどれですか？",
+    "code": null,
+    "explanation": "module-info.javaを持たないコードはクラスパス上に配置され、名前なしモジュール（unnamed module）として扱われます。名前なしモジュールはすべてのモジュールのexportsされたパッケージを読み取ることができますが、名前付きモジュールからは名前なしモジュールにアクセスできません。",
+    "choices": [
+      {
+        "id": "se17s1_q084_a",
+        "text": "module-info.javaを持たないコードはクラスパス上で名前なしモジュールとして動作する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q084_b",
+        "text": "名前なしモジュールは他のモジュールのパッケージにアクセスできない",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q084_c",
+        "text": "名前なしモジュールは名前付きモジュールから参照できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q084_d",
+        "text": "名前なしモジュールはJava 17で廃止された",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q085",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "opensディレクティブについて正しい説明はどれですか？",
+    "code": "module com.example.app {\n    opens com.example.app.model;\n}",
+    "explanation": "opensディレクティブは、指定パッケージをリフレクション（実行時アクセス）に対して公開します。exportsがコンパイル時のアクセスを許可するのに対し、opensは実行時のリフレクティブアクセスを許可します。フレームワーク（JPA、Jackson等）がリフレクションでオブジェクトを操作する際に必要です。",
+    "choices": [
+      {
+        "id": "se17s1_q085_a",
+        "text": "opensはリフレクションによる実行時アクセスを許可する",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q085_b",
+        "text": "opensはexportsと同じ効果を持つ",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q085_c",
+        "text": "opensで公開されたパッケージはコンパイル時にimportできる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q085_d",
+        "text": "opensはモジュール全体に対してのみ使用でき、パッケージ単位では使用できない",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
   }
 ]

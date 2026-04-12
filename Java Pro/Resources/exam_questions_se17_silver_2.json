@@ -2079,30 +2079,30 @@
     "lessonId": "exam_se17_silver_2",
     "type": "outputPredict",
     "question": "次のコードを実行すると何が出力されますか？",
-    "code": "public class PatternMatch {\n    public static void main(String[] args) {\n        Object obj = \"Hello Java 17\";\n        if (obj instanceof String msg && msg.length() > 5) {\n            System.out.println(msg.toUpperCase());\n        } else {\n            System.out.println(\"短い\");\n        }\n    }\n}",
-    "explanation": "Java SE 16で導入されたパターンマッチングfor instanceofを使用しています。obj instanceof String msgでobjがString型かチェックし、true ならばmsg変数にキャストされた値が代入されます。\"Hello Java 17\"は長さ13で5より大きいので、msg.toUpperCase()が実行され\"HELLO JAVA 17\"が出力されます。",
+    "code": "public class Main {\n    static void check(Object obj) {\n        if (obj instanceof Integer n && n > 0) {\n            System.out.println(\"正の整数: \" + n);\n        } else if (obj instanceof String s) {\n            System.out.println(\"文字列: \" + s.length());\n        } else {\n            System.out.println(\"その他\");\n        }\n    }\n    public static void main(String[] args) {\n        check(-5);\n        check(\"ABC\");\n    }\n}",
+    "explanation": "最初のcheck(-5)では、objはInteger型（オートボクシング）です。obj instanceof Integer n はtrueですが、n > 0 が false（-5 > 0 はfalse）のため、&&の短絡評価によりif条件全体がfalseになります。次のelse ifでString型チェックもfalseのため、\"その他\"が出力されます。2回目のcheck(\"ABC\")では、Integer型ではないのでifはfalse、String型なのでelse ifがtrueとなり、\"文字列: 3\"が出力されます。",
     "choices": [
       {
         "id": "se17s2_q057_a",
-        "text": "HELLO JAVA 17",
-        "isCorrect": true,
+        "text": "正の整数: -5\n文字列: 3",
+        "isCorrect": false,
         "order": 1
       },
       {
         "id": "se17s2_q057_b",
-        "text": "Hello Java 17",
-        "isCorrect": false,
+        "text": "その他\n文字列: 3",
+        "isCorrect": true,
         "order": 2
       },
       {
         "id": "se17s2_q057_c",
-        "text": "短い",
+        "text": "コンパイルエラーが発生する",
         "isCorrect": false,
         "order": 3
       },
       {
         "id": "se17s2_q057_d",
-        "text": "コンパイルエラーが発生する",
+        "text": "正の整数: -5\nその他",
         "isCorrect": false,
         "order": 4
       }
@@ -2970,5 +2970,191 @@
     "correctOrder": null,
     "certificationTopic": "switch_expressions",
     "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q081",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "Javaモジュールシステムにおけるmodule-info.javaについて正しい説明はどれですか？",
+    "code": null,
+    "explanation": "module-info.javaはモジュールの宣言ファイルで、デフォルトパッケージ（ソースルート直下）に配置します。ファイル内にはmodule宣言とディレクティブ（requires、exports、opens等）を記述します。通常のJavaクラスのようにpackage宣言やimport文を含めることはできません。",
+    "choices": [
+      {
+        "id": "se17s2_q081_a",
+        "text": "module-info.javaにはpackage宣言を記述できない",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q081_b",
+        "text": "module-info.javaには通常のクラス定義も記述できる",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q081_c",
+        "text": "1つのプロジェクトに複数のmodule-info.javaを配置できる",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q081_d",
+        "text": "module-info.javaのファイル名は変更可能である",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s2_q082",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "requires transitiveとrequiresの違いについて正しいものはどれですか？",
+    "code": "module moduleA {\n    requires transitive moduleB;\n}\n\nmodule moduleC {\n    requires moduleA;\n}",
+    "explanation": "moduleAがrequires transitive moduleBと宣言しているため、moduleAに依存するmoduleCは自動的にmoduleBのexportsされたパッケージにもアクセスできます。通常のrequires（transitiveなし）では、moduleC はmoduleBに直接アクセスできません。",
+    "choices": [
+      {
+        "id": "se17s2_q082_a",
+        "text": "moduleCはmoduleBのexportsパッケージに明示的なrequiresなしでアクセスできる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q082_b",
+        "text": "moduleCがmoduleBにアクセスするにはrequires moduleBの宣言が必要",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q082_c",
+        "text": "requires transitiveはコンパイル時のみ有効で実行時は無効",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q082_d",
+        "text": "requires transitiveを使うとmoduleBの全パッケージが公開される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q083",
+    "lessonId": "exam_se17_silver_2",
+    "type": "errorFind",
+    "question": "次のmodule-info.javaにはコンパイルエラーがあります。原因はどれですか？",
+    "code": "module com.example.app {\n    requires com.example.lib;\n    requires com.example.lib;\n}",
+    "explanation": "同一モジュールに対するrequiresディレクティブを重複して記述することはできません。com.example.libに対するrequires宣言が2回記述されているため、コンパイルエラーになります。",
+    "choices": [
+      {
+        "id": "se17s2_q083_a",
+        "text": "同じモジュールに対するrequiresが重複しているため",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q083_b",
+        "text": "requiresにはtransitiveキーワードが必要なため",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q083_c",
+        "text": "exportsディレクティブがないため",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q083_d",
+        "text": "モジュール名にドット（.）が含まれているため",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s2_q084",
+    "lessonId": "exam_se17_silver_2",
+    "type": "fourChoice",
+    "question": "自動モジュール（automatic module）について正しい説明はどれですか？",
+    "code": null,
+    "explanation": "自動モジュール（automatic module）とは、module-info.javaを持たないJARファイルをモジュールパス上に配置した場合に自動的に生成されるモジュールです。JARファイル名からモジュール名が自動的に導出されます。自動モジュールはすべてのパッケージを暗黙的にexportsし、すべての名前付きモジュールをrequiresします。",
+    "choices": [
+      {
+        "id": "se17s2_q084_a",
+        "text": "module-info.javaを持たないJARをモジュールパスに置くと自動モジュールになる",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q084_b",
+        "text": "自動モジュールはexportsされたパッケージのみ公開する",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q084_c",
+        "text": "自動モジュールはjava.baseモジュールにのみ依存する",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q084_d",
+        "text": "自動モジュールのモジュール名はランダムに生成される",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s2_q085",
+    "lessonId": "exam_se17_silver_2",
+    "type": "multiChoice",
+    "question": "module-info.javaで使用できるディレクティブとして正しいものをすべて選んでください。",
+    "code": null,
+    "explanation": "module-info.javaで使用できるディレクティブは、requires（依存モジュール宣言）、exports（パッケージ公開）、opens（リフレクション公開）、uses（サービス利用宣言）、provides（サービス提供宣言）の5つです。importsはJavaのimport文であり、モジュールディレクティブではありません。",
+    "choices": [
+      {
+        "id": "se17s2_q085_a",
+        "text": "requires",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s2_q085_b",
+        "text": "exports",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s2_q085_c",
+        "text": "imports",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s2_q085_d",
+        "text": "provides",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 3,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
   }
 ]
