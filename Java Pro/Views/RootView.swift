@@ -170,7 +170,9 @@ struct RootView: View {
 
     /// 初回起動時に通知権限をリクエストし、リマインダーをスケジュールする。
     /// View は @MainActor なので Task {} も MainActor を継承する。
+    /// ※ オンボーディング未完了時はスキップ（GoalSettingPage で許可を取得するため）
     private func scheduleInitialReminderIfNeeded(settings: AppSettings) {
+        guard settings.hasCompletedOnboarding else { return }
         guard settings.notificationsEnabled else { return }
         let key = "hasScheduledInitialReminder"
         guard !UserDefaults.standard.bool(forKey: key) else { return }
