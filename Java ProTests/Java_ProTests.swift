@@ -448,8 +448,8 @@ struct GamificationServiceTests {
         let titles = GamificationService.levelTitles
         #expect(titles[1] != nil)  // Lv1
         #expect(titles[50] != nil) // Lv50 (max)
-        #expect(titles[1] == "Java見習い")
-        #expect(titles[50] == "Javaマスター")
+        #expect(titles[1] == "level.title.1")
+        #expect(titles[50] == "level.title.50")
     }
 
     @Test("awardXP increases totalXP and returns level-up")
@@ -668,7 +668,7 @@ struct ExamServiceTests {
     func examDefinitionFields() {
         for exam in ExamService.examDefinitions {
             #expect(!exam.id.isEmpty)
-            #expect(!exam.title.isEmpty)
+            #expect(!exam.titleKey.isEmpty)
             #expect(exam.totalQuestions > 0)
             #expect(exam.timeLimitMinutes > 0)
             #expect(exam.passingRate > 0 && exam.passingRate < 1)

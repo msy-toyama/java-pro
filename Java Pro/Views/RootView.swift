@@ -116,6 +116,10 @@ struct RootView: View {
                 break
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: LanguageManager.languageDidChangeNotification)) { _ in
+            // 言語変更時に通知文面を新しい言語で再スケジュール
+            refreshDailyReminderIfNeeded()
+        }
     }
 
     // MARK: - 学習タイマー

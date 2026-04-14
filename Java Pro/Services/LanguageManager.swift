@@ -75,6 +75,9 @@ final class LanguageManager {
 
     // MARK: - 言語切替
 
+    /// 言語変更時に投稿される通知名。通知のリスケジュールなどに使用する。
+    static let languageDidChangeNotification = Notification.Name("languageDidChange")
+
     /// 言語を切り替える。文字列辞書をリロードし、UI更新をトリガーする。
     func setLanguage(_ language: AppLanguage) {
         guard language != currentLanguage else { return }
@@ -87,6 +90,9 @@ final class LanguageManager {
             await ContentService.shared.reloadForLanguageChange()
             PracticeService.shared.reloadForLanguageChange()
         }
+
+        // 通知文面を新しい言語で再スケジュールさせるために通知を投稿
+        NotificationCenter.default.post(name: Self.languageDidChangeNotification, object: nil)
     }
 
     // MARK: - ローカライズアクセサ

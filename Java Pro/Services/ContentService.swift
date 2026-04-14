@@ -59,6 +59,8 @@ final class ContentService {
         isCourseIndexLoaded = false
         loadError = nil
         loadingChapterIds = []
+        // 進行中のロードフラグもリセット（連続切替時に再ロードがブロックされるのを防止）
+        isLoadingAsync = false
 
         // 再ロード
         await loadAllContentAsync()
