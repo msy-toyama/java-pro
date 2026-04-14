@@ -31,8 +31,8 @@
           "lessonId": "ch13_01",
           "sectionType": "code",
           "title": "Declaring and Extending Abstract Classes",
-          "body": "Let's look at a basic example of declaring classes and methods with the abstract keyword and implementing the abstract method in a subclass.\nThe abstract class Shape defines an abstract method area(), and the Circle class implements the specific calculation.",
-          "code": "// Shapeクラスの定義\nabstract class Shape {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n\n    // 抽象メソッド：サブクラスが実装する\n    abstract double area();\n\n    // 具象メソッド：そのまま継承される\n    // printInfoメソッドの定義\n    void printInfo() {\n        System.out.println(name + \"の面積: \" + area());\n    }\n}\n\n// Circleクラスの定義\nclass Circle extends Shape {\n    double radius;\n\n    Circle(double radius) {\n        super(\"円\");\n        this.radius = radius;\n    }\n\n    @Override\n    // areaメソッドの定義\n    double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        // Shape s = new Shape(\"図形\"); // コンパイルエラー！\n        Shape s = new Circle(5.0);\n        s.printInfo();  // 円の面積: 78.53981633974483\n    }\n}",
+          "body": "Let's look at a basic example of declaring classes and methods with the abstract keyword and implementing the abstract method in a subclass.\nThe abstract class Shape defines an abstract method area(), and the  yen class implements the specific calculation.",
+          "code": "// ShapeClass definition\nabstract class Shape {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n\n    // Abstract method:Subclass implements this\n    abstract double area();\n\n    // Concrete method: Inherited as-is\n    // printInfoMethod definition\n    void printInfo() {\n        System.out.println(name + \" area: \" + area());\n    }\n}\n\n//  yenClass definition\nclass  yen extends Shape {\n    double radius;\n\n     yen(double radius) {\n        super(\" yen\");\n        this.radius = radius;\n    }\n\n    @Override\n    // areaMethod definition\n    double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        // Shape s = new Shape(\"Shape\"); // Compilation error!\n        Shape s = new  yen(5.0);\n        s.printInfo();  //  yen area: 78.53981633974483\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3
         },
@@ -133,7 +133,7 @@
           "lessonId": "ch13_01",
           "type": "errorFind",
           "question": "The following code has a compilation error. Select the correct cause of the error.",
-          "code": "abstract class Animal {\n    abstract void speak();\n}\n\nclass Dog extends Animal {\n    // speak()を実装していない\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.speak();\n    }\n}",
+          "code": "abstract class Animal {\n    abstract void speak();\n}\n\nclass Dog extends Animal {\n    // speak() is not implemented\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.speak();\n    }\n}",
           "explanation": "The Dog class does not implement (override) the abstract method speak() from the abstract class Animal. A non-abstract subclass must implement all abstract methods from its parent class, or a compilation error occurs.",
           "choices": [
             {
@@ -197,7 +197,7 @@
           "sectionType": "code",
           "title": "Template Method Pattern Implementation Example",
           "body": "This example defines the steps for preparing a beverage using a template method, delegating the specific ingredient processing to subclasses.\nThe prepare() method controls the flow of operations, and brew() and addCondiments() are implemented by subclasses.",
-          "code": "// Beverageクラスの定義\nabstract class Beverage {\n    // テンプレートメソッド：処理の流れを定義\n    final void prepare() {\n        boilWater();\n        brew();\n        pourInCup();\n        addCondiments();\n    }\n\n    // boilWaterメソッドの定義\n    void boilWater() {\n        System.out.println(\"お湯を沸かす\");\n    }\n\n    // pourInCupメソッドの定義\n    void pourInCup() {\n        System.out.println(\"カップに注ぐ\");\n    }\n    abstract void brew();           // サブクラスが実装\n    abstract void addCondiments();  // サブクラスが実装\n}\n\n// Teaクラスの定義\nclass Tea extends Beverage {\n    @Override\n    void brew() {\n        System.out.println(\"茶葉を蒸らす\");\n    }\n    @Override\n    void addCondiments() {\n        System.out.println(\"レモンを添える\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Beverage tea = new Tea();\n        tea.prepare();\n    }\n}",
+          "code": "// BeverageClass definition\nabstract class Beverage {\n    // Template method: Defines the processing flow\n    final void prepare() {\n        boilWater();\n        brew();\n        pourInCup();\n        addCondiments();\n    }\n\n    // boilWaterMethod definition\n    void boilWater() {\n        System.out.println(\"Boil water\");\n    }\n\n    // pourInCupMethod definition\n    void pourInCup() {\n        System.out.println(\"Pour into cup\");\n    }\n    abstract void brew();           // Subclass implements\n    abstract void addCondiments();  // Subclass implements\n}\n\n// TeaClass definition\nclass Tea extends Beverage {\n    @Override\n    void brew() {\n        System.out.println(\"Steep tea leaves\");\n    }\n    @Override\n    void addCondiments() {\n        System.out.println(\"Add lemon\");\n    }\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        Beverage tea = new Tea();\n        tea.prepare();\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3
         },
@@ -235,24 +235,24 @@
           "lessonId": "ch13_02",
           "type": "outputPredict",
           "question": "What is the output when the following code is executed?",
-          "code": "abstract class Greeting {\n    String language;\n\n    Greeting(String language) {\n        this.language = language;\n        System.out.println(\"言語: \" + language);\n    }\n\n    abstract void sayHello();\n}\n\nclass JapaneseGreeting extends Greeting {\n    JapaneseGreeting() {\n        super(\"日本語\");\n    }\n\n    @Override\n    void sayHello() {\n        System.out.println(\"こんにちは\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Greeting g = new JapaneseGreeting();\n        g.sayHello();\n    }\n}",
-          "explanation": "When the JapaneseGreeting constructor is called, super(\"日本語\") first executes the parent class Greeting's constructor, printing \"言語: 日本語\". Then g.sayHello() prints \"こんにちは\". The abstract class constructor is executed via super() during subclass instance creation.",
+          "code": "abstract class Greeting {\n    String language;\n\n    Greeting(String language) {\n        this.language = language;\n        System.out.println(\"Language: \" + language);\n    }\n\n    abstract void sayHello();\n}\n\nclass JapaneseGreeting extends Greeting {\n    JapaneseGreeting() {\n        super(\"Japanese\");\n    }\n\n    @Override\n    void sayHello() {\n        System.out.println(\"Hello\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Greeting g = new JapaneseGreeting();\n        g.sayHello();\n    }\n}",
+          "explanation": "When the JapaneseGreeting constructor is called, super(\"Japanese\") first executes the parent class Greeting's constructor, printing \"Language: Japanese\". Then g.sayHello() prints \"Hello\". The abstract class constructor is executed via super() during subclass instance creation.",
           "choices": [
             {
               "id": "ch13_02_q1_a",
-              "text": "言語: 日本語\nこんにちは",
+              "text": "Language: Japanese\nHello",
               "isCorrect": true,
               "order": 1
             },
             {
               "id": "ch13_02_q1_b",
-              "text": "こんにちは\n言語: 日本語",
+              "text": "Hello\nLanguage: Japanese",
               "isCorrect": false,
               "order": 2
             },
             {
               "id": "ch13_02_q1_c",
-              "text": "こんにちは",
+              "text": "Hello",
               "isCorrect": false,
               "order": 3
             },
@@ -349,7 +349,7 @@
           "correctOrder": null,
           "executionResult": null,
           "fixedExecutionResult": null,
-          "codeTemplate": "public class Circle __BLANK_1__ Shape {\n    __BLANK_2__\n    public double area() {\n        return Math.PI * radius * radius;\n    }\n}",
+          "codeTemplate": "public class  yen __BLANK_1__ Shape {\n    __BLANK_2__\n    public double area() {\n        return Math.PI * radius * radius;\n    }\n}",
           "blanks": [
             {
               "id": "blank_1",
@@ -432,7 +432,7 @@
           "sectionType": "code",
           "title": "Defining and Implementing Interfaces",
           "body": "Here is a basic example of defining interfaces and implementing them in a [[class]].\nThe Document class simultaneously implements two interfaces, Printable and Resizable.\nThis expresses that Document has two capabilities: \"can be printed\" and \"can be resized.\"",
-          "code": "// Printableインターフェースの定義\ninterface Printable {\n    void print();  // public abstractが暗黙的に付く\n}\n\n// Resizableインターフェースの定義\ninterface Resizable {\n    void resize(int width, int height);\n}\n\n// 複数のインターフェースを実装\n// Documentクラスの定義\nclass Document implements Printable, Resizable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n    @Override\n    // printメソッドの定義\n    public void print() {\n        System.out.println(\"印刷: \" + content);\n    }\n    @Override\n    // resizeメソッドの定義\n    public void resize(int width, int height) {\n        System.out.println(\"サイズ変更: \" + width + \"x\" + height);\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Document doc = new Document(\"レポート\");\n        doc.print();                // 印刷: レポート\n        doc.resize(800, 600);       // サイズ変更: 800x600\n\n        Printable p = doc;          // インターフェース型で参照\n        p.print();                  // 印刷: レポート\n    }\n}",
+          "code": "// PrintableInterface definition\ninterface Printable {\n    void print();  // public abstract is implicitly added\n}\n\n// ResizableInterface definition\ninterface Resizable {\n    void resize(int width, int height);\n}\n\n// Implement multiple interfaces\n// DocumentClass definition\nclass Document implements Printable, Resizable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n    @Override\n    // printMethod definition\n    public void print() {\n        System.out.println(\"Print: \" + content);\n    }\n    @Override\n    // resizeMethod definition\n    public void resize(int width, int height) {\n        System.out.println(\"Resize: \" + width + \"x\" + height);\n    }\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        Document doc = new Document(\"Report\");\n        doc.print();                // Print: Report\n        doc.resize(800, 600);       // Resize: 800x600\n\n        Printable p = doc;          // Reference with interface type\n        p.print();                  // Print: Report\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3
         },
@@ -533,18 +533,18 @@
           "lessonId": "ch13_03",
           "type": "outputPredict",
           "question": "What is the output when the following code is executed?",
-          "code": "interface Greetable {\n    void greet();\n}\n\ninterface Farewell {\n    void sayBye();\n}\n\nclass Person implements Greetable, Farewell {\n    @Override\n    public void greet() {\n        System.out.println(\"やあ！\");\n    }\n\n    @Override\n    public void sayBye() {\n        System.out.println(\"さようなら！\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Greetable g = new Person();\n        g.greet();\n        Farewell f = (Farewell) g;\n        f.sayBye();\n    }\n}",
-          "explanation": "The Person class implements both Greetable and Farewell. A Person instance is assigned to the Greetable-type variable g, and greet() prints \"やあ！\". Since the actual object of g is a Person, it can be cast to Farewell, and sayBye() prints \"さようなら！\".",
+          "code": "interface Greetable {\n    void greet();\n}\n\ninterface Farewell {\n    void sayBye();\n}\n\nclass Person implements Greetable, Farewell {\n    @Override\n    public void greet() {\n        System.out.println(\"Hey!\");\n    }\n\n    @Override\n    public void sayBye() {\n        System.out.println(\"Goodbye!\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Greetable g = new Person();\n        g.greet();\n        Farewell f = (Farewell) g;\n        f.sayBye();\n    }\n}",
+          "explanation": "The Person class implements both Greetable and Farewell. A Person instance is assigned to the Greetable-type variable g, and greet() prints \"Hey!\". Since the actual object of g is a Person, it can be cast to Farewell, and sayBye() prints \"Goodbye!\".",
           "choices": [
             {
               "id": "ch13_03_q3_a",
-              "text": "やあ！\nさようなら！",
+              "text": "Hey!\nGoodbye!",
               "isCorrect": true,
               "order": 1
             },
             {
               "id": "ch13_03_q3_b",
-              "text": "やあ！",
+              "text": "Hey!",
               "isCorrect": false,
               "order": 2
             },
@@ -597,7 +597,7 @@
           "sectionType": "code",
           "title": "Default Method and Static Method Examples",
           "body": "Here is an example of an interface definition that includes default and static methods.\nThe default method log() can be used as-is by implementing [[classes]], and the static method createTimestamp() is called using the interface name.",
-          "code": "// Loggerインターフェースの定義\ninterface Logger {\n    void write(String message);  // 抽象メソッド\n\n    // デフォルトメソッド\n    default void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n        write(message);\n    }\n\n    // staticメソッド\n    // createTimestampメソッドの定義\n    static String createTimestamp() {\n        return java.time.LocalDateTime.now().toString();\n    }\n}\n\n// ConsoleLoggerクラスの定義\nclass ConsoleLogger implements Logger {\n    @Override\n    // writeメソッドの定義\n    public void write(String message) {\n        System.out.println(\"Console: \" + message);\n    }\n    // log()はオーバーライドしなくても使える\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        ConsoleLogger logger = new ConsoleLogger();\n        logger.log(\"テスト\");\n        // [LOG] テスト\n        // Console: テスト\n\n        // 変数の宣言と初期化\n        String ts = Logger.createTimestamp(); // static呼び出し\n        System.out.println(ts);\n    }\n}",
+          "code": "// LoggerInterface definition\ninterface Logger {\n    void write(String message);  // Abstract method\n\n    // Default method\n    default void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n        write(message);\n    }\n\n    // staticMethod\n    // createTimestampMethod definition\n    static String createTimestamp() {\n        return java.time.LocalDateTime.now().toString();\n    }\n}\n\n// ConsoleLoggerClass definition\nclass ConsoleLogger implements Logger {\n    @Override\n    // writeMethod definition\n    public void write(String message) {\n        System.out.println(\"Console: \" + message);\n    }\n    // log() can be used without overriding\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        ConsoleLogger logger = new ConsoleLogger();\n        logger.log(\"Test\");\n        // [LOG] Test\n        // Console: Test\n\n        // Variable declaration and initialization\n        String ts = Logger.createTimestamp(); // staticInvocation\n        System.out.println(ts);\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3
         },
@@ -707,7 +707,7 @@
           "lessonId": "ch13_04",
           "type": "errorFind",
           "question": "The following code has a compilation error. Select the correct cause of the error.",
-          "code": "interface X {\n    default void show() {\n        System.out.println(\"X\");\n    }\n}\n\ninterface Y {\n    default void show() {\n        System.out.println(\"Y\");\n    }\n}\n\nclass Z implements X, Y {\n    // show()をオーバーライドしていない\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Z z = new Z();\n        z.show();\n    }\n}",
+          "code": "interface X {\n    default void show() {\n        System.out.println(\"X\");\n    }\n}\n\ninterface Y {\n    default void show() {\n        System.out.println(\"Y\");\n    }\n}\n\nclass Z implements X, Y {\n    // show() is not overridden\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Z z = new Z();\n        z.show();\n    }\n}",
           "explanation": "Both interfaces X and Y have a default method show() with the same name. Since it is ambiguous which show() class Z should use, an explicit override is required — otherwise a compilation error occurs. This is the Diamond Problem.",
           "choices": [
             {
@@ -807,7 +807,7 @@
           "lessonId": "ch13_05",
           "sectionType": "rule",
           "title": "IS-A Relationship and CAN-DO Relationship",
-          "body": "The following concepts are widely used as design guidelines.\n\n[IS-A Relationship → Abstract Class]\nUse when representing a taxonomic relationship such as \"a Dog IS-A Animal\" or \"a Circle IS-A Shape.\"\nSuitable as a base for groups of [[classes]] that share common state (fields) and common behavior (concrete methods).\n\n[CAN-DO Relationship → Interface]\nUse when representing a capability or functionality such as \"can be compared ([[Comparable]])\" or \"can be [[serialized]] ([[Serializable]])\"\nCan grant shared capabilities to classes from different inheritance hierarchies.\n\nIn practice, it is common to use abstract classes to provide shared implementations and interfaces to define shared contracts.",
+          "body": "The following concepts are widely used as design guidelines.\n\n[IS-A Relationship → Abstract Class]\nUse when representing a taxonomic relationship such as \"a Dog IS-A Animal\" or \"a  yen IS-A Shape.\"\nSuitable as a base for groups of [[classes]] that share common state (fields) and common behavior (concrete methods).\n\n[CAN-DO Relationship → Interface]\nUse when representing a capability or functionality such as \"can be compared ([[Comparable]])\" or \"can be [[serialized]] ([[Serializable]])\"\nCan grant shared capabilities to classes from different inheritance hierarchies.\n\nIn practice, it is common to use abstract classes to provide shared implementations and interfaces to define shared contracts.",
           "code": null,
           "note": "The AbstractList class in the Java standard library is a good example of an abstract class that implements the List interface.",
           "order": 3
@@ -817,7 +817,7 @@
           "sectionType": "code",
           "title": "Combining Abstract Classes and Interfaces",
           "body": "In real-world design, abstract classes and interfaces are often used together.\nIn the following example, the Measurable interface defines measurement capability, and the abstract class Shape implements common shape functionality.",
-          "code": "// Measurableインターフェースの定義\ninterface Measurable {\n    double getMeasure();\n}\n\n// Shapeクラスの定義\nabstract class Shape implements Measurable {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n    abstract double area();\n\n    @Override\n    // getMeasureメソッドの定義\n    public double getMeasure() {\n        return area();  // 面積を測定値として返す\n    }\n    @Override\n    // toStringメソッドの定義\n    public String toString() {\n        return name + \"(面積: \" + area() + \")\";\n    }\n}\n\n// Rectangleクラスの定義\nclass Rectangle extends Shape {\n    double width, height;\n\n    Rectangle(double w, double h) {\n        super(\"長方形\");\n        this.width = w;\n        this.height = h;\n    }\n    @Override\n    double area() {\n        return width * height;\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Rectangle(3, 4);\n        System.out.println(s);               // 長方形(面積: 12.0)\n        System.out.println(s.getMeasure());   // 12.0\n    }\n}",
+          "code": "// MeasurableInterface definition\ninterface Measurable {\n    double getMeasure();\n}\n\n// ShapeClass definition\nabstract class Shape implements Measurable {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n    abstract double area();\n\n    @Override\n    // getMeasureMethod definition\n    public double getMeasure() {\n        return area();  // Returns area as a measurement value\n    }\n    @Override\n    // toStringMethod definition\n    public String toString() {\n        return name + \"(Area: \" + area() + \")\";\n    }\n}\n\n// RectangleClass definition\nclass Rectangle extends Shape {\n    double width, height;\n\n    Rectangle(double w, double h) {\n        super(\"Rectangle\");\n        this.width = w;\n        this.height = h;\n    }\n    @Override\n    double area() {\n        return width * height;\n    }\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Rectangle(3, 4);\n        System.out.println(s);               // Rectangle(Area: 12.0)\n        System.out.println(s.getMeasure());   // 12.0\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 4
         },
@@ -899,13 +899,13 @@
             },
             {
               "id": "ch13_05_q2_c",
-              "text": "    public void fly() { System.out.println(\"飛ぶ\"); }\n    abstract void sing(); }",
+              "text": "    public void fly() { System.out.println(\"Fly\"); }\n    abstract void sing(); }",
               "isCorrect": true,
               "order": 3
             },
             {
               "id": "ch13_05_q2_d",
-              "text": "class Sparrow extends Bird {\n    void sing() { System.out.println(\"チュンチュン\"); } }",
+              "text": "class Sparrow extends Bird {\n    void sing() { System.out.println(\"Chirp chirp\"); } }",
               "isCorrect": true,
               "order": 4
             }
@@ -923,18 +923,18 @@
           "lessonId": "ch13_05",
           "type": "outputPredict",
           "question": "What is the output when the following code is executed?",
-          "code": "interface Drawable {\n    default void draw() {\n        System.out.println(\"描画\");\n    }\n}\n\nabstract class Widget {\n    void draw() {\n        System.out.println(\"ウィジェット描画\");\n    }\n}\n\nclass Button extends Widget implements Drawable {\n    // draw()をオーバーライドしていない\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Button b = new Button();\n        b.draw();\n    }\n}",
-          "explanation": "The concrete method draw() from the Widget class and the default method draw() from the Drawable interface conflict. However, in Java, the \"class-wins rule\" means the class method takes precedence over the interface default method. Therefore, Widget's draw() is executed and \"ウィジェット描画\" is printed.",
+          "code": "interface Drawable {\n    default void draw() {\n        System.out.println(\"Draw\");\n    }\n}\n\nabstract class Widget {\n    void draw() {\n        System.out.println(\"Draw widget\");\n    }\n}\n\nclass Button extends Widget implements Drawable {\n    // draw() is not overridden\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Button b = new Button();\n        b.draw();\n    }\n}",
+          "explanation": "The concrete method draw() from the Widget class and the default method draw() from the Drawable interface conflict. However, in Java, the \"class-wins rule\" means the class method takes precedence over the interface default method. Therefore, Widget's draw() is executed and \"Draw widget\" is printed.",
           "choices": [
             {
               "id": "ch13_05_q3_a",
-              "text": "描画",
+              "text": "Draw",
               "isCorrect": false,
               "order": 1
             },
             {
               "id": "ch13_05_q3_b",
-              "text": "ウィジェット描画",
+              "text": "Draw widget",
               "isCorrect": true,
               "order": 2
             },
@@ -946,7 +946,7 @@
             },
             {
               "id": "ch13_05_q3_d",
-              "text": "描画\nウィジェット描画",
+              "text": "Draw\nDraw widget",
               "isCorrect": false,
               "order": 4
             }

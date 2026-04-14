@@ -32,7 +32,7 @@
           "sectionType": "code",
           "title": "Examples of Common RuntimeExceptions",
           "body": "Subclasses of RuntimeException often result from programming mistakes.\nLet's look at some representative unchecked exceptions in the following code.\nThese are not checked at compile time and only occur at runtime.",
-          "code": "public class Main {\n    public static void main(String[] args) {\n        // NullPointerException\n        String s = null;\n        // s.length();  // 実行時にNullPointerException\n\n        // ArrayIndexOutOfBoundsException\n        int[] arr = {1, 2, 3};\n        // System.out.println(arr[5]);  // 範囲外アクセス\n\n        // ClassCastException\n        Object obj = \"Hello\";\n        // Integer num = (Integer) obj;  // 不正なキャスト\n\n        // ArithmeticException\n        // int result = 10 / 0;  // ゼロ除算\n\n        // NumberFormatException\n        // int n = Integer.parseInt(\"abc\");  // 数値に変換不可\n\n        System.out.println(\"すべてコメントアウト中のため正常終了\");\n    }\n}",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // NullPointerException\n        String s = null;\n        // s.length();  // NullPointerException at runtime\n\n        // ArrayIndexOutOfBoundsException\n        int[] arr = {1, 2, 3};\n        // System.out.println(arr[5]);  // Out of range access\n\n        // ClassCastException\n        Object obj = \"Hello\";\n        // Integer num = (Integer) obj;  // Invalid cast\n\n        // ArithmeticException\n        // int result = 10 / 0;  // Division by zero\n\n        // NumberFormatException\n        // int n = Integer.parseInt(\"abc\");  // Cannot convert to number\n\n        System.out.println(\"All commented out so normal ending\");\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3
         },
@@ -188,7 +188,7 @@
           "sectionType": "code",
           "title": "Ordering of Multiple Catch Blocks",
           "body": "When using multiple catch blocks, subclass exceptions must be written first.\nSince Exception is the superclass of all exceptions, it must be written last.\nCatch blocks are matched from top to bottom, and only the first matching block is executed.",
-          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            int[] arr = {1, 2, 3};\n            System.out.println(arr[5]);\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"配列の範囲外: \" + e.getMessage());\n        } catch (RuntimeException e) {\n            System.out.println(\"実行時例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外: \" + e.getMessage());\n        }\n    }\n}",
+          "code": "// MainClass definition\npublic class Main {\n    // mainMethod definition\n    public static void main(String[] args) {\n        // Processing that may throw an exception\n        try {\n            int[] arr = {1, 2, 3};\n            System.out.println(arr[5]);\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"Array out of bounds: \" + e.getMessage());\n        } catch (RuntimeException e) {\n            System.out.println(\"Runtime exception: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"Other exception: \" + e.getMessage());\n        }\n    }\n}",
           "note": "In the code above, if the Exception catch were placed first, subsequent catch blocks would be unreachable and a [[compilation]] error would occur.",
           "order": 2
         },
@@ -206,7 +206,7 @@
           "sectionType": "code",
           "title": "Multi-Catch Syntax (Java 7+)",
           "body": "Starting from Java 7, you can use the pipe (|) to catch multiple exception types in a single catch block.\nThis prevents code duplication when the same handling applies.\nHowever, if the exception types specified in a **multi-catch** have an inheritance relationship, a compilation error occurs.",
-          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            // 変数の宣言と初期化\n            String s = \"abc\";\n            int num = Integer.parseInt(s);\n        } catch (NumberFormatException | ArithmeticException e) {\n            System.out.println(\"数値関連の例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外\");\n        }\n    }\n}",
+          "code": "// MainClass definition\npublic class Main {\n    // mainMethod definition\n    public static void main(String[] args) {\n        // Processing that may throw an exception\n        try {\n            // Variable declaration and initialization\n            String s = \"abc\";\n            int num = Integer.parseInt(s);\n        } catch (NumberFormatException | ArithmeticException e) {\n            System.out.println(\"Number-related exception: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"Other exception\");\n        }\n    }\n}",
           "note": "The variable e in a **multi-catch** is **implicitly final**. Reassigning it within the catch block, such as e = new Exception(), causes a compilation error.",
           "order": 4
         },
@@ -307,7 +307,7 @@
           "lessonId": "ch14_02",
           "type": "errorFind",
           "question": "The following code has a compilation error. What is the cause?",
-          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            int x = Integer.parseInt(\"abc\");\n        } catch (Exception e) {\n            System.out.println(\"例外\");\n        } catch (NumberFormatException e) {\n            System.out.println(\"数値変換エラー\");\n        }\n    }\n}",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            int x = Integer.parseInt(\"abc\");\n        } catch (Exception e) {\n            System.out.println(\"Exception\");\n        } catch (NumberFormatException e) {\n            System.out.println(\"NumberConversionError\");\n        }\n    }\n}",
           "explanation": "Exception is a superclass of NumberFormatException. When the superclass catch comes first, the subclass catch becomes unreachable, causing a compilation error. The NumberFormatException catch must be written before the Exception catch.",
           "choices": [
             {
@@ -423,7 +423,7 @@
           "sectionType": "code",
           "title": "Throwing Exceptions with throw",
           "body": "The throw keyword allows you to raise an exception at any point.\nYou create an exception object with new and throw it with throw.\nWriting code after throw results in unreachable code and a [[compilation]] error.",
-          "code": "// Mainクラスの定義\npublic class Main {\n    // checkAgeメソッドの定義\n    static void checkAge(int age) {\n        // 条件分岐\n        if (age < 0) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\"年齢は0以上でなければなりません: \" + age);\n        }\n        System.out.println(\"年齢: \" + age);\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            checkAge(-5);\n        } catch (IllegalArgumentException e) {\n            System.out.println(\"エラー: \" + e.getMessage());\n        }\n    }\n}",
+          "code": "// MainClass definition\npublic class Main {\n    // checkAgeMethod definition\n    static void checkAge(int age) {\n        // Conditional branching\n        if (age < 0) {\n            // Throw exception\n            throw new IllegalArgumentException(\"Age must be 0 or greater: \" + age);\n        }\n        System.out.println(\"Age: \" + age);\n    }\n\n    // mainMethod definition\n    public static void main(String[] args) {\n        // Processing that may throw an exception\n        try {\n            checkAge(-5);\n        } catch (IllegalArgumentException e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n    }\n}",
           "note": "IllegalArgumentException is a [[RuntimeException]] (unchecked exception), so the code compiles even without a throws declaration.",
           "order": 2
         },
@@ -441,7 +441,7 @@
           "sectionType": "code",
           "title": "Declaring and Propagating Checked Exceptions with throws",
           "body": "When throwing a checked exception, you must add throws to the method declaration.\nThe caller must either handle it with try-catch or propagate it further with throws.\nExceptions propagate up the call [[stack]] until they are handled; if not handled anywhere, the program terminates abnormally.",
-          "code": "import java.io.IOException;\n\n// Mainクラスの定義\npublic class Main {\n    // readFileメソッドの定義\n    static void readFile() throws IOException {\n        // 例外を投げる\n        throw new IOException(\"ファイルが見つかりません\");\n    }\n\n    // processFileメソッドの定義\n    static void processFile() throws IOException {\n        readFile();  // 例外をさらに上位に伝播\n    }\n\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            processFile();\n        } catch (IOException e) {\n            System.out.println(\"捕捉: \" + e.getMessage());\n        }\n    }\n}",
+          "code": "import java.io.IOException;\n\n// MainClass definition\npublic class Main {\n    // readFileMethod definition\n    static void readFile() throws IOException {\n        // Throw exception\n        throw new IOException(\"File not found\");\n    }\n\n    // processFileMethod definition\n    static void processFile() throws IOException {\n        readFile();  // Propagate exception further up\n    }\n\n    public static void main(String[] args) {\n        // Processing that may throw an exception\n        try {\n            processFile();\n        } catch (IOException e) {\n            System.out.println(\"Caught: \" + e.getMessage());\n        }\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 4
         },
@@ -506,7 +506,7 @@
           "lessonId": "ch14_03",
           "type": "outputPredict",
           "question": "What is the output of the following code?",
-          "code": "public class Main {\n    static void methodA() {\n        System.out.println(\"A-start\");\n        throw new RuntimeException(\"エラー\");\n    }\n\n    public static void main(String[] args) {\n        try {\n            System.out.println(\"main-start\");\n            methodA();\n            System.out.println(\"main-end\");\n        } catch (RuntimeException e) {\n            System.out.println(\"caught\");\n        }\n    }\n}",
+          "code": "public class Main {\n    static void methodA() {\n        System.out.println(\"A-start\");\n        throw new RuntimeException(\"Error\");\n    }\n\n    public static void main(String[] args) {\n        try {\n            System.out.println(\"main-start\");\n            methodA();\n            System.out.println(\"main-end\");\n        } catch (RuntimeException e) {\n            System.out.println(\"caught\");\n        }\n    }\n}",
           "explanation": "In main(), \"main-start\" is printed, then methodA() is called. In methodA(), \"A-start\" is printed, then a RuntimeException is thrown. The exception is caught by main()'s catch block, printing \"caught\". \"main-end\" is not printed because execution was interrupted by the exception.",
           "choices": [
             {
@@ -634,7 +634,7 @@
           "sectionType": "code",
           "title": "Custom Checked Exception Class",
           "body": "You create a checked exception by [[extending]] Exception.\nIt is common practice for the [[constructor]] to accept a message and pass it to super.\nCallers must handle it with try-catch or throws.",
-          "code": "// InsufficientBalanceExceptionクラスの定義\nclass InsufficientBalanceException extends Exception {\n    private int balance;\n    private int amount;\n\n    InsufficientBalanceException(int balance, int amount) {\n        super(\"残高不足: 残高\" + balance + \"円に対して\" + amount + \"円の引き出し\");\n        this.balance = balance;\n        this.amount = amount;\n    }\n\n    // getBalanceメソッドの定義\n    int getBalance() { return balance; }\n    // getAmountメソッドの定義\n    int getAmount() { return amount; }\n}\n\n// BankAccountクラスの定義\nclass BankAccount {\n    private int balance;\n\n    BankAccount(int balance) { this.balance = balance; }\n\n    void withdraw(int amount) throws InsufficientBalanceException {\n        // 条件分岐\n        if (amount > balance) {\n            // 例外を投げる\n            throw new InsufficientBalanceException(balance, amount);\n        }\n        balance -= amount;\n        System.out.println(amount + \"円引き出し。残高: \" + balance + \"円\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount account = new BankAccount(1000);\n        // 例外が発生する可能性がある処理\n        try {\n            account.withdraw(500);\n            account.withdraw(800);\n        } catch (InsufficientBalanceException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+          "code": "// InsufficientBalanceExceptionClass definition\nclass InsufficientBalanceException extends Exception {\n    private int balance;\n    private int amount;\n\n    InsufficientBalanceException(int balance, int amount) {\n        super(\"Insufficient balance: Balance \" + balance + \" yen vs. \" + amount + \" yen withdrawal\");\n        this.balance = balance;\n        this.amount = amount;\n    }\n\n    // getBalanceMethod definition\n    int getBalance() { return balance; }\n    // getAmountMethod definition\n    int getAmount() { return amount; }\n}\n\n// BankAccountClass definition\nclass BankAccount {\n    private int balance;\n\n    BankAccount(int balance) { this.balance = balance; }\n\n    void withdraw(int amount) throws InsufficientBalanceException {\n        // Conditional branching\n        if (amount > balance) {\n            // Throw exception\n            throw new InsufficientBalanceException(balance, amount);\n        }\n        balance -= amount;\n        System.out.println(amount + \" yen withdrawn. Balance: \" + balance + \" yen\");\n    }\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount account = new BankAccount(1000);\n        // Processing that may throw an exception\n        try {\n            account.withdraw(500);\n            account.withdraw(800);\n        } catch (InsufficientBalanceException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 2
         },
@@ -643,7 +643,7 @@
           "sectionType": "code",
           "title": "Custom Unchecked Exception Class",
           "body": "Extending [[RuntimeException]] creates an unchecked exception.\nSince handling is not enforced, callers do not need try-catch or throws.\nUnchecked exceptions are appropriate when indicating programming errors or bugs.",
-          "code": "// InvalidProductCodeExceptionクラスの定義\nclass InvalidProductCodeException extends RuntimeException {\n    InvalidProductCodeException(String code) {\n        super(\"無効な商品コード: \" + code);\n    }\n}\n\n// Productクラスの定義\nclass Product {\n    // validateメソッドの定義\n    static void validate(String code) {\n        // 条件分岐\n        if (code == null || code.length() != 8) {\n            // 例外を投げる\n            throw new InvalidProductCodeException(code);\n        }\n        System.out.println(\"商品コード \" + code + \" は有効です\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        Product.validate(\"PROD0001\");  // 有効\n        Product.validate(\"ABC\");       // 例外発生\n    }\n}",
+          "code": "// InvalidProductCodeExceptionClass definition\nclass InvalidProductCodeException extends RuntimeException {\n    InvalidProductCodeException(String code) {\n        super(\"Invalid product code: \" + code);\n    }\n}\n\n// ProductClass definition\nclass Product {\n    // validateMethod definition\n    static void validate(String code) {\n        // Conditional branching\n        if (code == null || code.length() != 8) {\n            // Throw exception\n            throw new InvalidProductCodeException(code);\n        }\n        System.out.println(\"Product code \" + code + \" is valid\");\n    }\n}\n\n// MainClass definition\npublic class Main {\n    // mainMethod definition\n    public static void main(String[] args) {\n        Product.validate(\"PROD0001\");  // Valid\n        Product.validate(\"ABC\");       // Exception occurred\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3
         },
@@ -731,7 +731,7 @@
             },
             {
               "id": "ch14_04_q2_d",
-              "text": "    throw new MyException(\"エラー\");",
+              "text": "    throw new MyException(\"Error\");",
               "isCorrect": true,
               "order": 4
             }
@@ -749,24 +749,24 @@
           "lessonId": "ch14_04",
           "type": "outputPredict",
           "question": "What is the output of the following code?",
-          "code": "class AgeException extends RuntimeException {\n    AgeException(String msg) { super(msg); }\n}\n\npublic class Main {\n    static void checkAge(int age) {\n        if (age < 0 || age > 150) {\n            throw new AgeException(\"不正: \" + age);\n        }\n        System.out.println(\"年齢OK: \" + age);\n    }\n\n    public static void main(String[] args) {\n        try {\n            checkAge(25);\n            checkAge(200);\n            checkAge(30);\n        } catch (AgeException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
-          "explanation": "checkAge(25) satisfies the condition, so \"年齢OK: 25\" is printed. checkAge(200) exceeds 150, so an AgeException is thrown and \"不正: 200\" is printed by the catch block. checkAge(30) is not executed because it comes after the exception.",
+          "code": "class AgeException extends RuntimeException {\n    AgeException(String msg) { super(msg); }\n}\n\npublic class Main {\n    static void checkAge(int age) {\n        if (age < 0 || age > 150) {\n            throw new AgeException(\"Invalid: \" + age);\n        }\n        System.out.println(\"Age OK: \" + age);\n    }\n\n    public static void main(String[] args) {\n        try {\n            checkAge(25);\n            checkAge(200);\n            checkAge(30);\n        } catch (AgeException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+          "explanation": "checkAge(25) satisfies the condition, so \"Age OK: 25\" is printed. checkAge(200) exceeds 150, so an AgeException is thrown and \"Invalid: 200\" is printed by the catch block. checkAge(30) is not executed because it comes after the exception.",
           "choices": [
             {
               "id": "ch14_04_q3_a",
-              "text": "年齢OK: 25\n不正: 200",
+              "text": "Age OK: 25\nInvalid: 200",
               "isCorrect": true,
               "order": 1
             },
             {
               "id": "ch14_04_q3_b",
-              "text": "年齢OK: 25\n不正: 200\n年齢OK: 30",
+              "text": "Age OK: 25\nInvalid: 200\nAge OK: 30",
               "isCorrect": false,
               "order": 2
             },
             {
               "id": "ch14_04_q3_c",
-              "text": "年齢OK: 25\n年齢OK: 30",
+              "text": "Age OK: 25\nAge OK: 30",
               "isCorrect": false,
               "order": 3
             },
@@ -804,7 +804,7 @@
           "sectionType": "code",
           "title": "Basic try-with-resources Syntax",
           "body": "When a [[class]] implementing AutoCloseable is declared inside the try parentheses, close() is automatically called at the end of the block.\nclose() is always executed regardless of whether an exception occurs.\nMultiple resources can be declared separated by semicolons, and they are closed in the reverse order of declaration.",
-          "code": "class MyResource implements AutoCloseable {\n    String name;\n\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n\n    void use() {\n        System.out.println(name + \" used\");\n    }\n\n    @Override\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyResource r1 = new MyResource(\"R1\");\n             MyResource r2 = new MyResource(\"R2\")) {\n            r1.use();\n            r2.use();\n        }\n    }\n}\n// 出力:\n// R1 opened\n// R2 opened\n// R1 used\n// R2 used\n// R2 closed  ← 宣言と逆順にクローズ\n// R1 closed",
+          "code": "class MyResource implements AutoCloseable {\n    String name;\n\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n\n    void use() {\n        System.out.println(name + \" used\");\n    }\n\n    @Override\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyResource r1 = new MyResource(\"R1\");\n             MyResource r2 = new MyResource(\"R2\")) {\n            r1.use();\n            r2.use();\n        }\n    }\n}\n// Output:\n// R1 opened\n// R2 opened\n// R1 used\n// R2 used\n// R2 closed  ← Closed in reverse order of declaration\n// R1 closed",
           "note": "Resources are closed in the reverse order of declaration. This is the same behavior as a [[stack]] (LIFO).",
           "order": 2
         },
@@ -831,7 +831,7 @@
           "sectionType": "code",
           "title": "Suppressed Exceptions",
           "body": "When an exception occurs inside the try block and close() also throws an exception, the close() exception is recorded as a suppressed exception.\nThe main exception is passed to the catch handler with priority, and suppressed exceptions can be retrieved with getSuppressed().\nThis mechanism prevents the original error cause from being hidden.",
-          "code": "// ErrorResourceクラスの定義\nclass ErrorResource implements AutoCloseable {\n    @Override\n    // closeメソッドの定義\n    public void close() {\n        // 例外を投げる\n        throw new RuntimeException(\"close時のエラー\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try (ErrorResource r = new ErrorResource()) {\n            // 例外を投げる\n            throw new RuntimeException(\"tryブロックのエラー\");\n        } catch (RuntimeException e) {\n            System.out.println(\"主例外: \" + e.getMessage());\n            // 拡張for文（コレクションの全要素を順番に処理）\n            for (Throwable s : e.getSuppressed()) {\n                System.out.println(\"抑制: \" + s.getMessage());\n            }\n        }\n    }\n}\n// 出力:\n// 主例外: tryブロックのエラー\n// 抑制: close時のエラー",
+          "code": "// ErrorResourceClass definition\nclass ErrorResource implements AutoCloseable {\n    @Override\n    // closeMethod definition\n    public void close() {\n        // Throw exception\n        throw new RuntimeException(\"Error during close\");\n    }\n}\n\n// MainClass definition\npublic class Main {\n    // mainMethod definition\n    public static void main(String[] args) {\n        // Processing that may throw an exception\n        try (ErrorResource r = new ErrorResource()) {\n            // Throw exception\n            throw new RuntimeException(\"Error in try block\");\n        } catch (RuntimeException e) {\n            System.out.println(\"Main exception: \" + e.getMessage());\n            // Enhanced for loop(Process all elements in the collection in order)\n            for (Throwable s : e.getSuppressed()) {\n                System.out.println(\"Suppressed: \" + s.getMessage());\n            }\n        }\n    }\n}\n// Output:\n// Main exception: Error in try block\n// Suppressed: Error during close",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 5
         },

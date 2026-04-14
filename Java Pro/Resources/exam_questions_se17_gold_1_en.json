@@ -1340,7 +1340,7 @@
     "lessonId": "exam_se17_gold_1",
     "type": "fillBlank",
     "question": "Which code correctly fills in the blank? This creates a CyclicBarrier that allows 3 threads to synchronize at a barrier point.",
-    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        CyclicBarrier barrier = new CyclicBarrier(_____);\n\n        Runnable task = () -> {\n            try {\n                System.out.println(Thread.currentThread().getName() + \" 到着\");\n                barrier.await();\n                System.out.println(Thread.currentThread().getName() + \" 再開\");\n            } catch (Exception e) { e.printStackTrace(); }\n        };\n\n        new Thread(task).start();\n        new Thread(task).start();\n        new Thread(task).start();\n    }\n}",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        CyclicBarrier barrier = new CyclicBarrier(_____);\n\n        Runnable task = () -> {\n            try {\n                System.out.println(Thread.currentThread().getName() + \" arrived\");\n                barrier.await();\n                System.out.println(Thread.currentThread().getName() + \" resumed\");\n            } catch (Exception e) { e.printStackTrace(); }\n        };\n\n        new Thread(task).start();\n        new Thread(task).start();\n        new Thread(task).start();\n    }\n}",
     "explanation": "The CyclicBarrier constructor takes the number of threads that must wait at the barrier point. To synchronize 3 threads, the value 3 must be specified. Each thread blocks until the specified number of threads have called await(), at which point all threads are released simultaneously.",
     "choices": [
       {
@@ -1563,7 +1563,7 @@
     "lessonId": "exam_se17_gold_1",
     "type": "errorFind",
     "question": "When this code is deserialized, what happens to the name field value?",
-    "code": "import java.io.*;\n\npublic class User implements Serializable {\n    private static final long serialVersionUID = 1L;\n    private String name;\n    private transient String password;\n\n    public User(String name, String password) {\n        this.name = name;\n        this.password = password;\n    }\n\n    // getter/setter省略\n}",
+    "code": "import java.io.*;\n\npublic class User implements Serializable {\n    private static final long serialVersionUID = 1L;\n    private String name;\n    private transient String password;\n\n    public User(String name, String password) {\n        this.name = name;\n        this.password = password;\n    }\n\n    // getter/setter omitted\n}",
     "explanation": "The password field marked with the transient modifier is excluded from serialization. After deserialization, password becomes the default value (null for String). On the other hand, name does not have the transient modifier, so its value from serialization is restored.",
     "choices": [
       {
@@ -1786,7 +1786,7 @@
     "lessonId": "exam_se17_gold_1",
     "type": "outputPredict",
     "question": "Regarding the ResultSet next() method, what is the cursor position before the first next() call, and what is the return value of the first next() call when data exists?",
-    "code": "// ResultSet rs が \"SELECT name FROM users\" の結果で\n// \"Alice\" と \"Bob\" の2行を含むとする\nSystem.out.println(rs.next()); // 最初のnext()呼び出し",
+    "code": "// Assume ResultSet rs contains the result of \"SELECT name FROM users\"\n// with 2 rows: \"Alice\" and \"Bob\"\nSystem.out.println(rs.next()); // First next() call",
     "explanation": "The ResultSet cursor is initially positioned before the first row. The first next() call moves the cursor to the first row, and since the row exists, it returns true. next() advances the cursor to the next row, returning true if a row exists and false if not.",
     "choices": [
       {
@@ -2824,24 +2824,24 @@
     "lessonId": "exam_se17_gold_1",
     "type": "outputPredict",
     "question": "What is the output when this code is executed?",
-    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat {}\n    record Dog(String name) implements Animal {}\n    record Cat(String name, boolean indoor) implements Animal {}\n\n    static String describe(Object obj) {\n        if (obj instanceof Dog d) {\n            return \"犬: \" + d.name();\n        } else if (obj instanceof Cat c && c.indoor()) {\n            return \"室内猫: \" + c.name();\n        } else if (obj instanceof Cat c) {\n            return \"外猫: \" + c.name();\n        }\n        return \"不明\";\n    }\n\n    public static void main(String[] args) {\n        System.out.println(describe(new Cat(\"タマ\", true)));\n        System.out.println(describe(new Dog(\"ポチ\")));\n    }\n}",
-    "explanation": "This uses pattern matching for instanceof. new Cat(\"タマ\", true) is of type Cat and indoor() is true, so it matches the second condition and outputs \"室内猫: タマ\". new Dog(\"ポチ\") is of type Dog, so it matches the first condition and outputs \"犬: ポチ\". The guard pattern (&& c.indoor()) narrows down the condition.",
+    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat {}\n    record Dog(String name) implements Animal {}\n    record Cat(String name, boolean indoor) implements Animal {}\n\n    static String describe(Object obj) {\n        if (obj instanceof Dog d) {\n            return \"Dog: \" + d.name();\n        } else if (obj instanceof Cat c && c.indoor()) {\n            return \"Indoor cat: \" + c.name();\n        } else if (obj instanceof Cat c) {\n            return \"Outdoor cat: \" + c.name();\n        }\n        return \"Unknown\";\n    }\n\n    public static void main(String[] args) {\n        System.out.println(describe(new Cat(\"Tama\", true)));\n        System.out.println(describe(new Dog(\"Pochi\")));\n    }\n}",
+    "explanation": "This uses pattern matching for instanceof. new Cat(\"Tama\", true) is of type Cat and indoor() is true, so it matches the second condition and outputs \"Indoor cat: Tama\". new Dog(\"Pochi\") is of type Dog, so it matches the first condition and outputs \"Dog: Pochi\". The guard pattern (&& c.indoor()) narrows down the condition.",
     "choices": [
       {
         "id": "se17g1_q077_a",
-        "text": "室内猫: タマ\n犬: ポチ",
+        "text": "Indoor cat: Tama\nDog: Pochi",
         "isCorrect": true,
         "order": 1
       },
       {
         "id": "se17g1_q077_b",
-        "text": "外猫: タマ\n犬: ポチ",
+        "text": "Outdoor cat: Tama\nDog: Pochi",
         "isCorrect": false,
         "order": 2
       },
       {
         "id": "se17g1_q077_c",
-        "text": "犬: ポチ\n室内猫: タマ",
+        "text": "Dog: Pochi\nIndoor cat: Tama",
         "isCorrect": false,
         "order": 3
       },
@@ -2898,7 +2898,7 @@
     "lessonId": "exam_se17_gold_1",
     "type": "fourChoice",
     "question": "Which of the following is correct about the following code?",
-    "code": "public class Main {\n    static String check(Object obj) {\n        if (obj instanceof String s && s.length() > 3) {\n            return \"長い文字列: \" + s;\n        }\n        if (!(obj instanceof String s)) {\n            return \"文字列ではない\";\n        }\n        return \"短い文字列: \" + s;\n    }\n}",
+    "code": "public class Main {\n    static String check(Object obj) {\n        if (obj instanceof String s && s.length() > 3) {\n            return \"Long string: \" + s;\n        }\n        if (!(obj instanceof String s)) {\n            return \"Not a string\";\n        }\n        return \"Short string: \" + s;\n    }\n}",
     "explanation": "This code compiles correctly. The first if combines instanceof String s with a guard condition to handle strings longer than 3 characters. When the negated condition !(obj instanceof String s) in the second if is false (meaning obj is a String), the variable s becomes available afterward due to flow scoping. Since the if statement returns, the last return is only reached when obj is a String with length 3 or less.",
     "choices": [
       {
@@ -3194,7 +3194,7 @@
     "lessonId": "exam_se17_gold_1",
     "type": "fourChoice",
     "question": "Which of the following is correct about the constraints of a record?",
-    "code": "public record Point(int x, int y) {\n    // カスタムコンストラクタ\n    public Point {\n        if (x < 0 || y < 0) throw new IllegalArgumentException();\n    }\n}",
+    "code": "public record Point(int x, int y) {\n    // Custom constructor\n    public Point {\n        if (x < 0 || y < 0) throw new IllegalArgumentException();\n    }\n}",
     "explanation": "A record's compact constructor (canonical constructor) can be written in a form that omits the parameter list. Inside the compact constructor, explicit field assignments such as this.x = x are not necessary, as they are automatically performed at the end of the constructor. Record classes are implicitly final and cannot be inherited.",
     "choices": [
       {

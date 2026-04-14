@@ -597,18 +597,18 @@
     "lessonId": "exam_se17_silver_2",
     "type": "outputPredict",
     "question": "What is the output when this code is executed?",
-    "code": "public class IfElseDemo {\n    public static void main(String[] args) {\n        int temperature = 25;\n        if (temperature > 30)\n            System.out.println(\"暑い\");\n            System.out.println(\"水分補給\");\n    }\n}",
-    "explanation": "When an if statement has no braces, only the immediately following single statement becomes the body of the if statement. System.out.println(\"水分補給\") is unrelated to the if statement and is always executed. Since temperature > 30 is false, \"暑い\" is not printed, but \"水分補給\" is always printed. Indentation does not affect the Java compiler.",
+    "code": "public class IfElseDemo {\n    public static void main(String[] args) {\n        int temperature = 25;\n        if (temperature > 30)\n            System.out.println(\"Hot\");\n            System.out.println(\"Stay hydrated\");\n    }\n}",
+    "explanation": "When an if statement has no braces, only the immediately following single statement becomes the body of the if statement. System.out.println(\"Stay hydrated\") is unrelated to the if statement and is always executed. Since temperature > 30 is false, \"Hot\" is not printed, but \"Stay hydrated\" is always printed. Indentation does not affect the Java compiler.",
     "choices": [
       {
         "id": "se17s2_q017_a",
-        "text": "暑い\n水分補給",
+        "text": "Hot\nStay hydrated",
         "isCorrect": false,
         "order": 1
       },
       {
         "id": "se17s2_q017_b",
-        "text": "水分補給",
+        "text": "Stay hydrated",
         "isCorrect": true,
         "order": 2
       },
@@ -634,7 +634,7 @@
     "lessonId": "exam_se17_silver_2",
     "type": "errorFind",
     "question": "This code has a compilation error. Which of the following is the cause?",
-    "code": "public class SwitchError {\n    public static void main(String[] args) {\n        long value = 100L;\n        switch (value) {\n            case 100:\n                System.out.println(\"百\");\n                break;\n            default:\n                System.out.println(\"その他\");\n        }\n    }\n}",
+    "code": "public class SwitchError {\n    public static void main(String[] args) {\n        long value = 100L;\n        switch (value) {\n            case 100:\n                System.out.println(\"Hundred\");\n                break;\n            default:\n                System.out.println(\"Other\");\n        }\n    }\n}",
     "explanation": "The long type cannot be used as the argument of a switch statement. The types allowed in a switch statement are byte, short, char, int (and their wrapper types), String, and enum types. long, float, double, and boolean types cannot be used.",
     "choices": [
       {
@@ -2079,18 +2079,18 @@
     "lessonId": "exam_se17_silver_2",
     "type": "outputPredict",
     "question": "What is the output when this code is executed?",
-    "code": "public class Main {\n    static void check(Object obj) {\n        if (obj instanceof Integer n && n > 0) {\n            System.out.println(\"正の整数: \" + n);\n        } else if (obj instanceof String s) {\n            System.out.println(\"文字列: \" + s.length());\n        } else {\n            System.out.println(\"その他\");\n        }\n    }\n    public static void main(String[] args) {\n        check(-5);\n        check(\"ABC\");\n    }\n}",
-    "explanation": "In the first check(-5), obj is of Integer type (autoboxing). obj instanceof Integer n is true, but n > 0 is false (-5 > 0 is false), so the entire if condition evaluates to false due to short-circuit evaluation with &&. The next else if checks for String type, which is also false, so \"その他\" (Other) is output. In the second check(\"ABC\"), it is not Integer so if is false, but it is String so the else if is true, and \"文字列: 3\" (String: 3) is output.",
+    "code": "public class Main {\n    static void check(Object obj) {\n        if (obj instanceof Integer n && n > 0) {\n            System.out.println(\"Positive integer: \" + n);\n        } else if (obj instanceof String s) {\n            System.out.println(\"String: \" + s.length());\n        } else {\n            System.out.println(\"Other\");\n        }\n    }\n    public static void main(String[] args) {\n        check(-5);\n        check(\"ABC\");\n    }\n}",
+    "explanation": "In the first check(-5), obj is of Integer type (autoboxing). obj instanceof Integer n is true, but n > 0 is false (-5 > 0 is false), so the entire if condition evaluates to false due to short-circuit evaluation with &&. The next else if checks for String type, which is also false, so \"Other\" is output. In the second check(\"ABC\"), it is not Integer so if is false, but it is String so the else if is true, and \"String: 3\" is output.",
     "choices": [
       {
         "id": "se17s2_q057_a",
-        "text": "正の整数: -5\n文字列: 3",
+        "text": "Positive integer: -5\nString: 3",
         "isCorrect": false,
         "order": 1
       },
       {
         "id": "se17s2_q057_b",
-        "text": "その他\n文字列: 3",
+        "text": "Other\nString: 3",
         "isCorrect": true,
         "order": 2
       },
@@ -2102,7 +2102,7 @@
       },
       {
         "id": "se17s2_q057_d",
-        "text": "正の整数: -5\nその他",
+        "text": "Positive integer: -5\nOther",
         "isCorrect": false,
         "order": 4
       }
@@ -2494,7 +2494,7 @@
     "lessonId": "exam_se17_silver_2",
     "type": "errorFind",
     "question": "The following code has a compilation error. Which of the following is the cause of the error?",
-    "code": "public class MultiCatch {\n    public static void main(String[] args) {\n        try {\n            String s = null;\n            s.length();\n        } catch (NullPointerException | RuntimeException e) {\n            System.out.println(\"エラー: \" + e.getMessage());\n        }\n    }\n}",
+    "code": "public class MultiCatch {\n    public static void main(String[] args) {\n        try {\n            String s = null;\n            s.length();\n        } catch (NullPointerException | RuntimeException e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n    }\n}",
     "explanation": "In a multi-catch, the specified exception classes must not have an inheritance relationship. Since NullPointerException is a subclass of RuntimeException, specifying both in the same catch clause causes a compilation error. The subclass exception is already caught by the parent class exception, making it a redundant specification.",
     "choices": [
       {
@@ -2827,8 +2827,8 @@
     "lessonId": "exam_se17_silver_2",
     "type": "outputPredict",
     "question": "What is the output when this code is executed?",
-    "code": "public class SwitchYield {\n    public static void main(String[] args) {\n        String season = \"SUMMER\";\n        int numDays = switch (season) {\n            case \"SPRING\", \"FALL\" -> 90;\n            case \"SUMMER\" -> {\n                System.out.print(\"暑い！ \");\n                yield 92;\n            }\n            case \"WINTER\" -> 89;\n            default -> 0;\n        };\n        System.out.println(numDays);\n    }\n}",
-    "explanation": "In the switch expression, season matches \"SUMMER\". Inside the arrow syntax block, System.out.print(\"暑い！ \") is executed, then yield 92; returns the value 92. After that, System.out.println(numDays) outputs 92. The result is \"暑い！ 92\".",
+    "code": "public class SwitchYield {\n    public static void main(String[] args) {\n        String season = \"SUMMER\";\n        int numDays = switch (season) {\n            case \"SPRING\", \"FALL\" -> 90;\n            case \"SUMMER\" -> {\n                System.out.print(\"Hot! \");\n                yield 92;\n            }\n            case \"WINTER\" -> 89;\n            default -> 0;\n        };\n        System.out.println(numDays);\n    }\n}",
+    "explanation": "In the switch expression, season matches \"SUMMER\". Inside the arrow syntax block, System.out.print(\"Hot! \") is executed, then yield 92; returns the value 92. After that, System.out.println(numDays) outputs 92. The result is \"Hot! 92\".",
     "choices": [
       {
         "id": "se17s2_q077_a",
@@ -2838,13 +2838,13 @@
       },
       {
         "id": "se17s2_q077_b",
-        "text": "暑い！ 92",
+        "text": "Hot! 92",
         "isCorrect": true,
         "order": 2
       },
       {
         "id": "se17s2_q077_c",
-        "text": "暑い！ \n92",
+        "text": "Hot! \n92",
         "isCorrect": false,
         "order": 3
       },

@@ -2860,7 +2860,7 @@
     "lessonId": "exam_se17_gold_2",
     "type": "errorFind",
     "question": "What is the problem with the following code?",
-    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat {}\n    final class Dog implements Animal {\n        String name() { return \"Dog\"; }\n    }\n    final class Cat implements Animal {\n        String name() { return \"Cat\"; }\n    }\n\n    static String identify(Animal animal) {\n        if (animal instanceof Dog d) {\n            return d.name();\n        }\n        // Cat の場合の処理がない\n        return \"Unknown\";\n    }\n}",
+    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat {}\n    final class Dog implements Animal {\n        String name() { return \"Dog\"; }\n    }\n    final class Cat implements Animal {\n        String name() { return \"Cat\"; }\n    }\n\n    static String identify(Animal animal) {\n        if (animal instanceof Dog d) {\n            return d.name();\n        }\n        // No handling for the Cat case\n        return \"Unknown\";\n    }\n}",
     "explanation": "The code itself does not cause a compilation error. However, there is a logical problem. Animal is a sealed interface that only permits Dog and Cat. The identify method only handles the Dog case, and returns \"Unknown\" for Cat. The compiler does not perform exhaustiveness checking for sealed types in regular if-else statements (it does in switch expression pattern matching). This code compiles and runs normally, returning \"Unknown\", but proper handling for Cat is missing.",
     "choices": [
       {

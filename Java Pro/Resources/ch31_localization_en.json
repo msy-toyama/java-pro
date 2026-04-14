@@ -32,7 +32,7 @@
           "sectionType": "code",
           "title": "How to Create a Locale",
           "body": "There are several ways to create a Locale object.\nUsing constants is the simplest approach.\nUsing constructors is another option, but this approach is becoming deprecated.\nUsing **Locale**.Builder is the recommended method.",
-          "code": "// 定数を使用\nLocale japan = Locale.JAPAN;\nLocale us = Locale.US;\n\n// コンストラクタ（非推奨になりつつある）\nLocale france = new Locale(\"fr\", \"FR\");\n\n// Locale.Builder（推奨）\nLocale germany = new Locale.Builder()\n    .setLanguage(\"de\")\n    .setRegion(\"DE\")\n    .build();\n\nSystem.out.println(japan); // ja_JP\nSystem.out.println(germany); // de_DE",
+          "code": "// Using constants\nLocale japan = Locale.JAPAN;\nLocale us = Locale.US;\n\n// Constructor(Has been deprecated)\nLocale france = new Locale(\"fr\", \"FR\");\n\n// Locale.Builder(Recommended)\nLocale germany = new Locale.Builder()\n    .setLanguage(\"de\")\n    .setRegion(\"DE\")\n    .build();\n\nSystem.out.println(japan); // ja_JP\nSystem.out.println(germany); // de_DE",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },
@@ -197,7 +197,7 @@
           "sectionType": "code",
           "title": "How to Use ResourceBundle",
           "body": "Use **ResourceBundle**.getBundle() to obtain a bundle and getString() to retrieve the value associated with a key.\nPass the base name and a Locale to getBundle().\nIf the Locale is omitted, the default Locale is used.",
-          "code": "// messages_ja.properties:\n// greeting=こんにちは\n// farewell=さようなら\n\n// messages_en.properties:\n// greeting=Hello\n// farewell=Goodbye\n\nLocale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nString greeting = bundle.getString(\"greeting\");\nSystem.out.println(greeting); // こんにちは\n\nResourceBundle enBundle = ResourceBundle.getBundle(\"messages\", Locale.US);\nSystem.out.println(enBundle.getString(\"greeting\")); // Hello",
+          "code": "// messages_ja.properties:\n// greeting=Hello\n// farewell=Goodbye\n\n// messages_en.properties:\n// greeting=Hello\n// farewell=Goodbye\n\nLocale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nString greeting = bundle.getString(\"greeting\");\nSystem.out.println(greeting); // Hello\n\nResourceBundle enBundle = ResourceBundle.getBundle(\"messages\", Locale.US);\nSystem.out.println(enBundle.getString(\"greeting\")); // Hello",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },
@@ -261,7 +261,7 @@
           "id": "ch31_02_q2",
           "lessonId": "ch31_02",
           "type": "outputPredict",
-          "question": "Choose the output of the following code.\n\nmessages_ja.properties contains greeting=こんにちは.\nmessages.properties contains greeting=Hello and farewell=Goodbye.",
+          "question": "Choose the output of the following code.\n\nmessages_ja.properties contains greeting=Hello.\nmessages.properties contains greeting=Hello and farewell=Goodbye.",
           "code": "Locale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nSystem.out.println(bundle.getString(\"farewell\"));",
           "explanation": "Since the farewell key does not exist in messages_ja.properties, the search falls back to the default messages.properties, retrieving \"Goodbye\". Key lookups fall back to the parent bundle.",
           "choices": [
@@ -285,7 +285,7 @@
             },
             {
               "id": "ch31_02_q2_d",
-              "text": "こんにちは",
+              "text": "Hello",
               "isCorrect": false,
               "order": 4
             }
@@ -414,7 +414,7 @@
           "sectionType": "code",
           "title": "Using NumberFormat",
           "body": "NumberFormat.getInstance() obtains a locale-aware number formatter.\ngetCurrencyInstance() obtains a currency formatter.\nThe format() [[method]] converts a number to a string, and parse() converts a string back to a number.",
-          "code": "import java.text.NumberFormat;\nimport java.util.Locale;\n\n// 変数の宣言と初期化\ndouble amount = 1234567.89;\n\nNumberFormat nfJP = NumberFormat.getInstance(Locale.JAPAN);\nSystem.out.println(nfJP.format(amount)); // 1,234,567.89\n\nNumberFormat nfDE = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nfDE.format(amount)); // 1.234.567,89\n\nNumberFormat cfJP = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nSystem.out.println(cfJP.format(amount)); // ￥1,234,568\n\nNumberFormat cfUS = NumberFormat.getCurrencyInstance(Locale.US);\nSystem.out.println(cfUS.format(amount)); // $1,234,567.89",
+          "code": "import java.text.NumberFormat;\nimport java.util.Locale;\n\n// Variable declaration and initialization\ndouble amount = 1234567.89;\n\nNumberFormat nfJP = NumberFormat.getInstance(Locale.JAPAN);\nSystem.out.println(nfJP.format(amount)); // 1,234,567.89\n\nNumberFormat nfDE = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nfDE.format(amount)); // 1.234.567,89\n\nNumberFormat cfJP = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nSystem.out.println(cfJP.format(amount)); // ¥1,234,568\n\nNumberFormat cfUS = NumberFormat.getCurrencyInstance(Locale.US);\nSystem.out.println(cfUS.format(amount)); // $1,234,567.89",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 2
         },
@@ -423,7 +423,7 @@
           "sectionType": "code",
           "title": "DateTimeFormatter and Locale",
           "body": "DateTimeFormatter's ofLocalizedDate() and ofLocalizedDateTime() generate locale-aware formatters.\nUse the withLocale() method to specify a Locale.\nFormatStyle lets you specify the display style (FULL, LONG, MEDIUM, SHORT).",
-          "code": "import java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.FormatStyle;\nimport java.util.Locale;\n\nLocalDate date = LocalDate.of(2025, 4, 1);\n\nDateTimeFormatter fmtJP = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nSystem.out.println(date.format(fmtJP));\n// 2025年4月1日火曜日\n\nDateTimeFormatter fmtUS = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.US);\nSystem.out.println(date.format(fmtUS));\n// Tuesday, April 1, 2025",
+          "code": "import java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.FormatStyle;\nimport java.util.Locale;\n\nLocalDate date = LocalDate.of(2025, 4, 1);\n\nDateTimeFormatter fmtJP = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nSystem.out.println(date.format(fmtJP));\n// 2025/4/1Tuesday\n\nDateTimeFormatter fmtUS = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.US);\nSystem.out.println(date.format(fmtUS));\n// Tuesday, April 1, 2025",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },

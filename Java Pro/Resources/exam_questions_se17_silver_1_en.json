@@ -671,7 +671,7 @@
     "lessonId": "exam_se17_silver_1",
     "type": "errorFind",
     "question": "The following code has a compilation error. What is the cause of the error?",
-    "code": "public class Main {\n    public static void main(String[] args) {\n        long value = 100L;\n        switch (value) {\n            case 100:\n                System.out.println(\"百\");\n                break;\n            default:\n                System.out.println(\"その他\");\n        }\n    }\n}",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        long value = 100L;\n        switch (value) {\n            case 100:\n                System.out.println(\"Hundred\");\n                break;\n            default:\n                System.out.println(\"Other\");\n        }\n    }\n}",
     "explanation": "The long type cannot be used in a switch statement expression. Types allowed in switch statements are byte, short, char, int, String, enum, and their wrapper classes. long, float, double, and boolean cannot be used.",
     "choices": [
       {
@@ -1226,8 +1226,8 @@
     "lessonId": "exam_se17_silver_1",
     "type": "errorFind",
     "question": "The following code has a compilation error. What is the cause of the error?",
-    "code": "public class Main {\n    static void greet(String name, String... titles) {\n        System.out.println(name + \": \" + String.join(\", \", titles));\n    }\n    static void greet(String... args) {\n        System.out.println(String.join(\" \", args));\n    }\n    public static void main(String[] args) {\n        greet(\"田中\", \"部長\", \"課長\");\n    }\n}",
-    "explanation": "Both methods match the call greet(\"田中\", \"部長\", \"課長\"), so the compiler cannot determine which one to call, resulting in an ambiguous invocation compilation error. Overloaded methods with varargs can create ambiguity.",
+    "code": "public class Main {\n    static void greet(String name, String... titles) {\n        System.out.println(name + \": \" + String.join(\", \", titles));\n    }\n    static void greet(String... args) {\n        System.out.println(String.join(\" \", args));\n    }\n    public static void main(String[] args) {\n        greet(\"Tanaka\", \"Manager\", \"Section Chief\");\n    }\n}",
+    "explanation": "Both methods match the call greet(\"Tanaka\", \"Manager\", \"Section Chief\"), so the compiler cannot determine which one to call, resulting in an ambiguous invocation compilation error. Overloaded methods with varargs can create ambiguity.",
     "choices": [
       {
         "id": "se17s1_q034_a",
@@ -1782,18 +1782,18 @@
     "lessonId": "exam_se17_silver_1",
     "type": "outputPredict",
     "question": "What is the output when the following code is executed?",
-    "code": "public class Main {\n    static class Person {\n        private String name;\n        private int age;\n        \n        Person(String name, int age) {\n            this.name = name;\n            this.age = setAge(age);\n        }\n        \n        private int setAge(int age) {\n            return age < 0 ? 0 : age;\n        }\n        \n        public String toString() {\n            return name + \"(\" + age + \")\";\n        }\n    }\n    public static void main(String[] args) {\n        Person p = new Person(\"太郎\", -5);\n        System.out.println(p);\n    }\n}",
-    "explanation": "In the constructor, setAge(-5) is called, and since -5 < 0, 0 is returned. So age becomes 0. The toString() method outputs \"太郎(0)\".",
+    "code": "public class Main {\n    static class Person {\n        private String name;\n        private int age;\n        \n        Person(String name, int age) {\n            this.name = name;\n            this.age = setAge(age);\n        }\n        \n        private int setAge(int age) {\n            return age < 0 ? 0 : age;\n        }\n        \n        public String toString() {\n            return name + \"(\" + age + \")\";\n        }\n    }\n    public static void main(String[] args) {\n        Person p = new Person(\"Taro\", -5);\n        System.out.println(p);\n    }\n}",
+    "explanation": "In the constructor, setAge(-5) is called, and since -5 < 0, 0 is returned. So age becomes 0. The toString() method outputs \"Taro(0)\".",
     "choices": [
       {
         "id": "se17s1_q049_a",
-        "text": "太郎(-5)",
+        "text": "Taro(-5)",
         "isCorrect": false,
         "order": 1
       },
       {
         "id": "se17s1_q049_b",
-        "text": "太郎(0)",
+        "text": "Taro(0)",
         "isCorrect": true,
         "order": 2
       },

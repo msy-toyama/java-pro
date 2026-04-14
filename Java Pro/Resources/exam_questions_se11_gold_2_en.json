@@ -3045,7 +3045,7 @@
     "lessonId": "exam_se11_gold_2",
     "type": "fourChoice",
     "question": "Which of the following is correct about the two forms of the assert statement?",
-    "code": "assert x > 0;\nassert x > 0 : \"xは正の数でなければなりません\";",
+    "code": "assert x > 0;\nassert x > 0 : \"x must be a positive number\";",
     "explanation": "There are two forms of the assert statement: (1) assert condition; — throws AssertionError when the condition is false. (2) assert condition : message expression; — passes the value of the message expression to the AssertionError constructor when the condition is false. Any type except void can be specified for the message expression.",
     "choices": [
       {

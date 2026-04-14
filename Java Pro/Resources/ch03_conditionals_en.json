@@ -23,7 +23,7 @@
           "sectionType": "code",
           "title": "How to Write an if Statement",
           "body": "An if statement executes processing only when the specified condition is true.",
-          "code": "int score = 80;\n\nif (score >= 60) {\n    System.out.println(\"合格です！\");\n}\n// 出力: 合格です！",
+          "code": "int score = 80;\n\nif (score >= 60) {\n    System.out.println(\"You passed!\");\n}\n// Output: You passed!",
           "note": "The processing inside {} (braces) is the body of the if statement. If the condition is false, nothing is executed.",
           "order": 2
         },
@@ -195,7 +195,7 @@
           "sectionType": "code",
           "title": "The if-else Statement",
           "body": "You can write processing for \"otherwise\" using else.",
-          "code": "// 変数の宣言と初期化\nint score = 45;\n\n// 条件分岐\nif (score >= 60) {\n    System.out.println(\"合格\");\n} else {\n    System.out.println(\"不合格\");\n}\n// 出力: 不合格",
+          "code": "// Variable declaration and initialization\nint score = 45;\n\n// Conditional branching\nif (score >= 60) {\n    System.out.println(\"Pass\");\n} else {\n    System.out.println(\"Failed\");\n}\n// Output: Failed",
           "note": "\"//\" in code is a comment (explanatory text). It does not affect program execution.",
           "order": 2
         },
@@ -213,7 +213,7 @@
           "sectionType": "code",
           "title": "Multiple Conditions with else if",
           "body": "Use else if when you want to split into three or more conditions.",
-          "code": "// 変数の宣言と初期化\nint score = 75;\n\n// 条件分岐\nif (score >= 90) {\n    System.out.println(\"優\");\n// 別の条件をチェック\n} else if (score >= 70) {\n    System.out.println(\"良\");\n// 別の条件をチェック\n} else if (score >= 60) {\n    System.out.println(\"可\");\n} else {\n    System.out.println(\"不可\");\n}\n// 出力: 良",
+          "code": "// Variable declaration and initialization\nint score = 75;\n\n// Conditional branching\nif (score >= 90) {\n    System.out.println(\"Excellent\");\n// Check different condition\n} else if (score >= 70) {\n    System.out.println(\"Good\");\n// Check different condition\n} else if (score >= 60) {\n    System.out.println(\"Acceptable\");\n} else {\n    System.out.println(\"Not allowed\");\n}\n// Output: Good",
           "note": "Conditions are evaluated from top to bottom, and only the first block whose condition is true is executed.",
           "order": 4
         },
@@ -435,7 +435,7 @@
           "sectionType": "code",
           "title": "Logical Operators",
           "body": "There are three [[operators]] for combining conditions.",
-          "code": "// 変数の宣言と初期化\nint age = 20;\nboolean hasTicket = true;\n\n// AND（かつ）: 両方trueならtrue\n// 条件分岐\nif (age >= 18 && hasTicket) {\n    System.out.println(\"入場できます\");\n}\n\n// OR（または）: どちらかtrueならtrue\nint day = 6; // 土曜\nif (day == 6 || day == 0) {\n    System.out.println(\"休日です\");\n}\n\n// NOT（否定）: true/falseを反転\nboolean isHoliday = false;\nif (!isHoliday) {\n    System.out.println(\"平日です\");\n}",
+          "code": "// Variable declaration and initialization\nint age = 20;\nboolean hasTicket = true;\n\n// AND( and): true if both are true\n// Conditional branching\nif (age >= 18 && hasTicket) {\n    System.out.println(\"You may enter\");\n}\n\n// OR(Or): true if either is true\nint day = 6; // Saturday\nif (day == 6 || day == 0) {\n    System.out.println(\"It's a day off\");\n}\n\n// NOT(Negation): Flip true/false\nboolean isHoliday = false;\nif (!isHoliday) {\n    System.out.println(\"It's a weekday\");\n}",
           "note": "\"//\" in code is a comment (explanatory text). It does not affect program execution.",
           "order": 2
         },
@@ -473,18 +473,18 @@
           "lessonId": "ch03_03",
           "type": "outputPredict",
           "question": "What is the output of the following code?",
-          "code": "int x = 15;\nif (x >= 10 && x <= 20) {\n    System.out.println(\"範囲内\");\n} else {\n    System.out.println(\"範囲外\");\n}",
-          "explanation": "With x=15, x>=10 is true and x<=20 is also true. Since && (AND) is true when both sides are true, \"範囲内\" (in range) is displayed.",
+          "code": "int x = 15;\nif (x >= 10 && x <= 20) {\n    System.out.println(\"In range\");\n} else {\n    System.out.println(\"Out of range\");\n}",
+          "explanation": "With x=15, x>=10 is true and x<=20 is also true. Since && (AND) is true when both sides are true, \"In range\" is displayed.",
           "choices": [
             {
               "id": "ch03_03_q1_a",
-              "text": "範囲内",
+              "text": "In range",
               "isCorrect": true,
               "order": 1
             },
             {
               "id": "ch03_03_q1_b",
-              "text": "範囲外",
+              "text": "Out of range",
               "isCorrect": false,
               "order": 2
             },
@@ -503,7 +503,7 @@
           ],
           "correctOrder": null,
           "executionResult": {
-            "output": "範囲内\n",
+            "output": "In range\n",
             "exitCode": 0,
             "hasError": false,
             "errorMessage": null,
@@ -699,7 +699,7 @@
           "sectionType": "code",
           "title": "Basics of the switch Statement",
           "body": "The switch statement executes the processing of the matching case.",
-          "code": "// 変数の宣言と初期化\nint day = 3; // 水曜\n\n// 値に応じた分岐処理\nswitch (day) {\n    case 1:\n        System.out.println(\"月曜\");\n        break;\n    case 2:\n        System.out.println(\"火曜\");\n        break;\n    case 3:\n        System.out.println(\"水曜\");\n        break;\n    default:\n        System.out.println(\"その他\");\n        break;\n}\n// 出力: 水曜",
+          "code": "// Variable declaration and initialization\nint day = 3; // Wednesday\n\n// Branch processing based on value\nswitch (day) {\n    case 1:\n        System.out.println(\"Monday\");\n        break;\n    case 2:\n        System.out.println(\"Tuesday\");\n        break;\n    case 3:\n        System.out.println(\"Wednesday\");\n        break;\n    default:\n        System.out.println(\"Others\");\n        break;\n}\n// Output: Wednesday",
           "note": "If you forget break, the processing \"falls through\" to the next case. Be careful.",
           "order": 2
         },
@@ -871,7 +871,7 @@
           "sectionType": "code",
           "title": "The Ternary Operator",
           "body": "A shorthand notation that lets you write a simple conditional branch in one line.",
-          "code": "// 変数の宣言と初期化\nint age = 20;\nString result = (age >= 18) ? \"成人\" : \"未成年\";\nSystem.out.println(result);  // 成人\n\n// if文で書くと:\nString result2;\n// 条件分岐\nif (age >= 18) {\n    result2 = \"成人\";\n} else {\n    result2 = \"未成年\";\n}",
+          "code": "// Variable declaration and initialization\nint age = 20;\nString result = (age >= 18) ? \"Adult\" : \"Minor\";\nSystem.out.println(result);  // Adult\n\n// Written with an if statement:\nString result2;\n// Conditional branching\nif (age >= 18) {\n    result2 = \"Adult\";\n} else {\n    result2 = \"Minor\";\n}",
           "note": "The **ternary operator** is concise but not suitable for complex conditions. Prioritize readability.",
           "order": 2
         },
@@ -889,7 +889,7 @@
           "sectionType": "code",
           "title": "Nesting if Statements",
           "body": "Writing an [[if statement]] inside another if statement is called nesting.",
-          "code": "// 変数の宣言と初期化\nint score = 85;\nboolean isPresent = true;\n\n// 条件分岐\nif (isPresent) {\n    if (score >= 80) {\n        System.out.println(\"出席かつ高得点！\");\n    } else {\n        System.out.println(\"出席しています\");\n    }\n} else {\n    System.out.println(\"欠席です\");\n}",
+          "code": "// Variable declaration and initialization\nint score = 85;\nboolean isPresent = true;\n\n// Conditional branching\nif (isPresent) {\n    if (score >= 80) {\n        System.out.println(\"Attending with high score!\");\n    } else {\n        System.out.println(\"Attending\");\n    }\n} else {\n    System.out.println(\"Absent\");\n}",
           "note": "Deep nesting makes code hard to read. Address this by combining conditions with && or using early returns.",
           "order": 4
         },
@@ -909,18 +909,18 @@
           "lessonId": "ch03_05",
           "type": "outputPredict",
           "question": "What is the output of the following code?",
-          "code": "int x = 7;\nString s = (x % 2 == 0) ? \"偶数\" : \"奇数\";\nSystem.out.println(s);",
-          "explanation": "7 % 2 = 1, which is not 0, so the condition is false. The ternary operator selects the false value \"奇数\" (odd).",
+          "code": "int x = 7;\nString s = (x % 2 == 0) ? \"Even\" : \"Odd\";\nSystem.out.println(s);",
+          "explanation": "7 % 2 = 1, which is not 0, so the condition is false. The ternary operator selects the false value \"Odd\".",
           "choices": [
             {
               "id": "ch03_05_q1_a",
-              "text": "偶数",
+              "text": "Even",
               "isCorrect": false,
               "order": 1
             },
             {
               "id": "ch03_05_q1_b",
-              "text": "奇数",
+              "text": "Odd",
               "isCorrect": true,
               "order": 2
             },
@@ -939,7 +939,7 @@
           ],
           "correctOrder": null,
           "executionResult": {
-            "output": "奇数\n",
+            "output": "Odd\n",
             "exitCode": 0,
             "hasError": false,
             "errorMessage": null,

@@ -189,8 +189,8 @@
     "lessonId": "exam_se11_gold_1",
     "type": "outputPredict",
     "question": "What is the output when the following code is executed?",
-    "code": "import java.util.Optional;\n\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> opt = Optional.empty();\n        opt.ifPresentOrElse(\n            s -> System.out.println(s),\n            () -> System.out.println(\"値なし\")\n        );\n    }\n}",
-    "explanation": "Optional.empty() creates an empty Optional with no value. ifPresentOrElse() executes the second argument (Runnable) when the value is absent, so \"値なし\" is output.",
+    "code": "import java.util.Optional;\n\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> opt = Optional.empty();\n        opt.ifPresentOrElse(\n            s -> System.out.println(s),\n            () -> System.out.println(\"No value\")\n        );\n    }\n}",
+    "explanation": "Optional.empty() creates an empty Optional with no value. ifPresentOrElse() executes the second argument (Runnable) when the value is absent, so \"No value\" is output.",
     "choices": [
       {
         "id": "se11g1_q006_a",
@@ -200,7 +200,7 @@
       },
       {
         "id": "se11g1_q006_b",
-        "text": "値なし",
+        "text": "No value",
         "isCorrect": true,
         "order": 2
       },

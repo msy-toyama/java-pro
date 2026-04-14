@@ -206,7 +206,7 @@
           "sectionType": "code",
           "title": "The Compilation and Execution Flow",
           "body": "A Java program follows the flow of \"Source Code → **Compile** → Execute.\"",
-          "code": "// === Javaプログラムの実行手順 ===\n\n// ステップ1: ソースファイルを作成する\n//   Hello.java というファイル名で保存\n\n// ステップ2: コンパイル（ソースコードを変換）\n//   javac Hello.java\n//   → Hello.class（バイトコード）が生成される\n\n// ステップ3: 実行（プログラムを動かす）\n//   java Hello\n//   → 画面にメッセージが表示される",
+          "code": "// === Java program Execution steps ===\n\n// Step1: Create a source file\n//   Hello.java Save with filename\n\n// Step2: Compile (convert source code)\n//   javac Hello.java\n//   → Hello.class(bytecode) is generated\n\n// Step3: Execute (run the program)\n//   java Hello\n//   → Message on screen is displayed",
           "note": ".java files are human-readable source code, and .class files are **bytecode** that the JVM can execute.",
           "order": 4
         },
@@ -360,7 +360,7 @@
           "sectionType": "code",
           "title": "Hello World",
           "body": "The simplest program that displays text on the screen in Java.",
-          "code": "// Javaプログラムの基本構造\n// すべてのコードは「クラス」の中に書く\npublic class Hello {\n    // mainメソッド: プログラムの開始地点\n    public static void main(String[] args) {\n        // コンソールにメッセージを表示する\n        System.out.println(\"Hello, World!\");\n    }\n}",
+          "code": "// Java program basic structure\n// All code is written inside a class\npublic class Hello {\n    // mainMethod: Program entry point\n    public static void main(String[] args) {\n        // Message to console to display\n        System.out.println(\"Hello, World!\");\n    }\n}",
           "note": null,
           "order": 2
         },

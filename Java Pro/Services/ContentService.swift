@@ -173,9 +173,11 @@ final class ContentService {
         loadingChapterIds.insert(courseId)
         defer { loadingChapterIds.remove(courseId) }
 
+        let currentLanguage = LanguageManager.shared.currentLanguage
         // ファイルI/Oのみバックグラウンドで実行
         let data: Data? = await Task.detached(priority: .userInitiated) {
-            Self.loadJSONDataFromBundle(fileName: course.fileName)
+            let localizedName = Self.localizedFileName(course.fileName, language: currentLanguage)
+            return Self.loadJSONDataFromBundle(fileName: localizedName)
         }.value
 
         // デコードはメインスレッドで実行（ChapterContent の Decodable がメインアクター分離のため）

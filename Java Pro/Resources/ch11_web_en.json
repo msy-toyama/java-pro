@@ -13,7 +13,7 @@
           "lessonId": "ch11_01",
           "sectionType": "overview",
           "title": "What You Will Learn",
-          "body": "In this lesson, you will learn:\n\n・How HTTP communication works (requests and responses)\n・The differences between [[HTTP]] [[methods|method]] (GET, POST, PUT, DELETE)\n・The meaning of **status codes** (200, 404, 500, etc.)\n\nLet's understand the fundamentals of HTTP communication, which forms the foundation of web development.",
+          "body": "In this lesson, you will learn:\n\n- How HTTP communication works (requests and responses)\n- The differences between [[HTTP]] [[methods|method]] (GET, POST, PUT, DELETE)\n- The meaning of **status codes** (200, 404, 500, etc.)\n\nLet's understand the fundamentals of HTTP communication, which forms the foundation of web development.",
           "code": null,
           "note": null,
           "order": 1
@@ -31,7 +31,7 @@
           "lessonId": "ch11_01",
           "sectionType": "rule",
           "title": "HTTP Methods",
-          "body": "HTTP requests include a method that indicates \"what you want to do.\"\n\n| Method | Purpose | Notes |\n|---|---|---|\n| GET | Retrieve data | Parameters are included in the URL (?name=taro&age=25) |\n| POST | Send data (form submission, login) | Parameters are in the request body. Can send large amounts of data |\n| PUT | Update data (overwrite existing resources) | Used in REST APIs |\n| DELETE | Delete data | Used in REST APIs |\n| PATCH | Partially update data | Used in REST APIs |\n\nGET and POST are the basics of web apps. PUT/DELETE/PATCH are used in REST APIs.\n\nWhen to use GET vs POST:\n・GET: For retrieval. Can be bookmarked. Saved in browser history\n・POST: For submission. Use POST for sensitive data like passwords",
+          "body": "HTTP requests include a method that indicates \"what you want to do.\"\n\n| Method | Purpose | Notes |\n|---|---|---|\n| GET | Retrieve data | Parameters are included in the URL (?name=taro&age=25) |\n| POST | Send data (form submission, login) | Parameters are in the request body. Can send large amounts of data |\n| PUT | Update data (overwrite existing resources) | Used in REST APIs |\n| DELETE | Delete data | Used in REST APIs |\n| PATCH | Partially update data | Used in REST APIs |\n\nGET and POST are the basics of web apps. PUT/DELETE/PATCH are used in REST APIs.\n\nWhen to use GET vs POST:\n- GET: For retrieval. Can be bookmarked. Saved in browser history\n- POST: For submission. Use POST for sensitive data like passwords",
           "code": null,
           "note": "GET request parameters are exposed in the URL, so never send confidential information like passwords via GET.",
           "order": 3
@@ -67,7 +67,7 @@
           "lessonId": "ch11_01",
           "sectionType": "point",
           "title": "Key Points",
-          "body": "・Web communication is fundamentally a single request → response round trip\n・HTTP methods: GET (retrieve), POST (submit), PUT (update), DELETE (delete)\n・GET parameters are exposed in the URL; POST parameters are stored in the body\n・**Status codes**: 2xx=Success, 4xx=Client error, 5xx=Server error\n・Java 11's HttpClient enables HTTP communication using only standard libraries\n・HTTP is a stateless protocol (does not maintain state)",
+          "body": "- Web communication is fundamentally a single request → response round trip\n- HTTP methods: GET (retrieve), POST (submit), PUT (update), DELETE (delete)\n- GET parameters are exposed in the URL; POST parameters are stored in the body\n- **Status codes**: 2xx=Success, 4xx=Client error, 5xx=Server error\n- Java 11's HttpClient enables HTTP communication using only standard libraries\n- HTTP is a stateless protocol (does not maintain state)",
           "code": null,
           "note": null,
           "order": 7
@@ -201,7 +201,7 @@
           "lessonId": "ch11_02",
           "sectionType": "overview",
           "title": "What You Will Learn",
-          "body": "In this lesson, you will learn:\n\n・The basic structure of **servlets** (HttpServlet)\n・Implementing doGet() and doPost() [[methods|method]]\n・How to retrieve request parameters\n\n[[Servlets|Servlet]] are the foundational technology for Java web applications.",
+          "body": "In this lesson, you will learn:\n\n- The basic structure of **servlets** (HttpServlet)\n- Implementing doGet() and doPost() [[methods|method]]\n- How to retrieve request parameters\n\n[[Servlets|Servlet]] are the foundational technology for Java web applications.",
           "code": null,
           "note": null,
           "order": 1
@@ -246,7 +246,7 @@
           "lessonId": "ch11_02",
           "sectionType": "point",
           "title": "Key Points",
-          "body": "・**Servlets** are created by extending HttpServlet\n・doGet() handles GET requests, doPost() handles POST requests\n・The @WebServlet annotation specifies the URL pattern\n・getParameter() retrieves request parameters\n・setContentType() sets the MIME type of the response\n・A web container (Tomcat, etc.) provides the servlet execution environment",
+          "body": "- **Servlets** are created by extending HttpServlet\n- doGet() handles GET requests, doPost() handles POST requests\n- The @WebServlet annotation specifies the URL pattern\n- getParameter() retrieves request parameters\n- setContentType() sets the MIME type of the response\n- A web container (Tomcat, etc.) provides the servlet execution environment",
           "code": null,
           "note": null,
           "order": 6
@@ -375,7 +375,7 @@
           "lessonId": "ch11_03",
           "sectionType": "overview",
           "title": "What You Will Learn",
-          "body": "In this lesson, you will learn:\n\n・The stateless nature of HTTP and the need for sessions\n・How to manage login state with HttpSession\n・How cookies work and how to use them\n\nLearn the mechanisms for identifying users and maintaining state.",
+          "body": "In this lesson, you will learn:\n\n- The stateless nature of HTTP and the need for sessions\n- How to manage login state with HttpSession\n- How cookies work and how to use them\n\nLearn the mechanisms for identifying users and maintaining state.",
           "code": null,
           "note": null,
           "order": 1
@@ -420,7 +420,7 @@
           "lessonId": "ch11_03",
           "sectionType": "point",
           "title": "Key Points",
-          "body": "・HTTP is stateless → Sessions/Cookies maintain state\n・Cookie: Stores small data on the client-side (4KB limit)\n・Session: Stores data on the server-side (higher security)\n・The session ID is stored in a cookie and linked to server data\n・getSession() retrieves the session; setAttribute/getAttribute for data operations\n・setHttpOnly(true) for XSS prevention\n・Sessions are automatically invalidated by timeout",
+          "body": "- HTTP is stateless → Sessions/Cookies maintain state\n- Cookie: Stores small data on the client-side (4KB limit)\n- Session: Stores data on the server-side (higher security)\n- The session ID is stored in a cookie and linked to server data\n- getSession() retrieves the session; setAttribute/getAttribute for data operations\n- setHttpOnly(true) for XSS prevention\n- Sessions are automatically invalidated by timeout",
           "code": null,
           "note": null,
           "order": 6
@@ -610,7 +610,7 @@
           "lessonId": "ch11_04",
           "sectionType": "overview",
           "title": "What You Will Learn",
-          "body": "In this lesson, you will learn:\n\n・Embedding dynamic values in HTML with JSP (JavaServer Pages)\n・The concept of the MVC pattern (Model-View-Controller)\n・The division of responsibilities between **servlets** and JSP\n\nThis is a design pattern for building maintainable web applications.",
+          "body": "In this lesson, you will learn:\n\n- Embedding dynamic values in HTML with JSP (JavaServer Pages)\n- The concept of the MVC pattern (Model-View-Controller)\n- The division of responsibilities between **servlets** and JSP\n\nThis is a design pattern for building maintainable web applications.",
           "code": null,
           "note": null,
           "order": 1
@@ -655,7 +655,7 @@
           "lessonId": "ch11_04",
           "sectionType": "point",
           "title": "Key Points",
-          "body": "・JSP is a template that allows embedding Java code within HTML\n・Using EL expressions (${...}) to replace scriptlets is the current recommendation\n・MVC pattern: Model (data) + View (display) + Controller (control)\n・Data is transferred from **servlet** (C) to JSP (V) via Forward\n・JSP files should be placed under WEB-INF to prevent direct access\n・Understand the differences between Forward and Redirect",
+          "body": "- JSP is a template that allows embedding Java code within HTML\n- Using EL expressions (${...}) to replace scriptlets is the current recommendation\n- MVC pattern: Model (data) + View (display) + Controller (control)\n- Data is transferred from **servlet** (C) to JSP (V) via Forward\n- JSP files should be placed under WEB-INF to prevent direct access\n- Understand the differences between Forward and Redirect",
           "code": null,
           "note": null,
           "order": 6
@@ -784,7 +784,7 @@
           "lessonId": "ch11_05",
           "sectionType": "overview",
           "title": "What You Will Learn",
-          "body": "In this lesson, you will learn:\n\n・**REST API** design principles (resource-oriented)\n・Data exchange in JSON format\n・The correspondence between CRUD and HTTP methods\n\nLearn the basics of API development, the mainstream approach for modern web applications.",
+          "body": "In this lesson, you will learn:\n\n- **REST API** design principles (resource-oriented)\n- Data exchange in JSON format\n- The correspondence between CRUD and HTTP methods\n\nLearn the basics of API development, the mainstream approach for modern web applications.",
           "code": null,
           "note": null,
           "order": 1
@@ -811,7 +811,7 @@
           "lessonId": "ch11_05",
           "sectionType": "tip",
           "title": "RESTful API Design Rules",
-          "body": "Good **REST API** design follows certain rules.\n\n・URLs represent resources (nouns): /users, /orders\n・Verbs are expressed via HTTP methods: GET /users (list retrieval), POST /users (create new)\n・Specify a specific resource by ID: GET /users/123\n・JSON format is the mainstream for responses\n\nAvoid URLs like \"/getUser\" or \"/deleteUser.\"",
+          "body": "Good **REST API** design follows certain rules.\n\n- URLs represent resources (nouns): /users, /orders\n- Verbs are expressed via HTTP methods: GET /users (list retrieval), POST /users (create new)\n- Specify a specific resource by ID: GET /users/123\n- JSON format is the mainstream for responses\n\nAvoid URLs like \"/getUser\" or \"/deleteUser.\"",
           "code": null,
           "note": null,
           "order": 4
@@ -829,7 +829,7 @@
           "lessonId": "ch11_05",
           "sectionType": "point",
           "title": "Key Points",
-          "body": "・**REST API** is a web API design style that exchanges data in JSON\n・URLs represent resources (nouns), HTTP methods represent operations\n・GET=Retrieve, POST=Create, PUT=Update, DELETE=Delete\n・Content-Type: application/json for JSON communication\n・Gson / Jackson for Java ↔ JSON conversion\n・Return appropriate **status codes** (200, 201, 404, etc.)\n・Spring Boot allows writing this pattern more concisely",
+          "body": "- **REST API** is a web API design style that exchanges data in JSON\n- URLs represent resources (nouns), HTTP methods represent operations\n- GET=Retrieve, POST=Create, PUT=Update, DELETE=Delete\n- Content-Type: application/json for JSON communication\n- Gson / Jackson for Java ↔ JSON conversion\n- Return appropriate **status codes** (200, 201, 404, etc.)\n- Spring Boot allows writing this pattern more concisely",
           "code": null,
           "note": null,
           "order": 6
@@ -958,7 +958,7 @@
           "lessonId": "ch11_06",
           "sectionType": "overview",
           "title": "What You Will Learn",
-          "body": "In this lesson, you will learn:\n\n・Centralizing common processing with Filters\n・Event-driven processing with Listeners\n・Practical design patterns for web development\n\nLearn tips for designing maintainable applications as they grow in scale.",
+          "body": "In this lesson, you will learn:\n\n- Centralizing common processing with Filters\n- Event-driven processing with Listeners\n- Practical design patterns for web development\n\nLearn tips for designing maintainable applications as they grow in scale.",
           "code": null,
           "note": null,
           "order": 1
@@ -1003,7 +1003,7 @@
           "lessonId": "ch11_06",
           "sectionType": "point",
           "title": "Key Points",
-          "body": "・Filters intercept common processing before and after requests/responses\n・@WebFilter specifies the URL pattern to apply the filter\n・chain.doFilter() passes processing to the next filter or **servlet**\n・Used for cross-cutting concerns like authentication checks, logging, and character encoding\n・Not calling chain.doFilter() blocks the request\n・MVC + Filters enable building maintainable web applications\n・Spring Boot internally uses Servlet/Filter technology",
+          "body": "- Filters intercept common processing before and after requests/responses\n- @WebFilter specifies the URL pattern to apply the filter\n- chain.doFilter() passes processing to the next filter or **servlet**\n- Used for cross-cutting concerns like authentication checks, logging, and character encoding\n- Not calling chain.doFilter() blocks the request\n- MVC + Filters enable building maintainable web applications\n- Spring Boot internally uses Servlet/Filter technology",
           "code": null,
           "note": null,
           "order": 6

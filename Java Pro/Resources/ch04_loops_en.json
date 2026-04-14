@@ -23,7 +23,7 @@
           "sectionType": "code",
           "title": "Writing a for Loop",
           "body": "A for loop is written in the form: for (initialization; condition; update) { body }.",
-          "code": "for (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}\n// 出力: 0 1 2 3 4（各行）",
+          "code": "for (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}\n// Output: 0 1 2 3 4(Each line(s))",
           "note": "i is a \"counter variable\" that counts the number of iterations. By convention, i, j, and k are used.",
           "order": 2
         },
@@ -202,7 +202,7 @@
           "sectionType": "code",
           "title": "Writing a while Loop",
           "body": "A while loop is written in the form: while (condition) { body }.",
-          "code": "int count = 0;\nwhile (count < 3) {\n    System.out.println(\"count = \" + count);\n    count++;\n}\n// 出力:\n// count = 0\n// count = 1\n// count = 2",
+          "code": "int count = 0;\nwhile (count < 3) {\n    System.out.println(\"count = \" + count);\n    count++;\n}\n// Output:\n// count = 0\n// count = 1\n// count = 2",
           "note": "If the condition never changes inside the loop, it becomes an **infinite loop**. Always include code that moves toward the exit condition.",
           "order": 2
         },
@@ -211,7 +211,7 @@
           "sectionType": "code",
           "title": "Infinite Loop and break Pattern",
           "body": "A common real-world pattern is to intentionally create an **infinite loop** and exit with break when a condition is met.\nBy writing while(true), you can flexibly control the exit condition inside the loop body.",
-          "code": "// 入力待ちループの代表例\nimport java.util.Scanner;\n\nScanner sc = new Scanner(System.in);\n// 条件が成り立つ間、繰り返す\nwhile (true) {\n    System.out.print(\"コマンドを入力（quitで終了）: \");\n    // 変数の宣言と初期化\n    String cmd = sc.nextLine();\n    // 条件分岐\n    if (cmd.equals(\"quit\")) {\n        break; // ループを抜ける\n    }\n    System.out.println(\"実行: \" + cmd);\n}\nSystem.out.println(\"終了しました\");",
+          "code": "// Typical input-waiting loop example\nimport java.util.Scanner;\n\nScanner sc = new Scanner(System.in);\n// Repeat while condition holds\nwhile (true) {\n    System.out.print(\"Enter command (quit to End): \");\n    // Variable declaration and initialization\n    String cmd = sc.nextLine();\n    // Conditional branching\n    if (cmd.equals(\"quit\")) {\n        break; // Break out of loop\n    }\n    System.out.println(\"Runtime \" + cmd);\n}\nSystem.out.println(\"Ended\");",
           "note": "while(true) is a standard expression for intentionally creating an **infinite loop**. Always make sure to include a break condition.",
           "order": 3
         },
@@ -435,7 +435,7 @@
           "sectionType": "code",
           "title": "Writing a do-while Loop",
           "body": "A do-while loop is written in the form: do { body } while (condition); Note the semicolon at the end!",
-          "code": "int count = 5;\ndo {\n    System.out.println(\"count = \" + count);\n    count++;\n} while (count < 3);\n// 出力: count = 5\n// countは5で条件count<3はfalseだが、1回は実行される",
+          "code": "int count = 5;\ndo {\n    System.out.println(\"count = \" + count);\n    count++;\n} while (count < 3);\n// Output: count = 5\n// count is 5 and condition count<3 is false, but、1  time is still executed",
           "note": "The key difference from a [[while loop]] is the timing of the condition check. while = pre-check, do-while = post-check.",
           "order": 2
         },
@@ -462,7 +462,7 @@
           "sectionType": "rule",
           "title": "Choosing Between for / while / do-while",
           "body": "Use the three loop statements according to the situation.\n\n| Loop | Characteristics | Use Case |\n|------|------|--------|\n| for | Number of iterations is clear | \"Repeat 10 times\", \"All elements of an array\" |\n| while | Number unknown, pre-check | \"Until a condition is met\" |\n| do-while | Number unknown, post-check | \"Must execute at least once\" |",
-          "code": "// for: 1から5まで表示（回数が明確）\nfor (int i = 1; i <= 5; i++) {\n    System.out.println(i);\n}\n\n// while: 条件を満たすまで（回数不明）\nint num = 1;\nwhile (num < 1000) {\n    num *= 2; // 2倍ずつ増やす\n}\nSystem.out.println(num); // 1024\n\n// do-while: メニュー表示（必ず1回表示）\nint choice;\ndo {\n    System.out.println(\"1:開始 2:設定 0:終了\");\n    choice = 1; // 仮の値\n} while (choice != 0);",
+          "code": "// for: 1 to 5 display( count is known)\nfor (int i = 1; i <= 5; i++) {\n    System.out.println(i);\n}\n\n// while: Until condition is met( count is unknown)\nint num = 1;\nwhile (num < 1000) {\n    num *= 2; // Double each time\n}\nSystem.out.println(num); // 1024\n\n// do-while: Menu display(Displayed at least once)\nint choice;\ndo {\n    System.out.println(\"1:Start 2:Set 0:End\");\n    choice = 1; // Temporary value\n} while (choice != 0);",
           "note": "When in doubt, use a for loop. It is the most commonly used loop statement in Java.",
           "order": 5
         }
@@ -670,7 +670,7 @@
           "sectionType": "code",
           "title": "break and continue",
           "body": "These are two keywords that control the flow of a loop.",
-          "code": "// break: ループを即座に抜ける\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) break;\n    System.out.print(i + \" \");\n}\n// 出力: 0 1 2 3 4\n\n// continue: 今回のループをスキップして次の回へ\nfor (int i = 0; i < 5; i++) {\n    if (i == 2) continue;\n    System.out.print(i + \" \");\n}\n// 出力: 0 1 3 4",
+          "code": "// break: Break out of loop immediately\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) break;\n    System.out.print(i + \" \");\n}\n// Output: 0 1 2 3 4\n\n// continue: This current iteration of the loop and go to the next\nfor (int i = 0; i < 5; i++) {\n    if (i == 2) continue;\n    System.out.print(i + \" \");\n}\n// Output: 0 1 3 4",
           "note": "break is also used in [[switch statements]]. If you omit break inside a case in a switch statement, execution \"falls through\" to the next case.",
           "order": 2
         },
@@ -688,7 +688,7 @@
           "sectionType": "code",
           "title": "Labeled break and continue",
           "body": "Use labels to control the outer loop in nested loops.",
-          "code": "// ラベル付きbreak: 外側のループごと抜ける\nouter:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (i == 1 && j == 1) {\n            break outer; // 外側ループごと脱出！\n        }\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// 出力: (0,0) (0,1) (0,2) (1,0)\n// → (1,1)でouter全体を抜けた\n\nSystem.out.println();\n\n// ラベル付きcontinue: 外側ループの次の回へ\nouter:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) {\n            continue outer; // 外側ループの次の回へ！\n        }\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// 出力: (0,0) (1,0) (2,0)\n// → j==1で外側のiの次の回に進むため、j=1,2はスキップ\n\n// ラベルなしのbreakは最も内側のループだけ抜ける\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) break; // 内側のjループだけ抜ける\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// 出力: (0,0) (1,0) (2,0)",
+          "code": "// Labeled break: Break out of the outer loop entirely\nouter:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (i == 1 && j == 1) {\n            break outer; // Break out of entire outer loop!\n        }\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// Output: (0,0) (0,1) (0,2) (1,0)\n// → (1,1) exits the entire outer loop\n\nSystem.out.println();\n\n// Labeled continue: To the outer loop'snext iteration\nouter:\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) {\n            continue outer; // Next iteration of outer loop!\n        }\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// Output: (0,0) (1,0) (2,0)\n// → At j==1, goes to next iteration of outer i, so, j=1,2 are skipped\n\n// Without a label, break only exits the innermost loop\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j == 1) break; // Only exits the inner j loop\n        System.out.print(\"(\" + i + \",\" + j + \") \");\n    }\n}\n// Output: (0,0) (1,0) (2,0)",
           "note": "Any identifier can be used as a label name (e.g., outer, loop1). By convention, names that describe the role of the loop, such as outer: or row:, are used.",
           "order": 4
         },
@@ -890,7 +890,7 @@
           "sectionType": "code",
           "title": "Double Loops",
           "body": "For each iteration of the outer loop, the inner loop runs from start to finish.",
-          "code": "for (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= 3; j++) {\n        System.out.print(i * j + \" \");\n    }\n    System.out.println(); // 改行\n}\n// 出力:\n// 1 2 3\n// 2 4 6\n// 3 6 9",
+          "code": "for (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= 3; j++) {\n        System.out.print(i * j + \" \");\n    }\n    System.out.println(); // Newline\n}\n// Output:\n// 1 2 3\n// 2 4 6\n// 3 6 9",
           "note": "When the outer loop has i=1, the inner loop runs through all of j=1, 2, 3. Then i becomes 2, and j=1, 2, 3 runs again.",
           "order": 2
         },
@@ -908,7 +908,7 @@
           "sectionType": "code",
           "title": "Triangle Pattern — Using the Outer Variable in the Inner Loop",
           "body": "By varying the inner loop count based on the outer [[variable]], you can create patterns where the output count changes per row.",
-          "code": "for (int i = 1; i <= 4; i++) {\n    for (int j = 0; j < i; j++) {\n        System.out.print(\"* \");\n    }\n    System.out.println();\n}\n// 出力:\n// * \n// * * \n// * * * \n// * * * * ",
+          "code": "for (int i = 1; i <= 4; i++) {\n    for (int j = 0; j < i; j++) {\n        System.out.print(\"* \");\n    }\n    System.out.println();\n}\n// Output:\n// * \n// * * \n// * * * \n// * * * * ",
           "note": "Since the inner loop condition is j < i, the number of * increases as i increases. This is a common pattern that uses nested loops.",
           "order": 4
         },

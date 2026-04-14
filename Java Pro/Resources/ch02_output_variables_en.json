@@ -23,7 +23,7 @@
           "sectionType": "code",
           "title": "Three Ways to Display Output",
           "body": "There are three main [[method]]s for displaying text in Java.",
-          "code": "// 改行あり\nSystem.out.println(\"Hello\");\nSystem.out.println(\"World\");\n// 出力: Hello\n//       World\n\n// 改行なし\nSystem.out.print(\"Hello\");\nSystem.out.print(\"World\");\n// 出力: HelloWorld\n\n// 書式指定\nSystem.out.printf(\"名前は%sです。年齢は%d歳です。\", \"太郎\", 20);\n// 出力: 名前は太郎です。年齢は20歳です。",
+          "code": "// With newline\nSystem.out.println(\"Hello\");\nSystem.out.println(\"World\");\n// Output: Hello\n//       World\n\n// Without newline\nSystem.out.print(\"Hello\");\nSystem.out.print(\"World\");\n// Output: HelloWorld\n\n// Format specification\nSystem.out.printf(\"Name is %s. Age is %d years old.\", \"Taro\", 20);\n// Output: Name is Taro. Age is 20 years old.",
           "note": "The \"ln\" in println stands for \"line.\" It automatically adds a newline after the output.",
           "order": 2
         },
@@ -50,7 +50,7 @@
           "sectionType": "code",
           "title": "Escape Sequences",
           "body": "To represent special characters such as newlines and tabs within a string, use **escape sequences** that start with a backslash (\\).\nThese are used when you want to insert a newline in the middle of a string, separate from println's automatic newline.",
-          "code": "// \\n → 改行\nSystem.out.println(\"Hello\\nWorld\");\n// 出力: Hello\n//       World\n\n// \\t → タブ（字下げ）\nSystem.out.println(\"名前\\t年齢\");\nSystem.out.println(\"太郎\\t20\");\n// 出力: 名前\t年齢\n//       太郎\t20\n\n// \\\\ → バックスラッシュ自身\nSystem.out.println(\"C:\\\\Users\\\\\");\n// 出力: C:\\Users\\\n\n// \\\" → ダブルクォート\nSystem.out.println(\"彼は\\\"Java\\\"が好きです\");\n// 出力: 彼は\"Java\"が好きです",
+          "code": "// \\n → Newline\nSystem.out.println(\"Hello\\nWorld\");\n// Output: Hello\n//       World\n\n// \\t → Tab (indent)\nSystem.out.println(\"Name\\tAge\");\nSystem.out.println(\"Taro\\t20\");\n// Output: Name\tAge\n//       Taro\t20\n\n// \\\\ → Backslash itself\nSystem.out.println(\"C:\\\\Users\\\\\");\n// Output: C:\\Users\\\n\n// \\\" → Double quote\nSystem.out.println(\"He \\\"Java\\\"likes\");\n// Output: He \"Java\"likes",
           "note": "\\n (newline) and \\t (tab) are especially common. To include a double quote inside a string [[literal]], escape it with \\\".",
           "order": 5
         },
@@ -59,7 +59,7 @@
           "sectionType": "rule",
           "title": "printf Format Specifiers",
           "body": "Let's learn the commonly used format specifiers for printf.\n\n| Specifier | Meaning | Example |\n|--------|------|------|\n| %s | String | printf(\"%s\", \"Java\") → Java |\n| %d | Integer | printf(\"%d\", 42) → 42 |\n| %f | Decimal (default 6 digits) | printf(\"%f\", 3.14) → 3.140000 |\n| %.2f | Decimal (2 digits specified) | printf(\"%.2f\", 3.14) → 3.14 |\n| %n | Newline (OS-dependent newline character) | printf(\"Hello%n\") |",
-          "code": "int price = 1980;\ndouble tax = 1.10;\nSystem.out.printf(\"商品価格: %d円%n\", price);\nSystem.out.printf(\"税込価格: %.0f円%n\", price * tax);\n// 出力: 商品価格: 1980円\n//       税込価格: 2178円",
+          "code": "int price = 1980;\ndouble tax = 1.10;\nSystem.out.printf(\"ProductPrice: %d yen%n\", price);\nSystem.out.printf(\"Price including tax: %.0f yen%n\", price * tax);\n// Output: ProductPrice: 1980 yen\n//       Price including tax: 2178 yen",
           "note": "printf does not automatically add a newline. Add %n or \\n at the end if you want a newline.",
           "order": 6
         }
@@ -222,7 +222,7 @@
           "sectionType": "code",
           "title": "Using Variables",
           "body": "Use the format: type variableName = value;",
-          "code": "// 宣言と代入を別々に\nint age;        // 宣言（int型の変数ageを作る）\nage = 25;       // 代入（ageに25を入れる）\n\n// 初期化（宣言と代入を同時に）\nString name = \"太郎\";\ndouble height = 170.5;\n\n// 変数の値を表示\nSystem.out.println(name);   // 太郎\nSystem.out.println(age);    // 25",
+          "code": "// Declaration and assignment separately\nint age;        // Declaration(Create an int variable 'age')\nage = 25;       // Assignment(Assign 25 to age)\n\n// Initialization(Declaration and assignment at the same time)\nString name = \"Taro\";\ndouble height = 170.5;\n\n// Display the variable value\nSystem.out.println(name);   // Taro\nSystem.out.println(age);    // 25",
           "note": "The \"//\" in code is a comment (explanatory note). It does not affect program execution.",
           "order": 4
         },
@@ -463,7 +463,7 @@
           "sectionType": "code",
           "title": "Using Data Types",
           "body": "Let's look at declaration examples for each type.",
-          "code": "// 変数の宣言と初期化\nint age = 25;              // 整数\ndouble price = 198.5;      // 小数\nboolean isStudent = true;  // 真偽値\nchar initial = 'A';        // 1文字\nString name = \"太郎\";      // 文字列（参照型）",
+          "code": "// Variable declaration and initialization\nint age = 25;              // Integer\ndouble price = 198.5;      // Decimal\nboolean isStudent = true;  // Boolean value\nchar initial = 'A';        // 1Character\nString name = \"Taro\";      // String(ReferenceType)",
           "note": "String is not a **primitive data type** but a \"**reference type**.\" However, it is designed to be especially easy to use. The uppercase S at the beginning is a telltale sign.",
           "order": 3
         },
@@ -528,7 +528,7 @@
           "lessonId": "ch02_03",
           "type": "errorFind",
           "question": "The following code has an error. What is the cause?",
-          "code": "String msg = 'こんにちは';",
+          "code": "String msg = 'Hello';",
           "explanation": "String values must be enclosed in double quotes (\"). Single quotes (') are used for the char type (a single character).",
           "choices": [
             {
@@ -561,7 +561,7 @@
             "output": "",
             "exitCode": 1,
             "hasError": true,
-            "errorMessage": "Main.java:2: error: unclosed character literal\n        String msg = 'こんにちは';\n                     ^\n1 error",
+            "errorMessage": "Main.java:2: error: unclosed character literal\n        String msg = 'Hello';\n                     ^\n1 error",
             "errorType": "CompilationError"
           },
           "fixedExecutionResult": {
@@ -694,7 +694,7 @@
           "sectionType": "code",
           "title": "Arithmetic Operators",
           "body": "Here are the calculation symbols ([[operator]]s) available in Java.",
-          "code": "// 変数の宣言と初期化\nint a = 10;\nint b = 3;\n\nSystem.out.println(a + b);  // 13（足し算）\nSystem.out.println(a - b);  // 7 （引き算）\nSystem.out.println(a * b);  // 30（掛け算）\nSystem.out.println(a / b);  // 3 （割り算・整数同士は小数切捨て）\nSystem.out.println(a % b);  // 1 （余り）",
+          "code": "// Variable declaration and initialization\nint a = 10;\nint b = 3;\n\nSystem.out.println(a + b);  // 13(Addition)\nSystem.out.println(a - b);  // 7 (Subtraction)\nSystem.out.println(a * b);  // 30(Multiplication)\nSystem.out.println(a / b);  // 3 (Integer division truncates decimals)\nSystem.out.println(a % b);  // 1 (Remainder)",
           "note": "When dividing integers, the decimal part is truncated. 10 / 3 = 3, not 3.33...",
           "order": 2
         },
@@ -712,7 +712,7 @@
           "sectionType": "code",
           "title": "Compound Assignment Operators",
           "body": "These are shorthand notations that perform a calculation and assignment at the same time.",
-          "code": "// 変数の宣言と初期化\nint score = 100;\nscore += 10;  // score = score + 10;  → 110\nscore -= 20;  // score = score - 20;  → 90\nscore *= 2;   // score = score * 2;   → 180\nscore /= 3;   // score = score / 3;   → 60\nscore++;      // score = score + 1;   → 61\nscore--;      // score = score - 1;   → 60",
+          "code": "// Variable declaration and initialization\nint score = 100;\nscore += 10;  // score = score + 10;  → 110\nscore -= 20;  // score = score - 20;  → 90\nscore *= 2;   // score = score * 2;   → 180\nscore /= 3;   // score = score / 3;   → 60\nscore++;      // score = score + 1;   → 61\nscore--;      // score = score - 1;   → 60",
           "note": "The // in code is a comment (explanatory note). It does not affect program behavior.",
           "order": 4
         },
@@ -922,7 +922,7 @@
           "sectionType": "code",
           "title": "String Concatenation",
           "body": "You can join strings together using the + [[operator]].",
-          "code": "// 変数の宣言と初期化\nString first = \"Hello\";\nString second = \"World\";\nString greeting = first + \" \" + second;\nSystem.out.println(greeting);  // Hello World\n\n// 数値と文字列の結合\nint age = 20;\nSystem.out.println(\"年齢は\" + age + \"歳\");  // 年齢は20歳",
+          "code": "// Variable declaration and initialization\nString first = \"Hello\";\nString second = \"World\";\nString greeting = first + \" \" + second;\nSystem.out.println(greeting);  // Hello World\n\n// Number and String concatenation\nint age = 20;\nSystem.out.println(\"Age is \" + age + \" years old\");  // Age is 20 years old",
           "note": "When you concatenate a string and a number with +, the number is automatically converted to a string.",
           "order": 2
         },
@@ -940,7 +940,7 @@
           "sectionType": "code",
           "title": "Commonly Used String Methods",
           "body": "String has many useful [[method]]s.",
-          "code": "// 変数の宣言と初期化\nString s = \"Hello, Java!\";\n\ns.length()          // 12（文字数）\ns.charAt(0)         // 'H'（0番目の文字）\ns.contains(\"Java\")  // true（含むか判定）\ns.toUpperCase()     // \"HELLO, JAVA!\"\ns.toLowerCase()     // \"hello, java!\"\ns.replace(\"Java\", \"World\")  // \"Hello, World!\"\n\n// 文字列の比較は equals() を使う\nString a = \"abc\";\nString b = \"abc\";\na.equals(b)  // true ✓\n// a == b は参照の比較なので使わない ✗",
+          "code": "// Variable declaration and initialization\nString s = \"Hello, Java!\";\n\ns.length()          // 12(Character count)\ns.charAt(0)         // 'H'(0th character)\ns.contains(\"Java\")  // true(Check if it contains)\ns.toUpperCase()     // \"HELLO, JAVA!\"\ns.toLowerCase()     // \"hello, java!\"\ns.replace(\"Java\", \"World\")  // \"Hello, World!\"\n\n// Use equals() for String comparison\nString a = \"abc\";\nString b = \"abc\";\na.equals(b)  // true ✓\n// a == b Don't use as it compares references ✗",
           "note": "The // in code is a comment (explanatory note). It does not affect program behavior.",
           "order": 4
         },
@@ -958,7 +958,7 @@
           "sectionType": "code",
           "title": "Searching and Extracting Strings",
           "body": "Let's also learn methods for extracting parts of a string and searching for positions. These are frequently used in practice.",
-          "code": "String s = \"Hello, Java!\";\n\n// indexOf: 文字列の位置を検索（見つからなければ-1）\ns.indexOf(\"Java\")     // 7\ns.indexOf(\"Python\")   // -1\n\n// substring: 文字列の一部を切り出し\ns.substring(7)        // \"Java!\"（7番目以降）\ns.substring(0, 5)     // \"Hello\"（0〜4番目）\n\n// trim: 前後の空白を除去\n\"  Hello  \".trim()    // \"Hello\"\n\n// startsWith / endsWith: 先頭・末尾の判定\ns.startsWith(\"Hello\") // true\ns.endsWith(\"!\")       // true\n\n// isEmpty / isBlank（Java 11以降）\n\"\".isEmpty()           // true\n\"  \".isEmpty()         // false\n\"  \".isBlank()         // true（空白のみ）",
+          "code": "String s = \"Hello, Java!\";\n\n// indexOf: Search for position in String(returns -1 if not found)\ns.indexOf(\"Java\")     // 7\ns.indexOf(\"Python\")   // -1\n\n// substring: Extract part of a String\ns.substring(7)        // \"Java!\"(From index 7 onwards)\ns.substring(0, 5)     // \"Hello\"(0~4th)\n\n// trim: Remove surrounding whitespace\n\"  Hello  \".trim()    // \"Hello\"\n\n// startsWith / endsWith: Beginning/End check\ns.startsWith(\"Hello\") // true\ns.endsWith(\"!\")       // true\n\n// isEmpty / isBlank(Java 11+)\n\"\".isEmpty()           // true\n\"  \".isEmpty()         // false\n\"  \".isBlank()         // true(Whitespace only)",
           "note": "The second argument of substring means \"up to but not including that position.\" substring(0, 5) returns the 5 characters at positions 0, 1, 2, 3, and 4.",
           "order": 6
         }
@@ -1048,24 +1048,24 @@
           "lessonId": "ch02_05",
           "type": "outputPredict",
           "question": "What is the output of the following code?",
-          "code": "System.out.println(\"数値:\" + 3 + 5);",
-          "explanation": "String + number is concatenated from left to right. \"数値:\" + 3 = \"数値:3\", then \"数値:3\" + 5 = \"数値:35\".",
+          "code": "System.out.println(\"Value:\" + 3 + 5);",
+          "explanation": "String + number is concatenated from left to right. \"Value:\" + 3 = \"Value:3\", then \"Value:3\" + 5 = \"Value:35\".",
           "choices": [
             {
               "id": "ch02_05_q3_a",
-              "text": "数値:8",
+              "text": "Value:8",
               "isCorrect": false,
               "order": 1
             },
             {
               "id": "ch02_05_q3_b",
-              "text": "数値:35",
+              "text": "Value:35",
               "isCorrect": true,
               "order": 2
             },
             {
               "id": "ch02_05_q3_c",
-              "text": "数値:3 5",
+              "text": "Value:3 5",
               "isCorrect": false,
               "order": 3
             },
@@ -1078,7 +1078,7 @@
           ],
           "correctOrder": null,
           "executionResult": {
-            "output": "数値:35\n",
+            "output": "Value:35\n",
             "exitCode": 0,
             "hasError": false,
             "errorMessage": null,
@@ -1110,7 +1110,7 @@
           "sectionType": "code",
           "title": "Automatic Type Conversion (Implicit Conversion)",
           "body": "Conversion from a smaller type to a larger type happens automatically.",
-          "code": "int i = 100;\ndouble d = i;  // int → double は自動変換OK\nSystem.out.println(d);  // 100.0\n\n// 小さい型 → 大きい型の順\n// byte → short → int → long → float → double",
+          "code": "int i = 100;\ndouble d = i;  // int → double Automatic conversion OK\nSystem.out.println(d);  // 100.0\n\n// From smaller to larger type\n// byte → short → int → long → float → double",
           "note": "The \"//\" in code is a comment (explanatory note). It does not affect program execution.",
           "order": 2
         },
@@ -1119,7 +1119,7 @@
           "sectionType": "code",
           "title": "Casting (Explicit Conversion)",
           "body": "Converting from a larger type to a smaller type requires you to explicitly write a [[cast]].",
-          "code": "double d = 3.14;\nint i = (int) d;  // キャスト: double → int\nSystem.out.println(i);  // 3（小数点以下は切り捨て）\n\n// 文字列 → 数値の変換\nString numStr = \"123\";\nint num = Integer.parseInt(numStr);  // 123\ndouble dbl = Double.parseDouble(\"3.14\"); // 3.14\n\n// 数値 → 文字列の変換\nString s = String.valueOf(100);  // \"100\"",
+          "code": "double d = 3.14;\nint i = (int) d;  // Cast: double → int\nSystem.out.println(i);  // 3(Decimal part is truncated)\n\n// String to Number conversion\nString numStr = \"123\";\nint num = Integer.parseInt(numStr);  // 123\ndouble dbl = Double.parseDouble(\"3.14\"); // 3.14\n\n// Number to String conversion\nString s = String.valueOf(100);  // \"100\"",
           "note": "Information can be lost during casting. For example, the decimal part is discarded when converting from double to int.",
           "order": 3
         },

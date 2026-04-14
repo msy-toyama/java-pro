@@ -23,7 +23,7 @@
           "sectionType": "code",
           "title": "Pitfalls of Wildcards",
           "body": "You cannot add elements other than null to List<? extends Number>.\nYou can add Integer or its subtypes to List<? super Integer>, but when retrieving, the type is Object.\nAccurately understanding these constraints is the key to passing the exam.",
-          "code": "List<? extends Number> list1 = new ArrayList<Integer>();\n// list1.add(1);       // コンパイルエラー！\n// list1.add(1.0);     // コンパイルエラー！\nlist1.add(null);       // nullのみ追加可能\nNumber n = list1.get(0); // 取得はNumber型\n\nList<? super Integer> list2 = new ArrayList<Number>();\nlist2.add(1);          // OK\nlist2.add(2);          // OK\n// list2.add(1.0);     // コンパイルエラー！\nObject o = list2.get(0); // 取得はObject型",
+          "code": "List<? extends Number> list1 = new ArrayList<Integer>();\n// list1.add(1);       // Compilation error!\n// list1.add(1.0);     // Compilation error!\nlist1.add(null);       // Only null can be added\nNumber n = list1.get(0); // Get returns Number type\n\nList<? super Integer> list2 = new ArrayList<Number>();\nlist2.add(1);          // OK\nlist2.add(2);          // OK\n// list2.add(1.0);     // Compilation error!\nObject o = list2.get(0); // Get returns Object type",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 2
         },
@@ -32,7 +32,7 @@
           "sectionType": "code",
           "title": "Type Inference and the Diamond Operator",
           "body": "The [[diamond operator]] from Java 7 onward infers types from the left-hand side.\nIn generic [[method]] [[type inference]], both the argument types and the return type are considered.\nIf type inference cannot be resolved, it may fall back to the Object type.",
-          "code": "// ダイヤモンド演算子\nList<String> list = new ArrayList<>(); // OK\nvar list2 = new ArrayList<>(); // ArrayList<Object>と推論される\n\n// ジェネリックメソッドの型推論\npublic static <T> List<T> of(T... elements) {\n    return Arrays.asList(elements);\n}\n\nList<String> names = of(\"a\", \"b\"); // T=String\nList<Object> mixed = of(\"a\", 1);   // T=Object（共通の型）",
+          "code": "// Diamond operator\nList<String> list = new ArrayList<>(); // OK\nvar list2 = new ArrayList<>(); // ArrayList<Object> is inferred\n\n// Generic method type inference\npublic static <T> List<T> of(T... elements) {\n    return Arrays.asList(elements);\n}\n\nList<String> names = of(\"a\", \"b\"); // T=String\nList<Object> mixed = of(\"a\", 1);   // T=Object(Common type)",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },
@@ -188,7 +188,7 @@
           "sectionType": "code",
           "title": "Applied Collectors",
           "body": "Combining downstream collectors with [[groupingBy]] enables complex aggregations.\n[[partitioningBy]] splits data into two groups based on a [[Predicate]] condition (true/false).\nCollectors.toMap() throws an IllegalStateException when key collisions occur.",
-          "code": "List<String> words = List.of(\"apple\", \"banana\", \"avocado\", \"blueberry\", \"cherry\");\n\n// groupingBy + counting()\nMap<Character, Long> countByInitial = words.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()));\n// {a=2, b=2, c=1}\n\n// toMap() でキー衝突 → 例外\n// words.stream().collect(Collectors.toMap(\n//     s -> s.charAt(0), s -> s)); // IllegalStateException\n\n// toMap() でマージ関数を指定\nMap<Character, String> merged = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0), s -> s,\n        (s1, s2) -> s1 + \",\" + s2));\n// {a=apple,avocado, b=banana,blueberry, c=cherry}",
+          "code": "List<String> words = List.of(\"apple\", \"banana\", \"avocado\", \"blueberry\", \"cherry\");\n\n// groupingBy + counting()\nMap<Character, Long> countByInitial = words.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()));\n// {a=2, b=2, c=1}\n\n// toMap()  Key collision → Exception\n// words.stream().collect(Collectors.toMap(\n//     s -> s.charAt(0), s -> s)); // IllegalStateException\n\n// toMap()  Specify merge function\nMap<Character, String> merged = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0), s -> s,\n        (s1, s2) -> s1 + \",\" + s2));\n// {a=apple,avocado, b=banana,blueberry, c=cherry}",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 2
         },
@@ -197,7 +197,7 @@
           "sectionType": "code",
           "title": "flatMap and Optional",
           "body": "flatMap() is used to flatten a stream of streams.\nOptional.flatMap() is used to prevent nested Optionals.\nThe or() [[method]] of Optional is available since Java 9.",
-          "code": "// flatMapでネストされたリストを平坦化\nList<List<Integer>> nested = List.of(\n    List.of(1, 2), List.of(3, 4), List.of(5));\nList<Integer> flat = nested.stream()\n    .flatMap(Collection::stream)\n    .collect(Collectors.toList());\n// [1, 2, 3, 4, 5]\n\n// Optional.flatMapの使い方\nOptional<String> name = Optional.of(\"Java\");\nOptional<String> result = name\n    .map(String::toUpperCase)              // Optional<String>\n    .flatMap(s -> s.equals(\"JAVA\")\n        ? Optional.of(s) : Optional.empty()); // Optional<String>\nSystem.out.println(result); // Optional[JAVA]",
+          "code": "// Flatten nested list with flatMap\nList<List<Integer>> nested = List.of(\n    List.of(1, 2), List.of(3, 4), List.of(5));\nList<Integer> flat = nested.stream()\n    .flatMap(Collection::stream)\n    .collect(Collectors.toList());\n// [1, 2, 3, 4, 5]\n\n// Usage of Optional.flatMap\nOptional<String> name = Optional.of(\"Java\");\nOptional<String> result = name\n    .map(String::toUpperCase)              // Optional<String>\n    .flatMap(s -> s.equals(\"JAVA\")\n        ? Optional.of(s) : Optional.empty()); // Optional<String>\nSystem.out.println(result); // Optional[JAVA]",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },
@@ -340,7 +340,7 @@
           "correctOrder": null,
           "executionResult": null,
           "fixedExecutionResult": null,
-          "codeTemplate": "public __BLANK_1__ class Shape __BLANK_2__ Circle, Rectangle {\n    public abstract double area();\n}",
+          "codeTemplate": "public __BLANK_1__ class Shape __BLANK_2__  yen, Rectangle {\n    public abstract double area();\n}",
           "blanks": [
             {
               "id": "blank_1",
@@ -414,7 +414,7 @@
           "sectionType": "code",
           "title": "Thread Safety Problem Patterns",
           "body": "Operating on non-thread-safe collections from multiple threads can cause ConcurrentModificationException or data inconsistencies.\nUnderstand countermeasures using atomic variables and [[synchronized]] blocks.",
-          "code": "// 問題のあるコード\nList<Integer> list = new ArrayList<>();\nExecutorService exec = Executors.newFixedThreadPool(3);\nfor (int i = 0; i < 1000; i++) {\n    final int val = i;\n    exec.submit(() -> list.add(val)); // スレッドセーフでない\n}\nexec.shutdown();\nexec.awaitTermination(10, TimeUnit.SECONDS);\n// list.size()は1000未満になる可能性がある\n\n// 修正: スレッドセーフなコレクションを使用\nList<Integer> safeList = Collections.synchronizedList(new ArrayList<>());\n// または\nList<Integer> cowList = new CopyOnWriteArrayList<>();",
+          "code": "// Problematic code\nList<Integer> list = new ArrayList<>();\nExecutorService exec = Executors.newFixedThreadPool(3);\nfor (int i = 0; i < 1000; i++) {\n    final int val = i;\n    exec.submit(() -> list.add(val)); // Not thread-safe\n}\nexec.shutdown();\nexec.awaitTermination(10, TimeUnit.SECONDS);\n// list.size() may be less than 1000\n\n// Fix: Thread-safe collection should be used\nList<Integer> safeList = Collections.synchronizedList(new ArrayList<>());\n// Or\nList<Integer> cowList = new CopyOnWriteArrayList<>();",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 2
         },
@@ -423,7 +423,7 @@
           "sectionType": "code",
           "title": "Path Operations",
           "body": "Path.resolve() concatenates a relative path.\nPath.relativize() computes the relative relationship between two paths.\nPath.normalize() removes redundant elements (. and ..).",
-          "code": "Path p1 = Path.of(\"/home/user\");\nPath p2 = Path.of(\"docs/file.txt\");\n\n// resolve: パスの結合\nSystem.out.println(p1.resolve(p2));\n// /home/user/docs/file.txt\n\n// relativize: 相対パスの算出\nPath p3 = Path.of(\"/home/user/docs\");\nPath p4 = Path.of(\"/home/user/pics\");\nSystem.out.println(p3.relativize(p4));\n// ../pics\n\n// normalize: 冗長な要素の除去\nPath p5 = Path.of(\"/home/user/../user/./docs\");\nSystem.out.println(p5.normalize());\n// /home/user/docs",
+          "code": "Path p1 = Path.of(\"/home/user\");\nPath p2 = Path.of(\"docs/file.txt\");\n\n// resolve: Joining paths\nSystem.out.println(p1.resolve(p2));\n// /home/user/docs/file.txt\n\n// relativize: Calculating relative path\nPath p3 = Path.of(\"/home/user/docs\");\nPath p4 = Path.of(\"/home/user/pics\");\nSystem.out.println(p3.relativize(p4));\n// ../pics\n\n// normalize: Removing redundant elements\nPath p5 = Path.of(\"/home/user/../user/./docs\");\nSystem.out.println(p5.normalize());\n// /home/user/docs",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },
@@ -628,7 +628,7 @@
           "sectionType": "code",
           "title": "Combining Exception Handling and Inheritance",
           "body": "There are constraints on [[checked exceptions]] when [[overriding]] [[methods]].\nA sub[[class]] method can only throw the same or narrower [[checked]] [[exceptions]] than the superclass method.\nThis constraint does not apply to unchecked exceptions.",
-          "code": "class Parent {\n    void doWork() throws IOException {\n        throw new IOException();\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    void doWork() throws FileNotFoundException {\n        // OK: FileNotFoundExceptionはIOExceptionのサブクラス\n        throw new FileNotFoundException();\n    }\n}\n\nclass BadChild extends Parent {\n    // @Override\n    // void doWork() throws Exception { // コンパイルエラー！\n    //     ExceptionはIOExceptionのスーパークラス\n    // }\n}",
+          "code": "class Parent {\n    void doWork() throws IOException {\n        throw new IOException();\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    void doWork() throws FileNotFoundException {\n        // OK: FileNotFoundException is a subclass of IOException\n        throw new FileNotFoundException();\n    }\n}\n\nclass BadChild extends Parent {\n    // @Override\n    // void doWork() throws Exception { // Compilation error!\n    //     Exception is a superclass of IOException\n    // }\n}",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 2
         },
@@ -637,7 +637,7 @@
           "sectionType": "code",
           "title": "Combining Generics and Inheritance",
           "body": "When [[inheriting]] from generic classes, careful handling of type parameters is required.\nThere are cases of instantiating with a concrete type and cases of carrying over the type parameter.\n[[Type erasure]] causes [[generics]] type information to be lost at runtime.",
-          "code": "// Containerクラスの定義\nabstract class Container<T> {\n    abstract T getValue();\n    abstract void setValue(T value);\n}\n\n// StringContainerクラスの定義\nclass StringContainer extends Container<String> {\n    private String value;\n    @Override\n    // getValueメソッドの定義\n    String getValue() { return value; }\n    @Override\n    // setValueメソッドの定義\n    void setValue(String value) { this.value = value; }\n}\n\n// GenericPairクラスの定義\nclass GenericPair<A, B> extends Container<A> {\n    private A first;\n    private B second;\n    @Override\n    A getValue() { return first; }\n    @Override\n    void setValue(A value) { this.first = value; }\n    B getSecond() { return second; }\n}",
+          "code": "// ContainerClass definition\nabstract class Container<T> {\n    abstract T getValue();\n    abstract void setValue(T value);\n}\n\n// StringContainerClass definition\nclass StringContainer extends Container<String> {\n    private String value;\n    @Override\n    // getValueMethod definition\n    String getValue() { return value; }\n    @Override\n    // setValueMethod definition\n    void setValue(String value) { this.value = value; }\n}\n\n// GenericPairClass definition\nclass GenericPair<A, B> extends Container<A> {\n    private A first;\n    private B second;\n    @Override\n    A getValue() { return first; }\n    @Override\n    void setValue(A value) { this.first = value; }\n    B getSecond() { return second; }\n}",
           "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
           "order": 3
         },

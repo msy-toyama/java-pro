@@ -32,7 +32,7 @@
           "sectionType": "code",
           "title": "Automatic Modules and Unnamed Modules",
           "body": "An automatic module's name is determined from the JAR file's manifest or its file name.\nAutomatic modules export all packages and require all modules.\nThe unnamed module contains all classes on the classpath.",
-          "code": "// module-info.java（名前付きモジュール）\nmodule com.example.app {\n    requires com.example.lib;  // 依存関係\n    exports com.example.app.api; // 公開パッケージ\n}\n\n// 自動モジュール:\n// my-library-1.0.jar をモジュールパスに配置\n// → モジュール名は \"my.library\" になる\n\n// 無名モジュール:\n// クラスパスに配置されたクラス\n// java -cp lib.jar com.example.Main",
+          "code": "// module-info.java(Named module)\nmodule com.example.app {\n    requires com.example.lib;  // Dependencies\n    exports com.example.app.api; // PublicPackage\n}\n\n// Automatic module:\n// my-library-1.0.jar  placed on module path\n// → Module name becomes \"my.library\"  becomes\n\n// Unnamed module:\n// Classes placed on classpath\n// java -cp lib.jar com.example.Main",
           "note": null,
           "order": 3
         },
@@ -138,7 +138,7 @@
           "lessonId": "ch32_01",
           "type": "fillBlank",
           "question": "Fill in the short form of the command-line option for specifying the module path.\njava _____ mods -m com.example.app/com.example.Main",
-          "code": "// jlink: カスタムランタイム作成\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
+          "code": "// jlink: Custom runtime creation\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
           "explanation": "The short form of --module-path is -p. It is used to specify the module path when running modules.",
           "choices": [
             {
@@ -202,7 +202,7 @@
           "sectionType": "code",
           "title": "Service Provider Implementation Example",
           "body": "The implementation is divided into three parts: the service interface module, the provider module, and the consumer module.\nUse [[ServiceLoader]] to dynamically retrieve service implementations.",
-          "code": "// サービスインターフェースモジュール\nmodule com.example.api {\n    exports com.example.api;\n}\n\n// サービスプロバイダモジュール\nmodule com.example.provider {\n    requires com.example.api;\n    provides com.example.api.Logger\n        with com.example.provider.FileLogger;\n}\n\n// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    uses com.example.api.Logger;\n}\n\n// ServiceLoaderでサービスを取得\nServiceLoader<Logger> loader = ServiceLoader.load(Logger.class);\nfor (Logger logger : loader) {\n    logger.log(\"Hello\");\n}",
+          "code": "// ServiceInterfaceModule\nmodule com.example.api {\n    exports com.example.api;\n}\n\n// Service provider module\nmodule com.example.provider {\n    requires com.example.api;\n    provides com.example.api.Logger\n        with com.example.provider.FileLogger;\n}\n\n// Consumer module\nmodule com.example.app {\n    requires com.example.api;\n    uses com.example.api.Logger;\n}\n\n// Get service with ServiceLoader\nServiceLoader<Logger> loader = ServiceLoader.load(Logger.class);\nfor (Logger logger : loader) {\n    logger.log(\"Hello\");\n}",
           "note": null,
           "order": 3
         },
@@ -231,7 +231,7 @@
           "lessonId": "ch32_02",
           "type": "errorFind",
           "question": "Find the cause of the problem where ServiceLoader returns no services in the following module-info.java.",
-          "code": "// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    // ServiceLoader.load(Logger.class) が空を返す\n}",
+          "code": "// Consumer module\nmodule com.example.app {\n    requires com.example.api;\n    // ServiceLoader.load(Logger.class)  returns empty\n}",
           "explanation": "To search for services with ServiceLoader, the consumer module must declare `uses com.example.api.Logger;`. Without the uses declaration, ServiceLoader cannot discover service providers.",
           "choices": [
             {
@@ -428,7 +428,7 @@
           "sectionType": "code",
           "title": "How to Use opens",
           "body": "opens can open a package to all modules or to specific modules only.\nUse opens...to to limit the target modules.\nYou can also declare the entire module as open using open module.",
-          "code": "// 特定パッケージをすべてのモジュールにopen\nmodule com.example.app {\n    opens com.example.app.model;\n}\n\n// 特定パッケージを特定のモジュールにのみopen\nmodule com.example.app {\n    opens com.example.app.model to com.fasterxml.jackson;\n}\n\n// モジュール全体をopen\nopen module com.example.app {\n    exports com.example.app.api;\n    // 全パッケージがリフレクションアクセス可能\n}\n\n// opensされたクラスへのリフレクション\nClass<?> clazz = Class.forName(\"com.example.app.model.User\");\nField field = clazz.getDeclaredField(\"name\");\nfield.setAccessible(true); // opensされていれば成功",
+          "code": "// Open specific package to all modules\nmodule com.example.app {\n    opens com.example.app.model;\n}\n\n// Open specific package to specific modules only\nmodule com.example.app {\n    opens com.example.app.model to com.fasterxml.jackson;\n}\n\n// Open entire module\nopen module com.example.app {\n    exports com.example.app.api;\n    // All packages are accessible via reflection\n}\n\n// Reflection on opened classes\nClass<?> clazz = Class.forName(\"com.example.app.model.User\");\nField field = clazz.getDeclaredField(\"name\");\nfield.setAccessible(true); // Succeeds if opened",
           "note": null,
           "order": 3
         },
@@ -457,7 +457,7 @@
           "lessonId": "ch32_03",
           "type": "fourChoice",
           "question": "Which statement about the difference between exports and opens is correct?",
-          "code": "// jlink: カスタムランタイム作成\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
+          "code": "// jlink: Custom runtime creation\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
           "explanation": "exports allows compile-time and runtime access to public members, but does not allow reflective access to private members. Using opens enables access to private members via setAccessible(true).",
           "choices": [
             {
@@ -602,7 +602,7 @@
           "sectionType": "code",
           "title": "Automatic Module Naming",
           "body": "The name of an automatic module is determined in two ways.\nIf the JAR's MANIFEST.MF contains an Automatic-Module-Name attribute, that value is used.\nOtherwise, the name is automatically derived from the JAR file name.",
-          "code": "// MANIFEST.MFで指定する方式（推奨）\n// META-INF/MANIFEST.MF:\n// Automatic-Module-Name: com.example.library\n\n// JARファイル名から導出する方式\n// my-library-1.0.jar → my.library\n// 規則:\n//   1. 拡張子(.jar)を除去\n//   2. バージョン部分(-1.0)を除去\n//   3. ハイフン(-)をドット(.)に置換\n\n// module-info.javaでの参照\nmodule com.example.app {\n    requires my.library; // 自動モジュール名\n}",
+          "code": "// Method specified in MANIFEST.MF(Recommended)\n// META-INF/MANIFEST.MF:\n// Automatic-Module-Name: com.example.library\n\n// Method derived from JAR filename\n// my-library-1.0.jar → my.library\n// Rules:\n//   1. Remove extension (.jar)\n//   2. Remove version part (-1.0)\n//   3. Replace hyphens (-) with dots (.)\n\n// module-info.java reference\nmodule com.example.app {\n    requires my.library; // Automatic module name\n}",
           "note": null,
           "order": 4
         },
