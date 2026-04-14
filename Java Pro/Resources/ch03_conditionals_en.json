@@ -727,7 +727,7 @@
           "title": "Key Points",
           "body": "- The switch statement is ideal for multi-way branching by value\n- Write break at the end of each case\n- default handles cases where no case matches\n- String can also be used (Java 7 and later)",
           "code": null,
-          "note": "【Practical Tips】In practice, switch is used for branching on fixed values such as enums and status codes, while **if-else** is used for range checks and complex conditions. Using **switch expressions** from Java 14 onward also prevents forgotten breaks.",
+          "note": "**[Practical Tips]**In practice, switch is used for branching on fixed values such as enums and status codes, while **if-else** is used for range checks and complex conditions. Using **switch expressions** from Java 14 onward also prevents forgotten breaks.",
           "order": 5
         }
       ],

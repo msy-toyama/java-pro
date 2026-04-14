@@ -607,7 +607,7 @@
           "title": "Key Points",
           "body": "- **Encapsulation**: protect fields with private + getter/setter\n- Add validation (value checking) in setters\n- Four levels: private < (none) < protected < public\n- Principle: choose the minimum access level\n- Fields should generally be private; methods should be chosen based on purpose",
           "code": null,
-          "note": "【Practical Tips】In practice, **encapsulation** is essential when designing DTOs (Data Transfer Objects) and Entities (database-mapped classes). Using the Lombok library to auto-generate getters/setters is the standard approach in the industry.",
+          "note": "**[Practical Tips]**In practice, **encapsulation** is essential when designing DTOs (Data Transfer Objects) and Entities (database-mapped classes). Using the Lombok library to auto-generate getters/setters is the standard approach in the industry.",
           "order": 5
         }
       ],

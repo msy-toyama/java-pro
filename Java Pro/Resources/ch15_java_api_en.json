@@ -225,7 +225,7 @@
           "title": "String Immutability",
           "body": "Once a String object is created, its contents cannot be modified.\nEven when methods like toUpperCase() and replace() are called, the original string remains unchanged, and a new String object is returned.\nThis property is called \"immutable.\"\nTo use the modified string, you must assign the return value to a variable.",
           "code": "// Definition of the Main class\npublic class Main {\n    // Definition of the main method\n    public static void main(String[] args) {\n        // Variable declaration and initialization\n        String s = \"Hello\";\n        s.toUpperCase();  // A new string is created, but s is unchanged\n        System.out.println(s);  // Hello (unchanged)\n\n        String upper = s.toUpperCase();  // Receive the return value\n        System.out.println(upper);  // HELLO\n\n        String s2 = s.replace('l', 'r');\n        System.out.println(s);   // Hello (unchanged)\n        System.out.println(s2);  // Herro\n\n        String s3 = s.concat(\" World\");\n        System.out.println(s);   // Hello (unchanged)\n        System.out.println(s3);  // Hello World\n    }\n}",
-          "note": "【Practical Tips】In business applications, String's immutability makes it safe to use as [[HashMap]] keys and for sharing between [[threads]]. For extensive string concatenation, use [[StringBuilder]] for better performance — this is a fundamental practice in the field.",
+          "note": "**[Practical Tips]**In business applications, String's immutability makes it safe to use as [[HashMap]] keys and for sharing between [[threads]]. For extensive string concatenation, use [[StringBuilder]] for better performance — this is a fundamental practice in the field.",
           "order": 5
         },
         {
@@ -449,7 +449,7 @@
           "lessonId": "ch15_03",
           "sectionType": "tip",
           "title": "When to Use String vs StringBuilder",
-          "body": "You need to choose between String and StringBuilder depending on the situation.\n\n【When String is appropriate】\n- When you rarely modify strings\n- When [[thread]] safety is needed (String is thread-safe because it is immutable)\n- When only a small number of string concatenations are needed\n\n【When StringBuilder is appropriate】\n- When concatenating strings repeatedly inside a loop\n- When frequently inserting or deleting strings\n- When performance is critical\n\nThere is also a [[class]] called StringBuffer. It has the same functionality as StringBuilder but is thread-safe.\nStringBuilder is more likely to appear on certification exams.",
+          "body": "You need to choose between String and StringBuilder depending on the situation.\n\n**[When String is appropriate]**\n- When you rarely modify strings\n- When [[thread]] safety is needed (String is thread-safe because it is immutable)\n- When only a small number of string concatenations are needed\n\n**[When StringBuilder is appropriate]**\n- When concatenating strings repeatedly inside a loop\n- When frequently inserting or deleting strings\n- When performance is critical\n\nThere is also a [[class]] called StringBuffer. It has the same functionality as StringBuilder but is thread-safe.\nStringBuilder is more likely to appear on certification exams.",
           "code": null,
           "note": "StringBuilder is not thread-safe. Use StringBuffer in multithreaded environments.",
           "order": 4

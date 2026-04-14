@@ -51,7 +51,7 @@
           "title": "Practical Example with Comparator",
           "body": "A typical use case for lambda expressions is the [[Comparator]] interface.\nWriting list sorting logic with an anonymous inner class is verbose, but with a lambda expression it can be written concisely.\nSince Comparator has only one abstract method (the compare method), it can be implemented with a lambda expression.\nAn interface with exactly one abstract method is called a \"**functional interface**.\"",
           "code": "List<String> names = Arrays.asList(\"Tanaka\", \"Suzuki\", \"Sato\");\n\n// Anonymous inner class\nCollections.sort(names, new Comparator<String>() {\n    @Override\n    public int compare(String a, String b) {\n        return a.compareTo(b);\n    }\n});\n\n// Lambda expression\nCollections.sort(names, (a, b) -> a.compareTo(b));",
-          "note": "【Practical Tips】In the field, lambda expressions are used daily in [[Stream API]] operations like filter/map/forEach and in Spring Framework bean definitions. Modern Java development almost never has code without lambda expressions.",
+          "note": "**[Practical Tips]**In the field, lambda expressions are used daily in [[Stream API]] operations like filter/map/forEach and in Spring Framework bean definitions. Modern Java development almost never has code without lambda expressions.",
           "order": 5
         },
         {
@@ -866,7 +866,7 @@
           "lessonId": "ch16_05",
           "sectionType": "rule",
           "title": "Capture Rules Summary",
-          "body": "【What can be captured】\n- Final or effectively final local variables\n- [[Instance]] variables (this.field is always OK)\n- Static variables (always OK)\n\n【What cannot be captured】\n- Reassigned local variables\n\n【Notes】\n- If a lambda parameter has the same name as an outer local variable, a compilation error occurs (shadowing is prohibited)\n- Reassigning a captured variable inside a lambda also causes a compilation error\n- Instance variables and static variables have no capture restrictions (because they exist on the [[heap]])",
+          "body": "**[What can be captured]**\n- Final or effectively final local variables\n- [[Instance]] variables (this.field is always OK)\n- Static variables (always OK)\n\n**[What cannot be captured]**\n- Reassigned local variables\n\n**[Notes]**\n- If a lambda parameter has the same name as an outer local variable, a compilation error occurs (shadowing is prohibited)\n- Reassigning a captured variable inside a lambda also causes a compilation error\n- Instance variables and static variables have no capture restrictions (because they exist on the [[heap]])",
           "code": "public class CaptureRules {\n    int instanceVar = 100; // Instance variable\n    static int staticVar = 200; // Static variable\n\n    void demo() {\n        final int a = 1;     // final → OK\n        int b = 2;          // effectively final → OK\n        int c = 3;\n        c = 4;              // reassignment → NG\n\n        Runnable r = () -> {\n            System.out.println(a);           // OK\n            System.out.println(b);           // OK\n            // System.out.println(c);        // Compilation error\n            System.out.println(instanceVar); // OK (instance variable)\n            System.out.println(staticVar);   // OK (static variable)\n            instanceVar = 999;               // OK (instance variables can be modified)\n        };\n    }\n}",
           "note": null,
           "order": 4

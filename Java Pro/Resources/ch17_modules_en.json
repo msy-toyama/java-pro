@@ -51,7 +51,7 @@
           "title": "Exam Preparation Tips",
           "body": "The certification exam tests the basic syntax of **module-info.java**.\nIt is especially important to understand the difference between exports and requires precisely.\nexports is a declaration that \"exposes your own packages to external modules.\"\nrequires is a declaration that \"depends on another module.\"\nBe careful not to confuse these two.\nAlso remember that the java.base module is a special module that is implicitly required.",
           "code": null,
-          "note": "【Practical Tips】In real-world development, many projects do not explicitly use the module system because Maven or Gradle handles dependency management. However, it indirectly affects areas such as access restrictions to JDK internal APIs.",
+          "note": "**[Practical Tips]**In real-world development, many projects do not explicitly use the module system because Maven or Gradle handles dependency management. However, it indirectly affects areas such as access restrictions to JDK internal APIs.",
           "order": 5
         }
       ],
