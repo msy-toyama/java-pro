@@ -46,6 +46,8 @@ struct HomeView: View {
                             .shimmer(duration: 1.5)
                     }
                     .padding(AppLayout.paddingMD)
+                    .frame(maxWidth: horizontalSizeClass == .regular ? 780 : .infinity)
+                    .frame(maxWidth: .infinity)
                 }
                 .background(AppColor.background)
                 .navigationTitle(lang.l("home.title"))
@@ -54,15 +56,8 @@ struct HomeView: View {
                 .onAppear { vm.loadData(modelContext: modelContext) }
             } else {
             ScrollView {
-                let isWide = horizontalSizeClass == .regular
-                let columns = isWide
-                    ? [GridItem(.flexible(), spacing: AppLayout.paddingMD),
-                       GridItem(.flexible(), spacing: AppLayout.paddingMD)]
-                    : [GridItem(.flexible())]
-
-                LazyVGrid(columns: columns, spacing: AppLayout.paddingLG) {
+                VStack(spacing: AppLayout.paddingLG) {
                     levelCard
-                        .gridCellColumns(isWide ? 2 : 1)
                         .staggeredAppear(index: 0)
 
                     streakCard
@@ -90,10 +85,11 @@ struct HomeView: View {
                     }
 
                     progressSummaryCard
-                        .gridCellColumns(isWide ? 2 : 1)
                         .staggeredAppear(index: 7)
                 }
                 .padding(AppLayout.paddingMD)
+                .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+                .frame(maxWidth: .infinity)
             }
             .background(AppColor.background)
             .refreshable { vm.loadData(modelContext: modelContext) }

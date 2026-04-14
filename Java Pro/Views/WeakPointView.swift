@@ -11,6 +11,7 @@ import SwiftData
 
 struct WeakPointView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let certLevel: String  // "silver" or "gold"
 
     @State private var weakTopics: [WeakTopic] = []
@@ -33,6 +34,8 @@ struct WeakPointView: View {
                 weakTopicsList
             }
         }
+        .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+        .frame(maxWidth: .infinity)
         .background(AppColor.background)
         .navigationTitle(lang.l("weak.title"))
         .navigationBarTitleDisplayMode(.inline)

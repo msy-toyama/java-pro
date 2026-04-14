@@ -12,6 +12,7 @@ import SwiftData
 struct CourseListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var courses: [CourseIndex] = []
     @State private var completedCounts: [String: Int] = [:]
     @State private var showPaywall = false
@@ -49,6 +50,8 @@ struct CourseListView: View {
                     PracticeListView()
                 }
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
             .background(AppColor.background)
             .navigationTitle(lang.l("learn.title"))
             .navigationBarTitleDisplayMode(.inline)

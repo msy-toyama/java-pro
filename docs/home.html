@@ -68,6 +68,16 @@
         @keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         @keyframes orbit-slow{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
         @keyframes gallery-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        @keyframes float-strip{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+        /* ===== HERO FLOATING SCREENSHOTS ===== */
+        .hero-float-strip{position:absolute;top:50%;left:0;right:0;z-index:1;pointer-events:none;overflow:hidden;height:420px;transform:translateY(-50%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.6) 15%,rgba(0,0,0,.6) 85%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.6) 15%,rgba(0,0,0,.6) 85%,transparent 100%)}
+        .hero-float-track{display:flex;gap:28px;animation:float-strip 50s linear infinite;width:max-content;align-items:center;height:100%;padding:20px 0}
+        .hero-float-item{flex-shrink:0;opacity:.12;transition:opacity .6s var(--ease)}
+        .hero-float-item img{width:180px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+        @media(prefers-color-scheme:light){.hero-float-item{opacity:.08}}
+        @media(max-width:768px){.hero-float-strip{height:300px}.hero-float-item img{width:130px;border-radius:18px}}
+        @media(max-width:480px){.hero-float-strip{height:240px}.hero-float-item img{width:110px;border-radius:14px}}
 
         .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
         .reveal.vis{opacity:1;transform:none}
@@ -133,7 +143,6 @@
         .gallery-track-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
         .gallery-track-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
         .gallery-track{display:flex;gap:32px;animation:gallery-scroll 40s linear infinite;width:max-content;padding:20px 0}
-        .gallery-track:hover{animation-play-state:paused}
         .gallery-phone{flex-shrink:0;transition:transform .5s var(--ease)}
         .gallery-phone:hover{transform:translateY(-12px) rotateY(4deg) scale(1.04)}
         .gallery-phone .phone-img-frame{width:260px;padding:10px}
@@ -295,6 +304,25 @@
     <div class="hero-orb hero-orb--2"></div>
     <div class="hero-orb hero-orb--3"></div>
     <div class="hero-ring"></div>
+
+    <!-- Floating screenshots strip (semi-transparent background decoration) -->
+    <div class="hero-float-strip">
+        <div class="hero-float-track">
+            <div class="hero-float-item"><img src="images/screen_home.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_courses.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_oop.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_exam.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_badges.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_courses_all.png" alt="" loading="lazy"></div>
+            <!-- duplicate for seamless loop -->
+            <div class="hero-float-item"><img src="images/screen_home.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_courses.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_oop.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_exam.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_badges.png" alt="" loading="lazy"></div>
+            <div class="hero-float-item"><img src="images/screen_courses_all.png" alt="" loading="lazy"></div>
+        </div>
+    </div>
 
     <div class="hero-content">
         <div class="hero-badge"><span class="badge-pill">&#10024; iOS 無料ダウンロード</span></div>

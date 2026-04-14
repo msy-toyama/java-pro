@@ -9,6 +9,7 @@
 
 import SwiftUI
 import SwiftData
+import os
 
 struct LessonDetailView: View {
     @Environment(\.modelContext) private var modelContext

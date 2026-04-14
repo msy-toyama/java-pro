@@ -12,6 +12,7 @@ import SwiftData
 
 struct BadgeListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var earnedBadges: [UserBadge] = []
 
     private var badgeDateFormatter: DateFormatter {
@@ -75,6 +76,8 @@ struct BadgeListView: View {
                 }
             }
             .padding(AppLayout.paddingMD)
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
         .navigationTitle(lang.l("badges.title"))

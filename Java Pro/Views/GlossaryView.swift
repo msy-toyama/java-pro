@@ -17,6 +17,7 @@ struct GlossaryView: View {
     @State private var searchTask: Task<Void, Never>?
     @State private var appearedEntries: Set<String> = []
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     private var lang: LanguageManager { LanguageManager.shared }
 
     private var filteredEntries: [GlossaryEntry] {
@@ -53,6 +54,8 @@ struct GlossaryView: View {
                 }
             }
             .padding(AppLayout.paddingMD)
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
         .navigationTitle(lang.l("glossary.nav_title"))

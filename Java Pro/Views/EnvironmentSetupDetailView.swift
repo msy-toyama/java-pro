@@ -11,6 +11,7 @@ import SwiftUI
 
 struct EnvironmentSetupDetailView: View {
     let section: SetupGuideSection
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     private var lang: LanguageManager { LanguageManager.shared }
 
     var body: some View {
@@ -43,6 +44,8 @@ struct EnvironmentSetupDetailView: View {
                 }
             }
             .padding(AppLayout.paddingMD)
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
         .navigationTitle(section.title)

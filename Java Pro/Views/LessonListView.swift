@@ -11,6 +11,7 @@ import SwiftData
 
 struct LessonListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let course: CourseIndex
     @Binding var navigationPath: NavigationPath
 
@@ -63,6 +64,8 @@ struct LessonListView: View {
                 }
             }
             .padding(AppLayout.paddingMD)
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
         .navigationTitle(course.title)

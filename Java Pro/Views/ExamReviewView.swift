@@ -11,6 +11,7 @@ import SwiftUI
 struct ExamReviewView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     let quizzes: [QuizData]
     let answers: [String: String]           // quizId -> choiceId
@@ -65,6 +66,8 @@ struct ExamReviewView: View {
                         if let quiz = currentQuiz {
                             reviewQuestionView(quiz)
                                 .padding(AppLayout.paddingMD)
+                                .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+                                .frame(maxWidth: .infinity)
                                 .id(currentIndex) // 問題切替時にスクロール位置をリセット
                         }
                     }

@@ -12,6 +12,7 @@ import SwiftData
 struct ExamResultView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     let result: UserExamResult
     let topicScores: [String: Double]
@@ -63,6 +64,8 @@ struct ExamResultView: View {
                         .staggeredAppear(index: 3)
                 }
                 .padding(AppLayout.paddingMD)
+                .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+                .frame(maxWidth: .infinity)
             }
             .background(AppColor.background)
 

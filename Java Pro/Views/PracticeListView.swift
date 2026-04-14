@@ -13,6 +13,7 @@ struct PracticeListView: View {
     @State private var appearedItems: Set<String> = []
     @State private var collapsedSections: Set<String> = []
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     private var lang: LanguageManager { LanguageManager.shared }
 
     private var chapters: [PracticeChapter] {
@@ -111,6 +112,8 @@ struct PracticeListView: View {
                 }
             }
             .padding(AppLayout.paddingMD)
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
         .sheet(isPresented: $showPaywall) {

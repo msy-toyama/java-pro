@@ -11,6 +11,7 @@ import SwiftData
 
 struct CertificationView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var silverProgress: CertProgress?
     @State private var goldProgress: CertProgress?
     @State private var selectedCert: CertificationLevel = .silver
@@ -120,6 +121,8 @@ struct CertificationView: View {
                         .padding(.top, AppLayout.paddingSM)
                 }
                 .padding(AppLayout.paddingMD)
+                .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+                .frame(maxWidth: .infinity)
             }
             .background(AppColor.background)
             .navigationTitle(lang.l("cert.title"))

@@ -11,6 +11,7 @@ import SwiftData
 
 struct ReviewView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var reviewQuizzes: [QuizData] = []
     @State private var weakCourses: [(CourseIndex, Double)] = []
     @State private var showReviewQuiz = false
@@ -24,6 +25,8 @@ struct ReviewView: View {
                 reviewContent
             }
         }
+        .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+        .frame(maxWidth: .infinity)
         .background(AppColor.background)
         .navigationTitle(lang.l("review.title"))
         .onAppear(perform: loadData)

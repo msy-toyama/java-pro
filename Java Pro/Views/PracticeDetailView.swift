@@ -11,6 +11,7 @@ import SwiftUI
 
 struct PracticeDetailView: View {
     let chapter: PracticeChapter
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var expandedExercise: String?
     @State private var showSolutionFor: String?
     @State private var generatedFileURLs: [String: URL?] = [:]
@@ -26,6 +27,8 @@ struct PracticeDetailView: View {
                 }
             }
             .padding(AppLayout.paddingMD)
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(AppColor.background)
         .navigationTitle(chapter.title)

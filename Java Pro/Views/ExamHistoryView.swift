@@ -11,6 +11,7 @@ import SwiftData
 
 struct ExamHistoryView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let certLevel: CertificationLevel
 
     @State private var history: [UserExamResult] = []
@@ -50,6 +51,8 @@ struct ExamHistoryView: View {
                         }
                     }
                     .padding(AppLayout.paddingMD)
+                    .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
+                    .frame(maxWidth: .infinity)
                 }
                 .background(AppColor.background)
             }

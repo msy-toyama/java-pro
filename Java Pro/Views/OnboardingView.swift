@@ -14,6 +14,7 @@ import SwiftData
 
 struct OnboardingView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let onComplete: () -> Void
 
     @State private var currentPage = 0
@@ -48,6 +49,7 @@ struct OnboardingView: View {
 
                 bottomControls
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 600 : .infinity)
         }
     }
 
@@ -168,8 +170,18 @@ private struct LanguageSelectionPage: View {
                         }
                     } label: {
                         HStack {
-                            Text(language == .japanese ? "🇯🇵" : "🇺🇸")
-                                .font(.title)
+                            // 国旗絵文字はシミュレータ等で ? 表示になる場合があるため
+                            // テキスト略称 + 背景色で代替表示する
+                            Text(language == .japanese ? "JP" : "US")
+                                .font(.system(size: 14, weight: .bold, design: .rounded))
+                                .foregroundStyle(.white)
+                                .frame(width: 36, height: 36)
+                                .background(
+                                    language == .japanese
+                                        ? Color(red: 0.74, green: 0.07, blue: 0.19)   // 日本の赤
+                                        : Color(red: 0.23, green: 0.35, blue: 0.60),  // 米国の紺
+                                    in: RoundedRectangle(cornerRadius: 8)
+                                )
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(language.displayName)
                                     .font(AppFont.headline)

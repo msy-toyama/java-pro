@@ -3,10 +3,10 @@
 | 項目 | 内容 |
 |---|---|
 | ドキュメントID | BD-001 |
-| バージョン | 2.0.0 |
+| バージョン | 2.1.0 |
 | 作成日 | 2026-04-08 |
-| 最終更新日 | 2026-04-12 |
-| 対応要件定義 | REQ-001 v2.0.0 |
+| 最終更新日 | 2026-04-14 |
+| 対応要件定義 | REQ-001 v2.1.0 |
 | ステータス | リリース版 |
 
 ---
@@ -19,13 +19,13 @@
 
 | レイヤー | 役割 | 主要コンポーネント |
 |---|---|---|
-| **View 層** | UI 表示・ユーザー操作受付 | 30 Views + 6 Components（計 36 ファイル） |
+| **View 層** | UI 表示・ユーザー操作受付 | 30 Views + 7 Components（計 37 ファイル） |
 | **ViewModel 層** | ビュー固有の状態管理・ビジネスロジック呼び出し | 4 個の ViewModel クラス |
-| **Service 層** | ビジネスロジック・データ操作 | 14 個の Service クラス |
+| **Service 層** | ビジネスロジック・データ操作 | 15 個の Service クラス |
 | **Model 層** | データ定義・永続化 | 8 個の SwiftData @Model + 17 個のコンテンツ構造体 + 5 個の実践演習構造体 |
 | **Theme 層** | デザイントークン管理 | AppColor / AppFont / AppLayout / AppAnimation + アニメーション + コンポーネント（計 3 ファイル） |
 | **Extension 層** | ヘルパーメソッド | DateExtensions + ModelContextExtensions（計 2 ファイル） |
-| **Resource 層** | 静的コンテンツ | 46 個の JSON ファイル + Assets.xcassets |
+| **Resource 層** | 静的コンテンツ | 92 個の JSON ファイル（日英各 46）+ Assets.xcassets |
 
 ### 1.2 技術スタック
 
@@ -79,6 +79,7 @@ Java Pro/
 │   ├── AppearanceManager.swift       # ダーク/ライトモード管理
 │   ├── SaveErrorNotifier.swift       # データ保存エラー通知
 │   ├── AppLogger.swift               # os.Logger ラッパー (8 カテゴリ)
+│   ├── LanguageManager.swift         # 日英言語切替管理
 │   └── CrashReportService.swift      # MetricKit クラッシュ診断
 │
 ├── Views/
@@ -117,6 +118,7 @@ Java Pro/
 │       ├── LevelUpOverlayView.swift    # レベルアップ演出
 │       ├── CodeBlockView.swift         # コードブロック表示
 │       ├── JavaSyntaxHighlighter.swift # Java シンタックスハイライト
+│       ├── GlossaryPopupView.swift     # 用語ポップアップ表示
 │       ├── RichBodyView.swift          # リッチテキスト表示
 │       └── SectionView.swift          # レッスンセクション表示
 │
@@ -130,11 +132,14 @@ Java Pro/
 │   └── ModelContextExtensions.swift  # ModelContext ログ付きフェッチ
 │
 ├── Resources/
-│   ├── courses_index.json                   # コースインデックス (34 コース)
-│   ├── ch01_introduction.json ... (34 ファイル)  # チャプターコンテンツ
-│   ├── exam_questions_*.json (8 ファイル)   # 模擬試験問題 (計 640 問)
-│   ├── glossary.json                        # 用語集 (202 語)
-│   └── practice_exercises.json              # 実践演習 (39 チャプター・108 問 + 環境構築ガイド)
+│   ├── courses_index.json / courses_index_en.json           # コースインデックス (34 コース)
+│   ├── ch01_introduction.json ... (34 ファイル)  # チャプターコンテンツ（日本語）
+│   ├── ch01_introduction_en.json ... (34 ファイル)  # チャプターコンテンツ（英語）
+│   ├── exam_questions_*.json (8 ファイル)   # 模擬試験問題（日本語・計 640 問）
+│   ├── exam_questions_*_en.json (8 ファイル) # 模擬試験問題（英語）
+│   ├── glossary.json / glossary_en.json                    # 用語集 (202 語)
+│   ├── practice_exercises.json / practice_exercises_en.json # 実践演習 (39ch・108問 + 環境構築ガイド)
+│   └── strings_ja.json / strings_en.json                   # UI 文字列辞書
 │
 └── Tests/
     ├── Java_ProTests.swift              # ユニットテスト (89 テスト / 10 スイート)
@@ -146,7 +151,7 @@ Java Pro/
 
 | 方針 | 説明 |
 |---|---|
-| **シングルトンパターン** | 状態を持たない・グローバル参照が必要なサービスに使用（ContentService, PracticeService, StoreService, SoundService, AppearanceManager, SaveErrorNotifier, NotificationService, AppLogger, CrashReportService） |
+| **シングルトンパターン** | 状態を持たない・グローバル参照が必要なサービスに使用（ContentService, PracticeService, StoreService, SoundService, AppearanceManager, SaveErrorNotifier, NotificationService, AppLogger, CrashReportService, LanguageManager） |
 | **DI パターン** | ModelContext 依存サービスは `init(modelContext:)` で注入（ProgressService, GamificationService, ExamService, ReviewService, AnalyticsService） |
 | **@Observable** | SwiftUI の状態監視に `@Observable` マクロを採用（Combine 不使用）。※ NotificationService (`Sendable`) と SoundService (`@MainActor` のみ) は `@Observable` 非適用 |
 | **@MainActor** | UI 関連サービスは全て `@MainActor` で実行（NotificationService は `Sendable`、CrashReportService は `@unchecked Sendable`） |
@@ -400,13 +405,18 @@ exam_questions_{examId}.json (8 ファイル)
 glossary.json
     └── [GlossaryEntry] (202 語)
 
-practice_exercises.json
+practice_exercises.json / practice_exercises_en.json
     └── PracticeData
         ├── setupGuide: [SetupGuideSection] (5 セクション)
         │   └── steps: [SetupStep]
         └── chapters: [PracticeChapter] (39 チャプター)
             └── exercises: [PracticeExercise] (合計 108 問)
+
+strings_ja.json / strings_en.json
+    └── { "key": "翻訳テキスト" } (UI 文字列辞書)
 ```
+
+> **多言語設計**: 全コンテンツ JSON は日本語版（`*.json`）と英語版（`*_en.json`）のペアで管理される。`LanguageManager.shared.currentLanguage` に応じて `ContentService` / `PracticeService` がロードするファイル名にサフィックス `_en` を付与する。
 
 ---
 
@@ -450,6 +460,12 @@ practice_exercises.json
 │NotificationService │  │   AppLogger   │  │CrashReportService│
 │ (Singleton,Sendable)│  │  (os.Logger)  │  │ (MetricKit)      │
 └────────────────────┘  └───────────────┘  └──────────────────┘
+
+┌────────────────────┐
+│ LanguageManager    │
+│ (Singleton)        │
+│ 日英言語切替          │
+└────────────────────┘
 ```
 
 ### 5.2 サービス初期化フロー
@@ -476,6 +492,7 @@ Java_ProApp.init()
                ├── AppSettings ロード / 作成
                ├── AppearanceManager.sync(from: settings.isDarkMode)
                ├── SoundService.shared — 効果音設定・音量反映
+               ├── LanguageManager.shared — 言語設定反映
                ├── ContentService.shared.loadAllContentAsync()  ← await 完了待ち
                ├── PracticeService.shared.loadPracticeData()  ← 実践演習ロード
                ├── エラーチェック → アラート表示
@@ -483,8 +500,8 @@ Java_ProApp.init()
                └── 600ms sleep → isLoading = false → メイン画面表示
            }
            └── scenePhase 監視
-               ├── .active: 学習タイマー開始 + 通知再スケジュール
-               └── .background: タイマー停止 + 学習秒数 flush
+               ├── .active: 学習タイマー開始 (Task + Task.sleep) + 通知再スケジュール
+               └── .background: タイマー停止 (Task.cancel) + 学習秒数 flush
 ```
 
 ### 5.3 コンテンツ読み込み設計
@@ -759,3 +776,4 @@ ProgressService / GamificationService / ExamService
 | 1.0.0 | 2026-04-08 | 初版作成。v1.00 リリースに対応した設計をコードベースから逆算して策定 |
 | 2.0.0 | 2026-04-12 | 全面改訂。ViewModel 層追加（4 VM）。Service 11→14（AppLogger / CrashReportService / PracticeService 追加）。View 23→36（実践演習・環境構築・ガイドツアー・クイズ結果・レッスン一覧等追加）。Theme 1→3 ファイル。Extension 1→2 ファイル。Schema V2 追加。コンテンツ統計全更新（34 コース / 169 レッスン / 575 クイズ / 202 用語 / 108 演習 / 640 試験問題）。テスト設計セクション追加。構造化ログセクション追加 |
 | 2.0.1 | 2026-04-12 | View 層ファイル数修正 (30 Views + 6 Components = 36)。MVVM 用語補足追加 |
+| 2.1.0 | 2026-04-14 | Service 層 14→15 (LanguageManager 追加)。Component 6→7 (GlossaryPopupView 追加)。JSON リソース数 46→92 (英語版追加反映)。学習タイマーを Timer から Task パターンに修正。サービス初期化フローに LanguageManager 追加 |
