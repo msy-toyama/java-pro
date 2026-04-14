@@ -159,7 +159,7 @@ struct LevelUpOverlayView: View {
         withAnimation(.easeOut(duration: 0.25)) {
             overlayOpacity = 0
         }
-        Task {
+        Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(300))
             isPresented = false
         }

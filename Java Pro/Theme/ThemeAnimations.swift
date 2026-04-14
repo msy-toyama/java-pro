@@ -300,7 +300,7 @@ struct CountUpText: View {
         animationTask = Task {
             for i in 1...steps {
                 try? await Task.sleep(for: .milliseconds(Int(interval * 1000)))
-                if Task.isCancelled { return }
+                if Task.isCancelled { displayValue = capturedTarget; return }
                 withAnimation(.easeOut(duration: 0.1)) {
                     displayValue = capturedTarget * i / steps
                 }

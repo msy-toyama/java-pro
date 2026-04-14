@@ -139,7 +139,8 @@ struct ExamSimulatorView: View {
             questionListPanel
         }
         .task {
-            // タイマー: VMに委譲
+            // タイマー: VMに委譲（初回tickは即時実行）
+            vm.timerTick(modelContext: modelContext)
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 vm.timerTick(modelContext: modelContext)

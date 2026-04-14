@@ -173,7 +173,7 @@ struct QuizView: View {
                         startPoint: .leading, endPoint: .trailing
                     ))
                     .frame(
-                        width: geometry.size.width * CGFloat(vm.currentIndex + (vm.isAnswered ? 1 : 0)) / CGFloat(vm.quizzes.count),
+                        width: geometry.size.width * CGFloat(vm.currentIndex + (vm.isAnswered ? 1 : 0)) / CGFloat(max(vm.quizzes.count, 1)),
                         height: 6
                     )
                     .animation(.spring(response: 0.4), value: vm.currentIndex)

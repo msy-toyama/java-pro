@@ -192,8 +192,13 @@ final class StoreService {
         Task.detached { [weak self] in
             for await verification in StoreKit.Transaction.updates {
                 guard let self else { return }
-                if case .verified(let transaction) = verification {
+                switch verification {
+                case .verified(let transaction):
                     await self.updatePurchase(transaction)
+                    await transaction.finish()
+                case .unverified(let transaction, let error):
+                    AppLogger.store.warning("未検証トランザクション: \(transaction.productID), error: \(error.localizedDescription)")
+                    // 検証失敗でも finish して再受信ループを防止
                     await transaction.finish()
                 }
             }

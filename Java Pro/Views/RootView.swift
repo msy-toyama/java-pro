@@ -19,8 +19,8 @@ struct RootView: View {
     @AppStorage("dataRecoveryMode") private var dataRecoveryMode = false
     /// フォアグラウンドに入った時刻（学習時間計測用）
     @State private var foregroundStartDate: Date?
-    /// 60秒周期で学習時間を中間保存するタイマー
-    @State private var studyTimer: Timer?
+    /// 60秒周期で学習時間を中間保存するタスク
+    @State private var studyTimerTask: Task<Void, Never>?
     private var appearance = AppearanceManager.shared
     private var saveErrorNotifier = SaveErrorNotifier.shared
     private var lang = LanguageManager.shared
@@ -129,18 +129,21 @@ struct RootView: View {
     /// ProgressService は軽量だがタイマー周期中は同一インスタンスを再利用する。
     private func startStudyTimer() {
         stopStudyTimer()
-        let service = ProgressService(modelContext: modelContext)
-        studyTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
-            Task { @MainActor in
-                self.flushStudySeconds(service: service)
+        let context = modelContext
+        studyTimerTask = Task { @MainActor in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(60))
+                guard !Task.isCancelled else { break }
+                let service = ProgressService(modelContext: context)
+                flushStudySeconds(service: service)
             }
         }
     }
 
-    /// タイマーを停止する。
+    /// タイマータスクをキャンセルする。
     private func stopStudyTimer() {
-        studyTimer?.invalidate()
-        studyTimer = nil
+        studyTimerTask?.cancel()
+        studyTimerTask = nil
     }
 
     /// foregroundStartDate からの経過秒数を加算し、起点時刻を現在にリセットする。

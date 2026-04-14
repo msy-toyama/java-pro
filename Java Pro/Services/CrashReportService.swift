@@ -29,8 +29,15 @@ final class CrashReportService: NSObject, @unchecked Sendable {
         category: "CrashReport"
     )
 
+    /// スレッドセーフなロック（MetricKit コールバックは任意スレッドから呼ばれるため）
+    private let lock = NSLock()
+    private var _lastDiagnosticSummary: String?
+
     /// 最新のクラッシュ / ハング診断サマリ（設定画面などで表示可能）
-    private(set) var lastDiagnosticSummary: String?
+    var lastDiagnosticSummary: String? {
+        get { lock.lock(); defer { lock.unlock() }; return _lastDiagnosticSummary }
+        set { lock.lock(); defer { lock.unlock() }; _lastDiagnosticSummary = newValue }
+    }
 
     private let diagnosticKey = "lastCrashDiagnostic"
 
@@ -38,7 +45,7 @@ final class CrashReportService: NSObject, @unchecked Sendable {
 
     private override init() {
         super.init()
-        lastDiagnosticSummary = UserDefaults.standard.string(forKey: diagnosticKey)
+        _lastDiagnosticSummary = UserDefaults.standard.string(forKey: diagnosticKey)
     }
 
     /// MetricKit レシーバーを登録する。App 起動時に1度だけ呼ぶ。

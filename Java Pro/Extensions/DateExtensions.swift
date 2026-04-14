@@ -70,11 +70,19 @@ extension Date {
         return Self.shortDisplayFormatter.string(from: self)
     }
 
+    private static var _cachedShortFormatter: DateFormatter?
+    private static var _cachedIsJapanese: Bool?
+
     private static var shortDisplayFormatter: DateFormatter {
+        let isJa = LanguageManager.shared.isJapanese
+        if let cached = _cachedShortFormatter, _cachedIsJapanese == isJa {
+            return cached
+        }
         let f = DateFormatter()
-        let lang = LanguageManager.shared
-        f.locale = Locale(identifier: lang.isJapanese ? "ja_JP" : "en_US")
-        f.dateFormat = lang.isJapanese ? "M/d" : "MMM d"
+        f.locale = Locale(identifier: isJa ? "ja_JP" : "en_US")
+        f.dateFormat = isJa ? "M/d" : "MMM d"
+        _cachedShortFormatter = f
+        _cachedIsJapanese = isJa
         return f
     }
 }

@@ -122,7 +122,8 @@ final class QuizViewModel {
 
     func submitCodeCompleteAnswer(modelContext: ModelContext, reduceMotion: Bool) {
         guard let blanks = currentQuiz.blanks else { return }
-        let correct = blanks.allSatisfy { blank in
+        // 空の blanks 配列はデータ不正として不正解扱い（allSatisfy は空で true を返す）
+        let correct = !blanks.isEmpty && blanks.allSatisfy { blank in
             guard let selectedId = blankSelections[blank.id],
                   let choice = blank.choices.first(where: { $0.id == selectedId }) else { return false }
             return choice.isCorrect
