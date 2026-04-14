@@ -112,7 +112,7 @@ struct LessonDetailView: View {
                 if let entry = ContentService.shared.getGlossaryEntry(term: term) {
                     glossaryPopupEntry = entry
                 } else {
-                    print("[GlossaryLink] 用語が見つかりません: \(term)")
+                    AppLogger.app.warning("[GlossaryLink] 用語が見つかりません: \(term)")
                 }
                 return .handled
             })
