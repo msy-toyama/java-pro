@@ -1,0 +1,714 @@
+{
+  "courseId": "ch18",
+  "lessons": [
+    {
+      "id": "ch18_01",
+      "courseId": "ch18",
+      "title": "Comprehensive Review of Basic Syntax",
+      "summary": "Review the key points of variables, operators, and control flow. Master the frequently tested patterns on the Silver exam, including operator precedence, short-circuit evaluation, and tricky switch/if patterns.",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "overview",
+          "title": "Identifying Pitfalls in Basic Syntax",
+          "body": "In this lesson, you will learn:\n\n- A refresher on [[operator]] precedence and associativity\n- Rules for implicit/explicit [[type conversion]]\n- Pitfalls in [[for loops]], [[while loops]], and [[switch statements]]\n\nThis is a comprehensive review of syntax questions frequently tested on the Silver exam.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "rule",
+          "title": "Operator Precedence and Short-Circuit Evaluation",
+          "body": "Operator precedence is a topic frequently targeted on the exam.\nPost-increment (i++) returns the value first and then increments; pre-increment (++i) increments first and then returns the value.\nThe logical operators && and || perform short-circuit evaluation.\nIf the left operand of && is false, the right operand is not evaluated; if the left operand of || is true, the right operand is not evaluated.\nIn contrast, & and | are bitwise operators (or non-short-circuit logical operators for boolean types) that always evaluate both operands.\nAlso be careful not to confuse the assignment operator = with the comparison operator ==.",
+          "code": "int a = 5;\nint b = a++ + ++a;  // a++(returns 5, a becomes 6) + ++a(returns 7, a becomes 7) → b = 12\n\nboolean x = false;\nint c = 0;\nif (x && (++c > 0)) { }  // Short-circuit: x is false so c is not incremented\nSystem.out.println(c);    // 0",
+          "note": "The difference between post-increment and pre-increment becomes apparent when used within expressions. As standalone statements (i++;), both produce the same result.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "code",
+          "title": "Switch Statement Fall-Through and Patterns",
+          "body": "In a switch statement, forgetting a break statement causes \"fall-through\" to the next case.\nThis is a very common trick pattern on the exam.\nThe types that can be used in a [[switch expression]] are byte, short, char, int, [[String]], enum, and their wrapper types.\nRemember that long, double, and boolean cannot be used in switch expressions.\nThe default label can be placed at any position, but it is still affected by fall-through.\nOnly [[compile]]-time constants ([[literals]] or final variables) can be used as case labels.",
+          "code": "// Variable declaration and initialization\nint val = 2;\nString result = \"\";\n// Branching based on value\nswitch (val) {\n    case 1: result += \"A\";\n    case 2: result += \"B\";\n    case 3: result += \"C\";\n    default: result += \"D\";\n}\nSystem.out.println(result);  // \"BCD\" (fall-through due to missing break)",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "point",
+          "title": "Type Conversion and Variable Scope Considerations",
+          "body": "Implicit type conversion (widening conversion) occurs automatically from a smaller type to a larger type.\nWidening conversion is possible in the order int → long → float → double.\nHowever, precision may be lost in int → float or long → double conversions.\nNarrowing conversion (from a larger type to a smaller type) requires an explicit [[cast]].\nLoop variables in a for loop are only valid within the for loop's block.\nOnly boolean types can be used in [[if statement]] conditions — unlike C, integer values cannot be used.",
+          "code": "// Examples of compile errors\n// int x = 3.14;           // double → int implicit conversion not allowed\n// if (1) { }              // int is not a boolean type, so this is an error\n\nfor (int i = 0; i < 3; i++) {\n    // i is only valid within this block\n}\n// System.out.println(i);  // Compile error: i is undefined",
+          "note": "The result of byte + byte is of type int. byte b = 1 + 2; is OK because they are compile-time constants, but byte b1 = 1; byte b2 = 2; byte b3 = b1 + b2; is an error.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_01",
+          "sectionType": "tip",
+          "title": "Exam Strategy: Common Basic Syntax Patterns",
+          "body": "Basic syntax questions are an area where you should score reliably. Master the following patterns.\n| Key Point |\n| --- |\n| Patterns where post/pre-increment is used inside expressions |\n| Patterns where side-effecting expressions are/aren't evaluated due to short-circuit evaluation |\n| Fall-through patterns depending on the presence/absence of break in switch statements |\n| Situations requiring implicit type conversion vs. explicit casting |\n| Variable scope boundaries (for loops, if statements, blocks) |\nWhen in doubt, \"think like the compiler\" and carefully trace through the code line by line.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_01_q1",
+          "lessonId": "ch18_01",
+          "type": "outputPredict",
+          "question": "What value is output when the following code is executed?",
+          "code": "int x = 3;\nint y = x++ * --x;\nSystem.out.println(y);",
+          "explanation": "x++ is a post-increment, so it first returns the current value of x (3), then x becomes 4. Next, --x is a pre-decrement, so it decrements x from 4 to 3 and then returns 3. Therefore, y = 3 * 3 = 9.",
+          "choices": [
+            {
+              "id": "ch18_01_q1_a",
+              "text": "6",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_01_q1_b",
+              "text": "9",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_01_q1_c",
+              "text": "12",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_01_q1_d",
+              "text": "16",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_01_q2",
+          "lessonId": "ch18_01",
+          "type": "errorFind",
+          "question": "The following code has a compile error. Which of the following correctly identifies the cause of the error?",
+          "code": "int count = 0;\nfor (int i = 0; i < 5; i++)\n    count++;\n    System.out.println(i + \": \" + count);",
+          "explanation": "Since the for loop has no braces {}, its body consists of only the single statement count++;. The System.out.println(i + \": \" + count); line is outside the for loop, so variable i is out of scope, resulting in a compile error. Be careful not to be misled by indentation.",
+          "choices": [
+            {
+              "id": "ch18_01_q2_a",
+              "text": "count is not initialized",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_01_q2_b",
+              "text": "The for loop condition is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_01_q2_c",
+              "text": "Variable i is referenced outside its scope",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_01_q2_d",
+              "text": "There is no semicolon after count++",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_01_q3",
+          "lessonId": "ch18_01",
+          "type": "outputPredict",
+          "question": "What is output when the following code is executed?",
+          "code": "int num = 5;\nString result = \"\";\nswitch (num) {\n    default: result += \"X\";\n    case 1:  result += \"A\"; break;\n    case 5:  result += \"B\";\n    case 10: result += \"C\"; break;\n}  \nSystem.out.println(result);",
+          "explanation": "Since num is 5, it matches case 5 and result += \"B\" is executed. There is no break, so it falls through to case 10, and result += \"C\" is executed. case 10 has a break so the switch statement is exited. The default and case 1 are not executed. The result is \"BC\".",
+          "choices": [
+            {
+              "id": "ch18_01_q3_a",
+              "text": "B",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_01_q3_b",
+              "text": "BC",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_01_q3_c",
+              "text": "BCA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_01_q3_d",
+              "text": "XABC",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch18_02",
+      "courseId": "ch18",
+      "title": "Comprehensive Review of OOP",
+      "summary": "Review the key concepts of classes, inheritance, polymorphism, abstract classes, and interfaces. Organize the differences between method overriding and overloading, and the behavior of access modifiers.",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "overview",
+          "title": "Understanding Object-Oriented Programming Precisely",
+          "body": "In this lesson, you will learn:\n\n- How [[inheritance]] and [[constructor]] chaining works\n- Rules for [[overriding]] ([[access modifiers]] and return types)\n- Type resolution in [[polymorphism]] ([[compile]] time vs. runtime)\n\nThe OOP section has the highest score weight on the Silver exam.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "rule",
+          "title": "Requirements for Method Overriding",
+          "body": "There are several strict requirements for [[method]] overriding to be valid.\nThe method name and parameter list (types, count, and order) must match exactly.\nThe return type must be the same type or a [[covariant return]] type (a sub[[class]] type).\nThe access modifier must be the same or broader in scope (e.g., changing protected to public is allowed).\nOnly the same or subclass [[checked exceptions]] can be thrown compared to the parent class.\nstatic/private methods cannot be overridden (in the case of static methods, this is called \"hiding\").",
+          "code": "class Animal {\n    protected String speak() throws Exception {\n        return \"...\";\n    }\n}\nclass Dog extends Animal {\n    @Override\n    public String speak() throws RuntimeException {  // OK: broader access modifier, narrower exception\n        return \"Woof\";\n    }\n}",
+          "note": "Adding the @Override annotation causes a compile error if the override conditions are not met, helping to prevent mistakes.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "code",
+          "title": "Polymorphism and Method Invocation",
+          "body": "The core of polymorphism is the distinction between the \"[[variable]] type\" and the \"actual object type.\"\n[[Instance]] methods are invoked based on the actual object type (dynamic binding).\nInstance variables and [[static methods]] are accessed based on the variable type ([[reference type]]) (static binding).\nThis distinction is the most frequently tested point on the exam.\nWithout a [[cast]], you cannot call child class-specific methods from a parent class type variable.",
+          "code": "// Parent class definition\nclass Parent {\n    // Variable declaration and initialization\n    String name = \"Parent\";\n    // greet method definition\n    String greet() { return \"Hello from Parent\"; }\n}\n// Child class definition\nclass Child extends Parent {\n    String name = \"Child\";\n    // greet method definition\n    String greet() { return \"Hello from Child\"; }\n}\n\nParent obj = new Child();\nSystem.out.println(obj.greet());  // \"Hello from Child\" (dynamic binding)\nSystem.out.println(obj.name);     // \"Parent\" (fields use static binding)",
+          "note": "Fields are not overridden but \"hidden.\" Which field is visible depends on the reference type.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "point",
+          "title": "Differences Between Abstract Classes and Interfaces",
+          "body": "[[Abstract classes]] can have constructors and can define instance variables and concrete methods.\n[[Interface]] fields are implicitly public static final.\nSince Java 8, interfaces can define default methods and static methods.\nMultiple class inheritance is not allowed, but a class can implement multiple interfaces.\nA class that extends an abstract class must implement all abstract methods or itself be declared abstract.\nWhen default methods from interfaces conflict, the implementing class must explicitly override them.",
+          "code": null,
+          "note": "Abstract classes cannot be instantiated with new, but their constructors are called via super() from child classes.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_02",
+          "sectionType": "tip",
+          "title": "Exam Strategy: Common OOP Tricks",
+          "body": "Watch out for the following tricks in OOP questions.\n| Key Point |\n| --- |\n| The behavioral difference between field hiding and method overriding |\n| Confusing overloading (different parameters) with overriding (same parameters) |\n| Constructor invocation order in the parent class (super() is implicitly called first) |\n| Concrete methods of abstract classes are also inherited |\n| Conflict resolution for default methods in interfaces |\nWhen reading code, always trace with awareness of the \"declared type (reference type)\" vs. the \"runtime type.\"",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_02_q1",
+          "lessonId": "ch18_02",
+          "type": "outputPredict",
+          "question": "What is output when the following code is executed?",
+          "code": "class Base {\n    int val = 10;\n    int getVal() { return val; }\n}\nclass Sub extends Base {\n    int val = 20;\n    int getVal() { return val; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base obj = new Sub();\n        System.out.println(obj.val + \",\" + obj.getVal());\n    }\n}",
+          "explanation": "obj.val is a field access, so it references the val of the reference type Base, returning 10. obj.getVal() is an instance method, so the actual object Sub's getVal() is called, returning 20. Fields use static binding while methods use dynamic binding.",
+          "choices": [
+            {
+              "id": "ch18_02_q1_a",
+              "text": "10,10",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_02_q1_b",
+              "text": "10,20",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_02_q1_c",
+              "text": "20,20",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_02_q1_d",
+              "text": "20,10",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_02_q2",
+          "lessonId": "ch18_02",
+          "type": "fourChoice",
+          "question": "Which of the following statements about method overriding is correct?",
+          "code": null,
+          "explanation": "When overriding, it is possible to change the access modifier to the same or a broader scope than the parent class. It cannot be narrowed (e.g., public cannot be changed to protected). The return type can be changed to a subclass type (covariant return type). Changing the parameters results in overloading, not overriding.",
+          "choices": [
+            {
+              "id": "ch18_02_q2_a",
+              "text": "The access modifier can be changed to a narrower scope",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_02_q2_b",
+              "text": "The return type can be changed to a superclass type",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_02_q2_c",
+              "text": "The access modifier can be changed to a broader scope",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_02_q2_d",
+              "text": "Changing the parameter types still counts as overriding",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_02_q3",
+          "lessonId": "ch18_02",
+          "type": "errorFind",
+          "question": "The following code has a compile error. Which of the following correctly identifies the cause of the error?",
+          "code": "interface Flyable {\n    void fly();\n}\ninterface Swimmable {\n    void swim();\n}\nabstract class Bird implements Flyable {\n    // fly() is not implemented\n}\nclass Duck extends Bird implements Swimmable {\n    public void swim() {\n        System.out.println(\"swimming\");\n    }\n}",
+          "explanation": "Since the Bird class is abstract, it does not need to implement Flyable's fly() method. However, the Duck class is a concrete class that extends Bird, so it must implement the fly() method. Since Duck does not have fly(), a compile error occurs.",
+          "choices": [
+            {
+              "id": "ch18_02_q3_a",
+              "text": "fly() is not implemented in the Bird class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_02_q3_b",
+              "text": "fly() is not implemented in the Duck class",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_02_q3_c",
+              "text": "An abstract class cannot implement an interface",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_02_q3_d",
+              "text": "The Duck class cannot implement two interfaces",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch18_02_q4",
+          "lessonId": "ch18_02",
+          "type": "multiChoice",
+          "question": "Select all valid Java access modifiers.",
+          "code": null,
+          "explanation": "Java has four access modifiers: public, protected, private, and default (package-private). internal is a keyword in Kotlin and C#.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "protected",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "private",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "internal",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "default (no modifier)",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch18_03",
+      "courseId": "ch18",
+      "title": "Comprehensive Review of Exceptions and APIs",
+      "summary": "Review the key exam-targeted points for the exception hierarchy, try-catch-finally flow, String/StringBuilder behavior, and ArrayList operations.",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "overview",
+          "title": "Solidifying Your Score in Exceptions and APIs",
+          "body": "In this lesson, you will learn:\n\n- The [[exception]] hierarchy and catch ordering rules\n- The execution order of [[try-with-resources]]\n- The behavior of key [[methods]] in [[String]]/[[StringBuilder]]/[[ArrayList]]\n\nLet's review the details that are tested on the exam.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "rule",
+          "title": "Execution Flow of try-catch-finally",
+          "body": "In try-catch-[[finally]], the finally block is always executed regardless of whether an exception occurs.\nEven if there is a return statement in the try block, the finally block is executed first.\nIf there is a return in the finally block, it overrides the return value from try or catch.\ncatch blocks are evaluated from top to bottom, and only the first matching catch block is executed.\nIf a parent [[class]] exception type is written first, the child class catch becomes unreachable, causing a [[compile]] error.\nIn try-with-resources, the resource's close() method is called before finally.",
+          "code": "public static int test() {\n    try {\n        System.out.println(\"try\");\n        return 1;\n    } catch (Exception e) {\n        System.out.println(\"catch\");\n        return 2;\n    } finally {\n        System.out.println(\"finally\");\n        // Returning here would override the value 1 or 2\n    }\n}\n// Output: try → finally → return value: 1",
+          "note": "Returning in finally is discouraged, but it is frequently tested on exams. Remember that a return in finally overrides the return from try/catch.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "code",
+          "title": "String Immutability and StringBuilder Operations",
+          "body": "String objects are immutable. String manipulation methods return a new String.\nThe original String object is not modified, so changes are not reflected unless the return value is assigned to a [[variable]].\nStringBuilder is mutable, and methods like append, insert, delete, and reverse modify the object itself.\nStringBuilder method chaining is possible because these methods return this (the object itself).\nString.concat() and substring() are also frequently tested on exams.\nNote that substring(start, end) includes start but excludes end (half-open interval).",
+          "code": "// Variable declaration and initialization\nString s = \"Hello\";\ns.concat(\" World\");       // Return value not used!\nSystem.out.println(s);     // \"Hello\" (original String is immutable)\n\nStringBuilder sb = new StringBuilder(\"Hello\");\nsb.append(\" World\");       // sb itself is modified\nSystem.out.println(sb);    // \"Hello World\"\n\nString t = \"abcdef\";\nSystem.out.println(t.substring(1, 4));  // \"bcd\" (index 1 to 3)",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "point",
+          "title": "ArrayList Operations and Considerations",
+          "body": "ArrayList<Integer>'s remove method has two [[overloads]].\nremove(int index) removes an element by index, and remove(Object o) removes by value.\nadd(int index, E element) inserts at the specified position, shifting existing elements to the right.\nModifying a list during a for-each loop causes a ConcurrentModificationException.\nArrayList indices start at 0, and out-of-bounds access throws an IndexOutOfBoundsException.\nDue to autoboxing, list.remove(2) removes the element at index 2, not the value 2.",
+          "code": "ArrayList<String> list = new ArrayList<>();\nlist.add(\"A\"); list.add(\"B\"); list.add(\"C\");\nlist.add(1, \"X\");          // Insert \"X\" at index 1 → [A, X, B, C]\nlist.remove(2);             // Remove element at index 2 → [A, X, C]\nlist.set(0, \"Z\");           // Replace index 0 with \"Z\" → [Z, X, C]\nSystem.out.println(list);   // [Z, X, C]",
+          "note": "With ArrayList<Integer>, remove(Integer.valueOf(2)) removes the element with value 2, while remove(2) removes the element at index 2.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_03",
+          "sectionType": "tip",
+          "title": "Exam Strategy: Tips for Exception and API Questions",
+          "body": "For exception and API questions, keep the following points in mind.\n| Key Point |\n| --- |\n| Memorize the exception hierarchy (distinguish between checked and unchecked exceptions) |\n| Trace the execution order of try-catch-finally precisely |\n| Check whether the return value of String methods is being assigned |\n| Understand what StringBuilder method chains return |\n| Determine whether ArrayList's remove uses index or value |\nThis knowledge may appear in standalone questions or as part of combined questions.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_03_q1",
+          "lessonId": "ch18_03",
+          "type": "outputPredict",
+          "question": "What is output when the following code is executed?",
+          "code": "String s1 = \"Java\";\nString s2 = s1.concat(\" SE\");\ns1.toUpperCase();\nSystem.out.println(s1 + \",\" + s2);",
+          "explanation": "s1.concat(\" SE\") returns a new String \"Java SE\" which is assigned to s2. s1 itself remains unchanged as \"Java\". s1.toUpperCase() returns \"JAVA\", but since the return value is not assigned to any variable, it has no effect. Therefore, the output is \"Java,Java SE\".",
+          "choices": [
+            {
+              "id": "ch18_03_q1_a",
+              "text": "JAVA,Java SE",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_03_q1_b",
+              "text": "Java,Java SE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_03_q1_c",
+              "text": "JAVA,JAVA SE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_03_q1_d",
+              "text": "Java SE,JAVA",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_03_q2",
+          "lessonId": "ch18_03",
+          "type": "outputPredict",
+          "question": "What is output when the following code is executed?",
+          "code": "StringBuilder sb = new StringBuilder(\"ABCDE\");\nsb.delete(1, 3).insert(2, \"XY\");\nSystem.out.println(sb);",
+          "explanation": "sb.delete(1, 3) deletes from index 1 up to (but not including) index 3, removing indices 1 and 2. \"ABCDE\" → \"ADE\". Then insert(2, \"XY\") inserts \"XY\" at index 2. \"ADE\" → \"ADXYE\". Since StringBuilder is mutable, chained operations can be performed consecutively.",
+          "choices": [
+            {
+              "id": "ch18_03_q2_a",
+              "text": "ADXYE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch18_03_q2_b",
+              "text": "AXYDC",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_03_q2_c",
+              "text": "AXYDE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_03_q2_d",
+              "text": "ADXY",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_03_q3",
+          "lessonId": "ch18_03",
+          "type": "fourChoice",
+          "question": "Which of the following statements about try-catch-finally is correct?",
+          "code": null,
+          "explanation": "The finally block is always executed regardless of whether an exception occurs. Even if a return statement is executed in the try block, the finally block is executed before returning. The finally block is also executed when an exception is re-thrown in the catch block. However, the finally block is NOT executed if System.exit() is called.",
+          "choices": [
+            {
+              "id": "ch18_03_q3_a",
+              "text": "The finally block is only executed when an exception occurs",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_03_q3_b",
+              "text": "If return is used in the try block, finally is not executed",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_03_q3_c",
+              "text": "The finally block is always executed even when System.exit() is called",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_03_q3_d",
+              "text": "Even if return is used in the try block, the finally block is still executed",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch18_04",
+      "courseId": "ch18",
+      "title": "Practice Problem Challenge",
+      "summary": "Take on exam-level combined problems that integrate inheritance, exceptions, and polymorphism. Develop code tracing skills and exam time management strategies.",
+      "estimatedMinutes": 10,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "overview",
+          "title": "Tackling Exam-Level Combined Problems",
+          "body": "In this lesson, you will learn:\n\n- How to solve combined problems that integrate multiple topics\n- Code tracing techniques\n- Time allocation strategies to stay calm during the exam\n\nGet a feel for the real exam with practice problems.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "code",
+          "title": "Combined Patterns: Inheritance and Exceptions",
+          "body": "In problems that combine [[inheritance]] and [[exception]] handling, focus on the following points.\nTrace the [[constructor]] chain (implicit super() calls) and exception propagation.\nThe constraints on what exceptions an [[overridden]] [[method]] can throw are also important.\nAn overriding method in a sub[[class]] cannot throw broader exceptions than the superclass method.\nHowever, [[RuntimeException]] (unchecked [[exceptions]]) are not subject to this constraint.\nAlso pay attention to the combination of [[finally]] block execution timing and exception re-throwing.",
+          "code": "// Class A definition\nclass A {\n    A() { System.out.print(\"A\"); }\n    // exec method definition\n    void exec() throws Exception {\n        System.out.print(\"a\");\n        // Throw an exception\n        throw new Exception();\n    }\n}\n// Class B definition\nclass B extends A {\n    B() { System.out.print(\"B\"); }\n    // exec method definition\n    void exec() throws Exception {\n        System.out.print(\"b\");\n        super.exec();\n    }\n}\n// new B().exec() → Output: \"ABba\" + Exception thrown",
+          "note": "Constructors execute in parent-to-child order, while methods are called from the child class due to overriding.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "code",
+          "title": "Combined Code Tracing Exercise",
+          "body": "When tracing code in combined problems, it is essential to follow values step by step.\nFirst, check the [[variable]] declarations and initialization, then trace the method call flow.\nWhen [[polymorphism]] is involved, always be aware of the declared type vs. the actual type.\nFor state changes inside loops, writing out variable values for each iteration helps track them accurately.\nFor branches (if/switch), accurately determine the evaluation result of condition expressions.",
+          "code": "// Shape class definition\nclass Shape {\n    // area method definition\n    double area() { return 0; }\n    // toString method definition\n    public String toString() { return \"Shape:\" + area(); }\n}\n// Circle class definition\nclass Circle extends Shape {\n    double r;\n    Circle(double r) { this.r = r; }\n    double area() { return 3.14 * r * r; }\n}\n// Main class definition\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Circle(5);\n        System.out.println(s);  // \"Shape:78.5\" (toString calls area(), and Circle's area is executed via dynamic binding)\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "point",
+          "title": "Exam Time Management Strategy",
+          "body": "The Java Silver exam consists of 80 questions in 180 minutes. The target is approximately 2 minutes and 15 seconds per question.\nFirst, skim through all questions to identify easy and difficult ones.\nKnowledge questions (such as API specifications) can be solved in 30 seconds if you know them, so tackle those first.\nCode tracing questions take more time, so you may want to save them for later.\nSpending more than 5 minutes on a difficult question is risky. Flagging it and coming back later is an effective strategy.\nReserve 15-20 minutes for review to check for marking errors and missed details.",
+          "code": null,
+          "note": "On the exam, using the process of elimination to rule out \"obviously wrong choices\" increases your success rate.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch18_04",
+          "sectionType": "tip",
+          "title": "Final Checklist for Passing the Exam",
+          "body": "Review the following items before the exam.\n| Checklist Item |\n| --- |\n| Range and default values of primitive data types (int array default is 0, boolean array is false) |\n| Operator precedence and short-circuit evaluation behavior |\n| The 5 conditions for overriding (name, parameters, return type, access modifier, exceptions) |\n| String immutability and StringBuilder mutability |\n| Exception hierarchy (checked vs. unchecked exceptions) |\n| Behavior of ArrayList's main methods (add, remove, set, get, size) |\n| Differences between abstract classes and interfaces |\nFocus your review on weak areas and approach the exam with confidence.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch18_04_q1",
+          "lessonId": "ch18_04",
+          "type": "outputPredict",
+          "question": "What is output when the following code is executed?",
+          "code": "class X {\n    X() { System.out.print(\"X\"); }\n    void show() { System.out.print(\"x\"); }\n}\nclass Y extends X {\n    Y() { System.out.print(\"Y\"); }\n    void show() { System.out.print(\"y\"); }\n}\nclass Z extends Y {\n    Z() { System.out.print(\"Z\"); }\n    void show() { System.out.print(\"z\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        X obj = new Z();\n        obj.show();\n    }\n}",
+          "explanation": "The constructor chain of new Z() executes constructors in the order X → Y → Z, outputting \"XYZ\". obj.show() calls Z's show() method due to polymorphism (since the actual type is Z), outputting \"z\". The total output is \"XYZz\".",
+          "choices": [
+            {
+              "id": "ch18_04_q1_a",
+              "text": "XYZx",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_04_q1_b",
+              "text": "Zz",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_04_q1_c",
+              "text": "XYZz",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_04_q1_d",
+              "text": "ZYXz",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch18_04_q2",
+          "lessonId": "ch18_04",
+          "type": "errorFind",
+          "question": "The following code has a compile error. Which of the following correctly identifies the cause of the error?",
+          "code": "class Animal {\n    void speak() throws Exception {\n        System.out.println(\"...\");\n    }\n}\nclass Cat extends Animal {\n    void speak() throws Exception {\n        System.out.println(\"Meow\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Cat();\n        a.speak();\n    }\n}",
+          "explanation": "a.speak() is declared as potentially throwing the checked exception Exception. The main method has neither a try-catch block nor a throws declaration to handle this checked exception. Therefore, a compile error occurs due to an \"unhandled checked exception.\"",
+          "choices": [
+            {
+              "id": "ch18_04_q2_a",
+              "text": "The Cat class cannot throw Exception in speak()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_04_q2_b",
+              "text": "A Cat method cannot be called from an Animal type variable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch18_04_q2_c",
+              "text": "The checked exception is not handled in the main method",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch18_04_q2_d",
+              "text": "The Cat type cannot be cast to the Animal type",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch18_04_q3",
+          "lessonId": "ch18_04",
+          "type": "outputPredict",
+          "question": "What is output when the following code is executed?",
+          "code": "public class Main {\n    static String process() {\n        String result = \"\";\n        try {\n            result += \"T\";\n            int[] arr = new int[3];\n            arr[5] = 10;\n            result += \"U\";\n        } catch (ArrayIndexOutOfBoundsException e) {\n            result += \"C\";\n        } finally {\n            result += \"F\";\n        }\n        result += \"E\";\n        return result;\n    }\n    public static void main(String[] args) {\n        System.out.println(process());\n    }\n}",
+          "explanation": "In the try block, result += \"T\" is executed. arr[5] = 10 throws an ArrayIndexOutOfBoundsException, so result += \"U\" is skipped. In the catch block, result += \"C\" is executed. In the finally block, result += \"F\" is executed. Since the exception was handled by catch, result += \"E\" is also executed. The result is \"TCFE\".",
+          "choices": [
+            {
+              "id": "ch18_04_q3_a",
+              "text": "TCF",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch18_04_q3_b",
+              "text": "TCFE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch18_04_q3_c",
+              "text": "TUCFE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch18_04_q3_d",
+              "text": "TF",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

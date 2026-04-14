@@ -1,0 +1,619 @@
+{
+  "courseId": "ch17",
+  "lessons": [
+    {
+      "id": "ch17_01",
+      "courseId": "ch17",
+      "title": "Overview of the Module System",
+      "summary": "Learn about the background and basic concepts of the module system introduced in Java 9. Understand everything from the problems with the classpath to the role of module-info.java.",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "overview",
+          "title": "The Background Behind the Module System",
+          "body": "In this lesson, you will learn:\n\n- Why the [[module]] system (JPMS) was introduced\n- The basic concepts of **modules** (explicit dependency management)\n- The difference between the [[class]]path and the module path\n\nLet's understand the major transformation introduced in Java 9.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "rule",
+          "title": "The Role of module-info.java",
+          "body": "To define a module, place a **module-info.java** file at the root of the source tree.\nIn this file, you declare the module name, packages to export, dependent modules, and more.\nModule names typically use a reverse-domain dot-separated format, similar to package names.\nmodule-info.java is [[compiled]] into module-info.class and stored at the root of the JAR.\nA JAR without this file is treated as an \"Unnamed Module.\"",
+          "code": "// Basic structure of module-info.java\nmodule com.example.myapp {\n    requires java.sql;\n    exports com.example.myapp.api;\n}",
+          "note": "**module-info.java** is placed in the root directory of the module. It should NOT be placed inside a **package**.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "code",
+          "title": "Basics of exports and requires",
+          "body": "The exports directive specifies packages to expose outside the module.\nPackages not specified with exports cannot be accessed from outside the module.\nThe requires directive declares other modules that this module depends on.\nPackages from modules not declared with requires cannot be used.\nThis mechanism makes dependencies explicit and prevents access to unnecessary classes.",
+          "code": "// Example of a module definition\nmodule com.example.app {\n    // Depends on the java.sql module\n    requires java.sql;\n    // Depends on the java.logging module\n    requires java.logging;\n\n    // Exposes the api package to external modules\n    exports com.example.app.api;\n    // The internal package is not exported (inaccessible from outside)\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "point",
+          "title": "Benefits of the Module System",
+          "body": "The main benefits of the module system are as follows.\nThe first is \"strong [[encapsulation]].\" Packages not declared with exports are completely hidden from external access.\nThe second is \"explicit dependencies.\" The requires declaration enables dependency verification at compile time.\nThe third is \"improved reliability.\" The module graph is resolved at startup, enabling early detection of missing dependencies.\nThe fourth is \"custom runtimes.\" The jlink tool can create runtimes containing only the necessary modules.",
+          "code": null,
+          "note": "With the module system, even public classes cannot be accessed externally unless they are exported.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch17_01",
+          "sectionType": "tip",
+          "title": "Exam Preparation Tips",
+          "body": "The certification exam tests the basic syntax of **module-info.java**.\nIt is especially important to understand the difference between exports and requires precisely.\nexports is a declaration that \"exposes your own packages to external modules.\"\nrequires is a declaration that \"depends on another module.\"\nBe careful not to confuse these two.\nAlso remember that the java.base module is a special module that is implicitly required.",
+          "code": null,
+          "note": "【Practical Tips】In real-world development, many projects do not explicitly use the module system because Maven or Gradle handles dependency management. However, it indirectly affects areas such as access restrictions to JDK internal APIs.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch17_01_q1",
+          "lessonId": "ch17_01",
+          "type": "fourChoice",
+          "question": "Which Java version introduced the module system?",
+          "code": "module com.example.app {\n    requires java.sql;\n    exports com.example.api;\n}",
+          "explanation": "The module system (Project Jigsaw) was introduced in Java 9. It enabled package-level encapsulation and explicit dependency management.",
+          "choices": [
+            {
+              "id": "ch17_01_q1_a",
+              "text": "Java 7",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_01_q1_b",
+              "text": "Java 8",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_01_q1_c",
+              "text": "Java 9",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch17_01_q1_d",
+              "text": "Java 11",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch17_01_q2",
+          "lessonId": "ch17_01",
+          "type": "fourChoice",
+          "question": "Which directive is used to specify packages to expose externally in a module definition?",
+          "code": "module com.example.service {\n    requires transitive com.example.model;\n    exports com.example.service;\n}",
+          "explanation": "The exports directive is used to expose a module's packages externally. requires is used for declaring dependent modules, opens for reflection access, and provides for declaring service providers.",
+          "choices": [
+            {
+              "id": "ch17_01_q2_a",
+              "text": "requires",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_01_q2_b",
+              "text": "exports",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_01_q2_c",
+              "text": "opens",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_01_q2_d",
+              "text": "provides",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_01_q3",
+          "lessonId": "ch17_01",
+          "type": "fillBlank",
+          "question": "The file name used to define a module is ______.",
+          "code": "module com.example.app {\n    requires java.logging;\n    opens com.example.internal\n        to com.google.gson;\n}",
+          "explanation": "Module definitions are written in the module-info.java file. This file is placed in the root directory of the module's source tree and declares the module name, exported packages, and dependencies.",
+          "choices": [
+            {
+              "id": "ch17_01_q3_a",
+              "text": "module-info.java",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch17_01_q3_b",
+              "text": "module.java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_01_q3_c",
+              "text": "module-config.java",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_01_q3_d",
+              "text": "module-descriptor.java",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch17_02",
+      "courseId": "ch17",
+      "title": "Defining and Using Modules",
+      "summary": "Learn the detailed syntax of module-info.java and advanced directives such as requires transitive and exports...to.",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "overview",
+          "title": "The Complete Picture of Module Definitions",
+          "body": "In this lesson, you will learn:\n\n- The syntax and placement of **module-info.java**\n- requires (dependency declaration) and exports (export declaration)\n- Module operations using command-line tools\n\nLearn the practical way to write [[module]] definitions.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "code",
+          "title": "requires and requires transitive",
+          "body": "requires declares modules that are directly depended upon.\nUsing requires transitive propagates the dependency to modules that depend on this module.\nFor example, if module A declares requires transitive B, module C that depends on A can also use B.\nThis means module C can access B's exported packages without explicitly requiring B.\ntransitive is called a transitive dependency and is particularly useful in library development.",
+          "code": "// Module A: Declares a transitive dependency on java.sql\nmodule com.example.moduleA {\n    requires transitive java.sql;\n    exports com.example.moduleA.api;\n}\n\n// Module B: Depends on module A\nmodule com.example.moduleB {\n    requires com.example.moduleA;\n    // java.sql is also available without requires (transitive effect)\n}",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "tip",
+          "title": "Key Directives in module-info.java",
+          "body": "| Directive | Meaning | Example |\n|---|---|---|\n| requires | Declares a dependent module | requires java.sql; |\n| exports | Exports a package externally | exports com.example.api; |\n| requires transitive | Transitive dependency | requires transitive java.logging; |\n| opens | Allows reflection access | opens com.example.model; |\n| provides...with | Declares a service provider | provides MyService with MyImpl; |\n\nThe java.base module is automatically required, so it does not need to be explicitly declared.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "code",
+          "title": "Qualified Exports with exports...to",
+          "body": "A regular exports exposes a package to all modules, but exports...to allows you to expose it only to specific modules.\nThis lets you expose internal APIs to specific modules while prohibiting access from all others.\nYou can specify multiple modules after to, separated by commas.\nThis mechanism is called a \"Qualified Export.\"",
+          "code": "module com.example.library {\n    // Exported to all modules\n    exports com.example.library.api;\n\n    // Exported only to specific modules\n    exports com.example.library.internal\n        to com.example.app, com.example.test;\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "rule",
+          "title": "The opens Directive",
+          "body": "The opens directive is used to allow runtime [[reflection]] access.\nWhile exports allows access at both [[compile]] time and runtime, opens only allows runtime reflection access.\nThis is needed when frameworks (JPA, Spring, etc.) access [[classes]] via reflection.\nDeclaring an open module exposes the entire module to reflection.\nHowever, it is generally recommended to use opens declarations to expose only the necessary packages.",
+          "code": "// Allow reflection access at the package level\nmodule com.example.app {\n    opens com.example.app.model;\n    opens com.example.app.entity to hibernate.core;\n}\n\n// Expose the entire module to reflection\nopen module com.example.app {\n    exports com.example.app.api;\n}",
+          "note": "exports allows compile-time + runtime access, while opens allows only runtime reflection access.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch17_02",
+          "sectionType": "point",
+          "title": "Inter-module Dependencies and Compilation",
+          "body": "Dependencies between modules are verified at compile time.\nUsing types from a module not declared with requires results in a compile error.\nCircular dependencies (module A depends on B, and B depends on A) are not allowed.\nAlso, having the same package in multiple modules — known as \"split packages\" — results in an error.\nThese constraints ensure that dependencies between modules are clearly managed.",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch17_02_q1",
+          "lessonId": "ch17_02",
+          "type": "fillBlank",
+          "question": "To propagate module A's dependency to modules that depend on A, use requires ______.",
+          "code": "module com.example.provider {\n    provides com.example.spi.Service\n        with com.example.impl.ServiceImpl;\n}",
+          "explanation": "Using requires transitive declares a transitive dependency. When module A declares requires transitive B, modules that depend on A can also access B's exported packages.",
+          "choices": [
+            {
+              "id": "ch17_02_q1_a",
+              "text": "transitive",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch17_02_q1_b",
+              "text": "static",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_02_q1_c",
+              "text": "public",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_02_q1_d",
+              "text": "shared",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch17_02_q2",
+          "lessonId": "ch17_02",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes the exports...to directive?",
+          "code": "module com.example.lib {\n    exports com.example.lib.internal\n        to com.example.app;\n}",
+          "explanation": "exports...to is known as a Qualified Export, which exposes a package only to specified modules. In this example, the com.example.lib.internal package is accessible only to the com.example.app module and cannot be accessed by other modules.",
+          "choices": [
+            {
+              "id": "ch17_02_q2_a",
+              "text": "Exposes the internal package to all modules",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_02_q2_b",
+              "text": "Exposes the internal package only to the com.example.app module",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_02_q2_c",
+              "text": "Allows reflection access from the com.example.app module",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_02_q2_d",
+              "text": "Declares a dependency on the com.example.app module",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_02_q3",
+          "lessonId": "ch17_02",
+          "type": "outputPredict",
+          "question": "What happens when com.example.app is compiled with the following module configuration?",
+          "code": "// com.example.lib's module-info.java\nmodule com.example.lib {\n    exports com.example.lib.api;\n    // com.example.lib.internal is NOT exported\n}\n\n// com.example.app's module-info.java\nmodule com.example.app {\n    requires com.example.lib;\n}\n\n// Code inside com.example.app\nimport com.example.lib.internal.Helper; // Uses the internal package\npublic class Main {\n    Helper h = new Helper();\n}",
+          "explanation": "The com.example.lib.internal package is not exported, so it cannot be accessed from other modules. When com.example.app tries to use classes from this package, a compile error occurs. Only the com.example.lib.api package exposed with exports is accessible.",
+          "choices": [
+            {
+              "id": "ch17_02_q3_a",
+              "text": "Compiles successfully",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_02_q3_b",
+              "text": "A compile error occurs",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_02_q3_c",
+              "text": "A runtime error occurs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_02_q3_d",
+              "text": "A warning is issued but compilation succeeds",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch17_02_q4",
+          "lessonId": "ch17_02",
+          "type": "codeComplete",
+          "question": "Complete the code to define a module in module-info.java.",
+          "code": "module com.example.app {\n    requires java.sql;\n    exports com.example.api;\n}",
+          "explanation": "The module keyword declares a module, and requires specifies dependent modules. This is a fundamental part of the module system introduced in Java 9.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ com.example.app {\n    __BLANK_2__ com.example.utils;\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Module declaration",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "module",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "package",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "import",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Dependency",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "requires",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "imports",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "uses",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_02_q5",
+          "lessonId": "ch17_02",
+          "type": "multiChoice",
+          "question": "Select all directives that can be used in module-info.java.",
+          "code": "module com.example.service {\n    requires transitive com.example.model;\n    exports com.example.service;\n}",
+          "explanation": "The directives available in module-info.java are requires, exports, opens, provides, and uses. imports is not a module directive.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "requires",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "exports",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "opens",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "imports",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "provides",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch17_03",
+      "courseId": "ch17",
+      "title": "Key JDK Modules",
+      "summary": "Learn about the structure of JDK standard modules starting with java.base, and how to create custom runtimes using jlink.",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "overview",
+          "title": "The Overall Structure of JDK Modules",
+          "body": "In this lesson, you will learn:\n\n- The java.base module (automatic dependency)\n- Key modules such as java.sql and java.logging\n- Dependencies among JDK modules\n\nLet's understand the module structure of the JDK itself.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "rule",
+          "title": "The java.base Module",
+          "body": "java.base is the most fundamental module of the Java platform.\nAll modules implicitly depend on java.base, so you do not need to write requires java.base.\nThe main packages included in java.base are as follows.\nIt includes java.lang ([[String]], Object, System, etc.), java.util (List, Map, etc.), and java.io (File, [[InputStream]], etc.).\nIt also includes java.math, java.net, java.nio, java.time, and more.\nThese packages are always available without a requires declaration.",
+          "code": "// java.base is automatically required, so\n// the following two are equivalent\nmodule com.example.app {\n    // requires java.base; // Not needed (implicit)\n    requires java.sql;\n}\n\n// java.lang, java.util, java.io are\n// included in java.base and always available\nimport java.util.List;      // OK\nimport java.io.IOException; // OK",
+          "note": "java.base is implicitly required by all modules. You may write it explicitly, but it is redundant.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "code",
+          "title": "Major JDK Modules",
+          "body": "The JDK provides modules organized by purpose.\njava.sql provides [[classes]] related to JDBC (database access).\njava.logging provides Java's standard logging API.\njava.desktop contains GUI-related classes such as Swing/AWT.\njava.net provides network-related APIs such as HTTP Client.\nTo use these modules, you must explicitly declare requires in **module-info.java**.",
+          "code": "module com.example.app {\n    // Required for database access\n    requires java.sql;\n    // Required for logging functionality\n    requires java.logging;\n    // Required for GUI development\n    requires java.desktop;\n\n    exports com.example.app.api;\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "code",
+          "title": "Custom Runtimes with jlink",
+          "body": "jlink is a tool introduced in Java 9 that creates custom runtime images containing only the required modules.\nA standard JDK can be several hundred megabytes, but jlink can generate a minimal runtime.\nThis significantly reduces the size of application distributions.\nIt is especially useful in resource-constrained environments such as container environments and IoT devices.\nFor jlink to work properly, the application must be modularized.",
+          "code": "# Example of creating a custom runtime\njlink \\\n  --module-path $JAVA_HOME/jmods:mods \\\n  --add-modules com.example.app \\\n  --output custom-runtime\n\n# Run the app with the created runtime\ncustom-runtime/bin/java \\\n  -m com.example.app/com.example.app.Main\n\n# Check the runtime size\ndu -sh custom-runtime/",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch17_03",
+          "sectionType": "tip",
+          "title": "Exam Preparation for Modules",
+          "body": "The certification exam tests basic knowledge of JDK modules.\nFirst, make sure to remember that java.base is implicitly required.\nThe packages included in java.base (java.lang, java.util, java.io, etc.) are frequently tested.\nIt is also important to know that modules like java.sql and java.logging require explicit requires declarations.\nCommand-line options may also be tested.\nOrganize options such as --module-path, -m (--module), and --add-modules.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch17_03_q1",
+          "lessonId": "ch17_03",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes the java.base module?",
+          "code": "module com.example.app {\n    requires java.logging;\n    opens com.example.internal\n        to com.google.gson;\n}",
+          "explanation": "The java.base module is a special module that is implicitly required by all modules. It contains fundamental packages such as java.lang, java.util, and java.io, and does not need to be explicitly declared with requires.",
+          "choices": [
+            {
+              "id": "ch17_03_q1_a",
+              "text": "An explicit requires declaration is needed to use it",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_03_q1_b",
+              "text": "It is implicitly required by all modules",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_03_q1_c",
+              "text": "It contains the java.sql package",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_03_q1_d",
+              "text": "It is a module added in Java 11",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch17_03_q2",
+          "lessonId": "ch17_03",
+          "type": "fourChoice",
+          "question": "Which is the correct module-info.java for an application that uses JDBC?",
+          "code": "module com.example.provider {\n    provides com.example.spi.Service\n        with com.example.impl.ServiceImpl;\n}",
+          "explanation": "JDBC classes (java.sql.Connection, java.sql.DriverManager, etc.) are contained in the java.sql module. Unlike java.base, you must explicitly declare requires java.sql. Modules named java.jdbc or java.database do not exist.",
+          "choices": [
+            {
+              "id": "ch17_03_q2_a",
+              "text": "module app { requires java.jdbc; }",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch17_03_q2_b",
+              "text": "module app { requires java.sql; }",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch17_03_q2_c",
+              "text": "module app { requires java.database; }",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_03_q2_d",
+              "text": "module app { exports java.sql; }",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch17_03_q3",
+          "lessonId": "ch17_03",
+          "type": "fillBlank",
+          "question": "The JDK tool used to create a custom runtime image containing only the required modules is ______.",
+          "code": null,
+          "explanation": "jlink is a tool introduced in Java 9 that creates a minimal runtime image containing only the specified modules and their dependencies. This helps reduce the size of application distributions.",
+          "choices": [
+            {
+              "id": "ch17_03_q3_a",
+              "text": "jlink",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch17_03_q3_b",
+              "text": "jmod",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch17_03_q3_c",
+              "text": "jpackage",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch17_03_q3_d",
+              "text": "jdeps",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

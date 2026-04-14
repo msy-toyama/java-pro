@@ -92,7 +92,16 @@ final class ExamService {
 
     /// 模擬試験の全問題を読み込む。
     func loadExamQuizzes(examId: String) -> [QuizData] {
-        let fileName = "exam_questions_\(examId)"
+        let baseName = "exam_questions_\(examId)"
+        let lang = LanguageManager.shared.currentLanguage
+        // 英語版が存在すればそちらを使用、なければ日本語版にフォールバック
+        let fileName: String
+        if lang == .english,
+           Bundle.main.url(forResource: "\(baseName)_en", withExtension: "json") != nil {
+            fileName = "\(baseName)_en"
+        } else {
+            fileName = baseName
+        }
 
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
             AppLogger.content.error("ExamService: \(fileName).json が見つかりません")

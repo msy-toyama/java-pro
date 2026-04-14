@@ -1,0 +1,960 @@
+{
+  "courseId": "ch12",
+  "lessons": [
+    {
+      "id": "ch12_01",
+      "courseId": "ch12",
+      "title": "What Is Polymorphism?",
+      "summary": "Learn how the same operation behaves differently across different objects",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The concept and definition of **polymorphism**\n- Why [[polymorphism]] is important\n- Its relationship with the three pillars of OOP\n\nThis is the first step toward understanding the most powerful feature of object-oriented programming.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "rule",
+          "title": "Fundamental Rules of Polymorphism",
+          "body": "In Java, **polymorphism** can be broadly divided into two types.\n\n1. [[Compile]]-time polymorphism (static binding): Achieved through [[method]] [[overloading]]. The method to be called is determined at compile time based on the argument types and count.\n\n2. Runtime polymorphism (dynamic binding): Achieved through method [[overriding]]. When a subclass [[instance]] is assigned to a parent [[class]] [[variable]] and an overridden method is called, the method is selected based on the actual object's type.\n\nFor the Java Silver exam, runtime polymorphism (dynamic binding) is especially important.",
+          "code": null,
+          "note": "[[Static methods]] and private methods cannot be overridden, so they are not subject to **polymorphism**.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "code",
+          "title": "Basic Example of Polymorphism",
+          "body": "When you reference a subclass instance through a parent class variable and call an overridden method, the method corresponding to the actual object's type is executed. This is the essence of runtime **polymorphism**.",
+          "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    @Override\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"ワンワン\");\n    }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    @Override\n    void speak() {\n        System.out.println(\"ニャー\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal a1 = new Dog();  // 親クラス型でDogを参照\n        Animal a2 = new Cat();  // 親クラス型でCatを参照\n        a1.speak();  // ワンワン（Dogのspeak()が呼ばれる）\n        a2.speak();  // ニャー（Catのspeak()が呼ばれる）\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "tip",
+          "title": "Why Polymorphism Matters",
+          "body": "Using **polymorphism** greatly improves code flexibility and extensibility.\n\n- You can add new subclasses without modifying existing code (Open/Closed Principle).\n- By using parent class types for method parameters and return values, you can handle all subclasses uniformly.\n- It reduces conditional branching (if/switch), resulting in cleaner code.\n\nFor example, you can store Dog, Cat, Bird, etc. in an Animal-type [[array]] and process them all in a single loop.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Polymorphism** is the mechanism where \"the same operation behaves differently depending on the type\"\n- There are two types: compile-time (overloading) and runtime (overriding)\n- A parent class variable can reference a subclass object\n- The method that gets called is determined by the object's runtime type\n- Polymorphism enables highly extensible designs",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_01_q1",
+          "lessonId": "ch12_01",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes polymorphism in Java?",
+          "code": null,
+          "explanation": "Polymorphism is a mechanism where the same method call executes different methods depending on the actual type of the object. It is achieved by assigning a subclass instance to a parent class variable and calling an overridden method.",
+          "choices": [
+            {
+              "id": "ch12_01_q1_a",
+              "text": "A mechanism where the same method name behaves differently depending on the actual type of the object",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_01_q1_b",
+              "text": "A mechanism that allows direct external access to a class's fields",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_01_q1_c",
+              "text": "A mechanism where a single class inherits from multiple classes simultaneously",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_01_q1_d",
+              "text": "A mechanism that allows calling methods without creating a class instance",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_01_q2",
+          "lessonId": "ch12_01",
+          "type": "fourChoice",
+          "question": "Which Java mechanism is used to achieve runtime polymorphism (dynamic binding)?",
+          "code": null,
+          "explanation": "Runtime polymorphism is achieved through method overriding. When a parent class method is redefined in a subclass and called through a parent class variable, the method corresponding to the actual object type is executed. Overloading is resolved at compile time and thus corresponds to compile-time polymorphism.",
+          "choices": [
+            {
+              "id": "ch12_01_q2_a",
+              "text": "Method overloading",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_01_q2_b",
+              "text": "Method overriding",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_01_q2_c",
+              "text": "Constructor invocation",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_01_q2_d",
+              "text": "Static method definition",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_01_q3",
+          "lessonId": "ch12_01",
+          "type": "fillBlank",
+          "question": "When calling an overridden method through a parent class variable, the method is selected based on the object's type at ___.",
+          "code": null,
+          "explanation": "The invocation of an overridden method is determined at runtime based on the actual type of the object, not at compile time. This is called dynamic binding (dynamic dispatch).",
+          "choices": [
+            {
+              "id": "ch12_01_q3_a",
+              "text": "runtime",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_01_q3_b",
+              "text": "compile time",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_01_q3_c",
+              "text": "declaration time",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_01_q3_d",
+              "text": "load time",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch12_02",
+      "courseId": "ch12",
+      "title": "Upcasting and Downcasting",
+      "summary": "Learn the mechanism of type conversion and checking with the instanceof operator",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- Automatic conversion via upcasting (child → parent type)\n- Explicit conversion via downcasting (parent → child type)\n- [[instanceof]] checks to prevent [[ClassCastException]]\n\nUnderstanding the [[type conversion]] mechanism precisely is the foundation of **polymorphism**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "code",
+          "title": "Upcasting (Automatic Conversion)",
+          "body": "Assigning a sub[[class]] [[instance]] to a parent class [[variable]] is called upcasting.\nSince a subclass possesses all the functionality of its parent class, upcasting is always safe and does not require an explicit cast.\nHowever, after upcasting, subclass-specific [[methods]] can no longer be called. This is because the compiler only recognizes methods of the variable's declared type (the parent class type).",
+          "code": "// Animalクラスの定義\nclass Animal {\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"...\");\n    }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    @Override\n    // speakメソッドの定義\n    void speak() {\n        System.out.println(\"ワンワン\");\n    }\n    void fetch() {\n        System.out.println(\"ボールを取ってきた！\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();  // アップキャスト（自動）\n        a.speak();   // OK → ワンワン（実行時の型Dogのメソッド）\n        // a.fetch(); // コンパイルエラー！ Animal型にfetch()はない\n    }\n}",
+          "note": "Even after upcasting, [[overridden]] methods will still call the actual object type's implementation.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "tip",
+          "title": "Safety of Upcasting and Downcasting",
+          "body": "| Cast | Direction | Safety | Syntax |\n|---|---|---|---|\n| Upcasting | Child → Parent | Always safe | Implicit (automatic) |\n| Downcasting | Parent → Child | Risky | Explicit (SubClass)obj |\n\nIf a downcast fails, a ClassCastException is thrown. Always verify with instanceof before casting.",
+          "code": null,
+          "note": "Starting with Java 16, \"pattern matching instanceof\" allows you to perform the check and cast in a single line.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "code",
+          "title": "Downcasting (Explicit Conversion)",
+          "body": "Converting a parent class variable to a subclass type is called downcasting.\nDowncasting requires explicitly writing the cast [[operator]].\nHowever, if the actual object is not an instance of that subclass, a ClassCastException will be thrown at runtime, so caution is required.",
+          "code": "Animal a = new Dog();  // アップキャスト\nDog d = (Dog) a;       // ダウンキャスト（成功：元々Dogだから）\nd.fetch();             // OK → ボールを取ってきた！\n\nAnimal a2 = new Cat();\n// Dog d2 = (Dog) a2;  // 実行時エラー！ ClassCastException\n// a2は実際にはCatのインスタンスなのでDogにキャストできない",
+          "note": "It is safe to check the type with the instanceof operator before performing a downcast.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "code",
+          "title": "The instanceof Operator",
+          "body": "The instanceof operator determines whether an object is an instance of a specified type.\nBy checking with instanceof before downcasting, you can prevent ClassCastException.\nThis operator is an essential tool for safely working with **polymorphism** and frequently appears on the Java Silver exam.\nUsing instanceof on null always returns false.",
+          "code": "Animal a = new Dog();\n\n// 条件分岐\nif (a instanceof Dog) {\n    Dog d = (Dog) a;  // 安全にダウンキャスト\n    d.fetch();\n}\n\nif (a instanceof Cat) {\n    // ここは実行されない（aはDogなので）\n    Cat c = (Cat) a;\n}\n\nAnimal nullAnimal = null;\nSystem.out.println(nullAnimal instanceof Animal); // false",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch12_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Upcasting: Subclass → parent class type (automatic, always safe)\n- Downcasting: Parent class type → subclass type (explicit, can fail)\n- An invalid downcast throws a ClassCastException\n- The instanceof operator allows safe verification before casting\n- instanceof on null always returns false",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_02_q1",
+          "lessonId": "ch12_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Animal {\n    void speak() {\n        System.out.println(\"Animal\");\n    }\n}\nclass Dog extends Animal {\n    @Override\n    void speak() {\n        System.out.println(\"Dog\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.speak();\n        System.out.println(a instanceof Dog);\n        System.out.println(a instanceof Animal);\n    }\n}",
+          "explanation": "The variable a is of type Animal, but the actual object is a Dog. Since speak() is overridden, Dog's speak() is called and \"Dog\" is printed. For instanceof, since a is a Dog instance, it returns true. Since Dog is a subclass of Animal, it also returns true for Animal.",
+          "choices": [
+            {
+              "id": "ch12_02_q1_a",
+              "text": "Dog\ntrue\ntrue",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_02_q1_b",
+              "text": "Animal\ntrue\ntrue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_02_q1_c",
+              "text": "Dog\nfalse\ntrue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_02_q1_d",
+              "text": "Animal\ntrue\nfalse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_02_q2",
+          "lessonId": "ch12_02",
+          "type": "fourChoice",
+          "question": "What happens when the following code is executed?\n\nAnimal a = new Cat();\nDog d = (Dog) a;",
+          "code": null,
+          "explanation": "The actual object of variable a is a Cat. Attempting to cast a Cat to Dog will throw a ClassCastException at runtime. At compile time, a downcast from Animal to Dog is syntactically valid, so no compilation error occurs.",
+          "choices": [
+            {
+              "id": "ch12_02_q2_a",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_02_q2_b",
+              "text": "A ClassCastException is thrown at runtime",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_02_q2_c",
+              "text": "It executes normally",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_02_q2_d",
+              "text": "null is assigned",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_02_q3",
+          "lessonId": "ch12_02",
+          "type": "errorFind",
+          "question": "The following code has an error. What is the problem?",
+          "code": "class Vehicle {\n    void drive() {\n        System.out.println(\"走行中\");\n    }\n}\nclass Truck extends Vehicle {\n    void loadCargo() {\n        System.out.println(\"荷物を積む\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Vehicle v = new Truck();\n        v.loadCargo();\n    }\n}",
+          "explanation": "The variable v is declared as type Vehicle. After upcasting, the compiler only recognizes methods of the declared type (Vehicle). loadCargo() is a method unique to the Truck class and cannot be called from a Vehicle type. You need to either downcast with ((Truck) v).loadCargo() or cast after an instanceof check.",
+          "choices": [
+            {
+              "id": "ch12_02_q3_a",
+              "text": "Compilation error because loadCargo(), a Truck-specific method, is called from a Vehicle-type variable v",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_02_q3_b",
+              "text": "Error because the Truck class does not override Vehicle's drive()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_02_q3_c",
+              "text": "ClassCastException is thrown at the upcast Vehicle v = new Truck()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_02_q3_d",
+              "text": "Error because the Truck class has no constructor",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch12_02_q4",
+          "lessonId": "ch12_02",
+          "type": "codeComplete",
+          "question": "Complete the code that demonstrates a method call using polymorphism.",
+          "code": null,
+          "explanation": "A parent class variable holds a child class instance, and at runtime the child class's overridden method is called.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ animal = new Dog();\nanimal.__BLANK_2__();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Type",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Animal",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Dog",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Object",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Method",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "speak",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "bark",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "toString",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch12_03",
+      "courseId": "ch12",
+      "title": "Method Overriding and Dynamic Binding",
+      "summary": "Learn the rules of overriding and how methods are selected at runtime",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The relationship between [[method]] [[overriding]] and dynamic binding\n- The difference between [[compile]]-time type and runtime type\n- Rules for determining which method gets called\n\nDynamic binding is at the heart of how **polymorphism** works.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "rule",
+          "title": "Rules of Overriding",
+          "body": "To override a method, the following rules must be satisfied.\n\n| Rule |\n| --- |\n| The method name and parameter list (types, order, and count) must exactly match the parent class |\n| The return type must be the same as the parent class or a subclass thereof (covariant return type) |\n| The access modifier must be the same as or broader than the parent class (e.g., changing protected to public is OK, but the reverse is not) |\n| A method declared final in the parent class cannot be overridden |\n| Static methods are not overridden but \"hidden\" |\n\nIf any one of these conditions is not met, it does not qualify as an override.",
+          "code": null,
+          "note": "[[Access modifier]] breadth order: private < default < protected < public",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "code",
+          "title": "The @Override Annotation",
+          "body": "Adding the @Override annotation lets the compiler verify the correctness of the override.\nIt can detect unintended mistakes such as method name typos or wrong parameter types at compile time, so it is always recommended to use it.\nThe override itself is valid even without @Override, but adding it makes the code's intent explicit.",
+          "code": "// Shapeクラスの定義\nclass Shape {\n    // areaメソッドの定義\n    double area() {\n        return 0;\n    }\n}\n\n// Circleクラスの定義\nclass Circle extends Shape {\n    double radius;\n\n    Circle(double radius) {\n        this.radius = radius;\n    }\n\n    @Override\n    // areaメソッドの定義\n    double area() {\n        return Math.PI * radius * radius;\n    }\n\n    // @Override\n    // double Area() { }  // コンパイルエラー！ 親クラスにArea()がない\n}",
+          "note": "The @Override annotation is not mandatory, but it is always a best practice to include it.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "tip",
+          "title": "Compile-Time Type vs. Runtime Type",
+          "body": "This is the most important concept for understanding how **polymorphism** works.\n\nAnimal a = new Dog();\n\n| Perspective | Type | What It Determines |\n|---|---|---|\n| Compile-time (declared type) | Animal | The list of methods that can be called |\n| Runtime (actual type) | Dog | The actual method implementation that executes |\n\n\"The callable methods are determined by the declared type; the executed implementation is determined by the actual type.\"",
+          "code": null,
+          "note": "Exam questions frequently ask: \"Is it a compile error? A runtime error? Or does it run normally?\"",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "code",
+          "title": "Dynamic Binding (Dynamic Dispatch)",
+          "body": "Dynamic binding is the mechanism where, during a method call, the method is determined based on the runtime type of the object rather than the declared type of the [[variable]].\nNote that field access is based on the declared type (static binding), while [[instance]] method calls are resolved via dynamic binding.\nThis distinction is frequently tested on the Java Silver exam.",
+          "code": "// Parentクラスの定義\nclass Parent {\n    // 変数の宣言と初期化\n    String name = \"親\";\n    // greetメソッドの定義\n    void greet() {\n        System.out.println(\"こんにちは、\" + name);\n    }\n}\n\n// Childクラスの定義\nclass Child extends Parent {\n    String name = \"子\";\n    @Override\n    // greetメソッドの定義\n    void greet() {\n        System.out.println(\"やあ、\" + name);\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.name);  // 親（フィールドは静的束縛）\n        p.greet();                   // やあ、子（メソッドは動的束縛）\n    }\n}",
+          "note": "Fields are not subject to dynamic binding. The field of the variable's declared type is referenced.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch12_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Use the @Override annotation to have the compiler verify the override\n- The return type can be the same or a sub[[class]] type (**covariant return type**)\n- The access modifier must be the same or broader\n- Instance methods use dynamic binding (determined by the runtime type)\n- Field access uses static binding (determined by the declared type)",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_03_q1",
+          "lessonId": "ch12_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Parent {\n    String type = \"Parent\";\n    String getType() {\n        return \"Parent\";\n    }\n}\nclass Child extends Parent {\n    String type = \"Child\";\n    @Override\n    String getType() {\n        return \"Child\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.type);\n        System.out.println(p.getType());\n    }\n}",
+          "explanation": "Field access (p.type) is based on the declared type of the variable (Parent), so \"Parent\" is printed. On the other hand, the method call (p.getType()) is based on the runtime type of the object (Child), so \"Child\" is printed. This is the difference between static binding and dynamic binding.",
+          "choices": [
+            {
+              "id": "ch12_03_q1_a",
+              "text": "Parent\nChild",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q1_b",
+              "text": "Child\nChild",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q1_c",
+              "text": "Parent\nParent",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q1_d",
+              "text": "Child\nParent",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_03_q2",
+          "lessonId": "ch12_03",
+          "type": "fourChoice",
+          "question": "Which of the following is the correct rule regarding access modifiers when overriding a method?",
+          "code": null,
+          "explanation": "When overriding, the access modifier must be the same as or broader than the parent class method. For example, changing a protected method to public is OK, but narrowing public to protected will cause a compilation error.",
+          "choices": [
+            {
+              "id": "ch12_03_q2_a",
+              "text": "The access modifier must exactly match the parent class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q2_b",
+              "text": "The access modifier can be narrower than the parent class",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q2_c",
+              "text": "The access modifier must be the same as or broader than the parent class",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q2_d",
+              "text": "The access modifier can be changed freely",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_03_q3",
+          "lessonId": "ch12_03",
+          "type": "fillBlank",
+          "question": "To have the compiler verify the correctness of an override, you place the ___ annotation before the method.",
+          "code": null,
+          "explanation": "Adding the @Override annotation causes the compiler to check whether the method correctly overrides a superclass method. It can detect method name typos and parameter mismatches at compile time.",
+          "choices": [
+            {
+              "id": "ch12_03_q3_a",
+              "text": "@Override",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q3_b",
+              "text": "@Overload",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q3_c",
+              "text": "@Inherited",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q3_d",
+              "text": "@Super",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch12_03_q4",
+          "lessonId": "ch12_03",
+          "type": "multiChoice",
+          "question": "Select all correct ways to achieve polymorphism.",
+          "code": null,
+          "explanation": "Polymorphism is achieved through \"method overriding,\" \"interface implementation,\" and \"inheriting abstract classes.\" Constructors cannot be overridden, so they are not a means of achieving polymorphism.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch12_03_q4_a",
+              "text": "Method overriding",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_03_q4_b",
+              "text": "Interface implementation",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_03_q4_c",
+              "text": "Constructor overriding",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_03_q4_d",
+              "text": "Inheriting abstract classes",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch12_04",
+      "courseId": "ch12",
+      "title": "Designing with Polymorphism",
+      "summary": "Learn flexible design techniques using parent class types and interface types",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- Flexible design using [[interface]] types\n- The Open/Closed Principle (OCP)\n- Designing so that adding new [[classes]] requires no changes to existing code\n\nThe true value of **polymorphism** lies in \"designs that are resilient to change.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "code",
+          "title": "Polymorphic Arrays and Collections",
+          "body": "By using parent class [[arrays]] or lists, you can manage objects of different subclasses in a single collection.\nThis allows you to call [[methods]] uniformly through loop processing.\nA major benefit is that you don't need to modify the loop processing code when adding new subclasses.",
+          "code": "// Animalクラスの定義\nclass Animal {\n    String name;\n    Animal(String name) { this.name = name; }\n    // speakメソッドの定義\n    void speak() { System.out.println(name + \": ...\"); }\n}\n\n// Dogクラスの定義\nclass Dog extends Animal {\n    Dog(String name) { super(name); }\n    @Override\n    // speakメソッドの定義\n    void speak() { System.out.println(name + \": ワンワン\"); }\n}\n\n// Catクラスの定義\nclass Cat extends Animal {\n    Cat(String name) { super(name); }\n    @Override\n    void speak() { System.out.println(name + \": ニャー\"); }\n}\n\n// Birdクラスの定義\nclass Bird extends Animal {\n    Bird(String name) { super(name); }\n    @Override\n    void speak() { System.out.println(name + \": チュンチュン\"); }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Animal[] animals = {\n            new Dog(\"ポチ\"),\n            new Cat(\"タマ\"),\n            new Bird(\"ピッピ\")\n        };\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Animal a : animals) {\n            a.speak();  // 各オブジェクトの型に応じたspeak()が呼ばれる\n        }\n    }\n}\n// 出力:\n// ポチ: ワンワン\n// タマ: ニャー\n// ピッピ: チュンチュン",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "code",
+          "title": "Using Polymorphism in Method Parameters",
+          "body": "By making method parameters a parent class type or interface type, you can pass any subclass [[instance]].\nThis allows a single method to handle objects of various types, eliminating code duplication.\nThis is a practical application of the principle: \"Program to an interface, not an implementation.\"",
+          "code": "// Printerクラスの定義\nclass Printer {\n    // Animal型の引数 → Dog、Cat、Bird何でも受け取れる\n    // printAnimalSoundメソッドの定義\n    static void printAnimalSound(Animal animal) {\n        System.out.print(animal.name + \"の鳴き声: \");\n        animal.speak();\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        printAnimalSound(new Dog(\"ポチ\"));   // ポチの鳴き声: ポチ: ワンワン\n        printAnimalSound(new Cat(\"タマ\"));   // タマの鳴き声: タマ: ニャー\n        printAnimalSound(new Bird(\"ピッピ\")); // ピッピの鳴き声: ピッピ: チュンチュン\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "tip",
+          "title": "Basics of the Strategy Pattern",
+          "body": "The Strategy Pattern is a well-known [[design pattern]] that leverages **polymorphism**.\nAlgorithms or operations are defined as interfaces, and concrete implementations are provided as classes.\nBy switching implementations at runtime, you can eliminate if/switch conditional branching and achieve a highly extensible design.\n\nFor example, when switching payment processing between \"credit card,\" \"bank transfer,\" and \"e-money,\"\nyou define a PaymentStrategy interface and implement each payment method as a class.\nWhen adding a new payment method, there is no need to modify existing code.",
+          "code": null,
+          "note": "The Strategy Pattern is outside the scope of the Java Silver exam, but it is worth understanding as an application of **polymorphism**.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Parent class arrays or lists can manage different subclasses together\n- Making method parameters a parent class type allows accepting any subclass\n- Adding new subclasses requires no changes to existing code\n- \"Program to an interface, not an implementation\" is an important principle\n- The Strategy Pattern is a representative application of **polymorphism**",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_04_q1",
+          "lessonId": "ch12_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Shape {\n    double area() { return 0; }\n}\nclass Rectangle extends Shape {\n    double width, height;\n    Rectangle(double w, double h) { width = w; height = h; }\n    @Override\n    double area() { return width * height; }\n}\nclass Circle extends Shape {\n    double radius;\n    Circle(double r) { radius = r; }\n    @Override\n    double area() { return 3.14 * radius * radius; }\n}\npublic class Main {\n    static void printArea(Shape s) {\n        System.out.println(s.area());\n    }\n    public static void main(String[] args) {\n        printArea(new Rectangle(3, 4));\n        printArea(new Circle(5));\n    }\n}",
+          "explanation": "The printArea method accepts a Shape-type argument, but the area() method corresponding to the actual object type is called. For Rectangle, 3×4=12.0 is output; for Circle, 3.14×5×5=78.5 is output.",
+          "choices": [
+            {
+              "id": "ch12_04_q1_a",
+              "text": "12.0\n78.5",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_04_q1_b",
+              "text": "0\n0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_04_q1_c",
+              "text": "12.0\n0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_04_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_04_q2",
+          "lessonId": "ch12_04",
+          "type": "fourChoice",
+          "question": "Which of the following is NOT a benefit of designing with polymorphism?",
+          "code": null,
+          "explanation": "The purpose of polymorphism is to improve flexibility and extensibility, not to directly speed up program execution. In fact, there is a slight overhead from dynamic binding. However, in practice, JVM optimizations make this impact negligible.",
+          "choices": [
+            {
+              "id": "ch12_04_q2_a",
+              "text": "Adding new subclasses requires no changes to existing code",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_04_q2_b",
+              "text": "Program execution speed always improves",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_04_q2_c",
+              "text": "Reducing conditional branches makes code simpler",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_04_q2_d",
+              "text": "Different subclasses can be managed in a parent class array",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_04_q3",
+          "lessonId": "ch12_04",
+          "type": "reorder",
+          "question": "Arrange the code in the correct order to create an Animal array and call speak() on each element in a loop.",
+          "code": null,
+          "explanation": "First, declare an Animal-type array and initialize it with Dog and Cat instances. Then use an enhanced for loop to iterate and call each element's speak() method. Don't forget the closing brace for the array.",
+          "choices": [
+            {
+              "id": "ch12_04_q3_a",
+              "text": "Animal[] animals = {",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_04_q3_b",
+              "text": "new Dog(), new Cat()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_04_q3_c",
+              "text": "};",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch12_04_q3_d",
+              "text": "for (Animal a : animals) { a.speak(); }",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch12_04_q3_a",
+            "ch12_04_q3_b",
+            "ch12_04_q3_c",
+            "ch12_04_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch12_05",
+      "courseId": "ch12",
+      "title": "Polymorphism in Practice",
+      "summary": "Deepen your understanding of polymorphism through practical examples and common pitfalls",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- A practical example of **polymorphism** in a payment system\n- Applying **polymorphism** to shape calculations\n- Using it to improve testability in design\n\nLet's build practical skills in applying [[polymorphism]] through real-world examples.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "code",
+          "title": "Practical Example: Payment System",
+          "body": "Let's look at a payment system as a typical application of **polymorphism**.\nA Payment interface is defined, and each payment method is implemented as a separate [[class]].\nThe calling code only needs to be aware of the Payment type and does not need to know the specific payment method.\nWhen adding a new payment method, you simply create a new class that implements the Payment interface.",
+          "code": "// Paymentインターフェースの定義\ninterface Payment {\n    void pay(int amount);\n}\n\n// CreditCardクラスの定義\nclass CreditCard implements Payment {\n    @Override\n    // payメソッドの定義\n    public void pay(int amount) {\n        System.out.println(\"クレジットカードで\" + amount + \"円支払い\");\n    }\n}\n\n// BankTransferクラスの定義\nclass BankTransfer implements Payment {\n    @Override\n    // payメソッドの定義\n    public void pay(int amount) {\n        System.out.println(\"銀行振込で\" + amount + \"円支払い\");\n    }\n}\n\n// EMoneyクラスの定義\nclass EMoney implements Payment {\n    @Override\n    public void pay(int amount) {\n        System.out.println(\"電子マネーで\" + amount + \"円支払い\");\n    }\n}\n\n// Shopクラスの定義\npublic class Shop {\n    static void checkout(Payment payment, int amount) {\n        payment.pay(amount);  // どの支払い方法でも同じ呼び出し\n    }\n\n    public static void main(String[] args) {\n        checkout(new CreditCard(), 5000);\n        checkout(new BankTransfer(), 3000);\n        checkout(new EMoney(), 1000);\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "tip",
+          "title": "Problems When Not Using Polymorphism",
+          "body": "Without **polymorphism**, if-else branching is required for each type.\n\n- Every time a new type is added, all branches must be modified\n- Risk of bugs due to missed modifications\n- Code becomes bloated and readability decreases\n\nWith polymorphism, you can extend by simply adding a new class, and existing code remains unchanged.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "code",
+          "title": "Combining Inheritance and Polymorphism",
+          "body": "By combining code reuse through [[inheritance]] and **polymorphism**, you can create efficient and highly extensible designs.\nThe pattern of defining common behavior in an [[abstract class]] and implementing specific behavior in subclasses is frequently used in practice.",
+          "code": "// Employeeクラスの定義\nabstract class Employee {\n    String name;\n    int baseSalary;\n\n    Employee(String name, int baseSalary) {\n        this.name = name;\n        this.baseSalary = baseSalary;\n    }\n    abstract int calculateBonus();  // サブクラスで実装\n\n    // totalSalaryメソッドの定義\n    int totalSalary() {\n        return baseSalary + calculateBonus();  // 共通処理\n    }\n}\n\n// Managerクラスの定義\nclass Manager extends Employee {\n    Manager(String name) { super(name, 500000); }\n    @Override\n    // calculateBonusメソッドの定義\n    int calculateBonus() { return 200000; }\n}\n\n// Engineerクラスの定義\nclass Engineer extends Employee {\n    Engineer(String name) { super(name, 400000); }\n    @Override\n    int calculateBonus() { return 100000; }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Employee[] staff = { new Manager(\"田中\"), new Engineer(\"鈴木\") };\n        // 拡張for文（コレクションの全要素を順番に処理）\n        for (Employee e : staff) {\n            System.out.println(e.name + \": \" + e.totalSalary() + \"円\");\n        }\n    }\n}\n// 出力:\n// 田中: 700000円\n// 鈴木: 500000円",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "rule",
+          "title": "Common Pitfalls",
+          "body": "Here is a summary of pitfalls to watch out for regarding **polymorphism**.\n\n1. Fields are not dynamically bound: Field access is based on the [[variable]]'s declared type. Unlike [[methods]], they are not resolved by the runtime type.\n\n2. [[Static methods]] are not [[overridden]]: Static methods are hidden, and the method of the variable's declared type is called.\n\n3. Private methods cannot be overridden: Defining a method with the same name in a subclass creates a completely new method, not an override.\n\n4. Calling overridable methods from a [[constructor]] is dangerous: An overridden method may execute before the subclass fields are initialized.",
+          "code": null,
+          "note": "On the Java Silver exam, the differences between points 1 and 2 are frequently tested.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch12_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Polymorphism** through interfaces is the most commonly used pattern in practice\n- Define common behavior in an abstract class and implement specifics in subclasses\n- Fields and static methods are not subject to dynamic binding\n- Private methods cannot be overridden\n- Avoid calling overridable methods from constructors",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch12_05_q1",
+          "lessonId": "ch12_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Base {\n    static void hello() {\n        System.out.println(\"Base hello\");\n    }\n    void greet() {\n        System.out.println(\"Base greet\");\n    }\n}\nclass Sub extends Base {\n    static void hello() {\n        System.out.println(\"Sub hello\");\n    }\n    @Override\n    void greet() {\n        System.out.println(\"Sub greet\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Sub();\n        b.hello();\n        b.greet();\n    }\n}",
+          "explanation": "The static method hello() is not dynamically bound — the method of the variable's declared type (Base) is called, printing \"Base hello\". On the other hand, the instance method greet() is dynamically bound, so the method of the actual object type (Sub) is called, printing \"Sub greet\".",
+          "choices": [
+            {
+              "id": "ch12_05_q1_a",
+              "text": "Base hello\nSub greet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_05_q1_b",
+              "text": "Sub hello\nSub greet",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_05_q1_c",
+              "text": "Base hello\nBase greet",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_05_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch12_05_q2",
+          "lessonId": "ch12_05",
+          "type": "errorFind",
+          "question": "The following code has an error. What is the problem?",
+          "code": "class Animal {\n    public void speak() {\n        System.out.println(\"...\");\n    }\n}\nclass Dog extends Animal {\n    @Override\n    protected void speak() {\n        System.out.println(\"ワンワン\");\n    }\n}",
+          "explanation": "When overriding, the access modifier must be the same as or broader than the parent class method. Since the parent class's speak() is public and the subclass narrows it to protected, a compilation error occurs. It must remain public or use a broader modifier.",
+          "choices": [
+            {
+              "id": "ch12_05_q2_a",
+              "text": "Compilation error because the access modifier is narrowed from public to protected",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch12_05_q2_b",
+              "text": "Because the @Override annotation is unnecessary",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch12_05_q2_c",
+              "text": "ClassCastException occurs because the Dog class has no constructor",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_05_q2_d",
+              "text": "Because the return type of the speak() method does not match",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch12_05_q3",
+          "lessonId": "ch12_05",
+          "type": "fourChoice",
+          "question": "Which of the following is NOT subject to polymorphism (dynamic binding)?",
+          "code": null,
+          "explanation": "Static methods belong to the class, not to instances. Therefore, static methods are hidden rather than overridden, and they are not subject to dynamic binding. They are called based on the variable's declared type. Instance methods, overridden methods, and abstract method implementations are all subject to dynamic binding.",
+          "choices": [
+            {
+              "id": "ch12_05_q3_a",
+              "text": "Instance method calls",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch12_05_q3_b",
+              "text": "Static method calls",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch12_05_q3_c",
+              "text": "Overridden method calls",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch12_05_q3_d",
+              "text": "Abstract method implementation calls",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

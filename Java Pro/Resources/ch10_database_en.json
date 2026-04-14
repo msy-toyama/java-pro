@@ -1,0 +1,1150 @@
+{
+  "courseId": "ch10",
+  "lessons": [
+    {
+      "id": "ch10_01",
+      "courseId": "ch10",
+      "title": "What Is a Database?",
+      "summary": "Learn the concepts of RDB and MySQL basics",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The role and types of **databases** (DB)\n- Basic concepts of Relational Databases (RDB)\n- The relationship between tables, rows, and columns\n\nLearn the fundamentals of databases that enable persistent storage and efficient retrieval of data.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "rule",
+          "title": "Relational Database Basics",
+          "body": "A Relational **Database** (RDB) manages data in \"tables.\"\n\nBasic terminology:\n| Term | Description |\n|---|---|\n| Table | A structure that stores data. Similar to an Excel sheet |\n| Row / Record | One entry of data. Also called a \"record\" |\n| Column / Field | A data attribute. Such as \"name\" or \"age\" |\n| Primary Key | A column that uniquely identifies each row. No duplicates allowed |\n| Foreign Key | References a primary key in another table, linking tables together |\n\nFor example, an \"employees table\" would have columns like employee ID (primary key), name, department ID (foreign key), hire date, etc.",
+          "code": null,
+          "note": "The \"relational\" in RDB comes from the ability to connect tables through relationships (relations).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "tip",
+          "title": "Organizing RDB Terminology",
+          "body": "**Database** terminology differs from everyday language, so let's organize it.\n\n| DB Term | Common Expression | Example |\n|---|---|---|\n| Table | Spreadsheet | employees table |\n| Row (Record) | One data entry | Tanaka's data |\n| Column | Field/Attribute | name, age, department |\n| Primary Key | ID | Employee number (unique identifier) |\n| Foreign Key | Reference | Department code → departments table |\n",
+          "code": null,
+          "note": "A **primary key** cannot be null. Duplicates are also not allowed within a table.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "rule",
+          "title": "What Is MySQL?",
+          "body": "MySQL is the world's most widely used open-source RDBMS (Relational **Database** Management System).\n\nKey features:\n- Free and open-source (commercial edition also available)\n- Fast and stable operation\n- Widely adopted by web companies (Instagram, Twitter, YouTube, etc.)\n- High compatibility with Java ([[JDBC]])\n- Runs on Windows, macOS, and Linux\n\nOther major RDBMS options:\n| Name | Description |\n|---|---|\n| PostgreSQL | Feature-rich. Strong with complex queries |\n| Oracle Database | Widely used in enterprise core systems |\n| SQLite | Lightweight file-based DB. Ideal for mobile apps |",
+          "code": null,
+          "note": "The Java Gold exam tests JDBC knowledge. Building a solid DB foundation in this chapter will make JDBC learning smoother later.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "rule",
+          "title": "What Is SQL?",
+          "body": "SQL (Structured Query Language) is the language for manipulating **databases**. It uses nearly the same syntax across all RDBMS systems.\n\nSQL is broadly divided into three types:\n\n1. DDL (Data Definition Language): Create, alter, and drop tables\n   → CREATE, ALTER, DROP\n\n2. DML (Data Manipulation Language): Insert, retrieve, update, and delete data\n   → INSERT, SELECT, UPDATE, DELETE\n\n3. DCL (Data Control Language): Grant and revoke permissions\n   → GRANT, REVOKE\n\nThe most frequently used are the four DML commands. These are collectively called CRUD (Create, Read, Update, Delete).",
+          "code": null,
+          "note": "SQL keywords work in both uppercase and lowercase, but by convention, reserved words are typically written in uppercase.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- A **database** is a system for persistent data storage and management\n- RDB manages data in the form of tables\n- A **primary key** uniquely identifies each row, and **foreign keys** link tables together\n- MySQL is the world's most widely used open-source RDBMS\n- SQL consists of three types: DDL (definition), DML (manipulation), DCL (control)\n- **CRUD** = Create, Read, Update, Delete",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_01_q1",
+          "lessonId": "ch10_01",
+          "type": "fourChoice",
+          "question": "In a relational database, what is the column that uniquely identifies each row called?",
+          "code": "CREATE TABLE employees (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    salary DECIMAL(10,2)\n);",
+          "explanation": "A primary key is a column that uniquely identifies each row (record) in a table. No two rows can have the same value. For example, employee IDs or order numbers are commonly used as primary keys.",
+          "choices": [
+            {
+              "id": "ch10_01_q1_a",
+              "text": "Foreign Key",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_01_q1_b",
+              "text": "Primary Key",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_01_q1_c",
+              "text": "Index",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_01_q1_d",
+              "text": "Unique Key",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_01_q2",
+          "lessonId": "ch10_01",
+          "type": "fourChoice",
+          "question": "Which of the following is NOT part of SQL's DML (Data Manipulation Language)?",
+          "code": "SELECT e.name, d.dept_name\nFROM employees e\nJOIN departments d\n  ON e.dept_id = d.id\nWHERE e.salary > 50000;",
+          "explanation": "CREATE TABLE is classified as DDL (Data Definition Language). DML consists of commands that manipulate data: INSERT, SELECT, UPDATE, and DELETE. CREATE, ALTER, and DROP belong to DDL.",
+          "choices": [
+            {
+              "id": "ch10_01_q2_a",
+              "text": "SELECT",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_01_q2_b",
+              "text": "INSERT",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_01_q2_c",
+              "text": "CREATE TABLE",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_01_q2_d",
+              "text": "DELETE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_01_q3",
+          "lessonId": "ch10_01",
+          "type": "reorder",
+          "question": "When matching CRUD operations to their corresponding SQL statements, what is the order for C → R → U → D?",
+          "code": "INSERT INTO employees (id, name, salary)\nVALUES (1, 'Taro Tanaka', 450000);",
+          "explanation": "CRUD corresponds to Create = INSERT, Read = SELECT, Update = UPDATE, Delete = DELETE. These are the four basic database operations.",
+          "choices": [
+            {
+              "id": "ch10_01_q3_a",
+              "text": "INSERT",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_01_q3_b",
+              "text": "SELECT",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_01_q3_c",
+              "text": "UPDATE",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_01_q3_d",
+              "text": "DELETE",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch10_01_q3_a",
+            "ch10_01_q3_b",
+            "ch10_01_q3_c",
+            "ch10_01_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_02",
+      "courseId": "ch10",
+      "title": "Table Design Basics",
+      "summary": "Learn CREATE TABLE, data types, and constraints",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to create tables using the CREATE TABLE statement\n- The role of **primary keys** (PRIMARY KEY)\n- How to choose [[data types]] (INT, VARCHAR, DATE, etc.)\n\nTable design is a crucial task that forms the foundation of your application.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "code",
+          "title": "CREATE TABLE Basics",
+          "body": "The SQL statement for creating a table in MySQL. Let's look at an example using an \"employees table.\"",
+          "code": "-- Create and select the database\nCREATE DATABASE IF NOT EXISTS company_db;\nUSE company_db;\n\n-- Departments table (parent table)\nCREATE TABLE departments (\n    dept_id   INT          PRIMARY KEY AUTO_INCREMENT,\n    dept_name VARCHAR(50)  NOT NULL UNIQUE,\n    created_at DATETIME    DEFAULT CURRENT_TIMESTAMP\n);\n\n-- Employees table (child table)\nCREATE TABLE employees (\n    emp_id    INT          PRIMARY KEY AUTO_INCREMENT,\n    name      VARCHAR(100) NOT NULL,\n    email     VARCHAR(255) UNIQUE,\n    age       INT          CHECK (age >= 18 AND age <= 100),\n    salary    DECIMAL(10,2) DEFAULT 0.00,\n    dept_id   INT,\n    hire_date DATE         NOT NULL,\n    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)\n);",
+          "note": "Using AUTO_INCREMENT, MySQL automatically assigns sequential numbers. It is commonly used for **primary keys**.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "rule",
+          "title": "Common MySQL Data Types",
+          "body": "Let's learn the most frequently used MySQL data types.\n\n[Integer Types]\n| Data Type | Description |\n|---|---|\n| INT | Integer (approx. -2.1 billion to 2.1 billion). Most commonly used |\n| BIGINT | Large integer. Used when there are many IDs |\n| TINYINT | Small integer (-128 to 127). Useful for flags |\n\n[Decimal Types]\n- DECIMAL(m,d): Exact decimal. Ideal for monetary values (e.g., DECIMAL(10,2) → 12345678.99)\n- DOUBLE: Floating-point. For scientific calculations\n\n[String Types]\n| Data Type | Description |\n|---|---|\n| VARCHAR(n) | Variable-length string (max n characters). Most common |\n| CHAR(n) | Fixed-length string. For fixed-length data like postal codes |\n| TEXT | Long strings. For article body text, etc. |\n\n[Date/Time Types]\n| Data Type | Description |\n|---|---|\n| DATE | Date only (2025-04-01) |\n| DATETIME | Date and time (2025-04-01 10:30:00) |\n| TIMESTAMP | Timestamp. Can auto-update |\n\n[Others]\n- BOOLEAN: Boolean value (internally TINYINT(1))\n- BLOB: Binary data. For images, etc.",
+          "code": null,
+          "note": "Always use DECIMAL instead of DOUBLE for monetary values. DOUBLE can produce rounding errors in calculations.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "rule",
+          "title": "Constraints",
+          "body": "Constraints are rules that maintain data integrity. They prevent invalid data from being inserted.\n\n| Constraint | Description |\n|---|---|\n| PRIMARY KEY | Primary key. Combination of NOT NULL + UNIQUE. Only one per table |\n| NOT NULL | Prohibits NULL (no value) |\n| UNIQUE | Prohibits duplicate values (NULL is allowed) |\n| DEFAULT | Default value when no value is specified |\n| CHECK | Specifies value ranges or conditions |\n| FOREIGN KEY | References a primary key in another table, preventing insertion of non-existent values |\n| AUTO_INCREMENT | Auto-numbering. Automatically increments by 1 for each new row |\n\nAn INSERT that violates a constraint results in an error, and the data is not inserted. This prevents inconsistencies like \"assigning an employee to a non-existent department\" or \"registering duplicate email addresses.\"",
+          "code": null,
+          "note": "FOREIGN KEY guarantees \"referential integrity.\" Attempting to insert an ID into a child table that doesn't exist in the parent table will result in an error.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "tip",
+          "title": "Tips for Table Design",
+          "body": "Key points for good table design:\n\n1. Always set a **primary key** (INT with AUTO_INCREMENT is the standard)\n2. Use meaningful English column names (name, email, created_at, etc.)\n3. Use NOT NULL proactively (NULL is tricky to handle)\n4. Use the DECIMAL type for monetary values (to avoid DOUBLE rounding errors)\n5. Use DATETIME or TIMESTAMP for date/time columns\n6. Explicitly define relationships between tables using FOREIGN KEY\n\nTable design (schema design) is a critical step performed at the beginning of application development. Changing the table structure later is difficult, so think it through carefully upfront.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- CREATE TABLE defines column names, data types, and constraints\n- INT, VARCHAR, DECIMAL, DATE/DATETIME are the most common data types\n- PRIMARY KEY, NOT NULL, UNIQUE, FOREIGN KEY are the essential constraints\n- AUTO_INCREMENT enables automatic numbering for **primary keys**\n- FOREIGN KEY guarantees referential integrity\n- DECIMAL is the rule for monetary values",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_02_q1",
+          "lessonId": "ch10_02",
+          "type": "fourChoice",
+          "question": "Which data type is most appropriate for handling monetary values in MySQL?",
+          "code": "UPDATE employees\nSET salary = salary * 1.1\nWHERE dept_id = 3;",
+          "explanation": "The DECIMAL type allows exact decimal calculations and is ideal for monetary calculations. DOUBLE and FLOAT are floating-point types that can produce rounding errors, making them unsuitable for monetary values. DECIMAL(10,2) can accurately handle numbers up to 10 digits (8 integer digits) with 2 decimal places.",
+          "choices": [
+            {
+              "id": "ch10_02_q1_a",
+              "text": "DOUBLE",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_02_q1_b",
+              "text": "INT",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_02_q1_c",
+              "text": "DECIMAL",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_02_q1_d",
+              "text": "FLOAT",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_02_q2",
+          "lessonId": "ch10_02",
+          "type": "fourChoice",
+          "question": "What is the correct role of a FOREIGN KEY constraint?",
+          "code": "DELETE FROM employees\nWHERE id = 5;",
+          "explanation": "A FOREIGN KEY ensures that a column in the child table can only reference values that exist as primary keys in the parent table. This maintains referential integrity and prevents inconsistent data such as \"an employee with a non-existent department ID.\"",
+          "choices": [
+            {
+              "id": "ch10_02_q2_a",
+              "text": "Automatically encrypts column values",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_02_q2_b",
+              "text": "Prevents inserting values that don't exist in another table",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_02_q2_c",
+              "text": "Automatically assigns sequential numbers to column values",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_02_q2_d",
+              "text": "Allows NULL values to be set in the column",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_02_q3",
+          "lessonId": "ch10_02",
+          "type": "fillBlank",
+          "question": "Fill in the blank to create the users table.\nCREATE _____ users (\n  id INT PRIMARY KEY AUTO_INCREMENT,\n  name VARCHAR(100) NOT NULL\n);",
+          "code": "SELECT dept_id, AVG(salary) as avg_sal\nFROM employees\nGROUP BY dept_id\nHAVING AVG(salary) > 400000;",
+          "explanation": "The DDL (Data Definition Language) CREATE TABLE statement creates a table. It follows the format: CREATE TABLE table_name (column_definitions).",
+          "choices": [
+            {
+              "id": "ch10_02_q3_a",
+              "text": "TABLE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_02_q3_b",
+              "text": "DATABASE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_02_q3_c",
+              "text": "SCHEMA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_02_q3_d",
+              "text": "VIEW",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_03",
+      "courseId": "ch10",
+      "title": "Inserting, Updating, and Deleting Data",
+      "summary": "Master INSERT / UPDATE / DELETE statements",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to insert data using the INSERT statement\n- How to update data using the UPDATE statement\n- How to delete data using the DELETE statement\n\nThese are the basics of CRUD operations, used in all application development.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "code",
+          "title": "INSERT — Adding Data",
+          "body": "Use the INSERT INTO statement to add new data to a table.",
+          "code": "-- Add department data\nINSERT INTO departments (dept_name)\nVALUES ('Engineering');\n\nINSERT INTO departments (dept_name)\nVALUES ('Sales');\n\n-- Add employee data\nINSERT INTO employees (name, email, age, salary, dept_id, hire_date)\nVALUES ('Taro Yamada', 'yamada@example.com', 28, 350000.00, 1, '2024-04-01');\n\n-- Insert multiple rows at once (efficient MySQL-specific syntax)\nINSERT INTO employees (name, email, age, salary, dept_id, hire_date)\nVALUES\n  ('Hanako Sato', 'sato@example.com', 32, 420000.00, 1, '2021-04-01'),\n  ('Ichiro Suzuki', 'suzuki@example.com', 25, 300000.00, 2, '2025-04-01'),\n  ('Misaki Tanaka', 'tanaka@example.com', 30, 380000.00, 2, '2022-10-01');",
+          "note": "The AUTO_INCREMENT column (emp_id) can be omitted. MySQL automatically assigns sequential numbers.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "code",
+          "title": "UPDATE — Modifying Data",
+          "body": "Use the UPDATE statement to modify existing data. It is critically important to use the WHERE clause to limit which rows are updated.",
+          "code": "-- Update a specific employee's salary\nUPDATE employees\nSET salary = 400000.00\nWHERE emp_id = 1;\n\n-- Update multiple columns at once\nUPDATE employees\nSET salary = salary * 1.05,\n    dept_id = 1\nWHERE name = 'Ichiro Suzuki';\n\n-- ⚠️ Danger! Forgetting the WHERE clause updates ALL rows!\n-- UPDATE employees SET salary = 0;  -- Everyone's salary becomes 0!",
+          "note": "Always include a WHERE clause with UPDATE statements. Executing without a WHERE clause will update every row in the table. This is the most common critical mistake in practice.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "code",
+          "title": "DELETE — Removing Data",
+          "body": "Use the DELETE statement to remove data. A WHERE clause is also essential here.",
+          "code": "-- Delete a specific employee\nDELETE FROM employees\nWHERE emp_id = 3;\n\n-- Delete multiple rows matching a condition\nDELETE FROM employees\nWHERE dept_id = 2 AND salary < 350000;\n\n-- ⚠️ Danger! Forgetting the WHERE clause deletes ALL rows!\n-- DELETE FROM employees;  -- All data gone!\n\n-- Use TRUNCATE for faster full table deletion\n-- TRUNCATE TABLE employees;  -- Deletes all rows (also resets AUTO_INCREMENT)",
+          "note": "DELETE removes rows one by one and leaves a log. TRUNCATE is a fast way to empty a table but cannot be rolled back.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "tip",
+          "title": "Golden Rules in Practice",
+          "body": "Golden rules before executing UPDATE/DELETE:\n\n1. First, verify the target with SELECT\n   SELECT * FROM employees WHERE emp_id = 1;\n   → Confirm the expected rows appear before running UPDATE/DELETE\n\n2. Execute within a BEGIN (**transaction**)\n   → If something goes wrong, you can ROLLBACK\n\n3. Always write a WHERE clause\n   → UPDATE/DELETE without WHERE is a recipe for disaster\n\nThese are absolute rules that must be followed in real-world **database** operations.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- INSERT INTO ... VALUES adds rows\n- Bulk INSERT of multiple rows enables efficient data loading\n- UPDATE ... SET ... WHERE modifies specific rows\n- DELETE FROM ... WHERE removes specific rows\n- Forgetting the WHERE clause affects ALL rows (causes critical incidents)\n- Verifying the target with SELECT before execution is the golden rule",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_03_q1",
+          "lessonId": "ch10_03",
+          "type": "outputPredict",
+          "question": "What happens to the employees table data when the following SQL is executed?\n\nUPDATE employees SET salary = 0;",
+          "code": "UPDATE employees SET salary = 0;",
+          "explanation": "Since there is no WHERE clause, the salary of ALL rows in the employees table is updated to 0. When you omit the WHERE clause in an UPDATE statement, all rows become the target. In practice, always include a WHERE clause and verify the target with SELECT beforehand.",
+          "choices": [
+            {
+              "id": "ch10_03_q1_a",
+              "text": "An error occurs",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_03_q1_b",
+              "text": "All employees' salary becomes 0",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_03_q1_c",
+              "text": "Only the first row's salary becomes 0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_03_q1_d",
+              "text": "Nothing changes",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "Query OK, all rows updated",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_03_q2",
+          "lessonId": "ch10_03",
+          "type": "fillBlank",
+          "question": "Fill in the blank to delete data where the employee name is 'Taro Yamada'.\n_____ FROM employees WHERE name = 'Taro Yamada';",
+          "code": "SELECT name, salary,\n  RANK() OVER (ORDER BY salary DESC) as rank\nFROM employees;",
+          "explanation": "DELETE FROM table_name WHERE condition is the syntax for deleting data. The DELETE statement removes rows that match the condition specified in the WHERE clause.",
+          "choices": [
+            {
+              "id": "ch10_03_q2_a",
+              "text": "DELETE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_03_q2_b",
+              "text": "REMOVE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_03_q2_c",
+              "text": "DROP",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_03_q2_d",
+              "text": "ERASE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_03_q3",
+          "lessonId": "ch10_03",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the difference between DELETE and TRUNCATE?",
+          "code": "CREATE INDEX idx_emp_name\n  ON employees(name);",
+          "explanation": "TRUNCATE deletes all data from a table quickly but cannot be rolled back (undone). On the other hand, DELETE can selectively delete rows using a WHERE clause, and within a transaction, the operation can be rolled back.",
+          "choices": [
+            {
+              "id": "ch10_03_q3_a",
+              "text": "TRUNCATE can specify conditions to delete only some rows",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_03_q3_b",
+              "text": "DELETE drops the table itself",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_03_q3_c",
+              "text": "TRUNCATE cannot be rolled back",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_03_q3_d",
+              "text": "There is no difference between DELETE and TRUNCATE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch10_03_q4",
+          "lessonId": "ch10_03",
+          "type": "codeComplete",
+          "question": "Complete the code to connect to a database using JDBC.",
+          "code": "ALTER TABLE employees\n  ADD COLUMN email VARCHAR(200);",
+          "explanation": "DriverManager.getConnection() obtains a database connection, and createStatement() creates a Statement for SQL execution.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Connection conn = __BLANK_1__.getConnection(url);\n__BLANK_2__ stmt = conn.createStatement();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Connection",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "DriverManager",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Connection",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "DataSource",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Statement",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Statement",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "ResultSet",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "Query",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch10_04",
+      "courseId": "ch10",
+      "title": "Querying Data (SELECT)",
+      "summary": "WHERE, ORDER BY, aggregate functions, GROUP BY",
+      "estimatedMinutes": 10,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Basic SELECT syntax and retrieving all records\n- Filtering results with the WHERE clause\n- ORDER BY, GROUP BY, and aggregate functions (COUNT, SUM, AVG)\n\nThe SELECT statement is the most frequently used SQL command.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "code",
+          "title": "Basic SELECT Syntax",
+          "body": "Use SELECT to query data and the WHERE clause to filter results.",
+          "code": "-- Retrieve all columns and all rows\nSELECT * FROM employees;\n\n-- Retrieve only specific columns\nSELECT name, salary FROM employees;\n\n-- Specify conditions with WHERE\nSELECT name, salary\nFROM employees\nWHERE salary >= 350000;\n\n-- Multiple conditions (AND / OR)\nSELECT name, age, dept_id\nFROM employees\nWHERE dept_id = 1 AND age >= 25;\n\nSELECT name FROM employees\nWHERE dept_id = 1 OR dept_id = 2;\n\n-- IN clause for specifying multiple values (concise alternative to OR)\nSELECT name FROM employees\nWHERE dept_id IN (1, 2, 3);\n\n-- LIKE clause for pattern matching (% = any string)\nSELECT name FROM employees\nWHERE name LIKE 'Yamada%';  -- Names starting with \"Yamada\"\n\n-- BETWEEN for range specification\nSELECT name, salary FROM employees\nWHERE salary BETWEEN 300000 AND 400000;\n\n-- NULL comparison (use IS NULL / IS NOT NULL, not =)\nSELECT name FROM employees\nWHERE email IS NOT NULL;",
+          "note": "For NULL comparison, use \"IS NULL\" instead of \"= NULL\". NULL is a special state meaning \"no value exists\" and cannot be compared with =.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "code",
+          "title": "Sorting and Limiting Results",
+          "body": "Use ORDER BY to sort results and LIMIT to restrict the number of rows returned.",
+          "code": "-- Sort by salary descending (DESC = descending)\nSELECT name, salary\nFROM employees\nORDER BY salary DESC;\n\n-- Sort by name ascending (ASC = ascending; default if omitted)\nSELECT name, hire_date\nFROM employees\nORDER BY name ASC;\n\n-- Sort by multiple keys (by department, then by salary)\nSELECT name, dept_id, salary\nFROM employees\nORDER BY dept_id ASC, salary DESC;\n\n-- Retrieve only the top 3 (MySQL-specific LIMIT)\nSELECT name, salary\nFROM employees\nORDER BY salary DESC\nLIMIT 3;\n\n-- Retrieve 3 rows starting from the 4th (pagination)\nSELECT name, salary\nFROM employees\nORDER BY salary DESC\nLIMIT 3 OFFSET 3;  -- Can also be written as LIMIT 3, 3",
+          "note": "LIMIT is MySQL-specific syntax. Oracle Database uses ROWNUM, and the SQL standard uses FETCH FIRST.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "code",
+          "title": "Aggregate Functions and GROUP BY",
+          "body": "Use aggregate functions to summarize data and GROUP BY to analyze data by groups.",
+          "code": "-- Basic aggregate functions\nSELECT\n  COUNT(*) AS employee_count,     -- Row count\n  AVG(salary) AS avg_salary,      -- Average\n  MAX(salary) AS max_salary,      -- Maximum\n  MIN(salary) AS min_salary,      -- Minimum\n  SUM(salary) AS total_salary     -- Sum\nFROM employees;\n\n-- GROUP BY: Aggregate by department\nSELECT\n  dept_id,\n  COUNT(*) AS headcount,\n  AVG(salary) AS avg_salary\nFROM employees\nGROUP BY dept_id;\n\n-- HAVING: Apply conditions to grouped results\nSELECT\n  dept_id,\n  COUNT(*) AS headcount,\n  AVG(salary) AS avg_salary\nFROM employees\nGROUP BY dept_id\nHAVING COUNT(*) >= 2;  -- Show only departments with 2+ employees\n\n-- Difference between WHERE and HAVING\n-- WHERE: Filters before grouping\n-- HAVING: Filters after grouping",
+          "note": "WHERE applies conditions to individual rows, while HAVING applies conditions to grouped results. HAVING can use aggregate functions like COUNT() and AVG().",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "rule",
+          "title": "SELECT Statement Execution Order",
+          "body": "The clauses of a SELECT statement are written in one order but executed in a different order. Understanding the execution order gives you an accurate picture of how SQL statements work.\n\nWritten order:\n  SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT\n\nExecution order:\n  1. FROM   — Determine the target table\n  2. WHERE  — Filter rows\n  3. GROUP BY — Group the data\n  4. HAVING — Filter groups\n  5. SELECT — Determine which columns to display\n  6. ORDER BY — Sort the results\n  7. LIMIT  — Limit the number of rows\n\nBecause of this order, aliases defined in the SELECT clause (AS) cannot be used in the WHERE clause, but can be used in the ORDER BY clause.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "tip",
+          "title": "WHERE Clause Comparison Operators Differ Slightly from Java",
+          "body": "Note the differences between SQL and Java comparison [[operator]]s:\n\n| Purpose | Java | SQL |\n|---|---|---|\n| Equal | == | = |\n| Not equal | != | <> or != |\n| NULL check | obj == null | IS NULL |\n| Not NULL | obj != null | IS NOT NULL |\n\nEspecially for NULL, you cannot use = NULL. Use IS NULL instead.",
+          "code": null,
+          "note": null,
+          "order": 6
+        },
+        {
+          "lessonId": "ch10_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- SELECT is the most frequently used SQL statement\n- WHERE clause for conditions (AND, OR, IN, LIKE, BETWEEN, IS NULL)\n- ORDER BY for sorting (ASC ascending / DESC descending)\n- LIMIT for restricting row count (useful for pagination)\n- COUNT, AVG, MAX, MIN, SUM are the 5 major aggregate functions\n- GROUP BY for grouping, HAVING for group conditions\n- WHERE = filter before grouping, HAVING = filter after grouping",
+          "code": null,
+          "note": null,
+          "order": 7
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_04_q1",
+          "lessonId": "ch10_04",
+          "type": "fourChoice",
+          "question": "Which SQL statement is correct for checking NULL values?",
+          "code": "CREATE TABLE employees (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    salary DECIMAL(10,2)\n);",
+          "explanation": "NULL represents a special state (no value exists) and cannot be correctly evaluated using regular comparison operators (=, !=). You must use IS NULL or IS NOT NULL. WHERE email = NULL always evaluates to false.",
+          "choices": [
+            {
+              "id": "ch10_04_q1_a",
+              "text": "WHERE email = NULL",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_04_q1_b",
+              "text": "WHERE email IS NULL",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_04_q1_c",
+              "text": "WHERE email == NULL",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_04_q1_d",
+              "text": "WHERE email EQUALS NULL",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_04_q2",
+          "lessonId": "ch10_04",
+          "type": "fourChoice",
+          "question": "Which correctly describes the difference between WHERE and HAVING?",
+          "code": "SELECT e.name, d.dept_name\nFROM employees e\nJOIN departments d\n  ON e.dept_id = d.id\nWHERE e.salary > 50000;",
+          "explanation": "WHERE is executed before GROUP BY and filters individual rows. HAVING is executed after GROUP BY and applies conditions to grouped results. HAVING can use aggregate functions like COUNT() and AVG() in its conditions.",
+          "choices": [
+            {
+              "id": "ch10_04_q2_a",
+              "text": "WHERE and HAVING have exactly the same functionality",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_04_q2_b",
+              "text": "WHERE filters rows, HAVING filters groups",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_04_q2_c",
+              "text": "HAVING is executed before WHERE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_04_q2_d",
+              "text": "Aggregate functions can be used in WHERE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_04_q3",
+          "lessonId": "ch10_04",
+          "type": "reorder",
+          "question": "Arrange the SELECT statement's execution order correctly.",
+          "code": "INSERT INTO employees (id, name, salary)\nVALUES (1, 'Taro Tanaka', 450000);",
+          "explanation": "A SELECT statement's written order and execution order differ. The execution order is FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY. Understanding this order clarifies where aliases can and cannot be used.",
+          "choices": [
+            {
+              "id": "ch10_04_q3_a",
+              "text": "FROM",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_04_q3_b",
+              "text": "WHERE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_04_q3_c",
+              "text": "GROUP BY",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_04_q3_d",
+              "text": "SELECT",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch10_04_q3_a",
+            "ch10_04_q3_b",
+            "ch10_04_q3_c",
+            "ch10_04_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_05",
+      "courseId": "ch10",
+      "title": "Table Joins (JOIN)",
+      "summary": "Combining data from multiple tables",
+      "estimatedMinutes": 10,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- INNER JOIN: Retrieve only matching data from both tables\n- LEFT/RIGHT JOIN: Include data that exists in only one table\n- Practical queries joining multiple tables\n\nIn real-world development, retrieving data across multiple tables is the norm.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "code",
+          "title": "INNER JOIN",
+          "body": "INNER JOIN retrieves only the data that matches in both tables. It is the most basic and most commonly used JOIN.",
+          "code": "-- Display employee names along with department names\nSELECT\n  e.name AS employee_name,\n  e.salary AS salary,\n  d.dept_name AS department_name\nFROM employees e\nINNER JOIN departments d\n  ON e.dept_id = d.dept_id;\n\n-- Result:\n-- employee_name | salary     | department_name\n-- Taro Yamada   | 350000.00  | Engineering\n-- Hanako Sato   | 420000.00  | Engineering\n-- Ichiro Suzuki | 300000.00  | Sales\n-- Misaki Tanaka | 380000.00  | Sales\n\n-- Combining with a WHERE clause\nSELECT e.name, d.dept_name\nFROM employees e\nINNER JOIN departments d ON e.dept_id = d.dept_id\nWHERE e.salary >= 350000\nORDER BY e.salary DESC;",
+          "note": "Using table aliases (e, d) lets you write \"e.name\" before column names for clarity. Aliases are required when tables have columns with the same name.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "code",
+          "title": "LEFT JOIN / RIGHT JOIN (Outer Joins)",
+          "body": "Outer joins include data that doesn't match as well.",
+          "code": "-- LEFT JOIN: Keeps all rows from the left table (employees)\n-- Employees without a department (dept_id = NULL) are also shown\nSELECT e.name, d.dept_name\nFROM employees e\nLEFT JOIN departments d\n  ON e.dept_id = d.dept_id;\n\n-- Result (unassigned employees also appear):\n-- Taro Yamada   | Engineering\n-- Hanako Sato   | Engineering\n-- New Employee  | NULL     ← No department assigned\n\n-- RIGHT JOIN: Keeps all rows from the right table (departments)\n-- Departments with no employees are also shown\nSELECT e.name, d.dept_name\nFROM employees e\nRIGHT JOIN departments d\n  ON e.dept_id = d.dept_id;\n\n-- Result (departments without employees also appear):\n-- Taro Yamada   | Engineering\n-- NULL          | General Affairs   ← No employees",
+          "note": "LEFT JOIN retains all rows from the FROM side (left table). In practice, INNER JOIN and LEFT JOIN cover the vast majority of use cases.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "rule",
+          "title": "Summary of JOIN Types",
+          "body": "Let's organize the types and behavior of JOINs.\n\n| JOIN Type | Behavior | Notes |\n|---|---|---|\n| INNER JOIN | Returns only matching rows from both tables | Most basic |\n| LEFT JOIN | All rows from left table + matching right rows | Non-matching rows show NULL |\n| RIGHT JOIN | All rows from right table + matching left rows | Non-matching rows show NULL |\n| CROSS JOIN | All combinations of both tables (Cartesian product) | Used for test data generation, etc. |\n\nFrequency in practice:\n  INNER JOIN >> LEFT JOIN > RIGHT JOIN >> CROSS JOIN\n\nNote: Listing multiple tables separated by commas in the FROM clause results in an implicit CROSS JOIN.",
+          "code": null,
+          "note": "A RIGHT JOIN can be rewritten as a LEFT JOIN by reversing the table order. Many teams use only LEFT JOIN for code consistency.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "tip",
+          "title": "Visualizing JOINs",
+          "body": "Understand JOIN types using a set-based mental model.\n\n| JOIN Type | Retrieved Scope | Visualization |\n|---|---|---|\n| INNER JOIN | Items in both sets | Intersection only |\n| LEFT JOIN | All of left table + matching right | Left-based |\n| RIGHT JOIN | All of right table + matching left | Right-based |\n| FULL OUTER JOIN | Everything from both tables | All (not supported in MySQL) |\n\nIn practice, INNER JOIN and LEFT JOIN are used in the vast majority of cases.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "code",
+          "title": "Joining Multiple Tables and Subqueries",
+          "body": "Joining three or more tables is common. Simply chain multiple JOINs.",
+          "code": "-- Assuming a projects table exists\n-- Display employee name, department name, and project name\nSELECT\n  e.name AS employee_name,\n  d.dept_name AS department_name,\n  p.project_name AS project\nFROM employees e\nINNER JOIN departments d ON e.dept_id = d.dept_id\nLEFT JOIN projects p ON e.emp_id = p.lead_emp_id\nWHERE d.dept_name = 'Engineering'\nORDER BY e.name;\n\n-- Filtering with a subquery\nSELECT name, salary\nFROM employees\nWHERE dept_id = (\n  SELECT dept_id FROM departments\n  WHERE dept_name = 'Engineering'\n);\n\n-- Retrieve employees earning more than the average salary\nSELECT name, salary\nFROM employees\nWHERE salary > (SELECT AVG(salary) FROM employees);",
+          "note": "As the number of JOINs increases, SQL becomes more complex. Maintain readability by using table aliases (e, d, p) and clearly specifying keys in ON clauses.",
+          "order": 6
+        },
+        {
+          "lessonId": "ch10_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- JOIN combines data from multiple tables\n- INNER JOIN: Only matching rows (most common)\n- LEFT JOIN: Keeps all rows from the left table (non-matches become NULL)\n- The ON clause specifies the join condition (typically **foreign key** = **primary key**)\n- Table aliases improve readability\n- Join 3+ tables by chaining JOINs\n- Subqueries enable complex filtering",
+          "code": null,
+          "note": null,
+          "order": 7
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_05_q1",
+          "lessonId": "ch10_05",
+          "type": "fourChoice",
+          "question": "Which correctly describes the behavior of INNER JOIN?",
+          "code": "UPDATE employees\nSET salary = salary * 1.1\nWHERE dept_id = 3;",
+          "explanation": "INNER JOIN includes only rows where the ON clause condition matches in both tables. Rows that don't match are excluded from the result. LEFT JOIN would include all rows from the left table.",
+          "choices": [
+            {
+              "id": "ch10_05_q1_a",
+              "text": "Returns all rows from the left table",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_05_q1_b",
+              "text": "Returns only rows that match in both tables",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_05_q1_c",
+              "text": "Returns all combinations of both tables",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_05_q1_d",
+              "text": "Returns all rows from the right table",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_05_q2",
+          "lessonId": "ch10_05",
+          "type": "fourChoice",
+          "question": "In a LEFT JOIN, what value do columns have when there is no matching row in the right table?",
+          "code": "DELETE FROM employees\nWHERE id = 5;",
+          "explanation": "In a LEFT JOIN, all rows from the left table are included in the result. When there is no matching row in the right table, all columns from the right table become NULL. This allows you to include results like \"employees not assigned to any department.\"",
+          "choices": [
+            {
+              "id": "ch10_05_q2_a",
+              "text": "The row is excluded from the result",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_05_q2_b",
+              "text": "They become empty strings",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_05_q2_c",
+              "text": "They become NULL",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_05_q2_d",
+              "text": "They become 0",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_05_q3",
+          "lessonId": "ch10_05",
+          "type": "errorFind",
+          "question": "The following SQL has an error. What is the problem?",
+          "code": "SELECT e.name, d.dept_name\nFROM employees e\nINNER JOIN departments d\nWHERE e.dept_id = d.dept_id;",
+          "explanation": "JOIN conditions must be specified using the ON clause, not the WHERE clause. The correct syntax is \"INNER JOIN departments d ON e.dept_id = d.dept_id\". The WHERE clause should be used for filtering results, not for defining join conditions.",
+          "choices": [
+            {
+              "id": "ch10_05_q3_a",
+              "text": "Table aliases cannot be used",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_05_q3_b",
+              "text": "Missing ON clause; join condition is written in WHERE",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_05_q3_c",
+              "text": "Column names in the SELECT clause are wrong",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_05_q3_d",
+              "text": "LEFT JOIN should be used instead of INNER JOIN",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch10_06",
+      "courseId": "ch10",
+      "title": "Database Operations from Java with JDBC",
+      "summary": "Connecting to MySQL from a Java program",
+      "estimatedMinutes": 10,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Connecting to a DB using [[JDBC]] (Java Database Connectivity)\n- Executing SQL safely with [[PreparedStatement]]\n- Retrieving and processing query results with [[ResultSet]]\n\nMaster the basics of operating databases from Java.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "rule",
+          "title": "JDBC Processing Flow",
+          "body": "Operating a **database** with JDBC follows four steps.\n\n1. Connect ([[Connection]])\n   → Connect to the DB using DriverManager.getConnection()\n\n2. Prepare SQL (Statement / **PreparedStatement**)\n   → Prepare the SQL to execute. Use PreparedStatement for parameterized queries\n\n3. Execute\n   → SELECT → executeQuery() to get a ResultSet\n   → INSERT/UPDATE/DELETE → executeUpdate() to get the affected row count\n\n4. Close\n   → Automatically close with [[try-with-resources]]\n\nThe JDBC driver (mysql-connector-j) is added as a project dependency. For Maven, add it to pom.xml.",
+          "code": null,
+          "note": "Since Java 6, JDBC drivers are auto-detected, so manual driver loading with Class.forName() is no longer necessary.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "code",
+          "title": "SELECT — Retrieving Data",
+          "body": "An example of retrieving data from a **database** using JDBC.",
+          "code": "import java.sql.*;\n\n// Variable declaration and initialization\nString url  = \"jdbc:mysql://localhost:3306/company_db\";\nString user = \"root\";\nString pass = \"password\";\n\n// Code that may throw an exception\ntry (Connection conn = DriverManager.getConnection(url, user, pass);\n     Statement stmt = conn.createStatement();\n     ResultSet rs = stmt.executeQuery(\n         \"SELECT emp_id, name, salary FROM employees\")) {\n\n    // Loop while condition is true\n    while (rs.next()) {\n        int id       = rs.getInt(\"emp_id\");\n        String name  = rs.getString(\"name\");\n        double salary = rs.getDouble(\"salary\");\n        System.out.printf(\"%d: %s (%.0f)%n\", id, name, salary);\n    }\n} catch (SQLException e) {\n    System.err.println(\"DB error: \" + e.getMessage());\n    e.printStackTrace();\n}",
+          "note": "Using try-with-resources ensures that Connection, Statement, and ResultSet are automatically closed. This is the safest way to prevent resource leak issues.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "code",
+          "title": "PreparedStatement — Safe Data Operations",
+          "body": "Using PreparedStatement lets you manipulate data while preventing SQL injection attacks.",
+          "code": "// Variable declaration and initialization\nString url = \"jdbc:mysql://localhost:3306/company_db\";\n\n// Code that may throw an exception\ntry (Connection conn = DriverManager.getConnection(url, \"root\", \"pass\")) {\n\n    // INSERT — Adding data\n    String insertSql = \"INSERT INTO employees (name, email, age, salary, dept_id, hire_date) VALUES (?, ?, ?, ?, ?, ?)\";\n    // Code that may throw an exception\n    try (PreparedStatement ps = conn.prepareStatement(insertSql)) {\n        ps.setString(1, \"Kenta Takahashi\");\n        ps.setString(2, \"takahashi@example.com\");\n        ps.setInt(3, 27);\n        ps.setDouble(4, 320000);\n        ps.setInt(5, 1);\n        ps.setDate(6, java.sql.Date.valueOf(\"2025-04-01\"));\n        int rows = ps.executeUpdate();\n        System.out.println(rows + \" row(s) inserted\");\n    }\n\n    // UPDATE — Modifying data\n    String updateSql = \"UPDATE employees SET salary = ? WHERE name = ?\";\n    // Code that may throw an exception\n    try (PreparedStatement ps = conn.prepareStatement(updateSql)) {\n        ps.setDouble(1, 350000);\n        ps.setString(2, \"Kenta Takahashi\");\n        ps.executeUpdate();\n    }\n\n} catch (SQLException e) {\n    e.printStackTrace();\n}",
+          "note": "PreparedStatement placeholders (?) use 1-based numbering. setString(1, ...) sets the value for the first ?.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "tip",
+          "title": "What Is SQL Injection?",
+          "body": "SQL injection is a serious security vulnerability that occurs when user input is directly embedded in SQL statements.\n\nDangerous example (building SQL with string concatenation):\n  [[String]] sql = \"SELECT * FROM users WHERE name = '\" + userInput + \"'\";\n\nIf userInput contains \"' OR '1'='1\":\n  SELECT * FROM users WHERE name = '' OR '1'='1'\n  → All records are retrieved!\n\nWith even more malicious input:\n  SELECT * FROM users WHERE name = ''; DROP TABLE users; --\n  → The table could be dropped!\n\nSolution: Always use PreparedStatement\n  PreparedStatement automatically escapes input, fundamentally\n  preventing SQL injection.\n  This is the absolute security baseline.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch10_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- JDBC = The standard Java API for operating databases\n| Item | Description |\n|---|---|\n| Processing flow | Connection → Statement → Execute → Close |\n| SELECT | executeQuery() to get a ResultSet |\n| INSERT/UPDATE/DELETE | executeUpdate() to get the affected row count |\n- try-with-resources for automatic closing (most important pattern)\n- **PreparedStatement** prevents SQL injection\n- Never build SQL using string concatenation",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch10_06_q1",
+          "lessonId": "ch10_06",
+          "type": "fourChoice",
+          "question": "What is the most important reason for using PreparedStatement?",
+          "code": "SELECT dept_id, AVG(salary) as avg_sal\nFROM employees\nGROUP BY dept_id\nHAVING AVG(salary) > 400000;",
+          "explanation": "PreparedStatement automatically escapes parameters, preventing SQL injection attacks. Building SQL with string concatenation allows malicious input to enable unauthorized database operations.",
+          "choices": [
+            {
+              "id": "ch10_06_q1_a",
+              "text": "It reduces the amount of code",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch10_06_q1_b",
+              "text": "It prevents SQL injection attacks",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_06_q1_c",
+              "text": "It improves execution speed",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_06_q1_d",
+              "text": "It enables try-with-resources",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch10_06_q2",
+          "lessonId": "ch10_06",
+          "type": "fillBlank",
+          "question": "Which method executes a SELECT statement and retrieves results in JDBC?\nResultSet rs = stmt._____(\"SELECT * FROM users\");",
+          "code": "SELECT name, salary,\n  RANK() OVER (ORDER BY salary DESC) as rank\nFROM employees;",
+          "explanation": "The executeQuery() method is used to execute SELECT statements. It returns a ResultSet object, and you read results row by row using rs.next(). For INSERT/UPDATE/DELETE, use executeUpdate().",
+          "choices": [
+            {
+              "id": "ch10_06_q2_a",
+              "text": "executeQuery",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_06_q2_b",
+              "text": "executeUpdate",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch10_06_q2_c",
+              "text": "execute",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch10_06_q2_d",
+              "text": "runQuery",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch10_06_q3",
+          "lessonId": "ch10_06",
+          "type": "reorder",
+          "question": "Arrange the JDBC processing steps in the correct order.",
+          "code": "CREATE INDEX idx_emp_name\n  ON employees(name);",
+          "explanation": "The basic JDBC flow is: first connect to the database, then prepare and execute SQL, retrieve and process the results (ResultSet, etc.), and finally close the connection. Using try-with-resources automates the close step.",
+          "choices": [
+            {
+              "id": "ch10_06_q3_a",
+              "text": "Connect with DriverManager.getConnection()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch10_06_q3_b",
+              "text": "Prepare SQL with Statement/PreparedStatement",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch10_06_q3_c",
+              "text": "Execute with executeQuery()/executeUpdate()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch10_06_q3_d",
+              "text": "Retrieve results and close",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch10_06_q3_a",
+            "ch10_06_q3_b",
+            "ch10_06_q3_c",
+            "ch10_06_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

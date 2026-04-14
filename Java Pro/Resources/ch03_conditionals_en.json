@@ -1,0 +1,1025 @@
+{
+  "courseId": "ch03",
+  "lessons": [
+    {
+      "id": "ch03_01",
+      "courseId": "ch03",
+      "title": "Basics of the if Statement",
+      "summary": "Learn how to branch processing based on conditions",
+      "estimatedMinutes": 4,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The basic syntax of the [[if statement]]\n- How to write conditional expressions (comparison [[operators]])\n- How processing is executed only when a condition is met\n\nConditional branching is an important feature that gives your program the ability to make decisions.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "code",
+          "title": "How to Write an if Statement",
+          "body": "An if statement executes processing only when the specified condition is true.",
+          "code": "int score = 80;\n\nif (score >= 60) {\n    System.out.println(\"合格です！\");\n}\n// 出力: 合格です！",
+          "note": "The processing inside {} (braces) is the body of the if statement. If the condition is false, nothing is executed.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "rule",
+          "title": "How to Write Conditional Expressions",
+          "body": "Inside the () of an if statement, you write an expression that evaluates to a boolean (true/false).\n\nComparison operators:\n| Operator | Meaning |\n|---|---|\n| == | Equal to |\n| != | Not equal to |\n| > | Greater than |\n| < | Less than |\n| >= | Greater than or equal to |\n| <= | Less than or equal to |",
+          "code": null,
+          "note": "Be careful not to confuse = (assignment) with == (comparison)!",
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "tip",
+          "title": "\"true\" and \"false\" in Conditional Expressions",
+          "body": "A conditional expression in an if statement always evaluates to either true or false.\n\n| Operator | Meaning | Example |\n|---|---|---|\n| == | Equal to | age == 20 |\n| != | Not equal to | score != 0 |\n| > | Greater than | price > 1000 |\n| >= | Greater than or equal to | age >= 18 |\n| < | Less than | count < 10 |\n| <= | Less than or equal to | speed <= 60 |\n\nThe code inside the if statement's block {} is executed only when the conditional expression is true.",
+          "code": null,
+          "note": "= means \"assignment\" and == means \"comparison\". They look similar but have completely different meanings, so be careful.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Write in the form: if (condition) { processing }\n- The code inside { } is executed only when the condition is true\n- Conditional expressions are written using comparison operators\n- Don't confuse == (comparison) with = (assignment)",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_01_q1",
+          "lessonId": "ch03_01",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int x = 5;\nif (x > 3) {\n    System.out.println(\"A\");\n}\nif (x > 10) {\n    System.out.println(\"B\");\n}",
+          "explanation": "With x=5, x>3 is true so \"A\" is displayed. x>10 is false so \"B\" is not displayed.",
+          "choices": [
+            {
+              "id": "ch03_01_q1_a",
+              "text": "A",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_01_q1_b",
+              "text": "AB",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_01_q1_c",
+              "text": "B",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_01_q1_d",
+              "text": "Nothing is displayed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "A\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_01_q2",
+          "lessonId": "ch03_01",
+          "type": "fourChoice",
+          "question": "Which Java conditional expression checks whether int variables a and b are equal?",
+          "code": null,
+          "explanation": "In Java, == is the equality comparison operator. = is the assignment operator, so don't confuse them. Note that == is used for comparing primitive types like int and double, but for reference types like String, the equals() method should be used.",
+          "choices": [
+            {
+              "id": "ch03_01_q2_a",
+              "text": "a = b",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_01_q2_b",
+              "text": "a == b",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_01_q2_c",
+              "text": "a === b",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_01_q2_d",
+              "text": "a.equals(b)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_01_q3",
+          "lessonId": "ch03_01",
+          "type": "fillBlank",
+          "question": "Complete the code to display \"positive number\" when x is greater than 0 (a positive number).\nif (x _____ 0) {",
+          "code": null,
+          "explanation": "> is the comparison operator meaning \"greater than\". x > 0 creates the condition \"x is a positive number (greater than 0)\". Note that >= means \"greater than or equal to (including 0)\".",
+          "choices": [
+            {
+              "id": "ch03_01_q3_a",
+              "text": ">",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_01_q3_b",
+              "text": ">=",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_01_q3_c",
+              "text": ">>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_01_q3_d",
+              "text": "=<",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch03_02",
+      "courseId": "ch03",
+      "title": "The if-else Statement",
+      "summary": "Learn how to write processing for when a condition is false",
+      "estimatedMinutes": 4,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to express \"if...then / otherwise\" with the **if-else** statement\n- How to check multiple conditions in order with if-else if-else\n- Cautions about nesting conditional branches\n\nUse else when you have two or more alternatives.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "code",
+          "title": "The if-else Statement",
+          "body": "You can write processing for \"otherwise\" using else.",
+          "code": "// 変数の宣言と初期化\nint score = 45;\n\n// 条件分岐\nif (score >= 60) {\n    System.out.println(\"合格\");\n} else {\n    System.out.println(\"不合格\");\n}\n// 出力: 不合格",
+          "note": "\"//\" in code is a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "tip",
+          "title": "Watch the Evaluation Order of if-else if",
+          "body": "An **if-else** if chain is evaluated from top to bottom, and only the block of the first condition that evaluates to true is executed.\n\n- Conditions don't need to be mutually exclusive (they are evaluated in order from the top)\n- Place more specific conditions above, and general conditions below\n- The final else is the default processing for \"none of the above matched\"\n\nIf you get the order of conditions wrong, it can cause bugs where the expected processing is not executed.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "code",
+          "title": "Multiple Conditions with else if",
+          "body": "Use else if when you want to split into three or more conditions.",
+          "code": "// 変数の宣言と初期化\nint score = 75;\n\n// 条件分岐\nif (score >= 90) {\n    System.out.println(\"優\");\n// 別の条件をチェック\n} else if (score >= 70) {\n    System.out.println(\"良\");\n// 別の条件をチェック\n} else if (score >= 60) {\n    System.out.println(\"可\");\n} else {\n    System.out.println(\"不可\");\n}\n// 出力: 良",
+          "note": "Conditions are evaluated from top to bottom, and only the first block whose condition is true is executed.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **if-else** provides a two-way branch\n- else if provides three or more branches\n- Conditions are evaluated from top to bottom\n- Only the first block whose condition is true is executed",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_02_q1",
+          "lessonId": "ch03_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int n = 85;\nif (n >= 90) {\n    System.out.println(\"A\");\n} else if (n >= 80) {\n    System.out.println(\"B\");\n} else if (n >= 70) {\n    System.out.println(\"C\");\n} else {\n    System.out.println(\"D\");\n}",
+          "explanation": "With n=85, n>=90 is false, but n>=80 is true, so \"B\" is displayed. Although n>=70 is also true, \"C\" is not displayed because n>=80 was true first.",
+          "choices": [
+            {
+              "id": "ch03_02_q1_a",
+              "text": "A",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_02_q1_b",
+              "text": "B",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_02_q1_c",
+              "text": "BC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_02_q1_d",
+              "text": "D",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "B\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_02_q2",
+          "lessonId": "ch03_02",
+          "type": "fourChoice",
+          "question": "In what order are conditions evaluated in an if-else if statement?",
+          "code": null,
+          "explanation": "An if-else if statement evaluates conditions from top to bottom, and only the block of the first condition that is true is executed.",
+          "choices": [
+            {
+              "id": "ch03_02_q2_a",
+              "text": "From top to bottom",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_02_q2_b",
+              "text": "From bottom to top",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_02_q2_c",
+              "text": "Randomly",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_02_q2_d",
+              "text": "All conditions simultaneously",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_02_q3",
+          "lessonId": "ch03_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int x = 10;\nif (x > 5) {\n    System.out.println(\"A\");\n} else {\n    System.out.println(\"B\");\n}\nSystem.out.println(\"C\");",
+          "explanation": "x>5 is true, so \"A\" is displayed. The else block is skipped. The println(\"C\") outside the if statement is always executed.",
+          "choices": [
+            {
+              "id": "ch03_02_q3_a",
+              "text": "A\\nC",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_02_q3_b",
+              "text": "A",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_02_q3_c",
+              "text": "A\\nB\\nC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_02_q3_d",
+              "text": "B\\nC",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "A\nC\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch03_02_q4",
+          "lessonId": "ch03_02",
+          "type": "codeComplete",
+          "question": "Fill in the blanks to complete the code that determines a price based on age. Under 18 costs 500 yen, 65 and over costs 800 yen, and all others cost 1000 yen.",
+          "code": null,
+          "explanation": "The if-else if-else syntax evaluates conditions from top to bottom. Only the first matching condition block is executed.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "int age = 70;\nint price;\n__BLANK_1__ (age < 18) {\n    price = 500;\n} __BLANK_2__ (age >= 65) {\n    price = 800;\n} else {\n    price = 1000;\n}\nSystem.out.println(price);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "if",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "switch",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "while",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "else if",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "elif",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "else",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch03_03",
+      "courseId": "ch03",
+      "title": "Comparison Operators and Logical Operators",
+      "summary": "Learn how to combine multiple conditions",
+      "estimatedMinutes": 4,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The syntax and behavior of the [[switch statement]]\n- The relationship between case and break\n- How to use the default label\n\nWhen you want to branch processing by value, a switch statement makes the code more readable.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "code",
+          "title": "Logical Operators",
+          "body": "There are three [[operators]] for combining conditions.",
+          "code": "// 変数の宣言と初期化\nint age = 20;\nboolean hasTicket = true;\n\n// AND（かつ）: 両方trueならtrue\n// 条件分岐\nif (age >= 18 && hasTicket) {\n    System.out.println(\"入場できます\");\n}\n\n// OR（または）: どちらかtrueならtrue\nint day = 6; // 土曜\nif (day == 6 || day == 0) {\n    System.out.println(\"休日です\");\n}\n\n// NOT（否定）: true/falseを反転\nboolean isHoliday = false;\nif (!isHoliday) {\n    System.out.println(\"平日です\");\n}",
+          "note": "\"//\" in code is a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "tip",
+          "title": "Forgetting break Causes Fall-Through",
+          "body": "If you forget to write break in a switch statement, the processing of the next case will also be executed.\n\nThis is called \"fall-through\".\n\nUnintentional fall-through leads to unexpected behavior, so make it a habit to always write break.",
+          "code": null,
+          "note": "With the **switch expression (arrow syntax)** available from Java 14 onward, break is not needed. You'll learn about this in Chapter 19.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "rule",
+          "title": "Short-Circuit Evaluation",
+          "body": "&& and || perform **short-circuit evaluation**.\n\n- && does not evaluate the right side if the left side is false\n- || does not evaluate the right side if the left side is true\n\nThis property can be used to safely write null checks and similar patterns.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- && means \"and\" (AND)\n- || means \"or\" (OR)\n- ! means \"not\" (NOT)\n- **Short-circuit evaluation**: Evaluation stops as soon as the result is determined",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_03_q1",
+          "lessonId": "ch03_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int x = 15;\nif (x >= 10 && x <= 20) {\n    System.out.println(\"範囲内\");\n} else {\n    System.out.println(\"範囲外\");\n}",
+          "explanation": "With x=15, x>=10 is true and x<=20 is also true. Since && (AND) is true when both sides are true, \"範囲内\" (in range) is displayed.",
+          "choices": [
+            {
+              "id": "ch03_03_q1_a",
+              "text": "範囲内",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q1_b",
+              "text": "範囲外",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q1_c",
+              "text": "A compile error occurs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q1_d",
+              "text": "Nothing is displayed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "範囲内\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_03_q2",
+          "lessonId": "ch03_03",
+          "type": "fourChoice",
+          "question": "Under what condition does the || operator return true?",
+          "code": null,
+          "explanation": "|| (OR) returns true if at least one side is true. It returns false only when both sides are false.",
+          "choices": [
+            {
+              "id": "ch03_03_q2_a",
+              "text": "Only when both are true",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q2_b",
+              "text": "When at least one side is true",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q2_c",
+              "text": "Only when both are false",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q2_d",
+              "text": "Only when exactly one is true",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_03_q3",
+          "lessonId": "ch03_03",
+          "type": "fillBlank",
+          "question": "Complete the conditional expression to check \"x is a positive number AND an even number\".\nif (x > 0 _____ x % 2 == 0) {",
+          "code": null,
+          "explanation": "\"and\" is expressed with the AND operator &&. x > 0 && x % 2 == 0 checks for \"positive even number\".",
+          "choices": [
+            {
+              "id": "ch03_03_q3_a",
+              "text": "&&",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q3_b",
+              "text": "||",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q3_c",
+              "text": "&",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q3_d",
+              "text": "and",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch03_03_q4",
+          "lessonId": "ch03_03",
+          "type": "multiChoice",
+          "question": "Select all correct statements about the switch statement.",
+          "code": null,
+          "explanation": "The switch statement can use int, char, String, and enum. If break is not written in each case, fall-through occurs. The default label is optional and is executed when no case matches. boolean cannot be used in a switch statement.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch03_03_q4_a",
+              "text": "int, char, String, and enum can be used",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_03_q4_b",
+              "text": "Omitting break causes fall-through",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_03_q4_c",
+              "text": "boolean can also be used in a switch statement",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_03_q4_d",
+              "text": "The default label is optional",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch03_03_q5",
+          "lessonId": "ch03_03",
+          "type": "reorder",
+          "question": "Arrange the components of a switch statement in the correct order.",
+          "code": null,
+          "explanation": "A switch statement is structured in the order: expression → case label → processing → break. Without break, fall-through occurs.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "switch (value) {",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "    case 1:",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "        System.out.println(\"One\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "        break;",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "}",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch03_04",
+      "courseId": "ch03",
+      "title": "The switch Statement",
+      "summary": "A clean way to write multi-way branching by value",
+      "estimatedMinutes": 4,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to use logical [[operators]] (&&, ||, !)\n- Making decisions by combining multiple conditions\n- How **short-circuit evaluation** works\n\nYou'll be able to express complex conditions in a single [[if statement]].",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "code",
+          "title": "Basics of the switch Statement",
+          "body": "The switch statement executes the processing of the matching case.",
+          "code": "// 変数の宣言と初期化\nint day = 3; // 水曜\n\n// 値に応じた分岐処理\nswitch (day) {\n    case 1:\n        System.out.println(\"月曜\");\n        break;\n    case 2:\n        System.out.println(\"火曜\");\n        break;\n    case 3:\n        System.out.println(\"水曜\");\n        break;\n    default:\n        System.out.println(\"その他\");\n        break;\n}\n// 出力: 水曜",
+          "note": "If you forget break, the processing \"falls through\" to the next case. Be careful.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "rule",
+          "title": "Types You Can Use with switch",
+          "body": "Types that can be used in a [[switch statement]] expression:\n- int, byte, short, char\n- [[String]] (Java 7 and later)\n- enum (enumeration type)\n\nTypes that cannot be used:\n- double, float, long, boolean",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "tip",
+          "title": "What Is Short-Circuit Evaluation?",
+          "body": "For efficiency in logical operations, Java does not evaluate the right side if the result can be determined from the left side alone.\n\n| Operator | Short-Circuit Condition | Description |\n|---|---|---|\n| && | Left side is false | Right side is not evaluated (result is always false) |\n| \\| \\| | Left side is true | Right side is not evaluated (result is always true) |\n\nThis mechanism is commonly used in techniques such as performing null checks first.",
+          "code": null,
+          "note": "Example: if (name != null && name.length() > 0) → If name is null, length() is not called",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- The switch statement is ideal for multi-way branching by value\n- Write break at the end of each case\n- default handles cases where no case matches\n- String can also be used (Java 7 and later)",
+          "code": null,
+          "note": "【Practical Tips】In practice, switch is used for branching on fixed values such as enums and status codes, while **if-else** is used for range checks and complex conditions. Using **switch expressions** from Java 14 onward also prevents forgotten breaks.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_04_q1",
+          "lessonId": "ch03_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int n = 2;\nswitch (n) {\n    case 1:\n        System.out.println(\"A\");\n        break;\n    case 2:\n        System.out.println(\"B\");\n    case 3:\n        System.out.println(\"C\");\n        break;\n}",
+          "explanation": "Since case 2 has no break, fall-through occurs and case 3 is also executed. The result is that both \"B\" and \"C\" are output.",
+          "choices": [
+            {
+              "id": "ch03_04_q1_a",
+              "text": "B",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_04_q1_b",
+              "text": "B\\nC",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_04_q1_c",
+              "text": "A\\nB\\nC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_04_q1_d",
+              "text": "C",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "B\nC\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_04_q2",
+          "lessonId": "ch03_04",
+          "type": "fourChoice",
+          "question": "Which type cannot be used in a switch statement?",
+          "code": null,
+          "explanation": "double (floating-point type) cannot be used in a switch statement. int, String, char, etc. can be used.",
+          "choices": [
+            {
+              "id": "ch03_04_q2_a",
+              "text": "int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_04_q2_b",
+              "text": "String",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_04_q2_c",
+              "text": "char",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_04_q2_d",
+              "text": "double",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_04_q3",
+          "lessonId": "ch03_04",
+          "type": "fourChoice",
+          "question": "What happens if you forget to write break?",
+          "code": null,
+          "explanation": "Without break, after the processing of the matched case, the processing of the next case is also executed. This is called fall-through.",
+          "choices": [
+            {
+              "id": "ch03_04_q3_a",
+              "text": "A compile error occurs",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_04_q3_b",
+              "text": "The next case is also executed",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_04_q3_c",
+              "text": "The program terminates",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_04_q3_d",
+              "text": "The default is executed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch03_05",
+      "courseId": "ch03",
+      "title": "Practical Conditional Branching",
+      "summary": "Mastering the ternary operator and nesting",
+      "estimatedMinutes": 4,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The syntax of the **ternary operator** (condition ? value1 : value2)\n- When to use it vs. **if-else**\n- Situations where the [[ternary operator]] should and shouldn't be used\n\nLearn a convenient shorthand for writing simple conditional branches in a single line.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "code",
+          "title": "The Ternary Operator",
+          "body": "A shorthand notation that lets you write a simple conditional branch in one line.",
+          "code": "// 変数の宣言と初期化\nint age = 20;\nString result = (age >= 18) ? \"成人\" : \"未成年\";\nSystem.out.println(result);  // 成人\n\n// if文で書くと:\nString result2;\n// 条件分岐\nif (age >= 18) {\n    result2 = \"成人\";\n} else {\n    result2 = \"未成年\";\n}",
+          "note": "The **ternary operator** is concise but not suitable for complex conditions. Prioritize readability.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "tip",
+          "title": "Don't Overuse the Ternary Operator",
+          "body": "The **ternary operator** (condition ? value1 : value2) is convenient, but nesting it makes the code hard to read.\n\n- Good example: [[String]] msg = score >= 60 ? \"Pass\" : \"Fail\";\n- Bad example: String msg = a > b ? (b > c ? \"A\" : \"B\") : (a > c ? \"C\" : \"D\");\n\nUse the ternary [[operator]] for simple two-way choices, and **if-else** statements for complex conditions.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "code",
+          "title": "Nesting if Statements",
+          "body": "Writing an [[if statement]] inside another if statement is called nesting.",
+          "code": "// 変数の宣言と初期化\nint score = 85;\nboolean isPresent = true;\n\n// 条件分岐\nif (isPresent) {\n    if (score >= 80) {\n        System.out.println(\"出席かつ高得点！\");\n    } else {\n        System.out.println(\"出席しています\");\n    }\n} else {\n    System.out.println(\"欠席です\");\n}",
+          "note": "Deep nesting makes code hard to read. Address this by combining conditions with && or using early returns.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch03_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Ternary operator**: condition ? value if true : value if false\n- Best suited for simple two-way choices\n- Be careful not to nest too deeply\n- Always prioritize readability",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch03_05_q1",
+          "lessonId": "ch03_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int x = 7;\nString s = (x % 2 == 0) ? \"偶数\" : \"奇数\";\nSystem.out.println(s);",
+          "explanation": "7 % 2 = 1, which is not 0, so the condition is false. The ternary operator selects the false value \"奇数\" (odd).",
+          "choices": [
+            {
+              "id": "ch03_05_q1_a",
+              "text": "偶数",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_05_q1_b",
+              "text": "奇数",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch03_05_q1_c",
+              "text": "A compile error occurs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_05_q1_d",
+              "text": "7",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "奇数\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_05_q2",
+          "lessonId": "ch03_05",
+          "type": "fillBlank",
+          "question": "Complete the expression using the ternary operator to return \"adult\" if age is 20 or older, and \"child\" otherwise.\nString type = (age >= 20) _____ \"adult\" : \"child\";",
+          "code": null,
+          "explanation": "The ternary operator is written in the form: condition ? value if true : value if false. The ? comes immediately after the condition.",
+          "choices": [
+            {
+              "id": "ch03_05_q2_a",
+              "text": "?",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch03_05_q2_b",
+              "text": ":",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_05_q2_c",
+              "text": "&&",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch03_05_q2_d",
+              "text": "then",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch03_05_q3",
+          "lessonId": "ch03_05",
+          "type": "fourChoice",
+          "question": "What is a way to make code more readable when nesting becomes too deep?",
+          "code": null,
+          "explanation": "Combining conditions with && reduces nesting depth and improves code readability.",
+          "choices": [
+            {
+              "id": "ch03_05_q3_a",
+              "text": "Make variable names longer",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch03_05_q3_b",
+              "text": "Write lots of comments",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch03_05_q3_c",
+              "text": "Combine conditions with &&",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch03_05_q3_d",
+              "text": "Rewrite using a switch statement",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

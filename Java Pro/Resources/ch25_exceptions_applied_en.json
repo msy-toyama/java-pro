@@ -1,0 +1,830 @@
+{
+  "courseId": "ch25",
+  "lessons": [
+    {
+      "id": "ch25_01",
+      "courseId": "ch25",
+      "title": "try-with-resources in Detail",
+      "summary": "Learn the mechanics of the try-with-resources statement in detail. Understand the difference between AutoCloseable and Closeable, how to declare multiple resources, and the order in which resources are closed (reverse order of declaration).",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "overview",
+          "title": "Overview of try-with-resources",
+          "body": "In this lesson, you will learn:\n\n- Detailed rules of **try-with-resources**\n- Effectively final resource [[variables]] since Java 9\n- Managing multiple resources simultaneously\n\nLet's precisely understand the specification of automatic resource management.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "rule",
+          "title": "AutoCloseable and Closeable",
+          "body": "The [[AutoCloseable]] [[interface]] belongs to the java.lang package and declares the close() [[method]].\nThe Closeable interface belongs to the java.io package and is a sub-interface of AutoCloseable.\nAutoCloseable's close() can throw Exception, whereas Closeable's close() can only throw IOException.\nOnly [[classes]] that implement AutoCloseable can be used with **try-with-resources**.\nSince Closeable [[inherits]] from AutoCloseable, it can naturally be used with [[try-with-resources]].\nSince Java 9, effectively final variables declared outside the try block can also be used in try-with-resources.",
+          "code": "// Custom resource implementing AutoCloseable\nclass MyResource implements AutoCloseable {\n    String name;\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n    @Override\n    public void close() throws Exception {\n        System.out.println(name + \" closed\");\n    }\n}\n\n// Using with try-with-resources\ntry (MyResource r = new MyResource(\"Resource1\")) {\n    System.out.println(\"Using \" + r.name);\n}\n// Output:\n// Resource1 opened\n// Using Resource1\n// Resource1 closed",
+          "note": "Closeable is a sub-interface of AutoCloseable. Be aware of questions on the type hierarchy.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "code",
+          "title": "Multiple Resources and Close Order",
+          "body": "In **try-with-resources**, multiple resources can be declared separated by semicolons.\nResources are closed in the reverse order of their declaration (LIFO like a [[stack]]).\nThis mechanism ensures proper resolution of dependencies between resources.\nFor example, a statement created on top of a previously opened connection should be closed first.\nEven if an [[exception]] occurs during close, the closing of other resources is still attempted.",
+          "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\ntry (Res r1 = new Res(\"A\"); Res r2 = new Res(\"B\"); Res r3 = new Res(\"C\")) {\n    System.out.println(\"Processing\");\n}\n// Output:\n// A opened\n// B opened\n// C opened\n// Processing\n// C closed (reverse order)\n// B closed\n// A closed",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "point",
+          "title": "Improvements Since Java 9",
+          "body": "Since Java 9, effectively final variables declared outside the try block can be placed directly in the try parentheses.\nThis simplification makes the code cleaner when managing pre-created resources with **try-with-resources**.\nThe variable must not have been reassigned (effectively final).\nPassing a reassigned variable to the try parentheses results in a [[compile]] error.",
+          "code": "// Since Java 9\nMyResource r1 = new MyResource(\"R1\");\nMyResource r2 = new MyResource(\"R2\");\n\ntry (r1; r2) {  // Directly reference variables declared outside\n    System.out.println(\"Using resources\");\n}\n// r1 and r2 are automatically closed\n\n// Note: reassignment causes a compile error\nMyResource r3 = new MyResource(\"R3\");\nr3 = new MyResource(\"R3b\"); // Reassignment\n// try (r3) { } // Compile error! (not effectively final)",
+          "note": "The Java 9 improvement is also tested on exams. Make sure you thoroughly understand the conditions for effectively final.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: Resource Management",
+          "body": "On the Gold exam, questions about resource close order are frequently asked.\nRemember that resources are closed in the reverse order of declaration.\nResources are closed even if an exception occurs within the try block.\nIf an exception occurs during resource declaration (in the [[constructor]]), only the resources that have been created up to that point are closed.\nThe catch/[[finally]] block is executed after the resources have been closed.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_01_q1",
+          "lessonId": "ch25_01",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "class R implements AutoCloseable {\n    String n;\n    R(String n) { this.n = n; System.out.println(n + \" open\"); }\n    public void close() { System.out.println(n + \" close\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"X\"); R b = new R(\"Y\")) {\n            System.out.println(\"use\");\n        }\n    }\n}",
+          "explanation": "Resources are created in the order X → Y, but they are closed in the reverse order of declaration, so Y → X. The output is \"X open\", \"Y open\", \"use\", \"Y close\", \"X close\".",
+          "choices": [
+            {
+              "id": "ch25_01_q1_a",
+              "text": "X open → Y open → use → Y close → X close",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_01_q1_b",
+              "text": "X open → Y open → use → X close → Y close",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_01_q1_c",
+              "text": "Y open → X open → use → X close → Y close",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_01_q1_d",
+              "text": "X open → Y open → X close → Y close → use",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_01_q2",
+          "lessonId": "ch25_01",
+          "type": "fourChoice",
+          "question": "Which of the following is correct about the relationship between AutoCloseable and Closeable?",
+          "code": "public class BankAccount {\n    public void withdraw(int amount) {\n        if (amount <= 0)\n            throw new IllegalArgumentException(\n                \"Amount must be positive\");\n        if (amount > balance)\n            throw new InsufficientFundsException();\n        balance -= amount;\n    }\n}",
+          "explanation": "Closeable is a sub-interface of AutoCloseable. AutoCloseable belongs to the java.lang package, and its close() method can throw Exception. On the other hand, Closeable can only throw IOException.",
+          "choices": [
+            {
+              "id": "ch25_01_q2_a",
+              "text": "Closeable is a sub-interface of AutoCloseable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_01_q2_b",
+              "text": "AutoCloseable is a sub-interface of Closeable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_01_q2_c",
+              "text": "There is no inheritance relationship between them",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_01_q2_d",
+              "text": "Closeable's close() throws Exception",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_01_q3",
+          "lessonId": "ch25_01",
+          "type": "fillBlank",
+          "question": "A resource that can be used with try-with-resources must implement the ___ interface.",
+          "code": "try {\n    Files.readString(Path.of(\"config.txt\"));\n} catch (NoSuchFileException e) {\n    logger.warning(\"Config file not found\");\n} catch (IOException e) {\n    logger.severe(\"Read error: \" + e);\n}",
+          "explanation": "Resources managed by try-with-resources must implement the AutoCloseable interface. Since Closeable is a sub-interface of AutoCloseable, classes implementing Closeable can also be used.",
+          "choices": [
+            {
+              "id": "ch25_01_q3_a",
+              "text": "AutoCloseable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_01_q3_b",
+              "text": "Serializable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_01_q3_c",
+              "text": "Iterable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_01_q3_d",
+              "text": "Flushable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch25_02",
+      "courseId": "ch25",
+      "title": "Suppressed Exceptions",
+      "summary": "Learn about the suppressed exception mechanism in try-with-resources. Understand the behavior when exceptions occur in both the try block and close(), and how to use the getSuppressed() method.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "overview",
+          "title": "What Are Suppressed Exceptions?",
+          "body": "In this lesson, you will learn:\n\n- The mechanism and retrieval of suppressed exceptions\n- What happens when exceptions occur in both the try block and close()\n- Retrieving exception information with getSuppressed()\n\nLet's understand the mechanism that ensures exceptions are never \"swallowed.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "rule",
+          "title": "How Suppressed Exceptions Work",
+          "body": "If exception A occurs in the try block and exception B occurs in close(), exception A is thrown and exception B is suppressed.\nSuppressed exceptions can be retrieved using the primary exception's getSuppressed() [[method]].\ngetSuppressed() returns a Throwable[].\nIf exceptions occur in the close() of multiple resources, they are all added as suppressed exceptions.\nIf no exception occurs in the try block and an exception occurs only in close(), that close() exception is thrown directly (as a regular exception, not suppressed).",
+          "code": "class FailClose implements AutoCloseable {\n    public void close() {\n        throw new RuntimeException(\"close error\");\n    }\n}\n\ntry (FailClose fc = new FailClose()) {\n    throw new RuntimeException(\"try error\");\n} catch (RuntimeException e) {\n    System.out.println(\"Primary: \" + e.getMessage());\n    for (Throwable t : e.getSuppressed()) {\n        System.out.println(\"Suppressed: \" + t.getMessage());\n    }\n}\n// Output:\n// Primary: try error\n// Suppressed: close error",
+          "note": "Remember the priority: the try block exception is primary, and the close() exception is suppressed.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "code",
+          "title": "Multiple Resources and Suppressed Exceptions",
+          "body": "When multiple resources are declared, exceptions from each resource's close() all become suppressed exceptions.\nResources are closed in reverse order, so close() is called starting from the last declared resource.\nEach close() exception is added to the getSuppressed() [[array]].\nEven if no exception occurs in the try block, if the first close() throws an exception, that becomes the primary exception, and the remaining close() exceptions are suppressed.",
+          "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) { this.name = name; }\n    public void close() {\n        throw new RuntimeException(name + \" close fail\");\n    }\n}\n\ntry (Res a = new Res(\"A\"); Res b = new Res(\"B\")) {\n    throw new RuntimeException(\"main error\");\n} catch (RuntimeException e) {\n    System.out.println(\"Primary: \" + e.getMessage());\n    for (Throwable t : e.getSuppressed()) {\n        System.out.println(\"Suppressed: \" + t.getMessage());\n    }\n}\n// Output:\n// Primary: main error\n// Suppressed: B close fail (B closes first in reverse order)\n// Suppressed: A close fail",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "point",
+          "title": "The addSuppressed Method",
+          "body": "The Throwable class defines the addSuppressed(Throwable) method, which allows programmers to manually add suppressed exceptions.\ngetSuppressed() returns a Throwable[] with elements stored in the order they were added.\nIn **try-with-resources**, the JVM automatically calls addSuppressed() to add suppressed exceptions.\nAttempting to add itself as a suppressed exception throws an IllegalArgumentException.",
+          "code": "RuntimeException primary = new RuntimeException(\"main\");\nRuntimeException suppressed1 = new RuntimeException(\"sub1\");\nRuntimeException suppressed2 = new RuntimeException(\"sub2\");\n\nprimary.addSuppressed(suppressed1);\nprimary.addSuppressed(suppressed2);\n\nSystem.out.println(primary.getSuppressed().length); // 2\nSystem.out.println(primary.getSuppressed()[0].getMessage()); // sub1\nSystem.out.println(primary.getSuppressed()[1].getMessage()); // sub2",
+          "note": "addSuppressed() can be used manually, but it is normally used through the automatic processing of **try-with-resources**.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_02",
+          "sectionType": "tip",
+          "title": "Exam Prep: Suppressed Exceptions",
+          "body": "On the Gold exam, the execution order and exception relationships between the try block, close(), catch, and [[finally]] are tested.\nThe execution order of **try-with-resources** is \"try block → close() (reverse order) → catch → finally\".\nWhen exceptions occur in both the try block and close(), the catch receives the try block's exception.\nIf an exception occurs only in close(), that exception is passed directly to catch.\nAlso watch out for questions comparing with traditional try-finally.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_02_q1",
+          "lessonId": "ch25_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "class R implements AutoCloseable {\n    public void close() {\n        throw new RuntimeException(\"close\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R r = new R()) {\n            throw new RuntimeException(\"try\");\n        } catch (RuntimeException e) {\n            System.out.println(e.getMessage());\n            System.out.println(e.getSuppressed().length);\n        }\n    }\n}",
+          "explanation": "The \"try\" exception occurs in the try block, and the \"close\" exception occurs in close(). Since the try block exception becomes the primary, e.getMessage() returns \"try\". The close() exception is added as a suppressed exception, so getSuppressed().length is 1.",
+          "choices": [
+            {
+              "id": "ch25_02_q1_a",
+              "text": "try and 1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_02_q1_b",
+              "text": "close and 1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_02_q1_c",
+              "text": "try and 0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_02_q1_d",
+              "text": "close and 0",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_02_q2",
+          "lessonId": "ch25_02",
+          "type": "fourChoice",
+          "question": "In try-with-resources, when exception A occurs in the try block and exception B occurs in close(), which description is correct?",
+          "code": "public void process() {\n    Exception suppressed = null;\n    Resource r = acquire();\n    try {\n        r.use();\n    } catch (Exception e) {\n        suppressed = e;\n    } finally {\n        try { r.close(); }\n        catch (Exception e2) {\n            if (suppressed != null)\n                suppressed.addSuppressed(e2);\n        }\n    }\n}",
+          "explanation": "In try-with-resources, the try block exception is treated as the primary exception, and the close() exception is added as a suppressed exception to the primary. The catch block receives exception A, and exception B can be retrieved with getSuppressed().",
+          "choices": [
+            {
+              "id": "ch25_02_q2_a",
+              "text": "Exception A is thrown, and exception B becomes a suppressed exception of A",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_02_q2_b",
+              "text": "Exception B is thrown, and exception A becomes a suppressed exception of B",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_02_q2_c",
+              "text": "Only exception A is thrown, and exception B is lost",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_02_q2_d",
+              "text": "Only exception B is thrown, and exception A is lost",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_02_q3",
+          "lessonId": "ch25_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "class R implements AutoCloseable {\n    String name;\n    R(String name) { this.name = name; }\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"A\"); R b = new R(\"B\")) {\n            System.out.println(\"run\");\n        } catch (Exception e) {\n            System.out.println(\"caught\");\n        } finally {\n            System.out.println(\"finally\");\n        }\n    }\n}",
+          "explanation": "The try block executes normally and \"run\" is output. Then resources are closed in reverse order, outputting \"B closed\" and \"A closed\". Since no exception occurs, the catch is not executed. Finally, \"finally\" is output.",
+          "choices": [
+            {
+              "id": "ch25_02_q3_a",
+              "text": "run → B closed → A closed → finally",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_02_q3_b",
+              "text": "run → A closed → B closed → finally",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_02_q3_c",
+              "text": "run → B closed → A closed → caught → finally",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_02_q3_d",
+              "text": "run → finally → B closed → A closed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch25_02_q4",
+          "lessonId": "ch25_02",
+          "type": "codeComplete",
+          "question": "Complete the code to define a custom exception class.",
+          "code": "public class BankAccount {\n    public void withdraw(int amount) {\n        if (amount <= 0)\n            throw new IllegalArgumentException(\n                \"Amount must be positive\");\n        if (amount > balance)\n            throw new InsufficientFundsException();\n        balance -= amount;\n    }\n}",
+          "explanation": "Custom exceptions are created by extending Exception. Use super(msg) to pass the message to the parent constructor.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class InvalidAgeException __BLANK_1__ __BLANK_2__ {\n    public InvalidAgeException(String msg) {\n        super(msg);\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "(1) Inheritance",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "extends",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "implements",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "throws",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "(2) Parent Class",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Exception",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "Error",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "Throwable",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_02_q5",
+          "lessonId": "ch25_02",
+          "type": "reorder",
+          "question": "Arrange the correct flow of exception handling in the proper order.",
+          "code": "try {\n    Files.readString(Path.of(\"config.txt\"));\n} catch (NoSuchFileException e) {\n    logger.warning(\"Config file not found\");\n} catch (IOException e) {\n    logger.severe(\"Read error: \" + e);\n}",
+          "explanation": "Catch blocks must list more specific exceptions first. Placing Exception before a specific type causes a compile error. finally comes last.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "try {",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "    riskyMethod();",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "} catch (SpecificException e) {",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "} catch (Exception e) {",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "} finally {",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch25_03",
+      "courseId": "ch25",
+      "title": "Assertions",
+      "summary": "Learn about Java assertions (assert statement). Understand the assert statement syntax, how to enable/disable (-ea flag), and appropriate use cases (precondition/postcondition checking).",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "overview",
+          "title": "What Are Assertions?",
+          "body": "In this lesson, you will learn:\n\n- The assert statement syntax and usage\n- Enabling [[assertions]] (-ea option)\n- Where assertions should and should not be used\n\nLearn about assertions as a bug detection tool during development.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "rule",
+          "title": "Assert Statement Syntax",
+          "body": "The assert statement has two forms.\nForm 1: \"assert condition;\" — If the condition is false, an AssertionError without a message is thrown.\nForm 2: \"assert condition : errorMessage;\" — If the condition is false, an AssertionError with the specified message is thrown.\nAny expression can be specified as the error message, which is converted to a string using toString().\nThe condition expression must be of boolean type.\nAssertionError is a subclass of Error and should normally not be caught.",
+          "code": "int age = -5;\n\n// Form 1: condition only\nassert age >= 0;\n// If age is negative → AssertionError (no message)\n\n// Form 2: condition + message\nassert age >= 0 : \"Invalid age: \" + age;\n// If age is negative → AssertionError: Invalid age: -5\n\n// Specifying an expression as the error message\nassert age >= 0 : age;\n// AssertionError: -5",
+          "note": "A message can be specified after the colon (:) in the assert condition. This is a frequently tested syntax on the Gold exam.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "code",
+          "title": "Enabling and Disabling Assertions",
+          "body": "Assertions are disabled by default. To enable them, specify an option at JVM startup.\n-ea (or -enableassertions): Enables assertions.\n-da (or -disableassertions): Disables assertions.\nEnabling/disabling can be controlled on a per-package basis.\nSystem class assertions are enabled with -esa.",
+          "code": "// Command-line execution examples\n\n// Enable assertions for all classes\n// java -ea MainClass\n\n// Enable only for a specific class\n// java -ea:com.example.MyClass MainClass\n\n// Enable for a specific package and its subpackages\n// java -ea:com.example... MainClass\n\n// Assertion verification\npublic class AssertDemo {\n    public static void main(String[] args) {\n        int x = 10;\n        assert x > 0 : \"x should be positive\";\n        System.out.println(\"x = \" + x);\n        // Without -ea → normal output\n        // With -ea → AssertionError if x is 0 or less\n    }\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "point",
+          "title": "Appropriate Use Cases for Assertions",
+          "body": "Assertions can be used for precondition checks of [[methods]], but they are inappropriate for argument checks on public methods.\nFor public method argument checks, use exceptions like IllegalArgumentException.\nAssertions are appropriate for private method argument checks (since callers are limited to the class itself).\nThey are suitable for verifying postconditions — confirming that a method's result is as expected.\nThey can also be used for class invariant verification.\nThey are useful for verifying unreachable points in control flow (such as the default case in a [[switch statement]]).",
+          "code": "// Appropriate usage example\nprivate void setSpeed(int speed) {\n    assert speed >= 0 && speed <= 200 : \"Invalid speed: \" + speed;\n    this.speed = speed;\n}\n\n// Verifying unreachable code\nswitch (suit) {\n    case HEARTS: return Color.RED;\n    case DIAMONDS: return Color.RED;\n    case CLUBS: return Color.BLACK;\n    case SPADES: return Color.BLACK;\n    default: assert false : \"Unknown suit: \" + suit;\n}\n\n// Inappropriate usage (argument check in a public method)\npublic void withdraw(int amount) {\n    // assert amount > 0;  // NG: assert is inappropriate for public methods\n    if (amount <= 0) throw new IllegalArgumentException(); // OK\n}",
+          "note": "The reason not to use assert for public method argument checks is that the check is not performed when assertions are disabled.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: Assertions",
+          "body": "On the Gold exam, questions about whether assert statement syntax (message after the colon) is correct are common.\nThe assert condition must be boolean, and a void-returning method call cannot be used in the message part.\nAssertions should not be used in operations with side effects (since they are not executed when disabled).\nSpecifying a void-type method in the message part of an assert statement causes a [[compile]] error.\nRemember that AssertionError [[inherits]] from the Error class and is not checked.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_03_q1",
+          "lessonId": "ch25_03",
+          "type": "fourChoice",
+          "question": "Which of the following is a correct description about the use of assertions?",
+          "code": "public void process() {\n    Exception suppressed = null;\n    Resource r = acquire();\n    try {\n        r.use();\n    } catch (Exception e) {\n        suppressed = e;\n    } finally {\n        try { r.close(); }\n        catch (Exception e2) {\n            if (suppressed != null)\n                suppressed.addSuppressed(e2);\n        }\n    }\n}",
+          "explanation": "Assertions are disabled by default and are enabled by specifying the -ea option at JVM startup. When not enabled, assert statements are ignored. For public method argument checks, exceptions should be thrown instead of using assertions.",
+          "choices": [
+            {
+              "id": "ch25_03_q1_a",
+              "text": "Assertions are disabled by default and enabled with the -ea option",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_03_q1_b",
+              "text": "Assertions are enabled by default and disabled with the -da option",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_03_q1_c",
+              "text": "Assertions are ideal for argument checks in public methods",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_03_q1_d",
+              "text": "AssertionError is a subclass of Exception",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_03_q2",
+          "lessonId": "ch25_03",
+          "type": "fourChoice",
+          "question": "In which of the following scenarios is the use of assertions appropriate?",
+          "code": null,
+          "explanation": "Since private methods are called only from within the class, assertions are appropriate for precondition checks on their arguments. For public method argument checks, exceptions like IllegalArgumentException should be used. User input validation should always be checked, so assertions are inappropriate.",
+          "choices": [
+            {
+              "id": "ch25_03_q2_a",
+              "text": "Precondition check on a private method's arguments",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_03_q2_b",
+              "text": "Argument check on a public method",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_03_q2_c",
+              "text": "Validating input values from the user",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_03_q2_d",
+              "text": "Confirming a database connection",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_03_q3",
+          "lessonId": "ch25_03",
+          "type": "errorFind",
+          "question": "Select the error contained in the following code.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 5;\n        assert x > 0 : System.out.println(\"error\");\n        System.out.println(\"OK\");\n    }\n}",
+          "explanation": "A void-type expression cannot be used in the second expression (after the colon) of an assert statement. Since System.out.println() returns void, this results in a compile error. An expression that has a value, such as a string literal or variable, must be specified.",
+          "choices": [
+            {
+              "id": "ch25_03_q3_a",
+              "text": "A void-type expression (println) is used in the message part of the assert statement",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_03_q3_b",
+              "text": "The assert condition is of int type",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_03_q3_c",
+              "text": "assert statements cannot be used inside the main method",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_03_q3_d",
+              "text": "assert statements require a catch block",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch25_03_q4",
+          "lessonId": "ch25_03",
+          "type": "multiChoice",
+          "question": "Select all subclasses of RuntimeException.",
+          "code": null,
+          "explanation": "NullPointerException, ArrayIndexOutOfBoundsException, and ClassCastException are unchecked exceptions (RuntimeException). IOException and SQLException are checked exceptions.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "NullPointerException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "ArrayIndexOutOfBoundsException",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "IOException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "ClassCastException",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "SQLException",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 3,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch25_04",
+      "courseId": "ch25",
+      "title": "Multi-catch and Rethrow",
+      "summary": "Learn the details of Gold-level multi-catch syntax and exception rethrow patterns. Understand rethrowing with more specific types and the exception wrapping pattern.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "overview",
+          "title": "Multi-catch in Detail",
+          "body": "In this lesson, you will learn:\n\n- Multi-catch (catch(A | B e)) syntax and constraints\n- [[Type inference]] during rethrow (throw e)\n- Evolution of [[exception]] handling since Java 7\n\nMaster advanced exception handling techniques.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "rule",
+          "title": "Multi-catch Constraints",
+          "body": "Having an [[inheritance]] relationship between exception types specified in multi-catch causes a [[compile]] error.\nFor example, catch (IOException | Exception e) is invalid (IOException is a sub[[class]] of Exception).\nThe exception [[variable]] in a multi-catch is implicitly final and cannot be reassigned.\nThe exception variable in a single catch clause can be reassigned.\nThe type of the multi-catch exception variable is treated as the common parent type of the specified exception types.",
+          "code": "try {\n    // ...\n} catch (IOException | SQLException e) {\n    // OK: no inheritance relationship\n    // e = new IOException(); // Compile error: cannot reassign\n    System.out.println(e.getMessage());\n}\n\n// Compile error example\ntry {\n    // ...\n} catch (FileNotFoundException | IOException e) { // Error!\n    // FileNotFoundException is a subclass of IOException\n}\n\n// Single catch allows reassignment\ntry {\n    // ...\n} catch (IOException e) {\n    e = new IOException(\"wrapped\"); // OK\n}",
+          "note": "The fact that multi-catch variables are final is a frequently tested point. Make sure to remember it.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "code",
+          "title": "Exception Rethrow",
+          "body": "Since Java 7, the compiler can more precisely infer the type of an exception being rethrown within a catch block.\nEven when catching Exception in a catch clause, the [[method]]'s throws declaration can be more specific based on the types actually thrown in the try block.\nHowever, this type inference only works when the exception variable has not been reassigned.\nIf the exception variable is reassigned, the compiler can no longer perform accurate type inference.",
+          "code": "// Rethrow type inference since Java 7\npublic void process() throws IOException, SQLException {\n    try {\n        // May throw IOException or SQLException\n        callMethod();\n    } catch (Exception e) {\n        // e's type is Exception, but the compiler tracks the actual throw type\n        // Only IOException, SQLException need to be declared in throws\n        System.out.println(\"Error: \" + e.getMessage());\n        throw e; // Compiler treats this as a more specific type\n    }\n}\n\n// Type inference does not work with reassignment\npublic void process2() throws Exception { // Exception is required\n    try {\n        callMethod();\n    } catch (Exception e) {\n        e = new Exception(\"changed\"); // Reassignment\n        throw e; // Can only be inferred as Exception\n    }\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "point",
+          "title": "Exception Wrapping Pattern",
+          "body": "Exception wrapping is a pattern where a caught exception is wrapped in a different exception and rethrown.\nThe original exception is passed as a cause to the new exception's [[constructor]].\nThis allows using exceptions at the appropriate level of abstraction between layers while preserving the original exception information.\nThe original exception can be retrieved using the getCause() method.\nThis pattern is also very important in practice.",
+          "code": "public class ServiceException extends Exception {\n    public ServiceException(String msg, Throwable cause) {\n        super(msg, cause);\n    }\n}\n\npublic void processData() throws ServiceException {\n    try {\n        // Database operation\n        connectDB();\n    } catch (SQLException e) {\n        // Wrap SQLException in ServiceException\n        throw new ServiceException(\"Data processing error\", e);\n    }\n}\n\n// Retrieve the cause on the caller side\ntry {\n    processData();\n} catch (ServiceException e) {\n    System.out.println(e.getMessage()); // Data processing error\n    System.out.println(e.getCause());   // java.sql.SQLException: ...\n}",
+          "note": "Exception wrapping is an important pattern for preventing lower-layer implementation details from leaking to upper layers.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch25_04",
+          "sectionType": "tip",
+          "title": "Exam Prep: Multi-catch and Rethrow",
+          "body": "Multi-catch constraints (prohibition of inheritance relationships, finality of variables) are almost certainly tested.\nRemember that type inference during rethrow does not work when the exception variable has been reassigned.\nFor the exception wrapping pattern, understand that the original exception can be retrieved with getCause().\nThe initCause() method can also set the cause exception later (but only once).\nFamiliarize yourself with the pattern of processing order within catch blocks (log output → wrap → rethrow).",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch25_04_q1",
+          "lessonId": "ch25_04",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            try {\n                throw new RuntimeException(\"inner\");\n            } catch (RuntimeException e) {\n                throw new RuntimeException(\"outer\", e);\n            }\n        } catch (RuntimeException e) {\n            System.out.println(e.getMessage());\n            System.out.println(e.getCause().getMessage());\n        }\n    }\n}",
+          "explanation": "The \"inner\" exception is thrown in the inner try and caught. A new \"outer\" exception is created with the original \"inner\" exception set as the cause, and rethrown. In the outer catch, getMessage() of the received exception returns \"outer\", and getCause().getMessage() returns \"inner\".",
+          "choices": [
+            {
+              "id": "ch25_04_q1_a",
+              "text": "outer and inner",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_04_q1_b",
+              "text": "inner and outer",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_04_q1_c",
+              "text": "outer and NullPointerException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_04_q1_d",
+              "text": "inner and null",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch25_04_q2",
+          "lessonId": "ch25_04",
+          "type": "fourChoice",
+          "question": "Which of the following is a correct description about multi-catch syntax?",
+          "code": null,
+          "explanation": "The exception variable in a multi-catch is implicitly final, so it cannot be reassigned. Specifying exception types with an inheritance relationship causes a compile error. Multi-catch has been available since Java 7.",
+          "choices": [
+            {
+              "id": "ch25_04_q2_a",
+              "text": "The multi-catch exception variable is implicitly final and cannot be reassigned",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_04_q2_b",
+              "text": "The multi-catch exception variable can be reassigned",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_04_q2_c",
+              "text": "Exception types with an inheritance relationship can be specified in multi-catch",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_04_q2_d",
+              "text": "Multi-catch was introduced in Java 5",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch25_04_q3",
+          "lessonId": "ch25_04",
+          "type": "fillBlank",
+          "question": "In the exception wrapping pattern, the ___ method is used to retrieve the original exception.",
+          "code": null,
+          "explanation": "In the exception wrapping pattern, the original exception is passed as a cause to the new exception's constructor. The wrapped original exception can be retrieved using the getCause() method.",
+          "choices": [
+            {
+              "id": "ch25_04_q3_a",
+              "text": "getCause()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch25_04_q3_b",
+              "text": "getSuppressed()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch25_04_q3_c",
+              "text": "getOriginal()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch25_04_q3_d",
+              "text": "getSource()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

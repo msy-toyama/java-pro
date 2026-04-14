@@ -28,11 +28,31 @@ final class PracticeService {
 
     // MARK: - ロード
 
+    /// 言語切替時にキャッシュをクリアして再ロードする。
+    func reloadForLanguageChange() {
+        setupGuide = []
+        practiceChapters = []
+        exerciseIndex = [:]
+        isLoaded = false
+        loadError = nil
+        loadPracticeData()
+    }
+
     /// バンドル内の practice_exercises.json を読み込む。
     func loadPracticeData() {
         guard !isLoaded else { return }
 
-        guard let url = Bundle.main.url(forResource: "practice_exercises", withExtension: "json") else {
+        // 言語に応じたファイルを選択（英語版があればそちらを使用）
+        let lang = LanguageManager.shared.currentLanguage
+        let fileName: String
+        if lang == .english,
+           Bundle.main.url(forResource: "practice_exercises_en", withExtension: "json") != nil {
+            fileName = "practice_exercises_en"
+        } else {
+            fileName = "practice_exercises"
+        }
+
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
             let msg = "practice_exercises.json が見つかりません"
             assertionFailure(msg)
             loadError = msg

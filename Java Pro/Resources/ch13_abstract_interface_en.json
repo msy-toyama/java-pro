@@ -1,0 +1,960 @@
+{
+  "courseId": "ch13",
+  "lessons": [
+    {
+      "id": "ch13_01",
+      "courseId": "ch13",
+      "title": "Basics of Abstract Classes",
+      "summary": "Learn the basic syntax of abstract classes and abstract methods using the abstract keyword",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch13_01",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The definition and constraints of abstract classes\n- The mechanism of forcing child classes to implement abstract [[methods]]\n- Why **abstract classes** cannot be [[instantiated]]\n\nLet's understand the role of [[abstract classes]] as \"common blueprints.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch13_01",
+          "sectionType": "rule",
+          "title": "Rules for Abstract Classes and Abstract Methods",
+          "body": "**Abstract classes** and abstract methods follow these rules.\n\n| Rule |\n| --- |\n| Abstract classes are declared with the abstract keyword. |\n| Abstract methods have no method body ({}) and end with a semicolon. |\n| Abstract classes cannot be instantiated with new. Attempting to do so causes a compilation error. |\n| A class that contains even one abstract method must be declared as abstract. |\n| A concrete class (non-abstract class) that extends an abstract class must override and implement all abstract methods. |\n| 6 | Abstract classes themselves can have concrete methods (regular methods) and fields. |",
+          "code": null,
+          "note": "abstract and final cannot be specified together. final prohibits [[overriding]] and [[inheritance]], while abstract requires them — a contradiction.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch13_01",
+          "sectionType": "code",
+          "title": "Declaring and Extending Abstract Classes",
+          "body": "Let's look at a basic example of declaring classes and methods with the abstract keyword and implementing the abstract method in a subclass.\nThe abstract class Shape defines an abstract method area(), and the Circle class implements the specific calculation.",
+          "code": "// Shapeクラスの定義\nabstract class Shape {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n\n    // 抽象メソッド：サブクラスが実装する\n    abstract double area();\n\n    // 具象メソッド：そのまま継承される\n    // printInfoメソッドの定義\n    void printInfo() {\n        System.out.println(name + \"の面積: \" + area());\n    }\n}\n\n// Circleクラスの定義\nclass Circle extends Shape {\n    double radius;\n\n    Circle(double radius) {\n        super(\"円\");\n        this.radius = radius;\n    }\n\n    @Override\n    // areaメソッドの定義\n    double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        // Shape s = new Shape(\"図形\"); // コンパイルエラー！\n        Shape s = new Circle(5.0);\n        s.printInfo();  // 円の面積: 78.53981633974483\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch13_01",
+          "sectionType": "tip",
+          "title": "Abstract Classes Extending Abstract Classes",
+          "body": "A class that extends an abstract class can itself be declared as abstract.\nIn that case, it does not need to implement the parent's abstract methods. The implementation obligation is passed on to the eventual concrete class.\n\nFor example, you can have a multi-level inheritance like Shape → ClosedShape → Rectangle.\nIf ClosedShape is abstract, the implementation of Shape.area() can be deferred to Rectangle.\n\nThis mechanism enables flexible class designs with responsibilities distributed across multiple levels.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch13_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Abstract classes are declared with the abstract keyword and cannot be directly instantiated\n- Abstract methods have no method body and force subclasses to provide an implementation\n- A class containing abstract methods must be declared abstract\n- A concrete subclass must implement all abstract methods or a [[compilation]] error occurs\n- abstract and final cannot be used together",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch13_01_q1",
+          "lessonId": "ch13_01",
+          "type": "fourChoice",
+          "question": "Which of the following statements about abstract classes is correct?",
+          "code": null,
+          "explanation": "Abstract classes can contain both abstract methods (methods without a body) and concrete methods (methods with a body). Abstract classes cannot be instantiated with new, and specifying both abstract and final causes a compilation error. It is also possible to define an abstract class with no abstract methods.",
+          "choices": [
+            {
+              "id": "ch13_01_q1_a",
+              "text": "Only abstract methods can be defined in an abstract class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_01_q1_b",
+              "text": "Both abstract methods and concrete methods can be defined in an abstract class",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_01_q1_c",
+              "text": "Abstract classes can be instantiated with the new keyword",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_01_q1_d",
+              "text": "abstract and final can be specified together on an abstract class",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch13_01_q2",
+          "lessonId": "ch13_01",
+          "type": "fillBlank",
+          "question": "To declare an abstract class, you add the \"___\" keyword before the class keyword.",
+          "code": null,
+          "explanation": "To declare an abstract class, you add the abstract keyword before class. Example: abstract class Shape { ... }. Adding abstract prevents the class from being directly instantiated.",
+          "choices": [
+            {
+              "id": "ch13_01_q2_a",
+              "text": "abstract",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_01_q2_b",
+              "text": "virtual",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_01_q2_c",
+              "text": "interface",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_01_q2_d",
+              "text": "final",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch13_01_q3",
+          "lessonId": "ch13_01",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. Select the correct cause of the error.",
+          "code": "abstract class Animal {\n    abstract void speak();\n}\n\nclass Dog extends Animal {\n    // speak()を実装していない\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.speak();\n    }\n}",
+          "explanation": "The Dog class does not implement (override) the abstract method speak() from the abstract class Animal. A non-abstract subclass must implement all abstract methods from its parent class, or a compilation error occurs.",
+          "choices": [
+            {
+              "id": "ch13_01_q3_a",
+              "text": "Dog class does not implement Animal's abstract method speak()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_01_q3_b",
+              "text": "A Dog instance cannot be assigned to an Animal-type variable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_01_q3_c",
+              "text": "An abstract class requires a constructor",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_01_q3_d",
+              "text": "void cannot be specified for an abstract method",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch13_02",
+      "courseId": "ch13",
+      "title": "Utilizing Abstract Classes",
+      "summary": "Learn practical uses of abstract classes such as the Template Method pattern and constructors",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch13_02",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- Designing with the **Template Method pattern**\n- How **abstract classes** provide a \"skeleton of operations\"\n- Designing customization points with hook methods\n\nLet [[abstract classes]] demonstrate their true value through practical design patterns.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch13_02",
+          "sectionType": "rule",
+          "title": "Rules of the Template Method Pattern",
+          "body": "The **Template Method pattern** is one of the GoF design patterns and is structured as follows.\n\n| Rule |\n| --- |\n| A final concrete method (the template method) is defined in the abstract class to fix the flow of operations. |\n| The template method calls abstract methods within it. |\n| Subclasses implement the abstract methods to customize only parts of the process. |\n\nBy making the template method final, you prevent sub[[classes]] from modifying the flow of operations.\nThis pattern enables designs that avoid duplicating common logic while delegating only the variable parts to subclasses.",
+          "code": null,
+          "note": "The Template Method pattern is also known as the \"Hollywood Principle\" (Don't call us, we'll call you).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch13_02",
+          "sectionType": "code",
+          "title": "Template Method Pattern Implementation Example",
+          "body": "This example defines the steps for preparing a beverage using a template method, delegating the specific ingredient processing to subclasses.\nThe prepare() method controls the flow of operations, and brew() and addCondiments() are implemented by subclasses.",
+          "code": "// Beverageクラスの定義\nabstract class Beverage {\n    // テンプレートメソッド：処理の流れを定義\n    final void prepare() {\n        boilWater();\n        brew();\n        pourInCup();\n        addCondiments();\n    }\n\n    // boilWaterメソッドの定義\n    void boilWater() {\n        System.out.println(\"お湯を沸かす\");\n    }\n\n    // pourInCupメソッドの定義\n    void pourInCup() {\n        System.out.println(\"カップに注ぐ\");\n    }\n    abstract void brew();           // サブクラスが実装\n    abstract void addCondiments();  // サブクラスが実装\n}\n\n// Teaクラスの定義\nclass Tea extends Beverage {\n    @Override\n    void brew() {\n        System.out.println(\"茶葉を蒸らす\");\n    }\n    @Override\n    void addCondiments() {\n        System.out.println(\"レモンを添える\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Beverage tea = new Tea();\n        tea.prepare();\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch13_02",
+          "sectionType": "tip",
+          "title": "Structure of the Template Method Pattern",
+          "body": "The Template Method pattern defines the \"skeleton\" of an operation in the parent class and delegates the \"details\" to child classes.\n\n| Element | Location | Role |\n|---|---|---|\n| Template method | Parent class (final) | Defines the flow of operations |\n| Abstract method | Parent class (abstract) | Must be implemented by child classes |\n| Hook method | Parent class (empty implementation) | Optionally implemented by child classes |\n\nThis pattern is also widely used in the internal design of frameworks.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch13_02",
+          "sectionType": "rule",
+          "title": "Constructors in Abstract Classes",
+          "body": "**Abstract classes** cannot be directly [[instantiated]], but they can define [[constructors]].\nThese constructors are invoked from subclass constructors via super().\n\nThe primary uses of abstract class constructors are as follows.\n| Use |\n| --- |\n| Initializing common fields |\n| Validation (argument checking) |\n| Sharing initialization logic |\n\nIf an abstract class has a parameterized constructor and no default constructor, subclasses must call super(arguments).\nThis point is frequently tested on the Java Silver exam.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch13_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- The Template Method pattern fixes the flow of operations and delegates parts to subclasses\n- Making the template method final prevents modification of the flow\n- Abstract classes can define constructors, which are called from subclasses via super()\n- Combining abstract and concrete methods enables flexible designs\n- Avoids duplicating common logic and improves code reusability",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch13_02_q1",
+          "lessonId": "ch13_02",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "abstract class Greeting {\n    String language;\n\n    Greeting(String language) {\n        this.language = language;\n        System.out.println(\"言語: \" + language);\n    }\n\n    abstract void sayHello();\n}\n\nclass JapaneseGreeting extends Greeting {\n    JapaneseGreeting() {\n        super(\"日本語\");\n    }\n\n    @Override\n    void sayHello() {\n        System.out.println(\"こんにちは\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Greeting g = new JapaneseGreeting();\n        g.sayHello();\n    }\n}",
+          "explanation": "When the JapaneseGreeting constructor is called, super(\"日本語\") first executes the parent class Greeting's constructor, printing \"言語: 日本語\". Then g.sayHello() prints \"こんにちは\". The abstract class constructor is executed via super() during subclass instance creation.",
+          "choices": [
+            {
+              "id": "ch13_02_q1_a",
+              "text": "言語: 日本語\nこんにちは",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_02_q1_b",
+              "text": "こんにちは\n言語: 日本語",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_02_q1_c",
+              "text": "こんにちは",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_02_q1_d",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch13_02_q2",
+          "lessonId": "ch13_02",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes a \"template method\" in the Template Method pattern?",
+          "code": null,
+          "explanation": "A template method is a concrete method that defines the flow of operations (the skeleton of an algorithm). It is typically declared final to prevent subclasses from changing the flow. The template method calls abstract methods within it, delegating specific processing to subclasses.",
+          "choices": [
+            {
+              "id": "ch13_02_q2_a",
+              "text": "A method declared as abstract where subclasses determine the flow of operations",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_02_q2_b",
+              "text": "A concrete method that defines the flow of operations, typically declared final",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_02_q2_c",
+              "text": "A method declared as static that can be called from anywhere",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_02_q2_d",
+              "text": "A method declared as private that cannot be called externally",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch13_02_q3",
+          "lessonId": "ch13_02",
+          "type": "fourChoice",
+          "question": "Which of the following statements about constructors in abstract classes is correct?",
+          "code": null,
+          "explanation": "Although abstract classes cannot be directly instantiated, constructors can still be defined in them. These constructors are called from subclass constructors using super() and are used for tasks such as initializing common fields.",
+          "choices": [
+            {
+              "id": "ch13_02_q3_a",
+              "text": "Constructors cannot be defined in an abstract class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_02_q3_b",
+              "text": "An abstract class constructor can be called directly from the main method",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_02_q3_c",
+              "text": "An abstract class constructor is called from subclasses via super()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch13_02_q3_d",
+              "text": "An abstract class constructor must be declared with abstract",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch13_02_q4",
+          "lessonId": "ch13_02",
+          "type": "codeComplete",
+          "question": "Complete the code for a class that implements an interface.",
+          "code": null,
+          "explanation": "Interfaces are implemented using implements, and the @Override annotation is added when overriding abstract methods.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class Circle __BLANK_1__ Shape {\n    __BLANK_2__\n    public double area() {\n        return Math.PI * radius * radius;\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Implementation",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "implements",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "extends",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "abstract",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Annotation",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "@Override",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "@Deprecated",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "@FunctionalInterface",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch13_03",
+      "courseId": "ch13",
+      "title": "Basics of Interfaces",
+      "summary": "Learn how to define and implement interfaces using the interface keyword and implements",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch13_03",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The syntax for defining **interfaces** (interface)\n- Implementing multiple [[interfaces]] with implements\n- The implicit rules of interfaces (public abstract)\n\nInterfaces are a mechanism for defining a contract of \"what can be done.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch13_03",
+          "sectionType": "rule",
+          "title": "Basic Rules of Interfaces",
+          "body": "**Interfaces** have the following important rules.\n\n| Rule |\n| --- |\n| Interfaces are declared with the interface keyword. |\n| Interface methods are implicitly public abstract (prior to Java 8). |\n| Interface fields are implicitly public static final (constants only). |\n| Classes implement interfaces using the implements keyword. |\n| Implementing classes must implement all abstract methods of the interface. |\n| A single class can implement multiple interfaces (comma-separated). |\n| 7 | Interfaces can extend other interfaces using extends. |",
+          "code": null,
+          "note": "Interfaces are implicitly abstract, so the abstract keyword can be omitted (adding it is also fine).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch13_03",
+          "sectionType": "code",
+          "title": "Defining and Implementing Interfaces",
+          "body": "Here is a basic example of defining interfaces and implementing them in a [[class]].\nThe Document class simultaneously implements two interfaces, Printable and Resizable.\nThis expresses that Document has two capabilities: \"can be printed\" and \"can be resized.\"",
+          "code": "// Printableインターフェースの定義\ninterface Printable {\n    void print();  // public abstractが暗黙的に付く\n}\n\n// Resizableインターフェースの定義\ninterface Resizable {\n    void resize(int width, int height);\n}\n\n// 複数のインターフェースを実装\n// Documentクラスの定義\nclass Document implements Printable, Resizable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n    @Override\n    // printメソッドの定義\n    public void print() {\n        System.out.println(\"印刷: \" + content);\n    }\n    @Override\n    // resizeメソッドの定義\n    public void resize(int width, int height) {\n        System.out.println(\"サイズ変更: \" + width + \"x\" + height);\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Document doc = new Document(\"レポート\");\n        doc.print();                // 印刷: レポート\n        doc.resize(800, 600);       // サイズ変更: 800x600\n\n        Printable p = doc;          // インターフェース型で参照\n        p.print();                  // 印刷: レポート\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch13_03",
+          "sectionType": "tip",
+          "title": "Interface Constants and Method Modifiers",
+          "body": "Fields defined in an interface are automatically public static final.\nTherefore, they must be initialized and their values cannot be changed later.\n\nAlso, abstract [[methods]] of an interface are implicitly public.\nWhen [[overriding]] them in an implementing class, you must explicitly specify public.\nIf you omit public, it narrows the [[access modifier]], causing a [[compilation]] error.\nPay attention to this rule as it is frequently tested on the Java Silver exam.",
+          "code": null,
+          "note": "\"int MAX = 100;\" inside an interface means the same as \"public static final int MAX = 100;\".",
+          "order": 4
+        },
+        {
+          "lessonId": "ch13_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Interfaces are declared with the interface keyword and implemented with implements\n- Methods are implicitly public abstract; fields are implicitly public static final\n- A single class can implement multiple interfaces\n- Implementing classes must override all abstract methods with public access\n- Interface-type [[variables]] can reference implementing class [[instances]] ([[polymorphism]])",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch13_03_q1",
+          "lessonId": "ch13_03",
+          "type": "fourChoice",
+          "question": "What is the correct combination of modifiers that are implicitly applied to fields defined in a Java interface?",
+          "code": null,
+          "explanation": "Fields defined in an interface are implicitly public static final. In other words, interface fields are always public constants that must be initialized and cannot be changed afterward.",
+          "choices": [
+            {
+              "id": "ch13_03_q1_a",
+              "text": "private static final",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_03_q1_b",
+              "text": "public static final",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_03_q1_c",
+              "text": "protected abstract",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_03_q1_d",
+              "text": "public abstract",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch13_03_q2",
+          "lessonId": "ch13_03",
+          "type": "fillBlank",
+          "question": "To implement an interface in a class, you use the \"___\" keyword.",
+          "code": null,
+          "explanation": "To implement an interface in a class, you use the implements keyword. Example: class Dog implements Animal { ... }. extends is used for class inheritance and interface-to-interface inheritance, while implements is used for implementing interfaces.",
+          "choices": [
+            {
+              "id": "ch13_03_q2_a",
+              "text": "implements",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_03_q2_b",
+              "text": "extends",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_03_q2_c",
+              "text": "inherits",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_03_q2_d",
+              "text": "uses",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch13_03_q3",
+          "lessonId": "ch13_03",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "interface Greetable {\n    void greet();\n}\n\ninterface Farewell {\n    void sayBye();\n}\n\nclass Person implements Greetable, Farewell {\n    @Override\n    public void greet() {\n        System.out.println(\"やあ！\");\n    }\n\n    @Override\n    public void sayBye() {\n        System.out.println(\"さようなら！\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Greetable g = new Person();\n        g.greet();\n        Farewell f = (Farewell) g;\n        f.sayBye();\n    }\n}",
+          "explanation": "The Person class implements both Greetable and Farewell. A Person instance is assigned to the Greetable-type variable g, and greet() prints \"やあ！\". Since the actual object of g is a Person, it can be cast to Farewell, and sayBye() prints \"さようなら！\".",
+          "choices": [
+            {
+              "id": "ch13_03_q3_a",
+              "text": "やあ！\nさようなら！",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_03_q3_b",
+              "text": "やあ！",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_03_q3_c",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_03_q3_d",
+              "text": "A ClassCastException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch13_04",
+      "courseId": "ch13",
+      "title": "Default Methods and Static Methods",
+      "summary": "Learn about default methods and static methods in interfaces introduced in Java 8 and later",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch13_04",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- default methods: **interface** methods with an implementation\n- [[Static methods]]: Utility methods for [[interfaces]]\n- How to add methods to existing interfaces after the fact\n\nLet's understand the important evolution from Java 8 onward.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch13_04",
+          "sectionType": "rule",
+          "title": "Rules for Default Methods and Static Methods",
+          "body": "**Default methods** and static methods each have their own rules.\n\n[Default Methods]\n| Rule |\n| --- |\n| Declared with the default keyword and include a method body. |\n| Implicitly public. |\n| Can be overridden by implementing classes or used as-is. |\n| If multiple interfaces have default methods with the same name, the implementing class must explicitly override it. |\n\n[Static Methods]\n| Rule |\n| --- |\n| Declared with the static keyword. |\n| Called as InterfaceName.methodName(). |\n| Not inherited by implementing classes. |\n| 4 | Implicitly public. |",
+          "code": null,
+          "note": "Starting from Java 9, private methods can also be defined in **interfaces**, allowing code sharing between **default methods**.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch13_04",
+          "sectionType": "code",
+          "title": "Default Method and Static Method Examples",
+          "body": "Here is an example of an interface definition that includes default and static methods.\nThe default method log() can be used as-is by implementing [[classes]], and the static method createTimestamp() is called using the interface name.",
+          "code": "// Loggerインターフェースの定義\ninterface Logger {\n    void write(String message);  // 抽象メソッド\n\n    // デフォルトメソッド\n    default void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n        write(message);\n    }\n\n    // staticメソッド\n    // createTimestampメソッドの定義\n    static String createTimestamp() {\n        return java.time.LocalDateTime.now().toString();\n    }\n}\n\n// ConsoleLoggerクラスの定義\nclass ConsoleLogger implements Logger {\n    @Override\n    // writeメソッドの定義\n    public void write(String message) {\n        System.out.println(\"Console: \" + message);\n    }\n    // log()はオーバーライドしなくても使える\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        ConsoleLogger logger = new ConsoleLogger();\n        logger.log(\"テスト\");\n        // [LOG] テスト\n        // Console: テスト\n\n        // 変数の宣言と初期化\n        String ts = Logger.createTimestamp(); // static呼び出し\n        System.out.println(ts);\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch13_04",
+          "sectionType": "tip",
+          "title": "The Diamond Inheritance Problem with Default Methods",
+          "body": "When two interfaces have default methods with the same signature, resolution is required in the implementing class.\n\n- If the same default methods conflict → [[overriding]] in the implementing class is mandatory\n- InterfaceA.super.method() can be used to invoke a specific default implementation\n- A class's method takes precedence over an interface's default method\n\nThis is a frequently tested topic on exams.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch13_04",
+          "sectionType": "rule",
+          "title": "Resolving the Diamond Problem",
+          "body": "When two interfaces have default methods with the same name, it becomes ambiguous which one the implementing class should use.\nThis is called the \"Diamond Problem.\"\n\nIn Java, the implementing class must explicitly override the method in question, or a [[compilation]] error occurs.\nTo call a specific interface's default method within the override, use the syntax: \"InterfaceName.super.methodName()\".\n\nExample: Write InterfaceA.super.hello().\nMake sure to remember this resolution method as it frequently appears on the Java Silver exam.",
+          "code": null,
+          "note": "When a class method and an interface default method conflict, the class method always takes precedence (class-wins rule).",
+          "order": 5
+        },
+        {
+          "lessonId": "ch13_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Default methods are declared with the default keyword and have an implementation\n- Static methods are called as InterfaceName.methodName() and are not [[inherited]]\n- When multiple interfaces have the same default method, the implementing class must explicitly override it\n- The Diamond Problem is resolved with \"InterfaceName.super.methodName()\"\n- A class method takes precedence over an interface default method",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch13_04_q1",
+          "lessonId": "ch13_04",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "interface A {\n    default void hello() {\n        System.out.println(\"A\");\n    }\n}\n\ninterface B {\n    default void hello() {\n        System.out.println(\"B\");\n    }\n}\n\nclass C implements A, B {\n    @Override\n    public void hello() {\n        A.super.hello();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        C c = new C();\n        c.hello();\n    }\n}",
+          "explanation": "Since both interfaces A and B have a default method hello(), class C explicitly overrides it. Inside the override, A.super.hello() is called, so interface A's default method is executed and \"A\" is printed.",
+          "choices": [
+            {
+              "id": "ch13_04_q1_a",
+              "text": "A",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_04_q1_b",
+              "text": "B",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_04_q1_c",
+              "text": "A\nB",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_04_q1_d",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch13_04_q2",
+          "lessonId": "ch13_04",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes static methods in interfaces?",
+          "code": null,
+          "explanation": "Interface static methods are called in the form InterfaceName.methodName(). They are not inherited by implementing classes, so they cannot be called using the implementing class's instance or class name. This differs from static methods in classes.",
+          "choices": [
+            {
+              "id": "ch13_04_q2_a",
+              "text": "They are inherited by implementing classes and can be called using the implementing class name",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_04_q2_b",
+              "text": "Called as InterfaceName.methodName() and not inherited by implementing classes",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_04_q2_c",
+              "text": "They can be overridden by implementing classes",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_04_q2_d",
+              "text": "They are implicitly protected",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch13_04_q3",
+          "lessonId": "ch13_04",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. Select the correct cause of the error.",
+          "code": "interface X {\n    default void show() {\n        System.out.println(\"X\");\n    }\n}\n\ninterface Y {\n    default void show() {\n        System.out.println(\"Y\");\n    }\n}\n\nclass Z implements X, Y {\n    // show()をオーバーライドしていない\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Z z = new Z();\n        z.show();\n    }\n}",
+          "explanation": "Both interfaces X and Y have a default method show() with the same name. Since it is ambiguous which show() class Z should use, an explicit override is required — otherwise a compilation error occurs. This is the Diamond Problem.",
+          "choices": [
+            {
+              "id": "ch13_04_q3_a",
+              "text": "Conflicting default methods with the same name from two interfaces require an override",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_04_q3_b",
+              "text": "Default methods cannot be defined in interfaces",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch13_04_q3_c",
+              "text": "A single class cannot implement two interfaces",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_04_q3_d",
+              "text": "show() cannot be called on a Z-type variable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch13_04_q4",
+          "lessonId": "ch13_04",
+          "type": "multiChoice",
+          "question": "Select all correct statements about interfaces in Java 8 and later.",
+          "code": null,
+          "explanation": "Starting from Java 8, interfaces can define default methods (with implementations) and static methods. From Java 9 onward, private methods are also allowed. However, interfaces cannot have instance fields (non-static variables). Only constants (public static final) can be declared.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch13_04_q4_a",
+              "text": "Default methods can be defined",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_04_q4_b",
+              "text": "Static methods can be defined",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_04_q4_c",
+              "text": "Instance fields can be declared",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_04_q4_d",
+              "text": "Private methods can be defined (Java 9+)",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch13_05",
+      "courseId": "ch13",
+      "title": "Abstract Classes vs. Interfaces: When to Use Which",
+      "summary": "Understand the differences between abstract classes and interfaces and learn when to use each",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch13_05",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The clear differences between **abstract classes** and **interfaces**\n- Appropriate selection criteria (IS-A relationship vs. CAN-DO relationship)\n- Practical designs that combine both\n\nThe goal is to be able to make informed design decisions.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch13_05",
+          "sectionType": "rule",
+          "title": "Differences Between Abstract Classes and Interfaces",
+          "body": "The main differences between **abstract classes** and **interfaces** are as follows.\n\n[[[Abstract Class]]]\n- Uses extends for [[inheritance]] (single inheritance only)\n- Can have [[constructors]]\n- Can have [[instance]] fields (state)\n- [[Access modifiers]] can be freely specified (public/protected/private)\n- Can mix concrete [[methods]] and abstract methods\n\n[[[Interface]]]\n- Uses implements for implementation (multiple implementation possible)\n- Cannot have constructors\n- Fields are public static final (constants only)\n- Methods are implicitly public\n- Since Java 8, default methods and [[static methods]] are also allowed",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch13_05",
+          "sectionType": "rule",
+          "title": "IS-A Relationship and CAN-DO Relationship",
+          "body": "The following concepts are widely used as design guidelines.\n\n[IS-A Relationship → Abstract Class]\nUse when representing a taxonomic relationship such as \"a Dog IS-A Animal\" or \"a Circle IS-A Shape.\"\nSuitable as a base for groups of [[classes]] that share common state (fields) and common behavior (concrete methods).\n\n[CAN-DO Relationship → Interface]\nUse when representing a capability or functionality such as \"can be compared ([[Comparable]])\" or \"can be [[serialized]] ([[Serializable]])\"\nCan grant shared capabilities to classes from different inheritance hierarchies.\n\nIn practice, it is common to use abstract classes to provide shared implementations and interfaces to define shared contracts.",
+          "code": null,
+          "note": "The AbstractList class in the Java standard library is a good example of an abstract class that implements the List interface.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch13_05",
+          "sectionType": "code",
+          "title": "Combining Abstract Classes and Interfaces",
+          "body": "In real-world design, abstract classes and interfaces are often used together.\nIn the following example, the Measurable interface defines measurement capability, and the abstract class Shape implements common shape functionality.",
+          "code": "// Measurableインターフェースの定義\ninterface Measurable {\n    double getMeasure();\n}\n\n// Shapeクラスの定義\nabstract class Shape implements Measurable {\n    String name;\n\n    Shape(String name) {\n        this.name = name;\n    }\n    abstract double area();\n\n    @Override\n    // getMeasureメソッドの定義\n    public double getMeasure() {\n        return area();  // 面積を測定値として返す\n    }\n    @Override\n    // toStringメソッドの定義\n    public String toString() {\n        return name + \"(面積: \" + area() + \")\";\n    }\n}\n\n// Rectangleクラスの定義\nclass Rectangle extends Shape {\n    double width, height;\n\n    Rectangle(double w, double h) {\n        super(\"長方形\");\n        this.width = w;\n        this.height = h;\n    }\n    @Override\n    double area() {\n        return width * height;\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Rectangle(3, 4);\n        System.out.println(s);               // 長方形(面積: 12.0)\n        System.out.println(s.getMeasure());   // 12.0\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch13_05",
+          "sectionType": "tip",
+          "title": "Decision Flow for Choosing Between Them",
+          "body": "Decision flow when in doubt:\n\n1. Is there an \"IS-A\" relationship? → Consider an abstract class\n2. Are common fields or constructors needed? → Abstract class\n3. Want to give the same capability to multiple types? → Interface\n4. Is **multiple implementation** needed? → Interface (Java only supports single inheritance)\n\nIn practice, the general approach is \"interfaces by default; abstract classes when there is a lot of shared implementation.\"",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch13_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Use abstract classes for IS-A relationships (taxonomy) and interfaces for CAN-DO relationships (capabilities)\n- Abstract classes can hold state (fields), while interfaces can only hold constants\n- Abstract classes support single inheritance; interfaces support multiple implementation\n- Comparable, Serializable, and Iterable are representative interfaces\n- Combining abstract classes and interfaces is a practical design approach",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch13_05_q1",
+          "lessonId": "ch13_05",
+          "type": "fourChoice",
+          "question": "What is the most appropriate design approach when you want to give various types of objects a common comparison capability?",
+          "code": null,
+          "explanation": "When you want to give a common capability (CAN-DO relationship) to classes from different inheritance hierarchies, an interface is appropriate. Java's Comparable interface is exactly this use case. Abstract classes have the single-inheritance constraint, making them unsuitable for classes that already extend another class.",
+          "choices": [
+            {
+              "id": "ch13_05_q1_a",
+              "text": "Implement a comparison method individually in every class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_05_q1_b",
+              "text": "Define the comparison capability as an interface and implement it in each class",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_05_q1_c",
+              "text": "Create a common abstract class and have all classes inherit from it",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_05_q1_d",
+              "text": "Create a utility class with static methods",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch13_05_q2",
+          "lessonId": "ch13_05",
+          "type": "reorder",
+          "question": "Arrange the following code fragments in the correct order to complete a Sparrow class that extends the abstract class Bird, which implements the interface Flyable.",
+          "code": null,
+          "explanation": "First, the Flyable interface is defined. Then the abstract class Bird implements Flyable. The Bird class has a constructor and fly() implementation, and declares abstract void sing(). Finally, the concrete class Sparrow extends Bird and implements sing().",
+          "choices": [
+            {
+              "id": "ch13_05_q2_a",
+              "text": "interface Flyable { void fly(); }",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch13_05_q2_b",
+              "text": "abstract class Bird implements Flyable {",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_05_q2_c",
+              "text": "    public void fly() { System.out.println(\"飛ぶ\"); }\n    abstract void sing(); }",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch13_05_q2_d",
+              "text": "class Sparrow extends Bird {\n    void sing() { System.out.println(\"チュンチュン\"); } }",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch13_05_q2_a",
+            "ch13_05_q2_b",
+            "ch13_05_q2_c",
+            "ch13_05_q2_d"
+          ],
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch13_05_q3",
+          "lessonId": "ch13_05",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "interface Drawable {\n    default void draw() {\n        System.out.println(\"描画\");\n    }\n}\n\nabstract class Widget {\n    void draw() {\n        System.out.println(\"ウィジェット描画\");\n    }\n}\n\nclass Button extends Widget implements Drawable {\n    // draw()をオーバーライドしていない\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Button b = new Button();\n        b.draw();\n    }\n}",
+          "explanation": "The concrete method draw() from the Widget class and the default method draw() from the Drawable interface conflict. However, in Java, the \"class-wins rule\" means the class method takes precedence over the interface default method. Therefore, Widget's draw() is executed and \"ウィジェット描画\" is printed.",
+          "choices": [
+            {
+              "id": "ch13_05_q3_a",
+              "text": "描画",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch13_05_q3_b",
+              "text": "ウィジェット描画",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch13_05_q3_c",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch13_05_q3_d",
+              "text": "描画\nウィジェット描画",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

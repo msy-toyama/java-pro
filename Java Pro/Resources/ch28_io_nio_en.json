@@ -1,0 +1,940 @@
+{
+  "courseId": "ch28",
+  "lessons": [
+    {
+      "id": "ch28_01",
+      "courseId": "ch28",
+      "title": "Traditional I/O",
+      "summary": "Learn the hierarchical structure of byte streams centered around Java's InputStream/OutputStream. Understand how to use FileInputStream/FileOutputStream and BufferedReader/BufferedWriter.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "overview",
+          "title": "Java I/O Overview",
+          "body": "In this lesson, you will learn:\n\n- The basics of [[InputStream]] and [[OutputStream]] (byte streams)\n- How to use FileInputStream / FileOutputStream\n- How to improve I/O performance with BufferedStream\n\nYou will learn the fundamentals of reading and writing files.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "rule",
+          "title": "InputStream / OutputStream Hierarchy",
+          "body": "InputStream is the abstract base [[class]] for byte input, centered around the read() [[method]].\nOutputStream is the abstract base class for byte output, centered around the write() method.\nKey subclasses include FileInputStream, FileOutputStream, ByteArrayInputStream, and ByteArrayOutputStream.\nBufferedInputStream / BufferedOutputStream improve I/O efficiency through buffering.\nDataInputStream / DataOutputStream provide reading and writing of [[primitive types]].\nObjectInputStream / ObjectOutputStream are used for object serialization and deserialization.",
+          "code": null,
+          "note": "Remember that InputStream/OutputStream work at the byte level, while Reader/Writer work at the character level.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "code",
+          "title": "Using FileInputStream / FileOutputStream",
+          "body": "FileInputStream is a stream that reads bytes from a file.\nFileOutputStream is a stream that writes bytes to a file.\nYou pass a file path or File object to the [[constructor]].\nread() reads one byte and returns -1 at end of file.\nYou need to release resources with close(). Using [[try-with-resources]] is recommended.",
+          "code": "import java.io.*;\n\n// Writing to a file with FileOutputStream\n// A block where exceptions may occur\ntry (FileOutputStream fos = new FileOutputStream(\"output.dat\")) {\n    fos.write(65);  // ASCII code for 'A'\n    fos.write(66);  // 'B'\n    byte[] data = {67, 68, 69}; // C, D, E\n    fos.write(data);\n} // close() is called automatically\n\n// Reading from a file with FileInputStream\n// A block where exceptions may occur\ntry (FileInputStream fis = new FileInputStream(\"output.dat\")) {\n    int b;\n    // Repeat while the condition is true\n    while ((b = fis.read()) != -1) {\n        System.out.print((char) b); // ABCDE\n    }\n}\n\n// Efficient reading with buffering\n// A block where exceptions may occur\ntry (BufferedInputStream bis = new BufferedInputStream(\n        new FileInputStream(\"output.dat\"))) {\n    byte[] buffer = new byte[1024];\n    // Variable declaration and initialization\n    int len = bis.read(buffer);\n    System.out.println(new String(buffer, 0, len)); // ABCDE\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "code",
+          "title": "BufferedReader / BufferedWriter",
+          "body": "[[BufferedReader]] adds buffering to a character input stream.\nThe readLine() method reads text one line at a time.\nBufferedWriter adds buffering to a character output stream.\nThe newLine() method writes a platform-dependent line separator.\nYou can convert a byte stream to a character stream via InputStreamReader.",
+          "code": "import java.io.*;\n\n// Writing text with BufferedWriter\ntry (BufferedWriter bw = new BufferedWriter(\n        new FileWriter(\"sample.txt\"))) {\n    bw.write(\"Hello, Java!\");\n    bw.newLine();\n    bw.write(\"I/O is important.\");\n}\n\n// Reading line by line with BufferedReader\ntry (BufferedReader br = new BufferedReader(\n        new FileReader(\"sample.txt\"))) {\n    String line;\n    while ((line = br.readLine()) != null) {\n        System.out.println(line);\n    }\n}\n// Output:\n// Hello, Java!\n// I/O is important.",
+          "note": "**BufferedReader**.readLine() returns null when end of file is reached. An empty line returns an empty string (\"\").",
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: Traditional I/O",
+          "body": "Clearly distinguish between byte streams (InputStream/OutputStream) and character streams (Reader/Writer).\nThe decorator pattern (wrapping **streams**) combinations are tested on the exam.\nResource leaks from forgetting to call close() are an important topic.\nUsing try-with-resources automatically closes [[AutoCloseable]] resources.\nRemember the conditions under which read() returns -1 and readLine() returns null.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_01_q1",
+          "lessonId": "ch28_01",
+          "type": "fourChoice",
+          "question": "Which statement about the InputStream class is correct?",
+          "code": "Path path = Path.of(\"data\", \"output.txt\");\nFiles.writeString(path, \"Hello Java NIO!\");\nString content = Files.readString(path);",
+          "explanation": "InputStream is an abstract class that reads data byte by byte. The read() method reads one byte and returns -1 when the end of the stream is reached. Character-level reading is handled by the Reader class.",
+          "choices": [
+            {
+              "id": "ch28_01_q1_a",
+              "text": "It is an abstract class that reads data byte by byte",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_01_q1_b",
+              "text": "It is a concrete class that reads data character by character",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_01_q1_c",
+              "text": "read() returns 0 at the end of the stream",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_01_q1_d",
+              "text": "There is no need to call close()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_01_q2",
+          "lessonId": "ch28_01",
+          "type": "fillBlank",
+          "question": "BufferedReader's readLine() method returns ___ when the end of the file is reached.",
+          "code": "try (BufferedReader br = Files.newBufferedReader(\n        Path.of(\"input.txt\"))) {\n    br.lines()\n      .filter(line -> !line.isBlank())\n      .forEach(System.out::println);\n}",
+          "explanation": "BufferedReader.readLine() returns null when the end of the file is reached. For empty lines, it returns an empty string (\"\"). The read() method returns -1 when reading bytes/characters one at a time.",
+          "choices": [
+            {
+              "id": "ch28_01_q2_a",
+              "text": "null",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_01_q2_b",
+              "text": "-1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_01_q2_c",
+              "text": "An empty string",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_01_q2_d",
+              "text": "IOException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_01_q3",
+          "lessonId": "ch28_01",
+          "type": "fourChoice",
+          "question": "Which class adds buffering to a byte stream?",
+          "code": "try (var stream = Files.walk(Path.of(\"src\"))) {\n    stream.filter(p -> p.toString().endsWith(\".java\"))\n          .forEach(System.out::println);\n}",
+          "explanation": "BufferedInputStream is a class that wraps an InputStream to add buffering. BufferedReader is a buffering class for character streams (Reader). DataInputStream is for reading primitive types.",
+          "choices": [
+            {
+              "id": "ch28_01_q3_a",
+              "text": "BufferedInputStream",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_01_q3_b",
+              "text": "BufferedReader",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_01_q3_c",
+              "text": "DataInputStream",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_01_q3_d",
+              "text": "ObjectInputStream",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch28_02",
+      "courseId": "ch28",
+      "title": "Reader and Writer",
+      "summary": "Learn character stream operations with FileReader/FileWriter, character encoding specification with Charset, and safe resource management with try-with-resources.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "overview",
+          "title": "Character Stream Overview",
+          "body": "In this lesson, you will learn:\n\n- The basics of Reader and Writer (character streams)\n- FileReader / FileWriter, **BufferedReader** / **BufferedWriter**\n- Differences from byte streams (character encoding support)\n\nCharacter streams are suited for text file processing.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "code",
+          "title": "Using FileReader / FileWriter",
+          "body": "FileWriter is a [[class]] that writes character data to a file.\nSpecifying true as the second argument in the [[constructor]] enables append mode.\nFileReader is a class that reads character data from a file.\nThe read() [[method]] reads one character at a time and returns -1 at end of file.\nYou can also read into a char array in bulk with read(char[]).",
+          "code": "import java.io.*;\nimport java.nio.charset.StandardCharsets;\n\n// Writing text with FileWriter\ntry (FileWriter fw = new FileWriter(\"hello.txt\")) {\n    fw.write(\"こんにちは\\n\");\n    fw.write(\"Java I/O\");\n}\n\n// Append mode\ntry (FileWriter fw = new FileWriter(\"hello.txt\", true)) {\n    fw.write(\"\\n追記テキスト\");\n}\n\n// Reading with FileReader\ntry (FileReader fr = new FileReader(\"hello.txt\")) {\n    int ch;\n    while ((ch = fr.read()) != -1) {\n        System.out.print((char) ch);\n    }\n}\n\n// Java 11+: Specifying Charset\ntry (FileReader fr = new FileReader(\"hello.txt\",\n        StandardCharsets.UTF_8)) {\n    // Reading with UTF-8\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "rule",
+          "title": "Character Encoding (Charset)",
+          "body": "The [[Charset]] class represents a character encoding.\nThe StandardCharsets class defines constants such as UTF_8, ISO_8859_1, and US_ASCII.\nYou can also obtain a Charset from a string with Charset.forName(\"UTF-8\").\nIf no encoding is specified, the system's default encoding is used.\nReading and writing with different encodings will cause garbled text.\nUsing InputStreamReader, you can convert a byte stream to a character stream with a specific encoding.",
+          "code": "import java.io.*;\nimport java.nio.charset.*;\n\n// Specifying encoding with InputStreamReader\ntry (BufferedReader br = new BufferedReader(\n        new InputStreamReader(\n            new FileInputStream(\"data.txt\"),\n            StandardCharsets.UTF_8))) {\n    String line;\n    while ((line = br.readLine()) != null) {\n        System.out.println(line);\n    }\n}\n\n// Specifying encoding with OutputStreamWriter\ntry (BufferedWriter bw = new BufferedWriter(\n        new OutputStreamWriter(\n            new FileOutputStream(\"output.txt\"),\n            StandardCharsets.UTF_8))) {\n    bw.write(\"UTF-8エンコーディング\");\n}",
+          "note": "Starting with Java 18, the default encoding is UTF-8. In earlier versions, it was platform-dependent.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "code",
+          "title": "try-with-resources and I/O",
+          "body": "The [[try-with-resources]] statement automatically calls close() on resources that implement [[AutoCloseable]].\nSince all I/O classes implement AutoCloseable, they should be used with try-with-resources.\nMultiple resources can be declared separated by semicolons.\nResources are closed in the reverse order of declaration (last in, first out).\nSince Java 9, previously declared final or effectively final [[variables]] can be used in try-with-resources.",
+          "code": "import java.io.*;\n\n// Basic try-with-resources\n// A block where exceptions may occur\ntry (FileReader fr = new FileReader(\"input.txt\");\n     BufferedReader br = new BufferedReader(fr)) {\n    System.out.println(br.readLine());\n} // close() is called in order: br → fr\n\n// Java 9+: Using pre-declared variables\nFileReader fr = new FileReader(\"input.txt\");\nBufferedReader br = new BufferedReader(fr);\n// A block where exceptions may occur\ntry (br) {  // Effectively final variable\n    System.out.println(br.readLine());\n}\n\n// catch/finally can also be used\n// A block where exceptions may occur\ntry (FileWriter fw = new FileWriter(\"log.txt\")) {\n    fw.write(\"ログメッセージ\");\n} catch (IOException e) {\n    System.err.println(\"書き込みエラー: \" + e.getMessage());\n} finally {\n    System.out.println(\"処理完了\");\n}",
+          "note": "If an [[exception]] and a close() exception occur simultaneously in try-with-resources, the close() exception becomes a suppressed exception.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_02",
+          "sectionType": "tip",
+          "title": "Exam Prep: Reader and Writer",
+          "body": "The ability to specify a Charset in FileReader and FileWriter constructors is available from Java 11 onward.\nInputStreamReader is a bridge for converting byte streams to character streams.\nThe resource close order in try-with-resources (reverse of declaration order) is tested on the exam.\nSince Java 9, using effectively final variables directly in try-with-resources is also important.\nCalling flush() after write(), or calling close(), ensures the buffer's contents are written to the file.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_02_q1",
+          "lessonId": "ch28_02",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes the role of InputStreamReader?",
+          "code": "ByteBuffer buf = ByteBuffer.allocate(1024);\ntry (FileChannel ch = FileChannel.open(\n        Path.of(\"data.bin\"),\n        StandardOpenOption.READ)) {\n    ch.read(buf);\n    buf.flip();\n}",
+          "explanation": "InputStreamReader is a bridge class that converts a byte stream (InputStream) to a character stream (Reader). By specifying a Charset in the constructor, you can convert bytes to characters using a specific encoding.",
+          "choices": [
+            {
+              "id": "ch28_02_q1_a",
+              "text": "Converts a byte stream to a character stream",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_02_q1_b",
+              "text": "Converts a character stream to a byte stream",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_02_q1_c",
+              "text": "Reads a file byte by byte",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_02_q1_d",
+              "text": "Adds buffering to a stream",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_02_q2",
+          "lessonId": "ch28_02",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        try (StringWriter sw = new StringWriter()) {\n            sw.write(\"Hello\");\n            sw.write(' ');\n            sw.write(\"World\");\n            System.out.println(sw.toString());\n        }\n    }\n}",
+          "explanation": "StringWriter is a Writer that writes to an in-memory string buffer. write(\"Hello\") writes \"Hello\", write(' ') writes a space, and write(\"World\") writes \"World\". toString() returns the concatenated string \"Hello World\".",
+          "choices": [
+            {
+              "id": "ch28_02_q2_a",
+              "text": "Hello World",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_02_q2_b",
+              "text": "HelloWorld",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_02_q2_c",
+              "text": "Hello\\nWorld",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_02_q2_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_02_q3",
+          "lessonId": "ch28_02",
+          "type": "errorFind",
+          "question": "The following code has an error. Which part is problematic?",
+          "code": "import java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        FileReader fr = new FileReader(\"data.txt\");\n        try (fr) {\n            fr = new FileReader(\"other.txt\"); // ★\n            System.out.println(fr.read());\n        }\n    }\n}",
+          "explanation": "Variables used in try-with-resources cannot be reassigned within the try block. Since Java 9, pre-declared variables can be used in try-with-resources, but those variables must be final or effectively final. Reassigning fr inside the try block causes a compilation error.",
+          "choices": [
+            {
+              "id": "ch28_02_q3_a",
+              "text": "The variable fr used in try-with-resources is being reassigned",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_02_q3_b",
+              "text": "The FileReader constructor is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_02_q3_c",
+              "text": "The return type of fr.read() is invalid",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_02_q3_d",
+              "text": "throws IOException is unnecessary",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch28_02_q4",
+          "lessonId": "ch28_02",
+          "type": "codeComplete",
+          "question": "Complete the code that reads a file using NIO's Path and Files.",
+          "code": "Path path = Path.of(\"data\", \"output.txt\");\nFiles.writeString(path, \"Hello Java NIO!\");\nString content = Files.readString(path);",
+          "explanation": "Path.get() obtains a file path, and Files.readAllLines() reads all lines. Since Java 11, Path.of() can also be used.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Path path = __BLANK_1__.get(\"data.txt\");\nList<String> lines = __BLANK_2__.readAllLines(path);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Obtain path",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Path",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Paths",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "File",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Read file",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Files",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "File",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "IO",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch28_03",
+      "courseId": "ch28",
+      "title": "NIO.2 Path",
+      "summary": "Learn the NIO.2 Path interface. Understand creating paths with Paths.get() and Path.of(), and path manipulation methods such as resolve(), relativize(), and normalize().",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "overview",
+          "title": "What Is NIO.2?",
+          "body": "In this lesson, you will learn:\n\n- The **NIO**.2 Path interface (Java 7+)\n- Creating paths with Paths.get() and Path.of()\n- Operations such as resolve(), relativize(), and normalize()\n\nThis is the modern file path API that replaces the traditional java.io.File.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "rule",
+          "title": "Creating a Path",
+          "body": "The Path interface is located in java.nio.file.Path.\nYou can create a Path object with the Paths.get() [[method]] (Java 7+).\nYou can also create a Path with the Path.of() method (Java 11+).\nPaths can be specified with multiple arguments for path elements.\nYou can convert a File object to a Path with toPath(), and a Path to a File with toFile().\nBoth relative and absolute paths are supported.",
+          "code": "import java.nio.file.*;\nimport java.io.File;\n\n// Creating a Path with Paths.get()\nPath p1 = Paths.get(\"/home/user/docs/file.txt\");\nPath p2 = Paths.get(\"/home\", \"user\", \"docs\", \"file.txt\");\n\n// Creating a Path with Path.of() (Java 11+)\nPath p3 = Path.of(\"/home/user/docs/file.txt\");\nPath p4 = Path.of(\"/home\", \"user\", \"docs\");\n\n// Converting between File and Path\nFile file = p1.toFile();\nPath p5 = file.toPath();\n\n// Relative path\nPath relative = Path.of(\"src\", \"main\", \"App.java\");\nSystem.out.println(relative); // src/main/App.java",
+          "note": "Paths.get() and Path.of() are functionally equivalent. Path.of() is recommended from Java 11 onward.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "code",
+          "title": "resolve / relativize / normalize",
+          "body": "| Method | Description |\n|---|---|\n| resolve() | Joins paths. If the argument is an absolute path, the argument is returned as-is. |\n| relativize() | Computes the relative path between two paths. Both must be either relative or absolute. |\n| normalize() | Resolves redundant elements such as . and .. |\nThese methods return a Path object and do not modify the original Path ([[immutable object]]).",
+          "code": "import java.nio.file.*;\n\n// resolve: Joining paths\nPath base = Path.of(\"/home/user\");\nSystem.out.println(base.resolve(\"docs/file.txt\"));\n// → /home/user/docs/file.txt\n\n// Resolving with an absolute path returns the argument as-is\nSystem.out.println(base.resolve(\"/etc/config\"));\n// → /etc/config\n\n// relativize: Computing a relative path\nPath p1 = Path.of(\"/home/user/docs\");\nPath p2 = Path.of(\"/home/user/pics/photo.jpg\");\nSystem.out.println(p1.relativize(p2));\n// → ../pics/photo.jpg\n\n// normalize: Removing redundant elements\nPath p3 = Path.of(\"/home/user/../user/./docs/file.txt\");\nSystem.out.println(p3.normalize());\n// → /home/user/docs/file.txt",
+          "note": "Mixing absolute and relative paths in relativize() throws an IllegalArgumentException.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "point",
+          "title": "Path Information Methods",
+          "body": "| Method | Description |\n|---|---|\n| getFileName() | Returns the last element of the path (file name). |\n| getParent() | Returns the parent directory path. Returns null for root-only paths. |\n| getRoot() | Returns the root element. Returns null for relative paths. |\n| getNameCount() | Returns the number of name elements in the path (excluding root). |\n| getName(int) | Returns the name element at the specified index. |\n| toAbsolutePath() | Converts to an absolute path. |",
+          "code": "import java.nio.file.*;\n\nPath p = Path.of(\"/home/user/docs/file.txt\");\n\nSystem.out.println(p.getFileName());   // file.txt\nSystem.out.println(p.getParent());     // /home/user/docs\nSystem.out.println(p.getRoot());       // /\nSystem.out.println(p.getNameCount());  // 4 (home, user, docs, file.txt)\nSystem.out.println(p.getName(0));      // home\nSystem.out.println(p.getName(3));      // file.txt\nSystem.out.println(p.subpath(1, 3));   // user/docs\nSystem.out.println(p.toAbsolutePath());\n// → /home/user/docs/file.txt (already absolute)\n\n// For a relative path\nPath rel = Path.of(\"src/App.java\");\nSystem.out.println(rel.getRoot());     // null\nSystem.out.println(rel.toAbsolutePath());\n// → current directory/src/App.java",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: Path Methods",
+          "body": "Passing an absolute path to resolve() causes the argument to be returned as-is — this is a frequently tested point.\n| Method | Description |\n|---|---|\n| relativize() | Throws an exception if the paths are not both absolute or both relative. |\n| normalize() | Processes only the path string without accessing the file system. |\n| getNameCount() | Does not include the root element. getName(0) is the element directly under the root. |\nsubpath(begin, end) uses a range from begin (inclusive) to end (exclusive), zero-based.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_03_q1",
+          "lessonId": "ch28_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p = Path.of(\"/home/user/docs\");\n        System.out.println(p.resolve(\"file.txt\"));\n    }\n}",
+          "explanation": "resolve() joins the argument to the original path when the argument is a relative path. It concatenates file.txt to /home/user/docs, resulting in /home/user/docs/file.txt.",
+          "choices": [
+            {
+              "id": "ch28_03_q1_a",
+              "text": "/home/user/docs/file.txt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_03_q1_b",
+              "text": "file.txt",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_03_q1_c",
+              "text": "/home/user/file.txt",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_03_q1_d",
+              "text": "docs/file.txt",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_03_q2",
+          "lessonId": "ch28_03",
+          "type": "fourChoice",
+          "question": "What is the return value of Path.of(\"/a/b/c\").getNameCount()?",
+          "code": "try (BufferedReader br = Files.newBufferedReader(\n        Path.of(\"input.txt\"))) {\n    br.lines()\n      .filter(line -> !line.isBlank())\n      .forEach(System.out::println);\n}",
+          "explanation": "getNameCount() returns the number of name elements in the path. The root element (/) is not included in the count. The name elements of /a/b/c are a, b, and c — three elements.",
+          "choices": [
+            {
+              "id": "ch28_03_q2_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_03_q2_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_03_q2_c",
+              "text": "2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_03_q2_d",
+              "text": "1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_03_q3",
+          "lessonId": "ch28_03",
+          "type": "fillBlank",
+          "question": "The normalize() method of Path resolves redundant ___ and .. in the path and returns the normalized path.",
+          "code": "try (var stream = Files.walk(Path.of(\"src\"))) {\n    stream.filter(p -> p.toString().endsWith(\".java\"))\n          .forEach(System.out::println);\n}",
+          "explanation": "The normalize() method resolves redundant elements in the path string — . (current directory) and .. (parent directory) — and returns the normalized path. It does not access the file system.",
+          "choices": [
+            {
+              "id": "ch28_03_q3_a",
+              "text": ". (dot)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_03_q3_b",
+              "text": "/ (slash)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_03_q3_c",
+              "text": "* (asterisk)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_03_q3_d",
+              "text": "~ (tilde)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch28_03_q4",
+          "lessonId": "ch28_03",
+          "type": "multiChoice",
+          "question": "Select all valid methods of the NIO.2 (java.nio.file) Files class.",
+          "code": "ByteBuffer buf = ByteBuffer.allocate(1024);\ntry (FileChannel ch = FileChannel.open(\n        Path.of(\"data.bin\"),\n        StandardOpenOption.READ)) {\n    ch.read(buf);\n    buf.flip();\n}",
+          "explanation": "The Files class provides readAllLines(), copy(), exists(), walk(), and more. open() is not a method of Files — use newInputStream() and similar methods instead.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "readAllLines()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "copy()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "exists()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "open()",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "walk()",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch28_04",
+      "courseId": "ch28",
+      "title": "NIO.2 Files",
+      "summary": "Learn file I/O operations with the Files class. Understand file reading and writing with readAllLines() and write(), and file manipulation methods such as copy(), move(), delete(), and exists().",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "overview",
+          "title": "Overview of the Files Class",
+          "body": "In this lesson, you will learn:\n\n- Simple file I/O with Files.readAllLines() and Files.write()\n- Files.copy(), Files.move(), Files.delete()\n- Retrieving file attributes (size, lastModifiedTime, etc.)\n\nWith the **NIO**.2 Files class, many file operations can be written in a single line.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "code",
+          "title": "Reading and Writing Files",
+          "body": "| Method | Description |\n|---|---|\n| Files.readAllLines() | Reads all lines as a List<String> |\n| Files.readString() | Reads the content as a String (Java 11+) |\n| Files.write() | Writes a byte array or a list of strings to a file |\n| Files.writeString() | Writes a string to a file (Java 11+) |\nYou can specify the write mode (overwrite, append, etc.) with OpenOption.",
+          "code": "import java.nio.file.*;\nimport java.util.*;\n\nPath path = Path.of(\"sample.txt\");\n\n// Writing to a file\nList<String> lines = List.of(\"1行目\", \"2行目\", \"3行目\");\nFiles.write(path, lines);\n\n// Append mode\nFiles.write(path, List.of(\"4行目\"),\n    StandardOpenOption.APPEND);\n\n// Reading all lines\nList<String> result = Files.readAllLines(path);\nresult.forEach(System.out::println);\n// 1行目\n// 2行目\n// 3行目\n// 4行目\n\n// Java 11+: Reading and writing as strings\nFiles.writeString(path, \"Hello NIO.2\");\nString content = Files.readString(path);\nSystem.out.println(content); // Hello NIO.2",
+          "note": "readAllLines() loads the entire file into memory, so for large files, use Files.lines() instead.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "code",
+          "title": "Copying, Moving, and Deleting Files",
+          "body": "Files.copy() copies a file. By default, a FileAlreadyExistsException is thrown if the target file already exists.\nFiles.move() moves or renames a file.\nCopyOption lets you specify overwriting or atomic operations.\nFiles.delete() deletes a file and throws a NoSuchFileException if the file does not exist.\nFiles.deleteIfExists() deletes the file only if it exists, returning false instead of throwing an [[exception]] if it does not.",
+          "code": "import java.nio.file.*;\n\nPath source = Path.of(\"original.txt\");\nPath target = Path.of(\"copy.txt\");\n\n// Copy (throws exception if target exists)\nFiles.copy(source, target);\n\n// Overwrite copy\nFiles.copy(source, target,\n    StandardCopyOption.REPLACE_EXISTING);\n\n// Move (rename)\nPath moved = Path.of(\"renamed.txt\");\nFiles.move(target, moved,\n    StandardCopyOption.REPLACE_EXISTING);\n\n// Atomic move\nFiles.move(source, target,\n    StandardCopyOption.ATOMIC_MOVE);\n\n// Delete\nFiles.delete(moved);           // Throws exception if not exists\nFiles.deleteIfExists(moved);   // OK even if not exists (returns false)",
+          "note": "If REPLACE_EXISTING is not specified in copy/move and the target file already exists, a FileAlreadyExistsException is thrown.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "rule",
+          "title": "Checking File Information",
+          "body": "| Method | Description |\n|---|---|\n| Files.exists() | Checks whether a file or directory exists |\n| Files.isDirectory() | Checks whether the target is a directory |\n| Files.isRegularFile() | Checks whether the target is a regular file |\n| Files.size() | Returns the file size in bytes |\n| Files.getLastModifiedTime() | Returns the last modified time |\nYou can check access permissions with Files.isReadable(), Files.isWritable(), and Files.isExecutable().",
+          "code": "import java.nio.file.*;\nimport java.nio.file.attribute.*;\n\nPath p = Path.of(\"sample.txt\");\n\nSystem.out.println(Files.exists(p));         // true/false\nSystem.out.println(Files.isDirectory(p));    // false\nSystem.out.println(Files.isRegularFile(p));  // true\nSystem.out.println(Files.size(p));           // Bytes\nSystem.out.println(Files.isReadable(p));     // true/false\n\nFileTime time = Files.getLastModifiedTime(p);\nSystem.out.println(time); // 2024-01-15T10:30:00Z\n\n// Creating a directory\nFiles.createDirectory(Path.of(\"newDir\"));\n// Creating intermediate directories as well\nFiles.createDirectories(Path.of(\"a/b/c\"));",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_04",
+          "sectionType": "tip",
+          "title": "Exam Prep: Files Class",
+          "body": "Remember the default behavior of Files.copy() and Files.move() (no overwrite).\nThe difference in behavior between delete() and deleteIfExists() is tested on the exam.\nreadAllLines() returns a List<String>, while readString() returns a String (Java 11+).\nThe difference between createDirectory() and createDirectories() is also important (whether intermediate directories are automatically created).\nMemorize the key constants in StandardCopyOption and StandardOpenOption.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_04_q1",
+          "lessonId": "ch28_04",
+          "type": "fourChoice",
+          "question": "Which option is required to overwrite an existing file when using Files.copy()?",
+          "code": null,
+          "explanation": "By default, Files.copy() throws a FileAlreadyExistsException if the target file already exists. To overwrite, you need to specify StandardCopyOption.REPLACE_EXISTING.",
+          "choices": [
+            {
+              "id": "ch28_04_q1_a",
+              "text": "StandardCopyOption.REPLACE_EXISTING",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_04_q1_b",
+              "text": "StandardOpenOption.APPEND",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_04_q1_c",
+              "text": "StandardCopyOption.COPY_ATTRIBUTES",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_04_q1_d",
+              "text": "StandardOpenOption.CREATE_NEW",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_04_q2",
+          "lessonId": "ch28_04",
+          "type": "fillBlank",
+          "question": "Files.___() returns false if the file does not exist, while Files.delete() throws a ___.",
+          "code": null,
+          "explanation": "Files.deleteIfExists() returns false if the file does not exist, without throwing an exception. On the other hand, Files.delete() throws a NoSuchFileException if the file does not exist.",
+          "choices": [
+            {
+              "id": "ch28_04_q2_a",
+              "text": "deleteIfExists / NoSuchFileException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_04_q2_b",
+              "text": "deleteIfExists / FileNotFoundException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_04_q2_c",
+              "text": "tryDelete / IOException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_04_q2_d",
+              "text": "remove / IllegalStateException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_04_q3",
+          "lessonId": "ch28_04",
+          "type": "errorFind",
+          "question": "The following code has an error. Which part is problematic?",
+          "code": "import java.nio.file.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Path dir = Path.of(\"myDir/subDir\");\n        Files.createDirectory(dir); // ★\n        Files.writeString(dir.resolve(\"test.txt\"), \"Hello\");\n    }\n}",
+          "explanation": "Files.createDirectory() creates only a single directory level. If intermediate directories (myDir) do not exist in a path like myDir/subDir, a NoSuchFileException is thrown. To create intermediate directories as well, use Files.createDirectories().",
+          "choices": [
+            {
+              "id": "ch28_04_q3_a",
+              "text": "createDirectory() does not auto-create intermediate dirs; createDirectories() should be used",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_04_q3_b",
+              "text": "The path in writeString() is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_04_q3_c",
+              "text": "Slashes cannot be included in Path.of() arguments",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_04_q3_d",
+              "text": "The resolve() method name is wrong",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch28_05",
+      "courseId": "ch28",
+      "title": "Directory Operations and Streams",
+      "summary": "Learn NIO.2 directory operation methods (Files.list, Files.walk, Files.find), DirectoryStream, and integration with the Stream API using Files.lines().",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "overview",
+          "title": "Directory Operations and Streams Overview",
+          "body": "In this lesson, you will learn:\n\n- Obtaining a Stream of directories with Files.list() and Files.walk()\n- Searching for files matching criteria with Files.find()\n- Differences from DirectoryStream\n\nEfficient file operations combining the [[Stream API]] with NIO.2.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "code",
+          "title": "Files.list() and Files.walk()",
+          "body": "Files.list() returns the entries (files and subdirectories) directly under a directory as a Stream<Path>.\nIt does not traverse recursively — depth 1 only.\nFiles.walk() recursively traverses the directory tree in depth-first order.\nYou can specify maxDepth (maximum depth) as the second argument.\nBoth return Stream<Path>, so they must be closed with close() or [[try-with-resources]] after use.",
+          "code": "import java.nio.file.*;\nimport java.io.IOException;\n\n// list(): Only direct entries\ntry (var stream = Files.list(Path.of(\"src\"))) {\n    stream.forEach(System.out::println);\n}\n// Example output:\n// src/main\n// src/test\n// src/App.java\n\n// walk(): Recursive traversal of all files\ntry (var stream = Files.walk(Path.of(\"src\"))) {\n    stream.filter(Files::isRegularFile)\n          .forEach(System.out::println);\n}\n// Example output:\n// src/App.java\n// src/main/Main.java\n// src/test/TestMain.java\n\n// Specifying maxDepth\ntry (var stream = Files.walk(Path.of(\"src\"), 1)) {\n    stream.forEach(System.out::println);\n}\n// depth=1: Only the src directory itself and its direct entries",
+          "note": "The Streams returned by Files.list() and Files.walk() hold I/O resources, so they must be closed.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "code",
+          "title": "Files.find() and DirectoryStream",
+          "body": "Files.find() recursively searches for files and specifies conditions with a BiPredicate<Path, BasicFileAttributes>.\nDirectoryStream is an [[interface]] for iterating over the contents of a directory.\nYou can obtain a DirectoryStream with Files.newDirectoryStream() and filter with glob patterns.\nSince DirectoryStream implements Iterable, it can be used with an [[enhanced for loop]].",
+          "code": "import java.nio.file.*;\nimport java.nio.file.attribute.*;\n\n// find(): Search for files matching conditions\n// A block where exceptions may occur\ntry (var stream = Files.find(Path.of(\"src\"), 10,\n        (path, attrs) -> attrs.isRegularFile()\n            && path.toString().endsWith(\".java\"))) {\n    stream.forEach(System.out::println);\n}\n\n// DirectoryStream: Filtering with glob pattern\n// A block where exceptions may occur\ntry (DirectoryStream<Path> ds = Files.newDirectoryStream(\n        Path.of(\"src\"), \"*.java\")) {\n    // Enhanced for loop (processes all elements of a collection in order)\n    for (Path p : ds) {\n        System.out.println(p.getFileName());\n    }\n}\n\n// DirectoryStream: Multiple patterns\n// A block where exceptions may occur\ntry (DirectoryStream<Path> ds = Files.newDirectoryStream(\n        Path.of(\"docs\"), \"*.{txt,md,csv}\")) {\n    for (Path p : ds) {\n        System.out.println(p);\n    }\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "point",
+          "title": "Files.lines() and the Stream API",
+          "body": "Files.lines() lazily reads each line of a file as a Stream<String>.\nUnlike readAllLines(), it does not hold all lines in memory, making it suitable for large files.\nIt can be combined with various Stream API operations (filter, map, collect, etc.).\nThe returned Stream also holds I/O resources, so close() is required.\nYou can specify a [[Charset]] as the second argument; the default is UTF-8.",
+          "code": "import java.nio.file.*;\nimport java.util.stream.*;\n\n// Processing each line of a file as a Stream\ntry (Stream<String> lines = Files.lines(Path.of(\"data.csv\"))) {\n    lines.filter(line -> !line.startsWith(\"#\"))\n         .map(String::trim)\n         .forEach(System.out::println);\n}\n\n// Counting lines\ntry (Stream<String> lines = Files.lines(Path.of(\"log.txt\"))) {\n    long count = lines.filter(l -> l.contains(\"ERROR\")).count();\n    System.out.println(\"Error line count: \" + count);\n}\n\n// Collecting results into a list\ntry (Stream<String> lines = Files.lines(Path.of(\"names.txt\"))) {\n    var sorted = lines.sorted()\n                      .distinct()\n                      .collect(Collectors.toList());\n    sorted.forEach(System.out::println);\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch28_05",
+          "sectionType": "tip",
+          "title": "Exam Prep: Directory Operations and Streams",
+          "body": "Clearly remember that Files.list() covers only immediate entries, while Files.walk() is recursive.\nThe default maxDepth for Files.walk() is Integer.MAX_VALUE.\nAll Streams returned by Files.list(), Files.walk(), Files.find(), and Files.lines() must be closed.\nDirectoryStream is not a Stream but an Iterable, and is used with an enhanced [[for loop]].\nThe BiPredicate in Files.find() accepts (Path, BasicFileAttributes).",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch28_05_q1",
+          "lessonId": "ch28_05",
+          "type": "outputPredict",
+          "question": "If the src directory directly contains 2 files (App.java and Main.java) and 1 subdirectory (utils), how many lines would be output by this code?",
+          "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        try (var stream = Files.list(Path.of(\"src\"))) {\n            long count = stream.count();\n            System.out.println(count);\n        }\n    }\n}",
+          "explanation": "Files.list() returns all entries (files and subdirectories) directly under the directory. Since there are 3 entries — App.java, Main.java, and utils — count() returns 3.",
+          "choices": [
+            {
+              "id": "ch28_05_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_05_q1_b",
+              "text": "2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_05_q1_c",
+              "text": "1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_05_q1_d",
+              "text": "0",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch28_05_q2",
+          "lessonId": "ch28_05",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the difference between Files.walk() and Files.list()?",
+          "code": null,
+          "explanation": "Files.walk() recursively traverses the directory tree and returns all files including those in subdirectories as a Stream<Path>. Files.list() returns only entries directly under the directory and does not traverse recursively.",
+          "choices": [
+            {
+              "id": "ch28_05_q2_a",
+              "text": "walk() traverses recursively, while list() returns only direct entries",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_05_q2_b",
+              "text": "list() traverses recursively, while walk() returns only direct entries",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_05_q2_c",
+              "text": "walk() returns List<Path>, while list() returns Stream<Path>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_05_q2_d",
+              "text": "Both behave the same way and only differ in name",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch28_05_q3",
+          "lessonId": "ch28_05",
+          "type": "fourChoice",
+          "question": "Which statement about Files.lines() is correct?",
+          "code": null,
+          "explanation": "Files.lines() lazily reads each line and returns it as a Stream<String>. Unlike Files.readAllLines(), it does not load all lines into memory at once, making it suitable for large files. The returned Stream holds I/O resources, so close() is required.",
+          "choices": [
+            {
+              "id": "ch28_05_q3_a",
+              "text": "Lazily reads each line of the file and returns it as a Stream<String>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch28_05_q3_b",
+              "text": "Immediately returns all lines of the file as a List<String>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch28_05_q3_c",
+              "text": "The returned Stream does not need to be closed",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch28_05_q3_d",
+              "text": "Returns each line of a binary file as Stream<byte[]>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

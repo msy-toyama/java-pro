@@ -1,0 +1,1313 @@
+{
+  "courseId": "ch27",
+  "lessons": [
+    {
+      "id": "ch27_01",
+      "courseId": "ch27",
+      "title": "Thread Basics",
+      "summary": "Learn the basics of Java multithreading. Understand thread creation by extending the Thread class and implementing the Runnable interface, starting threads with start(), and the thread lifecycle.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "overview",
+          "title": "What Is Multithreading?",
+          "body": "In this lesson, you will learn:\n\n- What a [[thread]] is (a unit of concurrent execution in a program)\n- [[Extending]] the Thread class and implementing the [[Runnable]] [[interface]]\n- The difference between the start() and run() [[methods]]\n\nYou will learn the concept of threads, which form the foundation of **concurrent processing**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "rule",
+          "title": "Extending Thread and Implementing Runnable",
+          "body": "There are two main ways to create a thread.\nMethod 1: Extend the Thread class and [[override]] the run() method.\nMethod 2: Implement the Runnable interface, define the run() method, and pass it to the Thread [[constructor]].\nSince Runnable is a SAM (Single Abstract Method) interface, it can also be written using a [[lambda expression]].\nImplementing Runnable is generally recommended (because Java supports single inheritance only, extending Thread prevents extending other classes).\nCalling start() executes run() in a separate thread. Calling run() directly only executes it synchronously in the current thread.",
+          "code": "// Method 1: Extending the Thread class\nclass MyThread extends Thread {\n    @Override\n    public void run() {\n        System.out.println(\"Thread: \" + getName());\n    }\n}\n\n// Method 2: Runnable interface\nclass MyRunnable implements Runnable {\n    @Override\n    public void run() {\n        System.out.println(\"Runnable thread\");\n    }\n}\n\n// Starting threads\nMyThread t1 = new MyThread();\nt1.start();  // run() is executed in a separate thread\n\nThread t2 = new Thread(new MyRunnable());\nt2.start();\n\n// Lambda expression\nThread t3 = new Thread(() -> System.out.println(\"Lambda thread\"));\nt3.start();\n\n// Note: Calling run() directly executes in the same thread\nt1.run(); // Does not create a separate thread",
+          "note": "The difference between start() and run() is a frequently tested topic. start() launches a new thread, while run() executes in the current thread.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "code",
+          "title": "Starting Threads and Important Notes",
+          "body": "The start() method can only be called once. Calling start() twice on the same thread throws an IllegalThreadStateException.\nThe execution order of threads is not guaranteed. Which thread runs first depends on the JVM and OS scheduling.\nThread.currentThread() returns a reference to the currently executing thread.\nYou can set a thread's name with setName() and retrieve it with getName().",
+          "code": "Thread t = new Thread(() -> {\n    System.out.println(\"Name: \" + Thread.currentThread().getName());\n});\nt.setName(\"Worker-1\");\nt.start();\n// Output: Name: Worker-1\n\n// Calling start() twice causes an error\nThread t2 = new Thread(() -> System.out.println(\"run\"));\nt2.start();\ntry {\n    t2.start(); // Second call to start()\n} catch (IllegalThreadStateException e) {\n    System.out.println(\"Error: \" + e.getMessage());\n}\n\n// Execution order is not guaranteed\nfor (int i = 0; i < 3; i++) {\n    final int num = i;\n    new Thread(() -> System.out.println(\"Thread-\" + num)).start();\n}\n// Output order may vary between executions",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "point",
+          "title": "Thread Lifecycle",
+          "body": "A thread has the following states (Thread.State enum).\n| State | Description |\n|---|---|\n| NEW | The thread has been created but start() has not been called. |\n| RUNNABLE | The thread is eligible to run (either running or waiting to run). |\n| BLOCKED | The thread is waiting to acquire a monitor lock. |\n| WAITING | The thread is in a waiting state (transitioned via Object.wait(), Thread.join(), LockSupport.park()). |\n| TIMED_WAITING | The thread is waiting for a specified time (transitioned via Thread.sleep(), wait(timeout)). |\n| TERMINATED | The run() method has completed execution. |",
+          "code": "Thread t = new Thread(() -> {\n    try {\n        Thread.sleep(1000);\n    } catch (InterruptedException e) {\n        e.printStackTrace();\n    }\n});\n\nSystem.out.println(t.getState()); // NEW\nt.start();\nSystem.out.println(t.getState()); // RUNNABLE (or TIMED_WAITING)\n\ntry {\n    Thread.sleep(100); // Wait briefly\n    System.out.println(t.getState()); // TIMED_WAITING\n    t.join(); // Wait for thread completion\n    System.out.println(t.getState()); // TERMINATED\n} catch (InterruptedException e) {\n    e.printStackTrace();\n}",
+          "note": "There are 6 states obtainable via getState(). The RUNNABLE state includes both running and ready-to-run threads.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: Thread Basics",
+          "body": "The Gold exam tests the difference between start() and run(). Calling run() directly does not start a new thread.\nCalling start() twice on the same thread throws an IllegalThreadStateException.\nThread execution order is nondeterministic, so it is important to understand the behavior of code whose output order is uncertain.\nMemorize the 6 states of the Thread.State enum and their transition conditions.\nKnowing that Runnable can be written as a lambda expression is also essential.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_01_q1",
+          "lessonId": "ch27_01",
+          "type": "fourChoice",
+          "question": "Which statement about the Thread class is correct?",
+          "code": "ExecutorService es = Executors.newFixedThreadPool(4);\nFuture<String> future = es.submit(() -> {\n    Thread.sleep(1000);\n    return \"Done\";\n});\nString result = future.get();",
+          "explanation": "The start() method can only be called once. Calling start() twice on the same thread throws an IllegalThreadStateException. Calling run() directly does not start a new thread; it executes synchronously in the current thread.",
+          "choices": [
+            {
+              "id": "ch27_01_q1_a",
+              "text": "Calling start() twice on the same thread throws an IllegalThreadStateException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_01_q1_b",
+              "text": "Calling run() directly executes it in a new thread",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_01_q1_c",
+              "text": "start() can be called any number of times",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_01_q1_d",
+              "text": "Threads can only be created by extending the Thread class",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_01_q2",
+          "lessonId": "ch27_01",
+          "type": "fourChoice",
+          "question": "Which of the following is NOT included in Thread.State?",
+          "code": "synchronized (lock) {\n    while (queue.isEmpty()) {\n        lock.wait();\n    }\n    return queue.poll();\n}",
+          "explanation": "The values of Thread.State are NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, and TERMINATED — a total of 6. There is no state called RUNNING. The running state is included within RUNNABLE.",
+          "choices": [
+            {
+              "id": "ch27_01_q2_a",
+              "text": "RUNNING",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_01_q2_b",
+              "text": "BLOCKED",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_01_q2_c",
+              "text": "WAITING",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_01_q2_d",
+              "text": "TIMED_WAITING",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_01_q3",
+          "lessonId": "ch27_01",
+          "type": "fillBlank",
+          "question": "To create a thread from an object that implements the Runnable interface, use the form new Thread(___).",
+          "code": "AtomicInteger counter = new AtomicInteger(0);\nint newVal = counter.incrementAndGet();\nboolean ok = counter.compareAndSet(1, 2);",
+          "explanation": "By passing an object that implements the Runnable interface to the Thread constructor, its run() method can be executed in a separate thread. Since Runnable is a functional interface, lambda expressions can also be passed.",
+          "choices": [
+            {
+              "id": "ch27_01_q3_a",
+              "text": "A Runnable object",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_01_q3_b",
+              "text": "A Thread object",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_01_q3_c",
+              "text": "A Callable object",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_01_q3_d",
+              "text": "An Executor object",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch27_02",
+      "courseId": "ch27",
+      "title": "Thread Control",
+      "summary": "Learn thread control methods (sleep, join, yield), thread priority, and daemon threads. Understand how threads cooperate with each other.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "overview",
+          "title": "Overview of Thread Control",
+          "body": "In this lesson, you will learn:\n\n- [[Thread]] control with sleep(), join(), and yield()\n- Thread state transitions (NEW → RUNNABLE → TERMINATED, etc.)\n- The interrupt() mechanism\n\nLet's understand the thread lifecycle.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "rule",
+          "title": "sleep() and join()",
+          "body": "Thread.sleep(long millis) pauses the current thread for the specified number of milliseconds. It is a [[static method]].\nIf interrupt() is called during sleep(), an InterruptedException is thrown.\njoin() waits for the target thread to finish. It is an [[instance]] [[method]].\njoin(long millis) allows waiting with a timeout.\njoin() can also throw an InterruptedException.\nsleep() operates on the current thread and cannot pause other threads.",
+          "code": "// Using sleep()\nThread t = new Thread(() -> {\n    try {\n        System.out.println(\"Start\");\n        Thread.sleep(2000); // Pause for 2 seconds\n        System.out.println(\"End\");\n    } catch (InterruptedException e) {\n        System.out.println(\"Interrupted!\");\n    }\n});\nt.start();\n\n// Using join()\nThread worker = new Thread(() -> {\n    System.out.println(\"Working...\");\n    try { Thread.sleep(1000); } catch (InterruptedException e) {}\n    System.out.println(\"Done\");\n});\nworker.start();\ntry {\n    worker.join(); // Wait for the worker thread to complete\n} catch (InterruptedException e) {}\nSystem.out.println(\"Worker finished\"); // Printed after \"Done\"",
+          "note": "sleep() is a static method that pauses the current thread. join() is an instance method that waits for the target thread to finish.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "code",
+          "title": "Thread Priority and yield()",
+          "body": "Thread.yield() temporarily pauses the current thread and gives other threads an opportunity to execute.\nHowever, yield() is just a hint to the scheduler, and there is no guarantee that the thread will actually switch.\nThread priority is set using setPriority() with an integer between 1 and 10.\nThread.MIN_PRIORITY = 1, Thread.NORM_PRIORITY = 5, Thread.MAX_PRIORITY = 10.\nPriority is a hint to the scheduler and does not guarantee execution order.",
+          "code": "// Using yield()\nThread t1 = new Thread(() -> {\n    // Loop (for statement)\n    for (int i = 0; i < 5; i++) {\n        System.out.println(\"T1: \" + i);\n        Thread.yield(); // Yield to other threads\n    }\n});\n\nThread t2 = new Thread(() -> {\n    // Loop (for statement)\n    for (int i = 0; i < 5; i++) {\n        System.out.println(\"T2: \" + i);\n    }\n});\n\nt1.start();\nt2.start();\n// Output order is nondeterministic\n\n// Setting priority\nThread high = new Thread(() -> System.out.println(\"High\"));\nThread low = new Thread(() -> System.out.println(\"Low\"));\nhigh.setPriority(Thread.MAX_PRIORITY);  // 10\nlow.setPriority(Thread.MIN_PRIORITY);   // 1\nhigh.start();\nlow.start();\n// Higher-priority threads tend to run first, but it is not guaranteed",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "point",
+          "title": "Daemon Threads",
+          "body": "A daemon thread runs in the background, with the garbage collector being one such example.\nUse setDaemon(true) to set a thread as a daemon. This must be done before calling start().\nWhen all user (non-daemon) threads finish, daemon threads are forcibly stopped and the JVM exits.\nCalling setDaemon() after start() throws an IllegalThreadStateException.\nThreads created by a daemon thread are also daemon threads by default.",
+          "code": "Thread daemon = new Thread(() -> {\n    while (true) {\n        System.out.println(\"Daemon running\");\n        try { Thread.sleep(500); } catch (InterruptedException e) {}\n    }\n});\ndaemon.setDaemon(true); // Must be set before start()\ndaemon.start();\n\n// When the main thread ends, the daemon thread also stops\nSystem.out.println(\"Main done\");\n// The daemon thread stops after the main thread finishes\n\n// Check with isDaemon()\nSystem.out.println(daemon.isDaemon()); // true",
+          "note": "Execution of the [[finally]] block is also not guaranteed in daemon threads. Do not use them for critical cleanup operations.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_02",
+          "sectionType": "tip",
+          "title": "Exam Prep: Thread Control",
+          "body": "Remember that sleep() is a static method that always pauses the current thread.\njoin() is an instance method that waits for the target thread to finish.\nsetDaemon() must be called before start(); calling it after start() throws an [[exception]].\nyield() and priority are hints to the scheduler and do not guarantee behavior.\nInterruptedException is a checked exception, and it must be handled with sleep() and join().",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_02_q1",
+          "lessonId": "ch27_02",
+          "type": "fourChoice",
+          "question": "Which statement about Thread.sleep() is correct?",
+          "code": "ReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n    // Critical section\n    sharedResource.update();\n} finally {\n    lock.unlock();\n}",
+          "explanation": "Thread.sleep() is a static method that pauses the currently executing thread for a specified duration. It cannot pause other threads. InterruptedException is a checked exception and must be handled.",
+          "choices": [
+            {
+              "id": "ch27_02_q1_a",
+              "text": "It is a static method that pauses the current thread",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_02_q1_b",
+              "text": "It is an instance method that pauses the target thread",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_02_q1_c",
+              "text": "InterruptedException is an unchecked exception",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_02_q1_d",
+              "text": "A thread in sleep() enters the BLOCKED state",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_02_q2",
+          "lessonId": "ch27_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "public class Main {\n    public static void main(String[] args) throws InterruptedException {\n        Thread t = new Thread(() -> System.out.println(\"Hello\"));\n        t.start();\n        t.join();\n        System.out.println(\"World\");\n    }\n}",
+          "explanation": "The join() method causes the main thread to wait for thread t to complete. Therefore, \"Hello\" from thread t is always printed first, followed by \"World\". Without join(), the output order would be nondeterministic.",
+          "choices": [
+            {
+              "id": "ch27_02_q2_a",
+              "text": "Hello → World (this order is guaranteed)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_02_q2_b",
+              "text": "World → Hello (this order is guaranteed)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_02_q2_c",
+              "text": "The output order is nondeterministic",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_02_q2_d",
+              "text": "An InterruptedException occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_02_q3",
+          "lessonId": "ch27_02",
+          "type": "errorFind",
+          "question": "Select the error in the following code.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        Thread t = new Thread(() -> System.out.println(\"Run\"));\n        t.start();\n        t.setDaemon(true);\n    }\n}",
+          "explanation": "setDaemon() must be called before start(). Calling setDaemon() after start() throws an IllegalThreadStateException. The daemon setting must be configured before the thread is started.",
+          "choices": [
+            {
+              "id": "ch27_02_q3_a",
+              "text": "setDaemon() is called after start() (it must be set before start)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_02_q3_b",
+              "text": "The lambda expression syntax is incorrect",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_02_q3_c",
+              "text": "setDaemon() requires an int argument",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_02_q3_d",
+              "text": "The main method requires a throws declaration",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch27_02_q4",
+          "lessonId": "ch27_02",
+          "type": "codeComplete",
+          "question": "Complete the code to execute a task using ExecutorService.",
+          "code": "CompletableFuture.supplyAsync(() -> fetchData())\n    .thenApply(data -> process(data))\n    .thenAccept(result -> save(result))\n    .exceptionally(ex -> {\n        log.error(ex); return null;\n    });",
+          "explanation": "Executors.newFixedThreadPool() creates a fixed-size thread pool, and submit() submits a task. execute() is also valid, but submit() returns a Future.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "ExecutorService exec = Executors.__BLANK_1__(4);\nexec.__BLANK_2__(() -> System.out.println(\"Task\"));\nexec.shutdown();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "(1) Thread pool",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "newFixedThreadPool",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "newThreadPool",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "createPool",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "(2) Task submission",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "submit",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "execute",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "run",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch27_03",
+      "courseId": "ch27",
+      "title": "Synchronization",
+      "summary": "Learn about synchronization to maintain data integrity in a multithreaded environment. Understand the synchronized keyword, monitor locks, and the concept of race conditions.",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "overview",
+          "title": "The Need for Synchronization",
+          "body": "In this lesson, you will learn:\n\n- Mutual exclusion with [[synchronized]]\n- **Race conditions** and how to prevent them\n- Inter-[[thread]] communication with wait(), notify(), and notifyAll()\n\nThis is how multiple threads safely share data.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "rule",
+          "title": "Synchronized Methods and Blocks",
+          "body": "A synchronized method makes the entire method a target for locking.\nFor [[instance]] methods, the instance itself (this) is the lock target.\nFor [[static methods]], the Class object of the [[class]] is the lock target.\nA synchronized block allows you to specify any object as the lock target.\nThe lock is acquired at the beginning of the block and automatically released when the block ends (including [[exceptions]]).\nOnly one thread at a time can access a synchronized region with the same lock.",
+          "code": "class Counter {\n    private int count = 0;\n\n    // Synchronized method (locks on this)\n    public synchronized void increment() {\n        count++;\n    }\n\n    // Synchronized block\n    public void decrement() {\n        synchronized (this) {\n            count--;\n        }\n    }\n\n    // Synchronized static method (locks on the Class object)\n    private static int total = 0;\n    public static synchronized void addTotal(int n) {\n        total += n;\n    }\n\n    // Locking on an arbitrary object\n    private final Object lock = new Object();\n    public void safeOp() {\n        synchronized (lock) {\n            // Locks on the lock object\n            count++;\n        }\n    }\n}",
+          "note": "A synchronized method locks the entire method. A synchronized block can lock a more fine-grained scope.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "code",
+          "title": "Race Condition Example",
+          "body": "A race condition occurs when multiple threads read and write data simultaneously.\nAn operation like count++ is actually three steps: \"read → add → write\" and is not atomic (indivisible).\nWithout synchronization, two threads may read the same value, add to it, and produce an unexpected result.\nUsing synchronized prevents this problem.",
+          "code": "// UnsafeCounter class definition\nclass UnsafeCounter {\n    private int count = 0;\n    // increment method definition\n    public void increment() { count++; } // Not synchronized!\n    // getCount method definition\n    public int getCount() { return count; }\n}\n\n// SafeCounter class definition\nclass SafeCounter {\n    private int count = 0;\n    public synchronized void increment() { count++; } // Synchronized\n    public synchronized int getCount() { return count; }\n}\n\n// Test\nUnsafeCounter unsafe = new UnsafeCounter();\n// Loop (for statement)\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> unsafe.increment()).start();\n}\nThread.sleep(2000);\nSystem.out.println(unsafe.getCount()); // May be less than 1000\n\nSafeCounter safe = new SafeCounter();\n// Loop (for statement)\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> safe.increment()).start();\n}\nThread.sleep(2000);\nSystem.out.println(safe.getCount()); // Always 1000",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "point",
+          "title": "Monitor Locks and Reentrancy",
+          "body": "The lock used by Java's synchronized is called a monitor lock (also known as an intrinsic lock).\nEvery Java object has a monitor.\nMonitor locks are reentrant. If the same thread already holds a lock, it can reacquire the same lock.\nThis allows a synchronized method to call another synchronized method on the same object.\nWithout reentrancy, a thread would **deadlock** on its own lock.",
+          "code": "class Reentrant {\n    public synchronized void methodA() {\n        System.out.println(\"A\");\n        methodB(); // Can call another synchronized method on the same object\n    }\n\n    public synchronized void methodB() {\n        System.out.println(\"B\");\n    }\n}\n\n// Calling methodA() acquires the lock on this\n// When methodA() calls methodB(), the lock is already held and can be reacquired\nReentrant r = new Reentrant();\nnew Thread(() -> r.methodA()).start();\n// Output: A B",
+          "note": "Reentrancy is an important property of Java locks.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: Synchronization",
+          "body": "Distinguish that synchronized on an instance method locks on this, while synchronized on a static method locks on the Class object.\nSynchronized methods on different instances have different lock targets and can run concurrently.\nSpecifying null as the lock target in a synchronized block throws a [[NullPointerException]].\nThe [[volatile]] keyword guarantees visibility but not atomicity.\nThe Gold exam includes questions about determining whether a race condition occurs.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_03_q1",
+          "lessonId": "ch27_03",
+          "type": "outputPredict",
+          "question": "Which statement correctly describes the output of the following code?",
+          "code": "class Counter {\n    private int c = 0;\n    public void inc() { c++; }\n    public int get() { return c; }\n}\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Counter counter = new Counter();\n        Thread t1 = new Thread(() -> { for (int i = 0; i < 1000; i++) counter.inc(); });\n        Thread t2 = new Thread(() -> { for (int i = 0; i < 1000; i++) counter.inc(); });\n        t1.start(); t2.start();\n        t1.join(); t2.join();\n        System.out.println(counter.get());\n    }\n}",
+          "explanation": "Because the inc() method is not synchronized, a race condition can occur. c++ consists of three operations: \"read → add → write\" and is not atomic. Therefore, the result may be a nondeterministic value of 2000 or less.",
+          "choices": [
+            {
+              "id": "ch27_03_q1_a",
+              "text": "Since it is not synchronized, the result may be a nondeterministic value of 2000 or less",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_03_q1_b",
+              "text": "2000 is always output",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_03_q1_c",
+              "text": "1000 is always output",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_03_q1_d",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_03_q2",
+          "lessonId": "ch27_03",
+          "type": "fourChoice",
+          "question": "Which is the correct combination regarding the lock target of synchronized methods?",
+          "code": "ExecutorService es = Executors.newFixedThreadPool(4);\nFuture<String> future = es.submit(() -> {\n    Thread.sleep(1000);\n    return \"Done\";\n});\nString result = future.get();",
+          "explanation": "An instance synchronized method uses the instance (this) as the lock target, while a static synchronized method uses the Class object of that class as the lock target. This distinction is frequently tested.",
+          "choices": [
+            {
+              "id": "ch27_03_q2_a",
+              "text": "Instance method = locks on this, static method = locks on the Class object",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_03_q2_b",
+              "text": "Instance method = locks on the Class object, static method = locks on this",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_03_q2_c",
+              "text": "Both lock on the this object",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_03_q2_d",
+              "text": "Both lock on the Class object",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_03_q3",
+          "lessonId": "ch27_03",
+          "type": "fourChoice",
+          "question": "Which statement about Java monitor locks is correct?",
+          "code": "synchronized (lock) {\n    while (queue.isEmpty()) {\n        lock.wait();\n    }\n    return queue.poll();\n}",
+          "explanation": "Java's monitor locks are reentrant. If the same thread already holds a lock, it can reacquire the lock on the same object. This allows synchronized methods to safely call other synchronized methods on the same object.",
+          "choices": [
+            {
+              "id": "ch27_03_q3_a",
+              "text": "The same thread can reacquire the same lock (reentrant)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_03_q3_b",
+              "text": "Even the same thread will deadlock when reacquiring the same lock",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_03_q3_c",
+              "text": "Only objects inside a synchronized block have a monitor lock",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_03_q3_d",
+              "text": "Monitor locks must be explicitly acquired with the lock() method",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch27_03_q4",
+          "lessonId": "ch27_03",
+          "type": "reorder",
+          "question": "Arrange the thread lifecycle in the correct order.",
+          "code": "AtomicInteger counter = new AtomicInteger(0);\nint newVal = counter.incrementAndGet();\nboolean ok = counter.compareAndSet(1, 2);",
+          "explanation": "A thread follows this sequence: creation → start with start() → run() executes → wait for completion with join(). If run() is called directly without start(), it executes in the same thread.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Thread t = new Thread(task);",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "t.start();",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "// run() is executed",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "t.join();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch27_04",
+      "courseId": "ch27",
+      "title": "Concurrent Collections",
+      "summary": "Learn about collections that are safe to use in multithreaded environments (ConcurrentHashMap, CopyOnWriteArrayList, BlockingQueue). Understand the differences from traditional collections.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "overview",
+          "title": "The Need for Concurrent Collections",
+          "body": "In this lesson, you will learn:\n\n- Concurrent collections such as [[ConcurrentHashMap]] and CopyOnWriteArrayList\n- Differences from regular collections\n- Avoiding ConcurrentModificationException\n\nAchieve safe **concurrent processing** with **thread-safe** collections.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "rule",
+          "title": "ConcurrentHashMap",
+          "body": "ConcurrentHashMap is a **thread-safe** implementation of HashMap.\nInternally optimized locking mechanisms (fine-grained locking at the bucket level and CAS operations) achieve high concurrency.\nRead operations are performed without locks, and write operations are locked at the bucket (bin) level.\nNull keys and null values are not allowed (a difference from HashMap).\nAtomic operation [[methods]] such as putIfAbsent(), replace(), and compute() are provided.\nIterators are weakly consistent and do not throw ConcurrentModificationException.",
+          "code": "import java.util.concurrent.ConcurrentHashMap;\n\nConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\n\n// Atomic operations\nmap.putIfAbsent(\"C\", 3);  // Add only if key C does not exist\nmap.replace(\"A\", 1, 10);  // Replace with 10 only if the value is 1\nmap.compute(\"B\", (k, v) -> v + 100); // Atomically compute and update\n\nSystem.out.println(map); // {A=10, B=102, C=3}\n\n// null is not allowed\ntry {\n    map.put(\"D\", null); // NullPointerException\n} catch (NullPointerException e) {\n    System.out.println(\"null not allowed\");\n}\n\n// Modification during iteration is safe\nmap.forEach((k, v) -> {\n    if (v > 50) map.remove(k); // No ConcurrentModificationException\n});",
+          "note": "ConcurrentHashMap prohibits null keys and null values. Note the difference from HashMap.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "code",
+          "title": "CopyOnWriteArrayList",
+          "body": "CopyOnWriteArrayList is a **thread-safe** List that creates a copy of the internal [[array]] on every write.\nRead operations are fast and performed without locks.\nEvery write operation (add, set, remove) creates a copy of the entire internal array, so it is suitable for scenarios with few writes.\nIterators reference a snapshot from the time of creation, so changes during iteration are not reflected.\nThe iterator's remove() throws UnsupportedOperationException.",
+          "code": "import java.util.concurrent.CopyOnWriteArrayList;\nimport java.util.Iterator;\n\nCopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();\nlist.add(\"A\");\nlist.add(\"B\");\nlist.add(\"C\");\n\n// Modification during iteration\nIterator<String> it = list.iterator();\nlist.add(\"D\"); // Added after iterator creation\n// While the condition is true, repeat\nwhile (it.hasNext()) {\n    System.out.print(it.next() + \" \"); // A B C (D is not included)\n}\nSystem.out.println();\nSystem.out.println(list); // [A, B, C, D] (the list itself has D)\n\n// The iterator's remove() is not supported\nIterator<String> it2 = list.iterator();\nit2.next();\n// Operation that may throw an exception\ntry {\n    it2.remove(); // UnsupportedOperationException\n} catch (UnsupportedOperationException e) {\n    System.out.println(\"Iterator remove not supported\");\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "point",
+          "title": "BlockingQueue",
+          "body": "BlockingQueue is a queue used for passing data between [[threads]].\nWhen the queue is empty, take() blocks (waits) until data is added.\nWhen the queue is full, put() blocks until space becomes available.\nMajor implementations include ArrayBlockingQueue (fixed size) and LinkedBlockingQueue (variable size).\nIt is ideal for implementing the Producer-Consumer pattern.\noffer() and poll() are non-blocking alternatives (timeout specification is also possible).",
+          "code": "import java.util.concurrent.ArrayBlockingQueue;\nimport java.util.concurrent.BlockingQueue;\n\n// BlockingQueue with capacity of 3\nBlockingQueue<String> queue = new ArrayBlockingQueue<>(3);\n\n// Producer thread\nThread producer = new Thread(() -> {\n    try {\n        queue.put(\"Item1\");\n        queue.put(\"Item2\");\n        queue.put(\"Item3\");\n        System.out.println(\"Producer: 3 items added\");\n        queue.put(\"Item4\"); // Blocks because the queue is full\n        System.out.println(\"Producer: Item4 added\");\n    } catch (InterruptedException e) {}\n});\n\n// Consumer thread\nThread consumer = new Thread(() -> {\n    try {\n        Thread.sleep(1000);\n        System.out.println(\"Consumer: \" + queue.take()); // Item1\n    } catch (InterruptedException e) {}\n});\n\nproducer.start();\nconsumer.start();",
+          "note": "BlockingQueue is the foundation of the Producer-Consumer pattern. The blocking behavior of put/take is tested on exams.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_04",
+          "sectionType": "tip",
+          "title": "Exam Prep: Concurrent Collections",
+          "body": "Make sure to remember these key characteristics: ConcurrentHashMap prohibits null, CopyOnWriteArrayList iterators use snapshots, and BlockingQueue's put/take block.\nCollections.synchronizedList() wraps a list manually, but external synchronization is required during iteration.\nCopyOnWriteArrayList is suitable for scenarios with many reads and few writes.\nThe behavior of ConcurrentHashMap's compute()-family methods may also be tested.\nIt is also important that concurrent collection iterators do not throw ConcurrentModificationException.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_04_q1",
+          "lessonId": "ch27_04",
+          "type": "fourChoice",
+          "question": "Which statement about ConcurrentHashMap is correct?",
+          "code": "ReentrantLock lock = new ReentrantLock();\nlock.lock();\ntry {\n    // Critical section\n    sharedResource.update();\n} finally {\n    lock.unlock();\n}",
+          "explanation": "ConcurrentHashMap does not allow null keys or null values. This is an important difference from HashMap (which allows both null keys and null values). A NullPointerException is thrown.",
+          "choices": [
+            {
+              "id": "ch27_04_q1_a",
+              "text": "Neither null keys nor null values are allowed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_04_q1_b",
+              "text": "Null keys are allowed but null values are not",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_04_q1_c",
+              "text": "Like HashMap, null keys and null values are allowed",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_04_q1_d",
+              "text": "It throws ConcurrentModificationException during iteration",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_04_q2",
+          "lessonId": "ch27_04",
+          "type": "fourChoice",
+          "question": "Which statement about the CopyOnWriteArrayList iterator is correct?",
+          "code": "CompletableFuture.supplyAsync(() -> fetchData())\n    .thenApply(data -> process(data))\n    .thenAccept(result -> save(result))\n    .exceptionally(ex -> {\n        log.error(ex); return null;\n    });",
+          "explanation": "The CopyOnWriteArrayList iterator references a snapshot of the array at the time of creation. Changes made to the list after the iterator is created are not reflected. Additionally, the iterator's remove() throws UnsupportedOperationException.",
+          "choices": [
+            {
+              "id": "ch27_04_q2_a",
+              "text": "It references a snapshot at creation time, and subsequent changes are not reflected",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_04_q2_b",
+              "text": "Changes to the list are reflected in real time",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_04_q2_c",
+              "text": "Elements can be removed from the list using the iterator's remove()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_04_q2_d",
+              "text": "It throws ConcurrentModificationException when changes are made",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_04_q3",
+          "lessonId": "ch27_04",
+          "type": "errorFind",
+          "question": "Select the error in the following code.",
+          "code": "import java.util.concurrent.ConcurrentHashMap;\npublic class Main {\n    public static void main(String[] args) {\n        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();\n        map.put(\"key1\", \"value1\");\n        map.put(\"key2\", null);\n        System.out.println(map);\n    }\n}",
+          "explanation": "ConcurrentHashMap does not allow null values. Executing put(\"key2\", null) throws a NullPointerException. HashMap allows null keys and null values, but ConcurrentHashMap prohibits them.",
+          "choices": [
+            {
+              "id": "ch27_04_q3_a",
+              "text": "Attempting to store a null value in ConcurrentHashMap",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_04_q3_b",
+              "text": "ConcurrentHashMap constructor requires a capacity parameter",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_04_q3_c",
+              "text": "The add() method should be used instead of put()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_04_q3_d",
+              "text": "The import statement for ConcurrentHashMap is incorrect",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch27_05",
+      "courseId": "ch27",
+      "title": "ExecutorService",
+      "summary": "Learn the ExecutorService framework for managing thread pools. Understand Executors factory methods, the difference between submit() and execute(), Future and Callable, and shutdown methods.",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "overview",
+          "title": "Overview of ExecutorService",
+          "body": "In this lesson, you will learn:\n\n- [[Thread]] pool management with [[ExecutorService]]\n- Retrieving asynchronous results with [[Future]]<T>\n- Types of **thread pools** (fixed, cached, single, etc.)\n\nA safer and more efficient approach than managing threads directly.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "rule",
+          "title": "Executors Factory Methods",
+          "body": "| Method | Description |\n|---|---|\n| newSingleThreadExecutor() | Executes tasks sequentially with 1 thread |\n| newFixedThreadPool(n) | Fixed-size pool of n threads |\n| newCachedThreadPool() | Creates threads as needed, reuses idle ones |\n| newScheduledThreadPool(n) | Supports delayed and periodic execution |\nAll return an ExecutorService interface.\nYou must call shutdown() to release resources when done.",
+          "code": "import java.util.concurrent.*;\n\n// Fixed-size thread pool\nExecutorService pool = Executors.newFixedThreadPool(3);\n\n// Submitting tasks\npool.execute(() -> System.out.println(\"Task 1: \" + Thread.currentThread().getName()));\npool.execute(() -> System.out.println(\"Task 2: \" + Thread.currentThread().getName()));\npool.execute(() -> System.out.println(\"Task 3: \" + Thread.currentThread().getName()));\npool.execute(() -> System.out.println(\"Task 4: \" + Thread.currentThread().getName()));\n// With 3 threads, the 4th task waits until a thread becomes available\n\n// Single thread pool\nExecutorService single = Executors.newSingleThreadExecutor();\nsingle.execute(() -> System.out.println(\"Sequential 1\"));\nsingle.execute(() -> System.out.println(\"Sequential 2\"));\n// Always executes one at a time in order\n\npool.shutdown();\nsingle.shutdown();",
+          "note": "If more tasks are submitted than the pool size, they wait in a queue until a thread becomes available.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "code",
+          "title": "submit() and Callable/Future",
+          "body": "execute() takes a [[Runnable]] (no return value) and returns nothing.\nsubmit() takes a Runnable or [[Callable]] and returns a Future<T>.\nCallable<T> has a call() [[method]] that can return a result and is a [[functional interface]].\nFuture.get() retrieves the result, blocking until it is available.\nFuture.get(long timeout, TimeUnit unit) allows retrieval with a timeout.\nCallable's call() can throw [[checked exceptions]], which are wrapped as ExecutionException.",
+          "code": "import java.util.concurrent.*;\n\nExecutorService pool = Executors.newFixedThreadPool(2);\n\n// Callable: a task that returns a result\nCallable<Integer> task = () -> {\n    Thread.sleep(1000);\n    return 42;\n};\n\nFuture<Integer> future = pool.submit(task);\nSystem.out.println(\"Task submitted\");\n\n// Operation that may throw an exception\ntry {\n    // get() blocks until the result is available\n    Integer result = future.get();\n    System.out.println(\"Result: \" + result); // Result: 42\n} catch (InterruptedException | ExecutionException e) {\n    e.printStackTrace();\n}\n\n// Check completion with isDone()\nFuture<String> f2 = pool.submit(() -> \"Hello\");\n// While the condition is true, repeat\nwhile (!f2.isDone()) {\n    System.out.println(\"Waiting...\");\n}\nSystem.out.println(f2.get()); // Hello\n\npool.shutdown();",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "point",
+          "title": "shutdown() and shutdownNow()",
+          "body": "| Method | Description |\n|---|---|\n| shutdown() | Stops accepting new tasks. Already submitted tasks are executed to completion |\n| shutdownNow() | Attempts to interrupt running tasks and returns a list of waiting tasks |\n| awaitTermination() | Waits for pool termination for a specified time |\n| isShutdown() | Returns whether shutdown() has been called |\n| isTerminated() | Returns whether all tasks have completed |\nSubmitting a task after shutdown() throws a RejectedExecutionException.",
+          "code": "import java.util.concurrent.*;\n\nExecutorService pool = Executors.newFixedThreadPool(2);\npool.submit(() -> {\n    try { Thread.sleep(5000); } catch (InterruptedException e) {}\n    System.out.println(\"Task done\");\n});\n\npool.shutdown(); // Stop accepting new tasks\nSystem.out.println(pool.isShutdown()); // true\n\n// Submitting a task after shutdown causes an error\ntry {\n    pool.submit(() -> System.out.println(\"New task\"));\n} catch (RejectedExecutionException e) {\n    System.out.println(\"Rejected!\");\n}\n\n// Wait for termination\ntry {\n    boolean done = pool.awaitTermination(10, TimeUnit.SECONDS);\n    System.out.println(\"All done: \" + done);\n} catch (InterruptedException e) {}\n\nSystem.out.println(pool.isTerminated()); // true",
+          "note": "If you forget to call shutdown(), the program will not terminate. Always call shutdown() in a try-[[finally]] block.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_05",
+          "sectionType": "tip",
+          "title": "Exam Prep: ExecutorService",
+          "body": "Make sure to memorize the difference between execute() and submit() (return value, accepted types).\nCallable<T>'s call() can throw checked [[exceptions]], but Runnable's run() cannot.\nFuture.get() is a blocking method that requires handling InterruptedException and ExecutionException.\nUnderstand the difference between shutdown() and shutdownNow() (graceful vs. forceful).\nIt is essential to always call shutdown() when you are done with an ExecutorService.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_05_q1",
+          "lessonId": "ch27_05",
+          "type": "fourChoice",
+          "question": "Which statement about the difference between execute() and submit() is correct?",
+          "code": null,
+          "explanation": "submit() returns a Future, allowing you to retrieve the task's result and completion status. execute() has no return value and only accepts Runnable. submit() accepts both Runnable and Callable.",
+          "choices": [
+            {
+              "id": "ch27_05_q1_a",
+              "text": "submit() returns a Future, but execute() has no return value",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q1_b",
+              "text": "execute() returns a Future, but submit() has no return value",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q1_c",
+              "text": "Both return a Future",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q1_d",
+              "text": "submit() only accepts Callable, and execute() only accepts Runnable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_05_q2",
+          "lessonId": "ch27_05",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "import java.util.concurrent.*;\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService es = Executors.newSingleThreadExecutor();\n        Future<String> f1 = es.submit(() -> \"A\");\n        Future<String> f2 = es.submit(() -> \"B\");\n        es.shutdown();\n        System.out.println(f1.get() + f2.get());\n    }\n}",
+          "explanation": "newSingleThreadExecutor() executes tasks sequentially with a single thread. Tasks are submitted with submit(), and shutdown() stops accepting new tasks but allows already submitted tasks to execute. f1.get() returns \"A\" and f2.get() returns \"B\", so the output is \"AB\".",
+          "choices": [
+            {
+              "id": "ch27_05_q2_a",
+              "text": "AB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q2_b",
+              "text": "RejectedExecutionException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q2_c",
+              "text": "BA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q2_d",
+              "text": "Output order is nondeterministic",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_05_q3",
+          "lessonId": "ch27_05",
+          "type": "fillBlank",
+          "question": "To execute a task that returns a result using ExecutorService, use the ___ interface.",
+          "code": null,
+          "explanation": "Callable<T> is a functional interface with a call() method that can return a value. You submit a task with ExecutorService's submit(Callable) and receive the result via Future<T>. Unlike Runnable, it can also throw checked exceptions.",
+          "choices": [
+            {
+              "id": "ch27_05_q3_a",
+              "text": "Callable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q3_b",
+              "text": "Runnable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q3_c",
+              "text": "Supplier",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q3_d",
+              "text": "Executor",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch27_05_q4",
+          "lessonId": "ch27_05",
+          "type": "multiChoice",
+          "question": "Select all correct thread-safe implementation approaches.",
+          "code": null,
+          "explanation": "synchronized blocks, Atomic types such as AtomicInteger, ConcurrentHashMap, and immutable objects are thread-safe implementation approaches. ArrayList is not thread-safe; when synchronization is needed, use Collections.synchronizedList() or CopyOnWriteArrayList.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch27_05_q4_a",
+              "text": "synchronized block",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_05_q4_b",
+              "text": "Using AtomicInteger",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch27_05_q4_c",
+              "text": "Using ArrayList",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_05_q4_d",
+              "text": "Using ConcurrentHashMap",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch27_06",
+      "courseId": "ch27",
+      "title": "Atomic Operations and Deadlock",
+      "summary": "Learn about lock-free synchronization with atomic variables (AtomicInteger, AtomicReference), deadlock conditions and prevention, and inter-thread communication with wait()/notify().",
+      "estimatedMinutes": 6,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "overview",
+          "title": "Atomic Operations and Deadlock",
+          "body": "In this lesson, you will learn:\n\n- Atomic operation [[classes]] such as AtomicInteger\n- The CAS (Compare And Swap) mechanism\n- **Deadlock** conditions and avoidance strategies\n\nLearn about advanced **concurrent processing** problems and their solutions.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "rule",
+          "title": "AtomicInteger and AtomicReference",
+          "body": "AtomicInteger is a class that performs atomic (indivisible) operations on int values.\nIt provides [[methods]] such as get(), set(), incrementAndGet(), decrementAndGet(), and compareAndSet().\ncompareAndSet(expected, newValue) updates the value to newValue only if the current value matches expected (CAS operation).\nAtomicReference<T> is a class that performs atomic operations on [[reference types]].\nThese achieve **thread-safe** operations without using [[synchronized]].\nAtomic [[variables]] make operations on a single variable [[thread]]-safe, but they do not guarantee atomicity for compound operations.",
+          "code": "import java.util.concurrent.atomic.AtomicInteger;\nimport java.util.concurrent.atomic.AtomicReference;\n\n// AtomicInteger\nAtomicInteger counter = new AtomicInteger(0);\ncounter.incrementAndGet(); // 1 (equivalent to ++counter)\ncounter.getAndIncrement(); // Returns 1, value becomes 2 (equivalent to counter++)\ncounter.addAndGet(10);     // 12\ncounter.compareAndSet(12, 20); // true (updates 12 → 20)\nSystem.out.println(counter.get()); // 20\n\n// AtomicReference\nAtomicReference<String> ref = new AtomicReference<>(\"Hello\");\nref.set(\"World\");\nSystem.out.println(ref.get()); // World\nref.compareAndSet(\"World\", \"Java\"); // true\nSystem.out.println(ref.get()); // Java\n\n// Thread-safe counter (without synchronized)\nAtomicInteger safeCount = new AtomicInteger(0);\nfor (int i = 0; i < 1000; i++) {\n    new Thread(() -> safeCount.incrementAndGet()).start();\n}",
+          "note": "AtomicInteger is more lightweight than synchronized and is ideal for simple counters.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "code",
+          "title": "Deadlock",
+          "body": "A **deadlock** is a situation where two or more threads are forever waiting for each other to release their locks.\nThere are four conditions for [[deadlock]]: mutual exclusion, hold and wait, no preemption, and circular wait.\nA deadlock can occur when all four conditions are met.\nThe most common prevention strategy is to unify the lock acquisition order.\nWhen a deadlock occurs, the program hangs and does not recover automatically.",
+          "code": "// Deadlock example\nObject lockA = new Object();\nObject lockB = new Object();\n\nThread t1 = new Thread(() -> {\n    synchronized (lockA) {\n        System.out.println(\"T1: lockA acquired\");\n        // Operation that may throw an exception\n        try { Thread.sleep(100); } catch (InterruptedException e) {}\n        synchronized (lockB) { // Waiting for lockB\n            System.out.println(\"T1: lockB acquired\");\n        }\n    }\n});\n\nThread t2 = new Thread(() -> {\n    synchronized (lockB) {\n        System.out.println(\"T2: lockB acquired\");\n        // Operation that may throw an exception\n        try { Thread.sleep(100); } catch (InterruptedException e) {}\n        synchronized (lockA) { // Waiting for lockA\n            System.out.println(\"T2: lockA acquired\");\n        }\n    }\n});\n\nt1.start();\nt2.start();\n// T1 is waiting for lockB, T2 is waiting for lockA → Deadlock!\n\n// Prevention: Unify the lock acquisition order\n// Both threads should acquire lockA → lockB in that order",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "point",
+          "title": "wait(), notify(), and notifyAll()",
+          "body": "wait(), notify(), and notifyAll() are methods of the Object class used for inter-thread communication.\nThey can only be called inside a synchronized block. Calling them outside a synchronized block throws an IllegalMonitorStateException.\n| Method | Description |\n|---|---|\n| wait() | Puts the current thread in a waiting state and releases the lock. |\n| notify() | Wakes up one of the waiting threads (which one is nondeterministic). |\n| notifyAll() | Wakes up all waiting threads. |\nAfter returning from wait(), the thread must reacquire the lock.",
+          "code": "class SharedData {\n    private boolean ready = false;\n    \n    public synchronized void waitForReady() throws InterruptedException {\n        while (!ready) {  // Checking the condition in a while loop is important\n            wait();  // Wait until ready\n        }\n        System.out.println(\"Data is ready!\");\n    }\n    \n    public synchronized void setReady() {\n        ready = true;\n        notifyAll();  // Wake up all waiting threads\n    }\n}\n\nSharedData data = new SharedData();\n\nThread waiter = new Thread(() -> {\n    try { data.waitForReady(); }\n    catch (InterruptedException e) {}\n});\n\nThread setter = new Thread(() -> {\n    try { Thread.sleep(1000); } catch (InterruptedException e) {}\n    data.setReady();\n});\n\nwaiter.start();\nsetter.start();",
+          "note": "Calling wait() inside a while loop to check the condition is a best practice. This handles spurious wakeups.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_06",
+          "sectionType": "tip",
+          "title": "Exam Prep: Atomic Operations and Deadlock",
+          "body": "Remember the difference between incrementAndGet() and getAndIncrement() in AtomicInteger (equivalent to prefix ++ and postfix ++).\nUnderstand that compareAndSet() is a CAS operation that updates only when the expected value matches.\nThe most fundamental strategy for **deadlock** prevention is unifying the lock acquisition order.\nThe fact that wait()/notify() can only be used inside a synchronized block is frequently tested.\nAlso understand the importance of checking conditions with a while loop when using wait().",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_06_q1",
+          "lessonId": "ch27_06",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the behavior of AtomicInteger's compareAndSet(10, 20)?",
+          "code": null,
+          "explanation": "compareAndSet(expected, newValue) updates the value to newValue (20) only if the current value matches expected (10), and returns true. If they don't match, nothing is changed and false is returned. This is the CAS (Compare-And-Swap) operation.",
+          "choices": [
+            {
+              "id": "ch27_06_q1_a",
+              "text": "Updates to 20 only if the current value is 10, and returns true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_06_q1_b",
+              "text": "Unconditionally changes the value from 10 to 20",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_06_q1_c",
+              "text": "Adds 10 to the current value and sets 20",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_06_q1_d",
+              "text": "Sets whichever is larger between 10 and 20",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch27_06_q2",
+          "lessonId": "ch27_06",
+          "type": "fourChoice",
+          "question": "Which statement about the use of wait(), notify(), and notifyAll() is correct?",
+          "code": null,
+          "explanation": "wait(), notify(), and notifyAll() can only be called inside a synchronized block (or method). Calling them outside a synchronized block throws an IllegalMonitorStateException. This is because these methods are related to monitor lock operations.",
+          "choices": [
+            {
+              "id": "ch27_06_q2_a",
+              "text": "They can only be called inside a synchronized block",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_06_q2_b",
+              "text": "They can be called freely from anywhere",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_06_q2_c",
+              "text": "They are methods of the Thread class",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_06_q2_d",
+              "text": "They are called as static methods",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch27_06_q3",
+          "lessonId": "ch27_06",
+          "type": "errorFind",
+          "question": "Select the error in the following code.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        Object lock = new Object();\n        try {\n            lock.wait();\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        }\n    }\n}",
+          "explanation": "wait() can only be called inside a synchronized block. In this code, wait() is called outside a synchronized block, so an IllegalMonitorStateException is thrown at runtime. It should be written as synchronized (lock) { lock.wait(); }.",
+          "choices": [
+            {
+              "id": "ch27_06_q3_a",
+              "text": "wait() is called outside a synchronized block",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_06_q3_b",
+              "text": "wait() requires a timeout argument",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_06_q3_c",
+              "text": "The catch for InterruptedException is unnecessary",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_06_q3_d",
+              "text": "The lock object's type cannot be Object",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch27_07",
+      "courseId": "ch27",
+      "title": "CompletableFuture",
+      "summary": "Learn asynchronous programming with CompletableFuture, introduced in Java 8. Cover supplyAsync, thenApply, thenCompose, allOf/anyOf, and other declarative approaches to asynchronous processing, along with key Gold exam points.",
+      "estimatedMinutes": 7,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "overview",
+          "title": "What Is CompletableFuture?",
+          "body": "In this lesson, you will learn:\n\n- Asynchronous processing chains with [[CompletableFuture]]\n- How to use thenApply(), thenAccept(), and thenCompose()\n- Combining with [[exception]] handling (exceptionally, handle)\n\nThis is the standard approach for asynchronous programming in modern Java.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "rule",
+          "title": "Creating Asynchronous Tasks",
+          "body": "There are three main ways to create a CompletableFuture.\n| Method | Description |\n|---|---|\n| supplyAsync | Starts an asynchronous task with a return value. Runs on ForkJoinPool.commonPool() by default. |\n| runAsync | Starts an asynchronous task without a return value (Runnable). |\n| completedFuture | Wraps an already completed value into a CompletableFuture (useful for testing). |\nBoth supplyAsync and runAsync accept an Executor as a second argument to change the execution [[thread]] pool.",
+          "code": "import java.util.concurrent.CompletableFuture;\n\n// supplyAsync: with return value\nCompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> {\n    // Executed on a separate thread\n    return \"Hello from \" + Thread.currentThread().getName();\n});\nSystem.out.println(cf1.get()); // Hello from ForkJoinPool.commonPool-worker-1\n\n// runAsync: without return value\nCompletableFuture<Void> cf2 = CompletableFuture.runAsync(() -> {\n    System.out.println(\"Running in: \" + Thread.currentThread().getName());\n});\ncf2.get(); // Wait for completion\n\n// completedFuture: immediately completed value\nCompletableFuture<Integer> cf3 = CompletableFuture.completedFuture(42);\nSystem.out.println(cf3.get()); // 42 (does not block)",
+          "note": "Remember: supplyAsync = [[Supplier]] (with return value), runAsync = [[Runnable]] (without return value).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "code",
+          "title": "Chaining Operations (thenApply / thenAccept / thenRun)",
+          "body": "The greatest feature of CompletableFuture is the ability to chain operations.\n| Method | Description |\n|---|---|\n| thenApply | Receives the previous result, transforms it, and returns a new value (equivalent to map). |\n| thenAccept | Receives the previous result and consumes it (no return value). |\n| thenRun | Executes another operation without using the previous result (no return value). |\n| thenCompose | Receives the previous result and returns a new CompletableFuture (equivalent to flatMap). |\nEach [[method]] has an Async variant (such as thenApplyAsync) that can be executed on a different thread.",
+          "code": "CompletableFuture<String> result = CompletableFuture\n    .supplyAsync(() -> \"java\")\n    .thenApply(s -> s.toUpperCase())       // \"JAVA\"\n    .thenApply(s -> s + \" Programming\");  // \"JAVA Programming\"\nSystem.out.println(result.get()); // JAVA Programming\n\n// thenAccept: consume the result (no return value)\nCompletableFuture.supplyAsync(() -> 100)\n    .thenAccept(n -> System.out.println(\"Result: \" + n)); // Result: 100\n\n// thenCompose: chain operations that return CompletableFuture\nCompletableFuture<String> composed = CompletableFuture\n    .supplyAsync(() -> 1)\n    .thenCompose(id -> CompletableFuture.supplyAsync(\n        () -> \"User-\" + id  // Another async operation using the id\n    ));\nSystem.out.println(composed.get()); // User-1",
+          "note": "Think of thenApply as Stream.map() and thenCompose as Stream.flatMap() for easier understanding.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "tip",
+          "title": "CompletableFuture Composition Methods Overview",
+          "body": "| Method | Input | Output | Purpose |\n|---|---|---|---|\n| thenApply() | Previous result | Transformed value | Transform the result |\n| thenAccept() | Previous result | void | Consume the result |\n| thenRun() | None | void | Execute a follow-up action |\n| thenCompose() | Previous result | CompletableFuture | Chain asynchronous operations |\n| exceptionally() | Exception | Alternative value | Error handling |\n\nThink of thenApply = map and thenCompose = flatMap to see the similarity with the [[Stream API]].",
+          "code": null,
+          "note": "Async-suffixed methods (such as thenApplyAsync) are executed on a different thread.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "code",
+          "title": "Composing Multiple Asynchronous Operations",
+          "body": "There are also ways to combine multiple CompletableFutures.\n| Method | Description |\n|---|---|\n| allOf | Waits for all CompletableFutures to complete. Returns CompletableFuture<Void>. |\n| anyOf | Returns the result when any one completes. Returns CompletableFuture<Object>. |\n| thenCombine | Combines the results of two CompletableFutures and returns a new value. |",
+          "code": "// allOf: Wait for all to complete\nCompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> \"Hello\");\nCompletableFuture<String> cf2 = CompletableFuture.supplyAsync(() -> \"World\");\nCompletableFuture<String> cf3 = CompletableFuture.supplyAsync(() -> \"!\");\n\nCompletableFuture<Void> all = CompletableFuture.allOf(cf1, cf2, cf3);\nall.get(); // Wait until all complete\n// Get individual results with get()\nSystem.out.println(cf1.get() + \" \" + cf2.get() + cf3.get()); // Hello World!\n\n// thenCombine: Combine two results\nCompletableFuture<String> combined = CompletableFuture\n    .supplyAsync(() -> \"Java\")\n    .thenCombine(\n        CompletableFuture.supplyAsync(() -> 17),\n        (lang, ver) -> lang + \" SE \" + ver  // Combine both results\n    );\nSystem.out.println(combined.get()); // Java SE 17\n\n// anyOf: Get the first one that completes\nCompletableFuture<Object> any = CompletableFuture.anyOf(cf1, cf2);\nSystem.out.println(any.get()); // Either Hello or World",
+          "note": "Since allOf returns Void, individual results must be obtained by calling get() on the original CompletableFutures.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch27_07",
+          "sectionType": "point",
+          "title": "Exception Handling and Exam Points",
+          "body": "Exception handling in CompletableFuture uses exceptionally and handle.\n| Method | Description |\n|---|---|\n| exceptionally | Returns an alternative value only when an exception occurs. Not called on normal completion. |\n| handle | Handles both normal and error cases. The first argument is the result, the second is the exception (may be null). |\n| whenComplete | Receives both result and exception for side effects, but does not transform the value. |\n\n[Gold Exam Points]\n- The difference in return types between supplyAsync and runAsync\n- The difference between thenApply and thenCompose ([[Function]] vs Function returning a CF)\n- allOf returns **CompletableFuture**<Void>\n- get() throws ExecutionException (and InterruptedException)\n- getNow(defaultValue) returns a default value without blocking",
+          "code": "CompletableFuture<String> cf = CompletableFuture\n    .supplyAsync(() -> {\n        if (true) throw new RuntimeException(\"Error!\");\n        return \"OK\";\n    })\n    .exceptionally(ex -> \"Recovered: \" + ex.getMessage());\nSystem.out.println(cf.get()); // Recovered: java.lang.RuntimeException: Error!\n\n// handle: Process both normal and error cases\nCompletableFuture<String> handled = CompletableFuture\n    .supplyAsync(() -> \"Data\")\n    .handle((result, ex) -> {\n        if (ex != null) return \"Error\";\n        return \"Success: \" + result;\n    });\nSystem.out.println(handled.get()); // Success: Data\n\n// getNow: Get default value without blocking\nCompletableFuture<String> slow = CompletableFuture.supplyAsync(() -> {\n    try { Thread.sleep(5000); } catch (InterruptedException e) {}\n    return \"Done\";\n});\nSystem.out.println(slow.getNow(\"Not ready\")); // Not ready",
+          "note": "The argument to exceptionally may be wrapped in a CompletionException rather than the original exception. getMessage() may include the nested exception name.",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch27_07_q1",
+          "lessonId": "ch27_07",
+          "type": "fourChoice",
+          "question": "What is the return type of CompletableFuture.supplyAsync(() -> \"Hello\")?",
+          "explanation": "supplyAsync takes a Supplier<T> and returns a CompletableFuture<T>. Since the lambda returns \"Hello\" (a String), the return type is CompletableFuture<String>. runAsync returns CompletableFuture<Void>.",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch27_07_q1_a",
+              "text": "CompletableFuture<String>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_07_q1_b",
+              "text": "Future<String>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_07_q1_c",
+              "text": "CompletableFuture<Void>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_07_q1_d",
+              "text": "CompletableFuture<Object>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch27_07_q2",
+          "lessonId": "ch27_07",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "CompletableFuture<String> cf = CompletableFuture\n    .supplyAsync(() -> \"hello\")\n    .thenApply(s -> s.toUpperCase())\n    .thenApply(s -> s + \"!\");\nSystem.out.println(cf.get());",
+          "explanation": "supplyAsync generates \"hello\" asynchronously → thenApply transforms it to \"HELLO\" → thenApply transforms it to \"HELLO!\". get() retrieves the final result, so the output is \"HELLO!\".",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch27_07_q2_a",
+              "text": "HELLO!",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_07_q2_b",
+              "text": "hello!",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_07_q2_c",
+              "text": "HELLO",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_07_q2_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch27_07_q3",
+          "lessonId": "ch27_07",
+          "type": "fourChoice",
+          "question": "What is the correct return type of CompletableFuture.allOf(cf1, cf2, cf3)?",
+          "explanation": "The return type of allOf() is CompletableFuture<Void>. allOf waits for all passed CompletableFutures to complete but does not aggregate individual results. To obtain each result, call get() individually on the original CompletableFutures. anyOf() returns CompletableFuture<Object>.",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch27_07_q3_a",
+              "text": "CompletableFuture<Void>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch27_07_q3_b",
+              "text": "CompletableFuture<Object>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch27_07_q3_c",
+              "text": "CompletableFuture<List<Object>>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch27_07_q3_d",
+              "text": "void",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,561 @@
+{
+  "courseId": "ch31",
+  "lessons": [
+    {
+      "id": "ch31_01",
+      "courseId": "ch31",
+      "title": "Locale",
+      "summary": "Learn the basic usage of the java.util.Locale class, Locale constants, and Locale.Builder.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "overview",
+          "title": "What Is a Locale?",
+          "body": "In this lesson, you will learn:\n\n- The role of the **Locale** [[class]] (language and region settings)\n- How to create a [[Locale]] ([[constructor]], constants, builder)\n- Locale.getDefault() and the system locale\n\nThe first step toward **internationalization** begins with understanding Locales.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "rule",
+          "title": "Locale Constants",
+          "body": "The Locale class provides predefined constants for commonly used regions.\n**Locale**.JAPAN represents Japan (language: ja, country: JP).\nLocale.US represents the United States (language: en, country: US).\nLocale.JAPANESE represents only the Japanese language and does not include country information.\nLocale.ENGLISH similarly represents only the English language.\nIt is important to understand the difference between a language-only Locale and a language+country Locale.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "code",
+          "title": "How to Create a Locale",
+          "body": "There are several ways to create a Locale object.\nUsing constants is the simplest approach.\nUsing constructors is another option, but this approach is becoming deprecated.\nUsing **Locale**.Builder is the recommended method.",
+          "code": "// 定数を使用\nLocale japan = Locale.JAPAN;\nLocale us = Locale.US;\n\n// コンストラクタ（非推奨になりつつある）\nLocale france = new Locale(\"fr\", \"FR\");\n\n// Locale.Builder（推奨）\nLocale germany = new Locale.Builder()\n    .setLanguage(\"de\")\n    .setRegion(\"DE\")\n    .build();\n\nSystem.out.println(japan); // ja_JP\nSystem.out.println(germany); // de_DE",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "point",
+          "title": "Features of Locale.Builder",
+          "body": "**Locale**.Builder allows you to safely create Locales using the builder pattern.\nUse setLanguage() for the language code (ISO 639) and setRegion() for the country code (ISO 3166).\nSetting an invalid value throws an IllFormedLocaleException.\nThe build() [[method]] produces the final Locale object.\nLocale.Builder supports method chaining, offering high readability.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch31_01",
+          "sectionType": "tip",
+          "title": "Getting and Setting the Default Locale",
+          "body": "**Locale**.getDefault() retrieves the current default Locale.\nLocale.setDefault(Locale) changes the default Locale.\nChanging the default Locale affects the entire JVM, so caution is required.\nOn the exam, you may be asked how changing the default Locale impacts other operations.",
+          "code": null,
+          "note": "**Locale**.setDefault() is a [[static method]] that affects the entire JVM.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch31_01_q1",
+          "lessonId": "ch31_01",
+          "type": "fourChoice",
+          "question": "Which of the following correctly represents the language code and country code combination for Locale.JAPAN?",
+          "code": "Locale locale = Locale.of(\"ja\", \"JP\");\nResourceBundle rb = ResourceBundle.getBundle(\n    \"messages\", locale);\nString greeting = rb.getString(\"hello\");",
+          "explanation": "Locale.JAPAN represents the combination of language code \"ja\" and country code \"JP\". Locale.JAPANESE has only the language code \"ja\" and does not include a country code.",
+          "choices": [
+            {
+              "id": "ch31_01_q1_a",
+              "text": "Language: ja, Country: JP",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_01_q1_b",
+              "text": "Language: jp, Country: JA",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_01_q1_c",
+              "text": "Language: ja, Country: none",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_01_q1_d",
+              "text": "Language: japan, Country: JAPAN",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch31_01_q2",
+          "lessonId": "ch31_01",
+          "type": "fourChoice",
+          "question": "Which exception is thrown when an invalid language code is set in Locale.Builder?",
+          "code": "NumberFormat nf = NumberFormat\n    .getCurrencyInstance(Locale.JAPAN);\nString price = nf.format(1500);\n// ¥1,500",
+          "explanation": "When an invalid value is set in Locale.Builder, an IllFormedLocaleException is thrown. This is a mechanism for safely constructing Locales.",
+          "choices": [
+            {
+              "id": "ch31_01_q2_a",
+              "text": "IllFormedLocaleException",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_01_q2_b",
+              "text": "IllegalArgumentException",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_01_q2_c",
+              "text": "LocaleException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_01_q2_d",
+              "text": "UnsupportedLocaleException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch31_01_q3",
+          "lessonId": "ch31_01",
+          "type": "fillBlank",
+          "question": "Complete the code to set the default Locale for the entire JVM to Japan.\nLocale._____(Locale.JAPAN);",
+          "code": "DateTimeFormatter dtf = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nString date = LocalDate.now().format(dtf);",
+          "explanation": "Locale.setDefault() is a static method that changes the default Locale for the entire JVM. It takes a Locale object as its argument.",
+          "choices": [
+            {
+              "id": "ch31_01_q3_a",
+              "text": "setDefault",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_01_q3_b",
+              "text": "setLocale",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_01_q3_c",
+              "text": "changeDefault",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_01_q3_d",
+              "text": "applyLocale",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch31_02",
+      "courseId": "ch31",
+      "title": "ResourceBundle",
+      "summary": "Learn about internationalization using properties files, the ResourceBundle mechanism, and fallback chains.",
+      "estimatedMinutes": 7,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "overview",
+          "title": "What Is a ResourceBundle?",
+          "body": "In this lesson, you will learn:\n\n- Managing locale-specific messages with **ResourceBundle**\n- Properties file naming conventions (basename_ja_JP.properties)\n- The [[ResourceBundle]] search order\n\nLearn how to implement multi-language support.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "rule",
+          "title": "Properties File Naming Conventions",
+          "body": "Properties files are named using the format basename_languageCode_countryCode.properties.\nFor example, messages.properties is the default, and messages_ja.properties is for Japanese.\nmessages_ja_JP.properties is a file for Japanese (Japan).\nFiles must be placed on the [[class]]path.\nA file with only the base name (messages.properties) serves as the default bundle.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "code",
+          "title": "How to Use ResourceBundle",
+          "body": "Use **ResourceBundle**.getBundle() to obtain a bundle and getString() to retrieve the value associated with a key.\nPass the base name and a Locale to getBundle().\nIf the Locale is omitted, the default Locale is used.",
+          "code": "// messages_ja.properties:\n// greeting=こんにちは\n// farewell=さようなら\n\n// messages_en.properties:\n// greeting=Hello\n// farewell=Goodbye\n\nLocale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nString greeting = bundle.getString(\"greeting\");\nSystem.out.println(greeting); // こんにちは\n\nResourceBundle enBundle = ResourceBundle.getBundle(\"messages\", Locale.US);\nSystem.out.println(enBundle.getString(\"greeting\")); // Hello",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "point",
+          "title": "Fallback Chain",
+          "body": "When a ResourceBundle cannot find an exact match for the specified locale, it falls back.\nFor example, with Locale(\"fr\", \"CA\"), the search order is:\n1. messages_fr_CA.properties\n2. messages_fr.properties\n3. messages.properties (default bundle)\nIf the default bundle is not found either, a MissingResourceException is thrown.\nA MissingResourceException is also thrown when a key is not found.",
+          "code": null,
+          "note": "If a default Locale is set, bundles for the default Locale are also included in the fallback chain.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch31_02",
+          "sectionType": "tip",
+          "title": "Useful ResourceBundle Methods",
+          "body": "keySet() returns all keys in the bundle as a Set<String>.\ncontainsKey() checks whether a specific key exists.\ngetBaseBundleName() retrieves the base name of the bundle.\nThese [[methods]] are also frequently tested on the exam.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch31_02_q1",
+          "lessonId": "ch31_02",
+          "type": "fourChoice",
+          "question": "When executing ResourceBundle.getBundle(\"app\", new Locale(\"fr\", \"CA\")), which properties file is searched first?",
+          "code": "Locale locale = Locale.of(\"ja\", \"JP\");\nResourceBundle rb = ResourceBundle.getBundle(\n    \"messages\", locale);\nString greeting = rb.getString(\"hello\");",
+          "explanation": "In the fallback chain, the most specific locale file (language + country) is searched first. Therefore, app_fr_CA.properties is searched first.",
+          "choices": [
+            {
+              "id": "ch31_02_q1_a",
+              "text": "app_fr_CA.properties",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_02_q1_b",
+              "text": "app_fr.properties",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_02_q1_c",
+              "text": "app.properties",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_02_q1_d",
+              "text": "app_CA.properties",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch31_02_q2",
+          "lessonId": "ch31_02",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.\n\nmessages_ja.properties contains greeting=こんにちは.\nmessages.properties contains greeting=Hello and farewell=Goodbye.",
+          "code": "Locale locale = Locale.JAPAN;\nResourceBundle bundle = ResourceBundle.getBundle(\"messages\", locale);\nSystem.out.println(bundle.getString(\"farewell\"));",
+          "explanation": "Since the farewell key does not exist in messages_ja.properties, the search falls back to the default messages.properties, retrieving \"Goodbye\". Key lookups fall back to the parent bundle.",
+          "choices": [
+            {
+              "id": "ch31_02_q2_a",
+              "text": "Goodbye",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_02_q2_b",
+              "text": "A MissingResourceException is thrown",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_02_q2_c",
+              "text": "null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_02_q2_d",
+              "text": "こんにちは",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch31_02_q3",
+          "lessonId": "ch31_02",
+          "type": "fillBlank",
+          "question": "Fill in the method name used to retrieve a string corresponding to a key from a ResourceBundle.\nbundle._____(\"greeting\");",
+          "code": "NumberFormat nf = NumberFormat\n    .getCurrencyInstance(Locale.JAPAN);\nString price = nf.format(1500);\n// ¥1,500",
+          "explanation": "The getString() method of ResourceBundle returns the string associated with the specified key. If the key does not exist, a MissingResourceException is thrown.",
+          "choices": [
+            {
+              "id": "ch31_02_q3_a",
+              "text": "getString",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_02_q3_b",
+              "text": "getValue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_02_q3_c",
+              "text": "get",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_02_q3_d",
+              "text": "getProperty",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch31_02_q4",
+          "lessonId": "ch31_02",
+          "type": "codeComplete",
+          "question": "Complete the code for locale-aware resource handling with ResourceBundle.",
+          "code": "DateTimeFormatter dtf = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nString date = LocalDate.now().format(dtf);",
+          "explanation": "Use Locale.JAPAN to obtain the Japan locale, then use ResourceBundle.getBundle() to load the properties file.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Locale locale = Locale.__BLANK_1__;\nResourceBundle bundle = ResourceBundle.__BLANK_2__(\"messages\", locale);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Locale",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "JAPAN",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "JP",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "JAPANESE",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Retrieval",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "getBundle",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "load",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "open",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch31_03",
+      "courseId": "ch31",
+      "title": "NumberFormat and DateFormat",
+      "summary": "Learn how to format numbers, currencies, and dates in a locale-aware manner.",
+      "estimatedMinutes": 7,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "overview",
+          "title": "Locale-Aware Formatting",
+          "body": "In this lesson, you will learn:\n\n- Locale-dependent number formatting with NumberFormat and DecimalFormat\n- Locale support in [[DateTimeFormatter]]\n- **Internationalization** of currency formatting\n\nAchieve appropriate display formats according to the locale.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "code",
+          "title": "Using NumberFormat",
+          "body": "NumberFormat.getInstance() obtains a locale-aware number formatter.\ngetCurrencyInstance() obtains a currency formatter.\nThe format() [[method]] converts a number to a string, and parse() converts a string back to a number.",
+          "code": "import java.text.NumberFormat;\nimport java.util.Locale;\n\n// 変数の宣言と初期化\ndouble amount = 1234567.89;\n\nNumberFormat nfJP = NumberFormat.getInstance(Locale.JAPAN);\nSystem.out.println(nfJP.format(amount)); // 1,234,567.89\n\nNumberFormat nfDE = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nfDE.format(amount)); // 1.234.567,89\n\nNumberFormat cfJP = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nSystem.out.println(cfJP.format(amount)); // ￥1,234,568\n\nNumberFormat cfUS = NumberFormat.getCurrencyInstance(Locale.US);\nSystem.out.println(cfUS.format(amount)); // $1,234,567.89",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "code",
+          "title": "DateTimeFormatter and Locale",
+          "body": "DateTimeFormatter's ofLocalizedDate() and ofLocalizedDateTime() generate locale-aware formatters.\nUse the withLocale() method to specify a Locale.\nFormatStyle lets you specify the display style (FULL, LONG, MEDIUM, SHORT).",
+          "code": "import java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.FormatStyle;\nimport java.util.Locale;\n\nLocalDate date = LocalDate.of(2025, 4, 1);\n\nDateTimeFormatter fmtJP = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nSystem.out.println(date.format(fmtJP));\n// 2025年4月1日火曜日\n\nDateTimeFormatter fmtUS = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.US);\nSystem.out.println(date.format(fmtUS));\n// Tuesday, April 1, 2025",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "point",
+          "title": "NumberFormat Considerations",
+          "body": "The parse() method of NumberFormat can throw a ParseException.\nSince parse() throws a [[checked exception]], it must be handled with try-catch or a throws declaration.\nWhen formatting currency with getCurrencyInstance(), the appropriate currency symbol is applied based on the locale.\nFor Japanese yen, decimal places are truncated, while for US dollars, two decimal places are displayed.\nNumberFormat is an abstract class, so you cannot create an [[instance]] with new NumberFormat().",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch31_03",
+          "sectionType": "tip",
+          "title": "Exam Preparation Tips",
+          "body": "On the exam, you may be asked about differences in decimal separators and grouping separators across locales.\nJapan and the US use commas as grouping separators and periods as decimal separators.\nGermany and France use periods as grouping separators and commas as decimal separators.\nAlso remember that omitting the argument to NumberFormat.getInstance() uses the default Locale.",
+          "code": null,
+          "note": "CompactNumberFormat is available from Java 12 onward. Check whether it is within the exam scope.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch31_03_q1",
+          "lessonId": "ch31_03",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "NumberFormat nf = NumberFormat.getInstance(Locale.GERMANY);\nSystem.out.println(nf.format(1234.56));",
+          "explanation": "In the German locale, periods are used as grouping separators and commas as decimal separators. Therefore, 1234.56 is displayed as \"1.234,56\".",
+          "choices": [
+            {
+              "id": "ch31_03_q1_a",
+              "text": "1.234,56",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_03_q1_b",
+              "text": "1,234.56",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_03_q1_c",
+              "text": "1234.56",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_03_q1_d",
+              "text": "1234,56",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch31_03_q2",
+          "lessonId": "ch31_03",
+          "type": "fourChoice",
+          "question": "Which of the following is a correct way to create a NumberFormat instance?",
+          "code": null,
+          "explanation": "NumberFormat is an abstract class and cannot be instantiated using the new keyword. Use factory methods such as getInstance() or getCurrencyInstance().",
+          "choices": [
+            {
+              "id": "ch31_03_q2_a",
+              "text": "NumberFormat.getInstance(Locale.US)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_03_q2_b",
+              "text": "new NumberFormat(Locale.US)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_03_q2_c",
+              "text": "NumberFormat.of(Locale.US)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_03_q2_d",
+              "text": "NumberFormat.create(Locale.US)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch31_03_q3",
+          "lessonId": "ch31_03",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. What is the cause?",
+          "code": "NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.JAPAN);\nString result = nf.format(1000);\nNumber num = nf.parse(result);",
+          "explanation": "The parse() method of NumberFormat can throw a ParseException, which is a checked exception. It must be enclosed in a try-catch block or declared with a throws clause in the method signature.",
+          "choices": [
+            {
+              "id": "ch31_03_q3_a",
+              "text": "The ParseException from parse() is not handled",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch31_03_q3_b",
+              "text": "The argument to getCurrencyInstance() is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch31_03_q3_c",
+              "text": "An int type cannot be passed to format()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch31_03_q3_d",
+              "text": "The return value of parse() cannot be received as a Number type",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

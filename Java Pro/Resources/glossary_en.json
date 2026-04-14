@@ -1,0 +1,1822 @@
+[
+  {
+    "id": "g001",
+    "term": "Java",
+    "reading": "Java",
+    "definition": "An object-oriented programming language developed by Sun Microsystems (now Oracle). Based on the philosophy of \"Write Once, Run Anywhere,\" it runs on any platform via the JVM.",
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
+  },
+  {
+    "id": "g002",
+    "term": "JVM",
+    "reading": "JVM",
+    "definition": "Short for Java Virtual Machine. A virtual computer that executes Java bytecode. It abstracts away OS differences, enabling platform independence.",
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
+  },
+  {
+    "id": "g003",
+    "term": "JDK",
+    "reading": "JDK",
+    "definition": "Short for Java Development Kit. A bundle that includes the compiler, libraries, and tools required for Java program development.",
+    "relatedLessonIds": [
+      "ch01_02"
+    ]
+  },
+  {
+    "id": "g004",
+    "term": "Compile",
+    "reading": "Compile",
+    "definition": "The process of converting human-written source code (.java) into bytecode (.class) that the computer can execute. This is done using the javac command.",
+    "relatedLessonIds": [
+      "ch01_02"
+    ]
+  },
+  {
+    "id": "g005",
+    "term": "Variable",
+    "reading": "Variable",
+    "definition": "A \"named box\" for temporarily storing data. Declared with a type and used by assigning a value. Example: int age = 25;",
+    "relatedLessonIds": [
+      "ch02_02"
+    ]
+  },
+  {
+    "id": "g006",
+    "term": "Data Type",
+    "reading": "Data Type",
+    "definition": "Defines the kind of data that can be stored in a variable. Includes int (integer), double (decimal), String (text), boolean (true/false), and others.",
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
+  },
+  {
+    "id": "g007",
+    "term": "Method",
+    "reading": "Method",
+    "definition": "A named block of code that groups a series of operations. It can be called repeatedly, receives values via parameters, and returns results via a return value.",
+    "relatedLessonIds": [
+      "ch05_01"
+    ]
+  },
+  {
+    "id": "g008",
+    "term": "Class",
+    "reading": "Class",
+    "definition": "A \"blueprint\" in object-oriented programming that combines data (fields) and behavior (methods). Instances are created using the new keyword.",
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
+  },
+  {
+    "id": "g009",
+    "term": "Instance",
+    "reading": "Instance",
+    "definition": "A concrete object created from a class blueprint using new. Each instance holds its own independent field values.",
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
+  },
+  {
+    "id": "g010",
+    "term": "Constructor",
+    "reading": "Constructor",
+    "definition": "A special method automatically called when an instance is created (via new) for initialization. It has the same name as the class and no return type.",
+    "relatedLessonIds": [
+      "ch07_03"
+    ]
+  },
+  {
+    "id": "g011",
+    "term": "Encapsulation",
+    "reading": "Encapsulation",
+    "definition": "An OOP principle that hides an object's data from direct external access, allowing access only through methods. For example, a bank account's balance cannot be modified directly — only deposit and withdrawal methods are exposed. Fields are made private and accessed safely via getter/setter methods.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g012",
+    "term": "Inheritance",
+    "reading": "Inheritance",
+    "definition": "A mechanism for creating a new class (subclass/child class) that inherits the functionality of an existing class (superclass/parent class). Achieved using the extends keyword.",
+    "relatedLessonIds": [
+      "ch08_01"
+    ]
+  },
+  {
+    "id": "g013",
+    "term": "Override",
+    "reading": "Override",
+    "definition": "Redefining (overwriting) a parent class method in a subclass. Implements different behavior with the same method name and parameters. The @Override annotation should be used.",
+    "relatedLessonIds": [
+      "ch08_02"
+    ]
+  },
+  {
+    "id": "g014",
+    "term": "Overload",
+    "reading": "Overload",
+    "definition": "Defining multiple methods with the same name but different parameter types or counts within the same class. For example, print(int) and print(String) — the correct method is automatically determined based on the arguments. Overloading cannot be achieved by differing only in return type.",
+    "relatedLessonIds": [
+      "ch05_03"
+    ]
+  },
+  {
+    "id": "g015",
+    "term": "Abstract Class",
+    "reading": "Abstract Class",
+    "definition": "A class declared with the abstract keyword. It can contain abstract methods (methods without a body) and forces subclasses to implement them. It cannot be instantiated directly.",
+    "relatedLessonIds": [
+      "ch08_03"
+    ]
+  },
+  {
+    "id": "g016",
+    "term": "Interface",
+    "reading": "Interface",
+    "definition": "Defines method specifications (a contract) that a class must implement. It declares \"what can be done\" while leaving \"how it's done\" to the implementing class. Like a remote control's power button that works with any TV, a common interface guarantees behavior. In Java, interfaces are implemented using the implements keyword.",
+    "relatedLessonIds": [
+      "ch08_04"
+    ]
+  },
+  {
+    "id": "g017",
+    "term": "Polymorphism",
+    "reading": "Polymorphism",
+    "definition": "The ability for the same method call to exhibit different behavior depending on the actual type of the object. A design principle that enhances extensibility and maintainability.",
+    "relatedLessonIds": [
+      "ch08_05"
+    ]
+  },
+  {
+    "id": "g018",
+    "term": "Array",
+    "reading": "Array",
+    "definition": "A fixed-length data structure that stores elements of the same type in contiguous memory. Accessed by index (starting from 0), with length returning the number of elements.",
+    "relatedLessonIds": [
+      "ch06_01"
+    ]
+  },
+  {
+    "id": "g019",
+    "term": "ArrayList",
+    "reading": "ArrayList",
+    "definition": "A resizable list from the java.util package. Unlike arrays, elements can be freely added and removed. The type to store is specified using generics <Type>.",
+    "relatedLessonIds": [
+      "ch06_03"
+    ]
+  },
+  {
+    "id": "g020",
+    "term": "HashMap",
+    "reading": "HashMap",
+    "definition": "A collection that manages data as key-value pairs. Keys must be unique (no duplicates). Elements are added with put() and retrieved with get().",
+    "relatedLessonIds": [
+      "ch06_04"
+    ]
+  },
+  {
+    "id": "g021",
+    "term": "Exception",
+    "reading": "Exception",
+    "definition": "An error that occurs during program execution. Caught and handled appropriately using try-catch statements. Classified into checked exceptions and unchecked exceptions.",
+    "relatedLessonIds": [
+      "ch09_01"
+    ]
+  },
+  {
+    "id": "g022",
+    "term": "static",
+    "reading": "static",
+    "definition": "A modifier indicating that a member (field or method) belongs to the class rather than to instances. It can be accessed directly via the class name without creating an instance. Shared across all instances.",
+    "relatedLessonIds": [
+      "ch07_05"
+    ]
+  },
+  {
+    "id": "g023",
+    "term": "for Statement",
+    "reading": "for Statement",
+    "definition": "A control structure for repetitive processing. In the form for (initialization; condition; update), the block is repeated as long as the condition is true.",
+    "relatedLessonIds": [
+      "ch04_01"
+    ]
+  },
+  {
+    "id": "g024",
+    "term": "while Statement",
+    "reading": "while Statement",
+    "definition": "A loop construct that repeats while the condition is true. Suitable when the number of iterations is unknown. The do-while variant guarantees at least one execution.",
+    "relatedLessonIds": [
+      "ch04_02"
+    ]
+  },
+  {
+    "id": "g025",
+    "term": "if Statement",
+    "reading": "if Statement",
+    "definition": "A control structure for conditional branching. Executes the block only when the condition is true. Can be combined with else and else if to handle multiple conditions.",
+    "relatedLessonIds": [
+      "ch03_01"
+    ]
+  },
+  {
+    "id": "g026",
+    "term": "switch Statement",
+    "reading": "switch Statement",
+    "definition": "A control structure that branches processing based on a value. Can specify multiple matching conditions and is sometimes more readable than chained if-else if statements. Uses break to exit a branch.",
+    "relatedLessonIds": [
+      "ch03_04"
+    ]
+  },
+  {
+    "id": "g027",
+    "term": "JDBC",
+    "reading": "JDBC",
+    "definition": "Short for Java Database Connectivity. A standard API for operating relational databases from Java. Uses DriverManager, Connection, PreparedStatement, and other classes.",
+    "relatedLessonIds": [
+      "ch10_01"
+    ]
+  },
+  {
+    "id": "g028",
+    "term": "Servlet",
+    "reading": "Servlet",
+    "definition": "A server-side web program written in Java. It receives HTTP requests, processes them, and returns responses. A foundational technology for frameworks like Spring Boot.",
+    "relatedLessonIds": [
+      "ch11_02"
+    ]
+  },
+  {
+    "id": "g029",
+    "term": "HTTP",
+    "reading": "HTTP",
+    "definition": "Short for HyperText Transfer Protocol. A communication protocol between web browsers and servers. Resources are manipulated using methods such as GET, POST, PUT, and DELETE.",
+    "relatedLessonIds": [
+      "ch11_01"
+    ]
+  },
+  {
+    "id": "g030",
+    "term": "String",
+    "reading": "String",
+    "definition": "A class representing a sequence of characters. Created by enclosing text in double quotes. It is immutable — once created, its content cannot be changed.",
+    "relatedLessonIds": [
+      "ch02_05"
+    ]
+  },
+  {
+    "id": "g031",
+    "term": "Type Conversion",
+    "reading": "Type Conversion",
+    "definition": "Converting a value from one data type to another. Includes automatic (implicit) conversion and casting (explicit). Example: (int)3.14 → 3",
+    "relatedLessonIds": [
+      "ch02_06"
+    ]
+  },
+  {
+    "id": "g032",
+    "term": "Scope",
+    "reading": "Scope",
+    "definition": "The range in which a variable is valid (accessible). A variable declared inside a block {} is only valid within that block and cannot be accessed from outside.",
+    "relatedLessonIds": [
+      "ch05_04"
+    ]
+  },
+  {
+    "id": "g033",
+    "term": "private",
+    "reading": "private",
+    "definition": "An access modifier that allows access only from within the same class. A fundamental aspect of encapsulation — fields should be private by default.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g034",
+    "term": "public",
+    "reading": "public",
+    "definition": "An access modifier that allows access from anywhere. Commonly used for the main method and classes.",
+    "relatedLessonIds": [
+      "ch01_03"
+    ]
+  },
+  {
+    "id": "g035",
+    "term": "void",
+    "reading": "void",
+    "definition": "A return type indicating that a method does not return a value. Used for methods that only perform an action without returning a result, like System.out.println().",
+    "relatedLessonIds": [
+      "ch05_01"
+    ]
+  },
+  {
+    "id": "g036",
+    "term": "Lambda Expression",
+    "reading": "Lambda Expression",
+    "definition": "An anonymous function notation introduced in Java 8. Allows concise implementation of functional interfaces. Example: (x, y) -> x + y",
+    "relatedLessonIds": [
+      "ch16_01"
+    ]
+  },
+  {
+    "id": "g037",
+    "term": "Functional Interface",
+    "reading": "Functional Interface",
+    "definition": "An interface with exactly one abstract method. Declared with the @FunctionalInterface annotation. Serves as the target type for lambda expressions.",
+    "relatedLessonIds": [
+      "ch16_02"
+    ]
+  },
+  {
+    "id": "g038",
+    "term": "Stream API",
+    "reading": "Stream API",
+    "definition": "An API for processing collection elements in a sequential pipeline. Operations can be chained like filter (select matching elements) → map (transform) → collect (gather results). Compared to for loops, code is more concise and switching to parallel processing is straightforward.",
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
+  },
+  {
+    "id": "g039",
+    "term": "Generics",
+    "reading": "Generics",
+    "definition": "A mechanism for specifying type parameters on classes and methods. Guarantees compile-time type safety and eliminates the need for explicit casting. Example: List<String>",
+    "relatedLessonIds": [
+      "ch21_01"
+    ]
+  },
+  {
+    "id": "g040",
+    "term": "Optional",
+    "reading": "Optional",
+    "definition": "A container class that may or may not contain a value. Used instead of null to prevent NullPointerException.",
+    "relatedLessonIds": [
+      "ch24_05"
+    ]
+  },
+  {
+    "id": "g041",
+    "term": "Module",
+    "reading": "Module",
+    "definition": "A mechanism introduced in Java 9 for grouping related packages. Large applications can be divided by functionality, with control over which packages are exposed externally. Defined in a module-info.java file.",
+    "relatedLessonIds": [
+      "ch17_01"
+    ]
+  },
+  {
+    "id": "g042",
+    "term": "Thread",
+    "reading": "Thread",
+    "definition": "A unit of execution that runs concurrently within a program. Just as two cooks can prepare two dishes simultaneously, two threads can run two tasks in parallel. In Java, threads are created using the java.lang.Thread class.",
+    "relatedLessonIds": [
+      "ch27_01"
+    ]
+  },
+  {
+    "id": "g043",
+    "term": "synchronized",
+    "reading": "synchronized",
+    "definition": "A keyword for synchronization between threads. Applied to methods or blocks to ensure only one thread can access the synchronized section at a time.",
+    "relatedLessonIds": [
+      "ch27_03"
+    ]
+  },
+  {
+    "id": "g044",
+    "term": "ExecutorService",
+    "reading": "ExecutorService",
+    "definition": "A framework for managing thread pools. Created via the Executors class, tasks are submitted asynchronously with submit(). Eliminates the need for manual Thread management.",
+    "relatedLessonIds": [
+      "ch27_05"
+    ]
+  },
+  {
+    "id": "g045",
+    "term": "Predicate",
+    "reading": "Predicate",
+    "definition": "A functional interface in java.util.function. Has a test() method that takes one argument and returns a boolean. Widely used for filtering operations.",
+    "relatedLessonIds": [
+      "ch23_01"
+    ]
+  },
+  {
+    "id": "g046",
+    "term": "Collectors",
+    "reading": "Collectors",
+    "definition": "A utility class used with the Stream API terminal operation collect(). Provides functions to aggregate stream results, such as toList(), groupingBy(), and joining().",
+    "relatedLessonIds": [
+      "ch24_04"
+    ]
+  },
+  {
+    "id": "g047",
+    "term": "try-with-resources",
+    "reading": "try-with-resources",
+    "definition": "A syntax introduced in Java 7. When a resource implementing AutoCloseable is declared in the try parentheses, close() is automatically called when the block finishes. Ensures reliable resource release without finally. Supports multiple resources simultaneously.",
+    "relatedLessonIds": [
+      "ch14_05",
+      "ch09_03"
+    ]
+  },
+  {
+    "id": "g048",
+    "term": "StringBuilder",
+    "reading": "StringBuilder",
+    "definition": "A class for handling mutable strings. Characters can be appended with append() without creating new objects, unlike String. Recommended for string concatenation in loops.",
+    "relatedLessonIds": [
+      "ch15_03"
+    ]
+  },
+  {
+    "id": "g049",
+    "term": "Wrapper Class",
+    "reading": "Wrapper Class",
+    "definition": "Classes that wrap primitive types as objects. int→Integer, double→Double, boolean→Boolean, etc. Implicitly converted via autoboxing/unboxing. Required when storing primitives in collections.",
+    "relatedLessonIds": [
+      "ch02_03",
+      "ch15_01"
+    ]
+  },
+  {
+    "id": "g050",
+    "term": "TreeSet",
+    "reading": "TreeSet",
+    "definition": "A Set implementation that keeps elements sorted in natural order (or by a Comparator). Does not allow duplicates and implements the NavigableSet interface.",
+    "relatedLessonIds": [
+      "ch22_03"
+    ]
+  },
+  {
+    "id": "g051",
+    "term": "Path",
+    "reading": "Path",
+    "definition": "An interface representing a file path in NIO.2. Created with Paths.get() or Path.of(), and supports path operations via resolve() and relativize().",
+    "relatedLessonIds": [
+      "ch28_03"
+    ]
+  },
+  {
+    "id": "g052",
+    "term": "PreparedStatement",
+    "reading": "PreparedStatement",
+    "definition": "A JDBC interface for executing parameterized SQL statements. Uses ? placeholders to prevent SQL injection and improve performance.",
+    "relatedLessonIds": [
+      "ch29_03"
+    ]
+  },
+  {
+    "id": "g053",
+    "term": "Annotation",
+    "reading": "Annotation",
+    "definition": "A mechanism for attaching metadata to code. Includes built-in annotations like @Override and @Deprecated, and supports custom annotation definitions.",
+    "relatedLessonIds": [
+      "ch30_01"
+    ]
+  },
+  {
+    "id": "g054",
+    "term": "Locale",
+    "reading": "Locale",
+    "definition": "A class representing a language and country/region. Used with NumberFormat and DateTimeFormatter to display numbers and dates in region-specific formats.",
+    "relatedLessonIds": [
+      "ch31_01"
+    ]
+  },
+  {
+    "id": "g055",
+    "term": "Spring Boot",
+    "reading": "Spring Boot",
+    "definition": "A leading Java web application framework. Following the principle of Convention over Configuration, it enables rapid construction of web applications and RESTful APIs (a web service design style for exchanging data over HTTP) with minimal configuration.",
+    "relatedLessonIds": [
+      "ch38_01"
+    ]
+  },
+  {
+    "id": "g056",
+    "term": "LocalDateTime",
+    "reading": "LocalDateTime",
+    "definition": "A date-time class in the java.time package. Immutable, returning new instances from methods like plusDays() and minusHours(). Formatted using DateTimeFormatter.",
+    "relatedLessonIds": [
+      "ch26_01"
+    ]
+  },
+  {
+    "id": "g057",
+    "term": "Wildcard",
+    "reading": "Wildcard",
+    "definition": "A notation using ? as a type parameter in generics. <?> is unbounded, <? extends Number> is an upper bound, and <? super Integer> is a lower bound.",
+    "relatedLessonIds": [
+      "ch21_04"
+    ]
+  },
+  {
+    "id": "g058",
+    "term": "Deadlock",
+    "reading": "Deadlock",
+    "definition": "A state where multiple threads are each waiting for the other to release a resource, preventing any from making progress. For example, if A requests B's lock and B requests A's lock simultaneously, both wait forever. It is difficult to detect and must be prevented at the design stage.",
+    "relatedLessonIds": [
+      "ch27_06"
+    ]
+  },
+  {
+    "id": "g059",
+    "term": "enum",
+    "reading": "enum",
+    "definition": "An enumeration type. Defines a fixed set of constants in a type-safe manner. Can have methods and fields, and is used with switch statements and collections.",
+    "relatedLessonIds": [
+      "ch07_05"
+    ]
+  },
+  {
+    "id": "g060",
+    "term": "abstract",
+    "reading": "abstract",
+    "definition": "A keyword meaning \"abstract.\" Used to declare abstract classes and abstract methods. An abstract method has no body and must be implemented by subclasses.",
+    "relatedLessonIds": [
+      "ch13_01"
+    ]
+  },
+  {
+    "id": "g061",
+    "term": "this",
+    "reading": "this",
+    "definition": "A keyword that refers to the current instance. Used to distinguish between fields and parameters with the same name, and for constructor chaining.",
+    "relatedLessonIds": [
+      "ch07_03"
+    ]
+  },
+  {
+    "id": "g062",
+    "term": "super",
+    "reading": "super",
+    "definition": "A keyword that refers to a parent class member. super.method() calls a parent method, and super() calls the parent constructor. Must appear at the beginning of a constructor.",
+    "relatedLessonIds": [
+      "ch08_02"
+    ]
+  },
+  {
+    "id": "g063",
+    "term": "final",
+    "reading": "final",
+    "definition": "A keyword indicating immutability. A final class cannot be inherited, a final method cannot be overridden, and a final variable cannot be reassigned. Used for constant definitions.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g064",
+    "term": "package",
+    "reading": "package",
+    "definition": "A namespace for organizing and classifying classes. Corresponds to the directory structure and uniquely identifies a class by its fully qualified name. Example: java.util",
+    "relatedLessonIds": [
+      "ch07_02"
+    ]
+  },
+  {
+    "id": "g065",
+    "term": "import",
+    "reading": "import",
+    "definition": "A statement that makes classes from other packages available in the current file. Written as import java.util.List;. The java.lang package is automatically imported.",
+    "relatedLessonIds": [
+      "ch07_02"
+    ]
+  },
+  {
+    "id": "g066",
+    "term": "return",
+    "reading": "return",
+    "definition": "A statement that terminates method execution and returns a value to the caller. When the return type is void, it is written as return; or omitted.",
+    "relatedLessonIds": [
+      "ch05_02"
+    ]
+  },
+  {
+    "id": "g067",
+    "term": "break",
+    "reading": "break",
+    "definition": "A control statement that terminates a loop or switch statement prematurely. In nested loops, a labeled break can exit an outer loop.",
+    "relatedLessonIds": [
+      "ch04_03"
+    ]
+  },
+  {
+    "id": "g068",
+    "term": "continue",
+    "reading": "continue",
+    "definition": "A control statement that skips the current iteration of a loop and proceeds to the next one. Used as a filtering mechanism to skip processing for certain conditions.",
+    "relatedLessonIds": [
+      "ch04_03"
+    ]
+  },
+  {
+    "id": "g069",
+    "term": "null",
+    "reading": "null",
+    "definition": "A literal indicating that a reference variable does not refer to any object. Calling a method on null throws a NullPointerException.",
+    "relatedLessonIds": [
+      "ch02_05"
+    ]
+  },
+  {
+    "id": "g070",
+    "term": "NullPointerException",
+    "reading": "NullPointerException",
+    "definition": "A runtime exception thrown when a method call or field access is performed on a null object. One of the most commonly encountered errors in Java development.",
+    "relatedLessonIds": [
+      "ch09_02"
+    ]
+  },
+  {
+    "id": "g071",
+    "term": "Checked Exception",
+    "reading": "Checked Exception",
+    "definition": "An exception that requires a try-catch or throws declaration at compile time. Examples include IOException and SQLException. Enforced handling ensures higher safety.",
+    "relatedLessonIds": [
+      "ch09_03"
+    ]
+  },
+  {
+    "id": "g072",
+    "term": "RuntimeException",
+    "reading": "RuntimeException",
+    "definition": "The base class for unchecked exceptions. Includes NullPointerException, ArrayIndexOutOfBoundsException, and others. try-catch is optional, and these are often caused by programming mistakes.",
+    "relatedLessonIds": [
+      "ch09_03"
+    ]
+  },
+  {
+    "id": "g073",
+    "term": "throws",
+    "reading": "throws",
+    "definition": "A keyword that declares checked exceptions a method may throw. Delegates exception handling to the caller. Example: void read() throws IOException",
+    "relatedLessonIds": [
+      "ch09_04"
+    ]
+  },
+  {
+    "id": "g074",
+    "term": "finally",
+    "reading": "finally",
+    "definition": "A block written at the end of a try-catch statement. Always executes regardless of whether an exception occurred. Used for resource cleanup.",
+    "relatedLessonIds": [
+      "ch09_04"
+    ]
+  },
+  {
+    "id": "g075",
+    "term": "AutoCloseable",
+    "reading": "AutoCloseable",
+    "definition": "An interface that enables automatic close() calls in try-with-resources. Implemented by classes requiring resource management, such as streams and connections.",
+    "relatedLessonIds": [
+      "ch14_05"
+    ]
+  },
+  {
+    "id": "g076",
+    "term": "instanceof",
+    "reading": "instanceof",
+    "definition": "An operator that checks whether an object is an instance of a specific type. Since Java 16, pattern matching allows simultaneous type checking and variable declaration.",
+    "relatedLessonIds": [
+      "ch12_03"
+    ]
+  },
+  {
+    "id": "g077",
+    "term": "Enhanced for Statement",
+    "reading": "Enhanced for Statement",
+    "definition": "A syntax for sequentially processing all elements of an array or Iterable. Written as for (Type variable : collection). Eliminates index management and improves readability.",
+    "relatedLessonIds": [
+      "ch04_04"
+    ]
+  },
+  {
+    "id": "g078",
+    "term": "Ternary Operator",
+    "reading": "Ternary Operator",
+    "definition": "An operator that allows conditional branching in a single line: condition ? trueValue : falseValue. Concise but can reduce readability for complex conditions, so overuse should be avoided.",
+    "relatedLessonIds": [
+      "ch03_03"
+    ]
+  },
+  {
+    "id": "g079",
+    "term": "protected",
+    "reading": "protected",
+    "definition": "An access modifier that allows access from within the same package and from subclasses in other packages. Used in designs that consider inheritance.",
+    "relatedLessonIds": [
+      "ch08_01"
+    ]
+  },
+  {
+    "id": "g080",
+    "term": "default Method",
+    "reading": "default Method",
+    "definition": "A method with an implementation added to interfaces in Java 8. Defined with the default keyword, it allows APIs to be extended without breaking existing implementing classes.",
+    "relatedLessonIds": [
+      "ch13_03"
+    ]
+  },
+  {
+    "id": "g081",
+    "term": "record",
+    "reading": "record",
+    "definition": "A concise way to define immutable data classes, officially introduced in Java 16. equals(), hashCode(), and toString() are automatically generated.",
+    "relatedLessonIds": [
+      "ch19_01"
+    ]
+  },
+  {
+    "id": "g082",
+    "term": "sealed Class",
+    "reading": "sealed Class",
+    "definition": "A class that restricts inheritance, officially introduced in Java 17. The permits clause explicitly specifies which subclasses are allowed. Enables exhaustive pattern matching.",
+    "relatedLessonIds": [
+      "ch19_02"
+    ]
+  },
+  {
+    "id": "g083",
+    "term": "switch Expression",
+    "reading": "switch Expression",
+    "definition": "An enhancement to the switch statement officially introduced in Java 14. Uses arrow notation (->) for concise syntax and can return a value as an expression. The yield statement enables returning values from multi-line blocks.",
+    "relatedLessonIds": [
+      "ch19_03"
+    ]
+  },
+  {
+    "id": "g084",
+    "term": "var",
+    "reading": "var",
+    "definition": "Local variable type inference introduced in Java 10. The type is inferred from the right-hand side value, allowing the type name to be omitted. Can be used for local variables and lambda expression parameters.",
+    "relatedLessonIds": [
+      "ch19_04"
+    ]
+  },
+  {
+    "id": "g085",
+    "term": "Text Block",
+    "reading": "Text Block",
+    "definition": "A multi-line string literal officially introduced in Java 15. Enclosed in triple quotes (\"\"\"), allowing multi-line text such as JSON to be written without escape characters.",
+    "relatedLessonIds": [
+      "ch19_05"
+    ]
+  },
+  {
+    "id": "g086",
+    "term": "LinkedList",
+    "reading": "LinkedList",
+    "definition": "A List implementation backed by a doubly-linked list. Additions and removals at the head and tail are very fast (constant time regardless of data size). Also implements the Deque interface and can be used as a queue or stack. Random access is slower than ArrayList.",
+    "relatedLessonIds": [
+      "ch22_02"
+    ]
+  },
+  {
+    "id": "g087",
+    "term": "HashSet",
+    "reading": "HashSet",
+    "definition": "A Set implementation backed by a hash table. Does not allow duplicate elements and does not guarantee element order. Addition, search, and removal are very fast (constant time regardless of data size). Elements require correct implementations of equals() and hashCode().",
+    "relatedLessonIds": [
+      "ch22_03"
+    ]
+  },
+  {
+    "id": "g088",
+    "term": "TreeMap",
+    "reading": "TreeMap",
+    "definition": "A Map implementation that automatically sorts keys in ascending order, like a dictionary keeping entries in alphabetical order. Lookups remain efficient even as the number of keys grows. Keys must implement Comparable or a Comparator must be provided.",
+    "relatedLessonIds": [
+      "ch22_04"
+    ]
+  },
+  {
+    "id": "g089",
+    "term": "Queue",
+    "reading": "Queue",
+    "definition": "An interface representing a first-in-first-out (FIFO) data structure, like a line of people waiting. Elements are added at the tail with offer() and removed from the head with poll(). Main implementations include LinkedList and ArrayDeque.",
+    "relatedLessonIds": [
+      "ch22_05"
+    ]
+  },
+  {
+    "id": "g090",
+    "term": "Deque",
+    "reading": "Deque",
+    "definition": "A double-ended queue. Elements can be added and removed from both the head and the tail. ArrayDeque is a high-performance implementation and is preferred over the Stack class for stack operations.",
+    "relatedLessonIds": [
+      "ch22_05"
+    ]
+  },
+  {
+    "id": "g091",
+    "term": "Iterator",
+    "reading": "Iterator",
+    "definition": "An interface for sequentially retrieving elements from a collection. hasNext() checks for remaining elements and next() retrieves the next one. Used internally by the enhanced for statement.",
+    "relatedLessonIds": [
+      "ch22_01"
+    ]
+  },
+  {
+    "id": "g092",
+    "term": "Comparable",
+    "reading": "Comparable",
+    "definition": "An interface for defining natural ordering. Implements the compareTo() method, enabling automatic sorting in Collections.sort() and TreeSet.",
+    "relatedLessonIds": [
+      "ch22_06"
+    ]
+  },
+  {
+    "id": "g093",
+    "term": "Comparator",
+    "reading": "Comparator",
+    "definition": "A functional interface for specifying external comparison rules. Implements the compare() method to define sort orders independent of Comparable.",
+    "relatedLessonIds": [
+      "ch22_06"
+    ]
+  },
+  {
+    "id": "g094",
+    "term": "Function",
+    "reading": "Function",
+    "definition": "A functional interface in java.util.function. Has an apply() method that takes one argument and returns a result. Can be chained using andThen() and compose().",
+    "relatedLessonIds": [
+      "ch23_02"
+    ]
+  },
+  {
+    "id": "g095",
+    "term": "Consumer",
+    "reading": "Consumer",
+    "definition": "A functional interface in java.util.function. Has an accept() method that takes one argument and returns no result. Widely used in operations like forEach.",
+    "relatedLessonIds": [
+      "ch23_03"
+    ]
+  },
+  {
+    "id": "g096",
+    "term": "Supplier",
+    "reading": "Supplier",
+    "definition": "A functional interface in java.util.function. Has a get() method that takes no arguments and returns a value. Used for lazy evaluation and factory patterns.",
+    "relatedLessonIds": [
+      "ch23_04"
+    ]
+  },
+  {
+    "id": "g097",
+    "term": "UnaryOperator",
+    "reading": "UnaryOperator",
+    "definition": "A specialization of Function where the argument and return type are the same. Used in methods like replaceAll() and Stream.iterate().",
+    "relatedLessonIds": [
+      "ch23_05"
+    ]
+  },
+  {
+    "id": "g098",
+    "term": "Method Reference",
+    "reading": "Method Reference",
+    "definition": "A notation that references an existing method using the :: (double colon) operator instead of a lambda expression. Examples: String::toUpperCase, System.out::println",
+    "relatedLessonIds": [
+      "ch16_03"
+    ]
+  },
+  {
+    "id": "g099",
+    "term": "filter",
+    "reading": "filter",
+    "definition": "An intermediate operation in the Stream API. Passes only elements matching a Predicate condition. Example: stream.filter(s -> s.length() > 3)",
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
+  },
+  {
+    "id": "g100",
+    "term": "map",
+    "reading": "map",
+    "definition": "An intermediate operation in the Stream API. Transforms each element using a Function. Example: stream.map(String::toUpperCase) converts all elements to uppercase.",
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
+  },
+  {
+    "id": "g101",
+    "term": "flatMap",
+    "reading": "flatMap",
+    "definition": "An intermediate operation in the Stream API. Converts each element into a Stream and flattens the results into a single Stream. Used for processing nested collections.",
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
+  },
+  {
+    "id": "g102",
+    "term": "reduce",
+    "reading": "reduce",
+    "definition": "A terminal operation in the Stream API. Aggregates all elements of a stream into a single value. Takes an identity value and a BinaryOperator. Examples: computing sums or maximum values.",
+    "relatedLessonIds": [
+      "ch24_04"
+    ]
+  },
+  {
+    "id": "g103",
+    "term": "collect",
+    "reading": "collect",
+    "definition": "A terminal operation in the Stream API. Aggregates stream results into a collection or other structure using a Collector. Combined with Collectors.toList(), groupingBy(), etc.",
+    "relatedLessonIds": [
+      "ch24_04"
+    ]
+  },
+  {
+    "id": "g104",
+    "term": "Parallel Stream",
+    "reading": "Parallel Stream",
+    "definition": "A mechanism that uses multiple CPU cores to process stream elements concurrently. Can speed up processing of large datasets, but element processing order is not guaranteed. Converted using parallelStream() or parallel(). Internally uses ForkJoinPool (a mechanism that automatically splits and merges tasks) to distribute processing.",
+    "relatedLessonIds": [
+      "ch24_06"
+    ]
+  },
+  {
+    "id": "g105",
+    "term": "Future",
+    "reading": "Future",
+    "definition": "An interface representing the result of an asynchronous computation. get() retrieves the result (blocking), and isDone() checks completion. Returned by ExecutorService.submit().",
+    "relatedLessonIds": [
+      "ch27_05"
+    ]
+  },
+  {
+    "id": "g106",
+    "term": "CompletableFuture",
+    "reading": "CompletableFuture",
+    "definition": "A class for asynchronous programming introduced in Java 8. Builds chained processing using thenApply(), thenAccept(), and thenCompose().",
+    "relatedLessonIds": [
+      "ch27_07"
+    ]
+  },
+  {
+    "id": "g107",
+    "term": "ConcurrentHashMap",
+    "reading": "ConcurrentHashMap",
+    "definition": "A HashMap that can be safely accessed by multiple threads concurrently. Instead of locking the entire map, it uses fine-grained internal segmented locking for high performance in multi-threaded environments. Also provides atomic operation methods such as putIfAbsent() and compute().",
+    "relatedLessonIds": [
+      "ch27_04"
+    ]
+  },
+  {
+    "id": "g108",
+    "term": "volatile",
+    "reading": "volatile",
+    "definition": "A modifier that guarantees a variable's value is always read from and written to main memory. Prevents cache inconsistencies and ensures visibility between threads.",
+    "relatedLessonIds": [
+      "ch27_03"
+    ]
+  },
+  {
+    "id": "g109",
+    "term": "atomic",
+    "reading": "atomic",
+    "definition": "A property guaranteeing that an operation completes without interruption. For example, \"read a value, add 1, and write it back\" — these three steps execute as one indivisible unit without interference from other threads. Classes like AtomicInteger provide fast lock-free synchronization.",
+    "relatedLessonIds": [
+      "ch27_04"
+    ]
+  },
+  {
+    "id": "g110",
+    "term": "Files",
+    "reading": "Files",
+    "definition": "A utility class in NIO.2. Provides static methods for concise file operations using Path, including readAllLines(), write(), copy(), move(), and walk().",
+    "relatedLessonIds": [
+      "ch28_03"
+    ]
+  },
+  {
+    "id": "g111",
+    "term": "BufferedReader",
+    "reading": "BufferedReader",
+    "definition": "A buffered character stream reader class. Reads one line at a time with readLine(). Recommended to be used with try-with-resources.",
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
+  },
+  {
+    "id": "g112",
+    "term": "Serializable",
+    "reading": "Serializable",
+    "definition": "A marker interface (an interface with no methods, serving only as a tag) that enables an object to be converted to a byte sequence (serialized) for saving to files or sending over a network. Written with ObjectOutputStream and restored with ObjectInputStream.",
+    "relatedLessonIds": [
+      "ch28_04"
+    ]
+  },
+  {
+    "id": "g113",
+    "term": "InputStream",
+    "reading": "InputStream",
+    "definition": "An abstract base class for byte data input streams. Has subclasses such as FileInputStream and ByteArrayInputStream, and reads bytes via the read() method.",
+    "relatedLessonIds": [
+      "ch28_01"
+    ]
+  },
+  {
+    "id": "g114",
+    "term": "ResultSet",
+    "reading": "ResultSet",
+    "definition": "A JDBC object that holds the results of a SELECT query. Advances the cursor with next() and retrieves column values with getString(), getInt(), etc.",
+    "relatedLessonIds": [
+      "ch29_02"
+    ]
+  },
+  {
+    "id": "g115",
+    "term": "Transaction",
+    "reading": "Transaction",
+    "definition": "A mechanism that groups a series of database operations into a single logical unit. Finalized with commit() and rolled back with rollback(). Guarantees four properties (Atomicity: all succeed or all are canceled; Consistency: integrity is always maintained; Isolation: unaffected by other operations; Durability: once committed, changes persist).",
+    "relatedLessonIds": [
+      "ch29_04"
+    ]
+  },
+  {
+    "id": "g116",
+    "term": "ResourceBundle",
+    "reading": "ResourceBundle",
+    "definition": "A class for managing locale-specific resources (messages, labels, etc.). Combined with properties files to implement internationalization (i18n — named because there are 18 letters between 'i' and 'n' in 'internationalization').",
+    "relatedLessonIds": [
+      "ch31_02"
+    ]
+  },
+  {
+    "id": "g117",
+    "term": "DateTimeFormatter",
+    "reading": "DateTimeFormatter",
+    "definition": "A formatter in the java.time package that converts date-time objects to strings and vice versa. Format patterns are specified with ofPattern().",
+    "relatedLessonIds": [
+      "ch26_03"
+    ]
+  },
+  {
+    "id": "g118",
+    "term": "Duration",
+    "reading": "Duration",
+    "definition": "A class representing a time-based amount (hours, minutes, seconds). Used to calculate the difference between two Instants or LocalTimes. Immutable and thread-safe.",
+    "relatedLessonIds": [
+      "ch26_04"
+    ]
+  },
+  {
+    "id": "g119",
+    "term": "Period",
+    "reading": "Period",
+    "definition": "A class representing a date-based period (years, months, days). Calculates the difference between two LocalDate values and is created with between(). Immutable and thread-safe.",
+    "relatedLessonIds": [
+      "ch26_04"
+    ]
+  },
+  {
+    "id": "g120",
+    "term": "exports",
+    "reading": "exports",
+    "definition": "A declaration in the module system that makes a package available to other modules. Written as exports packageName; in module-info.java. The to clause can limit which modules receive access.",
+    "relatedLessonIds": [
+      "ch17_02"
+    ]
+  },
+  {
+    "id": "g121",
+    "term": "Bytecode",
+    "reading": "Bytecode",
+    "definition": "Intermediate code produced by the Java compiler (javac) from source code. Stored in .class files and interpreted/executed by the JVM. The foundational technology for platform independence.",
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
+  },
+  {
+    "id": "g122",
+    "term": "JRE",
+    "reading": "JRE",
+    "definition": "Short for Java Runtime Environment. Includes the JVM and Java class libraries — the environment needed to run Java applications. Since Java 11, it has been integrated into the JDK.",
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
+  },
+  {
+    "id": "g123",
+    "term": "Garbage Collection",
+    "reading": "Garbage Collection",
+    "definition": "A mechanism that automatically frees memory occupied by objects that are no longer needed. The JVM runs it periodically, eliminating the need for manual memory management. System.gc() can suggest a GC run, but execution is not guaranteed.",
+    "relatedLessonIds": [
+      "ch01_01"
+    ]
+  },
+  {
+    "id": "g124",
+    "term": "Heap",
+    "reading": "Heap",
+    "definition": "A memory area where the JVM dynamically allocates objects. Instances and arrays created with new are stored here. Subject to garbage collection. Maximum size can be set with the -Xmx option.",
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
+  },
+  {
+    "id": "g125",
+    "term": "Stack",
+    "reading": "Stack",
+    "definition": "A memory area created for each method invocation. Stores local variables, method arguments, and return addresses. Managed in a last-in-first-out (LIFO) manner — the last item pushed is the first to be popped. Automatically freed when the method completes.",
+    "relatedLessonIds": [
+      "ch05_01"
+    ]
+  },
+  {
+    "id": "g126",
+    "term": "Primitive Type",
+    "reading": "Primitive Type",
+    "definition": "Java's basic data types: byte (1B), short (2B), int (4B), long (8B), float (4B), double (8B), char (2B), and boolean — 8 types in total. They hold values directly (not objects) and are stored on the stack rather than the heap.",
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
+  },
+  {
+    "id": "g127",
+    "term": "Reference Type",
+    "reading": "Reference Type",
+    "definition": "A type that holds a reference (memory address) to an object. Includes classes, interfaces, arrays, and enums. Can be assigned null. A concept contrasted with primitive types.",
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
+  },
+  {
+    "id": "g128",
+    "term": "Literal",
+    "reading": "Literal",
+    "definition": "A fixed value written directly in source code. Includes integer literals (42), floating-point literals (3.14), character literals ('A'), string literals (\"hello\"), boolean literals (true/false), and the null literal.",
+    "relatedLessonIds": [
+      "ch02_02"
+    ]
+  },
+  {
+    "id": "g129",
+    "term": "Operator",
+    "reading": "Operator",
+    "definition": "A symbol representing an operation on values. Includes arithmetic (+,-,*,/,%), comparison (==,!=,<,>), logical (&&,||,!), assignment (=,+=), bitwise (&,|,^,~), ternary (?:), and instanceof operators.",
+    "relatedLessonIds": [
+      "ch02_04"
+    ]
+  },
+  {
+    "id": "g130",
+    "term": "Cast",
+    "reading": "Cast",
+    "definition": "Explicitly converting a value from one type to another. Downcasting (parent→child: (ChildClass)parentVar) may throw a ClassCastException at runtime. Widening (small→large: int→long) is performed implicitly.",
+    "relatedLessonIds": [
+      "ch02_04"
+    ]
+  },
+  {
+    "id": "g131",
+    "term": "new",
+    "reading": "new",
+    "definition": "A keyword for creating objects. Allocates memory on the heap and invokes the constructor. Example: List<String> list = new ArrayList<>(); Also used for creating arrays.",
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
+  },
+  {
+    "id": "g132",
+    "term": "main Method",
+    "reading": "main Method",
+    "definition": "The entry point of a Java application. Defined with the signature public static void main(String[] args). The first method invoked by the JVM when the program is executed.",
+    "relatedLessonIds": [
+      "ch01_02"
+    ]
+  },
+  {
+    "id": "g133",
+    "term": "Inner Class",
+    "reading": "Inner Class",
+    "definition": "A general term for classes defined inside another class. Four types exist: member class, local class, anonymous class, and static nested class. Can access members of the outer class and enhances encapsulation.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g134",
+    "term": "Anonymous Class",
+    "reading": "Anonymous Class",
+    "definition": "A disposable class with no name. Creates instances of interfaces or abstract classes on the spot. Before lambda expressions, it was commonly used for implementing event handlers.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g135",
+    "term": "Design Pattern",
+    "reading": "Design Pattern",
+    "definition": "A standard solution to common software design problems. The GoF 23 patterns are well known, including Singleton (one-instance guarantee), Factory (delegated creation), and Observer (state monitoring).",
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
+  },
+  {
+    "id": "g136",
+    "term": "Singleton Pattern",
+    "reading": "Singleton Pattern",
+    "definition": "A design pattern that guarantees only one instance of a class exists. Implemented with a private constructor + static field + static method. The thread-safe enum implementation is recommended.",
+    "relatedLessonIds": [
+      "ch07_01"
+    ]
+  },
+  {
+    "id": "g137",
+    "term": "List",
+    "reading": "List",
+    "definition": "An ordered collection that allows duplicate elements. The java.util.List interface. Elements are accessed by index (number). Main implementations are ArrayList (fast random access) and LinkedList (fast insertion/removal).",
+    "relatedLessonIds": [
+      "ch06_02"
+    ]
+  },
+  {
+    "id": "g138",
+    "term": "Set",
+    "reading": "Set",
+    "definition": "A collection that does not allow duplicate elements. The java.util.Set interface. Three main implementations: HashSet (fast lookup), TreeSet (automatic sorting), and LinkedHashSet (preserves insertion order).",
+    "relatedLessonIds": [
+      "ch22_02"
+    ]
+  },
+  {
+    "id": "g139",
+    "term": "Map",
+    "reading": "Map",
+    "definition": "A collection that manages key-value pairs. The java.util.Map interface. Like a dictionary — \"look up by key to get a value.\" Main implementations: HashMap (fast access), TreeMap (automatic key sorting), and LinkedHashMap (preserves insertion order).",
+    "relatedLessonIds": [
+      "ch22_03"
+    ]
+  },
+  {
+    "id": "g140",
+    "term": "Collections",
+    "reading": "Collections",
+    "definition": "A utility class for collection operations. Includes sort() for sorting, unmodifiableList() for immutability, synchronizedList() for thread safety, reverse() for reversing order, and more. Distinct from the Collectors class.",
+    "relatedLessonIds": [
+      "ch22_01"
+    ]
+  },
+  {
+    "id": "g141",
+    "term": "ArrayDeque",
+    "reading": "ArrayDeque",
+    "definition": "An array-based double-ended queue implementation. Implements the Deque interface. Can be used as both a stack (LIFO) and a queue (FIFO). A fast data structure recommended over the Stack class.",
+    "relatedLessonIds": [
+      "ch22_02"
+    ]
+  },
+  {
+    "id": "g142",
+    "term": "Error",
+    "reading": "Error",
+    "definition": "A subclass of Throwable indicating a serious, unrecoverable problem. Examples include OutOfMemoryError and StackOverflowError. Generally should not be caught — addressed by fixing the program or changing JVM settings.",
+    "relatedLessonIds": [
+      "ch09_01"
+    ]
+  },
+  {
+    "id": "g143",
+    "term": "Custom Exception",
+    "reading": "Custom Exception",
+    "definition": "An exception class defined specifically for application-specific errors. Created by extending Exception (checked exception) or RuntimeException (unchecked exception).",
+    "relatedLessonIds": [
+      "ch14_02"
+    ]
+  },
+  {
+    "id": "g144",
+    "term": "multi-catch",
+    "reading": "multi-catch",
+    "definition": "A syntax that catches multiple exception types in a single catch block. Exception types are separated with | as in catch(IOException | SQLException e). Introduced in Java 7, it reduces code redundancy.",
+    "relatedLessonIds": [
+      "ch14_01"
+    ]
+  },
+  {
+    "id": "g145",
+    "term": "StackOverflowError",
+    "reading": "StackOverflowError",
+    "definition": "An error that occurs when the stack memory is exhausted. Primarily caused by infinite recursion or extremely deep recursive calls. A subclass of Error that should not normally be caught.",
+    "relatedLessonIds": [
+      "ch09_01"
+    ]
+  },
+  {
+    "id": "g146",
+    "term": "ClassCastException",
+    "reading": "ClassCastException",
+    "definition": "A runtime exception thrown when an invalid type cast is performed. Can be prevented by checking the type with the instanceof operator beforehand. Pattern matching is recommended in Java 16+.",
+    "relatedLessonIds": [
+      "ch09_02"
+    ]
+  },
+  {
+    "id": "g147",
+    "term": "Pattern Matching",
+    "reading": "Pattern Matching",
+    "definition": "A type pattern combined with the instanceof operator. Allows simultaneous type checking and variable declaration, as in if (obj instanceof String s). Officially introduced in Java 16. Also usable in switch statements (Java 21+).",
+    "relatedLessonIds": [
+      "ch12_03"
+    ]
+  },
+  {
+    "id": "g148",
+    "term": "yield",
+    "reading": "yield",
+    "definition": "A keyword that returns a value from within a block in a switch expression. Used as in case MONDAY -> { yield \"Monday\"; } when returning a value after multi-line processing. Introduced in Java 14.",
+    "relatedLessonIds": [
+      "ch03_03"
+    ]
+  },
+  {
+    "id": "g149",
+    "term": "Runnable",
+    "reading": "Runnable",
+    "definition": "A functional interface that defines processing to be executed by a thread. Has a single run() method. Used with Thread(Runnable) and ExecutorService.submit(Runnable). Can be expressed concisely with lambda expressions.",
+    "relatedLessonIds": [
+      "ch27_01"
+    ]
+  },
+  {
+    "id": "g150",
+    "term": "Callable",
+    "reading": "Callable",
+    "definition": "A functional interface that returns a value. Its call() method returns a value of type V and can throw checked exceptions. ExecutorService.submit(Callable) returns a Future<V>. An evolution of Runnable.",
+    "relatedLessonIds": [
+      "ch27_02"
+    ]
+  },
+  {
+    "id": "g151",
+    "term": "ReentrantLock",
+    "reading": "ReentrantLock",
+    "definition": "An explicit locking mechanism that serves as an alternative to synchronized. Supports tryLock() for timeout-based lock acquisition and newCondition() for condition variable creation. unlock() in a finally block is mandatory.",
+    "relatedLessonIds": [
+      "ch27_03"
+    ]
+  },
+  {
+    "id": "g152",
+    "term": "CountDownLatch",
+    "reading": "CountDownLatch",
+    "definition": "A synchronization aid that makes threads wait until a specified number of events have completed. countDown() decrements the count, and await() waits until it reaches zero. Single-use (cannot be reset).",
+    "relatedLessonIds": [
+      "ch27_03"
+    ]
+  },
+  {
+    "id": "g153",
+    "term": "Reader",
+    "reading": "Reader",
+    "definition": "An abstract class for reading character streams. Superclass of FileReader, BufferedReader, InputStreamReader, etc. Reads one character at a time or into a char array.",
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
+  },
+  {
+    "id": "g154",
+    "term": "Writer",
+    "reading": "Writer",
+    "definition": "An abstract class for writing character streams. Superclass of FileWriter, BufferedWriter, PrintWriter, etc. Writes strings and char arrays, and flushes the buffer with flush().",
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
+  },
+  {
+    "id": "g155",
+    "term": "OutputStream",
+    "reading": "OutputStream",
+    "definition": "An abstract class for writing byte streams. Superclass of FileOutputStream, BufferedOutputStream, etc. Writes byte arrays with write(byte[]). The counterpart of InputStream.",
+    "relatedLessonIds": [
+      "ch28_01"
+    ]
+  },
+  {
+    "id": "g156",
+    "term": "Channel",
+    "reading": "Channel",
+    "definition": "A bidirectional data transfer path in Java NIO. Includes FileChannel, SocketChannel, etc. Combined with Buffer for efficient I/O. More performant than traditional Streams and supports non-blocking I/O.",
+    "relatedLessonIds": [
+      "ch28_03"
+    ]
+  },
+  {
+    "id": "g157",
+    "term": "Buffer",
+    "reading": "Buffer",
+    "definition": "A fixed-size container for temporarily storing data in NIO. Subclasses include ByteBuffer, CharBuffer, etc. Manages read/write positions with three attributes: position, limit, and capacity. flip() switches to read mode.",
+    "relatedLessonIds": [
+      "ch28_03"
+    ]
+  },
+  {
+    "id": "g158",
+    "term": "Assertion",
+    "reading": "Assertion",
+    "definition": "Validation of preconditions within a program using the assert statement. Written as assert condition : errorMessage;. Throws AssertionError when false. Enabled with the -ea option. Recommended to be disabled in production.",
+    "relatedLessonIds": [
+      "ch14_03"
+    ]
+  },
+  {
+    "id": "g159",
+    "term": "Access Modifier",
+    "reading": "Access Modifier",
+    "definition": "Keywords that control the visibility of classes and members. Four levels: public (accessible from anywhere), protected (same package + subclasses), default/package-private (same package only), and private (same class only).",
+    "relatedLessonIds": [
+      "ch07_02"
+    ]
+  },
+  {
+    "id": "g160",
+    "term": "static Method",
+    "reading": "static Method",
+    "definition": "A method belonging to the class, callable as ClassName.methodName() without creating an instance. Cannot access this or instance fields. Representative examples include Math.max() and Collections.sort().",
+    "relatedLessonIds": [
+      "ch05_03"
+    ]
+  },
+  {
+    "id": "g161",
+    "term": "static Field",
+    "reading": "static Field",
+    "definition": "A field belonging to the class, shared across all instances. Initialized once when the class is loaded. Used for constant definitions (static final) and counters.",
+    "relatedLessonIds": [
+      "ch05_03"
+    ]
+  },
+  {
+    "id": "g162",
+    "term": "Initializer",
+    "reading": "Initializer",
+    "definition": "A block that performs field initialization. An instance initializer ({...}) runs before the constructor, while a static initializer (static {...}) runs once when the class is loaded.",
+    "relatedLessonIds": [
+      "ch07_03"
+    ]
+  },
+  {
+    "id": "g163",
+    "term": "Varargs",
+    "reading": "Varargs",
+    "definition": "A feature that allows passing a variable number of arguments to a method. Defined as typeName... paramName. Internally treated as an array. Only one varargs parameter is allowed per method, and it must be the last parameter. Example: void print(String... args)",
+    "relatedLessonIds": [
+      "ch05_02"
+    ]
+  },
+  {
+    "id": "g164",
+    "term": "Diamond Operator",
+    "reading": "Diamond Operator",
+    "definition": "The empty angle brackets <> that simplify generics type inference. As in List<String> list = new ArrayList<>();, the type parameter on the right side can be omitted. Introduced in Java 7.",
+    "relatedLessonIds": [
+      "ch21_01"
+    ]
+  },
+  {
+    "id": "g165",
+    "term": "Type Erasure",
+    "reading": "Type Erasure",
+    "definition": "A Java mechanism where generic type parameters are removed at compile time. List<String> becomes a raw List after compilation. Type parameter information is not available at runtime.",
+    "relatedLessonIds": [
+      "ch21_02"
+    ]
+  },
+  {
+    "id": "g166",
+    "term": "Bounded Type Parameter",
+    "reading": "Bounded Type Parameter",
+    "definition": "A syntax for constraining type parameters in generics. <T extends Comparable<T>> specifies an upper bound, and <? super Integer> specifies a lower bound. The PECS principle (Producer-Extends, Consumer-Super) is important.",
+    "relatedLessonIds": [
+      "ch21_03"
+    ]
+  },
+  {
+    "id": "g167",
+    "term": "BiFunction",
+    "reading": "BiFunction",
+    "definition": "A functional interface that takes two arguments and returns one result. Has an apply(T, U) method. Used in Map.replaceAll() and Map.merge().",
+    "relatedLessonIds": [
+      "ch23_02"
+    ]
+  },
+  {
+    "id": "g168",
+    "term": "BinaryOperator",
+    "reading": "BinaryOperator",
+    "definition": "A functional interface that takes two arguments of the same type and returns a result of the same type. A specialization of BiFunction. Frequently used as an argument to Stream.reduce().",
+    "relatedLessonIds": [
+      "ch23_02"
+    ]
+  },
+  {
+    "id": "g169",
+    "term": "forEach",
+    "reading": "forEach",
+    "definition": "A method that executes an action on each element of a collection or Stream. Takes a Consumer as an argument, as in list.forEach(System.out::println). A method reference equivalent of the enhanced for statement.",
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
+  },
+  {
+    "id": "g170",
+    "term": "sorted",
+    "reading": "sorted",
+    "definition": "An intermediate operation that sorts Stream elements. Sorts by natural order or a specified Comparator. The original Stream and collection are not modified. Throws ClassCastException for elements not implementing Comparable.",
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
+  },
+  {
+    "id": "g171",
+    "term": "distinct",
+    "reading": "distinct",
+    "definition": "An intermediate operation that removes duplicate elements from a Stream. Determines duplicates based on equals() and hashCode(). Provides Set-like behavior.",
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
+  },
+  {
+    "id": "g172",
+    "term": "peek",
+    "reading": "peek",
+    "definition": "An intermediate operation that performs a side effect (such as logging) on each Stream element. Intended for debugging purposes and should not modify elements. Heavy use in production code is discouraged.",
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
+  },
+  {
+    "id": "g173",
+    "term": "groupingBy",
+    "reading": "groupingBy",
+    "definition": "Collectors.groupingBy() is a Collector that groups elements based on a classification function. Returns Map<K, List<V>>. Downstream collectors can be chained for aggregation. Equivalent to SQL's GROUP BY.",
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
+  },
+  {
+    "id": "g174",
+    "term": "partitioningBy",
+    "reading": "partitioningBy",
+    "definition": "Collectors.partitioningBy() is a Collector that splits elements into two groups based on a Predicate's true/false result. Returns Map<Boolean, List<T>>. A special case of groupingBy, ideal for binary partitioning by condition.",
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
+  },
+  {
+    "id": "g175",
+    "term": "toList",
+    "reading": "toList",
+    "definition": "Stream.toList() is a terminal operation that converts stream elements to an unmodifiable List. Introduced in Java 16, it is more concise than Collectors.toList(). The returned list is immutable (throws UnsupportedOperationException).",
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
+  },
+  {
+    "id": "g176",
+    "term": "Reflection",
+    "reading": "Reflection",
+    "definition": "A capability to inspect and manipulate class and method information at runtime. Uses Class, Method, Field, etc. from the java.lang.reflect package. Heavily used internally by frameworks and DI containers, but should be avoided in regular application code as it compromises type safety.",
+    "relatedLessonIds": [
+      "ch15_03"
+    ]
+  },
+  {
+    "id": "g177",
+    "term": "Autoboxing",
+    "reading": "Autoboxing",
+    "definition": "The automatic conversion from primitive types to their corresponding wrapper classes (e.g., int→Integer). The reverse is called unboxing. Unboxing a null value throws a NullPointerException, so caution is required.",
+    "relatedLessonIds": [
+      "ch02_03"
+    ]
+  },
+  {
+    "id": "g178",
+    "term": "Immutable Object",
+    "reading": "Immutable Object",
+    "definition": "An object whose state cannot be changed after creation. Representative examples include String, LocalDate, and the return value of List.of(). Thread-safe and requires no defensive copies. Implemented with a final class + private final fields.",
+    "relatedLessonIds": [
+      "ch07_03"
+    ]
+  },
+  {
+    "id": "g179",
+    "term": "Function Composition",
+    "reading": "Function Composition",
+    "definition": "Combining multiple functions to create a new function. Function.andThen() adds post-processing, and compose() adds pre-processing. Predicate.and(), or(), and negate() are also forms of function composition.",
+    "relatedLessonIds": [
+      "ch23_03"
+    ]
+  },
+  {
+    "id": "g180",
+    "term": "Lazy Evaluation",
+    "reading": "Lazy Evaluation",
+    "definition": "A mechanism where Stream API intermediate operations are not executed until a terminal operation is invoked. filter() and map() are not executed immediately — processing only begins when a terminal operation like collect() or forEach() is called. Enables efficient processing of large datasets.",
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
+  },
+  {
+    "id": "g181",
+    "term": "Serialization",
+    "reading": "Serialization",
+    "definition": "Converting an object to a byte sequence for saving to files or transmitting over a network. Uses the Serializable interface. The reverse is called deserialization. Defining a serialVersionUID is recommended.",
+    "relatedLessonIds": [
+      "ch28_04"
+    ]
+  },
+  {
+    "id": "g182",
+    "term": "Regular Expression",
+    "reading": "Regular Expression",
+    "definition": "A notation for describing string patterns. Used via the Pattern and Matcher classes. Also used in String.matches(), replaceAll(), and split(). \\d matches digits, \\w matches word characters, and . matches any single character.",
+    "relatedLessonIds": [
+      "ch15_03"
+    ]
+  },
+  {
+    "id": "g183",
+    "term": "Stream Pipeline",
+    "reading": "Stream Pipeline",
+    "definition": "A chain structure of source → intermediate operations (0 or more) → terminal operation (exactly 1). Processes data in a fluent style like stream().filter(...).map(...).collect(...). A consumed Stream cannot be reused.",
+    "relatedLessonIds": [
+      "ch24_01"
+    ]
+  },
+  {
+    "id": "g184",
+    "term": "Intermediate Operation",
+    "reading": "Intermediate Operation",
+    "definition": "An operation in the middle of a Stream pipeline that returns a new Stream. Includes filter, map, flatMap, sorted, distinct, peek, limit, skip, etc. Lazily evaluated — not executed until a terminal operation is called.",
+    "relatedLessonIds": [
+      "ch24_02"
+    ]
+  },
+  {
+    "id": "g185",
+    "term": "Terminal Operation",
+    "reading": "Terminal Operation",
+    "definition": "The final operation in a Stream pipeline that produces a result. Includes collect, forEach, reduce, count, min, max, findFirst, anyMatch, toList, etc. Invoking a terminal operation triggers the execution of the pipeline.",
+    "relatedLessonIds": [
+      "ch24_03"
+    ]
+  },
+  {
+    "id": "g186",
+    "term": "requires",
+    "reading": "requires",
+    "definition": "A keyword in the module system that declares a dependency on another module. Written as requires moduleName; in module-info.java. requires transitive declares a transitive dependency.",
+    "relatedLessonIds": [
+      "ch17_02"
+    ]
+  },
+  {
+    "id": "g187",
+    "term": "ServiceLoader",
+    "reading": "ServiceLoader",
+    "definition": "A mechanism for dynamically loading implementations of a Service Provider Interface (SPI). Provided via provides...with... and consumed via uses... in module-info.java. The foundation for plugin architectures.",
+    "relatedLessonIds": [
+      "ch32_02"
+    ]
+  },
+  {
+    "id": "g188",
+    "term": "Type Inference",
+    "reading": "Type Inference",
+    "definition": "A compiler feature that automatically determines types from context. Used in var declarations for local variables, the diamond operator <>, and lambda expression parameter type omission. Simplifies code but must be balanced with readability.",
+    "relatedLessonIds": [
+      "ch02_02"
+    ]
+  },
+  {
+    "id": "g189",
+    "term": "Exception Chaining",
+    "reading": "Exception Chaining",
+    "definition": "A mechanism for preserving the exception that caused another exception. The cause is passed via the constructor, as in throw new RuntimeException(\"message\", cause). The original cause can be retrieved with getCause().",
+    "relatedLessonIds": [
+      "ch14_02"
+    ]
+  },
+  {
+    "id": "g190",
+    "term": "Diamond Inheritance Problem",
+    "reading": "Diamond Inheritance Problem",
+    "definition": "A problem where methods with the same name conflict in multiple inheritance. Java prohibits class multiple inheritance and uses interfaces with default methods as an alternative. If default methods from multiple interfaces conflict, an explicit override is required.",
+    "relatedLessonIds": [
+      "ch13_02"
+    ]
+  },
+  {
+    "id": "g191",
+    "term": "Covariant Return Type",
+    "reading": "Covariant Return Type",
+    "definition": "The ability to change the return type of an overridden method in a subclass to a subtype of the superclass's return type. For example, Object clone() can be overridden as MyClass clone().",
+    "relatedLessonIds": [
+      "ch08_02"
+    ]
+  },
+  {
+    "id": "g192",
+    "term": "strictfp",
+    "reading": "strictfp",
+    "definition": "A keyword that enforces strict IEEE 754 compliance for floating-point arithmetic. Applied to classes or methods. Became the default behavior in Java 17, making explicit use unnecessary. Sometimes appears in certification exams.",
+    "relatedLessonIds": [
+      "ch15_01"
+    ]
+  },
+  {
+    "id": "g193",
+    "term": "transient",
+    "reading": "transient",
+    "definition": "A field modifier that excludes a field from serialization. Applied to fields that do not need to be persisted, such as passwords or temporary calculations. During deserialization, the field reverts to its default value (null, 0, etc.).",
+    "relatedLessonIds": [
+      "ch28_04"
+    ]
+  },
+  {
+    "id": "g194",
+    "term": "ZonedDateTime",
+    "reading": "ZonedDateTime",
+    "definition": "A class representing a date-time with a time zone. Composed of LocalDateTime + ZoneId. Accounts for daylight saving time transitions. Essential for date-time handling in global applications.",
+    "relatedLessonIds": [
+      "ch26_02"
+    ]
+  },
+  {
+    "id": "g195",
+    "term": "Instant",
+    "reading": "Instant",
+    "definition": "An immutable class representing time elapsed since the epoch (1970-01-01T00:00:00Z). A UTC-based timestamp independent of time zones. Ideal for representing machine time and used in Duration calculations.",
+    "relatedLessonIds": [
+      "ch26_02"
+    ]
+  },
+  {
+    "id": "g196",
+    "term": "Charset",
+    "reading": "Charset",
+    "definition": "A class representing a character encoding. StandardCharsets.UTF_8 is the standard. Explicitly specified in InputStreamReader/OutputStreamWriter to prevent character corruption. UTF-8 became the default in Java 18+.",
+    "relatedLessonIds": [
+      "ch28_02"
+    ]
+  },
+  {
+    "id": "g197",
+    "term": "Connection",
+    "reading": "Connection",
+    "definition": "java.sql.Connection is a JDBC interface representing a database connection. Obtained via DriverManager.getConnection() and reliably closed using try-with-resources. Transaction control is enabled with setAutoCommit(false).",
+    "relatedLessonIds": [
+      "ch29_01"
+    ]
+  },
+  {
+    "id": "g198",
+    "term": "Enum Constant",
+    "reading": "Enum Constant",
+    "definition": "A fixed instance defined within an enum. Each constant can have fields, methods, and constructors. values() returns an array of all constants, and valueOf() retrieves a constant by name. Works well with switch statements.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g199",
+    "term": "Record Class",
+    "reading": "Record Class",
+    "definition": "A class that concisely defines an immutable data carrier (Java 16+). Declared as record Point(int x, int y) {}, with constructor, getters, equals, hashCode, and toString automatically generated.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g200",
+    "term": "sealed Class",
+    "reading": "sealed Class",
+    "definition": "A class that restricts which subclasses can extend it (Java 17+). Declared as sealed class Shape permits Circle, Rectangle {}. Subclasses must be final, sealed, or non-sealed.",
+    "relatedLessonIds": [
+      "ch07_04"
+    ]
+  },
+  {
+    "id": "g201",
+    "term": "ClassLoader",
+    "reading": "ClassLoader",
+    "definition": "A mechanism that loads class files into the JVM. Organized in a three-tier hierarchy: Bootstrap, Platform, and Application. Uses a parent-delegation model where parent loaders search for classes first. Closely related to the module system.",
+    "relatedLessonIds": [
+      "ch17_01"
+    ]
+  },
+  {
+    "id": "g202",
+    "term": "Interface private Method",
+    "reading": "Interface private Method",
+    "definition": "A feature introduced in Java 9. Used to extract common logic shared between default methods within an interface. Not accessible from implementing classes, useful for internal refactoring within the interface.",
+    "relatedLessonIds": [
+      "ch13_03"
+    ]
+  }
+]

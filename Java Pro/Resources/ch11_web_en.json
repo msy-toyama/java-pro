@@ -1,0 +1,1129 @@
+{
+  "courseId": "ch11",
+  "lessons": [
+    {
+      "id": "ch11_01",
+      "courseId": "ch11",
+      "title": "Basics of HTTP Communication",
+      "summary": "Understand how web communication works",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n・How HTTP communication works (requests and responses)\n・The differences between [[HTTP]] [[methods|method]] (GET, POST, PUT, DELETE)\n・The meaning of **status codes** (200, 404, 500, etc.)\n\nLet's understand the fundamentals of HTTP communication, which forms the foundation of web development.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "rule",
+          "title": "How Web Applications Work",
+          "body": "Web communication follows this flow:\n\n1. The client (browser) sends a request to the server\n2. The server processes the request\n3. The server returns a response\n4. The browser displays the response\n\nThe communication protocol for this is HTTP (HyperText Transfer Protocol).\n\nURL structure:\n  https://example.com:8080/api/users?name=taro\n  ├─ Protocol (https)\n  ├─ Hostname (example.com)\n  ├─ Port number (8080)\n  ├─ Path (/api/users)\n  └─ Query parameter (name=taro)",
+          "code": null,
+          "note": "HTTP is a stateless protocol (it does not maintain state). Each request-response pair is independent, and the server does not remember previous communications.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "rule",
+          "title": "HTTP Methods",
+          "body": "HTTP requests include a method that indicates \"what you want to do.\"\n\n| Method | Purpose | Notes |\n|---|---|---|\n| GET | Retrieve data | Parameters are included in the URL (?name=taro&age=25) |\n| POST | Send data (form submission, login) | Parameters are in the request body. Can send large amounts of data |\n| PUT | Update data (overwrite existing resources) | Used in REST APIs |\n| DELETE | Delete data | Used in REST APIs |\n| PATCH | Partially update data | Used in REST APIs |\n\nGET and POST are the basics of web apps. PUT/DELETE/PATCH are used in REST APIs.\n\nWhen to use GET vs POST:\n・GET: For retrieval. Can be bookmarked. Saved in browser history\n・POST: For submission. Use POST for sensitive data like passwords",
+          "code": null,
+          "note": "GET request parameters are exposed in the URL, so never send confidential information like passwords via GET.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "rule",
+          "title": "HTTP Status Codes",
+          "body": "Responses from the server include a **status code** indicating the result of processing.\n\n【2xx Success】\n| Code | Description |\n|---|---|\n| 200 OK | Processing completed successfully |\n| 201 Created | New resource created successfully |\n| 204 No Content | Processing succeeded (no data to return) |\n\n【3xx Redirect】\n| Code | Description |\n|---|---|\n| 301 Moved Permanently | Permanent relocation |\n| 302 Found | Temporary redirect |\n\n【4xx Client Error】\n| Code | Description |\n|---|---|\n| 400 Bad Request | Invalid request |\n| 401 Unauthorized | Authentication required |\n| 403 Forbidden | Access denied |\n| 404 Not Found | Resource not found |\n| 405 Method Not Allowed | HTTP method not permitted |\n\n【5xx Server Error】\n| Code | Description |\n|---|---|\n| 500 Internal Server Error | Internal server error |\n| 503 Service Unavailable | Service temporarily unavailable |",
+          "code": null,
+          "note": "Remember: 404 means \"page not found\" and 500 means \"server bug.\" If you get a 500 error during development, check the server logs.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "code",
+          "title": "HTTP Communication in Java (HttpClient)",
+          "body": "Since Java 11, you can perform HTTP communication using the standard library's HttpClient.",
+          "code": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\n// GET request\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://api.example.com/users\"))\n    .GET()\n    .build();\n\nHttpResponse<String> response =\n    client.send(request, HttpResponse.BodyHandlers.ofString());\n\nSystem.out.println(\"Status: \" + response.statusCode());\nSystem.out.println(\"Body: \" + response.body());\n\n// POST request\nHttpRequest postReq = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://api.example.com/users\"))\n    .header(\"Content-Type\", \"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(\n        \"{\\\"name\\\": \\\"Taro\\\", \\\"age\\\": 25}\"))\n    .build();\n\nHttpResponse<String> postRes =\n    client.send(postReq, HttpResponse.BodyHandlers.ofString());",
+          "note": "HttpClient was officially introduced in Java 11. Before that, HttpURLConnection or Apache HttpClient was used.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "tip",
+          "title": "HTTP Methods and CRUD Correspondence",
+          "body": "HTTP methods express \"what you want to do.\"\n\n| HTTP Method | Purpose | CRUD | Example |\n|---|---|---|---|\n| GET | Retrieve | Read | Get user info |\n| POST | Create | Create | Register new user |\n| PUT | Update | Update | Update profile |\n| DELETE | Delete | Delete | Delete account |\n\nYou can access GET by typing a URL directly in the address bar, but POST is used from form submissions or APIs.",
+          "code": null,
+          "note": "**Status codes** 2xx=Success, 3xx=Redirect, 4xx=Client error, 5xx=Server error",
+          "order": 6
+        },
+        {
+          "lessonId": "ch11_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "・Web communication is fundamentally a single request → response round trip\n・HTTP methods: GET (retrieve), POST (submit), PUT (update), DELETE (delete)\n・GET parameters are exposed in the URL; POST parameters are stored in the body\n・**Status codes**: 2xx=Success, 4xx=Client error, 5xx=Server error\n・Java 11's HttpClient enables HTTP communication using only standard libraries\n・HTTP is a stateless protocol (does not maintain state)",
+          "code": null,
+          "note": null,
+          "order": 7
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_01_q1",
+          "lessonId": "ch11_01",
+          "type": "fourChoice",
+          "question": "When submitting a password from a user login form, which is the appropriate HTTP method?",
+          "code": "@WebServlet(\"/hello\")\npublic class HelloServlet extends HttpServlet {\n    protected void doGet(HttpServletRequest req,\n            HttpServletResponse resp) {\n        resp.getWriter().println(\"Hello!\");\n    }\n}",
+          "explanation": "Sensitive information such as passwords should be sent using the POST method. With the GET method, parameters are included in the URL, which means passwords could remain in browser history or server logs. With POST, data is stored in the request body and is not displayed in the URL.",
+          "choices": [
+            {
+              "id": "ch11_01_q1_a",
+              "text": "GET",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_01_q1_b",
+              "text": "POST",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_01_q1_c",
+              "text": "PUT",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_01_q1_d",
+              "text": "DELETE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_01_q2",
+          "lessonId": "ch11_01",
+          "type": "fourChoice",
+          "question": "What does HTTP status code 404 mean?",
+          "code": "HttpSession session = request.getSession();\nsession.setAttribute(\"user\", userName);\nString user = (String) session.getAttribute(\"user\");",
+          "explanation": "404 Not Found indicates that the requested resource (page or API) does not exist on the server. It is returned when accessing a mistyped URL or a deleted page. 500 is an internal server error, 401 is an authentication error, and 301 is a redirect.",
+          "choices": [
+            {
+              "id": "ch11_01_q2_a",
+              "text": "Internal server error",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_01_q2_b",
+              "text": "Authentication required",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_01_q2_c",
+              "text": "Resource not found",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_01_q2_d",
+              "text": "Invalid request",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_01_q3",
+          "lessonId": "ch11_01",
+          "type": "reorder",
+          "question": "Arrange the steps of web communication in the correct order.",
+          "code": "<%@ page contentType=\"text/html\" %>\n<html>\n<body>\n  <h1><%= request.getParameter(\"name\") %></h1>\n</body>\n</html>",
+          "explanation": "Web communication follows this flow: the client (browser) sends a request, the server receives and processes it, returns a response, and finally the browser displays it. HTTP is a stateless protocol that completes in a single round trip.",
+          "choices": [
+            {
+              "id": "ch11_01_q3_a",
+              "text": "Browser sends an HTTP request",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_01_q3_b",
+              "text": "Server processes the request",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_01_q3_c",
+              "text": "Server returns an HTTP response",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_01_q3_d",
+              "text": "Browser displays the response",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch11_01_q3_a",
+            "ch11_01_q3_b",
+            "ch11_01_q3_c",
+            "ch11_01_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_02",
+      "courseId": "ch11",
+      "title": "Servlet Basics",
+      "summary": "Handle web requests in Java",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n・The basic structure of **servlets** (HttpServlet)\n・Implementing doGet() and doPost() [[methods|method]]\n・How to retrieve request parameters\n\n[[Servlets|Servlet]] are the foundational technology for Java web applications.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "rule",
+          "title": "How Servlets Work",
+          "body": "**Servlet** operation flow:\n\n1. Client sends an HTTP request\n2. The web container (Tomcat, etc.) receives the request\n3. Calls the appropriate method of the servlet [[class]]\n   → GET request → doGet() method\n   → POST request → doPost() method\n4. The servlet processes and generates a response\n5. The web container sends the response to the client\n\nKey components:\n| Component | Description |\n|---|---|\n| HttpServlet | Base class for servlets. Extend this class |\n| HttpServletRequest | Request information (parameters, headers, etc.) |\n| HttpServletResponse | Response generation (HTML output, status codes, etc.) |\n| Web Container | Servlet execution environment (Apache Tomcat, Jetty, etc.) |",
+          "code": null,
+          "note": "The web container (**servlet** container) manages servlet lifecycle, [[thread]] management, and request routing.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "code",
+          "title": "Basic Servlet Implementation",
+          "body": "[[Inherit|Inheritance]] from HttpServlet and [[override]] the doGet/doPost methods.",
+          "code": "import jakarta.servlet.*;\nimport jakarta.servlet.http.*;\nimport jakarta.servlet.annotation.WebServlet;\nimport java.io.*;\n\n@WebServlet(\"/hello\")  // Specify URL pattern\n// Definition of HelloServlet class\npublic class HelloServlet extends HttpServlet {\n\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // Set response configuration\n        resp.setContentType(\"text/html; charset=UTF-8\");\n\n        // Get request parameter\n        // Variable declaration and initialization\n        String name = req.getParameter(\"name\");\n        // Conditional branching\n        if (name == null) name = \"Guest\";\n\n        // HTML output\n        PrintWriter out = resp.getWriter();\n        out.println(\"<html><body>\");\n        out.println(\"<h1>Hello, \" + name + \"!</h1>\");\n        out.println(\"</body></html>\");\n    }\n}\n// Access: http://localhost:8080/app/hello?name=Taro",
+          "note": "The @WebServlet annotation specifies the URL pattern. Previously, this was configured in web.xml, but since Java EE 6, annotations have become the standard approach.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "tip",
+          "title": "Servlet Lifecycle",
+          "body": "Let's understand the lifespan of a **servlet**.\n\n| Timing | Method Called | Frequency |\n|---|---|---|\n| Servlet initialization | init() | Only once |\n| Each request | doGet()/doPost() | Every time |\n| Servlet destruction | destroy() | Only once |\n\nTypically, only one [[instance]] of a servlet is created and shared across multiple requests.",
+          "code": null,
+          "note": "Therefore, you should not store request-specific data in **servlet** fields (not thread-safe).",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "code",
+          "title": "Processing Form Data",
+          "body": "An example of receiving data submitted from an HTML form in a **servlet**.",
+          "code": "// HTML form (login.html)\n// <form action=\"/app/login\" method=\"POST\">\n//   <input type=\"text\" name=\"username\" />\n//   <input type=\"password\" name=\"password\" />\n//   <button type=\"submit\">Login</button>\n// </form>\n\n@WebServlet(\"/login\")\npublic class LoginServlet extends HttpServlet {\n\n    @Override\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        req.setCharacterEncoding(\"UTF-8\");\n\n        String username = req.getParameter(\"username\");\n        String password = req.getParameter(\"password\");\n\n        resp.setContentType(\"text/html; charset=UTF-8\");\n        PrintWriter out = resp.getWriter();\n\n        if (\"admin\".equals(username) && \"pass123\".equals(password)) {\n            out.println(\"<h1>Login Successful</h1>\");\n        } else {\n            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);\n            out.println(\"<h1>Login Failed</h1>\");\n        }\n    }\n}",
+          "note": "To prevent character encoding issues, call req.setCharacterEncoding(\"UTF-8\") first.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "・**Servlets** are created by extending HttpServlet\n・doGet() handles GET requests, doPost() handles POST requests\n・The @WebServlet annotation specifies the URL pattern\n・getParameter() retrieves request parameters\n・setContentType() sets the MIME type of the response\n・A web container (Tomcat, etc.) provides the servlet execution environment",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_02_q1",
+          "lessonId": "ch11_02",
+          "type": "errorFind",
+          "question": "Find the error in the following servlet code.\nThis code has a compile error. What is the cause?",
+          "code": "public class HelloServlet extends HttpServlet {\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse res) {\n        String name = req.getParameter(\"name\");\n        res.setContentType(\"text/html; charset=UTF-8\");\n        PrintWriter out = res.getWriter();\n        out.println(\"Hello, \" + name);\n    }\n}",
+          "explanation": "res.getWriter() may throw an IOException, but there is no throws declaration or try-catch. The correct signature should be `protected void doPost(...) throws ServletException, IOException`. This is also needed to match the signature of HttpServlet's doPost method.",
+          "choices": [
+            {
+              "id": "ch11_02_q1_a",
+              "text": "Missing throws IOException, no exception handling for getWriter()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_02_q1_b",
+              "text": "The argument to getParameter is incorrect",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_02_q1_c",
+              "text": "The format of setContentType is wrong",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_02_q1_d",
+              "text": "There is no error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_02_q2",
+          "lessonId": "ch11_02",
+          "type": "fillBlank",
+          "question": "Fill in the blank to get the value of the request parameter \"name\".\nString name = req._____(\"name\");",
+          "code": "RequestDispatcher rd = request\n    .getRequestDispatcher(\"/result.jsp\");\nrd.forward(request, response);",
+          "explanation": "The getParameter() method retrieves request parameters. For GET requests, it retrieves from the URL query string; for POST requests, from the request body. If the parameter does not exist, null is returned.",
+          "choices": [
+            {
+              "id": "ch11_02_q2_a",
+              "text": "getParameter",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_02_q2_b",
+              "text": "getAttribute",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_02_q2_c",
+              "text": "getValue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_02_q2_d",
+              "text": "getInput",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_02_q3",
+          "lessonId": "ch11_02",
+          "type": "fourChoice",
+          "question": "Which software provides the execution environment for servlets?",
+          "code": "response.sendRedirect(\"/login\");",
+          "explanation": "Apache Tomcat is a Java web container (servlet container) that provides the execution environment for servlets. It manages servlet lifecycle, request routing, thread management, etc. MySQL is a database, Maven is a build tool, and Git is a version control system.",
+          "choices": [
+            {
+              "id": "ch11_02_q3_a",
+              "text": "MySQL",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_02_q3_b",
+              "text": "Apache Tomcat",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_02_q3_c",
+              "text": "Maven",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_02_q3_d",
+              "text": "Git",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_03",
+      "courseId": "ch11",
+      "title": "Session Management and Cookies",
+      "summary": "Maintaining state in stateless HTTP",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n・The stateless nature of HTTP and the need for sessions\n・How to manage login state with HttpSession\n・How cookies work and how to use them\n\nLearn the mechanisms for identifying users and maintaining state.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "rule",
+          "title": "Differences Between Cookies and Sessions",
+          "body": "| Item | Cookie | Session |\n|---|---|---|\n| Storage location | Client-side (browser) | Server-side |\n| Data size | Up to about 4KB | Can handle large data |\n| Security | Users can delete/disable | Data is not sent to the client |\n| Expiration | Configurable | Automatically deleted on timeout |\n| Identification | − | Session ID sent/received via cookies |\n\nHow it works:\n  1. On the first access, the server issues a session ID\n  2. The session ID is sent to the browser via a cookie\n  3. On the next access, the browser sends the session ID back\n  4. The server retrieves the user's data using the session ID",
+          "code": null,
+          "note": "The session data is stored on the server, and only the session ID is saved in the cookie. This is how \"HTTP sessions\" work.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "code",
+          "title": "Using HttpSession",
+          "body": "An example of managing login state using sessions in a **servlet**.",
+          "code": "@WebServlet(\"/login\")\n// Definition of LoginServlet class\npublic class LoginServlet extends HttpServlet {\n    @Override\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // Variable declaration and initialization\n        String user = req.getParameter(\"username\");\n        String pass = req.getParameter(\"password\");\n\n        // Conditional branching\n        if (authenticate(user, pass)) {\n            // Get session (create new if none exists)\n            HttpSession session = req.getSession();\n            session.setAttribute(\"loginUser\", user);\n            session.setMaxInactiveInterval(1800); // 30 minutes\n            resp.sendRedirect(\"/app/mypage\");\n        } else {\n            resp.sendRedirect(\"/app/login?error=true\");\n        }\n    }\n}\n@WebServlet(\"/mypage\")\n// Definition of MyPageServlet class\npublic class MyPageServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        HttpSession session = req.getSession(false); // Existing session only\n        if (session == null || session.getAttribute(\"loginUser\") == null) {\n            resp.sendRedirect(\"/app/login\"); // Not logged in → redirect\n            return;\n        }\n\n        String user = (String) session.getAttribute(\"loginUser\");\n        resp.setContentType(\"text/html; charset=UTF-8\");\n        resp.getWriter().println(\"<h1>Welcome, \" + user + \"</h1>\");\n    }\n}",
+          "note": "getSession(false) returns the existing session only if one exists. getSession() or getSession(true) creates a new session if one doesn't exist.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "tip",
+          "title": "Differences Between Sessions and Cookies",
+          "body": "Both are used for state management, but they differ in storage location and usage.\n\n| Item | Session | Cookie |\n|---|---|---|\n| Storage | Server-side | Browser-side |\n| Data size | Unlimited | About 4KB |\n| Security | Secure | Can be tampered with on client-side |\n| Expiration | Server-configured | Freely configurable |\n\nSessions are commonly used for login state, while cookies are often used for \"remember me\" functionality.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "code",
+          "title": "Working with Cookies",
+          "body": "How to manipulate cookies directly from a **servlet**.",
+          "code": "// Setting a cookie\nCookie cookie = new Cookie(\"theme\", \"dark\");\ncookie.setMaxAge(60 * 60 * 24 * 30); // Valid for 30 days\ncookie.setPath(\"/\");                  // Valid for all paths\ncookie.setHttpOnly(true);              // Inaccessible from JavaScript\nresp.addCookie(cookie);\n\n// Getting cookies\nCookie[] cookies = req.getCookies();\n// Conditional branching\nif (cookies != null) {\n    // Enhanced for loop (iterate through all elements)\n    for (Cookie c : cookies) {\n        if (\"theme\".equals(c.getName())) {\n            // Variable declaration and initialization\n            String theme = c.getValue(); // \"dark\"\n        }\n    }\n}\n\n// Deleting a cookie (MaxAge=0 for immediate deletion)\nCookie del = new Cookie(\"theme\", \"\");\ndel.setMaxAge(0);\nresp.addCookie(del);",
+          "note": "setHttpOnly(true) is important for XSS attack prevention. It prevents JavaScript from reading the cookie, improving security.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "・HTTP is stateless → Sessions/Cookies maintain state\n・Cookie: Stores small data on the client-side (4KB limit)\n・Session: Stores data on the server-side (higher security)\n・The session ID is stored in a cookie and linked to server data\n・getSession() retrieves the session; setAttribute/getAttribute for data operations\n・setHttpOnly(true) for XSS prevention\n・Sessions are automatically invalidated by timeout",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_03_q1",
+          "lessonId": "ch11_03",
+          "type": "fourChoice",
+          "question": "Where is HttpSession data stored?",
+          "code": "Cookie cookie = new Cookie(\"lang\", \"ja\");\ncookie.setMaxAge(3600);\nresponse.addCookie(cookie);",
+          "explanation": "HttpSession data is stored in the server's memory. Only a session ID is sent to the client (browser) as a cookie for identification purposes. This ensures security, preventing confidential data such as passwords and personal information from being sent to the client.",
+          "choices": [
+            {
+              "id": "ch11_03_q1_a",
+              "text": "Browser cookies",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_03_q1_b",
+              "text": "Server memory",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_03_q1_c",
+              "text": "Database",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_03_q1_d",
+              "text": "Browser local storage",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_03_q2",
+          "lessonId": "ch11_03",
+          "type": "outputPredict",
+          "question": "Predict the content displayed in the browser on the first access for the following servlet code.",
+          "code": "protected void doGet(HttpServletRequest req,\n        HttpServletResponse res) throws ... {\n    HttpSession session = req.getSession(false);\n    String msg;\n    if (session == null) {\n        msg = \"Guest\";\n    } else {\n        msg = (String) session.getAttribute(\"user\");\n    }\n    res.getWriter().println(msg);\n}",
+          "explanation": "getSession(false) returns the existing session only if one exists; otherwise, it returns null. On first access, no session exists, so session==null, and \"Guest\" is displayed. Understanding the difference from getSession(true) or getSession() is important.",
+          "choices": [
+            {
+              "id": "ch11_03_q2_a",
+              "text": "Guest",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_03_q2_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_03_q2_c",
+              "text": "NullPointerException is thrown",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_03_q2_d",
+              "text": "Blank is displayed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_03_q3",
+          "lessonId": "ch11_03",
+          "type": "fourChoice",
+          "question": "What is the effect of setting setHttpOnly(true) on a Cookie?",
+          "code": "String name = request.getParameter(\"name\");\nif (name == null || name.isEmpty()) {\n    response.sendError(400, \"Name is required\");\n}",
+          "explanation": "Setting setHttpOnly(true) prevents JavaScript from accessing that cookie. This is important for XSS (Cross-Site Scripting) attack prevention. It prevents attackers from stealing session IDs by reading document.cookie via JavaScript.",
+          "choices": [
+            {
+              "id": "ch11_03_q3_a",
+              "text": "Cookies are only sent over HTTPS",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_03_q3_b",
+              "text": "JavaScript cannot access the cookie",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_03_q3_c",
+              "text": "The cookie is encrypted",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_03_q3_d",
+              "text": "The cookie expiration becomes infinite",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch11_03_q4",
+          "lessonId": "ch11_03",
+          "type": "codeComplete",
+          "question": "Complete the HttpServlet GET request handler.",
+          "code": "@WebServlet(\"/hello\")\npublic class HelloServlet extends HttpServlet {\n    protected void doGet(HttpServletRequest req,\n            HttpServletResponse resp) {\n        resp.getWriter().println(\"Hello!\");\n    }\n}",
+          "explanation": "Extend HttpServlet using extends and override doGet() to handle GET requests.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class MyServlet __BLANK_1__ HttpServlet {\n    @Override\n    protected void __BLANK_2__(HttpServletRequest req, HttpServletResponse resp) {\n        resp.getWriter().println(\"Hello\");\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Inheritance",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "extends",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "implements",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "abstract",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Method",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "doGet",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "doPost",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "service",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch11_04",
+      "courseId": "ch11",
+      "title": "JSP and the MVC Pattern",
+      "summary": "Separating view rendering and architecture",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n・Embedding dynamic values in HTML with JSP (JavaServer Pages)\n・The concept of the MVC pattern (Model-View-Controller)\n・The division of responsibilities between **servlets** and JSP\n\nThis is a design pattern for building maintainable web applications.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "code",
+          "title": "Basic JSP Syntax",
+          "body": "JSP files (.jsp) are template engines that allow embedding Java code within HTML.",
+          "code": "<%-- userList.jsp --%>\n<%@ page contentType=\"text/html; charset=UTF-8\" %>\n<%@ page import=\"java.util.List\" %>\n<html>\n<body>\n  <h1>User List</h1>\n\n  <%-- Scriptlet: Embedding Java code --%>\n  <% List<String> users = (List<String>) request.getAttribute(\"users\"); %>\n\n  <table border=\"1\">\n    <tr><th>Name</th></tr>\n    <% for (String user : users) { %>\n      <tr>\n        <%-- Expression: Output a value --%>\n        <td><%= user %></td>\n      </tr>\n    <% } %>\n  </table>\n\n  <%-- EL (Expression Language): A more concise syntax --%>\n  <p>Number of users: ${users.size()}</p>\n  <p>Request parameter: ${param.name}</p>\n</body>\n</html>",
+          "note": "In modern JSP development, scriptlets (<% %>) are no longer recommended. Using EL expressions (${...}) and JSTL tag libraries is the preferred approach.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "tip",
+          "title": "MVC Pattern Role Division",
+          "body": "MVC is a fundamental design pattern for web applications.\n\n| Component | Role | Java Web Implementation |\n|---|---|---|\n| Model (M) | Data and business logic | JavaBeans, Service |\n| View (V) | Screen display | JSP |\n| Controller (C) | Request handling and dispatch | Servlet |\n\nBy separating responsibilities, changes to the UI or logic can be made independently.",
+          "code": null,
+          "note": "In Spring MVC, this pattern is used in an even more advanced form (see Chapter 38).",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "rule",
+          "title": "MVC Pattern",
+          "body": "MVC (Model-View-Controller) is a design pattern for web applications.\n\n| Component | Role | Java Implementation Example |\n|---|---|---|\n| Model | Data and business logic | POJO, DAO, Service (UserDAO, OrderService) |\n| View | Screen display | JSP, Thymeleaf, HTML templates |\n| Controller | Request processing control | Servlet, @Controller |\n\nBenefits of MVC:\n1. Separation of concerns: UI, logic, and control are independent\n2. Maintainability: UI changes don't affect logic\n3. Testability: Models can be unit tested\n4. Team development: Front-end and back-end teams can work in parallel",
+          "code": null,
+          "note": "In [[Spring Boot]], the MVC pattern is applied as standard. @Controller takes the role of **servlets**, and Thymeleaf etc. serves as the View instead of JSP.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "code",
+          "title": "MVC Implementation with Servlet + JSP",
+          "body": "A pattern for passing data from a **servlet** (Controller) to a JSP (View).",
+          "code": "// Controller: UserListServlet.java\n@WebServlet(\"/users\")\npublic class UserListServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        // Model: Retrieve data\n        List<String> users = List.of(\"Taro Yamada\", \"Hanako Sato\", \"Ichiro Suzuki\");\n\n        // Set Model data in Request scope\n        req.setAttribute(\"users\", users);\n        req.setAttribute(\"title\", \"User List\");\n\n        // Forward to View (JSP)\n        RequestDispatcher rd =\n            req.getRequestDispatcher(\"/WEB-INF/views/userList.jsp\");\n        rd.forward(req, resp);\n    }\n}\n// Forward: Delegates processing to JSP internally on the server (URL does not change)\n// Redirect: Instructs the client to re-request a different URL (URL changes)",
+          "note": "It is best practice to place JSP files under /WEB-INF/. WEB-INF is not directly accessible from the browser, so it forces requests to go through a **servlet**.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "・JSP is a template that allows embedding Java code within HTML\n・Using EL expressions (${...}) to replace scriptlets is the current recommendation\n・MVC pattern: Model (data) + View (display) + Controller (control)\n・Data is transferred from **servlet** (C) to JSP (V) via Forward\n・JSP files should be placed under WEB-INF to prevent direct access\n・Understand the differences between Forward and Redirect",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_04_q1",
+          "lessonId": "ch11_04",
+          "type": "fourChoice",
+          "question": "In the MVC pattern, what role does a servlet play?",
+          "code": "HttpSession session = request.getSession();\nsession.setAttribute(\"user\", userName);\nString user = (String) session.getAttribute(\"user\");",
+          "explanation": "A servlet serves as the Controller in MVC. It handles request reception, invokes business logic (Model), and controls transfer to the view (View=JSP). The Model is handled by POJOs and DAOs, and the View is handled by JSP or templates.",
+          "choices": [
+            {
+              "id": "ch11_04_q1_a",
+              "text": "Model (data management)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_04_q1_b",
+              "text": "View (screen display)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_04_q1_c",
+              "text": "Controller (control)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_04_q1_d",
+              "text": "Router (routing)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_04_q2",
+          "lessonId": "ch11_04",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the difference between forward and redirect?",
+          "code": "<%@ page contentType=\"text/html\" %>\n<html>\n<body>\n  <h1><%= request.getParameter(\"name\") %></h1>\n</body>\n</html>",
+          "explanation": "Forward delegates processing to another resource (such as JSP) internally on the server, so the browser URL does not change. Redirect instructs the browser to \"re-access a different URL,\" so the URL changes. With forward, request Attributes can be carried over, but with redirect, they cannot.",
+          "choices": [
+            {
+              "id": "ch11_04_q2_a",
+              "text": "Forward changes the URL, redirect does not",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_04_q2_b",
+              "text": "Forward does not change the URL, redirect changes the URL",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_04_q2_c",
+              "text": "There is no difference between forward and redirect",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_04_q2_d",
+              "text": "POST data can be carried over with redirect",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_04_q3",
+          "lessonId": "ch11_04",
+          "type": "fillBlank",
+          "question": "Fill in the blank for the JSP Expression Language (EL) syntax to display the value of the request attribute \"title\".\n_____",
+          "code": "RequestDispatcher rd = request\n    .getRequestDispatcher(\"/result.jsp\");\nrd.forward(request, response);",
+          "explanation": "In EL (Expression Language), ${attributeName} outputs the value of a request scope attribute. Writing ${title} displays the value of request.getAttribute(\"title\"). It is a more concise and safer syntax than scriptlets (<%= ... %>).",
+          "choices": [
+            {
+              "id": "ch11_04_q3_a",
+              "text": "${title}",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_04_q3_b",
+              "text": "<%= title %>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_04_q3_c",
+              "text": "#{title}",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_04_q3_d",
+              "text": "{{title}}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_05",
+      "courseId": "ch11",
+      "title": "REST API Basics",
+      "summary": "JSON communication and RESTful design concepts",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n・**REST API** design principles (resource-oriented)\n・Data exchange in JSON format\n・The correspondence between CRUD and HTTP methods\n\nLearn the basics of API development, the mainstream approach for modern web applications.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "rule",
+          "title": "RESTful Design Principles",
+          "body": "REST (Representational State Transfer) is an API design style. It follows these principles:\n\n1. Resource-oriented: URLs represent resources (nouns)\n   ○ /api/users (user list)\n   ○ /api/users/1 (user with ID:1)\n   × /api/getUser?id=1 (verbs are not recommended)\n\n2. HTTP methods represent operations (see table below)\n\n3. Stateless: The server does not maintain session state\n   → Authentication uses tokens (JWT, etc.) included in requests\n\n4. Appropriate **status codes**: Return 200, 201, 404, 500, etc. correctly\n\n| HTTP Method + Path | Operation |\n|---|---|\n| GET /api/users | Get user list |\n| GET /api/users/1 | Get user with ID:1 |\n| POST /api/users | Create new user |\n| PUT /api/users/1 | Update user with ID:1 |\n| DELETE /api/users/1 | Delete user with ID:1 |",
+          "code": null,
+          "note": "**REST API** CRUD operations naturally correspond to HTTP methods. POST=Create, GET=Read, PUT=Update, DELETE=Delete.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "code",
+          "title": "Reading and Writing JSON (Gson/Jackson)",
+          "body": "Java object ↔ JSON conversion uses dedicated libraries.",
+          "code": "// User class\npublic class User {\n    private int id;\n    private String name;\n    private String email;\n    // getters/setters omitted\n}\n\n// --- Using Gson ---\nimport com.google.gson.Gson;\n\nGson gson = new Gson();\n\n// Java → JSON (Serialization)\nUser user = new User(1, \"Taro\", \"taro@example.com\");\nString json = gson.toJson(user);\n// {\"id\":1,\"name\":\"Taro\",\"email\":\"taro@example.com\"}\n\n// JSON → Java (Deserialization)\nString jsonStr = \"{\\\"id\\\":2,\\\"name\\\":\\\"Hanako\\\"}\";\nUser u = gson.fromJson(jsonStr, User.class);\nSystem.out.println(u.getName()); // Hanako\n\n// --- Using Jackson ---\nimport com.fasterxml.jackson.databind.ObjectMapper;\n\nObjectMapper mapper = new ObjectMapper();\nString jacksonJson = mapper.writeValueAsString(user); // Java→JSON\nUser u2 = mapper.readValue(jsonStr, User.class);       // JSON→Java",
+          "note": "Gson is developed by Google, and Jackson is developed by FasterXML. In [[Spring Boot]], Jackson is included by default.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "tip",
+          "title": "RESTful API Design Rules",
+          "body": "Good **REST API** design follows certain rules.\n\n・URLs represent resources (nouns): /users, /orders\n・Verbs are expressed via HTTP methods: GET /users (list retrieval), POST /users (create new)\n・Specify a specific resource by ID: GET /users/123\n・JSON format is the mainstream for responses\n\nAvoid URLs like \"/getUser\" or \"/deleteUser.\"",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "code",
+          "title": "Implementing a REST API with Servlets",
+          "body": "An example of implementing a JSON-based **REST API** with **servlets**.",
+          "code": "@WebServlet(\"/api/users/*\")\n// Definition of UserApiServlet class\npublic class UserApiServlet extends HttpServlet {\n\n    private final Gson gson = new Gson();\n\n    @Override\n    protected void doGet(HttpServletRequest req,\n                         HttpServletResponse resp)\n            throws ServletException, IOException {\n\n        resp.setContentType(\"application/json; charset=UTF-8\");\n\n        // Extract ID from path\n        // Variable declaration and initialization\n        String pathInfo = req.getPathInfo();\n        // Conditional branching\n        if (pathInfo == null || pathInfo.equals(\"/\")) {\n            // GET /api/users → list\n            List<User> users = UserService.findAll();\n            resp.getWriter().write(gson.toJson(users));\n        } else {\n            // GET /api/users/1 → individual retrieval\n            int id = Integer.parseInt(pathInfo.substring(1));\n            User user = UserService.findById(id);\n            if (user != null) {\n                resp.getWriter().write(gson.toJson(user));\n            } else {\n                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n                resp.getWriter().write(\"{\\\"error\\\": \\\"User not found\\\"}\");\n            }\n        }\n    }\n    @Override\n    protected void doPost(HttpServletRequest req,\n                          HttpServletResponse resp)\n            throws ServletException, IOException {\n        User user = gson.fromJson(req.getReader(), User.class);\n        UserService.save(user);\n        resp.setStatus(HttpServletResponse.SC_CREATED); // 201\n        resp.setContentType(\"application/json; charset=UTF-8\");\n        resp.getWriter().write(gson.toJson(user));\n    }\n}",
+          "note": "With Spring Boot, using @RestController greatly simplifies this kind of code. You will learn about it in ch38.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "・**REST API** is a web API design style that exchanges data in JSON\n・URLs represent resources (nouns), HTTP methods represent operations\n・GET=Retrieve, POST=Create, PUT=Update, DELETE=Delete\n・Content-Type: application/json for JSON communication\n・Gson / Jackson for Java ↔ JSON conversion\n・Return appropriate **status codes** (200, 201, 404, etc.)\n・Spring Boot allows writing this pattern more concisely",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_05_q1",
+          "lessonId": "ch11_05",
+          "type": "fourChoice",
+          "question": "In RESTful API design, what is the correct request to \"delete user with ID:5\"?",
+          "code": "response.sendRedirect(\"/login\");",
+          "explanation": "In REST APIs, the URL specifies the resource and the HTTP method expresses the operation. \"/api/users/5\" identifies the resource, and the DELETE method expresses deletion. Including verbs (deleteUser, etc.) in the URL goes against RESTful design.",
+          "choices": [
+            {
+              "id": "ch11_05_q1_a",
+              "text": "GET /api/deleteUser?id=5",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_05_q1_b",
+              "text": "POST /api/users/5/delete",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_05_q1_c",
+              "text": "DELETE /api/users/5",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_05_q1_d",
+              "text": "GET /api/users/5?action=delete",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_05_q2",
+          "lessonId": "ch11_05",
+          "type": "fourChoice",
+          "question": "When a new resource has been successfully created, which HTTP status code should a REST API return?",
+          "code": "Cookie cookie = new Cookie(\"lang\", \"ja\");\ncookie.setMaxAge(3600);\nresponse.addCookie(cookie);",
+          "explanation": "201 Created is a status code indicating that a new resource was successfully created. It is returned when creating a new user via POST /api/users. 200 OK is for general success, and 204 No Content is for success without a response body.",
+          "choices": [
+            {
+              "id": "ch11_05_q2_a",
+              "text": "200 OK",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_05_q2_b",
+              "text": "201 Created",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_05_q2_c",
+              "text": "301 Moved Permanently",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_05_q2_d",
+              "text": "204 No Content",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_05_q3",
+          "lessonId": "ch11_05",
+          "type": "outputPredict",
+          "question": "When making a GET /api/items?category=book request to the following REST API, what is the HTTP status code of the response?\n* Assume service.findByCategory(\"book\") returns an empty List.",
+          "code": "@GetMapping(\"/api/items\")\npublic ResponseEntity<List<Item>> getItems(\n        @RequestParam String category) {\n    List<Item> items = service.findByCategory(category);\n    if (items.isEmpty()) {\n        return ResponseEntity.noContent().build();\n    }\n    return ResponseEntity.ok(items);\n}",
+          "explanation": "Since findByCategory(\"book\") returns an empty List, items.isEmpty() is true, and ResponseEntity.noContent().build() is executed. noContent() returns HTTP status code **204 No Content**. 200 is for success, 201 is for creation, and 404 is for not found.",
+          "choices": [
+            {
+              "id": "ch11_05_q3_a",
+              "text": "204 No Content",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_05_q3_b",
+              "text": "200 OK",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_05_q3_c",
+              "text": "404 Not Found",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_05_q3_d",
+              "text": "500 Internal Server Error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch11_06",
+      "courseId": "ch11",
+      "title": "Filters and Practical Web Design",
+      "summary": "Centralizing common processing and overall web application design",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n・Centralizing common processing with Filters\n・Event-driven processing with Listeners\n・Practical design patterns for web development\n\nLearn tips for designing maintainable applications as they grow in scale.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "code",
+          "title": "Implementing a Filter",
+          "body": "Filters intercept processing before and after a request reaches a **servlet**.",
+          "code": "import jakarta.servlet.*;\nimport jakarta.servlet.annotation.WebFilter;\nimport jakarta.servlet.http.*;\nimport java.io.IOException;\n\n// Filter applied to all requests\n@WebFilter(\"/*\")\n// Definition of EncodingFilter class\npublic class EncodingFilter implements Filter {\n\n    @Override\n    public void doFilter(ServletRequest req, ServletResponse resp,\n                         FilterChain chain)\n            throws IOException, ServletException {\n\n        // Pre-processing: Set character encoding\n        req.setCharacterEncoding(\"UTF-8\");\n        resp.setCharacterEncoding(\"UTF-8\");\n\n        // Measure processing time (for logging)\n        // Variable declaration and initialization\n        long start = System.currentTimeMillis();\n\n        // Delegate processing to the next filter or servlet\n        chain.doFilter(req, resp);\n\n        // Post-processing: Log processing time\n        long elapsed = System.currentTimeMillis() - start;\n        System.out.printf(\"[%s] %s (%dms)%n\",\n            ((HttpServletRequest) req).getMethod(),\n            ((HttpServletRequest) req).getRequestURI(),\n            elapsed);\n    }\n}",
+          "note": "If you don't call chain.doFilter(), the request will not reach the **servlet**. In authentication filters, access control is achieved by not calling chain.doFilter() for unauthenticated users and redirecting instead.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "tip",
+          "title": "Filter Execution Order Follows web.xml Declaration Order",
+          "body": "When multiple filters are defined, they execute in the order declared in web.xml (top to bottom).\n\nRequest: Filter A → Filter B → **Servlet**\nResponse: [[Servlet]] → Filter B → Filter A\n\nFilters can implement both \"pre-processing\" and \"post-processing\" by writing logic before and after chain.doFilter().",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "code",
+          "title": "Implementing an Authentication Filter",
+          "body": "An example of checking whether a user is logged in using a filter.",
+          "code": "@WebFilter(\"/app/*\")  // Applied to paths under /app/\n// Definition of AuthFilter class\npublic class AuthFilter implements Filter {\n\n    // Paths that don't require the filter\n    private static final Set<String> EXCLUDED = Set.of(\n        \"/app/login\", \"/app/register\", \"/app/public\"\n    );\n\n    @Override\n    public void doFilter(ServletRequest req, ServletResponse resp,\n                         FilterChain chain)\n            throws IOException, ServletException {\n\n        HttpServletRequest httpReq = (HttpServletRequest) req;\n        HttpServletResponse httpResp = (HttpServletResponse) resp;\n\n        // Variable declaration and initialization\n        String path = httpReq.getRequestURI();\n\n        // Skip excluded paths\n        // Conditional branching\n        if (EXCLUDED.contains(path)) {\n            chain.doFilter(req, resp);\n            return;\n        }\n\n        // Session check\n        HttpSession session = httpReq.getSession(false);\n        if (session != null && session.getAttribute(\"loginUser\") != null) {\n            chain.doFilter(req, resp); // Logged in → pass through\n        } else {\n            httpResp.sendRedirect(\"/app/login\"); // Not logged in → login page\n        }\n    }\n}",
+          "note": "Multiple filters can be defined, and chain.doFilter() passes processing to the next filter. The order of @WebFilter is not guaranteed, so if order control is needed, define them in web.xml.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "rule",
+          "title": "Web Application Project Structure",
+          "body": "Standard directory structure for a Java web application (Maven):\n\nsrc/main/\n├── java/com/example/\n│   ├── servlet/        ← Controller (**servlets**)\n│   │   ├── UserListServlet.java\n│   │   └── LoginServlet.java\n│   ├── service/        ← Business logic\n│   │   └── UserService.java\n│   ├── dao/            ← Data access (DB operations)\n│   │   └── UserDAO.java\n│   ├── model/          ← Data model (POJO)\n│   │   └── User.java\n│   └── filter/         ← Filters\n│       └── AuthFilter.java\n├── resources/          ← Configuration files\n└── webapp/\n    ├── WEB-INF/\n    │   ├── web.xml     ← Deployment descriptor\n    │   └── views/      ← JSP files\n    └── css/js/images/  ← Static resources\n\nThis structure allows organization aligned with the MVC pattern.",
+          "code": null,
+          "note": "In [[Spring Boot]], the traditional web.xml is not needed, and web application setup is automated through AutoConfiguration. However, understanding Servlet specifications for conceptual knowledge is very important.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch11_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "・Filters intercept common processing before and after requests/responses\n・@WebFilter specifies the URL pattern to apply the filter\n・chain.doFilter() passes processing to the next filter or **servlet**\n・Used for cross-cutting concerns like authentication checks, logging, and character encoding\n・Not calling chain.doFilter() blocks the request\n・MVC + Filters enable building maintainable web applications\n・Spring Boot internally uses Servlet/Filter technology",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch11_06_q1",
+          "lessonId": "ch11_06",
+          "type": "errorFind",
+          "question": "Find the issue in the following authentication filter code where authenticated user requests do not reach the servlet.",
+          "code": "public class AuthFilter implements Filter {\n    @Override\n    public void doFilter(ServletRequest req,\n            ServletResponse res, FilterChain chain)\n            throws IOException, ServletException {\n        HttpSession session = ((HttpServletRequest) req).getSession(false);\n        if (session != null && session.getAttribute(\"user\") != null) {\n            // Authenticated\n            System.out.println(\"Auth OK\");\n        } else {\n            ((HttpServletResponse) res).sendRedirect(\"/login\");\n        }\n    }\n}",
+          "explanation": "Even when authenticated, **chain.doFilter(req, res) is not called**, so the request does not reach the servlet. chain.doFilter() is the method that passes the request to the next filter or servlet. Forgetting to call it causes the request to stop.",
+          "choices": [
+            {
+              "id": "ch11_06_q1_a",
+              "text": "chain.doFilter() is not called in the authenticated branch",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_06_q1_b",
+              "text": "The argument to sendRedirect is wrong",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_06_q1_c",
+              "text": "getSession(true) should be used instead of getSession(false)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch11_06_q1_d",
+              "text": "There is no error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch11_06_q2",
+          "lessonId": "ch11_06",
+          "type": "fourChoice",
+          "question": "Which layer of a web application is responsible for database access?",
+          "code": "String name = request.getParameter(\"name\");\nif (name == null || name.isEmpty()) {\n    response.sendError(400, \"Name is required\");\n}",
+          "explanation": "The DAO (Data Access Object) layer is responsible for database access. It handles executing SQL, retrieving results, and converting to data models. The Service layer handles business logic, Controller (servlet) handles request processing, and View (JSP) handles screen display.",
+          "choices": [
+            {
+              "id": "ch11_06_q2_a",
+              "text": "Controller (Servlet)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch11_06_q2_b",
+              "text": "View (JSP)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch11_06_q2_c",
+              "text": "DAO (Data Access Object)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_06_q2_d",
+              "text": "Filter",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch11_06_q3",
+          "lessonId": "ch11_06",
+          "type": "reorder",
+          "question": "Arrange the order in which a request is processed in a web application correctly.",
+          "code": null,
+          "explanation": "A request is first received by the web container (Tomcat, etc.), then passes through Filters (common processing like authentication/logging), is processed by the servlet (Controller), and finally the screen is generated by JSP (View). This flow is the foundation of the MVC + Filter pattern.",
+          "choices": [
+            {
+              "id": "ch11_06_q3_a",
+              "text": "Web container receives the request",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch11_06_q3_b",
+              "text": "Filter performs common processing (authentication, etc.)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch11_06_q3_c",
+              "text": "Servlet processes the request",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch11_06_q3_d",
+              "text": "JSP generates the view and returns the response",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch11_06_q3_a",
+            "ch11_06_q3_b",
+            "ch11_06_q3_c",
+            "ch11_06_q3_d"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

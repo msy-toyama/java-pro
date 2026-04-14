@@ -1,0 +1,1114 @@
+{
+  "courseId": "ch24",
+  "lessons": [
+    {
+      "id": "ch24_01",
+      "courseId": "ch24",
+      "title": "What Is a Stream?",
+      "summary": "Learn the fundamental concepts of the Stream API. A Stream is not a collection but a flow of data that operates with lazy evaluation. Understand the pipeline structure of source → intermediate operations → terminal operations, and how to create Streams.",
+      "estimatedMinutes": 7,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "overview",
+          "title": "What Is the Stream API?",
+          "body": "In this lesson, you will learn:\n\n- What a Stream is (a data processing **pipeline**)\n- How to create Streams (collection.stream(), Stream.of(), etc.)\n- The rule that a Stream can only be used once\n\nLearn the new paradigm of declarative data processing.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "rule",
+          "title": "Structure of a Stream Pipeline",
+          "body": "Stream processing consists of three stages: \"Source (creation) → **Intermediate Operations** → **Terminal Operation**\".\nThe source is the data that feeds the Stream, generated from collections, [[arrays]], files, etc.\n[[Intermediate operations]] transform the Stream, such as filter() and map(), and return a new Stream.\n[[Terminal operations]] execute the Stream processing and return a result, such as forEach() and collect().\nIntermediate operations are **lazily evaluated**, meaning the actual processing is not executed until a terminal operation is called.\nA Stream cannot be reused once consumed, so calling a terminal operation twice on the same Stream throws an IllegalStateException.",
+          "code": "import java.util.List;\nimport java.util.stream.Stream;\n\nList<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"David\");\n\n// Source → Intermediate operations → Terminal operation\nnames.stream()              // Source: create stream from List\n     .filter(s -> s.length() > 3)  // Intermediate: length 4 or more\n     .map(String::toUpperCase)     // Intermediate: convert to uppercase\n     .forEach(System.out::println); // Terminal: print output\n// Output: ALICE, CHARLIE, DAVID",
+          "note": "A Stream **pipeline** is a declarative style that describes \"what to process.\" Traditional [[for loops]] use an imperative style that describes \"how to process.\"",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "code",
+          "title": "Ways to Create a Stream",
+          "body": "There are multiple ways to create a Stream.\n| Method | Description |\n|---|---|\n| Collection.stream() | Creates a Stream from a collection (most common) |\n| Stream.of() | Creates a Stream from specified elements |\n| Arrays.stream() | Creates a Stream from an array |\n| Stream.empty() | Creates an empty Stream |\nYou can also create infinite Streams with Stream.generate() or Stream.iterate().\nFiles.lines() can be used to obtain each line of a file as a Stream.",
+          "code": "import java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Stream;\n\n// 1. From a collection\nList<String> list = List.of(\"A\", \"B\", \"C\");\nStream<String> s1 = list.stream();\n\n// 2. Directly with Stream.of()\nStream<String> s2 = Stream.of(\"X\", \"Y\", \"Z\");\n\n// 3. From an array\nString[] arr = {\"a\", \"b\", \"c\"};\nStream<String> s3 = Arrays.stream(arr);\n\n// 4. Empty Stream\nStream<String> s4 = Stream.empty();\n\n// 5. Infinite Stream (limited with limit)\nStream<Integer> s5 = Stream.iterate(0, n -> n + 2).limit(5);\ns5.forEach(System.out::println); // 0, 2, 4, 6, 8\n\n// 6. Generate\nStream<Double> s6 = Stream.generate(Math::random).limit(3);",
+          "note": "The \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "point",
+          "title": "Stream Characteristics and Caveats",
+          "body": "Streams do not store data. They only process data through the **pipeline**.\nA Stream can only be used once. An [[exception]] is thrown if you try to perform operations after a **terminal operation** has been executed.\n**Intermediate operations** are **lazily evaluated**. They are executed only when a terminal operation is invoked.\nUsing parallelStream() enables parallel processing, but be careful with operations that are not [[thread]]-safe.\nStreams do not modify the source data (non-destructive).",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"C\");\nStream<String> stream = list.stream();\n\n// Execute a terminal operation\nstream.forEach(System.out::println);\n\n// Trying to reuse the same Stream throws an exception\ntry {\n    stream.forEach(System.out::println);\n} catch (IllegalStateException e) {\n    System.out.println(\"Stream cannot be reused\");\n    // Output: Stream cannot be reused\n}",
+          "note": "If you want to use a Stream multiple times, you need to create a new Stream each time.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: Stream Basics",
+          "body": "The Gold exam tests whether you can distinguish between Stream creation, **intermediate operations**, and **terminal operations**.\nPay attention to the behavior when passing null to Stream.of(), and the difference between Stream.of(array) and Arrays.stream(array).\nStream.of(array) treats the entire array as a single element, while Arrays.stream(array) treats each array element as a Stream element.\nStream.iterate() also has an [[overload]] that takes a [[Predicate]] as a third argument (since Java 9).\nIn problems about **lazy evaluation**, the processing order of Streams using peek() is a frequent topic.",
+          "code": "// Stream.of(array) vs Arrays.stream(array)\nString[] arr = {\"A\", \"B\", \"C\"};\n\nStream<String[]> s1 = Stream.of(arr);   // Stream<String[]>: 1 element\nStream<String> s2 = Arrays.stream(arr); // Stream<String>: 3 elements\n\nSystem.out.println(Stream.of(arr).count());    // 1\nSystem.out.println(Arrays.stream(arr).count()); // 3\n\n// iterate since Java 9\nStream.iterate(1, n -> n <= 10, n -> n * 2)\n      .forEach(System.out::println); // 1, 2, 4, 8",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_01_q1",
+          "lessonId": "ch24_01",
+          "type": "fourChoice",
+          "question": "Which of the following statements about Streams is correct?",
+          "code": null,
+          "explanation": "A Stream cannot be reused once a terminal operation has been executed. Attempting to reuse it throws an IllegalStateException. A Stream is not a collection that stores data, and intermediate operations are lazily evaluated, so they are not executed without a terminal operation.",
+          "choices": [
+            {
+              "id": "ch24_01_q1_a",
+              "text": "A Stream cannot be reused once a terminal operation has been executed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_01_q1_b",
+              "text": "A Stream is a collection that stores data internally",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_01_q1_c",
+              "text": "Intermediate operations are executed immediately",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_01_q1_d",
+              "text": "Intermediate operations are executed even without a terminal operation",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_01_q2",
+          "lessonId": "ch24_01",
+          "type": "fourChoice",
+          "question": "What is the output of the following code?",
+          "code": "int[] arr = {1, 2, 3};\nSystem.out.println(Stream.of(arr).count());\nSystem.out.println(Arrays.stream(arr).count());",
+          "explanation": "Since int[] is a primitive array, Stream.of(int[]) stores the int array itself as a single element in Stream<int[]>, and count() returns 1. On the other hand, Arrays.stream(int[]) has a dedicated overload that expands each element into an IntStream, so it returns 3. Note that for reference-type arrays like String[], Stream.of() also expands via varargs, so both would return 3.",
+          "choices": [
+            {
+              "id": "ch24_01_q2_a",
+              "text": "1\n3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_01_q2_b",
+              "text": "3\n3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_01_q2_c",
+              "text": "1\n1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_01_q2_d",
+              "text": "3\n1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_01_q3",
+          "lessonId": "ch24_01",
+          "type": "fillBlank",
+          "question": "To create a Stream from a collection, call the collection's ___() method.",
+          "code": "List<String> list = List.of(\"A\", \"B\");\nStream<String> s = list.___();",
+          "explanation": "By calling the Collection.stream() method, you can create a sequential Stream containing the collection's elements. To create a parallel Stream, use parallelStream().",
+          "choices": [
+            {
+              "id": "ch24_01_q3_a",
+              "text": "stream",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_01_q3_b",
+              "text": "toStream",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_01_q3_c",
+              "text": "getStream",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_01_q3_d",
+              "text": "createStream",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch24_02",
+      "courseId": "ch24",
+      "title": "Intermediate Operations",
+      "summary": "Learn about Stream intermediate operations: filter(), map(), flatMap(), distinct(), sorted(), and peek(). Understand that intermediate operations are lazily evaluated and not executed until a terminal operation is called.",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "overview",
+          "title": "Overview of Intermediate Operations",
+          "body": "In this lesson, you will learn:\n\n- Narrowing elements with filter()\n- Transforming elements with map()\n- Using sorted(), distinct(), limit(), and skip()\n\n**Intermediate operations** are **lazily evaluated** and are not executed until a **terminal operation** is called.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "code",
+          "title": "filter() and map()",
+          "body": "filter([[Predicate]]<T>) is an **intermediate operation** that passes only elements matching a condition.\nOnly elements for which the Predicate's test() returns true remain.\nmap([[Function]]<T,R>) is an [[intermediate operation]] that transforms each element into a different value.\nThe Function's apply() performs the transformation, and a Stream of the transformed type is returned.\nfilter() and map() are the most frequently used intermediate operations in Stream processing.\nThe order in which they are combined affects processing efficiency, so it is common to apply filter first and map afterward.",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eve\");\n\n// filter: keep only elements matching the condition\nnames.stream()\n     .filter(s -> s.length() >= 4)\n     .forEach(System.out::println);\n// Output: Alice, Charlie, David\n\n// map: transform each element\nnames.stream()\n     .map(String::toUpperCase)\n     .forEach(System.out::println);\n// Output: ALICE, BOB, CHARLIE, DAVID, EVE\n\n// Combining filter + map\nnames.stream()\n     .filter(s -> s.startsWith(\"C\"))\n     .map(String::toLowerCase)\n     .forEach(System.out::println);\n// Output: charlie",
+          "note": "It is more efficient to apply filter() first to narrow down the data and then transform with map().",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "code",
+          "title": "flatMap()",
+          "body": "flatMap(Function<T, Stream<R>>) transforms each element into a Stream and flattens them into a single Stream.\nIt is very useful when dealing with nested structures (such as a list of lists).\nWhile map() performs a one-to-one transformation, flatMap() performs a one-to-many transformation.\nThe function passed to flatMap() must return a Stream.\nIt is also possible to filter elements by returning an empty Stream.",
+          "code": "// Flatten a list of lists\nList<List<String>> nested = List.of(\n    List.of(\"A\", \"B\"),\n    List.of(\"C\", \"D\"),\n    List.of(\"E\")\n);\n\nnested.stream()\n      .flatMap(List::stream)\n      .forEach(System.out::println);\n// Output: A, B, C, D, E\n\n// Transform strings into a Stream of characters\nList<String> words = List.of(\"Hello\", \"World\");\nwords.stream()\n     .flatMap(s -> s.chars().mapToObj(c -> (char) c))\n     .forEach(System.out::print);\n// Output: HelloWorld",
+          "note": "The \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "rule",
+          "title": "distinct(), sorted(), peek()",
+          "body": "| Method | Description |\n|---|---|\n| distinct() | An intermediate operation that removes duplicate elements. Equality is determined by the equals() method. |\n| sorted() | Sorts elements in natural order. There is also an overload that takes a Comparator as an argument. |\n| peek(Consumer<T>) | Performs a side-effect action on each element but passes them unchanged to the next stage. It is often used for debugging purposes and is not recommended for side-effecting operations in production code. |\ndistinct() and sorted() are stateful intermediate operations that maintain internal state.",
+          "code": "List<Integer> nums = List.of(3, 1, 4, 1, 5, 9, 2, 6, 5, 3);\n\n// distinct: remove duplicates\nnums.stream()\n    .distinct()\n    .forEach(n -> System.out.print(n + \" \"));\n// Output: 3 1 4 5 9 2 6\n\nSystem.out.println();\n\n// sorted: sort\nnums.stream()\n    .sorted()\n    .forEach(n -> System.out.print(n + \" \"));\n// Output: 1 1 2 3 3 4 5 5 6 9\n\nSystem.out.println();\n\n// peek: for debugging\nnums.stream()\n    .filter(n -> n > 3)\n    .peek(n -> System.out.println(\"filtered: \" + n))\n    .map(n -> n * 10)\n    .forEach(n -> System.out.println(\"result: \" + n));\n// filtered: 4 → result: 40, filtered: 5 → result: 50, ...",
+          "note": "You can pass [[Comparator]].reverseOrder() to sorted() to sort in descending order.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_02",
+          "sectionType": "tip",
+          "title": "How Lazy Evaluation Works",
+          "body": "**Intermediate operations** are **lazily evaluated**, so no processing occurs until a **terminal operation** is called.\nThis mechanism allows performance optimization by skipping unnecessary computations.\nUsing peek(), you can observe the behavior of [[lazy evaluation]]. Without a [[terminal operation]], peek() is also not executed.\nAdditionally, elements pass through the **pipeline** one at a time (all intermediate operations are executed for each element).\nThis is called \"loop fusion\" and is efficient because it does not create intermediate buffers.\nWhen combined with short-circuiting terminal operations (such as findFirst), only the necessary elements are processed and the rest are skipped.",
+          "code": "// Confirming lazy evaluation\nStream<String> stream = List.of(\"A\", \"B\", \"C\").stream()\n    .peek(s -> System.out.println(\"peek: \" + s))\n    .filter(s -> s.equals(\"B\"));\n\nSystem.out.println(\"Before terminal operation\");\n// peek is not executed up to this point\n\nstream.forEach(System.out::println);\n// Output:\n// Before terminal operation\n// peek: A\n// peek: B\n// B\n// peek: C",
+          "note": "The fact that a Stream **pipeline** does not process anything without a **terminal operation** is frequently tested on exams.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_02_q1",
+          "lessonId": "ch24_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "List<String> list = List.of(\"apple\", \"banana\", \"avocado\", \"cherry\");\nlist.stream()\n    .filter(s -> s.startsWith(\"a\"))\n    .map(String::toUpperCase)\n    .forEach(System.out::println);",
+          "explanation": "filter() keeps elements starting with 'a' (\"apple\", \"avocado\"), and map() converts each to uppercase. forEach() outputs each element, so APPLE and AVOCADO are printed.",
+          "choices": [
+            {
+              "id": "ch24_02_q1_a",
+              "text": "APPLE\nAVOCADO",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_02_q1_b",
+              "text": "apple\navocado",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_02_q1_c",
+              "text": "APPLE\nBANANA\nAVOCADO\nCHERRY",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_02_q1_d",
+              "text": "AVOCADO\nAPPLE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_02_q2",
+          "lessonId": "ch24_02",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes flatMap()?",
+          "code": null,
+          "explanation": "flatMap() transforms each element into a Stream and merges (flattens) those multiple Streams into a single Stream. While map() performs a one-to-one transformation, flatMap() performs a one-to-many transformation, flattening nested structures.",
+          "choices": [
+            {
+              "id": "ch24_02_q2_a",
+              "text": "Transforms each element into a Stream and flattens them into a single Stream",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_02_q2_b",
+              "text": "Transforms each element in a one-to-one manner",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_02_q2_c",
+              "text": "Filters elements of a Stream",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_02_q2_d",
+              "text": "Sorts elements of a Stream",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_02_q3",
+          "lessonId": "ch24_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "List<Integer> nums = List.of(3, 1, 2, 3, 1, 4);\nnums.stream()\n    .distinct()\n    .sorted()\n    .forEach(n -> System.out.print(n + \" \"));",
+          "explanation": "distinct() removes duplicates, resulting in [3, 1, 2, 4] (maintaining encounter order). sorted() sorts in natural order, producing [1, 2, 3, 4]. forEach() prints each element separated by spaces.",
+          "choices": [
+            {
+              "id": "ch24_02_q3_a",
+              "text": "1 2 3 4 ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_02_q3_b",
+              "text": "3 1 2 4 ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_02_q3_c",
+              "text": "1 1 2 3 3 4 ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_02_q3_d",
+              "text": "3 1 2 3 1 4 ",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch24_03",
+      "courseId": "ch24",
+      "title": "Terminal Operations",
+      "summary": "Learn about Stream terminal operations: forEach(), count(), collect(), findFirst(), findAny(), anyMatch(), allMatch(), noneMatch(), and reduce(). Terminal operations trigger the actual execution of the Stream pipeline.",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "overview",
+          "title": "Overview of Terminal Operations",
+          "body": "In this lesson, you will learn:\n\n- Executing actions on each element with forEach()\n- Converting results to collections with collect()\n- Aggregating with count(), min(), max(), reduce()\n\n**Terminal operations** are the \"trigger\" of a Stream **pipeline**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "code",
+          "title": "forEach(), count(), collect()",
+          "body": "| Method | Description |\n|---|---|\n| forEach(Consumer<T>) | A terminal operation that executes an action on each element; returns void. |\n| count() | Returns the number of elements in the Stream as a long. |\n| collect(Collector) | The most versatile terminal operation that gathers Stream elements into a collection, etc. Used in combination with various methods of the Collectors class. |\n| collect(Supplier, BiConsumer, BiConsumer) | The 3-argument version of collect. Provides fine-grained control over accumulation into a mutable container. |\nYou can also convert Stream elements to an [[array]] using toArray().",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// forEach: execute an action on each element\nnames.stream().forEach(System.out::println);\n// Output: Alice, Bob, Charlie\n\n// count: return the number of elements\nlong count = names.stream()\n                  .filter(s -> s.length() > 3)\n                  .count();\nSystem.out.println(count); // 2\n\n// collect: collect into a list\nList<String> upper = names.stream()\n                          .map(String::toUpperCase)\n                          .collect(Collectors.toList());\nSystem.out.println(upper); // [ALICE, BOB, CHARLIE]\n\n// toArray: convert to an array\nString[] arr = names.stream().toArray(String[]::new);\nSystem.out.println(Arrays.toString(arr)); // [Alice, Bob, Charlie]",
+          "note": "The \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "code",
+          "title": "findFirst(), findAny(), Match Operations",
+          "body": "| Method | Description |\n|---|---|\n| findFirst() | Returns the first element of the Stream as an Optional. Returns Optional.empty() if there are no elements. |\n| findAny() | Returns any element of the Stream. In parallel Streams, it may not be the first element. |\n| anyMatch(Predicate) | Returns true if at least one element matches the condition. |\n| allMatch(Predicate) | Returns true if all elements match the condition. Returns true for an empty Stream. |\n| noneMatch(Predicate) | Returns true if no elements match the condition. Returns true for an empty Stream. |\nAll of these are short-circuiting **terminal operations** that stop processing the remaining elements once the result is determined.",
+          "code": "List<Integer> nums = List.of(1, 2, 3, 4, 5);\n\n// findFirst: get the first element\nOptional<Integer> first = nums.stream()\n    .filter(n -> n > 3)\n    .findFirst();\nSystem.out.println(first.get()); // 4\n\n// anyMatch: does any element satisfy the condition?\nboolean any = nums.stream().anyMatch(n -> n > 4);\nSystem.out.println(any); // true\n\n// allMatch: do all elements satisfy the condition?\nboolean all = nums.stream().allMatch(n -> n > 0);\nSystem.out.println(all); // true\n\n// noneMatch: does no element satisfy the condition?\nboolean none = nums.stream().noneMatch(n -> n > 10);\nSystem.out.println(none); // true",
+          "note": "allMatch() and noneMatch() return true for an empty Stream. This is called \"vacuous truth\" and is a point that is commonly tested on exams.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "rule",
+          "title": "reduce()",
+          "body": "| Method | Description |\n|---|---|\n| reduce() | A terminal operation that aggregates Stream elements into a single result. |\n| reduce(BinaryOperator<T>) | Combines elements sequentially and returns the result as Optional<T>. |\n| reduce(T identity, BinaryOperator<T>) | Allows specifying an initial value; the result is returned as type T. |\nWith an initial value, even if the Stream is empty, the initial value is returned, so it does not become an [[Optional]].\nThe 3-argument reduce(identity, [[BiFunction]], [[BinaryOperator]]) is for parallel processing, allowing you to specify a combiner.\nreduce() is a general-purpose operation that serves as the foundation for specialized [[terminal operations]] such as sum() and max().",
+          "code": "List<Integer> nums = List.of(1, 2, 3, 4, 5);\n\n// Without initial value: returns Optional<Integer>\nOptional<Integer> sum1 = nums.stream()\n    .reduce((a, b) -> a + b);\nSystem.out.println(sum1.get()); // 15\n\n// With initial value: returns int\nint sum2 = nums.stream()\n    .reduce(0, Integer::sum);\nSystem.out.println(sum2); // 15\n\n// Maximum value\nOptional<Integer> max = nums.stream()\n    .reduce(Integer::max);\nSystem.out.println(max.get()); // 5\n\n// String concatenation\nString joined = List.of(\"A\", \"B\", \"C\").stream()\n    .reduce(\"\", (a, b) -> a + b);\nSystem.out.println(joined); // ABC",
+          "note": "When reduce() with an initial value processes an empty Stream, the initial value is returned as-is. Without an initial value, Optional.empty() is returned.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: Return Types of Terminal Operations",
+          "body": "The return types of **terminal operations** are frequently tested on exams. Memorize the following precisely.\n| Method | Return Type |\n|---|---|\n| forEach() | void |\n| count() | long |\n| findFirst() / findAny() | Optional<T> |\n| anyMatch() / allMatch() / noneMatch() | boolean |\n| reduce(BinaryOperator) | Optional<T> |\n| reduce(identity, BinaryOperator) | T |\n| collect() | Type depends on the Collector |",
+          "code": null,
+          "note": "Since forEach() returns void, writing forEach() in the middle of a **pipeline** causes a [[compile]] error. It is a **terminal operation**, not an **intermediate operation**.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_03_q1",
+          "lessonId": "ch24_03",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "List<Integer> nums = List.of(5, 3, 8, 1, 9);\nint result = nums.stream()\n    .filter(n -> n > 4)\n    .reduce(0, Integer::sum);\nSystem.out.println(result);",
+          "explanation": "filter() keeps elements where n > 4 (5, 8, 9). reduce(0, Integer::sum) adds them sequentially starting from 0: 0+5=5, 5+8=13, 13+9=22. The result is 22.",
+          "choices": [
+            {
+              "id": "ch24_03_q1_a",
+              "text": "22",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_03_q1_b",
+              "text": "26",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_03_q1_c",
+              "text": "17",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_03_q1_d",
+              "text": "9",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_03_q2",
+          "lessonId": "ch24_03",
+          "type": "fourChoice",
+          "question": "What is the return value when calling allMatch(n -> n > 0) on an empty Stream?",
+          "code": "boolean result = Stream.<Integer>empty().allMatch(n -> n > 0);",
+          "explanation": "allMatch() returns true for an empty Stream. This is a concept known as \"vacuous truth\" — since there are no elements that violate the condition, the result is true. Similarly, noneMatch() also returns true for an empty Stream. anyMatch() returns false for an empty Stream.",
+          "choices": [
+            {
+              "id": "ch24_03_q2_a",
+              "text": "true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_03_q2_b",
+              "text": "false",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_03_q2_c",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_03_q2_d",
+              "text": "NoSuchElementException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_03_q3",
+          "lessonId": "ch24_03",
+          "type": "fillBlank",
+          "question": "To get the number of elements in a Stream as a long, use the ___() method.",
+          "code": "long n = List.of(1, 2, 3).stream().___()\n;",
+          "explanation": "count() is a terminal operation that returns the number of elements in a Stream as a long. Note that the return type is long, not int.",
+          "choices": [
+            {
+              "id": "ch24_03_q3_a",
+              "text": "count",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_03_q3_b",
+              "text": "size",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_03_q3_c",
+              "text": "length",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_03_q3_d",
+              "text": "total",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch24_03_q4",
+          "lessonId": "ch24_03",
+          "type": "codeComplete",
+          "question": "Complete the code to extract only elements with 3 or more characters from a string list, convert them to uppercase, and print them using the Stream API.",
+          "code": null,
+          "explanation": "The Stream intermediate operation filter() narrows down elements matching a condition, and map() transforms them. The terminal operation forEach() processes each element. Method references (::) are used like System.out::println.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "List<String> words = List.of(\"hi\", \"java\", \"ok\", \"stream\");\nwords.stream()\n    .__BLANK_1__(s -> s.length() >= 3)\n    .__BLANK_2__(String::toUpperCase)\n    .__BLANK_3__(System.out::println);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "(1) Filtering",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "filter",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "select",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "where",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "(2) Transformation",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "map",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "flatMap",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "mapToInt",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_3",
+              "label": "(3) Terminal Operation",
+              "choices": [
+                {
+                  "id": "b3_c1",
+                  "text": "forEach",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b3_c2",
+                  "text": "collect",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b3_c3",
+                  "text": "reduce",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch24_04",
+      "courseId": "ch24",
+      "title": "Collectors",
+      "summary": "Learn the key methods of the Collectors class. Understand collection conversion with toList(), toSet(), toMap(), string concatenation with joining(), and grouping with groupingBy() and partitioningBy().",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "overview",
+          "title": "Overview of the Collectors Class",
+          "body": "In this lesson, you will learn:\n\n- How to use Collectors]].[[toList(), toSet(), toMap()\n- Grouping with Collectors.groupingBy()\n- String concatenation with Collectors.joining()\n\nComprehensive coverage of how to use Collectors passed as arguments to collect().",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "code",
+          "title": "toList(), toSet(), toMap()",
+          "body": "Collectors.toList() converts Stream elements into a List.\nCollectors.toSet() converts Stream elements into a Set (duplicates are automatically removed).\nCollectors.toMap(keyMapper, valueMapper) converts Stream elements into a Map.\nIf keys are duplicated with toMap(), an IllegalStateException is thrown.\nTo handle duplicate keys, specify a mergeFunction (third argument).\nYou can also generate an unmodifiable collection with Collectors.toUnmodifiableList(), etc. (since Java 10).",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// toList()\nList<String> list = names.stream()\n    .filter(s -> s.length() > 3)\n    .collect(Collectors.toList());\nSystem.out.println(list); // [Alice, Charlie]\n\n// toSet()\nSet<Integer> lengths = names.stream()\n    .map(String::length)\n    .collect(Collectors.toSet());\nSystem.out.println(lengths); // [3, 5, 7]\n\n// toMap()\nMap<String, Integer> nameLength = names.stream()\n    .collect(Collectors.toMap(\n        s -> s,           // keyMapper\n        String::length    // valueMapper\n    ));\nSystem.out.println(nameLength);\n// {Alice=5, Bob=3, Charlie=7}\n\n// toMap() handling duplicate keys\nList<String> words = List.of(\"AA\", \"BB\", \"AB\");\nMap<Character, String> map = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0),       // key\n        s -> s,                 // value\n        (v1, v2) -> v1 + \",\" + v2  // merge on duplicate\n    ));\nSystem.out.println(map); // {A=AA,AB, B=BB}",
+          "note": "Since Java 16, the Stream.toList() [[method]] was added, allowing you to write stream().toList() instead of collect(Collectors.toList()).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "code",
+          "title": "joining()",
+          "body": "Collectors.joining() concatenates the string elements of a Stream.\nWith no arguments, elements are concatenated without a delimiter.\nWith one argument, elements are concatenated with the specified delimiter.\nWith three arguments, you can specify a delimiter, a prefix, and a suffix.\nIt must be used with a Stream of CharSequence; for other types, convert with map() first.",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\");\n\n// No delimiter\nString s1 = names.stream().collect(Collectors.joining());\nSystem.out.println(s1); // AliceBobCharlie\n\n// Comma-separated\nString s2 = names.stream().collect(Collectors.joining(\", \"));\nSystem.out.println(s2); // Alice, Bob, Charlie\n\n// Delimiter + prefix + suffix\nString s3 = names.stream()\n    .collect(Collectors.joining(\", \", \"[\", \"]\"));\nSystem.out.println(s3); // [Alice, Bob, Charlie]\n\n// Convert a numeric Stream to strings and join\nString s4 = List.of(1, 2, 3).stream()\n    .map(String::valueOf)\n    .collect(Collectors.joining(\"-\"));\nSystem.out.println(s4); // 1-2-3",
+          "note": "The \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "rule",
+          "title": "groupingBy() and partitioningBy()",
+          "body": "Collectors.groupingBy(Function) groups elements based on a specified key and returns Map<K, List<T>>.\nYou can specify a downstream Collector as a second argument to customize the aggregation within each group.\nCollectors.partitioningBy([[Predicate]]) divides elements into two groups based on a boolean condition, returning Map<Boolean, List<T>>.\nThe keys for partitioningBy() are always true and false (even if there are no elements, an empty list is included).\nBy combining groupingBy() with counting() or summing(), you can perform per-group aggregation.",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"Anna\", \"Brian\");\n\n// groupingBy: group by initial letter\nMap<Character, List<String>> grouped = names.stream()\n    .collect(Collectors.groupingBy(s -> s.charAt(0)));\nSystem.out.println(grouped);\n// {A=[Alice, Anna], B=[Bob, Brian], C=[Charlie]}\n\n// groupingBy + counting: count per group\nMap<Character, Long> counts = names.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()\n    ));\nSystem.out.println(counts); // {A=2, B=2, C=1}\n\n// partitioningBy: split by condition\nMap<Boolean, List<String>> partitioned = names.stream()\n    .collect(Collectors.partitioningBy(s -> s.length() > 3));\nSystem.out.println(partitioned);\n// {false=[Bob], true=[Alice, Charlie, Anna, Brian]}",
+          "note": "groupingBy() also has a 3-argument version that lets you specify the type of Map to be created (such as [[TreeMap]]).",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_04",
+          "sectionType": "tip",
+          "title": "counting() and summarizingInt()",
+          "body": "| Method | Description |\n|---|---|\n| counting() | Counts the number of elements in a group as a Long |\n| summingInt(ToIntFunction) | Converts to integers and calculates the sum |\n| averagingInt() | Calculates the average |\n| summarizingInt(ToIntFunction) | Returns an IntSummaryStatistics containing count/sum/min/average/max |\n| maxBy() / minBy() | Gets the maximum/minimum within a group |\nThese are typically used in combination with groupingBy() as downstream collectors.",
+          "code": "List<String> names = List.of(\"Alice\", \"Bob\", \"Charlie\", \"Anna\");\n\n// summarizingInt: statistics\nIntSummaryStatistics stats = names.stream()\n    .collect(Collectors.summarizingInt(String::length));\nSystem.out.println(\"Count: \" + stats.getCount());     // 4\nSystem.out.println(\"Sum: \" + stats.getSum());         // 20\nSystem.out.println(\"Min: \" + stats.getMin());         // 3\nSystem.out.println(\"Max: \" + stats.getMax());         // 7\nSystem.out.println(\"Avg: \" + stats.getAverage());     // 5.0\n\n// groupingBy + summingInt\nMap<Character, Integer> sumByInitial = names.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.summingInt(String::length)\n    ));\nSystem.out.println(sumByInitial); // {A=9, B=3, C=7}",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_04_q1",
+          "lessonId": "ch24_04",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"C\", \"D\");\nString result = list.stream()\n    .collect(Collectors.joining(\"-\", \"{\", \"}\"));\nSystem.out.println(result);",
+          "explanation": "Collectors.joining(delimiter, prefix, suffix) concatenates elements with a delimiter and adds a prefix and suffix. Concatenating with \"-\" gives \"A-B-C-D\", and adding prefix \"{\" and suffix \"}\" results in \"{A-B-C-D}\".",
+          "choices": [
+            {
+              "id": "ch24_04_q1_a",
+              "text": "{A-B-C-D}",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q1_b",
+              "text": "{A, B, C, D}",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q1_c",
+              "text": "A-B-C-D",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q1_d",
+              "text": "{ABCD}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_04_q2",
+          "lessonId": "ch24_04",
+          "type": "fourChoice",
+          "question": "What happens by default when duplicate keys occur in Collectors.toMap()?",
+          "code": null,
+          "explanation": "When duplicate keys occur in Collectors.toMap(), an IllegalStateException is thrown by default. To allow duplicate keys, you need to specify a mergeFunction ((v1, v2) -> ...) as the third argument to define the rule for combining values on duplicate.",
+          "choices": [
+            {
+              "id": "ch24_04_q2_a",
+              "text": "IllegalStateException is thrown",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q2_b",
+              "text": "The later value overwrites the earlier one",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q2_c",
+              "text": "The earlier value is retained",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q2_d",
+              "text": "null is set",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_04_q3",
+          "lessonId": "ch24_04",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "List<String> list = List.of(\"cat\", \"car\", \"dog\", \"deer\");\nMap<Character, Long> result = list.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()\n    ));\nSystem.out.println(result);",
+          "explanation": "groupingBy() groups by the first letter. The 'c' group has 2 elements (\"cat\" and \"car\"), and the 'd' group has 2 elements (\"dog\" and \"deer\"). Collectors.counting() counts the number of elements in each group, so {c=2, d=2} is output.",
+          "choices": [
+            {
+              "id": "ch24_04_q3_a",
+              "text": "{c=2, d=2}",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q3_b",
+              "text": "{c=[cat, car], d=[dog, deer]}",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q3_c",
+              "text": "{cat=1, car=1, dog=1, deer=1}",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q3_d",
+              "text": "{c=2, d=2, a=0}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch24_04_q4",
+          "lessonId": "ch24_04",
+          "type": "multiChoice",
+          "question": "Select all correct terminal operations of the Stream API.",
+          "code": null,
+          "explanation": "collect(), reduce(), forEach(), count(), and findFirst() are terminal operations. filter() and map() are intermediate operations, not terminal operations. Intermediate operations are lazily evaluated and are only executed when a terminal operation is called.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch24_04_q4_a",
+              "text": "collect()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_04_q4_b",
+              "text": "filter()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_04_q4_c",
+              "text": "reduce()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch24_04_q4_d",
+              "text": "forEach()",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch24_05",
+      "courseId": "ch24",
+      "title": "Optional",
+      "summary": "Learn the creation, checking, value retrieval, and transformation methods of the Optional class. Understand creation with of(), ofNullable(), empty(), value retrieval with isPresent() and orElse(), and Optional transformation with map() and flatMap().",
+      "estimatedMinutes": 7,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "overview",
+          "title": "What Is Optional?",
+          "body": "In this lesson, you will learn:\n\n- Writing null-safe code with [[Optional]]<T>\n- Distinguishing between isPresent(), ifPresent(), orElse(), and orElseGet()\n- Transforming Optionals with map() and flatMap()\n\nWrite safe code using Optional instead of null checks.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "code",
+          "title": "Optional Creation Methods",
+          "body": "Optional.of(value) creates an Optional containing a non-null value. Passing null throws a [[NullPointerException]].\nOptional.ofNullable(value) creates an Optional from a value that might be null. If the value is null, it behaves the same as empty().\nOptional.empty() creates an empty Optional.\nUse of() when you are certain the value is not null, and ofNullable() when unsure.\nChoosing the appropriate creation [[method]] is the first step to using Optional safely.",
+          "code": "// of(): specify a non-null value\nOptional<String> opt1 = Optional.of(\"Hello\");\nSystem.out.println(opt1); // Optional[Hello]\n\n// Passing null to of() throws NPE\ntry {\n    Optional<String> opt2 = Optional.of(null);\n} catch (NullPointerException e) {\n    System.out.println(\"NPE occurred\"); // NPE occurred\n}\n\n// ofNullable(): specify a value that might be null\nOptional<String> opt3 = Optional.ofNullable(\"World\");\nSystem.out.println(opt3); // Optional[World]\n\nOptional<String> opt4 = Optional.ofNullable(null);\nSystem.out.println(opt4); // Optional.empty\n\n// empty(): an empty Optional\nOptional<String> opt5 = Optional.empty();\nSystem.out.println(opt5); // Optional.empty",
+          "note": "The \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "rule",
+          "title": "isPresent(), ifPresent(), get()",
+          "body": "| Method | Description |\n|---|---|\n| isPresent() | Returns true if a value is present, false if empty. |\n| isEmpty() | A method added in Java 11 that returns the opposite of isPresent(). |\n| ifPresent(Consumer) | Executes the Consumer only if a value is present. |\n| get() | Retrieves the value, but throws NoSuchElementException if called on an empty Optional. |\nIt is safe to check with isPresent() before using get(), or to use orElse-family methods.\nifPresentOrElse([[Consumer]], [[Runnable]]) was added in Java 9 as a method that branches processing based on whether a value is present.",
+          "code": "Optional<String> opt = Optional.of(\"Java\");\nOptional<String> empty = Optional.empty();\n\n// isPresent()\nSystem.out.println(opt.isPresent());   // true\nSystem.out.println(empty.isPresent()); // false\n\n// ifPresent(): execute only if value is present\nopt.ifPresent(s -> System.out.println(\"Value: \" + s));\n// Output: Value: Java\n\nempty.ifPresent(s -> System.out.println(\"Value: \" + s));\n// Nothing is output\n\n// get(): retrieve the value\nSystem.out.println(opt.get()); // Java\n\ntry {\n    empty.get();\n} catch (NoSuchElementException e) {\n    System.out.println(\"No value\"); // No value\n}",
+          "note": "Since get() throws an [[exception]] on an empty Optional, using orElse() or orElseGet() is recommended.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "code",
+          "title": "orElse(), orElseGet(), orElseThrow()",
+          "body": "| Method | Description |\n|---|---|\n| orElse(T other) | Returns the value if present, otherwise returns the default value provided as an argument. |\n| orElseGet(Supplier<T>) | Returns the value if present, otherwise returns the result of the Supplier. |\n| orElseThrow() | Returns the value if present, otherwise throws NoSuchElementException. |\norElseThrow([[Supplier]]<Exception>) allows customizing the type of exception.\nThe difference between orElse() and orElseGet() is that orElse() always evaluates the default value, while orElseGet() evaluates it only when the Optional is empty.\nor(Supplier<Optional>) was added in Java 9 to return a different Optional when empty.",
+          "code": "Optional<String> opt = Optional.of(\"Java\");\nOptional<String> empty = Optional.empty();\n\n// orElse(): specify a default value\nSystem.out.println(opt.orElse(\"default\"));   // Java\nSystem.out.println(empty.orElse(\"default\")); // default\n\n// orElseGet(): generate a default value with a Supplier\nSystem.out.println(empty.orElseGet(() -> \"generated\"));\n// Output: generated\n\n// orElseThrow(): throw an exception if no value\nSystem.out.println(opt.orElseThrow()); // Java\ntry {\n    empty.orElseThrow(() -> new IllegalArgumentException(\"No value\"));\n} catch (IllegalArgumentException e) {\n    System.out.println(e.getMessage()); // No value\n}\n\n// orElse vs orElseGet difference\n// * heavyMethod() represents a hypothetical time-consuming operation\nOptional<String> present = Optional.of(\"A\");\npresent.orElse(heavyMethod());      // heavyMethod is always executed\npresent.orElseGet(() -> heavyMethod()); // heavyMethod is NOT executed",
+          "note": "When performance matters or the default value is expensive to generate, use orElseGet().",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_05",
+          "sectionType": "tip",
+          "title": "Optional's map() and flatMap()",
+          "body": "Optional.map([[Function]]) applies the function if a value is present and wraps the result in an Optional.\nCalling map() on an empty Optional does nothing and returns Optional.empty().\nOptional.flatMap(Function) is similar to map(), but prevents double-wrapping when the function returns an Optional.\nThe function for map() returns T→R, while the function for flatMap() returns T→Optional<R>.\nThe stream() method (since Java 9) converts an Optional to a Stream with zero or one element.",
+          "code": "Optional<String> opt = Optional.of(\"Hello\");\n\n// map: transform the value\nOptional<Integer> len = opt.map(String::length);\nSystem.out.println(len); // Optional[5]\n\n// map on an empty Optional\nOptional<Integer> empty = Optional.<String>empty()\n    .map(String::length);\nSystem.out.println(empty); // Optional.empty\n\n// flatMap: use with functions that return Optional\nOptional<String> result = opt.flatMap(\n    s -> s.length() > 3 ? Optional.of(s.toUpperCase()) : Optional.empty()\n);\nSystem.out.println(result); // Optional[HELLO]\n\n// Using map would result in double-wrapping\nOptional<Optional<String>> doubled = opt.map(\n    s -> Optional.of(s.toUpperCase())\n);\nSystem.out.println(doubled); // Optional[Optional[HELLO]]",
+          "note": "flatMap() is needed when using functions that return Optional. Using map() would result in Optional<Optional<T>>.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_05_q1",
+          "lessonId": "ch24_05",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "Optional<String> opt = Optional.ofNullable(null);\nSystem.out.println(opt.map(String::length).orElse(-1));",
+          "explanation": "Optional.ofNullable(null) creates Optional.empty(). Calling map() on an empty Optional returns Optional.empty() as-is. orElse(-1) returns the default value -1, so -1 is output.",
+          "choices": [
+            {
+              "id": "ch24_05_q1_a",
+              "text": "-1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_05_q1_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_05_q1_c",
+              "text": "NullPointerException is thrown",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_05_q1_d",
+              "text": "NoSuchElementException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_05_q2",
+          "lessonId": "ch24_05",
+          "type": "fourChoice",
+          "question": "What happens when Optional.of(null) is executed?",
+          "code": null,
+          "explanation": "Optional.of() assumes a non-null value. Passing null throws a NullPointerException. For values that might be null, you need to use Optional.ofNullable().",
+          "choices": [
+            {
+              "id": "ch24_05_q2_a",
+              "text": "NullPointerException is thrown",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_05_q2_b",
+              "text": "Optional.empty() is returned",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_05_q2_c",
+              "text": "An Optional containing null is created",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_05_q2_d",
+              "text": "A compile error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_05_q3",
+          "lessonId": "ch24_05",
+          "type": "errorFind",
+          "question": "The following code has an error. Which line is the cause of the error?",
+          "code": "Optional<String> opt = Optional.empty();\nString value = opt.get();\nSystem.out.println(value.toUpperCase());",
+          "explanation": "An empty Optional is created with Optional.empty(). Calling get() on an empty Optional throws a NoSuchElementException at runtime. Instead of get(), you should use orElse() or orElseThrow() to safely retrieve the value. Line 2's opt.get() is the cause of the error.",
+          "choices": [
+            {
+              "id": "ch24_05_q3_a",
+              "text": "Line 2: attempting to get a value from an empty Optional with opt.get()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_05_q3_b",
+              "text": "Line 1: the type parameter of Optional.empty() is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_05_q3_c",
+              "text": "Line 3: toUpperCase() is called on null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_05_q3_d",
+              "text": "Line 1: Optional.empty() is a compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch24_06",
+      "courseId": "ch24",
+      "title": "Primitive Streams",
+      "summary": "Learn about primitive-specialized Streams: IntStream, LongStream, and DoubleStream. Understand range specification with range() and rangeClosed(), aggregation with sum(), average(), max(), and min(), and conversions with mapToInt() and boxed().",
+      "estimatedMinutes": 7,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "overview",
+          "title": "What Are Primitive Streams?",
+          "body": "In this lesson, you will learn:\n\n- How to create IntStream, LongStream, and DoubleStream\n- Generating sequential number Streams with range() and rangeClosed()\n- Aggregation operations such as sum(), average(), and max()\n\nEfficient numerical processing that avoids the overhead of [[autoboxing]].",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "code",
+          "title": "IntStream.range() and rangeClosed()",
+          "body": "IntStream.range(start, end) generates a Stream of consecutive integers from start to end-1 (exclusive of end).\nIntStream.rangeClosed(start, end) generates a Stream of consecutive integers from start to end (inclusive of end).\nLongStream.range() and LongStream.rangeClosed() work the same way.\nDoubleStream does not have a range() [[method]].\nThese are useful for expressing processing equivalent to [[for loop]] iterations using the **Stream API**.",
+          "code": "import java.util.stream.IntStream;\n\n// range: 1 to 4 (5 is not included)\nIntStream.range(1, 5)\n    .forEach(n -> System.out.print(n + \" \"));\n// Output: 1 2 3 4\n\nSystem.out.println();\n\n// rangeClosed: 1 to 5 (5 is included)\nIntStream.rangeClosed(1, 5)\n    .forEach(n -> System.out.print(n + \" \"));\n// Output: 1 2 3 4 5\n\nSystem.out.println();\n\n// range() with zero elements\nSystem.out.println(IntStream.range(5, 5).count()); // 0\n\n// rangeClosed() with one element\nSystem.out.println(IntStream.rangeClosed(5, 5).count()); // 1",
+          "note": "range(5, 5) is an empty Stream, but rangeClosed(5, 5) is a Stream with one element: 5. This difference is commonly tested on exams.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "rule",
+          "title": "sum(), average(), max(), min()",
+          "body": "| Method | Return Type | Description |\n|---|---|---|\n| sum() | int / long / double | Sum of all elements |\n| average() | OptionalDouble | Average of all elements. Returns empty() for an empty Stream |\n| max() / min() | OptionalInt, etc. | Maximum/minimum value |\n| count() | long | Number of elements |\n| summaryStatistics() | IntSummaryStatistics, etc. | Gets count, sum, min, average, and max all at once |",
+          "code": "IntStream nums = IntStream.of(10, 20, 30, 40, 50);\n\n// Note: Streams can only be used once, so create a new one each time\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).sum());\n// Output: 150\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).average());\n// Output: OptionalDouble[30.0]\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).max());\n// Output: OptionalInt[50]\n\nSystem.out.println(IntStream.of(10, 20, 30, 40, 50).min());\n// Output: OptionalInt[10]\n\n// summaryStatistics: get all at once\nIntSummaryStatistics stats = IntStream.of(10, 20, 30, 40, 50)\n    .summaryStatistics();\nSystem.out.println(\"Count: \" + stats.getCount());   // 5\nSystem.out.println(\"Sum: \" + stats.getSum());       // 150\nSystem.out.println(\"Average: \" + stats.getAverage()); // 30.0",
+          "note": "sum() returns a primitive value directly, but average(), max(), and min() return [[Optional]] types — keep this in mind.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "code",
+          "title": "mapToInt() and boxed()",
+          "body": "To convert from Stream<T> to a primitive Stream, use mapToInt(), mapToLong(), or mapToDouble().\nConversely, to convert from a primitive Stream to Stream<T>, use boxed().\nmapToObj() converts a primitive Stream to an arbitrary object Stream.\nasLongStream() and asDoubleStream() allow conversion between primitive Streams.\nboxed() is needed when you want to use collect(Collectors]].[[toList()), for example.",
+          "code": "// Stream<String> → IntStream\nList<String> words = List.of(\"Java\", \"Go\", \"Python\");\nIntStream lengths = words.stream().mapToInt(String::length);\nSystem.out.println(lengths.sum()); // 12\n\n// IntStream → Stream<Integer> (boxed)\nList<Integer> boxed = IntStream.rangeClosed(1, 5)\n    .boxed()\n    .collect(Collectors.toList());\nSystem.out.println(boxed); // [1, 2, 3, 4, 5]\n\n// IntStream → Stream<String> (mapToObj)\nList<String> strs = IntStream.range(1, 4)\n    .mapToObj(n -> \"Item\" + n)\n    .collect(Collectors.toList());\nSystem.out.println(strs); // [Item1, Item2, Item3]\n\n// IntStream → LongStream → DoubleStream\nIntStream.range(1, 4)\n    .asDoubleStream()\n    .forEach(d -> System.out.print(d + \" \"));\n// Output: 1.0 2.0 3.0",
+          "note": "The \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch24_06",
+          "sectionType": "tip",
+          "title": "Exam Prep: Primitive Stream Caveats",
+          "body": "IntStream's collect() differs from Stream<T>'s collect() and cannot directly accept a Collector.\nTo use Collectors.toList() with IntStream, you need to convert it to Stream<Integer> using boxed() first.\nIntStream.of() lets you specify individual values to create a primitive Stream.\nNote that the return type of average() is OptionalDouble, not double.\nThe get() method of OptionalInt is named getAsInt() (different from Optional<T>'s get()).\nYou cannot call sum() directly on Stream<Integer>. You need to convert it to IntStream using mapToInt(Integer::intValue).",
+          "code": "// Cannot use Collectors.toList() directly on IntStream\n// IntStream.range(1, 4).collect(Collectors.toList()); // Compile error\n\n// Convert with boxed() first\nList<Integer> list = IntStream.range(1, 4)\n    .boxed()\n    .collect(Collectors.toList());\n\n// OptionalInt's get-family methods\nOptionalInt max = IntStream.of(3, 1, 4).max();\nSystem.out.println(max.getAsInt()); // 4 (getAsInt, not get)\n\n// Stream<Integer> → IntStream\nList<Integer> nums = List.of(10, 20, 30);\nint sum = nums.stream()\n    .mapToInt(Integer::intValue)\n    .sum();\nSystem.out.println(sum); // 60",
+          "note": "OptionalInt uses getAsInt(), OptionalLong uses getAsLong(), and OptionalDouble uses getAsDouble().",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch24_06_q1",
+          "lessonId": "ch24_06",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "int result = IntStream.rangeClosed(1, 5).sum();\nSystem.out.println(result);",
+          "explanation": "IntStream.rangeClosed(1, 5) generates a Stream of integers from 1 to 5 (1, 2, 3, 4, 5). sum() calculates their total: 1+2+3+4+5=15.",
+          "choices": [
+            {
+              "id": "ch24_06_q1_a",
+              "text": "15",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_06_q1_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_06_q1_c",
+              "text": "14",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_06_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch24_06_q2",
+          "lessonId": "ch24_06",
+          "type": "fillBlank",
+          "question": "To convert an IntStream to Stream<Integer>, call the ___() method.",
+          "code": "Stream<Integer> stream = IntStream.range(1, 5).___();",
+          "explanation": "The boxed() method is used to convert an IntStream to Stream<Integer>. boxed() returns a Stream where primitive values are boxed into their wrapper class. This enables the use of Stream<T> Collectors such as Collectors.toList().",
+          "choices": [
+            {
+              "id": "ch24_06_q2_a",
+              "text": "boxed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_06_q2_b",
+              "text": "toObject",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_06_q2_c",
+              "text": "mapToObj",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_06_q2_d",
+              "text": "wrap",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch24_06_q3",
+          "lessonId": "ch24_06",
+          "type": "fourChoice",
+          "question": "What is the result of IntStream.range(3, 3).count()?",
+          "code": null,
+          "explanation": "IntStream.range(start, end) generates a Stream from start to end-1. Since range(3, 3) has the same start and end, it creates a Stream with 0 elements, and count() returns 0. With rangeClosed(3, 3), a Stream containing only the element 3 would be created, and count() would return 1.",
+          "choices": [
+            {
+              "id": "ch24_06_q3_a",
+              "text": "0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch24_06_q3_b",
+              "text": "1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch24_06_q3_c",
+              "text": "3",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch24_06_q3_d",
+              "text": "IllegalArgumentException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

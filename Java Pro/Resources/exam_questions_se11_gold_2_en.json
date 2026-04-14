@@ -1,0 +1,3155 @@
+[
+  {
+    "id": "se11g2_q001",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is the correct return value of the Optional.stream() method?",
+    "code": null,
+    "explanation": "Optional.stream() returns a Stream with one element if a value is present, or an empty Stream if not. This method was added in Java 9 and is commonly used in combination with Stream.flatMap().",
+    "choices": [
+      {
+        "id": "se11g2_q001_a",
+        "text": "Returns a Stream with one element if a value is present, or an empty Stream if not",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q001_b",
+        "text": "Always returns a Stream with one element",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q001_c",
+        "text": "Throws a NullPointerException",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q001_d",
+        "text": "Returns a Stream wrapping the Optional itself",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q002",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What happens when the start date is after the end date in java.time.Period.between(start, end)?",
+    "code": null,
+    "explanation": "When start is after end in Period.between(), a negative Period is returned. For example, Period.between(LocalDate.of(2024,3,1), LocalDate.of(2024,1,1)) results in P-2M. No exception is thrown.",
+    "choices": [
+      {
+        "id": "se11g2_q002_a",
+        "text": "A DateTimeException is thrown",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q002_b",
+        "text": "A Period with negative values is returned",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q002_c",
+        "text": "A Period with absolute values is returned",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q002_d",
+        "text": "null is returned",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q003",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.time.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate date = LocalDate.of(2024, 1, 31);\n        date = date.plusMonths(1);\n        System.out.println(date);\n    }\n}",
+    "explanation": "Adding 1 month to January 31, 2024 results in February 29, 2024 (2024 is a leap year). End-of-month adjustment is performed automatically, and non-existent dates are adjusted to the last day of the month.",
+    "choices": [
+      {
+        "id": "se11g2_q003_a",
+        "text": "2024-02-29",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q003_b",
+        "text": "2024-02-28",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q003_c",
+        "text": "2024-03-01",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q003_d",
+        "text": "DateTimeException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q004",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between Duration.between() and Period.between()?",
+    "code": null,
+    "explanation": "Duration represents a time-based amount (hours, minutes, seconds, nanoseconds), while Period represents a date-based amount using the ISO calendar (years, months, days). Duration calculates the difference between LocalTime or Instant, and Period calculates the difference between LocalDate.",
+    "choices": [
+      {
+        "id": "se11g2_q004_a",
+        "text": "Duration represents a time-based amount, while Period represents a date-based amount",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q004_b",
+        "text": "Period works in milliseconds, while Duration works in nanoseconds",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q004_c",
+        "text": "Duration is used with LocalDate, and Period is used with LocalTime",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q004_d",
+        "text": "Both have exactly the same functionality",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q005",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = List.of(\"a\", \"bb\", \"ccc\", \"dd\");\n        String result = list.stream()\n            .max(Comparator.comparingInt(String::length))\n            .orElse(\"\");\n        System.out.println(result);\n    }\n}",
+    "explanation": "max() returns the maximum value based on the Comparator. Comparator.comparingInt(String::length) compares by string length, so the longest string \"ccc\" is stored in the Optional and printed.",
+    "choices": [
+      {
+        "id": "se11g2_q005_a",
+        "text": "a",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q005_b",
+        "text": "ccc",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q005_c",
+        "text": "dd",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q005_d",
+        "text": "Empty string",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q006",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has an error. What is the cause of the error?",
+    "code": "import java.time.*;\nimport java.time.format.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate date = LocalDate.parse(\"2024/01/15\");\n        System.out.println(date);\n    }\n}",
+    "explanation": "LocalDate.parse(String) expects the ISO_LOCAL_DATE format (yyyy-MM-dd). The string \"2024/01/15\" does not match this format, so a DateTimeParseException is thrown at runtime. A DateTimeFormatter must be specified as an argument.",
+    "choices": [
+      {
+        "id": "se11g2_q006_a",
+        "text": "The default format of parse() is yyyy-MM-dd, and it does not support slash-separated dates",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q006_b",
+        "text": "The parse() method does not exist in LocalDate",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q006_c",
+        "text": "An import statement is missing",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q006_d",
+        "text": "A String cannot be passed to parse()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q007",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes a characteristic of a list created by List.copyOf()?",
+    "code": null,
+    "explanation": "List.copyOf() creates an unmodifiable copy of the list. Changes to the original list do not affect the copy. Passing a list containing null throws a NullPointerException.",
+    "choices": [
+      {
+        "id": "se11g2_q007_a",
+        "text": "An unmodifiable copy is created, and null elements are not allowed",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q007_b",
+        "text": "A modifiable copy is created",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q007_c",
+        "text": "A view that maintains a reference to the original list is returned",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q007_d",
+        "text": "The copy can include null elements",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q008",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct about java.time.ZonedDateTime? (Choose 2)",
+    "code": null,
+    "explanation": "ZonedDateTime represents a date-time with a time zone. It maintains the time zone via ZoneId and automatically handles daylight saving time (DST) transitions. LocalDateTime does not hold time zone information.",
+    "choices": [
+      {
+        "id": "se11g2_q008_a",
+        "text": "It can represent a date-time that includes time zone information",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q008_b",
+        "text": "Like LocalDateTime, it does not have a time zone",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q008_c",
+        "text": "It automatically handles daylight saving time transitions",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q008_d",
+        "text": "It is a mutable class",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q009",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which functional interface is most appropriate for the lambda expression (x, y) -> x + y?",
+    "code": null,
+    "explanation": "BinaryOperator<T> is a functional interface that takes two arguments of the same type and returns a result of the same type. It is a sub-interface of BiFunction<T,U,R>, specialized for cases where T==U==R.",
+    "choices": [
+      {
+        "id": "se11g2_q009_a",
+        "text": "BiFunction<Integer, Integer, Integer> or BinaryOperator<Integer>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q009_b",
+        "text": "Function<Integer, Integer>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q009_c",
+        "text": "Supplier<Integer>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q009_d",
+        "text": "Consumer<Integer>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q010",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> startsA = s -> s.startsWith(\"A\");\n        Predicate<String> endsZ = s -> s.endsWith(\"Z\");\n        Predicate<String> combined = startsA.and(endsZ);\n        System.out.println(combined.test(\"ABZ\"));\n        System.out.println(combined.test(\"AXY\"));\n    }\n}",
+    "explanation": "Predicate.and() returns a logical AND. \"ABZ\" starts with A and ends with Z, so the result is true. \"AXY\" starts with A but does not end with Z, so the result is false.",
+    "choices": [
+      {
+        "id": "se11g2_q010_a",
+        "text": "true\\nfalse",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q010_b",
+        "text": "true\\ntrue",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q010_c",
+        "text": "false\\nfalse",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q010_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q011",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What type of method reference is String::valueOf?",
+    "code": null,
+    "explanation": "String::valueOf is a reference to a static method. There are four types of method references: (1) static method ClassName::method, (2) instance method of a specific object obj::method, (3) instance method of an arbitrary object ClassName::method, (4) constructor ClassName::new.",
+    "choices": [
+      {
+        "id": "se11g2_q011_a",
+        "text": "Reference to a static method",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q011_b",
+        "text": "Reference to an instance method of a specific object",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q011_c",
+        "text": "Reference to an instance method of an arbitrary object",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q011_d",
+        "text": "Constructor reference",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q012",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has an error. What is the cause of the error?",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        Runnable r = () -> {\n            count++;\n            System.out.println(count);\n        };\n        r.run();\n    }\n}",
+    "explanation": "Local variables referenced from a lambda expression must be effectively final. Since count++ modifies the variable, count is no longer effectively final, resulting in a compilation error.",
+    "choices": [
+      {
+        "id": "se11g2_q012_a",
+        "text": "The local variable count is modified inside the lambda expression, violating the effectively final requirement",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q012_b",
+        "text": "Runnable is not a FunctionalInterface",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q012_c",
+        "text": "println cannot be used in a lambda expression",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q012_d",
+        "text": "Variables of type int cannot be referenced in a lambda expression",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q013",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, Integer> len = String::length;\n        Function<Integer, String> repeat = n -> \"*\".repeat(n);\n        Function<String, String> composed = len.andThen(repeat);\n        System.out.println(composed.apply(\"Hello\"));\n    }\n}",
+    "explanation": "len.andThen(repeat) first applies len and then applies repeat to the result. \"Hello\".length() is 5, and \"*\".repeat(5) is \"*****\". andThen() passes the output of the first function as the input to the next function.",
+    "choices": [
+      {
+        "id": "se11g2_q013_a",
+        "text": "*****",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q013_b",
+        "text": "Hello",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q013_c",
+        "text": "5",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q013_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q014",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the parent interface of UnaryOperator<T>?",
+    "code": null,
+    "explanation": "UnaryOperator<T> is a sub-interface of Function<T,T>. It is used when the argument and return type are the same. Similarly, BinaryOperator<T> is a sub-interface of BiFunction<T,T,T>.",
+    "choices": [
+      {
+        "id": "se11g2_q014_a",
+        "text": "Function<T, T>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q014_b",
+        "text": "Supplier<T>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q014_c",
+        "text": "Consumer<T>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q014_d",
+        "text": "Predicate<T>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q015",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which method reference correctly fills in the blank?\nFunction<String, Integer> parser = _____;",
+    "code": null,
+    "explanation": "Integer::parseInt is a static method reference that takes a String argument and returns an int (auto-boxed to Integer). It corresponds to the apply(String) method of Function<String, Integer>.",
+    "choices": [
+      {
+        "id": "se11g2_q015_a",
+        "text": "Integer::parseInt",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q015_b",
+        "text": "Integer::new",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q015_c",
+        "text": "Integer::valueOf",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q015_d",
+        "text": "String::toInteger",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q016",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What object does the this keyword refer to inside a lambda expression?",
+    "code": null,
+    "explanation": "Inside a lambda expression, this refers to the instance of the enclosing class. This is a major difference from anonymous classes, where this refers to the instance of the anonymous class itself.",
+    "choices": [
+      {
+        "id": "se11g2_q016_a",
+        "text": "The instance of the enclosing class of the lambda expression",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q016_b",
+        "text": "The instance of the lambda expression itself",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q016_c",
+        "text": "The instance of the functional interface",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q016_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q017",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is correct about type erasure in generics?",
+    "code": null,
+    "explanation": "Due to type erasure, generic type parameters are only used at compile time and are replaced with Object or the bound type at runtime. Therefore, instanceof T and new T() result in compilation errors.",
+    "choices": [
+      {
+        "id": "se11g2_q017_a",
+        "text": "Type parameter information is removed at runtime and replaced with Object or the bound type",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q017_b",
+        "text": "Type information is fully retained at runtime",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q017_c",
+        "text": "Type erasure was abolished in Java 11",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q017_d",
+        "text": "Type erasure applies only to primitive types",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q018",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> list = new ArrayList<>();\n        list.add(1);\n        list.add(2);\n        List<Number> numList = list;\n    }\n}",
+    "explanation": "List<Integer> is not a subtype of List<Number>. Generics are invariant, meaning that even though Integer is a subtype of Number, List<Integer> cannot be assigned to List<Number>. You need to use the wildcard List<? extends Number>.",
+    "choices": [
+      {
+        "id": "se11g2_q018_a",
+        "text": "Generics are invariant, so List<Integer> cannot be assigned to List<Number>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q018_b",
+        "text": "Integer is not a subclass of Number",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q018_c",
+        "text": "Integer cannot be added to an ArrayList",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q018_d",
+        "text": "var must be used instead",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q019",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "When using <? super T> (lower-bounded wildcard), which operations can be safely performed?",
+    "code": null,
+    "explanation": "According to the PECS principle (Producer Extends, Consumer Super), <? super T> is suitable for Consumer (write) purposes. Objects of type T can be safely added, but when retrieving, they can only be referenced as Object type.",
+    "choices": [
+      {
+        "id": "se11g2_q019_a",
+        "text": "Elements of type T can be safely added, but retrieval returns Object type",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q019_b",
+        "text": "Elements can be safely retrieved as type T, but cannot be added",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q019_c",
+        "text": "Both reading and writing can be done freely",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q019_d",
+        "text": "Neither reading nor writing is possible",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q020",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    static <T extends Comparable<T>> T max(T a, T b) {\n        return a.compareTo(b) >= 0 ? a : b;\n    }\n    public static void main(String[] args) {\n        System.out.println(max(\"Apple\", \"Banana\"));\n        System.out.println(max(10, 5));\n    }\n}",
+    "explanation": "The max() method restricts type parameter T to types that implement Comparable<T>. \"Apple\".compareTo(\"Banana\") returns a negative value (A comes before B), so Banana is returned. 10.compareTo(5) returns a positive value, so 10 is returned.",
+    "choices": [
+      {
+        "id": "se11g2_q020_a",
+        "text": "Banana\\n10",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q020_b",
+        "text": "Apple\\n5",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q020_c",
+        "text": "Apple\\n10",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q020_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q021",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Where should the type parameter of a generic method be declared?",
+    "code": null,
+    "explanation": "The type parameter of a generic method is declared as <T> immediately before the return type. For example: public <T> List<T> emptyList(). This position is part of the method declaration and is independent of the class's type parameters.",
+    "choices": [
+      {
+        "id": "se11g2_q021_a",
+        "text": "Immediately before the return type",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q021_b",
+        "text": "After the method name",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q021_c",
+        "text": "Inside the parameter list",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q021_d",
+        "text": "After the throws clause",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q022",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Box<T> {\n    private T value;\n    \n    public Box(T value) {\n        this.value = value;\n    }\n    \n    public static T getDefault() {\n        return null;\n    }\n}",
+    "explanation": "The class's type parameter T cannot be used in a static method. Since static methods are independent of instances, class-level type parameters cannot be referenced. If a custom type parameter is needed, it must be declared as a generic method.",
+    "choices": [
+      {
+        "id": "se11g2_q022_a",
+        "text": "The class's type parameter T is used in a static method",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q022_b",
+        "text": "Generics are used in a private field",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q022_c",
+        "text": "A type parameter is used in the constructor",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q022_d",
+        "text": "null is being returned",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q023",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which operations are not allowed with generics? (Choose 2)",
+    "code": null,
+    "explanation": "Due to type erasure, type parameter information is lost at runtime, so new T() and new T[] result in compilation errors. Creating instances of List<T> and declaring variables of type T are allowed.",
+    "choices": [
+      {
+        "id": "se11g2_q023_a",
+        "text": "Creating an instance with new T()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q023_b",
+        "text": "Declaring a variable of type T",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q023_c",
+        "text": "Creating an array with new T[]",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q023_d",
+        "text": "Accepting a parameter of type List<T>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q024",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which wildcard expression correctly fills in the blank?\npublic static double sum(List<_____> list) {\n    return list.stream().mapToDouble(Number::doubleValue).sum();\n}",
+    "code": null,
+    "explanation": "List<? extends Number> accepts lists of Number and its subclasses (Integer, Double, etc.). Upper-bounded wildcards are used for read-only (Producer) purposes.",
+    "choices": [
+      {
+        "id": "se11g2_q024_a",
+        "text": "? extends Number",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q024_b",
+        "text": "? super Number",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q024_c",
+        "text": "Number",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q024_d",
+        "text": "?",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q025",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the requirement for keys in TreeMap<K,V>?",
+    "code": null,
+    "explanation": "TreeMap manages keys in sorted order, so keys must implement Comparable<K> or a Comparator must be specified in the constructor. hashCode() is required for HashMap, not for TreeMap.",
+    "choices": [
+      {
+        "id": "se11g2_q025_a",
+        "text": "Keys must implement Comparable, or a Comparator must be specified in the constructor",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q025_b",
+        "text": "hashCode() and equals() must be overridden",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q025_c",
+        "text": "Serializable must be implemented",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q025_d",
+        "text": "There are no particular constraints",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q026",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var deque = new ArrayDeque<Integer>();\n        deque.push(1);\n        deque.push(2);\n        deque.push(3);\n        System.out.println(deque.peek());\n        System.out.println(deque.poll());\n        System.out.println(deque.size());\n    }\n}",
+    "explanation": "push() is a stack operation that adds to the head. After push(1), push(2), push(3), the deque becomes [3,2,1]. peek() returns the head element 3 (without removing it), poll() removes and returns the head element 3, and size returns 2 for the remaining elements.",
+    "choices": [
+      {
+        "id": "se11g2_q026_a",
+        "text": "3\\n3\\n2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q026_b",
+        "text": "1\\n1\\n2",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q026_c",
+        "text": "3\\n2\\n2",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q026_d",
+        "text": "1\\n3\\n2",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q027",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the computeIfAbsent() method of ConcurrentHashMap?",
+    "code": null,
+    "explanation": "computeIfAbsent() executes the function and sets the value only when the key does not exist. This operation is performed atomically, making it safe to call from multiple threads. If the key already exists, the existing value is returned.",
+    "choices": [
+      {
+        "id": "se11g2_q027_a",
+        "text": "Atomically computes and sets the value only when the key does not exist",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q027_b",
+        "text": "Always recomputes and sets the value",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q027_c",
+        "text": "Updates the value when the key exists",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q027_d",
+        "text": "Supports null keys",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q028",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has an error. What is the cause of the error?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = List.of(1, 2, 3);\n        list.add(4);\n        System.out.println(list);\n    }\n}",
+    "explanation": "List.of() returns an unmodifiable list. Calling add() throws an UnsupportedOperationException at runtime. The code compiles successfully, but an error occurs at runtime.",
+    "choices": [
+      {
+        "id": "se11g2_q028_a",
+        "text": "List.of() returns an unmodifiable list, so add() throws UnsupportedOperationException",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q028_b",
+        "text": "Primitive types cannot be passed to List.of()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q028_c",
+        "text": "Using var causes a compilation error",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q028_d",
+        "text": "List.of() returns a null list",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q029",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between LinkedHashMap and HashMap?",
+    "code": null,
+    "explanation": "LinkedHashMap maintains insertion order (or access order). Internally, it maintains a doubly-linked list in addition to the hash table, making the iteration order predictable.",
+    "choices": [
+      {
+        "id": "se11g2_q029_a",
+        "text": "LinkedHashMap maintains insertion order, while HashMap does not guarantee order",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q029_b",
+        "text": "LinkedHashMap maintains keys in sorted order",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q029_c",
+        "text": "HashMap always has worse memory efficiency",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q029_d",
+        "text": "LinkedHashMap is thread-safe",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q030",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var set = new TreeSet<>(Comparator.reverseOrder());\n        set.addAll(List.of(\"Banana\", \"Apple\", \"Cherry\"));\n        System.out.println(set.first());\n        System.out.println(set.last());\n    }\n}",
+    "explanation": "Comparator.reverseOrder() sorts in reverse order (Z→A). In reverse order, the set becomes [Cherry, Banana, Apple], so first() returns \"Cherry\" and last() returns \"Apple\".",
+    "choices": [
+      {
+        "id": "se11g2_q030_a",
+        "text": "Cherry\\nApple",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q030_b",
+        "text": "Apple\\nCherry",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q030_c",
+        "text": "Banana\\nApple",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q030_d",
+        "text": "Cherry\\nBanana",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q031",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which methods are provided by the NavigableSet interface? (Choose 2)",
+    "code": null,
+    "explanation": "NavigableSet provides navigation methods such as floor() (greatest element less than or equal to the given value), ceiling() (smallest element greater than or equal to the given value), lower(), higher(), and descendingSet(). get() and containsValue() are Map methods.",
+    "choices": [
+      {
+        "id": "se11g2_q031_a",
+        "text": "floor() — returns the greatest element less than or equal to the given value",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q031_b",
+        "text": "get() — retrieves an element by index",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q031_c",
+        "text": "ceiling() — returns the smallest element greater than or equal to the given value",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q031_d",
+        "text": "containsValue() — checks whether a value exists",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q032",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which collection type correctly fills in the blank?\n_____ queue = new PriorityQueue<>();\nqueue.add(3); queue.add(1); queue.add(2);\nSystem.out.println(queue.poll()); // 1",
+    "code": null,
+    "explanation": "PriorityQueue implements the Queue<E> interface. Elements are sorted in natural order (or by a Comparator), and poll() returns the smallest element.",
+    "choices": [
+      {
+        "id": "se11g2_q032_a",
+        "text": "Queue<Integer>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q032_b",
+        "text": "Stack<Integer>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q032_c",
+        "text": "List<Integer>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q032_d",
+        "text": "Set<Integer>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q033",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = List.of(1, 2, 3, 4, 5);\n        long count = list.stream()\n            .filter(n -> n % 2 == 0)\n            .peek(n -> System.out.print(n + \" \"))\n            .count();\n        System.out.println(count);\n    }\n}",
+    "explanation": "filter() extracts even numbers (2, 4), peek() prints each element, and count() returns 2. In Java 9+, count() may optimize by skipping peek when the size is known, but after a filter operation, peek is executed normally.",
+    "choices": [
+      {
+        "id": "se11g2_q033_a",
+        "text": "2 4 2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q033_b",
+        "text": "1 2 3 4 5 2",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q033_c",
+        "text": "2",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q033_d",
+        "text": "2 4 5",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q034",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the purpose of Stream.flatMap()?",
+    "code": null,
+    "explanation": "flatMap() converts each element into a Stream and flattens them into a single Stream. It is used when processing nested collections such as List<List<T>>.",
+    "choices": [
+      {
+        "id": "se11g2_q034_a",
+        "text": "Converts each element into a Stream and flattens the results into a single Stream",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q034_b",
+        "text": "Filters and flattens each element",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q034_c",
+        "text": "Sorts the elements of the Stream",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q034_d",
+        "text": "Reverses the order of the Stream elements",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q035",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        String result = Stream.of(\"a\", \"b\", \"c\", \"d\")\n            .reduce(\"\", (a, b) -> a + b);\n        System.out.println(result);\n    }\n}",
+    "explanation": "reduce() starts with the initial value \"\" and concatenates each element sequentially. (\"\" + \"a\") → \"a\", (\"a\" + \"b\") → \"ab\", (\"ab\" + \"c\") → \"abc\", (\"abc\" + \"d\") → \"abcd\". The result is \"abcd\".",
+    "choices": [
+      {
+        "id": "se11g2_q035_a",
+        "text": "abcd",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q035_b",
+        "text": "dcba",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q035_c",
+        "text": "a,b,c,d",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q035_d",
+        "text": "Optional[abcd]",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q036",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the return type of Collectors.partitioningBy()?",
+    "code": null,
+    "explanation": "partitioningBy() divides elements into a true group and a false group based on a Predicate, and returns Map<Boolean, List<T>>. Unlike groupingBy(), the resulting Map always has two keys (true/false).",
+    "choices": [
+      {
+        "id": "se11g2_q036_a",
+        "text": "Map<Boolean, List<T>>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q036_b",
+        "text": "List<List<T>>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q036_c",
+        "text": "Map<String, List<T>>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q036_d",
+        "text": "Optional<Map<Boolean, List<T>>>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q037",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has an error. What is the cause of the error?",
+    "code": "import java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var stream = Stream.of(1, 2, 3);\n        stream.forEach(System.out::println);\n        stream.forEach(System.out::println);\n    }\n}",
+    "explanation": "A Stream can only be consumed once. After the first forEach() consumes the Stream, calling forEach() a second time throws an IllegalStateException. A new Stream must be created for reprocessing.",
+    "choices": [
+      {
+        "id": "se11g2_q037_a",
+        "text": "A Stream cannot be reused after consumption, so the second forEach() throws IllegalStateException",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q037_b",
+        "text": "Primitive types cannot be passed to Stream.of()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q037_c",
+        "text": "forEach() is not a terminal operation",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q037_d",
+        "text": "System.out::println is an invalid method reference",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q038",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Long> result = Stream.of(\"a\", \"b\", \"a\", \"c\", \"b\", \"a\")\n            .collect(Collectors.groupingBy(\n                s -> s, Collectors.counting()\n            ));\n        System.out.println(result.getOrDefault(\"a\", 0L));\n    }\n}",
+    "explanation": "groupingBy() groups elements by string as the key, and Collectors.counting() counts the number of elements in each group. Since \"a\" appears 3 times, result.get(\"a\") is 3L.",
+    "choices": [
+      {
+        "id": "se11g2_q038_a",
+        "text": "3",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q038_b",
+        "text": "1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q038_c",
+        "text": "6",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q038_d",
+        "text": "Optional[3]",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q039",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which Collector correctly fills in the blank?\nString csv = Stream.of(\"A\", \"B\", \"C\")\n    .collect(Collectors._____(\", \"));\n// Result: \"A, B, C\"",
+    "code": null,
+    "explanation": "Collectors.joining() concatenates a Stream of strings with the specified delimiter. joining(\", \") joins each element with \", \" to produce a single string.",
+    "choices": [
+      {
+        "id": "se11g2_q039_a",
+        "text": "joining",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q039_b",
+        "text": "reducing",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q039_c",
+        "text": "mapping",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q039_d",
+        "text": "concatenating",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q040",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are intermediate operations in the Stream API? (Choose 2)",
+    "code": null,
+    "explanation": "Intermediate operations return a Stream and are lazily evaluated. map() and filter() are intermediate operations, while forEach() and collect() are terminal operations. Intermediate operations are not executed until a terminal operation is invoked.",
+    "choices": [
+      {
+        "id": "se11g2_q040_a",
+        "text": "map()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q040_b",
+        "text": "forEach()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q040_c",
+        "text": "filter()",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q040_d",
+        "text": "collect()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q041",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between a synchronized block and ReentrantLock?",
+    "code": null,
+    "explanation": "ReentrantLock supports lock acquisition with a timeout via tryLock(), interruptible lock acquisition via lockInterruptibly(), and fairness settings. Synchronized blocks do not have these features.",
+    "choices": [
+      {
+        "id": "se11g2_q041_a",
+        "text": "ReentrantLock supports timed lock acquisition and interruptible lock acquisition",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q041_b",
+        "text": "synchronized always has better performance",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q041_c",
+        "text": "ReentrantLock is not reentrant",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q041_d",
+        "text": "synchronized can only be used on methods",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q042",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the guaranteed output when the following code is executed?",
+    "code": "import java.util.concurrent.*;\nimport java.util.concurrent.atomic.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        AtomicInteger counter = new AtomicInteger(0);\n        ExecutorService es = Executors.newFixedThreadPool(3);\n        for (int i = 0; i < 100; i++) {\n            es.submit(() -> counter.incrementAndGet());\n        }\n        es.shutdown();\n        es.awaitTermination(10, TimeUnit.SECONDS);\n        System.out.println(counter.get());\n    }\n}",
+    "explanation": "AtomicInteger's incrementAndGet() is a thread-safe atomic operation. All 100 increments are accurately reflected, so the result is always 100. awaitTermination waits for all tasks to complete.",
+    "choices": [
+      {
+        "id": "se11g2_q042_a",
+        "text": "100",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q042_b",
+        "text": "Indeterminate (may be less than 100)",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q042_c",
+        "text": "0",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q042_d",
+        "text": "ConcurrentModificationException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q043",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the default thread pool used by CompletableFuture.supplyAsync()?",
+    "code": null,
+    "explanation": "When no Executor is specified for supplyAsync(), ForkJoinPool.commonPool() is used by default. This pool has CPU core count - 1 threads.",
+    "choices": [
+      {
+        "id": "se11g2_q043_a",
+        "text": "ForkJoinPool.commonPool()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q043_b",
+        "text": "Executors.newCachedThreadPool()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q043_c",
+        "text": "Executors.newSingleThreadExecutor()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q043_d",
+        "text": "A new thread is created each time",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q044",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has a potential problem. What is the cause of the problem?",
+    "code": "import java.util.concurrent.locks.*;\n\npublic class Main {\n    private final Lock lock = new ReentrantLock();\n    \n    public void process() {\n        lock.lock();\n        doWork();\n        lock.unlock();\n    }\n    \n    private void doWork() {\n        throw new RuntimeException(\"Error!\");\n    }\n}",
+    "explanation": "If doWork() throws an exception, lock.unlock() is never called, which can cause a deadlock. The unlock() of a ReentrantLock should be called in a finally block. A try-finally pattern must be used.",
+    "choices": [
+      {
+        "id": "se11g2_q044_a",
+        "text": "If an exception occurs, unlock() is not called and the lock may not be released",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q044_b",
+        "text": "ReentrantLock cannot be a final field",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q044_c",
+        "text": "tryLock() must be called before lock()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q044_d",
+        "text": "The ReentrantLock constructor requires an argument",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q045",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between CyclicBarrier and CountDownLatch?",
+    "code": null,
+    "explanation": "CyclicBarrier is reusable and blocks all threads until the specified number of threads reach await(). CountDownLatch is one-time use and releases waiting threads when the count reaches 0.",
+    "choices": [
+      {
+        "id": "se11g2_q045_a",
+        "text": "CyclicBarrier is reusable, while CountDownLatch can only be used once",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q045_b",
+        "text": "CountDownLatch is reusable, while CyclicBarrier can only be used once",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q045_c",
+        "text": "There is no difference between the two",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q045_d",
+        "text": "CyclicBarrier counts down, while CountDownLatch counts up",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q046",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        CompletableFuture<String> cf = CompletableFuture.supplyAsync(() -> \"Hello\")\n            .thenApply(s -> s + \" World\")\n            .thenApply(String::toUpperCase);\n        System.out.println(cf.get());\n    }\n}",
+    "explanation": "supplyAsync() produces \"Hello\", thenApply() concatenates \" World\" to get \"Hello World\", and another thenApply() converts to uppercase to get \"HELLO WORLD\". get() blocks and retrieves the result.",
+    "choices": [
+      {
+        "id": "se11g2_q046_a",
+        "text": "HELLO WORLD",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q046_b",
+        "text": "Hello World",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q046_c",
+        "text": "hello world",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q046_d",
+        "text": "HELLO",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q047",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which class correctly fills in the blank?\nExecutorService es = Executors._____;\nes.submit(() -> System.out.println(\"Task\"));",
+    "code": null,
+    "explanation": "newCachedThreadPool() creates threads as needed and reuses idle threads. It is suitable when there are many short-lived tasks.",
+    "choices": [
+      {
+        "id": "se11g2_q047_a",
+        "text": "newCachedThreadPool()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q047_b",
+        "text": "createThreadPool()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q047_c",
+        "text": "newThread()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q047_d",
+        "text": "getThreadPool()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q048",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which factory methods are provided by the Executors class? (Choose 2)",
+    "code": null,
+    "explanation": "Executors provides factory methods for creating thread pools. newFixedThreadPool() creates a fixed-size pool, and newScheduledThreadPool() creates a pool that supports scheduled execution. newDaemonThreadPool() and newParallelPool() do not exist.",
+    "choices": [
+      {
+        "id": "se11g2_q048_a",
+        "text": "newFixedThreadPool()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q048_b",
+        "text": "newDaemonThreadPool()",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q048_c",
+        "text": "newScheduledThreadPool()",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q048_d",
+        "text": "newParallelPool()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q049",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the behavior of the resolve() method of java.nio.file.Path?",
+    "code": null,
+    "explanation": "resolve() joins a relative path to the current path. If the argument is an absolute path, the argument is returned as-is. For example: Path.of(\"/home\").resolve(\"file.txt\") → /home/file.txt",
+    "choices": [
+      {
+        "id": "se11g2_q049_a",
+        "text": "Joins a relative path to the current path; if the argument is absolute, it returns the argument as-is",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q049_b",
+        "text": "Resolves a symbolic link and returns the actual path",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q049_c",
+        "text": "Verifies whether a file exists",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q049_d",
+        "text": "Returns the file name at the end of the path",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q050",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p1 = Path.of(\"/home/user/docs\");\n        Path p2 = Path.of(\"/home/user/images\");\n        Path rel = p1.relativize(p2);\n        System.out.println(rel);\n    }\n}",
+    "explanation": "relativize() calculates the relative path from p1 to p2. From /home/user/docs to /home/user/images, you first go up one level (..) and then into images, resulting in ../images.",
+    "choices": [
+      {
+        "id": "se11g2_q050_a",
+        "text": "../images",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q050_b",
+        "text": "/home/user/images",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q050_c",
+        "text": "images",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q050_d",
+        "text": "IllegalArgumentException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q051",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes a characteristic of the Files.walk() method?",
+    "code": null,
+    "explanation": "Files.walk() recursively traverses the directory tree in depth-first order and returns a Stream<Path>. It is lazily evaluated, making it efficient even for large directories. The maxDepth parameter can limit the depth of traversal.",
+    "choices": [
+      {
+        "id": "se11g2_q051_a",
+        "text": "Recursively traverses the directory tree in depth-first order and returns Stream<Path>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q051_b",
+        "text": "Returns only files directly under the directory",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q051_c",
+        "text": "Returns List<Path>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q051_d",
+        "text": "Returns void and processes with a Consumer",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q052",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has an error. What is the cause of the error?",
+    "code": "import java.io.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        try (var br = new BufferedReader(new FileReader(\"test.txt\"))) {\n            String line;\n            while ((line = br.readLine()) != null) {\n                System.out.println(line);\n            }\n        }\n    }\n}",
+    "explanation": "The FileReader constructor and readLine() may throw IOException, which is a checked exception. The main method must either declare throws IOException or add a catch clause.",
+    "choices": [
+      {
+        "id": "se11g2_q052_a",
+        "text": "IOException is a checked exception, and a catch clause or throws declaration is required",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q052_b",
+        "text": "BufferedReader cannot be used with try-with-resources",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q052_c",
+        "text": "var cannot be used in try-with-resources",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q052_d",
+        "text": "A String cannot be passed to FileReader",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q053",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between Files.lines() and Files.readAllLines()?",
+    "code": null,
+    "explanation": "Files.lines() returns a Stream<String> and is lazily evaluated, making it memory-efficient even for large files. Files.readAllLines() returns a List<String> and reads the entire file into memory at once.",
+    "choices": [
+      {
+        "id": "se11g2_q053_a",
+        "text": "lines() returns Stream<String> with lazy evaluation; readAllLines() returns List<String> with immediate loading",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q053_b",
+        "text": "readAllLines() is more memory-efficient",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q053_c",
+        "text": "lines() is for binary files, readAllLines() is for text files",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q053_d",
+        "text": "Both have the same return type",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q054",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Fill in the blank with the method name that normalizes a Path.\nPath p = Path.of(\"/home/user/../admin/./docs\");\nPath normalized = p._____();\n// Result: /home/admin/docs",
+    "code": null,
+    "explanation": "normalize() resolves redundant elements (. and ..) in the path and returns a normalized path. It only performs path string manipulation without accessing the file system.",
+    "choices": [
+      {
+        "id": "se11g2_q054_a",
+        "text": "normalize",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q054_b",
+        "text": "resolve",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q054_c",
+        "text": "toRealPath",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q054_d",
+        "text": "toAbsolutePath",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q055",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the most important advantage of using JDBC PreparedStatement?",
+    "code": null,
+    "explanation": "PreparedStatement uses placeholders (?) for parameters, preventing SQL injection attacks. It also improves performance through precompilation when the same statement is executed repeatedly.",
+    "choices": [
+      {
+        "id": "se11g2_q055_a",
+        "text": "Prevention of SQL injection attacks and improved performance",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q055_b",
+        "text": "Transaction management becomes unnecessary",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q055_c",
+        "text": "Connection pooling is performed automatically",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q055_d",
+        "text": "ResultSet is automatically closed",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q056",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the correct execution order of the following JDBC code?",
+    "code": "Connection conn = DriverManager.getConnection(url);\nconn.setAutoCommit(false);\ntry {\n    PreparedStatement ps = conn.prepareStatement(\"UPDATE users SET name=? WHERE id=?\");\n    ps.setString(1, \"Alice\");\n    ps.setInt(2, 1);\n    ps.executeUpdate();\n    conn.commit();\n} catch (SQLException e) {\n    conn.rollback();\n}",
+    "explanation": "setAutoCommit(false) sets manual commit mode, PreparedStatement sets parameters and executes UPDATE, commit() on success, rollback() on exception. This is the typical JDBC transaction management pattern.",
+    "choices": [
+      {
+        "id": "se11g2_q056_a",
+        "text": "Get connection → Disable auto-commit → Execute SQL → Commit (rollback on failure)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q056_b",
+        "text": "Get connection → Execute SQL → Auto-commit → Commit",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q056_c",
+        "text": "Get connection → Start transaction → Execute SQL → End transaction",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q056_d",
+        "text": "This code causes a compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q057",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the characteristic of ResultSet.TYPE_SCROLL_INSENSITIVE?",
+    "code": null,
+    "explanation": "TYPE_SCROLL_INSENSITIVE is a ResultSet that allows forward and backward cursor movement, but does not reflect changes made by other transactions. TYPE_SCROLL_SENSITIVE reflects data changes.",
+    "choices": [
+      {
+        "id": "se11g2_q057_a",
+        "text": "Scrollable forward and backward, but does not reflect database changes",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q057_b",
+        "text": "Scrollable forward only",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q057_c",
+        "text": "Scrollable forward and backward, and reflects database changes",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q057_d",
+        "text": "Results can be accessed after the cursor is closed",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q058",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following JDBC code has a resource leak problem. What is the cause of the problem?",
+    "code": "public List<String> getNames() throws SQLException {\n    Connection conn = DriverManager.getConnection(url);\n    Statement stmt = conn.createStatement();\n    ResultSet rs = stmt.executeQuery(\"SELECT name FROM users\");\n    List<String> names = new ArrayList<>();\n    while (rs.next()) {\n        names.add(rs.getString(\"name\"));\n    }\n    return names;\n}",
+    "explanation": "The Connection, Statement, and ResultSet are never closed. Try-with-resources should be used to automatically close these resources, ensuring resources are released even when an exception occurs.",
+    "choices": [
+      {
+        "id": "se11g2_q058_a",
+        "text": "Connection, Statement, and ResultSet are not closed, causing a resource leak",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q058_b",
+        "text": "ResultSet cannot be converted to a List",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q058_c",
+        "text": "prepareStatement() should be used instead of createStatement()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q058_d",
+        "text": "getConnection() requires a username and password",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q059",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is the correct format for a DriverManager.getConnection() connection URL?",
+    "code": null,
+    "explanation": "The JDBC connection URL format is jdbc:subprotocol:subname. For example, MySQL: jdbc:mysql://localhost:3306/dbname, H2: jdbc:h2:mem:testdb. The protocol always starts with jdbc:.",
+    "choices": [
+      {
+        "id": "se11g2_q059_a",
+        "text": "jdbc:subprotocol:subname (e.g., jdbc:mysql://localhost:3306/db)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q059_b",
+        "text": "http://database:port/dbname",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q059_c",
+        "text": "sql:driver:database",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q059_d",
+        "text": "database://jdbc/dbname",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q060",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which ResultSet method correctly fills in the blank?\nwhile (rs._____()) {\n    String name = rs.getString(\"name\");\n    System.out.println(name);\n}",
+    "code": null,
+    "explanation": "ResultSet.next() moves the cursor to the next row and returns true if a row exists, or false if it does not. The first call sets the cursor to the first row.",
+    "choices": [
+      {
+        "id": "se11g2_q060_a",
+        "text": "next",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q060_b",
+        "text": "hasNext",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q060_c",
+        "text": "first",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q060_d",
+        "text": "read",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q061",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What does RetentionPolicy.RUNTIME mean in the @Retention annotation?",
+    "code": null,
+    "explanation": "RetentionPolicy.RUNTIME means that the annotation is retained in the class file at compile time and is accessible via reflection at runtime. SOURCE is available only at compile time, and CLASS is retained in the class file but not accessible at runtime.",
+    "choices": [
+      {
+        "id": "se11g2_q061_a",
+        "text": "The annotation is accessible via reflection at runtime",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q061_b",
+        "text": "The annotation is available only at compile time",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q061_c",
+        "text": "The annotation is retained only in the class file",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q061_d",
+        "text": "The annotation is loaded only at JVM startup",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q062",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the effect of the @FunctionalInterface annotation on the following code?",
+    "code": "@FunctionalInterface\npublic interface Calculator {\n    int calculate(int a, int b);\n    \n    default int add(int a, int b) {\n        return a + b;\n    }\n}",
+    "explanation": "This code compiles successfully. @FunctionalInterface causes the compiler to verify that there is exactly one abstract method. Since default methods are not abstract methods, only calculate() is counted as an abstract method.",
+    "choices": [
+      {
+        "id": "se11g2_q062_a",
+        "text": "Compiles successfully (valid as a functional interface because there is only one abstract method)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q062_b",
+        "text": "Compilation error (there are two methods)",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q062_c",
+        "text": "Compilation error (default methods are not allowed)",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q062_d",
+        "text": "A runtime exception is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q063",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Where can a @Target(ElementType.TYPE_USE) annotation be applied?",
+    "code": null,
+    "explanation": "TYPE_USE can be applied everywhere a type is used. This includes variable declarations, casts, implements clauses, throws clauses, generic type arguments, and any other context where a type appears.",
+    "choices": [
+      {
+        "id": "se11g2_q063_a",
+        "text": "Anywhere a type is used (variable declarations, casts, generic type arguments, etc.)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q063_b",
+        "text": "Class declarations only",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q063_c",
+        "text": "Method parameters only",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q063_d",
+        "text": "Field declarations only",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q064",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following annotation definition has an error. What is the cause of the error?",
+    "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\npublic @interface MyAnnotation {\n    String value();\n    Object data() default null;\n}",
+    "explanation": "Only primitive types, String, Class, enums, annotations, and arrays of these types are allowed as annotation element types. Object is not a permitted type, so data() causes a compilation error.",
+    "choices": [
+      {
+        "id": "se11g2_q064_a",
+        "text": "Object is not allowed as an annotation element type",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q064_b",
+        "text": "Static methods cannot be defined in annotation elements",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q064_c",
+        "text": "The value() method requires a default value",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q064_d",
+        "text": "@Retention and @Target cannot be used together",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q065",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is required to use the @Repeatable annotation?",
+    "code": null,
+    "explanation": "To use @Repeatable, a container annotation must be defined (with a value() method that returns an array of the target annotation), and the container must be specified in the @Repeatable's value attribute.",
+    "choices": [
+      {
+        "id": "se11g2_q065_a",
+        "text": "A container annotation that returns an array of the target annotation must be defined",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q065_b",
+        "text": "The @Inherited annotation must also be applied",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q065_c",
+        "text": "The RetentionPolicy must be set to RUNTIME",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q065_d",
+        "text": "No special configuration is required",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q066",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which meta-annotation correctly fills in the blank?\n@_____(RetentionPolicy.RUNTIME)\npublic @interface MyAnnotation {\n    String value();\n}",
+    "code": null,
+    "explanation": "@Retention is a meta-annotation that specifies the retention policy of an annotation. There are three policies: SOURCE (source only), CLASS (up to class file), and RUNTIME (up to runtime).",
+    "choices": [
+      {
+        "id": "se11g2_q066_a",
+        "text": "Retention",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q066_b",
+        "text": "Target",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q066_c",
+        "text": "Documented",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q066_d",
+        "text": "Inherited",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q067",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What influences the value returned by Locale.getDefault()?",
+    "code": null,
+    "explanation": "Locale.getDefault() returns the JVM's default locale. This can be set via JVM startup parameters (-Duser.language, -Duser.country), OS settings, or Locale.setDefault().",
+    "choices": [
+      {
+        "id": "se11g2_q067_a",
+        "text": "JVM startup parameters, OS settings, or Locale.setDefault()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q067_b",
+        "text": "Only the application's source code",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q067_c",
+        "text": "en_US is always returned",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q067_d",
+        "text": "Only the classpath configuration",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q068",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed (with ja_JP locale)?",
+    "code": "import java.text.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.JAPAN);\n        System.out.println(nf.format(1234.5));\n    }\n}",
+    "explanation": "NumberFormat.getCurrencyInstance(Locale.JAPAN) returns a currency format for Japanese Yen. Japanese Yen has no decimal places, and the currency symbol is \"¥\". 1234.5 is rounded to ¥1,235.",
+    "choices": [
+      {
+        "id": "se11g2_q068_a",
+        "text": "￥1,235",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q068_b",
+        "text": "$1,234.50",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q068_c",
+        "text": "1234.5円",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q068_d",
+        "text": "¥1,234.5",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q069",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the correct search order for ResourceBundle property files? (When the locale is fr_FR_PARIS)",
+    "code": null,
+    "explanation": "ResourceBundle searches from the most specific locale in order: messages_fr_FR_PARIS.properties → messages_fr_FR.properties → messages_fr.properties → messages.properties (default). The first file found is used.",
+    "choices": [
+      {
+        "id": "se11g2_q069_a",
+        "text": "language_country_variant → language_country → language → default",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q069_b",
+        "text": "default → language → language_country → language_country_variant",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q069_c",
+        "text": "Searched by language only",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q069_d",
+        "text": "The search order is undefined",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q070",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following code has a problem. What is the cause of the problem?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ResourceBundle rb = ResourceBundle.getBundle(\"messages\", new Locale(\"xx\"));\n        String greeting = rb.getString(\"nonexistent.key\");\n        System.out.println(greeting);\n    }\n}",
+    "explanation": "Calling getString() with a non-existent key throws a MissingResourceException. You should either check with containsKey() beforehand or catch the exception with try-catch. If the \"xx\" locale is not found, it falls back to the default bundle.",
+    "choices": [
+      {
+        "id": "se11g2_q070_a",
+        "text": "Calling getString() with a non-existent key throws MissingResourceException",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q070_b",
+        "text": "Locale(\"xx\") is an invalid locale and causes a compilation error",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q070_c",
+        "text": "The ResourceBundle constructor is invalid",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q070_d",
+        "text": "getString() returns an int",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q071",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the result of formatting January 2024 with DateTimeFormatter.ofPattern(\"MMMM\", Locale.JAPANESE)?",
+    "code": null,
+    "explanation": "The \"MMMM\" pattern outputs the full month name according to the locale. With Locale.JAPANESE, \"1月\" is output. With an English locale, it would be \"January\".",
+    "choices": [
+      {
+        "id": "se11g2_q071_a",
+        "text": "1月",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q071_b",
+        "text": "January",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q071_c",
+        "text": "01",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q071_d",
+        "text": "睦月",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q072",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which classes are used for localization? (Choose 2)",
+    "code": null,
+    "explanation": "ResourceBundle provides locale-specific resource management, and NumberFormat provides locale-aware formatting for numbers and currencies. StringBuilder is for string manipulation, and ArrayList is for collections — neither is specifically for localization.",
+    "choices": [
+      {
+        "id": "se11g2_q072_a",
+        "text": "ResourceBundle",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q072_b",
+        "text": "StringBuilder",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q072_c",
+        "text": "NumberFormat",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q072_d",
+        "text": "ArrayList",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "localization",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se11g2_q073",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What is the effect of \"requires transitive\" in module-info.java?",
+    "code": null,
+    "explanation": "Using requires transitive automatically makes the specified module accessible to modules that depend on this module. By declaring transitive dependencies, consumers do not need to add their own requires.",
+    "choices": [
+      {
+        "id": "se11g2_q073_a",
+        "text": "Automatically exposes the dependent module to consumers",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q073_b",
+        "text": "Makes the dependent module private",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q073_c",
+        "text": "Verifies dependencies only at runtime",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q073_d",
+        "text": "Allows access to private members of the dependent module",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q074",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "Which of the following correctly describes the following module-info.java?",
+    "code": "module com.example.app {\n    requires java.sql;\n    exports com.example.app.api to com.example.client;\n    provides com.example.app.spi.DataService\n        with com.example.app.impl.SqlDataService;\n}",
+    "explanation": "This module depends on java.sql and exposes the com.example.app.api package only to the com.example.client module (qualified export). It also provides SqlDataService as an implementation of the DataService interface using the ServiceLoader pattern.",
+    "choices": [
+      {
+        "id": "se11g2_q074_a",
+        "text": "Contains a qualified export and a service provider declaration",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q074_b",
+        "text": "Exposes the API to all modules",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q074_c",
+        "text": "Causes a compilation error",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q074_d",
+        "text": "Transitively exposes the java.sql module",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q075",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "What declarations are needed in module-info.java when loading a service provider using ServiceLoader?",
+    "code": null,
+    "explanation": "The consumer side declares the interface with \"uses\", and the provider side declares the implementation class with \"provides...with\". This achieves loose coupling between modules.",
+    "choices": [
+      {
+        "id": "se11g2_q075_a",
+        "text": "The consumer uses \"uses interface\" and the provider uses \"provides interface with implementation\"",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q075_b",
+        "text": "exports alone is sufficient",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q075_c",
+        "text": "requires alone is sufficient",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q075_d",
+        "text": "A module declaration is not required",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q076",
+    "lessonId": "exam_se11_gold_2",
+    "type": "errorFind",
+    "question": "The following module-info.java has an error. What is the cause of the error?",
+    "code": "module com.example {\n    exports com.example.api;\n    exports com.example.api;\n    requires java.sql;\n}",
+    "explanation": "Exporting the same package twice causes a compilation error. Each package's exports declaration is allowed only once. The duplicate must be removed.",
+    "choices": [
+      {
+        "id": "se11g2_q076_a",
+        "text": "The same package com.example.api is exported twice",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q076_b",
+        "text": "The order of exports and requires is invalid",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q076_c",
+        "text": "\"example\" cannot be used in a module name",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q076_d",
+        "text": "java.sql is automatically imported, so requires is unnecessary",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q077",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes a characteristic of an Automatic Module?",
+    "code": null,
+    "explanation": "An automatic module is a JAR without a module-info.java placed on the module path. All packages are automatically exported, and the module name is inferred from the JAR file name. It requires all other modules.",
+    "choices": [
+      {
+        "id": "se11g2_q077_a",
+        "text": "All packages are automatically exported, and the module name is inferred from the JAR name",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q077_b",
+        "text": "A module-info.java is automatically generated",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q077_c",
+        "text": "No packages are exported at all",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q077_d",
+        "text": "It cannot be accessed from other modules",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q078",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the advantage of creating a custom runtime image using jlink with the following code?",
+    "code": "jlink --module-path $JAVA_HOME/jmods:mods \\\n      --add-modules com.example.app \\\n      --output myimage",
+    "explanation": "jlink creates a custom runtime image containing only the necessary modules. By removing unnecessary modules, the distribution size is significantly reduced and the attack surface is also decreased for security purposes.",
+    "choices": [
+      {
+        "id": "se11g2_q078_a",
+        "text": "The runtime size is reduced because only the required modules are included",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q078_b",
+        "text": "Application execution speed is always improved",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q078_c",
+        "text": "It can be executed as a native binary without a JVM",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q078_d",
+        "text": "Debug information is automatically added",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q079",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fillBlank",
+    "question": "Which keyword correctly fills in the blank in the following module-info.java?\nmodule com.example {\n    _____ com.example.internal to com.example.test;\n}",
+    "code": null,
+    "explanation": "opens is the keyword that allows reflective access. It permits reflective access to the com.example.internal package only for the com.example.test module. This is commonly used for test frameworks.",
+    "choices": [
+      {
+        "id": "se11g2_q079_a",
+        "text": "opens",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q079_b",
+        "text": "exports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q079_c",
+        "text": "provides",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q079_d",
+        "text": "uses",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q080",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Which directives can be used in the module-info.java of the Java Module System? (Choose 2)",
+    "code": null,
+    "explanation": "Five types of directives can be used in module-info.java: requires (dependency declaration), exports (package exposure), opens (reflective access permission), uses (service consumption declaration), and provides...with (service provision declaration). imports and implements are invalid.",
+    "choices": [
+      {
+        "id": "se11g2_q080_a",
+        "text": "exports — exposes a package to other modules",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q080_b",
+        "text": "imports — imports another package",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q080_c",
+        "text": "provides...with — registers a service implementation",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q080_d",
+        "text": "implements — declares an interface implementation",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q081",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    static class Res implements AutoCloseable {\n        String name;\n        Res(String name) {\n            this.name = name;\n            System.out.print(\"O\" + name + \" \");\n        }\n        public void close() {\n            System.out.print(\"C\" + name + \" \");\n        }\n    }\n    public static void main(String[] args) {\n        try (Res a = new Res(\"1\"); Res b = new Res(\"2\")) {\n            System.out.print(\"T \");\n            throw new RuntimeException();\n        } catch (Exception e) {\n            System.out.print(\"E \");\n        }\n    }\n}",
+    "explanation": "Resources are initialized in order O1→O2, T is printed in the try block. After the exception, resources are closed in reverse order C2→C1, and finally the catch clause prints E. The result is \"O1 O2 T C2 C1 E\". close() is executed before the catch clause.",
+    "choices": [
+      {
+        "id": "se11g2_q081_a",
+        "text": "O1 O2 T C2 C1 E",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q081_b",
+        "text": "O1 O2 T E C2 C1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q081_c",
+        "text": "O1 O2 T C1 C2 E",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q081_d",
+        "text": "O1 O2 T E",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q082",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following multi-catch cases causes a compilation error?",
+    "code": null,
+    "explanation": "In a multi-catch (catch (A | B e)), the listed exception types must not have an inheritance relationship. Since FileNotFoundException is a subclass of IOException, catch (IOException | FileNotFoundException e) causes a compilation error because the subclass exception is already covered by the parent class exception, making it redundant.",
+    "choices": [
+      {
+        "id": "se11g2_q082_a",
+        "text": "catch (IOException | FileNotFoundException e)",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q082_b",
+        "text": "catch (IOException | SQLException e)",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q082_c",
+        "text": "catch (ClassNotFoundException | NoSuchMethodException e)",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q082_d",
+        "text": "catch (ArithmeticException | NullPointerException e)",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q083",
+    "lessonId": "exam_se11_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is correct about the two forms of the assert statement?",
+    "code": "assert x > 0;\nassert x > 0 : \"xは正の数でなければなりません\";",
+    "explanation": "There are two forms of the assert statement: (1) assert condition; — throws AssertionError when the condition is false. (2) assert condition : message expression; — passes the value of the message expression to the AssertionError constructor when the condition is false. Any type except void can be specified for the message expression.",
+    "choices": [
+      {
+        "id": "se11g2_q083_a",
+        "text": "In the form assert condition : message expression, any type except void can be specified for the message expression",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q083_b",
+        "text": "The assert statement throws a RuntimeException when the condition is false",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q083_c",
+        "text": "Only String type can be specified for the message expression of the assert statement",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q083_d",
+        "text": "The assert statement is enabled by default without any JVM options",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se11g2_q084",
+    "lessonId": "exam_se11_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static int getValue() {\n        try {\n            return 1;\n        } finally {\n            return 2;\n        }\n    }\n    public static void main(String[] args) {\n        System.out.println(getValue());\n    }\n}",
+    "explanation": "The return statement in the finally clause overrides the return statement in the try clause. Although return 1 is about to be executed in the try clause, the finally clause is always executed, so return 2 in the finally clause becomes the final return value. The output is \"2\". Returning from a finally clause is not recommended (a compiler warning is issued).",
+    "choices": [
+      {
+        "id": "se11g2_q084_a",
+        "text": "1",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q084_b",
+        "text": "2",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q084_c",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q084_d",
+        "text": "A runtime exception occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se11g2_q085",
+    "lessonId": "exam_se11_gold_2",
+    "type": "multiChoice",
+    "question": "Select all correct statements about try-with-resources.",
+    "code": null,
+    "explanation": "Resources in a try-with-resources statement must implement the AutoCloseable interface. Multiple resources are declared separated by semicolons and are closed in reverse order. Since Java 9, effectively final existing variables can also be used within try(). The catch and finally clauses can be omitted.",
+    "choices": [
+      {
+        "id": "se11g2_q085_a",
+        "text": "Resources must implement the AutoCloseable or Closeable interface",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se11g2_q085_b",
+        "text": "Resources are closed in declaration order",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se11g2_q085_c",
+        "text": "The catch and finally clauses can be omitted",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se11g2_q085_d",
+        "text": "Since Java 9, effectively final variables can be specified within try()",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 3,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  }
+]

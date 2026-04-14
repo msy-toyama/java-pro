@@ -1,0 +1,1005 @@
+{
+  "courseId": "ch16",
+  "lessons": [
+    {
+      "id": "ch16_01",
+      "courseId": "ch16",
+      "title": "What Are Lambda Expressions?",
+      "summary": "Learn the basic concepts and syntax of lambda expressions introduced in Java 8. Understand how to convert anonymous inner classes to lambda expressions.",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "overview",
+          "title": "The Background Behind Lambda Expressions",
+          "body": "In this lesson, you will learn:\n\n- The basic syntax of **lambda expressions**: (parameters) -> { body }\n- Comparison between anonymous inner [[classes]] and [[lambda expressions]]\n- Why lambda expressions were introduced\n\nLet's understand the basics of lambda expressions — Java 8's most significant new feature.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "code",
+          "title": "From Anonymous Inner Classes to Lambda Expressions",
+          "body": "Let's compare the traditional approach using anonymous inner classes with **lambda expressions**.\nUsing the [[Runnable]] [[interface]] as an example, code that took 5+ lines with an anonymous inner class can be written in a single line with a lambda expression.\nYou can think of a lambda expression as a \"shorthand notation\" for anonymous inner classes.\nHowever, they are not exactly the same — note the differences, such as where \"this\" refers to.",
+          "code": "// Anonymous inner class (traditional approach)\nRunnable r1 = new Runnable() {\n    @Override\n    public void run() {\n        System.out.println(\"Hello\");\n    }\n};\n\n// Lambda expression (Java 8 and later)\nRunnable r2 = () -> System.out.println(\"Hello\");",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "tip",
+          "title": "Lambda Expression Syntax Patterns",
+          "body": "Let's organize the ways to write lambda expressions.\n\n| Pattern | Example |\n|---|---|\n| Basic form | (a, b) -> { return a + b; } |\n| Braces omitted for single statement | (a, b) -> a + b |\n| Parentheses omitted for single parameter | a -> a * 2 |\n| No parameters | () -> System.out.println(\"hello\") |\n| Explicit types | (int a, int b) -> a + b |\n\nA lambda expression creates an \"[[instance]] of a **functional interface**.\"",
+          "code": null,
+          "note": "Lambda expressions are a shorthand for anonymous inner classes, but there are subtle differences such as how \"this\" behaves.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "rule",
+          "title": "Basic Lambda Expression Syntax",
+          "body": "The basic syntax of a lambda expression is \"(parameters) -> expression or statement block.\"\nParameters go on the left side of the arrow [[operator]] (->), and the processing goes on the right side.\nIf there is a single parameter, the parentheses can be omitted. If the body is a single expression, the braces and return keyword can be omitted.\nFor multiple statements, braces {} are required, and if there is a return value, an explicit return statement is needed.\nLambda expressions can be assigned to [[variables]] or passed as arguments to [[methods]].",
+          "code": "// Basic syntax\n(param1, param2) -> { body; }\n\n// Specific examples\n(int a, int b) -> { return a + b; }\n(String s) -> { System.out.println(s); }\n() -> { return 42; }",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "code",
+          "title": "Practical Example with Comparator",
+          "body": "A typical use case for lambda expressions is the [[Comparator]] interface.\nWriting list sorting logic with an anonymous inner class is verbose, but with a lambda expression it can be written concisely.\nSince Comparator has only one abstract method (the compare method), it can be implemented with a lambda expression.\nAn interface with exactly one abstract method is called a \"**functional interface**.\"",
+          "code": "List<String> names = Arrays.asList(\"Tanaka\", \"Suzuki\", \"Sato\");\n\n// Anonymous inner class\nCollections.sort(names, new Comparator<String>() {\n    @Override\n    public int compare(String a, String b) {\n        return a.compareTo(b);\n    }\n});\n\n// Lambda expression\nCollections.sort(names, (a, b) -> a.compareTo(b));",
+          "note": "【Practical Tips】In the field, lambda expressions are used daily in [[Stream API]] operations like filter/map/forEach and in Spring Framework bean definitions. Modern Java development almost never has code without lambda expressions.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_01",
+          "sectionType": "point",
+          "title": "Important Notes on Lambda Expressions",
+          "body": "Lambda expressions cannot be used with every interface.\nThey can only be used with \"functional interfaces\" that have exactly one abstract method.\nInterfaces with two or more abstract methods cannot be used with lambda expressions.\nAlso, when referencing external local variables from within a lambda expression, those variables must be effectively final.\nThis constraint is called \"effectively final\" and means the variable has never been reassigned.",
+          "code": null,
+          "note": "Lambda expressions can only be used with functional interfaces (those with exactly one abstract method).",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_01_q1",
+          "lessonId": "ch16_01",
+          "type": "fourChoice",
+          "question": "Which Java version introduced lambda expressions?",
+          "code": null,
+          "explanation": "Lambda expressions were introduced in Java 8 (released in 2014). Java 8 also added the Stream API, Optional, and a new Date/Time API, among other features.",
+          "choices": [
+            {
+              "id": "ch16_01_q1_a",
+              "text": "Java 7",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch16_01_q1_b",
+              "text": "Java 8",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch16_01_q1_c",
+              "text": "Java 9",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_01_q1_d",
+              "text": "Java 11",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_01_q2",
+          "lessonId": "ch16_01",
+          "type": "fourChoice",
+          "question": "Which is the correct lambda expression conversion of the following anonymous inner class?",
+          "code": "Comparator<Integer> comp = new Comparator<Integer>() {\n    @Override\n    public int compare(Integer a, Integer b) {\n        return a - b;\n    }\n};",
+          "explanation": "Comparator's compare method takes two arguments and returns an int value. With a lambda expression, this can be written concisely as (a, b) -> a - b. Type inference allows the parameter types to be omitted, and since it's a single expression, braces and return can also be omitted.",
+          "choices": [
+            {
+              "id": "ch16_01_q2_a",
+              "text": "Comparator<Integer> comp = (a, b) -> a - b;",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_01_q2_b",
+              "text": "Comparator<Integer> comp = a, b -> a - b;",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_01_q2_c",
+              "text": "Comparator<Integer> comp = (a, b) => a - b;",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_01_q2_d",
+              "text": "Comparator<Integer> comp = lambda(a, b) { a - b };",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_01_q3",
+          "lessonId": "ch16_01",
+          "type": "fillBlank",
+          "question": "Fill in the blank to complete the Runnable lambda expression.\nRunnable r = ___ System.out.println(\"Hello\");",
+          "code": null,
+          "explanation": "The Runnable interface's run method takes no arguments and returns void. When there are no arguments, you write empty parentheses () followed by the arrow operator ->. The answer is () ->.",
+          "choices": [
+            {
+              "id": "ch16_01_q3_a",
+              "text": "() ->",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_01_q3_b",
+              "text": "() =>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_01_q3_c",
+              "text": "void ->",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_01_q3_d",
+              "text": "_ ->",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch16_02",
+      "courseId": "ch16",
+      "title": "Functional Interfaces",
+      "summary": "Learn about the @FunctionalInterface annotation and the key built-in functional interfaces.",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "overview",
+          "title": "What Are Functional Interfaces?",
+          "body": "In this lesson, you will learn:\n\n- The definition of **functional interfaces** (SAM interfaces)\n- The role of the **@FunctionalInterface** [[annotation]]\n- The four major [[functional interfaces]]: [[Predicate]], [[Function]], [[Consumer]], and [[Supplier]]\n\nThis is foundational knowledge for mastering **lambda expressions**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "rule",
+          "title": "The @FunctionalInterface Annotation",
+          "body": "Adding the **@FunctionalInterface** annotation explicitly indicates that an interface is a **functional interface**.\nIf an interface with this annotation has two or more abstract [[methods]], a [[compilation]] error occurs.\nThe annotation is optional, but adding it makes the intent clear and prevents accidentally adding abstract methods.\nExisting interfaces like [[Comparator]], [[Runnable]], and [[Callable]] also have @FunctionalInterface.",
+          "code": "@FunctionalInterface\npublic interface MyFunction {\n    int apply(int x);  // Abstract method (only one)\n\n    // Any number of default methods are allowed\n    default void printInfo() {\n        System.out.println(\"MyFunction\");\n    }\n}",
+          "note": "Even without @FunctionalInterface, an interface with a single abstract method can be used with **lambda expressions**.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "code",
+          "title": "Predicate<T> and Function<T,R>",
+          "body": "The java.util.function package provides commonly used functional interfaces.\nPredicate<T> is a functional interface that takes one argument and returns a boolean value. It is used for filtering operations.\nFunction<T,R> is a functional interface that takes one argument and returns a value of a different type. It is used for transformation operations.\nUsing these eliminates the need to define your own interfaces.",
+          "code": "import java.util.function.*;\n\n// Predicate<T>: T -> boolean\nPredicate<String> isEmpty = s -> s.isEmpty();\nSystem.out.println(isEmpty.test(\"\"));     // true\nSystem.out.println(isEmpty.test(\"abc\")); // false\n\n// Function<T, R>: T -> R\nFunction<String, Integer> toLength = s -> s.length();\nSystem.out.println(toLength.apply(\"Java\")); // 4",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "code",
+          "title": "Consumer<T> and Supplier<T>",
+          "body": "Consumer<T> is a functional interface that takes one argument and performs an operation with no return value. It is used for output operations.\nSupplier<T> is a functional interface that takes no arguments and returns a value. It is used for value generation operations.\nThe abstract method names are accept for Consumer and get for Supplier.\nThese four (Predicate, Function, Consumer, Supplier) appear frequently on certification exams, so make sure you know them well.",
+          "code": "import java.util.function.*;\n\n// Consumer<T>: T -> void\nConsumer<String> printer = s -> System.out.println(s);\nprinter.accept(\"Hello\"); // Hello\n\n// Supplier<T>: () -> T\nSupplier<String> greeting = () -> \"Hello\";\nSystem.out.println(greeting.get()); // Hello",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_02",
+          "sectionType": "tip",
+          "title": "How to Remember the Functional Interfaces",
+          "body": "Organizing the four major functional interfaces by whether they have arguments and return values makes them easier to remember.\n| Item | Description |\n|---|---|\n| Supplier: No arguments | Has a return value (supplies) |\n| Consumer: Has arguments | No return value (consumes) |\n| Function: Has arguments | Has a return value (transforms) |\n| Predicate: Has arguments | Returns boolean (tests) |\nThinking about what the names mean helps with understanding. Supplier means \"provider,\" and Consumer means \"user/consumer.\"",
+          "code": null,
+          "note": "Exams also test the abstract method names of each interface (test, apply, accept, get).",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_02_q1",
+          "lessonId": "ch16_02",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes the requirement for a functional interface?",
+          "code": null,
+          "explanation": "A functional interface is an interface that has exactly one abstract method. Any number of default methods and static methods are allowed. The @FunctionalInterface annotation is not required.",
+          "choices": [
+            {
+              "id": "ch16_02_q1_a",
+              "text": "It has exactly one abstract method",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_02_q1_b",
+              "text": "It has exactly one method (including default methods)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_02_q1_c",
+              "text": "The @FunctionalInterface annotation is required",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_02_q1_d",
+              "text": "It has two or fewer abstract methods",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_02_q2",
+          "lessonId": "ch16_02",
+          "type": "outputPredict",
+          "question": "What is the correct output of the following code?",
+          "code": "import java.util.function.Predicate;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> check = s -> s.length() > 3;\n        System.out.println(check.test(\"Java\"));\n        System.out.println(check.test(\"Go\"));\n    }\n}",
+          "explanation": "The Predicate<String>'s test method receives a string. \"Java\" has a length of 4, which is greater than 3, so it returns true. \"Go\" has a length of 2, which is not greater than 3, so it returns false.",
+          "choices": [
+            {
+              "id": "ch16_02_q2_a",
+              "text": "true\nfalse",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_02_q2_b",
+              "text": "false\ntrue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_02_q2_c",
+              "text": "true\ntrue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_02_q2_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_02_q3",
+          "lessonId": "ch16_02",
+          "type": "fillBlank",
+          "question": "The functional interface that takes no arguments and returns a value is ____<T>, and its abstract method name is ____.",
+          "code": null,
+          "explanation": "Supplier<T> is a functional interface that takes no arguments and returns a value of type T. Its abstract method name is get(). As the name \"Supplier\" suggests, its role is to generate and supply values.",
+          "choices": [
+            {
+              "id": "ch16_02_q3_a",
+              "text": "Supplier / get",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_02_q3_b",
+              "text": "Provider / provide",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_02_q3_c",
+              "text": "Consumer / accept",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_02_q3_d",
+              "text": "Function / apply",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch16_02_q4",
+          "lessonId": "ch16_02",
+          "type": "codeComplete",
+          "question": "Complete the lambda expression using Predicate<String> to check if a string is not empty.",
+          "code": null,
+          "explanation": "Predicate<T> is a functional interface that takes one argument and returns a boolean. It is evaluated using the test() method. In a lambda expression, the argument goes on the left side of -> and the expression goes on the right.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__<String> isNotEmpty = s __BLANK_2__ !s.isEmpty();\nSystem.out.println(isNotEmpty.test(\"Hello\"));",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Functional interface",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Predicate",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Function",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Consumer",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Arrow operator",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "->",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "=>",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "::",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch16_03",
+      "courseId": "ch16",
+      "title": "Lambda Expression Shorthand Notation",
+      "summary": "Learn the various shorthand notations for lambda expressions, including type inference, parenthesis omission, and brace omission.",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "overview",
+          "title": "Lambda Expression Shorthand Rules",
+          "body": "In this lesson, you will learn:\n\n- Parameter type omission through [[type inference]]\n- Parenthesis omission when there is a single parameter\n- Brace, return, and semicolon omission when the body is a single statement\n\nLearn the shorthand rules to write **lambda expressions** even more concisely.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "rule",
+          "title": "Parameter Type Omission (Type Inference)",
+          "body": "The parameter types in a **lambda expression** can be omitted because the compiler can infer them from context.\nThis is called \"target type inference.\" The parameter types are determined from the target **functional interface**.\nHowever, if you omit types, you must omit all parameter types.\nYou cannot write types for some parameters and omit them for others — this causes a [[compilation]] error.",
+          "code": "// Explicit types\nBiFunction<String, String, String> f1 = (String a, String b) -> a + b;\n\n// Types omitted (type inference)\nBiFunction<String, String, String> f2 = (a, b) -> a + b;\n\n// Compilation error: cannot write types for only some parameters\n// BiFunction<String, String, String> f3 = (String a, b) -> a + b;",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "rule",
+          "title": "Parenthesis and Brace Omission",
+          "body": "When there is only one parameter, the parentheses can be omitted.\nHowever, parentheses cannot be omitted when specifying types explicitly, or when there are zero or two or more parameters.\nWhen the lambda body is a single expression, the braces {}, the return statement, and the semicolon can be omitted.\nFor multiple statements, braces are required, and a return statement is needed if there is a return value.\nWhen braces are omitted, the value of the expression automatically becomes the return value.",
+          "code": "// Parenthesis omission (single parameter)\nFunction<String, Integer> f1 = s -> s.length();\n\n// Cannot omit parentheses (explicit type)\nFunction<String, Integer> f2 = (String s) -> s.length();\n\n// Brace omission (single expression)\nFunction<Integer, Integer> f3 = x -> x * 2;\n\n// Braces required (multiple statements)\nFunction<Integer, Integer> f4 = x -> {\n    int result = x * 2;\n    return result;\n};",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "code",
+          "title": "Summary of Shorthand Patterns",
+          "body": "Let's review various shorthand patterns at a glance.\nComparing correct and incorrect examples deepens your understanding of the shorthand rules.\nThe three key points are: \"types must be all omitted or all specified,\" \"parentheses can only be omitted with one untyped parameter,\" and \"braces can only be omitted with a single expression.\"",
+          "code": "// ✅ Correct lambda expression examples\nRunnable r = () -> System.out.println(\"OK\");\nConsumer<String> c = s -> System.out.println(s);\nComparator<Integer> comp = (a, b) -> a - b;\nFunction<String, String> f = (String s) -> { return s.toUpperCase(); };\n\n// ❌ Compilation error examples\n// Consumer<String> c = String s -> System.out.println(s);  // Type with no parentheses\n// Comparator<Integer> comp = (int a, b) -> a - b;          // Mixed types\n// Function<Integer, Integer> f = x -> { x * 2 };           // Braces without return",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "tip",
+          "title": "Pitfalls of Shorthand Rules",
+          "body": "Writing unnecessary elements that should be omitted, or omitting elements that cannot be omitted, causes compilation errors.\n\n- If you write types, you must write them for all parameters: (int a, b) is invalid\n- When there are 0 or 2+ parameters, () cannot be omitted\n- When {} is omitted, return and the semicolon must also be omitted\n- For void-returning lambdas with {} omitted, the expression value is discarded",
+          "code": null,
+          "note": "Exam questions often ask you to \"select the lambda expression that compiles successfully.\"",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_03",
+          "sectionType": "point",
+          "title": "Exam Preparation Points for Shorthand Notation",
+          "body": "On exams, questions asking you to identify lambda expressions that cause compilation errors are common.\nThe three patterns to watch out for are:\nFirst: Partially omitting types (([[String]] a, b) -> ...).\nSecond: Omitting parentheses while keeping types (String s -> ...).\nThird: Writing braces but omitting return (x -> { x * 2 }).\nAll of these cause compilation errors, so learn to spot them in the answer choices.",
+          "code": null,
+          "note": "When braces are used, a semicolon and return statement (when there is a return value) are always required.",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_03_q1",
+          "lessonId": "ch16_03",
+          "type": "outputPredict",
+          "question": "What is the correct output of the following code?",
+          "code": "import java.util.function.Function;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, String> toUpper = s -> s.toUpperCase();\n        Function<String, Integer> length = s -> s.length();\n        System.out.println(toUpper.apply(\"hello\"));\n        System.out.println(length.apply(\"hello\"));\n    }\n}",
+          "explanation": "toUpper takes a String and converts it to uppercase using toUpperCase(). \"hello\" becomes \"HELLO\". length takes a String and returns its character count using length(). The character count of \"hello\" is 5.",
+          "choices": [
+            {
+              "id": "ch16_03_q1_a",
+              "text": "HELLO\n5",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_03_q1_b",
+              "text": "hello\n5",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_03_q1_c",
+              "text": "HELLO\nhello",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_03_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_03_q2",
+          "lessonId": "ch16_03",
+          "type": "fourChoice",
+          "question": "Which of the following lambda expressions causes a compilation error?",
+          "code": null,
+          "explanation": "When specifying types explicitly, parentheses are required. \"String s -> s.length()\" has a type specified but no parentheses, causing a compilation error. The correct form is \"(String s) -> s.length()\". Parentheses can only be omitted for a single parameter without an explicit type.",
+          "choices": [
+            {
+              "id": "ch16_03_q2_a",
+              "text": "Function<String, Integer> f = s -> s.length();",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch16_03_q2_b",
+              "text": "Function<String, Integer> f = (String s) -> s.length();",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_03_q2_c",
+              "text": "Function<String, Integer> f = String s -> s.length();",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch16_03_q2_d",
+              "text": "Function<String, Integer> f = (s) -> s.length();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_03_q3",
+          "lessonId": "ch16_03",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. Which is the correct cause of the error?",
+          "code": "import java.util.function.Function;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<Integer, Integer> doubleIt = x -> { x * 2 };\n        System.out.println(doubleIt.apply(5));\n    }\n}",
+          "explanation": "When using braces {}, a return statement and semicolon are required for expressions that have a return value. The correct form is either \"x -> { return x * 2; }\" or omit the braces: \"x -> x * 2\". \"x -> { x * 2 }\" is an incomplete statement, causing a compilation error.",
+          "choices": [
+            {
+              "id": "ch16_03_q3_a",
+              "text": "Missing return statement inside braces",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_03_q3_b",
+              "text": "No type specified for parameter x",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_03_q3_c",
+              "text": "Function<Integer, Integer> cannot be used",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_03_q3_d",
+              "text": "The argument type of the apply method is wrong",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch16_03_q4",
+          "lessonId": "ch16_03",
+          "type": "reorder",
+          "question": "Arrange the steps for sorting a list using lambda expressions in the correct order.",
+          "code": null,
+          "explanation": "The flow is: create a list → sort() with a lambda comparator → forEach() to print.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "List<String> names = new ArrayList<>(List.of(\"Charlie\", \"Alice\", \"Bob\"));",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "names.sort((a, b) -> a.compareTo(b));",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "names.forEach(name -> System.out.println(name));",
+              "isCorrect": false,
+              "order": 3
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch16_04",
+      "courseId": "ch16",
+      "title": "Method References",
+      "summary": "Learn method references for making lambda expressions even more concise — static method references, instance method references, and constructor references.",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "overview",
+          "title": "What Are Method References?",
+          "body": "In this lesson, you will learn:\n\n- The four forms of **method references**\n- How to rewrite **lambda expressions** as [[method references]]\n- [[Constructor]] references (Class::new)\n\nIf a [[lambda expression]] is simply a [[method]] call, a method reference can make it even more concise.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "code",
+          "title": "Static Method References",
+          "body": "Static **method references** are written in the form \"[[Class]]Name::staticMethodName.\"\nThey can be used when the **lambda expression** arguments are passed directly as the static method's arguments.\nCommon examples include static methods like Integer.parseInt and Math.abs.\n[[Type inference]] automatically determines the method's parameter and return types.",
+          "code": "import java.util.function.Function;\nimport java.util.function.UnaryOperator;\n\n// Lambda expression\nFunction<String, Integer> f1 = s -> Integer.parseInt(s);\n\n// Static method reference\nFunction<String, Integer> f2 = Integer::parseInt;\n\nSystem.out.println(f2.apply(\"123\")); // 123\n\n// Math.abs example\nUnaryOperator<Integer> abs1 = x -> Math.abs(x);  // Lambda expression\nUnaryOperator<Integer> abs2 = Math::abs;          // Method reference",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "tip",
+          "title": "The Four Forms of Method References",
+          "body": "| Form | Syntax | Equivalent Lambda Expression |\n|---|---|---|\n| Static method reference | Math::abs | x -> Math.abs(x) |\n| Instance method reference (specific) | str::length | () -> str.length() |\n| Instance method reference (arbitrary) | String::length | s -> s.length() |\n| Constructor reference | ArrayList::new | () -> new ArrayList<>() |\n\nThe key point is that method references pass arguments \"implicitly.\"",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "code",
+          "title": "Instance Method References",
+          "body": "[[Instance]] method references come in two patterns.\nThe first is \"specificInstance::methodName,\" which references a method of a specific object.\nThe second is \"ClassName::instanceMethodName,\" where the first argument of the lambda becomes the receiver.\nThe second pattern is somewhat non-intuitive and is a common point of confusion on exams.",
+          "code": "import java.util.function.*;\n\n// Pattern 1: Method reference of a specific instance\nString greeting = \"Hello\";\nSupplier<String> s1 = () -> greeting.toUpperCase();  // Lambda expression\nSupplier<String> s2 = greeting::toUpperCase;          // Method reference\nSystem.out.println(s2.get()); // HELLO\n\n// Pattern 2: Method reference of an arbitrary instance\nFunction<String, String> f1 = s -> s.toUpperCase();  // Lambda expression\nFunction<String, String> f2 = String::toUpperCase;   // Method reference\nSystem.out.println(f2.apply(\"java\")); // JAVA",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "code",
+          "title": "Constructor References",
+          "body": "Constructor references are written in the form \"ClassName::new.\"\nThey can be used when the lambda expression only creates an object.\nWhich constructor is called is inferred from the type of the **functional interface**.\nA no-argument constructor corresponds to [[Supplier]], and a single-argument constructor corresponds to [[Function]].",
+          "code": "import java.util.function.*;\nimport java.util.ArrayList;\nimport java.util.List;\n\n// Constructor reference (no arguments)\nSupplier<List<String>> s1 = () -> new ArrayList<>();  // Lambda expression\nSupplier<List<String>> s2 = ArrayList::new;            // Constructor reference\n\nList<String> list = s2.get();\nlist.add(\"Java\");\nSystem.out.println(list); // [Java]\n\n// Constructor reference (with argument)\nFunction<String, StringBuilder> f1 = s -> new StringBuilder(s);  // Lambda expression\nFunction<String, StringBuilder> f2 = StringBuilder::new;        // Constructor reference\nSystem.out.println(f2.apply(\"Hello\")); // Hello",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_04",
+          "sectionType": "point",
+          "title": "Key Points for Choosing Method References",
+          "body": "Method references make lambda expressions even more concise, but not all lambda expressions can be converted to method references.\nMethod references can only be used when the lambda body is \"a single method call\" and the arguments are passed as-is.\nWhen arguments need to be processed or multiple methods are called, you should keep using lambda expressions.\nExams include questions about \"correct conversions between lambda expressions and method references,\" so organize the correspondence patterns.\nFrom a readability perspective, it's good practice to use method references when they make the intent clearer.",
+          "code": null,
+          "note": "Method references can only be used when \"passing an existing method as-is.\" Use lambda expressions when processing is needed.",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_04_q1",
+          "lessonId": "ch16_04",
+          "type": "outputPredict",
+          "question": "What is the correct output of the following code?",
+          "code": "import java.util.function.Function;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> words = Arrays.asList(\"java\", \"python\", \"go\");\n        List<String> result = words.stream()\n            .map(String::toUpperCase)\n            .collect(Collectors.toList());\n        System.out.println(result);\n    }\n}",
+          "explanation": "String::toUpperCase is a method reference that \"calls toUpperCase() on any String instance.\" Using map, each element is converted to uppercase. \"java\" → \"JAVA\", \"python\" → \"PYTHON\", \"go\" → \"GO\", and the result is output as a list.",
+          "choices": [
+            {
+              "id": "ch16_04_q1_a",
+              "text": "[JAVA, PYTHON, GO]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q1_b",
+              "text": "[java, python, go]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q1_c",
+              "text": "[Java, Python, Go]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_04_q2",
+          "lessonId": "ch16_04",
+          "type": "fillBlank",
+          "question": "Rewrite the following lambda expression as a method reference.\nFunction<String, Integer> f = s -> Integer.parseInt(s);\n→ Function<String, Integer> f = ____::____;",
+          "code": null,
+          "explanation": "Integer.parseInt is a static method, so the method reference is \"Integer::parseInt\". Since the lambda's argument s is passed directly as the argument to parseInt, it can be converted to a method reference.",
+          "choices": [
+            {
+              "id": "ch16_04_q2_a",
+              "text": "Integer::parseInt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q2_b",
+              "text": "Integer::parse",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q2_c",
+              "text": "int::parseInt",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q2_d",
+              "text": "Integer::new",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_04_q3",
+          "lessonId": "ch16_04",
+          "type": "fourChoice",
+          "question": "Which is the correct way to write a constructor reference?",
+          "code": "Supplier<ArrayList<String>> supplier = /* code goes here */;",
+          "explanation": "Constructor references use the form \"ClassName::new\". Writing ArrayList::new calls the no-argument constructor and creates a new ArrayList instance. The type parameter ArrayList<String> is inferred from the Supplier's type parameter.",
+          "choices": [
+            {
+              "id": "ch16_04_q3_a",
+              "text": "ArrayList::new",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q3_b",
+              "text": "ArrayList::create",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q3_c",
+              "text": "new::ArrayList",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q3_d",
+              "text": "ArrayList::constructor",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch16_04_q4",
+          "lessonId": "ch16_04",
+          "type": "multiChoice",
+          "question": "Select all correct conditions for variables that can be referenced from a lambda expression.",
+          "code": null,
+          "explanation": "Lambda expressions can only reference local variables that are final or effectively final (practically final). Instance variables and class variables (static) can be referenced freely. You cannot modify local variable values inside a lambda expression.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch16_04_q4_a",
+              "text": "Final local variables",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_04_q4_b",
+              "text": "Effectively final local variables",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch16_04_q4_c",
+              "text": "Local variables whose values are modified",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_04_q4_d",
+              "text": "Instance variables and class variables",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch16_05",
+      "courseId": "ch16",
+      "title": "Variable Capture and Effectively Final",
+      "summary": "Learn the rules for referencing external variables from lambda expressions and local classes (effectively final constraint). A frequently tested topic on certification exams.",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "overview",
+          "title": "What Is Variable Capture?",
+          "body": "In this lesson, you will learn:\n\n- The mechanism for referencing local [[variables]] from **lambda expressions**\n- The conditions for effectively final\n- Why non-final variables cannot be captured\n\nUnderstand the constraints of [[lambda expressions]] to use them correctly.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "code",
+          "title": "Concrete Examples of Effectively Final",
+          "body": "A local variable referenced from a **lambda expression** can be accessed without the final keyword, as long as its value doesn't change after declaration.\nOn the other hand, a variable that has been reassigned even once is no longer effectively final, and referencing it from a lambda expression causes a [[compilation]] error.\nThis rule also applies to [[anonymous classes]] and local [[classes]].",
+          "code": "public class CaptureExample {\n    public static void main(String[] args) {\n        String name = \"Java\"; // effectively final (no reassignment)\n        int count = 3;        // effectively final\n\n        // OK: referencing effectively final variables\n        Runnable r1 = () -> {\n            System.out.println(name + \" x \" + count);\n        };\n        r1.run(); // Java x 3\n\n        int num = 10;\n        num = 20; // reassignment → no longer effectively final\n\n        // Compilation error! num is not effectively final\n        // Runnable r2 = () -> System.out.println(num);\n    }\n}",
+          "note": "The determination of effectively final requires that the variable is \"never reassigned throughout its entire [[scope]] after declaration.\" Even if there is no reassignment before the lambda, a reassignment after it means it is not effectively final.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "tip",
+          "title": "What Does Effectively Final Mean?",
+          "body": "To capture a local variable outside a lambda expression, the variable must be \"effectively final.\"\n\nConditions for effectively final:\n- A variable without the final keyword that is never actually reassigned\n- A state where \"adding final would still compile\"\n\nWhy does this constraint exist? Lambda expressions may execute on a different [[thread]], and variable changes are not synchronized between threads.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "rule",
+          "title": "Capture Rules Summary",
+          "body": "【What can be captured】\n- Final or effectively final local variables\n- [[Instance]] variables (this.field is always OK)\n- Static variables (always OK)\n\n【What cannot be captured】\n- Reassigned local variables\n\n【Notes】\n- If a lambda parameter has the same name as an outer local variable, a compilation error occurs (shadowing is prohibited)\n- Reassigning a captured variable inside a lambda also causes a compilation error\n- Instance variables and static variables have no capture restrictions (because they exist on the [[heap]])",
+          "code": "public class CaptureRules {\n    int instanceVar = 100; // Instance variable\n    static int staticVar = 200; // Static variable\n\n    void demo() {\n        final int a = 1;     // final → OK\n        int b = 2;          // effectively final → OK\n        int c = 3;\n        c = 4;              // reassignment → NG\n\n        Runnable r = () -> {\n            System.out.println(a);           // OK\n            System.out.println(b);           // OK\n            // System.out.println(c);        // Compilation error\n            System.out.println(instanceVar); // OK (instance variable)\n            System.out.println(staticVar);   // OK (static variable)\n            instanceVar = 999;               // OK (instance variables can be modified)\n        };\n    }\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "code",
+          "title": "Shadowing Is Prohibited",
+          "body": "Since Java 8, if a lambda expression's parameter name is the same as a local variable in the outer scope, a compilation error occurs.\nThis is because the lambda's scope shares the same scope as the enclosing [[method]].\nIn anonymous classes, a separate scope is created, so variables with the same name can be declared. This difference is also tested on certification exams.",
+          "code": "public class ShadowingExample {\n    public static void main(String[] args) {\n        int x = 10;\n\n        // Lambda expression: shadowing not allowed\n        // Consumer<Integer> c = (x) -> {};  // Compilation error!\n        // x is already declared in the outer scope\n\n        // Anonymous class: shadowing OK (separate scope)\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                int x = 20; // OK (anonymous class has a separate scope)\n                System.out.println(x); // 20\n            }\n        };\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch16_05",
+          "sectionType": "point",
+          "title": "Certification Exam Key Points",
+          "body": "Questions testing your understanding of effectively final frequently appear on exams. Let's organize the key points.\n\n1. Reassignment before or after a lambda makes the variable not effectively final\n2. Assigning to a captured variable inside a lambda also causes a compilation error\n3. For-loop variables create a new scope per iteration, so they are effectively final\n4. Enhanced for-loop variables are also effectively final\n5. The effectively final constraint does not apply to instance variables or static variables\n6. Lambda parameter names cannot overlap with outer local variable names",
+          "code": "// Variable capture in for loops\nList<Runnable> tasks = new ArrayList<>();\nfor (int i = 0; i < 3; i++) {\n    int num = i; // New variable per iteration (effectively final)\n    tasks.add(() -> System.out.println(num)); // OK\n    // tasks.add(() -> System.out.println(i)); // Compilation error! i is reassigned\n}\ntasks.forEach(Runnable::run); // 0, 1, 2",
+          "note": "Enhanced for-loop variables create a scope per iteration, so they are effectively final. for([[String]] s : list) { [[Runnable]] r = () -> System.out.println(s); } is OK.",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch16_05_q1",
+          "lessonId": "ch16_05",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. Select the cause of the error.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        List<String> names = List.of(\"A\", \"B\", \"C\");\n        names.forEach(name -> {\n            count++;\n            System.out.println(count + \": \" + name);\n        });\n    }\n}",
+          "explanation": "Attempting to modify the local variable count (count++) inside the lambda expression causes a compilation error. Local variables captured by a lambda must be final or effectively final. As alternatives, you can use an AtomicInteger or work around it with an int[] array.",
+          "choices": [
+            {
+              "id": "ch16_05_q1_a",
+              "text": "The local variable count is being modified inside the lambda expression",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_05_q1_b",
+              "text": "Lists created with List.of are unmodifiable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_05_q1_c",
+              "text": "Lambda expressions cannot be passed to forEach",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_05_q1_d",
+              "text": "The name 'name' is already in use",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch16_05_q2",
+          "lessonId": "ch16_05",
+          "type": "fourChoice",
+          "question": "Which statement about effectively final is correct?",
+          "code": null,
+          "explanation": "Effectively final means a variable that, even without the final keyword, has never been reassigned since its declaration. Local variables captured by lambda expressions or anonymous classes must be final or effectively final. Method parameters are also effectively final as long as they are not reassigned.",
+          "choices": [
+            {
+              "id": "ch16_05_q2_a",
+              "text": "A variable that is never reassigned is effectively final, even without the final keyword",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_05_q2_b",
+              "text": "Only variables with the final keyword are effectively final",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_05_q2_c",
+              "text": "Instance variables are also subject to the effectively final constraint",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_05_q2_d",
+              "text": "Effectively final variables can have their values changed inside a lambda expression",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch16_05_q3",
+          "lessonId": "ch16_05",
+          "type": "outputPredict",
+          "question": "What is the result of the following code?",
+          "code": "int x = 10;\nRunnable r = () -> System.out.println(x);\nx = 20;\nr.run();",
+          "explanation": "Variable x is reassigned (x = 20) after the lambda expression, so it is not effectively final. Since x is referenced inside the lambda expression, a compilation error occurs. Note that reassignment either before or after the lambda makes the variable not effectively final.",
+          "choices": [
+            {
+              "id": "ch16_05_q3_a",
+              "text": "Compilation error",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch16_05_q3_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch16_05_q3_c",
+              "text": "20",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch16_05_q3_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

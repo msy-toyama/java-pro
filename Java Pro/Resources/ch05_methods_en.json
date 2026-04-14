@@ -1,0 +1,1157 @@
+{
+  "courseId": "ch05",
+  "lessons": [
+    {
+      "id": "ch05_01",
+      "courseId": "ch05",
+      "title": "What is a Method",
+      "summary": "Name and reuse blocks of code",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- What a [[method]] is (a reusable block of code)\n- The syntax for defining and calling methods\n- Why we use methods (code reusability)\n\nBy using methods, you can avoid writing the same code over and over.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "code",
+          "title": "Defining and Calling Methods",
+          "body": "The syntax and basic usage of methods.",
+          "code": "// メソッドの構文\n// アクセス修飾子 static 戻り値の型 メソッド名(引数) {\n//     処理\n//     return 戻り値;\n// }\n\npublic class Main {\n\n    // 戻り値なし（void）のメソッド\n    static void greet() {\n        System.out.println(\"こんにちは！\");\n    }\n\n    // 引数ありのメソッド\n    static void greetPerson(String name) {\n        System.out.println(\"こんにちは、\" + name + \"さん！\");\n    }\n\n    // 戻り値ありのメソッド\n    static int add(int a, int b) {\n        return a + b;\n    }\n\n    public static void main(String[] args) {\n        greet();                     // こんにちは！\n        greetPerson(\"太郎\");         // こんにちは、太郎さん！\n        int result = add(3, 5);      // 8\n        System.out.println(result);\n    }\n}",
+          "note": "The [[main method]] is also a method. Java program execution starts from the main method.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "rule",
+          "title": "Why Use Methods",
+          "body": "Advantages of methods:\n\n1. Reusability: Call the same logic as many times as you need\n2. Readability: Named blocks of code are easier to understand\n3. Maintainability: Only one place to make changes\n4. Testability: Easier to test in small units\n\nMethod naming conventions:\n| Item | Description |\n|---|---|\n| Start with a verb | calculateTotal, displayMenu, isValid |\n| camelCase | getMaxValue (lowercase first letter) |\n| boolean return type | Start with is, has, can |\n  Example: isEmpty(), hasNext(), canExecute()\n\nReturn value rules:\n- You can only return one value\n- The return statement can be omitted in void methods\n- When a return statement is executed, the method exits immediately",
+          "code": null,
+          "note": "If you want to return multiple values, use an [[array]], List, or a custom [[class]].",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "tip",
+          "title": "Methods Are Like Cooking Recipes",
+          "body": "A method is a \"named set of instructions.\"\n\n- Recipe name = method name\n- Ingredients = arguments (parameters)\n- Finished dish = return value\n\nOnce you write a recipe (method), you can call those instructions as many times as you like.",
+          "code": null,
+          "note": "In other languages, methods are also called \"functions.\"",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Method = a named, reusable block of code\n- void: no return value, return statement can be omitted\n- With a return value: specify the type and return a value with the return statement\n- Method names start with a verb and use camelCase\n- Benefits of methods: reusability / readability / maintainability / testability",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_01_q1",
+          "lessonId": "ch05_01",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "static int square(int n) {\n    return n * n;\n}\npublic static void main(String[] args) {\n    System.out.println(square(4));\n}",
+          "explanation": "square(4) receives 4 as n and returns 4 * 4 = 16. The value returned by return is output by println.",
+          "choices": [
+            {
+              "id": "ch05_01_q1_a",
+              "text": "16",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_01_q1_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_01_q1_c",
+              "text": "8",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_01_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_01_q2",
+          "lessonId": "ch05_01",
+          "type": "fourChoice",
+          "question": "Which keyword is used when a method has no return value?",
+          "code": null,
+          "explanation": "The void keyword is used for methods that don't return a value. void means the method returns nothing. The return statement can be omitted, but if you want to exit the method early, you can write return;.",
+          "choices": [
+            {
+              "id": "ch05_01_q2_a",
+              "text": "null",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_01_q2_b",
+              "text": "void",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_01_q2_c",
+              "text": "empty",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_01_q2_d",
+              "text": "none",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_01_q3",
+          "lessonId": "ch05_01",
+          "type": "fillBlank",
+          "question": "Fill in the blank with the keyword used to return a value.\nstatic int getMax(int a, int b) {\n    _____ Math.max(a, b);\n}",
+          "code": null,
+          "explanation": "The return keyword sends a value back to the caller of the method. In this case, the result of Math.max(a, b) (the larger of the two arguments) is returned.",
+          "choices": [
+            {
+              "id": "ch05_01_q3_a",
+              "text": "return",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_01_q3_b",
+              "text": "output",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_01_q3_c",
+              "text": "send",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_01_q3_d",
+              "text": "yield",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch05_02",
+      "courseId": "ch05",
+      "title": "Arguments and Return Values in Detail",
+      "summary": "Understand data passing in depth",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- How to pass arguments (parameters)\n- [[Methods]] with multiple arguments\n- The difference between actual arguments and formal parameters\n\nLet's understand how to pass data to methods.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "code",
+          "title": "Pass by Value",
+          "body": "In Java, all arguments are passed **by value**. The behavior differs between [[primitive types]] and [[reference types]].",
+          "code": "// プリミティブ型: 値のコピーが渡される\n// changeValueメソッドの定義\nstatic void changeValue(int x) {\n    x = 100; // コピーを変更しても元に影響なし\n}\n// 変数の宣言と初期化\nint num = 10;\nchangeValue(num);\nSystem.out.println(num); // 10（変わらない）\n\n// 参照型（配列）: 参照のコピーが渡される\n// changeArrayメソッドの定義\nstatic void changeArray(int[] arr) {\n    arr[0] = 999; // 同じ配列を操作→反映される\n}\nint[] data = {1, 2, 3};\nchangeArray(data);\nSystem.out.println(data[0]); // 999（変わる！）\n\n// ただし参照自体の再代入は反映されない\nstatic void replaceArray(int[] arr) {\n    arr = new int[]{10, 20, 30}; // 参照のコピーを差し替えただけ\n}\nint[] original = {1, 2, 3};\nreplaceArray(original);\nSystem.out.println(original[0]); // 1（変わらない！）",
+          "note": "Java does not have \"pass by reference.\" Even for reference types, only \"the value of the reference (a copy of the address)\" is passed. Therefore, you can manipulate the object that the reference points to, but reassigning the reference itself does not affect the original [[variable]].",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "tip",
+          "title": "Java Uses Pass by Value Only",
+          "body": "Method arguments in Java always pass a \"copy of the value.\"\n\n| Argument Type | What Is Passed | Changes Inside the Method |\n|---|---|---|\n| Primitive (int, etc.) | Copy of the value | Does not affect the caller |\n| Reference (array, object) | Copy of the reference | Object contents are changed |\n\nSince a \"copy of the reference\" is passed, modifying the object's contents inside the method also affects the caller.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "code",
+          "title": "Patterns for Returning Multiple Values",
+          "body": "A Java method can only return one value, but with some techniques you can return multiple values.",
+          "code": "// パターン1: 配列で返す\nstatic int[] minMax(int[] nums) {\n    // 変数の宣言と初期化\n    int min = Integer.MAX_VALUE;\n    int max = Integer.MIN_VALUE;\n    // 繰り返し処理（for文）\n    for (int i = 0; i < nums.length; i++) {\n        // 条件分岐\n        if (nums[i] < min) min = nums[i];\n        if (nums[i] > max) max = nums[i];\n    }\n    return new int[]{min, max};\n}\nint[] result = minMax(new int[]{5, 2, 8, 1});\nSystem.out.println(\"最小: \" + result[0] + \", 最大: \" + result[1]);\n\n// パターン2: 独自クラスで返す\n// Resultクラスの定義\nclass Result {\n    String name;\n    int score;\n    Result(String name, int score) {\n        this.name = name;\n        this.score = score;\n    }\n}",
+          "note": "With Java 14+ Records, you can define value-holding [[classes]] like Pattern 2 more concisely.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Java arguments are all **pass by value**\n- Primitive types: a copy of the value is passed → no effect on the original\n- Reference types: a copy of the reference is passed → object operations are reflected\n- Reassigning the reference itself (= new ...) is not reflected\n- Only one return value → use an [[array]] or class to return multiple values",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_02_q1",
+          "lessonId": "ch05_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "static void modify(int x, int[] arr) {\n    x = 99;\n    arr[0] = 99;\n}\npublic static void main(String[] args) {\n    int n = 10;\n    int[] a = {1, 2, 3};\n    modify(n, a);\n    System.out.println(n + \",\" + a[0]);\n}",
+          "explanation": "Since int n is a primitive type, a copy of the value is passed, and the original n remains unchanged (stays 10). Since int[] a is a reference type, arr[0] = 99 directly operates on the object, so a[0] changes to 99.",
+          "choices": [
+            {
+              "id": "ch05_02_q1_a",
+              "text": "10,99",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_02_q1_b",
+              "text": "99,99",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_02_q1_c",
+              "text": "10,1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_02_q1_d",
+              "text": "99,1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_02_q2",
+          "lessonId": "ch05_02",
+          "type": "fourChoice",
+          "question": "Which description of Java's argument passing is correct?",
+          "code": null,
+          "explanation": "All arguments in Java are \"pass by value.\" Primitive types pass a copy of the value itself, and reference types pass a copy of the reference (address). \"Pass by reference\" as in C++ does not exist in Java.",
+          "choices": [
+            {
+              "id": "ch05_02_q2_a",
+              "text": "Primitive types are pass by value, reference types are pass by reference",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_02_q2_b",
+              "text": "All are pass by value (reference types pass a copy of the reference value)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_02_q2_c",
+              "text": "All are pass by reference",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_02_q2_d",
+              "text": "The developer can choose between pass by value and pass by reference",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_02_q3",
+          "lessonId": "ch05_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "static void replace(String s) {\n    s = \"変更後\";\n}\npublic static void main(String[] args) {\n    String text = \"元の値\";\n    replace(text);\n    System.out.println(text);\n}",
+          "explanation": "String is also an Object (reference type), but s = \"変更後\" inside the method only replaces the copy of the reference with a new String. It does not affect the original text reference. Furthermore, String is immutable, so there is no way to modify the original string from inside the method.",
+          "choices": [
+            {
+              "id": "ch05_02_q3_a",
+              "text": "元の値",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_02_q3_b",
+              "text": "変更後",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_02_q3_c",
+              "text": "null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_02_q3_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch05_03",
+      "courseId": "ch05",
+      "title": "Method Overloading",
+      "summary": "Use same-named methods with different arguments",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- How to use return values (the return statement)\n- The difference from void [[methods]]\n- How to receive a method's result in a [[variable]]\n\nLearn how to return calculated results from methods.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "code",
+          "title": "Overloading Basics",
+          "body": "You can define methods with the same name as long as their \"type,\" \"number,\" or \"order\" of arguments differ.",
+          "code": "// 引数の数で区別\nstatic int add(int a, int b) {\n    return a + b;\n}\nstatic int add(int a, int b, int c) {\n    return a + b + c;\n}\n\n// 引数の型で区別\nstatic double add(double a, double b) {\n    return a + b;\n}\n\n// 呼び出し時に引数の型・数で自動判別\nSystem.out.println(add(1, 2));       // int版: 3\nSystem.out.println(add(1, 2, 3));    // 3引数版: 6\nSystem.out.println(add(1.5, 2.5));   // double版: 4.0\n\n// ⚠️ 戻り値の型だけが異なるのはオーバーロードにならない！\n// static int  calc(int a) { return a; }\n// static double calc(int a) { return a; } // コンパイルエラー！\n// → 呼び出し時にどちらか判別できないため",
+          "note": "The criterion for **overloading** is the \"parameter list (type, number, order).\" The return type and [[access modifier]] are not relevant.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "tip",
+          "title": "The Relationship Between void Methods and return",
+          "body": "There are methods that \"return a value\" and those that \"don't.\"\n\n| Return Type | Meaning | return Statement |\n|---|---|---|\n| int, String, etc. | Returns a value | return value; is required |\n| void | Returns nothing | return; can be omitted |\n\nAlways be aware of \"What does this method return?\"",
+          "code": null,
+          "note": "void means \"empty\" in English.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "rule",
+          "title": "Overloading and Type Conversion Priority",
+          "body": "When the argument type doesn't exactly match, Java searches for a matching method in the following priority order:\n\n1. Exact match: argument type matches the method definition\n2. Widening conversion: int → long → float → double\n3. [[Autoboxing]]: int → Integer\n4. **Varargs**: int...\n\nExample:\n  static void test(int n)     { ... }  // A\n  static void test(long n)    { ... }  // B\n  static void test(Integer n) { ... }  // C\n  static void test(int... n)  { ... }  // D\n\n  test(10);\n  // → A (exact match) is called\n  // If A doesn't exist → B (widening)\n  // If B doesn't exist either → C (autoboxing)\n  // If C doesn't exist either → D (varargs)",
+          "code": null,
+          "note": "On exams, questions about the priority between widening conversion and autoboxing are very common. Remember that widening conversion takes priority.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Overloading**: distinguishing same-named methods by argument type, number, and order\n- [[Overloading]] cannot be done by differing only in return type\n- Type priority: exact match > widening > autoboxing > varargs\n- println is a classic example of overloading",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_03_q1",
+          "lessonId": "ch05_03",
+          "type": "fourChoice",
+          "question": "Which of the following method definitions is valid as an overload? (Assume static int calc(int a) is already defined)",
+          "code": null,
+          "explanation": "Overloading requires a different number or type of arguments. static int calc(int a, int b) has a different number of arguments, so it is valid. static double calc(int a), which differs only in return type, causes a compilation error. Differing only in parameter name is also invalid.",
+          "choices": [
+            {
+              "id": "ch05_03_q1_a",
+              "text": "static double calc(int a) — differs only in return type",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_03_q1_b",
+              "text": "static int calc(int b) — differs only in parameter name",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_03_q1_c",
+              "text": "static int calc(int a, int b) — differs in number of parameters",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch05_03_q1_d",
+              "text": "int calc(int a) — differs only in access modifier",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_03_q2",
+          "lessonId": "ch05_03",
+          "type": "fourChoice",
+          "question": "Given the following methods, which one is called by test(10)?",
+          "code": "static void test(long n)    { System.out.println(\"long\"); }\nstatic void test(Integer n) { System.out.println(\"Integer\"); }",
+          "explanation": "When passing int value 10, there is no exact match, so widening conversion (int→long) takes priority. Since widening conversion has higher priority than autoboxing (int→Integer), test(long n) is called.",
+          "choices": [
+            {
+              "id": "ch05_03_q2_a",
+              "text": "test(long n) is called and outputs \"long\"",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_03_q2_b",
+              "text": "test(Integer n) is called and outputs \"Integer\"",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_03_q2_c",
+              "text": "Compilation error (ambiguous)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_03_q2_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_03_q3",
+          "lessonId": "ch05_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "static String greet(String name) {\n    return \"Hello, \" + name;\n}\nstatic String greet(String name, int times) {\n    return name + \" x\" + times;\n}\npublic static void main(String[] args) {\n    System.out.println(greet(\"Java\", 3));\n}",
+          "explanation": "Since there are two arguments (String, int), greet(String name, int times) is called. The result is \"Java x3\". The overload is resolved by the number of arguments.",
+          "choices": [
+            {
+              "id": "ch05_03_q3_a",
+              "text": "Java x3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_03_q3_b",
+              "text": "Hello, Java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_03_q3_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_03_q3_d",
+              "text": "Hello, Java x3",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_03_q4",
+          "lessonId": "ch05_03",
+          "type": "codeComplete",
+          "question": "Complete the method that returns the maximum of two integers.",
+          "code": null,
+          "explanation": "The method's return type is int, and it returns the larger of the two arguments with return. A common approach is to use Math.max() or a ternary operator.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public static __BLANK_1__ getMax(int a, int b) {\n    __BLANK_2__ Math.max(a, b);\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Return type",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "int",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "void",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "String",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Keyword",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "return",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "print",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "yield",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch05_04",
+      "courseId": "ch05",
+      "title": "Varargs and Static Methods",
+      "summary": "Flexible arguments and class methods",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- **Overloading** of [[methods]] (methods with the same name but different arguments)\n- How the compiler determines which method to call\n- Rules and considerations for [[overloading]]\n\nLearn how to use methods with the same name for different purposes.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "code",
+          "title": "Varargs (Variable-Length Arguments)",
+          "body": "By adding ... after the type name, you can accept zero or more arguments.",
+          "code": "// 可変長引数: 型... 変数名\nstatic int sum(int... numbers) {\n    int total = 0;\n    for (int n : numbers) {\n        total += n;\n    }\n    return total;\n}\n\n// 引数の数を自由に変えられる\nSystem.out.println(sum());          // 0\nSystem.out.println(sum(1, 2));      // 3\nSystem.out.println(sum(1, 2, 3, 4)); // 10\n\n// 配列を渡すことも可能\nint[] data = {10, 20, 30};\nSystem.out.println(sum(data)); // 60\n\n// ルール:\n// 1. 可変長引数はメソッドの最後の引数のみ\n// 2. 1つのメソッドに可変長引数は1つだけ\n\n// OK: 通常引数 + 可変長引数\nstatic String format(String prefix, String... items) {\n    return prefix + \": \" + String.join(\", \", items);\n}\nSystem.out.println(format(\"果物\", \"りんご\", \"みかん\"));\n// → 果物: りんご, みかん\n\n// NG: 可変長引数が最後でない\n// static void bad(int... a, String b) {} // コンパイルエラー！",
+          "note": "**Varargs** are internally converted to an [[array]] by the compiler. int... is the same as int[], but the caller doesn't need to explicitly create an array.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "code",
+          "title": "Static Methods and Instance Methods",
+          "body": "[[Static methods]] belong to the [[class]], while [[instance]] methods belong to objects.",
+          "code": "public class Calculator {\n    private int memory = 0; // インスタンス変数\n\n    // staticメソッド: クラスに属する\n    // → オブジェクトを作らず呼べる\n    // → インスタンス変数にアクセスできない\n    static int add(int a, int b) {\n        return a + b;\n    }\n\n    // インスタンスメソッド: オブジェクトに属する\n    // → オブジェクトを作って呼ぶ\n    // → インスタンス変数にアクセスできる\n    void addToMemory(int value) {\n        this.memory += value; // インスタンス変数を使用\n    }\n\n    int getMemory() {\n        return memory;\n    }\n}\n\n// staticメソッドの呼び出し（オブジェクト不要）\nint result = Calculator.add(3, 5); // 8\n\n// インスタンスメソッドの呼び出し（オブジェクト必要）\nCalculator calc = new Calculator();\ncalc.addToMemory(10);\nSystem.out.println(calc.getMemory()); // 10\n\n// 代表的なstaticメソッド:\n// Math.max(a, b), Integer.parseInt(\"123\")\n// Arrays.sort(arr), Collections.sort(list)",
+          "note": "The [[main method]] is static because no objects exist yet when the program starts.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "tip",
+          "title": "Conditions for Overloading",
+          "body": "For **overloading** to work, the \"parameter list must be different.\"\n\n| OK/NG | Example | Reason |\n|---|---|---|\n| OK | add(int a) and add(int a, int b) | Different number of parameters |\n| OK | add(int a) and add(double a) | Different parameter types |\n| NG | int add(int a) and double add(int a) | Only return type differs |\n\nNote that methods cannot be distinguished by return type alone.",
+          "code": null,
+          "note": "A method's \"signature\" is determined by \"method name + parameter list.\"",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Varargs**: use type... to accept zero or more arguments\n- [[Varargs]] must be the last parameter and only one per method\n- Internally converted to an array\n- Static methods: called with ClassName.methodName()\n- Instance methods: called with object.methodName()\n- Static methods cannot access instance [[variables]]",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_04_q1",
+          "lessonId": "ch05_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "static int count(String... words) {\n    return words.length;\n}\npublic static void main(String[] args) {\n    System.out.println(count(\"a\", \"b\", \"c\"));\n}",
+          "explanation": "The varargs String... words is internally treated as a String array. Since three arguments \"a\", \"b\", \"c\" are passed, words.length is 3.",
+          "choices": [
+            {
+              "id": "ch05_04_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q1_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q1_c",
+              "text": "1",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_04_q2",
+          "lessonId": "ch05_04",
+          "type": "errorFind",
+          "question": "Which of the following code causes a compilation error?",
+          "code": "static void m1(int... a, String b) {}\nstatic void m2(String b, int... a) {}\nstatic void m3(int... a) {}",
+          "explanation": "A compilation error occurs in m1. Varargs must be the last parameter in a method. In m1, String b comes after int... a, which is invalid. m2 and m3 have correct syntax.",
+          "choices": [
+            {
+              "id": "ch05_04_q2_a",
+              "text": "m1 only",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q2_b",
+              "text": "m2 only",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q2_c",
+              "text": "m3 only",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q2_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_04_q3",
+          "lessonId": "ch05_04",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes a characteristic of static methods?",
+          "code": null,
+          "explanation": "Static methods belong to the class, so they can be called without creating an object using ClassName.methodName(). However, they cannot directly access instance variables or instance methods. Math.max() and Integer.parseInt() are typical examples.",
+          "choices": [
+            {
+              "id": "ch05_04_q3_a",
+              "text": "Can access instance variables",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q3_b",
+              "text": "Can be called without creating an object",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q3_c",
+              "text": "Can use the this keyword",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q3_d",
+              "text": "Can be overridden in subclasses",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_04_q4",
+          "lessonId": "ch05_04",
+          "type": "multiChoice",
+          "question": "Select all correct conditions for method overloading.",
+          "code": null,
+          "explanation": "Overloading requires the same method name with a different parameter list (type, number, order). If only the return type differs, it causes a compilation error. Differences in access modifiers alone do not constitute overloading.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch05_04_q4_a",
+              "text": "Different number of parameters",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_04_q4_b",
+              "text": "Different parameter types",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_04_q4_c",
+              "text": "Only the return type differs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_04_q4_d",
+              "text": "Different parameter order",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_04_q5",
+          "lessonId": "ch05_04",
+          "type": "reorder",
+          "question": "Arrange the elements of a method definition in the correct order.",
+          "code": null,
+          "explanation": "A method definition follows the order: access modifier → static → return type → method name(parameters) → method body.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "static",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "int",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "add(int a, int b)",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "{ return a + b; }",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch05_05",
+      "courseId": "ch05",
+      "title": "Scope and Recursion",
+      "summary": "Variable scope and self-calling methods",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- What [[variable]] [[scope]] (range of validity) is\n- The lifetime of local variables\n- How block scope works\n\nUnderstanding where variables can be used helps prevent bugs.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "code",
+          "title": "Variable Scope",
+          "body": "The range where a variable can be used is determined by blocks ({}).",
+          "code": "public class ScopeExample {\n    static int classVar = 100; // クラス変数（どこからでも参照可能）\n\n    static void method() {\n        int localVar = 10; // ローカル変数（このメソッド内のみ）\n\n        if (localVar > 5) {\n            int blockVar = 20; // ブロック変数（if内のみ）\n            System.out.println(localVar);  // OK\n            System.out.println(blockVar);  // OK\n        }\n        // System.out.println(blockVar); // コンパイルエラー！\n\n        for (int i = 0; i < 3; i++) {\n            // i はこのforブロック内のみ有効\n        }\n        // System.out.println(i); // コンパイルエラー！\n    }\n\n    static void anotherMethod() {\n        // System.out.println(localVar); // コンパイルエラー！\n        System.out.println(classVar);     // OK\n    }\n}\n\n// スコープの範囲:\n// クラス変数 → クラス全体\n// ローカル変数 → 宣言されたメソッド内\n// ブロック変数 → 宣言されたブロック{} 内\n// for変数 → forブロック内",
+          "note": "Local variables are not initialized with default values. You must assign a value before using them (otherwise it's a [[compilation]] error).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "tip",
+          "title": "Basic Rules of Scope",
+          "body": "A variable's scope (range of validity) is limited to the block {} where it is declared.\n\n- Declared inside a [[method]] → valid only within that method\n- Declared in a [[for loop]] initializer → valid only within that for loop\n- Declared inside an [[if statement]] block → valid only within that if block\n\nAttempting to access a variable from outside its scope causes a compilation error.",
+          "code": null,
+          "note": "It's good design practice to keep variable scope as small as possible.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "code",
+          "title": "Recursive Methods",
+          "body": "**Recursion** is a mechanism where a method calls itself.",
+          "code": "// 階乗: n! = n × (n-1) × ... × 1\nstatic int factorial(int n) {\n    // ベースケース（終了条件）: 必ず必要！\n    if (n <= 1) return 1;\n    // 再帰呼び出し\n    return n * factorial(n - 1);\n}\n// factorial(4) → 4 * factorial(3)\n//              → 4 * 3 * factorial(2)\n//              → 4 * 3 * 2 * factorial(1)\n//              → 4 * 3 * 2 * 1 = 24\n\nSystem.out.println(factorial(5)); // 120\n\n// フィボナッチ数列: 0, 1, 1, 2, 3, 5, 8, 13, ...\nstatic int fibonacci(int n) {\n    if (n <= 0) return 0;\n    if (n == 1) return 1;\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\nSystem.out.println(fibonacci(7)); // 13\n\n// ⚠️ ベースケースがないと無限ループ → StackOverflowError\n// static int bad(int n) {\n//     return n * bad(n - 1); // 終了条件なし！\n// }",
+          "note": "**Recursion** always requires a \"base case (termination condition).\" Without a base case, a [[StackOverflowError]] occurs. Since deep recursion consumes a lot of memory, loops are more suitable for large values.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Scope: [[class]] variable > local variable > block variable\n- Local variables have no default values (must be initialized)\n- **Recursion**: a method calls itself\n- Recursion always requires a base case (termination condition)\n- No base case → StackOverflowError\n- Deep recursion consumes memory",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_05_q1",
+          "lessonId": "ch05_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "static int factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}\npublic static void main(String[] args) {\n    System.out.println(factorial(4));\n}",
+          "explanation": "factorial(4) = 4 × factorial(3) = 4 × 3 × factorial(2) = 4 × 3 × 2 × factorial(1) = 4 × 3 × 2 × 1 = 24. The recursion terminates when n=1, reaching the base case.",
+          "choices": [
+            {
+              "id": "ch05_05_q1_a",
+              "text": "24",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_05_q1_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_05_q1_c",
+              "text": "10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_05_q1_d",
+              "text": "StackOverflowError",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_05_q2",
+          "lessonId": "ch05_05",
+          "type": "fourChoice",
+          "question": "What happens when a recursive method has no base case (termination condition)?",
+          "code": null,
+          "explanation": "Without a base case, the method keeps calling itself infinitely, and the call stack (history of method calls) runs out of memory, causing a StackOverflowError. Since this is an Error class, it is not normally caught.",
+          "choices": [
+            {
+              "id": "ch05_05_q2_a",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_05_q2_b",
+              "text": "StackOverflowError",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_05_q2_c",
+              "text": "OutOfMemoryError",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_05_q2_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_05_q3",
+          "lessonId": "ch05_05",
+          "type": "errorFind",
+          "question": "Which line in the following code causes a compilation error?",
+          "code": "static void test() {\n    int x = 10;\n    if (x > 5) {\n        int y = 20;\n    }\n    System.out.println(y);\n}",
+          "explanation": "A compilation error occurs on line 6. The variable y is declared inside the if block, so its scope is limited to within the if block {}. It cannot be referenced from outside the block.",
+          "choices": [
+            {
+              "id": "ch05_05_q3_a",
+              "text": "Line 2",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_05_q3_b",
+              "text": "Line 4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_05_q3_c",
+              "text": "Line 6",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch05_05_q3_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch05_06",
+      "courseId": "ch05",
+      "title": "Method Design Best Practices",
+      "summary": "Learn how to write good methods",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- How **recursion** (a [[method]] calling itself) works\n- Termination conditions (base cases) for recursion\n- Recursive solutions for factorials and the Fibonacci sequence\n\nRecursion is a challenging concept, but it's a powerful technique for elegantly solving certain problems.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "rule",
+          "title": "Principles of Method Design",
+          "body": "Characteristics of a well-designed method:\n\n1. Single Responsibility: Each method should do only one thing\n   ○ calculateTax(int price)\n   × processOrderAndSendEmail()\n\n2. Proper Naming: The method name alone should convey what it does\n   ○ isAdult(int age)\n   × check(int n)\n\n3. Few Parameters: Ideally 0–2, maximum 3\n   → If there are too many, bundle them into an object\n\n4. Avoid Side Effects: Don't modify arguments or external state\n   ○ int add(int a, int b) → just returns a computed result\n   × void add(int[] arr, int val) → modifies the [[array]]\n\n5. Early Return: Check error conditions first and return\n   → Reduces nesting and improves readability",
+          "code": null,
+          "note": "The \"Single Responsibility Principle\" is fundamental to object-oriented design (SOLID principles). The same concept applies to [[class]] design.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "code",
+          "title": "Good Methods vs. Bad Methods",
+          "body": "The same logic can vary greatly in readability depending on how it's written.",
+          "code": "// ❌ 悪い例: 1つのメソッドで多くのことをしている\n// processメソッドの定義\nstatic void process(String name, int age, String email) {\n    // 条件分岐\n    if (name != null && !name.isEmpty()) {\n        if (age >= 0 && age <= 150) {\n            if (email.contains(\"@\")) {\n                // 登録処理...\n                System.out.println(\"登録完了\");\n            } else {\n                System.out.println(\"メール不正\");\n            }\n        } else {\n            System.out.println(\"年齢不正\");\n        }\n    } else {\n        System.out.println(\"名前不正\");\n    }\n}\n\n// ✅ 良い例: 早期リターンでネストを浅く\n// registerメソッドの定義\nstatic void register(String name, int age, String email) {\n    if (name == null || name.isEmpty()) {\n        System.out.println(\"名前不正\");\n        return;\n    }\n    if (age < 0 || age > 150) {\n        System.out.println(\"年齢不正\");\n        return;\n    }\n    if (!email.contains(\"@\")) {\n        System.out.println(\"メール不正\");\n        return;\n    }\n    // ここに来た時点で全バリデーション通過\n    System.out.println(\"登録完了\");\n}",
+          "note": "Using early return (guard clauses) reduces method nesting and lets you focus on the happy path.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "tip",
+          "title": "The Pitfall of Recursion — Stack Overflow",
+          "body": "A **recursive** method always needs a \"termination condition (base case).\"\n\nWithout a termination condition:\n- The method keeps calling itself infinitely\n- The call [[stack]] overflows, causing a [[StackOverflowError]]\n- The program terminates abnormally\n\nSteps for designing recursion:\n1. Decide the **base case** (the condition that stops the recursion)\n2. Write the **recursive case** (the part that calls itself)\n\nIt's important to design in this order.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "code",
+          "title": "Splitting Methods",
+          "body": "An example of breaking a large method into smaller methods.",
+          "code": "// ❌ 1つのメソッドに全部入り\n// showReportメソッドの定義\nstatic void showReport(int[] scores) {\n    // 変数の宣言と初期化\n    int sum = 0;\n    // 拡張for文（コレクションの全要素を順番に処理）\n    for (int s : scores) sum += s;\n    double avg = (double) sum / scores.length;\n    int max = Integer.MIN_VALUE;\n    for (int s : scores) if (s > max) max = s;\n    int min = Integer.MAX_VALUE;\n    for (int s : scores) if (s < min) min = s;\n    System.out.println(\"合計: \" + sum);\n    System.out.println(\"平均: \" + avg);\n    System.out.println(\"最高: \" + max);\n    System.out.println(\"最低: \" + min);\n}\n\n// ✅ 責務ごとにメソッド分割\n// calcSumメソッドの定義\nstatic int calcSum(int[] scores) {\n    int sum = 0;\n    for (int s : scores) sum += s;\n    return sum;\n}\nstatic double calcAverage(int[] scores) {\n    return (double) calcSum(scores) / scores.length;\n}\nstatic int findMax(int[] scores) {\n    int max = Integer.MIN_VALUE;\n    for (int s : scores) if (s > max) max = s;\n    return max;\n}\nstatic void showReport(int[] scores) {\n    System.out.println(\"合計: \" + calcSum(scores));\n    System.out.println(\"平均: \" + calcAverage(scores));\n    System.out.println(\"最高: \" + findMax(scores));\n}",
+          "note": "Split methods are easier to unit test. You can independently test calcSum() and findMax().",
+          "order": 5
+        },
+        {
+          "lessonId": "ch05_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Single responsibility: one method, one job\n- Naming: start with a verb, name should describe what it does\n- Keep parameters to 0–3. If more, bundle them into an object\n- Early return: check error conditions first and return\n- Minimize side effects: avoid modifying external state\n- Split large methods into smaller ones",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch05_06_q1",
+          "lessonId": "ch05_06",
+          "type": "fourChoice",
+          "question": "What does the \"Single Responsibility Principle\" mean in method design?",
+          "code": null,
+          "explanation": "The Single Responsibility Principle means that each method (or class) should do only one job. This makes methods easier to understand, easier to test, and limits the impact of changes.",
+          "choices": [
+            {
+              "id": "ch05_06_q1_a",
+              "text": "A method should be written in one line",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_06_q1_b",
+              "text": "Each method should do only one job",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_06_q1_c",
+              "text": "A method should have only one parameter",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_06_q1_d",
+              "text": "A method should be called only once",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch05_06_q2",
+          "lessonId": "ch05_06",
+          "type": "fourChoice",
+          "question": "Which is the most appropriate method name? (A method that checks if a user is an adult)",
+          "code": null,
+          "explanation": "There is a naming convention to start boolean-returning methods with is, has, or can. isAdult(int age) clearly expresses \"whether the person is an adult.\" check() is unclear about what it checks, and process() suggests processing rather than checking.",
+          "choices": [
+            {
+              "id": "ch05_06_q2_a",
+              "text": "check(int age)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch05_06_q2_b",
+              "text": "isAdult(int age)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch05_06_q2_c",
+              "text": "process(int age)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_06_q2_d",
+              "text": "adult(int age)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch05_06_q3",
+          "lessonId": "ch05_06",
+          "type": "fillBlank",
+          "question": "The technique of checking error conditions at the beginning of a method and returning early is called a ____.",
+          "code": "static int divide(int a, int b) {\n    if (b == 0) return -1; // ← This pattern\n    return a / b;\n}",
+          "explanation": "A guard clause (early return) is a pattern where error conditions are checked at the beginning of a method and the method returns early. This significantly reduces nesting and improves readability.",
+          "choices": [
+            {
+              "id": "ch05_06_q3_a",
+              "text": "guard clause",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch05_06_q3_b",
+              "text": "design pattern",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch05_06_q3_c",
+              "text": "polymorphism",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch05_06_q3_d",
+              "text": "default value",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,775 @@
+{
+  "courseId": "ch29",
+  "lessons": [
+    {
+      "id": "ch29_01",
+      "courseId": "ch29",
+      "title": "JDBC Basics",
+      "summary": "Learn JDBC architecture and driver types, connecting with DriverManager.getConnection(), and the basic usage of Connection, Statement, and ResultSet.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "overview",
+          "title": "What Is JDBC?",
+          "body": "In this lesson, you will learn:\n\n- JDBC architecture (driver → connection → SQL execution → result retrieval)\n- How to obtain a DB connection with DriverManager\n- The structure and meaning of connection URLs\n\nThis covers the foundations of Java's standard API for accessing databases.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "rule",
+          "title": "JDBC Architecture and Drivers",
+          "body": "The JDBC architecture consists of four layers: the application, JDBC Driver Manager, JDBC driver, and database.\nThe **JDBC** URL is a string specifying the database connection target, in the format jdbc:subprotocol:subname.\nExamples: jdbc:mysql://localhost:3306/mydb, jdbc:postgresql://localhost/testdb\nThe DriverManager class handles driver management and connection establishment.\nSince [[JDBC]] 4.0, drivers are automatically detected through service provider configuration under META-INF/services.\nExplicit driver loading with Class.forName() is no longer required, but it may be tested as exam knowledge.",
+          "code": null,
+          "note": "The **JDBC** URL format varies by database vendor. The basic URL format is tested on the exam.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "code",
+          "title": "Connecting to a Database",
+          "body": "DriverManager.getConnection() connects to a database.\nYou specify the JDBC URL, username, and password as arguments.\nThe return value is a Connection object, which represents the database connection.\nConnection implements [[AutoCloseable]], so it can be used with [[try-with-resources]].\nIf the connection fails, a SQLException is thrown.",
+          "code": "import java.sql.*;\n\n// Basic connection\n// Variable declaration and initialization\nString url = \"jdbc:mysql://localhost:3306/mydb\";\nString user = \"root\";\nString password = \"password\";\n\n// A block where exceptions may occur\ntry (Connection conn = DriverManager.getConnection(\n        url, user, password)) {\n    System.out.println(\"接続成功\");\n    System.out.println(\"DB: \" + conn.getMetaData()\n        .getDatabaseProductName());\n} catch (SQLException e) {\n    System.err.println(\"接続失敗: \" + e.getMessage());\n}\n\n// Connection using Properties\nimport java.util.Properties;\nProperties props = new Properties();\nprops.setProperty(\"user\", \"root\");\nprops.setProperty(\"password\", \"password\");\n\n// A block where exceptions may occur\ntry (Connection conn = DriverManager.getConnection(\n        url, props)) {\n    // Connection processing\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "code",
+          "title": "Statement and ResultSet",
+          "body": "A Statement is an object for executing SQL, obtained with Connection.createStatement().\nexecuteQuery() executes a SELECT statement and returns a [[ResultSet]].\nexecuteUpdate() executes INSERT, UPDATE, or DELETE and returns the number of affected rows.\nResultSet is a cursor over the query results; next() moves to the next row.\nWhen next() returns false, there are no more results. Use getString(), getInt(), etc. to retrieve column values.",
+          "code": "import java.sql.*;\n\n// A block where exceptions may occur\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // Executing a SELECT statement\n    ResultSet rs = stmt.executeQuery(\n        \"SELECT id, name, age FROM users\");\n    // Repeat while the condition is true\n    while (rs.next()) {\n        // Variable declaration and initialization\n        int id = rs.getInt(\"id\");         // Get by column name\n        String name = rs.getString(\"name\");\n        int age = rs.getInt(2);           // Get by column index (1-based)\n        System.out.println(id + \": \" + name + \" (\" + age + \")\");\n    }\n\n    // Executing an INSERT statement\n    int rows = stmt.executeUpdate(\n        \"INSERT INTO users (name, age) VALUES ('Taro', 25)\");\n    System.out.println(rows + \"行挿入\"); // 1行挿入\n}",
+          "note": "ResultSet column indices are 1-based. Specifying 0 will throw a SQLException.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: JDBC Basics",
+          "body": "Memorize the basic format of **JDBC** URLs (jdbc:subprotocol:subname).\nConnection, Statement, and ResultSet all implement AutoCloseable.\nexecuteQuery() returns a ResultSet, while executeUpdate() returns an int.\nResultSet column indices are 1-based, and values can be retrieved by either column name or column index.\nThe closing order for resources is ResultSet → Statement → Connection.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_01_q1",
+          "lessonId": "ch29_01",
+          "type": "fourChoice",
+          "question": "Which of the following is the correct basic format of a JDBC URL?",
+          "code": "Connection conn = DriverManager.getConnection(\n    \"jdbc:mysql://localhost:3306/mydb\",\n    \"user\", \"pass\");\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(\n    \"SELECT * FROM users\");",
+          "explanation": "The basic format of a JDBC URL is jdbc:subprotocol:subname. The subprotocol specifies the database type (mysql, postgresql, etc.), and the subname contains detailed connection information.",
+          "choices": [
+            {
+              "id": "ch29_01_q1_a",
+              "text": "jdbc:subprotocol:subname",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_01_q1_b",
+              "text": "jdbc://hostname:port/databasename",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_01_q1_c",
+              "text": "database:jdbc:connectionstring",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_01_q1_d",
+              "text": "sql:jdbc:drivername:databasename",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_01_q2",
+          "lessonId": "ch29_01",
+          "type": "fourChoice",
+          "question": "What is the return type of Statement.executeQuery()?",
+          "code": "String sql = \"SELECT * FROM users WHERE id = ?\";\ntry (PreparedStatement ps = conn.prepareStatement(sql)) {\n    ps.setInt(1, userId);\n    ResultSet rs = ps.executeQuery();\n    while (rs.next()) {\n        String name = rs.getString(\"name\");\n    }\n}",
+          "explanation": "executeQuery() executes a SELECT statement and returns the results as a ResultSet. executeUpdate() executes INSERT/UPDATE/DELETE statements and returns the number of affected rows as an int.",
+          "choices": [
+            {
+              "id": "ch29_01_q2_a",
+              "text": "ResultSet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_01_q2_b",
+              "text": "int",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_01_q2_c",
+              "text": "boolean",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_01_q2_d",
+              "text": "List<String>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_01_q3",
+          "lessonId": "ch29_01",
+          "type": "fillBlank",
+          "question": "ResultSet column indices are ___-based, and specifying 0 throws a SQLException.",
+          "code": "try {\n    conn.setAutoCommit(false);\n    stmt.executeUpdate(sql1);\n    stmt.executeUpdate(sql2);\n    conn.commit();\n} catch (SQLException e) {\n    conn.rollback();\n}",
+          "explanation": "ResultSet column indices are 1-based. getString(1) retrieves the value of the first column. Specifying 0 throws a SQLException. Note that this differs from array indices, which are 0-based.",
+          "choices": [
+            {
+              "id": "ch29_01_q3_a",
+              "text": "1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_01_q3_b",
+              "text": "0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_01_q3_c",
+              "text": "2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_01_q3_d",
+              "text": "-1",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch29_02",
+      "courseId": "ch29",
+      "title": "Executing SQL",
+      "summary": "Learn in detail how to execute SELECT statements with Statement and retrieve results with ResultSet, execute INSERT/UPDATE/DELETE statements, and use ResultSet navigation methods.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "overview",
+          "title": "SQL Execution Overview",
+          "body": "In this lesson, you will learn:\n\n- How to execute SQL with Statement\n- The difference between executeQuery() (SELECT) and executeUpdate() (INSERT/UPDATE/DELETE)\n- How to retrieve results from a [[ResultSet]]\n\nYou will learn the basic flow of SQL execution.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "code",
+          "title": "SELECT with executeQuery()",
+          "body": "executeQuery() executes a SELECT statement and returns a ResultSet.\nThe next() [[method]] of ResultSet moves the cursor to the next row.\nIt returns true if there is data and false if there is none, so you can process all rows with a while loop.\nThere are type-specific retrieval methods such as getString(), getInt(), and getDouble().\nColumn values are retrieved by column name or column index (1-based).",
+          "code": "import java.sql.*;\n\n// A block where exceptions may occur\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // Executing a SELECT statement\n    // Variable declaration and initialization\n    String sql = \"SELECT id, name, price FROM products \" +\n                 \"WHERE price > 1000 ORDER BY price\";\n    ResultSet rs = stmt.executeQuery(sql);\n\n    // Processing results\n    // Repeat while the condition is true\n    while (rs.next()) {\n        int id = rs.getInt(\"id\");\n        String name = rs.getString(\"name\");\n        double price = rs.getDouble(\"price\");\n        System.out.printf(\"ID=%d, 商品名=%s, 価格=%.0f%n\",\n            id, name, price);\n    }\n\n    // When there are no results\n    rs = stmt.executeQuery(\n        \"SELECT * FROM products WHERE id = -1\");\n    // Conditional branching\n    if (!rs.next()) {\n        System.out.println(\"データなし\");\n    }\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "code",
+          "title": "DML Operations with executeUpdate()",
+          "body": "executeUpdate() executes INSERT, UPDATE, or DELETE statements and returns the number of affected rows.\nIt can also be used for DDL (CREATE TABLE, DROP TABLE, etc.), in which case it returns 0.\nThe execute() method works with all SQL statements and returns true if the result is a ResultSet, or false if it is an update count.\nUse getResultSet() or getUpdateCount() to retrieve the results.",
+          "code": "import java.sql.*;\n\n// A block where exceptions may occur\ntry (Connection conn = DriverManager.getConnection(url, user, pw);\n     Statement stmt = conn.createStatement()) {\n\n    // INSERT\n    // Variable declaration and initialization\n    int inserted = stmt.executeUpdate(\n        \"INSERT INTO products (name, price) \" +\n        \"VALUES ('Java Book', 3000)\");\n    System.out.println(inserted + \"行挿入\"); // 1行挿入\n\n    // UPDATE\n    int updated = stmt.executeUpdate(\n        \"UPDATE products SET price = 3500 \" +\n        \"WHERE name = 'Java Book'\");\n    System.out.println(updated + \"行更新\");\n\n    // DELETE\n    int deleted = stmt.executeUpdate(\n        \"DELETE FROM products WHERE price < 500\");\n    System.out.println(deleted + \"行削除\");\n\n    // execute() method\n    boolean hasResultSet = stmt.execute(\n        \"SELECT * FROM products\");\n    // Conditional branching\n    if (hasResultSet) {\n        ResultSet rs = stmt.getResultSet();\n        // Repeat while the condition is true\n        while (rs.next()) {\n            System.out.println(rs.getString(\"name\"));\n        }\n    }\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "rule",
+          "title": "ResultSet Navigation",
+          "body": "The default ResultSet is TYPE_FORWARD_ONLY, which only allows forward movement.\nTo create a scrollable ResultSet, specify arguments in createStatement().\n| Constant | Description |\n|---|---|\n| TYPE_SCROLL_INSENSITIVE | Allows forward and backward movement but does not reflect database changes |\n| TYPE_SCROLL_SENSITIVE | Allows forward and backward movement and reflects database changes |\n| CONCUR_READ_ONLY | Read-only. CONCUR_UPDATABLE allows updates |",
+          "code": "import java.sql.*;\n\n// Creating a scrollable ResultSet\nStatement stmt = conn.createStatement(\n    ResultSet.TYPE_SCROLL_INSENSITIVE,\n    ResultSet.CONCUR_READ_ONLY);\n\nResultSet rs = stmt.executeQuery(\n    \"SELECT * FROM products\");\n\n// Move to the first row\nrs.first();\nSystem.out.println(rs.getString(\"name\"));\n\n// Move to the last row\nrs.last();\nSystem.out.println(rs.getString(\"name\"));\n\n// Move to the previous row\nrs.previous();\n\n// Move to a specific row (1-based)\nrs.absolute(3); // Row 3\n\n// Relative move\nrs.relative(-1); // Move 1 row back\nrs.relative(2);  // Move 2 rows forward",
+          "note": "Calling first() or previous() on a TYPE_FORWARD_ONLY ResultSet throws a SQLException.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_02",
+          "sectionType": "tip",
+          "title": "Exam Prep: Executing SQL",
+          "body": "Passing a non-SELECT statement to executeQuery() throws a SQLException.\nPassing a SELECT statement to executeUpdate() also throws a SQLException.\nexecute() works with all SQL statements and determines the result type as a boolean.\nThe ResultSet cursor is initially positioned before the first row.\nMemorize the TYPE and CONCUR combinations for scrollable ResultSets.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_02_q1",
+          "lessonId": "ch29_02",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the Statement.execute() method?",
+          "code": "try (Connection conn = dataSource.getConnection();\n     PreparedStatement ps = conn.prepareStatement(\n         \"INSERT INTO logs (msg) VALUES (?)\")) {\n    ps.setString(1, message);\n    int rows = ps.executeUpdate();\n}",
+          "explanation": "The execute() method can execute all types of SQL statements. It returns true if the result is a ResultSet (SELECT), and false if it is an update count (INSERT/UPDATE/DELETE/DDL).",
+          "choices": [
+            {
+              "id": "ch29_02_q1_a",
+              "text": "Can execute all SQL statements; returns true for ResultSet, false for update count",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_02_q1_b",
+              "text": "Can only execute SELECT statements and returns a ResultSet",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_02_q1_c",
+              "text": "Can only execute UPDATE statements and returns the update count",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_02_q1_d",
+              "text": "Can execute all SQL statements and always returns a ResultSet",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_02_q2",
+          "lessonId": "ch29_02",
+          "type": "outputPredict",
+          "question": "If the products table has two rows: {id=1, name=\"Pen\", price=100} and {id=2, name=\"Book\", price=500}, what is the output of the following code?",
+          "code": "Statement stmt = conn.createStatement();\nint count = stmt.executeUpdate(\n    \"UPDATE products SET price = price * 2 WHERE price < 300\");\nSystem.out.println(count);",
+          "explanation": "The UPDATE statement updates rows matching the condition price < 300. The Pen with price=100 matches, while the Book with price=500 does not. Therefore, 1 row is updated and executeUpdate() returns 1.",
+          "choices": [
+            {
+              "id": "ch29_02_q2_a",
+              "text": "1",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_02_q2_b",
+              "text": "2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_02_q2_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_02_q2_d",
+              "text": "200",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_02_q3",
+          "lessonId": "ch29_02",
+          "type": "fillBlank",
+          "question": "The default ResultSet type is TYPE___ONLY, which only allows forward cursor movement.",
+          "code": "Connection conn = DriverManager.getConnection(\n    \"jdbc:mysql://localhost:3306/mydb\",\n    \"user\", \"pass\");\nStatement stmt = conn.createStatement();\nResultSet rs = stmt.executeQuery(\n    \"SELECT * FROM users\");",
+          "explanation": "The default ResultSet type is TYPE_FORWARD_ONLY. With this type, only next() can be used to move the cursor forward. Reverse operations such as previous() and first() throw a SQLException.",
+          "choices": [
+            {
+              "id": "ch29_02_q3_a",
+              "text": "_FORWARD_",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_02_q3_b",
+              "text": "_SCROLL_",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_02_q3_c",
+              "text": "_READ_",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_02_q3_d",
+              "text": "_CURSOR_",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch29_02_q4",
+          "lessonId": "ch29_02",
+          "type": "codeComplete",
+          "question": "Complete the code that sets parameters with PreparedStatement.",
+          "code": "String sql = \"SELECT * FROM users WHERE id = ?\";\ntry (PreparedStatement ps = conn.prepareStatement(sql)) {\n    ps.setInt(1, userId);\n    ResultSet rs = ps.executeQuery();\n    while (rs.next()) {\n        String name = rs.getString(\"name\");\n    }\n}",
+          "explanation": "prepareStatement() prepares the SQL, and setInt() sets a value for the placeholder (?). This prevents SQL injection.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "PreparedStatement ps = conn.__BLANK_1__(\"SELECT * FROM users WHERE id = ?\");\nps.__BLANK_2__(1, userId);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Prepare",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "prepareStatement",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "createStatement",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "prepare",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Set parameter",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "setInt",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "setParameter",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "bind",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch29_03",
+      "courseId": "ch29",
+      "title": "PreparedStatement",
+      "summary": "Learn how to use PreparedStatement for parameterized queries, set parameters with setString() and setInt(), and understand how SQL injection is prevented.",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "overview",
+          "title": "What Is PreparedStatement?",
+          "body": "In this lesson, you will learn:\n\n- The advantages of **PreparedStatement**\n- How to use parameter placeholders (?)\n- Preventing **SQL injection** attacks\n\nThis is a SQL execution method that excels in both security and performance.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "code",
+          "title": "Using Parameterized Queries",
+          "body": "In [[PreparedStatement]], the ? in the SQL statement serves as a placeholder.\nYou bind values to parameters with setString(), setInt(), setDouble(), setDate(), etc.\nParameter indices are 1-based.\nAfter binding, execute with executeQuery() or executeUpdate().\nThe same PreparedStatement object can be reused with different parameters.",
+          "code": "import java.sql.*;\n\n// Creating and using a PreparedStatement\nString sql = \"SELECT * FROM users WHERE age >= ? AND city = ?\";\ntry (PreparedStatement pstmt = conn.prepareStatement(sql)) {\n    // Binding parameters (1-based)\n    pstmt.setInt(1, 20);           // 1st ?\n    pstmt.setString(2, \"Tokyo\");   // 2nd ?\n\n    ResultSet rs = pstmt.executeQuery();\n    while (rs.next()) {\n        System.out.println(rs.getString(\"name\"));\n    }\n}\n\n// PreparedStatement for INSERT\nString insertSql = \"INSERT INTO users (name, age) VALUES (?, ?)\";\ntry (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {\n    // First record\n    pstmt.setString(1, \"Taro\");\n    pstmt.setInt(2, 25);\n    pstmt.executeUpdate();\n\n    // Second record (reuse with new parameters)\n    pstmt.setString(1, \"Hanako\");\n    pstmt.setInt(2, 30);\n    pstmt.executeUpdate();\n}",
+          "note": "Parameter indices are 1-based. Specifying 0 throws a SQLException.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "rule",
+          "title": "Various set Methods",
+          "body": "PreparedStatement provides type-specific set methods.\n| Method | Description |\n|---|---|\n| setString(int, String) | Sets a string-type parameter. |\n| setInt(int, int) | Sets an integer-type parameter. |\n| setDouble(int, double) | Sets a floating-point parameter. |\n| setDate(int, java.sql.Date) | Sets a date-type parameter. |\n| setNull(int, int) | Sets a NULL value. The second argument is a java.sql.Types constant. |\n| setObject(int, Object) | Sets an object generically. |",
+          "code": "import java.sql.*;\n\nString sql = \"INSERT INTO orders \" +\n    \"(product, quantity, price, order_date, memo) \" +\n    \"VALUES (?, ?, ?, ?, ?)\";\n\ntry (PreparedStatement pstmt = conn.prepareStatement(sql)) {\n    pstmt.setString(1, \"Java教科書\");         // VARCHAR\n    pstmt.setInt(2, 3);                        // INTEGER\n    pstmt.setDouble(3, 2980.0);                // DOUBLE\n    pstmt.setDate(4, java.sql.Date.valueOf(\n        \"2024-04-01\"));                        // DATE\n    pstmt.setNull(5, java.sql.Types.VARCHAR);  // NULL\n    pstmt.executeUpdate();\n}\n\n// Generic setting with setObject()\ntry (PreparedStatement pstmt = conn.prepareStatement(\n        \"SELECT * FROM users WHERE id = ?\")) {\n    pstmt.setObject(1, 42);  // Type auto-detected\n    ResultSet rs = pstmt.executeQuery();\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "point",
+          "title": "Preventing SQL Injection",
+          "body": "**SQL injection** is an attack technique that tampers with SQL statements through malicious input.\nUsing string concatenation with Statement is dangerous when input contains SQL syntax.\nPreparedStatement prevents SQL injection because parameter values are not interpreted as SQL syntax.\nBy using ? placeholders, the supplied values are always treated as data.\nFrom a security perspective, SQL that includes user input should always use PreparedStatement.",
+          "code": "import java.sql.*;\n\n// ★ Dangerous example: String concatenation (SQL injection vulnerability)\nString userInput = \"'; DROP TABLE users; --\";\nString dangerousSql = \"SELECT * FROM users WHERE name = '\" \n    + userInput + \"'\"; \n// → SELECT * FROM users WHERE name = ''; DROP TABLE users; --'\n// The table could be dropped!\n\n// ★ Safe example: PreparedStatement\nString safeSql = \"SELECT * FROM users WHERE name = ?\";\ntry (PreparedStatement pstmt = conn.prepareStatement(safeSql)) {\n    pstmt.setString(1, userInput);\n    // → The input is treated as data, not interpreted as SQL\n    ResultSet rs = pstmt.executeQuery();\n    // Executed safely\n}",
+          "note": "Never build SQL with string concatenation. Always use PreparedStatement placeholders.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: PreparedStatement",
+          "body": "PreparedStatement parameter indices are 1-based.\nMemorize the correspondence between the types set with setXxx() and the database column types.\nPreparedStatement can be reused — reset parameters and execute multiple times.\nPassing a SQL string to executeQuery() throws a SQLException (use the no-argument version, not the one [[inherited]] from Statement).\nThe mechanism of **SQL injection** prevention may be tested on the exam.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_03_q1",
+          "lessonId": "ch29_03",
+          "type": "fourChoice",
+          "question": "Which of the following is NOT a benefit of using PreparedStatement?",
+          "code": "try {\n    conn.setAutoCommit(false);\n    stmt.executeUpdate(sql1);\n    stmt.executeUpdate(sql2);\n    conn.commit();\n} catch (SQLException e) {\n    conn.rollback();\n}",
+          "explanation": "The benefits of PreparedStatement are SQL injection prevention and performance improvement. It does not provide automatic transaction management. Transaction management is handled by the Connection object.",
+          "choices": [
+            {
+              "id": "ch29_03_q1_a",
+              "text": "Transactions are automatically managed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_03_q1_b",
+              "text": "It can prevent SQL injection attacks",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_03_q1_c",
+              "text": "The SQL is precompiled for improved performance",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_03_q1_d",
+              "text": "Parameters can be bound to safely execute SQL statements",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_03_q2",
+          "lessonId": "ch29_03",
+          "type": "fillBlank",
+          "question": "In a PreparedStatement SQL string, the symbol that indicates a parameter position is ___.",
+          "code": "try (Connection conn = dataSource.getConnection();\n     PreparedStatement ps = conn.prepareStatement(\n         \"INSERT INTO logs (msg) VALUES (?)\")) {\n    ps.setString(1, message);\n    int rows = ps.executeUpdate();\n}",
+          "explanation": "In PreparedStatement, the ? (question mark) in the SQL statement functions as a placeholder. Values are bound to the ? positions using methods like setString() and setInt().",
+          "choices": [
+            {
+              "id": "ch29_03_q2_a",
+              "text": "? (question mark)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_03_q2_b",
+              "text": ": (colon)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_03_q2_c",
+              "text": "# (hash)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_03_q2_d",
+              "text": "$ (dollar sign)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_03_q3",
+          "lessonId": "ch29_03",
+          "type": "errorFind",
+          "question": "The following code has an error. Which part is problematic?",
+          "code": "import java.sql.*;\n\npublic class Main {\n    public static void main(String[] args) throws SQLException {\n        Connection conn = DriverManager.getConnection(url, user, pw);\n        String sql = \"SELECT * FROM users WHERE id = ?\";\n        PreparedStatement pstmt = conn.prepareStatement(sql);\n        pstmt.setInt(0, 42); // ★\n        ResultSet rs = pstmt.executeQuery();\n    }\n}",
+          "explanation": "PreparedStatement parameter indices are 1-based. setInt(0, 42) specifies the invalid index 0, which causes a SQLException. The correct call is setInt(1, 42).",
+          "choices": [
+            {
+              "id": "ch29_03_q3_a",
+              "text": "The setInt() index is 0 (should be 1-based)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_03_q3_b",
+              "text": "The SQL in prepareStatement() is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_03_q3_c",
+              "text": "executeQuery() requires an argument",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_03_q3_d",
+              "text": "The getConnection() arguments are insufficient",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch29_03_q4",
+          "lessonId": "ch29_03",
+          "type": "multiChoice",
+          "question": "Select all major JDBC interfaces.",
+          "code": null,
+          "explanation": "The major JDBC interfaces are Connection, Statement, ResultSet, and DataSource. There is no interface called Database.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Connection",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "Statement",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "ResultSet",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "DataSource",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "Database",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch29_04",
+      "courseId": "ch29",
+      "title": "Transactions",
+      "summary": "Learn JDBC transaction management. Understand starting transactions with setAutoCommit(false), using commit() and rollback(), Savepoints, and the basics of DataSource.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "overview",
+          "title": "Transaction Management Overview",
+          "body": "In this lesson, you will learn:\n\n- The concept of **transactions** (ACID properties)\n- How to use setAutoCommit(false), commit(), and rollback()\n- Combining [[transactions]] with [[try-with-resources]]\n\nThis is an essential mechanism for maintaining data integrity.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "code",
+          "title": "commit() and rollback()",
+          "body": "In manual **transaction** management, you first call setAutoCommit(false).\nIf a series of SQL operations succeeds, call commit() to finalize; if it fails, call rollback() to undo.\nCalling rollback() undoes all changes since the last commit().\nA try-catch-[[finally]] pattern is commonly used to ensure rollback() on error.\nAfter processing, it is recommended to reset to setAutoCommit(true).",
+          "code": "import java.sql.*;\n\ntry (Connection conn = DriverManager.getConnection(url, user, pw)) {\n    // Disable auto-commit\n    conn.setAutoCommit(false);\n\n    try (Statement stmt = conn.createStatement()) {\n        // Transfer: Withdraw from A\n        stmt.executeUpdate(\n            \"UPDATE accounts SET balance = balance - 10000 \" +\n            \"WHERE name = 'A'\");\n\n        // Transfer: Deposit to B\n        stmt.executeUpdate(\n            \"UPDATE accounts SET balance = balance + 10000 \" +\n            \"WHERE name = 'B'\");\n\n        // Commit if all successful\n        conn.commit();\n        System.out.println(\"送金完了\");\n\n    } catch (SQLException e) {\n        // Rollback on error\n        conn.rollback();\n        System.err.println(\"送金失敗、ロールバック実行\");\n        throw e;\n    }\n}",
+          "note": "Without calling setAutoCommit(false), each SQL statement is automatically committed individually.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "rule",
+          "title": "Savepoint",
+          "body": "A Savepoint is an intermediate checkpoint that can be set within a **transaction**.\n[[Connection]].setSavepoint() creates a Savepoint.\nrollback(Savepoint) allows you to partially roll back to a specific Savepoint.\nRolling back to a Savepoint does not end the transaction itself.\nreleaseSavepoint() releases a Savepoint.\nA named Savepoint is created with setSavepoint([[String]] name).",
+          "code": "import java.sql.*;\n\ntry (Connection conn = DriverManager.getConnection(url, user, pw)) {\n    conn.setAutoCommit(false);\n    Statement stmt = conn.createStatement();\n\n    // Operation 1\n    stmt.executeUpdate(\n        \"INSERT INTO logs (msg) VALUES ('操作1')\");\n\n    // Set a Savepoint\n    Savepoint sp = conn.setSavepoint(\"after_op1\");\n\n    try {\n        // Operation 2 (may fail)\n        stmt.executeUpdate(\n            \"INSERT INTO logs (msg) VALUES ('操作2')\");\n        // Error occurs!\n        throw new SQLException(\"操作2でエラー\");\n    } catch (SQLException e) {\n        // Rollback to Savepoint (Operation 1 is preserved)\n        conn.rollback(sp);\n        System.out.println(\"操作2のみロールバック\");\n    }\n\n    // Commit only Operation 1\n    conn.commit();\n}",
+          "note": "After rolling back to a Savepoint, the **transaction** continues. A final commit() or rollback() is still required.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "point",
+          "title": "DataSource Overview",
+          "body": "DataSource is an alternative means of obtaining JDBC connections, defined by the javax.sql.DataSource interface.\nCompared to DriverManager, its major advantage is support for connection pooling (connection reuse).\nConnection pooling reduces the overhead of creating and destroying connections.\nUsing DataSource is recommended in production applications.\nIt is common to obtain a DataSource through JNDI (Java Naming and Directory Interface).\nThe concept and advantages of DataSource are tested on the exam.",
+          "code": "import javax.sql.DataSource;\nimport java.sql.*;\n\n// DataSource usage example (conceptual code)\n// In practice, an application server or framework\n// provides the DataSource\n\n// Obtain a connection from DataSource\n// DataSource ds = ... (obtained via JNDI or DI)\n// try (Connection conn = ds.getConnection()) {\n//     // Connection is obtained from the pool\n//     Statement stmt = conn.createStatement();\n//     ResultSet rs = stmt.executeQuery(\"SELECT * FROM users\");\n//     while (rs.next()) {\n//         System.out.println(rs.getString(\"name\"));\n//     }\n// } // close() returns the connection to the pool\n\n// Comparison with DriverManager\n// DriverManager: Creates a new connection each time\n// DataSource: Borrows from the pool and returns when done\nSystem.out.println(\"DataSourceはコネクションプーリングをサポート\");",
+          "note": "With DataSource, close() does not physically disconnect but returns the connection to the pool.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch29_04",
+          "sectionType": "tip",
+          "title": "Exam Prep: Transactions",
+          "body": "The default is AutoCommit mode (true), where each SQL statement is automatically committed.\nWithout setAutoCommit(false), commit()/rollback() have no effect.\nrolling back to a Savepoint does not end the **transaction** — this is an important point.\nConnection pooling is a key feature of DataSource.\nMemorize the four elements of ACID properties (Atomicity, Consistency, Isolation, Durability).",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch29_04_q1",
+          "lessonId": "ch29_04",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the default transaction behavior in JDBC?",
+          "code": null,
+          "explanation": "By default in JDBC, AutoCommit mode is enabled (true). Each SQL statement is automatically committed upon execution. To manage transactions manually, you need to call setAutoCommit(false).",
+          "choices": [
+            {
+              "id": "ch29_04_q1_a",
+              "text": "AutoCommit is enabled, and each SQL statement is automatically committed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_04_q1_b",
+              "text": "AutoCommit is disabled, and commit() must be called explicitly",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_04_q1_c",
+              "text": "Transactions are always managed with Savepoints",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_04_q1_d",
+              "text": "The transaction mode must be selected at connection time",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch29_04_q2",
+          "lessonId": "ch29_04",
+          "type": "fourChoice",
+          "question": "Which statement about Savepoint is correct?",
+          "code": null,
+          "explanation": "Calling rollback(Savepoint) undoes changes up to the specified Savepoint. However, the transaction itself does not end. You can continue with more SQL operations and ultimately end the transaction with commit() or rollback().",
+          "choices": [
+            {
+              "id": "ch29_04_q2_a",
+              "text": "Rolling back to a Savepoint does not end the transaction",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_04_q2_b",
+              "text": "Rolling back to a Savepoint automatically commits the transaction",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_04_q2_c",
+              "text": "A Savepoint can be set outside of a transaction",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_04_q2_d",
+              "text": "Only one Savepoint can be set per transaction",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch29_04_q3",
+          "lessonId": "ch29_04",
+          "type": "outputPredict",
+          "question": "What is the correct output of the following code?",
+          "code": "Connection conn = DriverManager.getConnection(url, user, pw);\nSystem.out.println(\"A: \" + conn.getAutoCommit());\nconn.setAutoCommit(false);\nSystem.out.println(\"B: \" + conn.getAutoCommit());\nconn.close();",
+          "explanation": "JDBC connections have AutoCommit set to true by default. getAutoCommit() returns true. After calling setAutoCommit(false) to disable it, getAutoCommit() returns false.",
+          "choices": [
+            {
+              "id": "ch29_04_q3_a",
+              "text": "A: true\nB: false",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch29_04_q3_b",
+              "text": "A: false\nB: true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch29_04_q3_c",
+              "text": "A: true\nB: true",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch29_04_q3_d",
+              "text": "A: false\nB: false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

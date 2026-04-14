@@ -1,0 +1,731 @@
+{
+  "courseId": "ch32",
+  "lessons": [
+    {
+      "id": "ch32_01",
+      "courseId": "ch32",
+      "title": "Types of Modules",
+      "summary": "Learn the differences between named modules, automatic modules, and unnamed modules, as well as the relationship between the module path and the classpath.",
+      "estimatedMinutes": 7,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "overview",
+          "title": "Three Types of Modules",
+          "body": "In this lesson, you will learn:\n\n- The differences between named [[modules]], automatic modules, and unnamed modules\n- The relationship between the [[class]]path and the module path\n- Access and export rules based on module type\n\nThis is an important topic for understanding module interoperability.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "rule",
+          "title": "Named Modules",
+          "body": "Named modules explicitly declare module dependencies and exports in module-info.java.\n**exports** specifies packages to make public, and **requires** declares module dependencies.\nThey must be placed on the module path.\nNamed modules can explicitly control access from other modules.\nThis enables powerful [[encapsulation]].",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "code",
+          "title": "Automatic Modules and Unnamed Modules",
+          "body": "An automatic module's name is determined from the JAR file's manifest or its file name.\nAutomatic modules export all packages and require all modules.\nThe unnamed module contains all classes on the classpath.",
+          "code": "// module-info.java（名前付きモジュール）\nmodule com.example.app {\n    requires com.example.lib;  // 依存関係\n    exports com.example.app.api; // 公開パッケージ\n}\n\n// 自動モジュール:\n// my-library-1.0.jar をモジュールパスに配置\n// → モジュール名は \"my.library\" になる\n\n// 無名モジュール:\n// クラスパスに配置されたクラス\n// java -cp lib.jar com.example.Main",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "point",
+          "title": "Difference Between Module Path and Classpath",
+          "body": "The module path (--module-path or -p) is the path managed by the module system.\nThe classpath (-cp or -classpath) is the path used by traditional Java.\nJAR files on the module path are treated as automatic modules.\nClasses on the classpath belong to the unnamed module.\nA named module cannot require the unnamed module.\nHowever, an automatic module can access the unnamed module.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_01",
+          "sectionType": "tip",
+          "title": "Key Points for the Exam",
+          "body": "The exam tests the characteristics and constraints of the three module types.\nThe constraint that \"a named module cannot require the unnamed module\" is frequently tested.\nThe fact that an automatic module can serve as a bridge between named modules and the unnamed module is also important.\nThe jdeps command can be used to analyze module dependencies.",
+          "code": null,
+          "note": "Use jdeps --module-path to check dependencies.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_01_q1",
+          "lessonId": "ch32_01",
+          "type": "fourChoice",
+          "question": "How is a JAR file without module-info.java treated when placed on the module path?",
+          "code": "module com.example.plugin {\n    uses com.example.spi.Plugin;\n}\n// ServiceLoader usage:\nServiceLoader<Plugin> loader =\n    ServiceLoader.load(Plugin.class);\nloader.forEach(Plugin::init);",
+          "explanation": "A JAR file without module-info.java placed on the module path is treated as an automatic module. If placed on the classpath, it belongs to the unnamed module.",
+          "choices": [
+            {
+              "id": "ch32_01_q1_a",
+              "text": "Automatic module",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_01_q1_b",
+              "text": "Named module",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_01_q1_c",
+              "text": "Unnamed module",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_01_q1_d",
+              "text": "Open module",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_01_q2",
+          "lessonId": "ch32_01",
+          "type": "reorder",
+          "question": "Arrange the steps of the bottom-up approach for migrating classpath-based libraries to the module system in the correct order.",
+          "code": "module com.example.app {\n    requires static com.example.optional;\n    requires transitive com.example.core;\n}",
+          "explanation": "In a bottom-up migration: (1) Identify the lowest-level library in the dependency graph → (2) Add module-info.java to that JAR to make it a named module → (3) Move dependent JARs to the module path (they function as automatic modules) → (4) Sequentially add module-info to higher-level modules to complete the migration.",
+          "choices": [
+            {
+              "id": "ch32_01_q2_a",
+              "text": "Identify the lowest-level library in the dependency graph",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_01_q2_b",
+              "text": "Add module-info.java to that JAR to make it a named module",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch32_01_q2_c",
+              "text": "Move dependent JARs to the module path (automatic module)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch32_01_q2_d",
+              "text": "Sequentially add module-info to higher-level modules to complete",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch32_01_q2_a",
+            "ch32_01_q2_b",
+            "ch32_01_q2_c",
+            "ch32_01_q2_d"
+          ],
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_01_q3",
+          "lessonId": "ch32_01",
+          "type": "fillBlank",
+          "question": "Fill in the short form of the command-line option for specifying the module path.\njava _____ mods -m com.example.app/com.example.Main",
+          "code": "// jlink: カスタムランタイム作成\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
+          "explanation": "The short form of --module-path is -p. It is used to specify the module path when running modules.",
+          "choices": [
+            {
+              "id": "ch32_01_q3_a",
+              "text": "-p",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_01_q3_b",
+              "text": "-mp",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_01_q3_c",
+              "text": "-m",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_01_q3_d",
+              "text": "-cp",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch32_02",
+      "courseId": "ch32",
+      "title": "Service Providers",
+      "summary": "Learn about the service provider mechanism in the module system (provides/uses/ServiceLoader).",
+      "estimatedMinutes": 7,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "overview",
+          "title": "What Are Service Providers?",
+          "body": "In this lesson, you will learn:\n\n- Providing services with provides ... with\n- Declaring service usage with uses\n- Dynamically retrieving implementations with **ServiceLoader**\n\nThis is the service provider mechanism that achieves loose coupling between [[modules]].",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "rule",
+          "title": "The provides...with and uses Directives",
+          "body": "The provides directive declares that a module offers an implementation of a service [[interface]].\nThe syntax is \"provides ServiceInterface with ImplementationClass\".\nThe uses directive declares that a module consumes a service.\nThe syntax is \"uses ServiceInterface\".\nThe service provider and consumer can be separated into different modules.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "code",
+          "title": "Service Provider Implementation Example",
+          "body": "The implementation is divided into three parts: the service interface module, the provider module, and the consumer module.\nUse [[ServiceLoader]] to dynamically retrieve service implementations.",
+          "code": "// サービスインターフェースモジュール\nmodule com.example.api {\n    exports com.example.api;\n}\n\n// サービスプロバイダモジュール\nmodule com.example.provider {\n    requires com.example.api;\n    provides com.example.api.Logger\n        with com.example.provider.FileLogger;\n}\n\n// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    uses com.example.api.Logger;\n}\n\n// ServiceLoaderでサービスを取得\nServiceLoader<Logger> loader = ServiceLoader.load(Logger.class);\nfor (Logger logger : loader) {\n    logger.log(\"Hello\");\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "point",
+          "title": "How ServiceLoader Works",
+          "body": "**ServiceLoader**.load() lazily loads implementations of a service interface.\nIf multiple providers exist, all providers are returned in sequence.\nYou can also use findFirst() to retrieve only the first provider.\nProvider classes must have a no-argument public constructor or a static provider() [[method]].\nThe stream() method allows processing providers as a stream.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_02",
+          "sectionType": "tip",
+          "title": "Service Provider Exam Tips",
+          "body": "The implementation class in provides...with does not need to be exported.\nIf a module uses ServiceLoader without a uses declaration, no services will be found.\nThe implementation class in provides must implement or [[extend]] the service interface.\nA single provides can specify multiple implementation classes separated by commas.",
+          "code": null,
+          "note": "The fact that the provides...with implementation class does not need to be **exported** is frequently tested on the exam.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_02_q1",
+          "lessonId": "ch32_02",
+          "type": "errorFind",
+          "question": "Find the cause of the problem where ServiceLoader returns no services in the following module-info.java.",
+          "code": "// 消費者モジュール\nmodule com.example.app {\n    requires com.example.api;\n    // ServiceLoader.load(Logger.class) が空を返す\n}",
+          "explanation": "To search for services with ServiceLoader, the consumer module must declare `uses com.example.api.Logger;`. Without the uses declaration, ServiceLoader cannot discover service providers.",
+          "choices": [
+            {
+              "id": "ch32_02_q1_a",
+              "text": "Missing uses directive (uses com.example.api.Logger is needed)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_02_q1_b",
+              "text": "Missing provides directive",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_02_q1_c",
+              "text": "Missing exports directive",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_02_q1_d",
+              "text": "No error (the provider is simply not registered)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_02_q2",
+          "lessonId": "ch32_02",
+          "type": "fillBlank",
+          "question": "Complete the service provider declaration.\n_____ com.example.api.Logger with com.example.impl.FileLogger;",
+          "code": "module com.example.reflect {\n    opens com.example.model\n        to com.fasterxml.jackson.databind;\n    exports com.example.api;\n}",
+          "explanation": "The provides directive uses the syntax \"provides ServiceInterface with ImplementationClass\" to declare that the module offers a service implementation.",
+          "choices": [
+            {
+              "id": "ch32_02_q2_a",
+              "text": "provides",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_02_q2_b",
+              "text": "exports",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_02_q2_c",
+              "text": "uses",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_02_q2_d",
+              "text": "implements",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_02_q3",
+          "lessonId": "ch32_02",
+          "type": "fourChoice",
+          "question": "Which statement about the implementation class specified in provides...with is correct?",
+          "code": "module com.example.plugin {\n    uses com.example.spi.Plugin;\n}\n// ServiceLoader usage:\nServiceLoader<Plugin> loader =\n    ServiceLoader.load(Plugin.class);\nloader.forEach(Plugin::init);",
+          "explanation": "The implementation class specified in provides...with does not need to be exported from the module. The module system's service provider mechanism accesses it internally.",
+          "choices": [
+            {
+              "id": "ch32_02_q3_a",
+              "text": "It does not need to be exported with exports",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_02_q3_b",
+              "text": "It must be exported with exports",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_02_q3_c",
+              "text": "It can be an abstract class",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_02_q3_d",
+              "text": "It can be an interface",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch32_02_q4",
+          "lessonId": "ch32_02",
+          "type": "codeComplete",
+          "question": "Complete the module package access configuration.",
+          "code": "module com.example.app {\n    requires static com.example.optional;\n    requires transitive com.example.core;\n}",
+          "explanation": "exports allows compile-time access, while opens allows reflective access. Use to for qualified access to specific modules.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "module com.app {\n    __BLANK_1__ com.app.api;\n    __BLANK_2__ com.app.internal to com.app.test;\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Export",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "exports",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "opens",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "provides",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Qualified access",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "opens",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "exports",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "requires",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch32_03",
+      "courseId": "ch32",
+      "title": "opens and Reflection",
+      "summary": "Learn about controlling reflective access with the opens directive and deep reflection.",
+      "estimatedMinutes": 7,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "overview",
+          "title": "Reflection and the Module System",
+          "body": "In this lesson, you will learn:\n\n- Allowing [[reflection]] access with the opens directive\n- The difference between **exports** and opens\n- Why frameworks (Spring, JPA, etc.) require opens\n\nThis covers the practically important relationship between reflection and [[modules]].",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "rule",
+          "title": "Difference Between exports and opens",
+          "body": "exports allows public access at both [[compile]] time and runtime.\n**opens** allows reflective access at runtime (including private members).\nEven in exported packages, **reflection** cannot access private members.\nIn opened packages, setAccessible(true) enables access to private members as well.\nexports and opens can be used together for the same package.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "code",
+          "title": "How to Use opens",
+          "body": "opens can open a package to all modules or to specific modules only.\nUse opens...to to limit the target modules.\nYou can also declare the entire module as open using open module.",
+          "code": "// 特定パッケージをすべてのモジュールにopen\nmodule com.example.app {\n    opens com.example.app.model;\n}\n\n// 特定パッケージを特定のモジュールにのみopen\nmodule com.example.app {\n    opens com.example.app.model to com.fasterxml.jackson;\n}\n\n// モジュール全体をopen\nopen module com.example.app {\n    exports com.example.app.api;\n    // 全パッケージがリフレクションアクセス可能\n}\n\n// opensされたクラスへのリフレクション\nClass<?> clazz = Class.forName(\"com.example.app.model.User\");\nField field = clazz.getDeclaredField(\"name\");\nfield.setAccessible(true); // opensされていれば成功",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "point",
+          "title": "Deep Reflection and Normal Access",
+          "body": "Normal reflection can only access public members.\nDeep Reflection uses setAccessible(true) to access private members.\nWith exports only, normal reflection is possible but deep reflection is not.\nWith opens, deep reflection becomes possible.\nPerforming deep reflection without opens throws an IllegalAccessException.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_03",
+          "sectionType": "tip",
+          "title": "Considerations for open module",
+          "body": "In an open module, all packages are implicitly opened.\nEven in an open module, exports must be declared separately.\nDeclaring individual opens within an open module causes a compilation error.\nOpen modules are convenient for framework-dependent applications, but [[encapsulation]] becomes weaker.",
+          "code": null,
+          "note": "In an open module, individual opens cannot be written, but exports can.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_03_q1",
+          "lessonId": "ch32_03",
+          "type": "fourChoice",
+          "question": "Which statement about the difference between exports and opens is correct?",
+          "code": "// jlink: カスタムランタイム作成\n// jlink --module-path mods\n//   --add-modules com.example.app\n//   --output myruntime\n\nmodule com.example.app {\n    requires java.base;\n    requires java.sql;\n}",
+          "explanation": "exports allows compile-time and runtime access to public members, but does not allow reflective access to private members. Using opens enables access to private members via setAccessible(true).",
+          "choices": [
+            {
+              "id": "ch32_03_q1_a",
+              "text": "opens allows reflective access to private members, but exports does not",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_03_q1_b",
+              "text": "exports allows all access including reflective access",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_03_q1_c",
+              "text": "opens and exports have exactly the same effect",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_03_q1_d",
+              "text": "opens allows compile-time access, but exports allows only runtime access",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_03_q2",
+          "lessonId": "ch32_03",
+          "type": "fourChoice",
+          "question": "Which statement about open modules is correct?",
+          "code": "module com.example.reflect {\n    opens com.example.model\n        to com.fasterxml.jackson.databind;\n    exports com.example.api;\n}",
+          "explanation": "In an open module, all packages are implicitly opened, but exports must still be declared separately for compile-time public access. Declaring individual opens within an open module causes a compilation error.",
+          "choices": [
+            {
+              "id": "ch32_03_q2_a",
+              "text": "Individual opens declarations within an open module cause a compilation error",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_03_q2_b",
+              "text": "In an open module, exports are also performed automatically",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_03_q2_c",
+              "text": "Additional opens declarations can be added within an open module",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_03_q2_d",
+              "text": "open module was deprecated in Java 17",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_03_q3",
+          "lessonId": "ch32_03",
+          "type": "errorFind",
+          "question": "The following module-info.java has an error. What is the cause?",
+          "code": "open module com.example.app {\n    exports com.example.app.api;\n    opens com.example.app.model;\n}",
+          "explanation": "In an open module, all packages are implicitly opened, so writing individual opens declarations causes a compilation error. However, exports can still be declared.",
+          "choices": [
+            {
+              "id": "ch32_03_q3_a",
+              "text": "opens declarations are not allowed within an open module",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_03_q3_b",
+              "text": "exports declarations are not allowed within an open module",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_03_q3_c",
+              "text": "The position of the open keyword is incorrect",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_03_q3_d",
+              "text": "Dots cannot be used in module names",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch32_04",
+      "courseId": "ch32",
+      "title": "Module Migration",
+      "summary": "Learn the migration strategies (bottom-up and top-down) for transitioning from the classpath to the module system.",
+      "estimatedMinutes": 7,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "overview",
+          "title": "Why Module Migration Is Needed",
+          "body": "In this lesson, you will learn:\n\n- Steps to modularize existing [[class]]path-based projects into [[modules]]\n- Bottom-up and top-down approaches\n- Incremental migration using automatic modules\n\nLearn strategies for modularizing legacy code.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "rule",
+          "title": "Bottom-Up Migration",
+          "body": "Bottom-up migration starts by modularizing the lowest-level libraries in the dependency graph.\nFirst, add module-info.java to libraries that have no dependencies on other modules.\nThen, sequentially modularize the modules that depend on them.\nThis approach is recommended because it minimizes dependencies on automatic modules.\nHowever, it can be difficult to apply when the lower-level libraries are not under your control.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "rule",
+          "title": "Top-Down Migration",
+          "body": "Top-down migration starts by modularizing the application itself (the top level).\nLower-level libraries are placed on the module path and treated as automatic modules.\nAutomatic modules can be referenced via requires from named modules.\nThis approach is effective when you cannot modify the lower-level libraries.\nHowever, it tends to create many dependencies on automatic modules, reducing stability.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "code",
+          "title": "Automatic Module Naming",
+          "body": "The name of an automatic module is determined in two ways.\nIf the JAR's MANIFEST.MF contains an Automatic-Module-Name attribute, that value is used.\nOtherwise, the name is automatically derived from the JAR file name.",
+          "code": "// MANIFEST.MFで指定する方式（推奨）\n// META-INF/MANIFEST.MF:\n// Automatic-Module-Name: com.example.library\n\n// JARファイル名から導出する方式\n// my-library-1.0.jar → my.library\n// 規則:\n//   1. 拡張子(.jar)を除去\n//   2. バージョン部分(-1.0)を除去\n//   3. ハイフン(-)をドット(.)に置換\n\n// module-info.javaでの参照\nmodule com.example.app {\n    requires my.library; // 自動モジュール名\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch32_04",
+          "sectionType": "tip",
+          "title": "Migration Considerations",
+          "body": "Split packages (the same package existing in multiple modules) are prohibited by the module system.\nSplit packages that worked without issues on the classpath can cause errors during module migration.\nUse the jdeps command to analyze dependencies before planning the migration.\nYou can also temporarily add access with the --add-reads and --add-exports options.",
+          "code": null,
+          "note": "Use jdeps -s to display a dependency summary.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch32_04_q1",
+          "lessonId": "ch32_04",
+          "type": "fourChoice",
+          "question": "In a bottom-up migration, which component is modularized first?",
+          "code": null,
+          "explanation": "In a bottom-up migration, you start by adding module-info.java to the lowest-level libraries that have no dependencies on other modules.",
+          "choices": [
+            {
+              "id": "ch32_04_q1_a",
+              "text": "The lowest-level library with no dependencies on other libraries",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_04_q1_b",
+              "text": "The application itself (the top level)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_04_q1_c",
+              "text": "The library with the most classes",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_04_q1_d",
+              "text": "Any library can be started with",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch32_04_q2",
+          "lessonId": "ch32_04",
+          "type": "fourChoice",
+          "question": "Which is the correct way to explicitly specify the name of an automatic module?",
+          "code": null,
+          "explanation": "You can explicitly specify the name of an automatic module by setting the Automatic-Module-Name attribute in the JAR file's META-INF/MANIFEST.MF. This is the recommended approach.",
+          "choices": [
+            {
+              "id": "ch32_04_q2_a",
+              "text": "Set the Automatic-Module-Name attribute in MANIFEST.MF",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_04_q2_b",
+              "text": "Create a module-info.java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_04_q2_c",
+              "text": "Rename the JAR file",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_04_q2_d",
+              "text": "Specify it with a command-line option",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch32_04_q3",
+          "lessonId": "ch32_04",
+          "type": "fillBlank",
+          "question": "In the module system, having the same package exist in multiple modules — known as a \"_____ package\" — is prohibited.",
+          "code": null,
+          "explanation": "A split package occurs when the same package spans multiple modules. While this was tolerated on the classpath, it causes an error in the module system.",
+          "choices": [
+            {
+              "id": "ch32_04_q3_a",
+              "text": "split",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch32_04_q3_b",
+              "text": "duplicate",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch32_04_q3_c",
+              "text": "shared",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch32_04_q3_d",
+              "text": "conflicting",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

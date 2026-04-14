@@ -1,0 +1,528 @@
+{
+  "courseId": "ch01",
+  "lessons": [
+    {
+      "id": "ch01_01",
+      "courseId": "ch01",
+      "title": "What Is Java?",
+      "summary": "Understand the features and use cases of the Java programming language",
+      "estimatedMinutes": 3,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch01_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- The three main features of Java\n- Why Java is widely used in enterprises\n- The relationship between Java SE 11/17 versions and certification exams\n\nLet's start by getting a big-picture understanding.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch01_01",
+          "sectionType": "rule",
+          "title": "Three Key Features of Java",
+          "body": "Java has three main features.\n\n| Feature | Details |\n|---|---|\n| Platform Independent | The same program runs on different operating systems such as Windows, Mac, and Linux |\n| Object-Oriented | A way of representing real-world \"things\" in programs |\n| High Safety | Automatic memory management (GC) and strict type checking |\n\n\"**Write Once, Run Anywhere**\" is the core philosophy of Java.",
+          "code": null,
+          "note": "Java SE 11 and SE 17 are the current major certification exam target versions. The learning content in this app is also based on the SE 11/17 exam scope.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch01_01",
+          "sectionType": "tip",
+          "title": "New Terms Introduced",
+          "body": "- [[Garbage Collection]] (GC): A mechanism that automatically frees memory that is no longer needed. Unlike C, you don't have to manage memory manually.\n\n- **Object-Oriented**: You'll learn about this in detail later. For now, just remember it as \"a way of representing real-world things in programs.\"\n\n- **Compile**: Converting human-readable code (source code) into a format that a computer can execute.",
+          "code": null,
+          "note": "These terms will appear many times going forward. You don't need to memorize them perfectly right now.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch01_01",
+          "sectionType": "rule",
+          "title": "Where Java Is Used",
+          "body": "Java is widely used around the world.\n\n| Field | Examples |\n|---|---|\n| Enterprise Systems | Banking, insurance, logistics, etc. |\n| Web Applications | E-commerce sites, social networks, etc. |\n| Mobile | Android apps |\n| Servers | Large-scale server systems |\n\nJava is especially widely adopted for enterprise system development in Japan.",
+          "code": null,
+          "note": "Learning Java is a great asset for your career and job opportunities.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch01_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Java is a language that is \"platform independent,\" \"**object-oriented**,\" and \"highly safe\"\n- It is widely used in enterprise systems and web applications\n- This app's content is based on the Java SE 11/17 exam scope",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch01_01_q1",
+          "lessonId": "ch01_01",
+          "type": "fourChoice",
+          "question": "Which of the following is a core philosophy of Java?",
+          "code": null,
+          "explanation": "Java was designed with the philosophy \"Write Once, Run Anywhere.\" The same program runs on different operating systems.",
+          "choices": [
+            {
+              "id": "ch01_01_q1_a",
+              "text": "Write Once, Run Anywhere",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch01_01_q1_b",
+              "text": "Code Fast, Deploy Faster",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch01_01_q1_c",
+              "text": "Simple is Best",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_01_q1_d",
+              "text": "Move Fast and Break Things",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch01_01_q2",
+          "lessonId": "ch01_01",
+          "type": "fourChoice",
+          "question": "In which field is Java particularly widely used?",
+          "code": null,
+          "explanation": "Java has a very high adoption rate in enterprise systems (banking, insurance, logistics, etc.). It is especially the de facto standard for enterprise development in Japan.",
+          "choices": [
+            {
+              "id": "ch01_01_q2_a",
+              "text": "Game Development",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch01_01_q2_b",
+              "text": "Enterprise Systems",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch01_01_q2_c",
+              "text": "OS Development",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_01_q2_d",
+              "text": "Machine Learning",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch01_01_q3",
+          "lessonId": "ch01_01",
+          "type": "fillBlank",
+          "question": "Java has a mechanism that automatically frees memory that is no longer needed. This mechanism is called ____.",
+          "code": null,
+          "explanation": "Java has a mechanism called Garbage Collection (GC) that automatically frees memory that is no longer needed. Programmers don't have to manage it manually.",
+          "choices": [
+            {
+              "id": "ch01_01_q3_a",
+              "text": "Garbage Collection",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch01_01_q3_b",
+              "text": "Memory Pool",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch01_01_q3_c",
+              "text": "Heap Manager",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_01_q3_d",
+              "text": "Stack Overflow",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch01_02",
+      "courseId": "ch01",
+      "title": "Understanding the Development Environment",
+      "summary": "Understand the JDK, IDE, and how compilation works",
+      "estimatedMinutes": 4,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch01_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- The role of the **JDK** (Java Development Kit)\n- Types of IDEs (Integrated Development Environments) and how to choose one\n- The flow of \"Source Code → **Compile** → Execute\"\n\nLet's understand the tools needed to write and run Java programs.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch01_02",
+          "sectionType": "rule",
+          "title": "What Is the JDK?",
+          "body": "The **JDK** (Java Development Kit) is the toolbox for creating Java programs.\n\n| Component | Description |\n|---|---|\n| javac (Compiler) | Converts source code into bytecode |\n| java (Runtime) | Runs compiled programs |\n| Other Tools | Debugger, documentation generator, etc. |\n\nOnce you install the JDK, you can start developing in Java.",
+          "code": null,
+          "note": "**JRE** (Java Runtime Environment) is an environment for running programs only. You need the JDK for development.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch01_02",
+          "sectionType": "rule",
+          "title": "What Is an IDE?",
+          "body": "An IDE (Integrated Development Environment) is a convenient tool that lets you write, run, and debug code all in one application.\n\nPopular IDEs for Java:\n| IDE | Description |\n|---|---|\n| Eclipse | Free. Commonly used in training programs in Japan |\n| IntelliJ IDEA | Feature-rich. Community Edition is free |\n| VS Code | Java support available through extensions |\n\nYou can write Java in a simple text editor, but using an IDE greatly improves your productivity.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch01_02",
+          "sectionType": "code",
+          "title": "The Compilation and Execution Flow",
+          "body": "A Java program follows the flow of \"Source Code → **Compile** → Execute.\"",
+          "code": "// === Javaプログラムの実行手順 ===\n\n// ステップ1: ソースファイルを作成する\n//   Hello.java というファイル名で保存\n\n// ステップ2: コンパイル（ソースコードを変換）\n//   javac Hello.java\n//   → Hello.class（バイトコード）が生成される\n\n// ステップ3: 実行（プログラムを動かす）\n//   java Hello\n//   → 画面にメッセージが表示される",
+          "note": ".java files are human-readable source code, and .class files are **bytecode** that the JVM can execute.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch01_02",
+          "sectionType": "tip",
+          "title": "Watch Out for the Difference Between JDK and JRE",
+          "body": "This is a point that beginners often find confusing.\n\n| Name | Full Name | Role |\n|---|---|---|\n| JDK | Java Development Kit | Development + Execution (for developers) |\n| JRE | Java Runtime Environment | Execution only (for end users) |\n\nYou need the JDK to write programs. With only the JRE, you cannot **compile**.",
+          "code": null,
+          "note": "Since Java 11, the JRE is no longer distributed separately. Installing the JDK includes the runtime environment as well.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch01_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- The JDK is an essential toolbox for Java development\n- Using an IDE significantly improves development efficiency\n- Java follows the flow of \"Source Code → **Compile** → Execute\"\n- .java is the source file, .class is the **bytecode**",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch01_02_q1",
+          "lessonId": "ch01_02",
+          "type": "fourChoice",
+          "question": "Which of the following is NOT included in the JDK?",
+          "code": null,
+          "explanation": "The JDK includes the compiler (javac), the runtime (java), and a debugger, among other tools, but it does not include a web browser.",
+          "choices": [
+            {
+              "id": "ch01_02_q1_a",
+              "text": "Compiler (javac)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch01_02_q1_b",
+              "text": "Runtime (java)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch01_02_q1_c",
+              "text": "Web Browser",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch01_02_q1_d",
+              "text": "Debugger",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch01_02_q2",
+          "lessonId": "ch01_02",
+          "type": "reorder",
+          "question": "Arrange the steps for running a Java program in the correct order.",
+          "code": null,
+          "explanation": "Java follows the flow of: (1) Write the source code → (2) Compile with javac → (3) Execute with the java command.",
+          "choices": [
+            {
+              "id": "ch01_02_q2_a",
+              "text": "Compile with javac",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch01_02_q2_b",
+              "text": "Execute with the java command",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch01_02_q2_c",
+              "text": "Write the source code",
+              "isCorrect": true,
+              "order": 1
+            }
+          ],
+          "correctOrder": [
+            "ch01_02_q2_c",
+            "ch01_02_q2_a",
+            "ch01_02_q2_b"
+          ],
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch01_02_q3",
+          "lessonId": "ch01_02",
+          "type": "fourChoice",
+          "question": "What is the file extension of the file generated after compilation?",
+          "code": null,
+          "explanation": "When you compile with the javac command, a .class file (bytecode) is generated. This is the format that the JVM (Java Virtual Machine) executes.",
+          "choices": [
+            {
+              "id": "ch01_02_q3_a",
+              "text": ".exe",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch01_02_q3_b",
+              "text": ".class",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch01_02_q3_c",
+              "text": ".jar",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_02_q3_d",
+              "text": ".bin",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch01_03",
+      "courseId": "ch01",
+      "title": "Your First Program",
+      "summary": "Understand the structure of a Hello World program",
+      "estimatedMinutes": 4,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch01_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you'll learn:\n\n- The basic structure of a Java program ([[Class]] and [[Method]])\n- Your first Java program: \"Hello World\"\n- The meaning and boilerplate of the **main method**\n\nLet's understand your first program and take the first step in Java.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch01_03",
+          "sectionType": "code",
+          "title": "Hello World",
+          "body": "The simplest program that displays text on the screen in Java.",
+          "code": "// Javaプログラムの基本構造\n// すべてのコードは「クラス」の中に書く\npublic class Hello {\n    // mainメソッド: プログラムの開始地点\n    public static void main(String[] args) {\n        // コンソールにメッセージを表示する\n        System.out.println(\"Hello, World!\");\n    }\n}",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch01_03",
+          "sectionType": "tip",
+          "title": "The main Method Is \"Boilerplate\"",
+          "body": "It's perfectly fine if you don't understand the following code at first.\n\npublic static void main([[String]][] args)\n\nThis single line is the boilerplate that indicates \"the entry point of the program.\"\n\n| Keyword | Meaning |\n|---|---|\n| public | Accessible from anywhere |\n| static | Can be called directly from the class |\n| void | No return value |\n| main | The starting point of the program |\n| String[] args | Receives command-line arguments |\n\nFor now, just remember that \"Java programs start with this form.\"",
+          "code": null,
+          "note": "The detailed meaning of each keyword will be covered in Chapter 5: \"Methods\" and beyond.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch01_03",
+          "sectionType": "rule",
+          "title": "Program Structure",
+          "body": "1. public class Hello\n   Java programs are always written inside a \"class.\" The file name must match the class name (Hello.java).\n\n2. public static void main(String[] args)\n   This is the \"main method.\" Every Java program starts execution from here. Remember it as boilerplate.\n\n3. System.out.println(\"Hello, World!\");\n   This is the command to display text on the screen. Every statement must end with a semicolon (;).",
+          "code": null,
+          "note": "Java is case-sensitive. The 'S' in System is uppercase.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch01_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Java programs are written inside a class\n- Execution starts from the main method\n- Statements must end with a semicolon (;)\n- The file name must match the class name",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch01_03_q1",
+          "lessonId": "ch01_03",
+          "type": "outputPredict",
+          "question": "What will be displayed when the following program is executed?",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}",
+          "explanation": "System.out.println() displays the string inside the parentheses exactly as-is on the screen.",
+          "choices": [
+            {
+              "id": "ch01_03_q1_a",
+              "text": "Hello, World!",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch01_03_q1_b",
+              "text": "hello, world!",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch01_03_q1_c",
+              "text": "HELLO, WORLD!",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_03_q1_d",
+              "text": "An error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "Hello, World!\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch01_03_q2",
+          "lessonId": "ch01_03",
+          "type": "errorFind",
+          "question": "The following code has an error. What is the cause?",
+          "code": "public class Hello {\n    public static void main(String[] args) {\n        System.out.println(\"Hello\")\n    }\n}",
+          "explanation": "In Java, every statement must end with a semicolon (;). The code has a compilation error because there is no semicolon after println(\"Hello\").",
+          "choices": [
+            {
+              "id": "ch01_03_q2_a",
+              "text": "The class name is wrong",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch01_03_q2_b",
+              "text": "A semicolon is missing",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch01_03_q2_c",
+              "text": "The main method is written incorrectly",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_03_q2_d",
+              "text": "println is misspelled",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:3: error: ';' expected\n        System.out.println(\"Hello\")\n                                   ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "Hello\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch01_03_q3",
+          "lessonId": "ch01_03",
+          "type": "fillBlank",
+          "question": "Complete the method that serves as the entry point of a Java program.",
+          "code": "public class Main {\n    public static void _____(String[] args) {\n        System.out.println(\"Start!\");\n    }\n}",
+          "explanation": "The entry point of a Java program is the main method. public static void main(String[] args) is the entry point of a Java program.",
+          "choices": [
+            {
+              "id": "ch01_03_q3_a",
+              "text": "main",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch01_03_q3_b",
+              "text": "start",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch01_03_q3_c",
+              "text": "run",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch01_03_q3_d",
+              "text": "init",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

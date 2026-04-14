@@ -1,0 +1,775 @@
+{
+  "courseId": "ch26",
+  "lessons": [
+    {
+      "id": "ch26_01",
+      "courseId": "ch26",
+      "title": "Overview of the java.time Package",
+      "summary": "Learn about the core classes of the java.time package introduced in Java 8. Understand how to create LocalDate, LocalTime, and LocalDateTime, and the immutable design philosophy.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch26_01",
+          "sectionType": "overview",
+          "title": "Overview of the Date & Time API",
+          "body": "In this lesson, you will learn:\n\n- The design philosophy of the java.time package (immutable, [[thread]]-safe)\n- Differences between **LocalDate**, **LocalTime**, and [[LocalDateTime]]\n- Creating instances using now() and of()\n\nThis is the new API that resolves the issues of the old Date/Calendar.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch26_01",
+          "sectionType": "rule",
+          "title": "LocalDate, LocalTime, and LocalDateTime",
+          "body": "| Class | Description |\n|---|---|\n| LocalDate | Represents only year, month, and day without time information. Expressed in ISO 8601 format (yyyy-MM-dd). |\n| LocalTime | Represents hours, minutes, seconds, and nanoseconds without date information. |\n| LocalDateTime | Represents both date and time. |\nAll of these are **immutable**, and operation [[methods]] return new [[instances]].\nSince the original object is not modified, changes are not reflected unless the return value is captured.\nThe [[constructor]] is private, so code like new LocalDate() results in a [[compile]] error.",
+          "code": "import java.time.LocalDate;\nimport java.time.LocalTime;\nimport java.time.LocalDateTime;\n\n// Current date and time\nLocalDate today = LocalDate.now();\nLocalTime now = LocalTime.now();\nLocalDateTime dateTime = LocalDateTime.now();\n\nSystem.out.println(today);    // e.g.: 2024-04-01\nSystem.out.println(now);      // e.g.: 14:30:15.123\nSystem.out.println(dateTime); // e.g.: 2024-04-01T14:30:15.123\n\n// Verifying immutability\nLocalDate d = LocalDate.of(2024, 1, 1);\nd.plusDays(10);  // Return value not captured!\nSystem.out.println(d); // 2024-01-01 (unchanged)\n\nLocalDate d2 = d.plusDays(10); // Capture the new instance\nSystem.out.println(d2); // 2024-01-11",
+          "note": "Not capturing the return value of an operation method, resulting in no change being reflected, is a very common trick question on exams.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch26_01",
+          "sectionType": "code",
+          "title": "How to Create Instances",
+          "body": "The now() method retrieves the current date/time.\nThe of() method creates an instance with specified values. The month can be specified as int or Month enum type.\nThe parse() method creates an instance from a string.\nSpecifying invalid values throws a DateTimeException (e.g., month 13, day 32).\nLocalDateTime can also be created from a LocalDate and LocalTime.",
+          "code": "import java.time.*;\n\n// of() method\nLocalDate d1 = LocalDate.of(2024, 3, 15);       // int specification\nLocalDate d2 = LocalDate.of(2024, Month.MARCH, 15); // Month enum\nLocalTime t1 = LocalTime.of(14, 30);             // hours, minutes\nLocalTime t2 = LocalTime.of(14, 30, 45);         // hours, minutes, seconds\nLocalDateTime dt1 = LocalDateTime.of(2024, 3, 15, 14, 30);\n\n// Create from LocalDate + LocalTime\nLocalDateTime dt2 = LocalDateTime.of(d1, t1);\n\n// parse() method\nLocalDate d3 = LocalDate.parse(\"2024-03-15\");\nLocalTime t3 = LocalTime.parse(\"14:30:45\");\nLocalDateTime dt3 = LocalDateTime.parse(\"2024-03-15T14:30:45\");\n\n// Invalid value → DateTimeException\ntry {\n    LocalDate invalid = LocalDate.of(2024, 13, 1); // Month is 13\n} catch (DateTimeException e) {\n    System.out.println(e.getMessage());\n}",
+          "note": "\"//\" in code indicates a comment (explanation text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch26_01",
+          "sectionType": "point",
+          "title": "Relationship with Month and Prohibition of new",
+          "body": "The month can be specified using int type (1–12) or Month enum type.\nMonth.JANUARY = January, Month.DECEMBER = December, and it is not zero-based.\nThis is an improvement over the counter-intuitive specification of the old API where Calendar.JANUARY = 0.\nDirect constructor calls such as new **LocalDate**() are not allowed and result in a compile error.\nBy using factory methods, the creation of objects in invalid states is prevented.",
+          "code": "// Using Month enum\nMonth m = Month.APRIL;\nSystem.out.println(m.getValue()); // 4\nSystem.out.println(m.name());     // APRIL\n\n// Get number of days from Month enum\nSystem.out.println(Month.FEBRUARY.length(false)); // 28 (non-leap year)\nSystem.out.println(Month.FEBRUARY.length(true));  // 29 (leap year)\n\n// new cannot be used\n// LocalDate d = new LocalDate(); // Compile error",
+          "note": "In the old Calendar API, months were zero-based (0 = January), but in java.time they are one-based (1 = January).",
+          "order": 4
+        },
+        {
+          "lessonId": "ch26_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: Date & Time Basics",
+          "body": "On the Gold exam, the pattern of not capturing the return value of **immutable** operations is very common.\nAlso remember that instance creation with the new operator results in a compile error.\nPassing a string in an invalid format to parse() causes a DateTimeParseException.\nLocalDate does not have a time() method. To work with time, use LocalTime or LocalDateTime.\nAlso be careful with methods for converting between LocalDate and LocalTime.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch26_01_q1",
+          "lessonId": "ch26_01",
+          "type": "fourChoice",
+          "question": "Which of the following is a correct description about the date and time classes in the java.time package?",
+          "code": null,
+          "explanation": "LocalDate, LocalTime, and LocalDateTime in the java.time package are all immutable. Operation methods return new instances, and the original object is not modified. Since the constructor is private, they cannot be created with new.",
+          "choices": [
+            {
+              "id": "ch26_01_q1_a",
+              "text": "All are immutable, and operation methods return new instances",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_01_q1_b",
+              "text": "They are mutable, and operation methods modify and return themselves",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_01_q1_c",
+              "text": "Instances can be created with the new operator",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_01_q1_d",
+              "text": "LocalDate includes timezone information",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch26_01_q2",
+          "lessonId": "ch26_01",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "import java.time.LocalDate;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate d = LocalDate.of(2024, 1, 31);\n        d.plusMonths(1);\n        System.out.println(d);\n    }\n}",
+          "explanation": "Since LocalDate is immutable, changes are not reflected unless the return value of plusMonths(1) is captured. d remains the original 2024-01-31. This is an important characteristic of the java.time API and a frequently tested pattern on exams.",
+          "choices": [
+            {
+              "id": "ch26_01_q2_a",
+              "text": "2024-01-31",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_01_q2_b",
+              "text": "2024-02-29",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_01_q2_c",
+              "text": "2024-02-28",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_01_q2_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch26_01_q3",
+          "lessonId": "ch26_01",
+          "type": "fillBlank",
+          "question": "To get the current date, use the LocalDate.___() method.",
+          "code": null,
+          "explanation": "LocalDate.now() is a factory method that returns the current date. of() creates an instance with a specified year, month, and day, and parse() creates an instance from a string.",
+          "choices": [
+            {
+              "id": "ch26_01_q3_a",
+              "text": "now",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_01_q3_b",
+              "text": "today",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_01_q3_c",
+              "text": "current",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_01_q3_d",
+              "text": "getInstance",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch26_02",
+      "courseId": "ch26",
+      "title": "Date and Time Operations",
+      "summary": "Learn how to use addition/subtraction methods (plus/minus), field modification methods (with), and the Period and Duration classes that represent time intervals.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch26_02",
+          "sectionType": "overview",
+          "title": "How to Manipulate Date and Time",
+          "body": "In this lesson, you will learn:\n\n- Adding and subtracting dates/times with plus/minus [[methods]]\n- Modifying specific fields with with methods\n- Using [[Period]] (date interval) and [[Duration]] (time interval)\n\n[[Immutable object]] operation methods return new objects.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch26_02",
+          "sectionType": "rule",
+          "title": "plus/minus Methods",
+          "body": "| Class | Main Methods |\n|---|---|\n| LocalDate | plusDays(), plusWeeks(), plusMonths(), plusYears() |\n| LocalTime | plusHours(), plusMinutes(), plusSeconds(), plusNanos() |\n| LocalDateTime | All of the above methods |\n\nWhen adding months to an end-of-month date, the day is automatically adjusted (e.g., Jan 31 + 1 month = Feb 28 or 29).\nMultiple operations can be chained using method chaining.",
+          "code": "import java.time.LocalDate;\nimport java.time.LocalTime;\nimport java.time.LocalDateTime;\n\nLocalDate d = LocalDate.of(2024, 3, 15);\nSystem.out.println(d.plusDays(10));    // 2024-03-25\nSystem.out.println(d.plusMonths(2));   // 2024-05-15\nSystem.out.println(d.minusYears(1));  // 2023-03-15\n\n// End-of-month adjustment\nLocalDate jan31 = LocalDate.of(2024, 1, 31);\nSystem.out.println(jan31.plusMonths(1)); // 2024-02-29 (leap year)\n\nLocalDate jan31b = LocalDate.of(2023, 1, 31);\nSystem.out.println(jan31b.plusMonths(1)); // 2023-02-28 (non-leap year)\n\n// Method chaining\nLocalDate result = d.plusDays(5).plusMonths(1).minusYears(2);\nSystem.out.println(result); // 2022-04-20",
+          "note": "End-of-month auto-adjustment is frequently tested on Gold exams. Adding 1 month to Jan 31 gives Feb 28 (or 29).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch26_02",
+          "sectionType": "code",
+          "title": "with Method and TemporalAdjusters",
+          "body": "The with methods return a new [[instance]] with a specific field changed to the specified value.\nMethods include withDayOfMonth(), withMonth(), withYear(), etc.\nSpecifying an invalid value throws a DateTimeException.\nThe TemporalAdjusters class makes it easy to perform complex adjustments like \"next Monday\" or \"last day of the month.\"",
+          "code": "import java.time.LocalDate;\nimport java.time.temporal.TemporalAdjusters;\nimport java.time.DayOfWeek;\n\nLocalDate d = LocalDate.of(2024, 3, 15);\n\n// with methods\nSystem.out.println(d.withDayOfMonth(1));  // 2024-03-01\nSystem.out.println(d.withMonth(6));       // 2024-06-15\nSystem.out.println(d.withYear(2025));     // 2025-03-15\n\n// TemporalAdjusters\nSystem.out.println(d.with(TemporalAdjusters.firstDayOfMonth()));  // 2024-03-01\nSystem.out.println(d.with(TemporalAdjusters.lastDayOfMonth()));   // 2024-03-31\nSystem.out.println(d.with(TemporalAdjusters.next(DayOfWeek.MONDAY))); // Next Monday\nSystem.out.println(d.with(TemporalAdjusters.firstDayOfNextMonth())); // 2024-04-01",
+          "note": "\"//\" in code indicates a comment (explanation text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch26_02",
+          "sectionType": "point",
+          "title": "Period and Duration",
+          "body": "Period represents a period in years, months, and days, and is used with LocalDate.\nDuration represents a period in hours, minutes, seconds, and nanoseconds, and is used with LocalTime and [[LocalDateTime]].\nPeriod.between() calculates the period between two dates.\nDuration.between() calculates the period between two times.\nApplying a Period to LocalTime or a Duration to LocalDate throws an UnsupportedTemporalTypeException.",
+          "code": "import java.time.*;\n\n// Period (date-based period)\nPeriod p1 = Period.of(1, 2, 3);  // 1 year, 2 months, 3 days\nPeriod p2 = Period.ofMonths(6);   // 6 months\nPeriod p3 = Period.between(\n    LocalDate.of(2024, 1, 1),\n    LocalDate.of(2024, 4, 15)\n); // 3 months, 14 days\n\nLocalDate d = LocalDate.of(2024, 1, 1);\nSystem.out.println(d.plus(p1)); // 2025-03-04\n\n// Duration (time-based period)\nDuration d1 = Duration.ofHours(5);    // 5 hours\nDuration d2 = Duration.ofMinutes(90); // 90 minutes\nDuration d3 = Duration.between(\n    LocalTime.of(10, 0),\n    LocalTime.of(14, 30)\n); // 4 hours 30 minutes\n\nLocalTime t = LocalTime.of(10, 0);\nSystem.out.println(t.plus(d1)); // 15:00\n\n// Type mismatch → exception\n// LocalTime.now().plus(p1); // UnsupportedTemporalTypeException",
+          "note": "Remember that Period is for LocalDate and Duration is for LocalTime. Confusing them is a common exam question.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch26_02",
+          "sectionType": "tip",
+          "title": "Exam Prep: Date Operations",
+          "body": "End-of-month auto-adjustment (Jan 31 + 1 month = Feb 28/29) is guaranteed to appear on exams.\nRemember the distinction between Period and Duration (Period for dates, Duration for times).\nAlso remember that ChronoUnit.DAYS.between() can be used to calculate the number of days between two dates.\nPeriod's toTotalMonths() method can be used to get the total number of months.\nDuration's toHours() and toMinutes() methods can be used for unit conversion.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch26_02_q1",
+          "lessonId": "ch26_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "import java.time.LocalDate;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate d = LocalDate.of(2024, 1, 31);\n        d = d.plusMonths(1);\n        System.out.println(d);\n    }\n}",
+          "explanation": "2024 is a leap year, so February has 29 days. When adding 1 month to January 31, since the 31st does not exist in February, it is automatically adjusted to the last day of February (29th). The return value is assigned back to d, so the change is reflected.",
+          "choices": [
+            {
+              "id": "ch26_02_q1_a",
+              "text": "2024-02-29",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_02_q1_b",
+              "text": "2024-02-28",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_02_q1_c",
+              "text": "2024-01-31",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_02_q1_d",
+              "text": "DateTimeException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch26_02_q2",
+          "lessonId": "ch26_02",
+          "type": "fourChoice",
+          "question": "Which of the following descriptions about Period and Duration is correct?",
+          "code": null,
+          "explanation": "Period represents a date-based period (years, months, days) and is used with LocalDate. Duration is used with time-based objects such as LocalTime and Instant. Applying a Period to LocalTime causes an UnsupportedTemporalTypeException.",
+          "choices": [
+            {
+              "id": "ch26_02_q2_a",
+              "text": "Period is used with LocalDate, and Duration is used with LocalTime",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_02_q2_b",
+              "text": "Period is used with LocalTime, and Duration is used with LocalDate",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_02_q2_c",
+              "text": "Both Period and Duration can be used with LocalDate",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_02_q2_d",
+              "text": "Period and Duration are aliases for the same class",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch26_02_q3",
+          "lessonId": "ch26_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "import java.time.LocalDate;\nimport java.time.Period;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate d1 = LocalDate.of(2024, 1, 1);\n        LocalDate d2 = LocalDate.of(2024, 3, 15);\n        Period p = Period.between(d1, d2);\n        System.out.println(p.getMonths() + \" months \" + p.getDays() + \" days\");\n    }\n}",
+          "explanation": "Period.between() calculates the period between two dates. From 2024-01-01 to 2024-03-15 is 2 months and 14 days. getMonths() returns 2 and getDays() returns 14.",
+          "choices": [
+            {
+              "id": "ch26_02_q3_a",
+              "text": "2 months 14 days",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_02_q3_b",
+              "text": "2 months 15 days",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_02_q3_c",
+              "text": "3 months 14 days",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_02_q3_d",
+              "text": "74 months 0 days",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch26_02_q4",
+          "lessonId": "ch26_02",
+          "type": "codeComplete",
+          "question": "Complete the code to manipulate dates using LocalDate.",
+          "code": null,
+          "explanation": "LocalDate.now() retrieves the current date, and plusDays() adds the specified number of days. Since it is an immutable object, a new instance is returned.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "LocalDate today = LocalDate.__BLANK_1__();\nLocalDate nextWeek = today.__BLANK_2__(7);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "(1) Current date",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "now",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "today",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "current",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "(2) Add days",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "plusDays",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "addDays",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "plus",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch26_03",
+      "courseId": "ch26",
+      "title": "DateTimeFormatter",
+      "summary": "Learn about formatting and parsing dates and times. Understand predefined formatters, how to specify custom patterns, and how to use the format() and parse() methods.",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch26_03",
+          "sectionType": "overview",
+          "title": "What Is DateTimeFormatter?",
+          "body": "In this lesson, you will learn:\n\n- Predefined formatters in [[DateTimeFormatter]]\n- Creating custom formats with ofPattern()\n- Converting strings to date/time objects with parse()\n\nConverting between date/time and strings is a frequently used operation in practice.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch26_03",
+          "sectionType": "rule",
+          "title": "Predefined Formatters",
+          "body": "DateTimeFormatter provides predefined formatters for ISO standards.\nISO_LOCAL_DATE: yyyy-MM-dd format (e.g., 2024-03-15)\nISO_LOCAL_TIME: HH:mm:ss format (e.g., 14:30:45)\nISO_LOCAL_DATE_TIME: yyyy-MM-ddTHH:mm:ss format (e.g., 2024-03-15T14:30:45)\nThese are the same format as toString() of LocalDate, LocalTime, etc.\nLocale-aware formatting is also possible using ofLocalizedDate() with FormatStyle.",
+          "code": "import java.time.LocalDate;\nimport java.time.LocalDateTime;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.FormatStyle;\nimport java.util.Locale;\n\nLocalDate d = LocalDate.of(2024, 3, 15);\n\n// Predefined formatter\nString s1 = d.format(DateTimeFormatter.ISO_LOCAL_DATE);\nSystem.out.println(s1); // 2024-03-15\n\nLocalDateTime dt = LocalDateTime.of(2024, 3, 15, 14, 30);\nString s2 = dt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);\nSystem.out.println(s2); // 2024-03-15T14:30:00\n\n// Locale-aware format\nDateTimeFormatter jf = DateTimeFormatter\n    .ofLocalizedDate(FormatStyle.FULL)\n    .withLocale(Locale.JAPAN);\nSystem.out.println(d.format(jf)); // 2024年3月15日金曜日",
+          "note": "ISO_LOCAL_DATE_TIME uses the T separator between date and time.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch26_03",
+          "sectionType": "code",
+          "title": "Custom Patterns (ofPattern)",
+          "body": "You can specify a custom format pattern with **DateTimeFormatter**.ofPattern().\nMain pattern characters: y (year), M (month), d (day), H (hour 24h), h (hour 12h), m (minute), s (second)\nPay attention to the difference between uppercase and lowercase (M is month, m is minute, H is 24-hour, h is 12-hour).\nThe number of repeated pattern characters determines the output digit count (yy is 2-digit year, yyyy is 4-digit year).\nCharacters enclosed in single quotes are output as [[literals]].",
+          "code": "import java.time.LocalDateTime;\nimport java.time.format.DateTimeFormatter;\n\nLocalDateTime dt = LocalDateTime.of(2024, 3, 15, 14, 30, 45);\n\n// Custom patterns\nDateTimeFormatter f1 = DateTimeFormatter.ofPattern(\"yyyy/MM/dd\");\nSystem.out.println(dt.format(f1)); // 2024/03/15\n\nDateTimeFormatter f2 = DateTimeFormatter.ofPattern(\"yyyy年MM月dd日 HH時mm分\");\nSystem.out.println(dt.format(f2)); // 2024年03月15日 14時30分\n\nDateTimeFormatter f3 = DateTimeFormatter.ofPattern(\"MM-dd-yyyy\");\nSystem.out.println(dt.format(f3)); // 03-15-2024\n\n// Note: Using a time pattern with LocalDate causes an error\nLocalDate d = LocalDate.of(2024, 3, 15);\nDateTimeFormatter f4 = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\n// d.format(f4); // UnsupportedTemporalTypeException",
+          "note": "\"//\" in code indicates a comment (explanation text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch26_03",
+          "sectionType": "point",
+          "title": "How to Use parse()",
+          "body": "The parse() [[method]] creates a date/time object from a string.\nIt is used in the form **LocalDate**.parse(string, formatter).\nIf the formatter is omitted, it parses using the ISO standard format (yyyy-MM-dd, etc.).\nPassing a string that does not match the pattern throws a DateTimeParseException.\nThe formatter pattern and the string format must match exactly.",
+          "code": "import java.time.LocalDate;\nimport java.time.LocalDateTime;\nimport java.time.format.DateTimeFormatter;\n\n// Parse with default format\nLocalDate d1 = LocalDate.parse(\"2024-03-15\");\nSystem.out.println(d1); // 2024-03-15\n\n// Parse with custom pattern\nDateTimeFormatter f = DateTimeFormatter.ofPattern(\"yyyy/MM/dd\");\nLocalDate d2 = LocalDate.parse(\"2024/03/15\", f);\nSystem.out.println(d2); // 2024-03-15\n\n// Parse error\ntry {\n    LocalDate.parse(\"2024/03/15\"); // Not in ISO format, so error\n} catch (Exception e) {\n    System.out.println(\"DateTimeParseException\");\n}\n\n// Parsing LocalDateTime\nDateTimeFormatter dtf = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\nLocalDateTime dt = LocalDateTime.parse(\"2024/03/15 14:30\", dtf);\nSystem.out.println(dt); // 2024-03-15T14:30",
+          "note": "parse() and format() are inverse operations. You can round-trip format → parse with the same formatter.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch26_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: Format and Parse",
+          "body": "On the Gold exam, you will be tested on your precise understanding of the ofPattern() pattern characters.\nThe difference between M and m (M = month, m = minute) and the difference between H and h (H = 24-hour, h = 12-hour) are essential.\nUsing a time pattern on a LocalDate throws an UnsupportedTemporalTypeException.\nWhen parsing, if the format does not match, a DateTimeParseException occurs.\nformat() can be called from both the formatter and the object (dt.format(f) and f.format(dt) produce the same result).",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch26_03_q1",
+          "lessonId": "ch26_03",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "import java.time.LocalDateTime;\nimport java.time.format.DateTimeFormatter;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDateTime dt = LocalDateTime.of(2024, 3, 5, 9, 7);\n        DateTimeFormatter f = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\n        System.out.println(dt.format(f));\n    }\n}",
+          "explanation": "With the pattern ofPattern(\"yyyy/MM/dd HH:mm\"), the year is displayed in 4 digits, the month and day in 2 digits (zero-padded), and the 24-hour time and minutes are also displayed in 2 digits. March is displayed as 03, the 5th as 05, 9 o'clock as 09, and 7 minutes as 07.",
+          "choices": [
+            {
+              "id": "ch26_03_q1_a",
+              "text": "2024/03/05 09:07",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_03_q1_b",
+              "text": "2024/3/5 9:7",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_03_q1_c",
+              "text": "2024-03-05T09:07",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_03_q1_d",
+              "text": "DateTimeParseException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch26_03_q2",
+          "lessonId": "ch26_03",
+          "type": "fillBlank",
+          "question": "To specify a custom pattern with DateTimeFormatter, use the DateTimeFormatter.___() method.",
+          "code": null,
+          "explanation": "You can create a custom formatter by passing a pattern string to the DateTimeFormatter.ofPattern() method. Pattern characters include y (year), M (month), d (day), H (hour), m (minute), s (second), etc.",
+          "choices": [
+            {
+              "id": "ch26_03_q2_a",
+              "text": "ofPattern",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_03_q2_b",
+              "text": "format",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_03_q2_c",
+              "text": "newPattern",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_03_q2_d",
+              "text": "createFormat",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch26_03_q3",
+          "lessonId": "ch26_03",
+          "type": "fourChoice",
+          "question": "Which of the following is the correct combination of DateTimeFormatter pattern characters?",
+          "code": null,
+          "explanation": "M (uppercase) represents month, and m (lowercase) represents minute. H (uppercase) represents 24-hour format hour, and h (lowercase) represents 12-hour format hour. This uppercase/lowercase distinction is frequently tested on exams.",
+          "choices": [
+            {
+              "id": "ch26_03_q3_a",
+              "text": "M=month, m=minute, H=24-hour hour, h=12-hour hour",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_03_q3_b",
+              "text": "M=minute, m=month, H=12-hour hour, h=24-hour hour",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_03_q3_c",
+              "text": "M=month, m=minute, H=12-hour hour, h=24-hour hour",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_03_q3_d",
+              "text": "M=minute, m=month, H=24-hour hour, h=12-hour hour",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch26_03_q4",
+          "lessonId": "ch26_03",
+          "type": "multiChoice",
+          "question": "Select all classes that belong to the java.time package.",
+          "code": null,
+          "explanation": "LocalDate, LocalTime, Duration, and Period are classes in java.time. Calendar is a legacy API from java.util.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "LocalDate",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "LocalTime",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "Duration",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "Calendar",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "Period",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch26_04",
+      "courseId": "ch26",
+      "title": "ZonedDateTime and Instant",
+      "summary": "Learn about the ZonedDateTime class for handling time zones and the Instant class representing epoch-based time points. Understand how to use ZoneId and how to convert between types.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch26_04",
+          "sectionType": "overview",
+          "title": "Time Zones and Instant",
+          "body": "In this lesson, you will learn:\n\n- Handling timezone-aware date/time with [[ZonedDateTime]]\n- Generating date/time from epoch seconds with [[Instant]]\n- Conversion methods between [[classes]]\n\nThis is essential knowledge for global applications.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch26_04",
+          "sectionType": "rule",
+          "title": "ZoneId and ZonedDateTime",
+          "body": "ZoneId is a class representing a time zone, created with ZoneId.of(\"Asia/Tokyo\").\nZonedDateTime is [[LocalDateTime]] with a ZoneId added.\n**ZonedDateTime**.now() retrieves the current timezone-aware date/time.\nA ZonedDateTime can be created from a LocalDateTime and ZoneId (using the atZone() [[method]]).\nThe toString() of ZonedDateTime includes timezone information (offset and zone ID).\nZoneId.getAvailableZoneIds() retrieves a list of available timezone IDs.",
+          "code": "import java.time.*;\n\n// Getting ZoneId\nZoneId tokyo = ZoneId.of(\"Asia/Tokyo\");\nZoneId utc = ZoneId.of(\"UTC\");\nZoneId ny = ZoneId.of(\"America/New_York\");\n\n// Creating ZonedDateTime\nZonedDateTime zdt1 = ZonedDateTime.now(tokyo);\nSystem.out.println(zdt1); // e.g.: 2024-03-15T14:30:00+09:00[Asia/Tokyo]\n\n// LocalDateTime to ZonedDateTime\nLocalDateTime ldt = LocalDateTime.of(2024, 3, 15, 14, 30);\nZonedDateTime zdt2 = ldt.atZone(tokyo);\nSystem.out.println(zdt2); // 2024-03-15T14:30+09:00[Asia/Tokyo]\n\n// Timezone conversion\nZonedDateTime zdtNY = zdt2.withZoneSameInstant(ny);\nSystem.out.println(zdtNY); // 2024-03-15T01:30-04:00[America/New_York]",
+          "note": "withZoneSameInstant() represents the same moment in a different timezone. withZoneSameLocal() changes only the zone while keeping the local time the same.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch26_04",
+          "sectionType": "code",
+          "title": "Instant Class",
+          "body": "Instant represents a point in time as the elapsed time from the epoch (1970-01-01T00:00:00Z).\nInstant.now() retrieves the current moment, and Instant.ofEpochSecond() creates one from epoch seconds.\nInstant has no concept of timezone and is always UTC-based.\nInstant and ZonedDateTime can be converted to each other.\n[[Duration]].between() can calculate the time difference between Instants.",
+          "code": "import java.time.*;\n\n// Creating an Instant\nInstant now = Instant.now();\nSystem.out.println(now); // e.g.: 2024-03-15T05:30:00.123Z\n\n// Create from epoch seconds\nInstant epoch = Instant.ofEpochSecond(0);\nSystem.out.println(epoch); // 1970-01-01T00:00:00Z\n\nInstant i = Instant.ofEpochSecond(1000000);\nSystem.out.println(i); // 1970-01-12T13:46:40Z\n\n// Conversion with ZonedDateTime\nZonedDateTime zdt = now.atZone(ZoneId.of(\"Asia/Tokyo\"));\nSystem.out.println(zdt); // Displayed in UTC+9\n\nInstant fromZdt = zdt.toInstant();\nSystem.out.println(fromZdt.equals(now)); // true\n\n// Duration between Instants\nInstant i1 = Instant.parse(\"2024-01-01T00:00:00Z\");\nInstant i2 = Instant.parse(\"2024-01-02T12:00:00Z\");\nDuration d = Duration.between(i1, i2);\nSystem.out.println(d.toHours()); // 36",
+          "note": "\"//\" in code indicates a comment (explanation text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch26_04",
+          "sectionType": "point",
+          "title": "Summary of Type Conversions",
+          "body": "| Conversion | Method |\n|---|---|\n| LocalDateTime → ZonedDateTime | Use atZone(ZoneId). |\n| ZonedDateTime → LocalDateTime | Use toLocalDateTime(). |\n| ZonedDateTime → Instant | Use toInstant(). |\n| LocalDateTime → Instant | Cannot convert directly; must go through ZonedDateTime first. |\nThese conversion relationships are frequently tested on the Gold exam.",
+          "code": "import java.time.*;\n\nZoneId tokyo = ZoneId.of(\"Asia/Tokyo\");\n\n// LocalDateTime → ZonedDateTime\nLocalDateTime ldt = LocalDateTime.of(2024, 3, 15, 14, 30);\nZonedDateTime zdt = ldt.atZone(tokyo);\n\n// ZonedDateTime → LocalDateTime\nLocalDateTime ldt2 = zdt.toLocalDateTime();\n\n// ZonedDateTime → LocalDate / LocalTime\nLocalDate ld = zdt.toLocalDate();\nLocalTime lt = zdt.toLocalTime();\n\n// ZonedDateTime → Instant\nInstant inst = zdt.toInstant();\n\n// Instant → ZonedDateTime\nZonedDateTime zdt2 = inst.atZone(tokyo);\n\n// LocalDateTime → Instant (via ZonedDateTime)\nInstant inst2 = ldt.atZone(tokyo).toInstant();",
+          "note": "Note that direct conversion from LocalDateTime to Instant is not possible.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch26_04",
+          "sectionType": "tip",
+          "title": "Exam Prep: ZonedDateTime and Instant",
+          "body": "- On the Gold exam, the difference between withZoneSameInstant() and withZoneSameLocal() is tested.\n- withZoneSameInstant() represents the same moment in a different zone (the time changes), while withZoneSameLocal() changes only the zone while maintaining the local time (the moment changes).\n- Note that Instant does not have methods like plusDays(); use plus(Duration) to perform operations.\n\nOrganizing the [[type conversion]] paths in a diagram helps deepen understanding.\nPassing an invalid zone ID to ZoneId.of() throws a ZoneRulesException.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch26_04_q1",
+          "lessonId": "ch26_04",
+          "type": "fourChoice",
+          "question": "Which of the following is a correct description about Instant?",
+          "code": null,
+          "explanation": "Instant represents a point in time as the elapsed time from the epoch (1970-01-01T00:00:00Z) and is always UTC-based. It does not hold timezone information and uniquely identifies a specific moment. It can be converted to a ZonedDateTime using atZone().",
+          "choices": [
+            {
+              "id": "ch26_04_q1_a",
+              "text": "Represents a point in time as elapsed time from January 1, 1970 UTC",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_04_q1_b",
+              "text": "It holds timezone information internally",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_04_q1_c",
+              "text": "It is a subclass of LocalDateTime",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_04_q1_d",
+              "text": "Days can be added using the plusDays() method",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch26_04_q2",
+          "lessonId": "ch26_04",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "import java.time.*;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDateTime ldt = LocalDateTime.of(2024, 3, 15, 12, 0);\n        ZonedDateTime zdt = ldt.atZone(ZoneId.of(\"Asia/Tokyo\"));\n        Instant inst = zdt.toInstant();\n        System.out.println(inst);\n    }\n}",
+          "explanation": "Converting 2024-03-15T12:00 in Tokyo (UTC+9) to UTC subtracts 9 hours, resulting in 2024-03-15T03:00:00Z. Instant's toString() displays the UTC time with a Z suffix.",
+          "choices": [
+            {
+              "id": "ch26_04_q2_a",
+              "text": "2024-03-15T03:00:00Z",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_04_q2_b",
+              "text": "2024-03-15T12:00:00Z",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_04_q2_c",
+              "text": "2024-03-15T21:00:00Z",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_04_q2_d",
+              "text": "2024-03-15T12:00:00+09:00",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch26_04_q3",
+          "lessonId": "ch26_04",
+          "type": "errorFind",
+          "question": "Select the error contained in the following code.",
+          "code": "import java.time.*;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDateTime ldt = LocalDateTime.of(2024, 3, 15, 14, 30);\n        Instant inst = ldt.toInstant();\n        System.out.println(inst);\n    }\n}",
+          "explanation": "Direct conversion from LocalDateTime to Instant is not possible. LocalDateTime does not have a parameterless toInstant() method (because UTC time cannot be determined without timezone information). While toInstant(ZoneOffset) exists, it cannot be called without arguments and results in a compile error. The correct approach is to convert to ZonedDateTime using atZone() first, then call toInstant().",
+          "choices": [
+            {
+              "id": "ch26_04_q3_a",
+              "text": "LocalDateTime does not have a parameterless toInstant() method",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch26_04_q3_b",
+              "text": "The number of arguments to LocalDateTime.of() is incorrect",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch26_04_q3_c",
+              "text": "A LocalDateTime value cannot be assigned to an Instant variable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch26_04_q3_d",
+              "text": "Instant cannot be output with System.out.println()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

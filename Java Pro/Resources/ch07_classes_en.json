@@ -1,0 +1,1315 @@
+{
+  "courseId": "ch07",
+  "lessons": [
+    {
+      "id": "ch07_01",
+      "courseId": "ch07",
+      "title": "Classes and Objects",
+      "summary": "Creating things from blueprints",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The relationship between [[class]]es (blueprints) and objects (instances)\n- Defining fields (data) and [[method]]s (behavior)\n- Creating objects using the new operator\n\nThese are the most fundamental concepts in object-oriented programming.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "code",
+          "title": "Defining a Class and Creating Instances",
+          "body": "Define a class and create an **instance** using the new keyword.",
+          "code": "// クラスの定義（設計図）\nclass Car {\n    // フィールド（データ）\n    String name;\n    int speed;\n\n    // メソッド（動作）\n    void accelerate() {\n        speed += 10;\n        System.out.println(name + \"が加速: \" + speed + \"km/h\");\n    }\n}\n\n// インスタンスの作成（実体を作る）\nCar car1 = new Car();\ncar1.name = \"プリウス\";\ncar1.speed = 0;\ncar1.accelerate(); // プリウスが加速: 10km/h\ncar1.accelerate(); // プリウスが加速: 20km/h\n\n// 同じ設計図から複数の実体を作れる\nCar car2 = new Car();\ncar2.name = \"フェラーリ\";\ncar2.speed = 100;\ncar2.accelerate(); // フェラーリが加速: 110km/h\n\n// car1とcar2は別のオブジェクト（独立したデータを持つ）",
+          "note": "You can create any number of **instances** from a single class. Each [[instance]] holds its own independent field values.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "rule",
+          "title": "Components of a Class",
+          "body": "The four elements that make up a class:\n\n1. Fields: [[Variable]]s that hold data\n- **Instance** variables: values owned by each object\n- Class variables (static): values shared across the entire class\n\n2. Methods: define behavior and operations\n- Instance methods: operations on an object\n- Class methods (static): operations on the class\n\n3. **Constructors**: initialization logic\n   - Called automatically when new is used\n\n4. Nested classes: classes defined inside a class (advanced)\n\nDefault values for fields:\n| Type | Default Value |\n|---|---|\n| int, long | 0 |\n| double, float | 0.0 |\n| boolean | false |\n| Reference types | null |\n*Note: Local variables have no default values!",
+          "code": null,
+          "note": "Fields automatically receive default values when declared, but local variables cause a [[compile]] error if not initialized.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "tip",
+          "title": "Visualizing the Relationship Between Classes and Objects",
+          "body": "Think of it like a \"cookie cutter\" and \"cookies.\"\n\n| Concept | Analogy | In Code |\n|---|---|---|\n| Class | The cookie \"cutter\" | Blueprint (only one) |\n| Object | The baked \"cookie\" | Instance (can make many) |\n| Field | Flavor, size | Data |\n| Method | Eat, reheat | Behavior/operations |\n\nYou can make as many cookies (objects) as you want from a single cutter (class).",
+          "code": null,
+          "note": "Every time you write new Car(), a new Car object is created.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Class = blueprint, **Instance** = actual object\n- Create instances with the new keyword\n- Fields: data, Methods: behavior\n- Fields have default values (local variables do not)\n- You can create multiple instances from a single class",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_01_q1",
+          "lessonId": "ch07_01",
+          "type": "fourChoice",
+          "question": "Which keyword is used to create an instance from a class?",
+          "code": null,
+          "explanation": "In Java, you create an instance of a class using the new keyword. Writing new Car() creates an object in memory based on the Car class blueprint.",
+          "choices": [
+            {
+              "id": "ch07_01_q1_a",
+              "text": "create",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_01_q1_b",
+              "text": "new",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_01_q1_c",
+              "text": "make",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_01_q1_d",
+              "text": "init",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_01_q2",
+          "lessonId": "ch07_01",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Counter {\n    int count;\n}\nCounter c = new Counter();\nSystem.out.println(c.count);",
+          "explanation": "The default value for an int field is 0. Even though the count field in Counter is not explicitly initialized, it is a field, so it receives the default value of 0.",
+          "choices": [
+            {
+              "id": "ch07_01_q2_a",
+              "text": "0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_01_q2_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_01_q2_c",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_01_q2_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_01_q3",
+          "lessonId": "ch07_01",
+          "type": "fillBlank",
+          "question": "Fill in the blank to create an instance of a class.\nDog d = _____ Dog();",
+          "code": null,
+          "explanation": "new Dog() creates an instance of the Dog class. The new keyword allocates an object in heap memory and invokes the constructor.",
+          "choices": [
+            {
+              "id": "ch07_01_q3_a",
+              "text": "new",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_01_q3_b",
+              "text": "create",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_01_q3_c",
+              "text": "this",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_01_q3_d",
+              "text": "super",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch07_02",
+      "courseId": "ch07",
+      "title": "The this Keyword and Field Operations",
+      "summary": "Referencing your own instance",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Using the this keyword to refer to \"the current object itself\"\n- How to distinguish between fields and local [[variable]]s with the same name\n- Initializing and manipulating fields\n\nMastering this makes the intent of your code much clearer.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "code",
+          "title": "How to Use this",
+          "body": "Use this to distinguish between fields and local variables.",
+          "code": "// Studentクラスの定義\nclass Student {\n    String name;\n    int age;\n\n    // 引数名とフィールド名が同じ場合、thisで区別\n    // setInfoメソッドの定義\n    void setInfo(String name, int age) {\n        this.name = name; // this.name = フィールド、name = 引数\n        this.age = age;\n    }\n\n    // thisを使わない場合の問題\n    // badSetNameメソッドの定義\n    void badSetName(String name) {\n        name = name; // 引数に引数を代入しているだけ！\n        // フィールドは変わらない\n    }\n\n    // thisは「自分自身」を返すこともできる\n    Student withName(String name) {\n        this.name = name;\n        return this; // メソッドチェーンに使える\n    }\n\n    void display() {\n        System.out.println(name + \"(\" + age + \"歳)\");\n    }\n}\n\nStudent s = new Student();\ns.setInfo(\"太郎\", 20);\ns.display(); // 太郎(20歳)\n\n// メソッドチェーン\nnew Student().withName(\"花子\").display(); // 花子(0歳)",
+          "note": "this.fieldName means \"this object's own field.\" If the parameter and field names are different, this can be omitted.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "tip",
+          "title": "Two Uses of this",
+          "body": "The this keyword has two primary uses.\n\n| Usage | Syntax | Purpose |\n|---|---|---|\n| Field reference | this.name = name | Distinguish from a local variable with the same name |\n| Constructor call | this(args) | Call another constructor in the same class |\n\nthis() must be placed on the first line of a [[constructor]].",
+          "code": null,
+          "note": "this() and super() cannot be used together.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "code",
+          "title": "Field Initialization and null",
+          "body": "Handling [[reference type]] fields and preventing [[NullPointerException]].",
+          "code": "// Profileクラスの定義\nclass Profile {\n    String name;    // デフォルト: null\n    int score;      // デフォルト: 0\n    boolean active; // デフォルト: false\n\n    // showNameメソッドの定義\n    void showName() {\n        // ⚠️ nameがnullの場合、length()でNullPointerException！\n        // System.out.println(name.length()); // 危険！\n\n        // 安全なnullチェック\n        // 条件分岐\n        if (name != null) {\n            System.out.println(name.length());\n        } else {\n            System.out.println(\"名前未設定\");\n        }\n    }\n}\n\nProfile p = new Profile();\nSystem.out.println(p.name);    // null\nSystem.out.println(p.score);   // 0\nSystem.out.println(p.active);  // false\np.showName();                  // 名前未設定\n\n// フィールドの初期値を宣言時に設定\n// Configクラスの定義\nclass Config {\n    // 変数の宣言と初期化\n    String lang = \"ja\";      // デフォルト値を指定\n    int maxRetry = 3;\n    boolean debug = false;\n}",
+          "note": "Fields can be given initial values at declaration time. They can also be overwritten in a **constructor**.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- this = a reference to the current **instance** itself\n- Use this.fieldName to distinguish a field from a parameter\n- Without this, parameters (local variables) take priority\n- The default value for reference type fields is null\n- Calling a [[method]] on a null reference → NullPointerException\n- Fields can be given initial values at declaration",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_02_q1",
+          "lessonId": "ch07_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Box {\n    int value;\n    void set(int value) {\n        value = value;\n    }\n}\nBox b = new Box();\nb.set(42);\nSystem.out.println(b.value);",
+          "explanation": "In the set() method, value = value simply assigns the parameter value to itself — the field is not changed. It should be written as this.value = value. The field retains its default value of 0.",
+          "choices": [
+            {
+              "id": "ch07_02_q1_a",
+              "text": "0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_02_q1_b",
+              "text": "42",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_02_q1_c",
+              "text": "null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_02_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_02_q2",
+          "lessonId": "ch07_02",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes the this keyword?",
+          "code": null,
+          "explanation": "this is a reference to the current instance itself. It is primarily used to distinguish between fields and local variables (parameters) that share the same name. this cannot be used inside a static method because no instance exists in that context.",
+          "choices": [
+            {
+              "id": "ch07_02_q2_a",
+              "text": "References the parent class instance",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_02_q2_b",
+              "text": "References the current instance itself",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_02_q2_c",
+              "text": "Can be used inside static methods",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_02_q2_d",
+              "text": "Creates a new instance",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_02_q3",
+          "lessonId": "ch07_02",
+          "type": "fourChoice",
+          "question": "What is the value when accessing an uninitialized String field?",
+          "code": null,
+          "explanation": "When a reference type field is not initialized, its default value is null. This applies only to instance variables (fields) — local variables will cause a compile error if not initialized.",
+          "choices": [
+            {
+              "id": "ch07_02_q3_a",
+              "text": "\"\" (empty string)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_02_q3_b",
+              "text": "null",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_02_q3_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_02_q3_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch07_03",
+      "courseId": "ch07",
+      "title": "Constructors",
+      "summary": "Initialization when creating objects",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Defining **constructors** and when they are called\n- Initializing objects with parameterized [[constructor]]s\n- Constructor [[overloading]] and this() calls\n\nYou'll learn the mechanism for \"always initializing objects when they are created\" using constructors.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "code",
+          "title": "Defining a Constructor",
+          "body": "A constructor has the same name as the [[class]] and does not have a return type.",
+          "code": "class Person {\n    String name;\n    int age;\n\n    // コンストラクタ（クラス名と同じ、戻り値なし）\n    Person(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n\n    void display() {\n        System.out.println(name + \"(\" + age + \"歳)\");\n    }\n}\n\n// new時にコンストラクタが呼ばれる\nPerson p = new Person(\"太郎\", 25);\np.display(); // 太郎(25歳)\n\n// Person p2 = new Person(); // コンパイルエラー！\n// → 引数ありコンストラクタを定義すると、\n//   デフォルトコンストラクタは自動生成されない",
+          "note": "If you do not define any **constructors**, Java automatically generates a no-argument default constructor. Once you define even one constructor, the default is no longer generated.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "code",
+          "title": "Constructor Overloading and this()",
+          "body": "Define multiple **constructors** with different parameters and call another constructor using this().",
+          "code": "class Product {\n    String name;\n    int price;\n    String category;\n\n    // フルコンストラクタ\n    Product(String name, int price, String category) {\n        this.name = name;\n        this.price = price;\n        this.category = category;\n    }\n\n    // 2引数版: this()で3引数版を呼ぶ\n    Product(String name, int price) {\n        this(name, price, \"一般\"); // 先頭行で別コンストラクタを呼ぶ\n    }\n\n    // 1引数版: this()で2引数版を呼ぶ\n    Product(String name) {\n        this(name, 0); // チェーン: → 2引数 → 3引数\n    }\n\n    void show() {\n        System.out.println(name + \" ¥\" + price + \" [\" + category + \"]\");\n    }\n}\n\nnew Product(\"Java入門\", 2980, \"書籍\").show();\n// Java入門 ¥2980 [書籍]\n\nnew Product(\"ノート\", 200).show();\n// ノート ¥200 [一般]\n\nnew Product(\"サンプル\").show();\n// サンプル ¥0 [一般]",
+          "note": "this() can only be used on the first line of a **constructor**. It cannot be used together with super().",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "tip",
+          "title": "Special Rules for Constructors",
+          "body": "**Constructors** have different rules from regular [[method]]s.\n\n| Rule | Description |\n|---|---|\n| Name matches the class name | For a Car class, it's Car() |\n| No return type specified | Don't even write void |\n| Called only with new | Cannot be called directly |\n| Auto-generated if none defined | A no-argument default constructor |\n\nNote: If you define a parameterized constructor, the default constructor is no longer auto-generated.",
+          "code": null,
+          "note": "On exams, questions about \"conditions under which the default **constructor** is or is not auto-generated\" are very common.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Constructor** = same name as the class, no return type\n- Automatically called with new to initialize the object\n- If none are defined, a default constructor is auto-generated\n- Defining even one constructor removes the default constructor\n- Multiple constructors with different parameters via overloading\n- Use this() to call another constructor in the same class (first line only)",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_03_q1",
+          "lessonId": "ch07_03",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes a constructor?",
+          "code": null,
+          "explanation": "A constructor has the same name as the class and does not specify a return type (not even void). It is automatically executed when an instance is created with new, and it initializes the object.",
+          "choices": [
+            {
+              "id": "ch07_03_q1_a",
+              "text": "Its return type is specified as void",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_03_q1_b",
+              "text": "It has the same name as the class and no return type",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_03_q1_c",
+              "text": "It can be called at any time",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_03_q1_d",
+              "text": "The static keyword is required",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_03_q2",
+          "lessonId": "ch07_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Msg {\n    String text;\n    Msg() { this(\"default\"); }\n    Msg(String text) { this.text = text; }\n}\nSystem.out.println(new Msg().text);",
+          "explanation": "new Msg() calls the no-argument constructor, which calls this(\"default\"), invoking the parameterized constructor. Since this.text = \"default\" is set, \"default\" is output.",
+          "choices": [
+            {
+              "id": "ch07_03_q2_a",
+              "text": "default",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_03_q2_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_03_q2_c",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_03_q2_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_03_q3",
+          "lessonId": "ch07_03",
+          "type": "errorFind",
+          "question": "Which line in the following code causes a compile error?",
+          "code": "class Item {\n    String name;\n    Item(String name) {\n        this.name = name;\n    }\n}\nItem i = new Item();",
+          "explanation": "Since the Item class defines a parameterized constructor Item(String), the default constructor Item() is not auto-generated. Line 7's new Item() tries to call a no-argument constructor that doesn't exist, causing a compile error.",
+          "choices": [
+            {
+              "id": "ch07_03_q3_a",
+              "text": "Line 3",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_03_q3_b",
+              "text": "Line 4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_03_q3_c",
+              "text": "Line 7",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_03_q3_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch07_03_q4",
+          "lessonId": "ch07_03",
+          "type": "codeComplete",
+          "question": "Complete the constructor for the Student class to initialize the name field.",
+          "code": null,
+          "explanation": "In a constructor, you use the this keyword to reference the current class's field and assign the parameter value to initialize it. The constructor name is the same as the class name, and no return type is specified.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class Student {\n    private String name;\n\n    public __BLANK_1__(String name) {\n        __BLANK_2__.name = name;\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Constructor name",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Student",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "void Student",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "new Student",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Self reference",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "this",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "self",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "super",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch07_04",
+      "courseId": "ch07",
+      "title": "Encapsulation and Access Modifiers",
+      "summary": "Protecting data and operating safely",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- **Encapsulation**: a design technique for hiding data from outside access\n- The differences between **access modifiers** (public, private, protected, default)\n- Safe data access through getter/setter methods\n\n[[Encapsulation]] is a critical technique for \"preventing bugs and writing code that is resilient to change.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "code",
+          "title": "private and getter/setter",
+          "body": "Make fields private and control access through public methods.",
+          "code": "// BankAccountクラスの定義\nclass BankAccount {\n    private String owner;\n    private int balance;\n\n    public BankAccount(String owner, int initialBalance) {\n        this.owner = owner;\n        this.balance = Math.max(0, initialBalance);\n    }\n\n    // getter（読み取り専用アクセス）\n    // getOwnerメソッドの定義\n    public String getOwner() {\n        return owner;\n    }\n\n    // getBalanceメソッドの定義\n    public int getBalance() {\n        return balance;\n    }\n\n    // setter（バリデーション付き書き込み）\n    public void deposit(int amount) {\n        // 条件分岐\n        if (amount <= 0) {\n            System.out.println(\"不正な金額\");\n            return;\n        }\n        balance += amount;\n    }\n\n    public boolean withdraw(int amount) {\n        if (amount <= 0 || amount > balance) {\n            System.out.println(\"引き出し不可\");\n            return false;\n        }\n        balance -= amount;\n        return true;\n    }\n}\nBankAccount acc = new BankAccount(\"太郎\", 1000);\n// acc.balance = -999; // コンパイルエラー！ private\nacc.deposit(500);\nSystem.out.println(acc.getBalance()); // 1500\nacc.withdraw(2000); // 引き出し不可",
+          "note": "By making the balance field private, you can completely prevent the balance from going negative.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "rule",
+          "title": "The Four Access Modifiers",
+          "body": "Java has four levels of **access modifiers**:\n\n| Modifier | Same Class | Same Package | Subclass | Other Packages |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (none) package-private | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\nGuidelines for choosing:\n\n| Target | Recommended Level |\n|---|---|\n| Fields | private (encapsulation) |\n| getter/setter | public |\n| Internal utility methods | private |\n| Methods for subclass use | protected |\n| API public methods | public |\n\nPrinciple: Choose the minimum access level needed (principle of information hiding).",
+          "code": null,
+          "note": "Only public and (none) can be used for top-level [[class]]es. private and protected can only be used for nested classes.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "tip",
+          "title": "Choosing the Right Access Modifier",
+          "body": "Review all four **access modifiers** at a glance.\n\n| Modifier | Same Class | Same Package | Subclass | Anywhere |\n|---|---|---|---|---|\n| private | ○ | × | × | × |\n| (none) | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\nBasic approach: Make fields private, and choose the narrowest modifier needed for methods.",
+          "code": null,
+          "note": "\"(none)\" is called default access or package-private.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Encapsulation**: protect fields with private + getter/setter\n- Add validation (value checking) in setters\n- Four levels: private < (none) < protected < public\n- Principle: choose the minimum access level\n- Fields should generally be private; methods should be chosen based on purpose",
+          "code": null,
+          "note": "【Practical Tips】In practice, **encapsulation** is essential when designing DTOs (Data Transfer Objects) and Entities (database-mapped classes). Using the Lombok library to auto-generate getters/setters is the standard approach in the industry.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_04_q1",
+          "lessonId": "ch07_04",
+          "type": "errorFind",
+          "question": "Which line in the following code causes a compile error?",
+          "code": "class Secret {\n    private int code = 42;\n}\nclass Main {\n    public static void main(String[] args) {\n        Secret s = new Secret();\n        System.out.println(s.code);\n    }\n}",
+          "explanation": "The code field is private, so it cannot be accessed from outside the Secret class. Line 7's s.code causes a compile error. A getter method would need to be provided to access it.",
+          "choices": [
+            {
+              "id": "ch07_04_q1_a",
+              "text": "Line 2",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_04_q1_b",
+              "text": "Line 6",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_04_q1_c",
+              "text": "Line 7",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_04_q1_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_04_q2",
+          "lessonId": "ch07_04",
+          "type": "fourChoice",
+          "question": "Which of the following is a benefit of encapsulation?",
+          "code": null,
+          "explanation": "Encapsulation restricts direct access to fields and uses setters with validation (value checking) to prevent invalid values from being set. Changes to the internal implementation are minimized in their impact on external code.",
+          "choices": [
+            {
+              "id": "ch07_04_q2_a",
+              "text": "Program execution speed improves",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_04_q2_b",
+              "text": "Invalid values can be prevented",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_04_q2_c",
+              "text": "Memory usage decreases",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_04_q2_d",
+              "text": "Compile time is shortened",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_04_q3",
+          "lessonId": "ch07_04",
+          "type": "fourChoice",
+          "question": "Which access modifier allows access from within the same package and from subclasses?",
+          "code": null,
+          "explanation": "protected allows access from classes within the same package and from subclasses even in different packages. private allows access from the same class only, package-private (no modifier) from the same package only, and public from everywhere.",
+          "choices": [
+            {
+              "id": "ch07_04_q3_a",
+              "text": "private",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_04_q3_b",
+              "text": "protected",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_04_q3_c",
+              "text": "public",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_04_q3_d",
+              "text": "No modifier (package-private)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch07_04_q4",
+          "lessonId": "ch07_04",
+          "type": "reorder",
+          "question": "Arrange the steps from object creation to method invocation in the correct order.",
+          "code": null,
+          "explanation": "First, create an object with new, set values with a setter, operate with a method, and retrieve the result with a getter.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Car car = new Car(\"Toyota\");",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "car.setSpeed(60);",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "car.accelerate();",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "System.out.println(car.getSpeed());",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch07_05",
+      "courseId": "ch07",
+      "title": "static Members",
+      "summary": "Data and methods shared across the entire class",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- [[static field]]s: [[variable]]s shared across all **instances**\n- [[static method]]s: [[method]]s callable without an [[instance]]\n- When to use static and important caveats\n\nMath.random() and Integer.parseInt() are examples of static methods.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "code",
+          "title": "static Fields and Methods",
+          "body": "static members exist as a single copy across the entire [[class]].",
+          "code": "// Employeeクラスの定義\nclass Employee {\n    // staticフィールド（クラス変数）: 全インスタンスで共有\n    static int totalCount = 0;\n    static String company = \"テック株式会社\";\n\n    // インスタンスフィールド: 各オブジェクトごとに独立\n    String name;\n    int id;\n\n    Employee(String name) {\n        this.name = name;\n        totalCount++;  // インスタンス生成のたびにカウント\n        this.id = totalCount;\n    }\n\n    // staticメソッド: オブジェクトなしで呼べる\n    // getTotalメソッドの定義\n    static int getTotal() {\n        // this.name; // コンパイルエラー！staticからインスタンスメンバは不可\n        return totalCount;\n    }\n\n    // インスタンスメソッド: staticメンバにもアクセスできる\n    // showメソッドの定義\n    void show() {\n        System.out.println(company + \" \" + name + \" (ID:\" + id + \")\");\n    }\n}\n\nEmployee e1 = new Employee(\"太郎\");\nEmployee e2 = new Employee(\"花子\");\ne1.show(); // テック株式会社 太郎 (ID:1)\ne2.show(); // テック株式会社 花子 (ID:2)\nSystem.out.println(Employee.getTotal()); // 2",
+          "note": "A static field is created only once when the class is loaded. It remains in memory until the JVM terminates.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "rule",
+          "title": "static Restrictions and Usage Guidelines",
+          "body": "Restrictions on static members:\n\n1. A static method cannot directly access **instance** members\n   → You must create an object first to access them\n\n2. this cannot be used in a static method\n   → Because this refers to \"the current instance\"\n\n3. Instance methods can access static members\n\nAppropriate uses of static:\n| Use Case | Description |\n|---|---|\n| Constants | static final double PI = 3.14159; |\n| Utility methods | Math.max(), Integer.parseInt() |\n| Counters | Managing instance counts |\n| Factory methods | Providing instance creation methods |\n\nUses to avoid:\n- Static fields with lots of state (causes issues in testing and multi-[[thread]]ing)\n- Making everything static (loses the benefits of object-oriented programming)",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "tip",
+          "title": "static Methods Cannot Access Instance Members",
+          "body": "Because static methods \"belong to the class,\" they cannot access information of a specific **instance**.\n\n- this cannot be used inside a static method\n- A static method cannot directly reference instance fields\n- A static method cannot directly call instance methods\n\nConversely, instance methods can access static members.",
+          "code": null,
+          "note": "The [[main method]] is also static, which is why you can't directly call **instance** methods from main — this is because of this rule.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- static = belongs to the class (no **instance** required)\n- static field: a value shared across all instances\n- static method: called with ClassName.methodName()\n- Cannot directly access instance members from static\n- Accessing static from an instance is allowed\n- static final is used for defining constants",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_05_q1",
+          "lessonId": "ch07_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Counter {\n    static int count = 0;\n    Counter() { count++; }\n}\nnew Counter();\nnew Counter();\nnew Counter();\nSystem.out.println(Counter.count);",
+          "explanation": "The static field count is shared across all instances. Calling new Counter() three times executes count++ in the constructor three times, so count becomes 3.",
+          "choices": [
+            {
+              "id": "ch07_05_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q1_b",
+              "text": "1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q1_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_05_q2",
+          "lessonId": "ch07_05",
+          "type": "errorFind",
+          "question": "Which line in the following code causes a compile error?",
+          "code": "class Sample {\n    int value = 10;\n    static void show() {\n        System.out.println(value);\n    }\n}",
+          "explanation": "The static method show() tries to directly access the instance field value. Since a static method does not belong to any instance, direct access to instance members causes a compile error. The error occurs on line 4.",
+          "choices": [
+            {
+              "id": "ch07_05_q2_a",
+              "text": "Line 2",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q2_b",
+              "text": "Line 3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q2_c",
+              "text": "Line 4",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q2_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_05_q3",
+          "lessonId": "ch07_05",
+          "type": "fourChoice",
+          "question": "What is the combination of static final used for?",
+          "code": null,
+          "explanation": "static final is used to define class-level constants. static makes it belong to the class, and final makes it immutable. Examples include Math.PI and Integer.MAX_VALUE. The naming convention is uppercase letters with underscores (MAX_VALUE).",
+          "choices": [
+            {
+              "id": "ch07_05_q3_a",
+              "text": "Defining instance variables",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q3_b",
+              "text": "Defining constants",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q3_c",
+              "text": "Defining local variables",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q3_d",
+              "text": "Defining abstract methods",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch07_05_q4",
+          "lessonId": "ch07_05",
+          "type": "multiChoice",
+          "question": "Select all correct benefits of encapsulation.",
+          "code": null,
+          "explanation": "The benefits of encapsulation are: \"internal implementation is hidden, making code resilient to change,\" \"invalid values can be prevented,\" and \"only the necessary interface is exposed to class users.\" Improved processing speed is not a direct benefit of encapsulation.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch07_05_q4_a",
+              "text": "Changes to internal implementation have minimal impact on external code",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_05_q4_b",
+              "text": "Invalid values can be prevented",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_05_q4_c",
+              "text": "Program processing speed improves",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_05_q4_d",
+              "text": "Only the necessary interface can be exposed",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch07_06",
+      "courseId": "ch07",
+      "title": "Methods of the Object Class",
+      "summary": "Implementing toString, equals, and hashCode",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- toString(): customizing the string representation of an object\n- equals(): defining logical equality comparison\n- hashCode(): required for hash-based collections\n\nLet's properly [[override]] the methods of the Object class that all [[class]]es implicitly have.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "code",
+          "title": "Overriding toString()",
+          "body": "Customize the string representation of an object.",
+          "code": "class Book {\n    String title;\n    int price;\n\n    Book(String title, int price) {\n        this.title = title;\n        this.price = price;\n    }\n\n    // toString()をオーバーライドしない場合:\n    // System.out.println(book); → Book@1a2b3c4d（クラス名@ハッシュ値）\n\n    @Override\n    public String toString() {\n        return \"Book{title='\" + title + \"', price=\" + price + \"}\";\n    }\n}\n\nBook b = new Book(\"Java入門\", 2980);\n\n// println は自動的にtoString()を呼ぶ\nSystem.out.println(b); // Book{title='Java入門', price=2980}\n\n// 文字列結合でも自動的にtoString()が呼ばれる\nString msg = \"購入: \" + b; // \"購入: Book{title='Java入門', price=2980}\"\nSystem.out.println(msg);",
+          "note": "toString() is extremely useful for debugging and log output. Make it a habit to override it in every class.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "code",
+          "title": "equals() and hashCode()",
+          "body": "An implementation for correctly determining object equality.",
+          "code": "// Pointクラスの定義\nclass Point {\n    int x, y;\n\n    Point(int x, int y) {\n        this.x = x;\n        this.y = y;\n    }\n    @Override\n    // equalsメソッドの定義\n    public boolean equals(Object obj) {\n        // 1. 同一オブジェクトチェック\n        // 条件分岐\n        if (this == obj) return true;\n        // 2. null & 型チェック\n        if (!(obj instanceof Point)) return false;\n        // 3. フィールド比較\n        Point other = (Point) obj;\n        return this.x == other.x && this.y == other.y;\n    }\n    @Override\n    // hashCodeメソッドの定義\n    public int hashCode() {\n        // equalsがtrueなら同じhashCodeを返す必要あり\n        return 31 * x + y;\n    }\n    @Override\n    public String toString() {\n        return \"(\" + x + \", \" + y + \")\";\n    }\n}\nPoint p1 = new Point(3, 4);\nPoint p2 = new Point(3, 4);\nPoint p3 = new Point(1, 2);\n\nSystem.out.println(p1 == p2);      // false（参照が異なる）\nSystem.out.println(p1.equals(p2)); // true（値が同じ）\nSystem.out.println(p1.equals(p3)); // false",
+          "note": "If you override equals(), you must also override hashCode(). For [[HashMap]]/[[HashSet]] to work correctly, there is a contract that objects for which equals returns true must return the same hashCode.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "rule",
+          "title": "The Difference Between == and equals()",
+          "body": "- == [[operator]]\n  → [[Primitive type]]s: compares values\n  → [[Reference type]]s: compares references (memory addresses)\n  → Determines whether two variables point to the same object\n\n- equals() method\n  → Can only be used with reference types\n  → Without overriding, behaves the same as ==\n  → When overridden, determines \"logical equality\"\n  → The String class already overrides equals()\n\nNote: String comparison\n  [[String]] s1 = \"hello\";\n  String s2 = \"hello\";\n  s1 == s2;      // true (same reference due to String pool)\n  \n  String s3 = new String(\"hello\");\n  s1 == s3;      // false (different objects)\n  s1.equals(s3); // true (same content)\n  \n→ Always use equals() for string comparison",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "tip",
+          "title": "Always Override hashCode When You Override equals",
+          "body": "An important contract in Java:\n\n- Two objects where equals() returns true → hashCode() must return the same value\n- If hashCode() differs → equals() must return false\n\nBreaking this contract will cause HashSet and HashMap to malfunction.",
+          "code": null,
+          "note": "By using your IDE's auto-generation feature, you can correctly generate equals() and hashCode() as a pair.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch07_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- All classes implicitly [[inherit]] from Object\n| Method | Description |\n|---|---|\n| toString() | String representation, auto-called by println |\n| equals() | Logical equality comparison |\n| hashCode() | Must be overridden together with equals() |\n- == compares references, equals() compares content\n- Always use equals() for string comparison",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_06_q1",
+          "lessonId": "ch07_06",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "String a = new String(\"Java\");\nString b = new String(\"Java\");\nSystem.out.print(a == b);\nSystem.out.print(\",\");\nSystem.out.print(a.equals(b));",
+          "explanation": "Strings created with new String() are separate objects, so a == b is false (different references). a.equals(b) compares the content, so it returns true (both are \"Java\").",
+          "choices": [
+            {
+              "id": "ch07_06_q1_a",
+              "text": "false,true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch07_06_q1_b",
+              "text": "true,true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_06_q1_c",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_06_q1_d",
+              "text": "true,false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_06_q2",
+          "lessonId": "ch07_06",
+          "type": "fourChoice",
+          "question": "Which method should also be overridden when overriding equals()?",
+          "code": null,
+          "explanation": "According to the Object class contract, two objects for which equals() returns true must return the same hashCode(). This is necessary for HashMap and HashSet to work correctly. Overriding only equals() without hashCode() will cause unexpected behavior in collections.",
+          "choices": [
+            {
+              "id": "ch07_06_q2_a",
+              "text": "toString()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_06_q2_b",
+              "text": "hashCode()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_06_q2_c",
+              "text": "compareTo()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_06_q2_d",
+              "text": "clone()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_06_q3",
+          "lessonId": "ch07_06",
+          "type": "fourChoice",
+          "question": "What is displayed when printing an object of a class that hasn't overridden toString()?",
+          "code": null,
+          "explanation": "The default toString() from the Object class returns \"class name @ hexadecimal hash code.\" For example, it would be something like MyClass@1a2b3c4d. To display meaningful information, you need to override toString().",
+          "choices": [
+            {
+              "id": "ch07_06_q3_a",
+              "text": "null",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_06_q3_b",
+              "text": "ClassName@hashCode",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_06_q3_c",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_06_q3_d",
+              "text": "Empty string",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch07_07",
+      "courseId": "ch07",
+      "title": "Packages and final",
+      "summary": "Organizing code and preventing modifications",
+      "estimatedMinutes": 8,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Organizing [[class]]es and avoiding name collisions with packages\n- How to write import statements and important caveats\n- Three uses of the final keyword ([[variable]]s, [[method]]s, and classes)\n\nThis is essential knowledge as your projects grow larger.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "code",
+          "title": "Packages and import",
+          "body": "Organize classes with packages and use classes from other packages with import.",
+          "code": "// パッケージ宣言（ファイルの先頭に記述）\npackage com.example.model;\n\n// import文（他のパッケージのクラスを使う）\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.time.LocalDate; // 個別import\n// import java.util.*;      // ワイルドカードimport（全クラス）\n\npublic class User {\n    private String name;\n    private List<String> roles = new ArrayList<>();\n    private LocalDate createdAt = LocalDate.now();\n}\n\n// パッケージの命名規則:\n// ドメイン名を逆にした形式が慣例\n// com.example.app\n// jp.co.company.project\n\n// java.lang パッケージのクラスはimport不要\n// String, Integer, System, Math 等\n\n// 完全修飾名（import不要だがコードが長くなる）\njava.util.ArrayList<String> list = new java.util.ArrayList<>();",
+          "note": "Classes in the java.lang package ([[String]], Math, Integer, etc.) are automatically imported. You don't need to write import statements for them.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "tip",
+          "title": "Three Uses of final",
+          "body": "The final keyword has different meanings depending on where it's used.\n\n| Target | Meaning | Effect |\n|---|---|---|\n| final variable | Reassignment prohibited | Value can only be set once |\n| final method | Override prohibited | Cannot be overridden in subclasses |\n| final class | Inheritance prohibited | Cannot create subclasses (e.g.: String) |\n\nWhy the String class is final: to guarantee security and immutability.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "code",
+          "title": "The final Keyword",
+          "body": "final is a modifier meaning \"modification prohibited.\"",
+          "code": "// 1. final変数: 再代入不可\nfinal int MAX = 100;\n// MAX = 200; // コンパイルエラー！\n\n// final参照型: 参照の再代入は不可、中身の変更はOK\nfinal List<String> list = new ArrayList<>();\nlist.add(\"OK\");          // OK! 中身の変更は可能\n// list = new ArrayList<>(); // コンパイルエラー！ 参照の再代入不可\n\n// 2. finalメソッド: オーバーライド不可\nclass Parent {\n    final void important() {\n        System.out.println(\"変更禁止のメソッド\");\n    }\n}\nclass Child extends Parent {\n    // @Override\n    // void important() {} // コンパイルエラー！\n}\n\n// 3. finalクラス: 継承不可\nfinal class Immutable {\n    private final int value;\n    Immutable(int value) {\n        this.value = value;\n    }\n    int getValue() { return value; }\n}\n// class Sub extends Immutable {} // コンパイルエラー！\n\n// 代表的なfinalクラス: String, Integer, LocalDate",
+          "note": "The String class is final to guarantee security and immutability. If subclasses could modify equals() or hashCode(), it would cause problems.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch07_07",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- package: organizes classes into categories (corresponds to folder structure)\n- import: declares usage of classes from other packages\n- java.lang is auto-imported (String, Math, etc.)\n| Target | Description |\n|---|---|\n| final variable | Reassignment prohibited (for reference types, modifying contents is allowed) |\n| final method | Override prohibited |\n| final class | Inheritance prohibited (String, Integer, etc.) |",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch07_07_q1",
+          "lessonId": "ch07_07",
+          "type": "fourChoice",
+          "question": "Which class can be used without an import statement?",
+          "code": null,
+          "explanation": "Classes in the java.lang package are automatically imported, so no explicit import statement is needed. String, Math, System, Integer, Object, etc. all belong to java.lang. ArrayList is in the java.util package and requires an import.",
+          "choices": [
+            {
+              "id": "ch07_07_q1_a",
+              "text": "ArrayList",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_07_q1_b",
+              "text": "Scanner",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_07_q1_c",
+              "text": "String",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_07_q1_d",
+              "text": "LocalDate",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch07_07_q2",
+          "lessonId": "ch07_07",
+          "type": "errorFind",
+          "question": "Which line in the following code causes a compile error?",
+          "code": "final int x = 10;\nfinal List<String> list = new ArrayList<>();\nlist.add(\"hello\");\nx = 20;",
+          "explanation": "x is a final variable, so it cannot be reassigned. Line 4's x = 20 causes a compile error. On the other hand, line 3's list.add(\"hello\") modifies the contents of the list, not the reference itself, so it is allowed.",
+          "choices": [
+            {
+              "id": "ch07_07_q2_a",
+              "text": "Line 1",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_07_q2_b",
+              "text": "Line 3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch07_07_q2_c",
+              "text": "Line 4",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch07_07_q2_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch07_07_q3",
+          "lessonId": "ch07_07",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes a final class?",
+          "code": null,
+          "explanation": "A final class cannot be inherited (extended) by other classes. The String class is final to guarantee immutability and security. All methods in a final class are implicitly final.",
+          "choices": [
+            {
+              "id": "ch07_07_q3_a",
+              "text": "Instances cannot be created",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch07_07_q3_b",
+              "text": "It cannot be inherited by other classes",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch07_07_q3_c",
+              "text": "It cannot have methods",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch07_07_q3_d",
+              "text": "It cannot have fields",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

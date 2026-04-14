@@ -81,6 +81,12 @@ final class LanguageManager {
         currentLanguage = language
         UserDefaults.standard.set(language.rawValue, forKey: "appLanguage")
         loadStrings()
+
+        // コンテンツデータも言語に応じて再ロード
+        Task {
+            await ContentService.shared.reloadForLanguageChange()
+            PracticeService.shared.reloadForLanguageChange()
+        }
     }
 
     // MARK: - ローカライズアクセサ

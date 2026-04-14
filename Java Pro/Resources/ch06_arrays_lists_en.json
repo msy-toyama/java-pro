@@ -1,0 +1,1379 @@
+{
+  "courseId": "ch06",
+  "lessons": [
+    {
+      "id": "ch06_01",
+      "courseId": "ch06",
+      "title": "Array Basics",
+      "summary": "Learn how to declare, initialize, and access arrays",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch06_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to declare, initialize, and access elements of an [[array]]\n- The rule that indexes (subscripts) start from 0\n- How to get the length of an array (length)\n\nArrays are the most fundamental mechanism for \"managing data of the same type together.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_01",
+          "sectionType": "code",
+          "title": "Declaring and Initializing Arrays",
+          "body": "There are three main ways to create an array.",
+          "code": "// 方法1: サイズ指定で作成（デフォルト値で初期化）\nint[] scores = new int[5];\n// → [0, 0, 0, 0, 0]  ※intのデフォルト値は0\n\n// 方法2: 初期値を指定して作成\nString[] fruits = {\"りんご\", \"みかん\", \"ぶどう\"};\n\n// 方法3: newキーワード + 初期値\ndouble[] prices = new double[]{100.0, 250.5, 380.0};\n\n// 各型のデフォルト値\n// int    → 0\n// double → 0.0\n// boolean → false\n// char   → '\\u0000'\n// String(参照型) → null",
+          "note": "The size of an array cannot be changed after creation. If you need a resizable collection, use [[ArrayList]] (covered in a later lesson).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_01",
+          "sectionType": "code",
+          "title": "Accessing Elements and length",
+          "body": "Array elements are accessed using an index (a number starting from 0).",
+          "code": "int[] nums = {10, 20, 30, 40, 50};\n\n// 要素の取得（0始まり）\nSystem.out.println(nums[0]); // 10（最初の要素）\nSystem.out.println(nums[4]); // 50（最後の要素）\n\n// 要素の変更\nnums[2] = 99;\nSystem.out.println(nums[2]); // 99\n\n// 配列の長さ\nSystem.out.println(nums.length); // 5 ※()は不要\n\n// 最後の要素を取得\nSystem.out.println(nums[nums.length - 1]); // 50\n\n// 範囲外アクセス → ArrayIndexOutOfBoundsException\n// System.out.println(nums[5]); // 実行時エラー！",
+          "note": "length is a field, not a [[method]], so no parentheses are needed. This differs from [[String]]'s length(), which is a method.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_01",
+          "sectionType": "code",
+          "title": "Arrays and for Loops",
+          "body": "Use a [[for loop]] to process all elements of an array.",
+          "code": "String[] names = {\"太郎\", \"花子\", \"次郎\"};\n\n// 通常のfor文\nfor (int i = 0; i < names.length; i++) {\n    System.out.println((i + 1) + \"番: \" + names[i]);\n}\n// 1番: 太郎  2番: 花子  3番: 次郎\n\n// 拡張for文（for-each）- 全要素を順に処理\nfor (String name : names) {\n    System.out.println(\"こんにちは、\" + name + \"さん\");\n}\n\n// 合計・平均の計算\nint[] scores = {85, 92, 78, 95, 88};\nint sum = 0;\nfor (int score : scores) {\n    sum += score;\n}\ndouble avg = (double) sum / scores.length;\nSystem.out.println(\"平均: \" + avg); // 平均: 87.6",
+          "note": "The [[enhanced for loop]] provides a concise way to iterate when you don't need the index. However, use a standard for loop when you need to modify elements or reference the index.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_01",
+          "sectionType": "tip",
+          "title": "Array Indexes Start at 0",
+          "body": "This is the most important rule about arrays.\n\n| Element | 1st | 2nd | 3rd | nth |\n|---|---|---|---|---|\n| Index | 0 | 1 | 2 | n-1 |\n\n- An array of size 5 → indexes range from 0 to 4\n- Accessing a non-existent index throws **ArrayIndexOutOfBoundsException**\n\nThis is a frequently encountered error in both exams and real-world development.",
+          "code": null,
+          "note": "The last element of an array is accessed with array[array.length - 1].",
+          "order": 5
+        },
+        {
+          "lessonId": "ch06_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Arrays store data of the same type in a fixed-size container\n- Indexes start at 0; the last element is array[length - 1]\n- length is a field (no parentheses needed)\n- Out-of-bounds access throws ArrayIndexOutOfBoundsException\n- The enhanced for loop (for-each) provides concise iteration over all elements\n- Array size cannot be changed after creation",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_01_q1",
+          "lessonId": "ch06_01",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int[] a = new int[3];\na[1] = 5;\nSystem.out.println(a[0] + \",\" + a[1] + \",\" + a[2]);",
+          "explanation": "An array created with new int[3] is initialized with the default value 0. Since 5 is assigned to a[1], a[0]=0, a[1]=5, a[2]=0.",
+          "choices": [
+            {
+              "id": "ch06_01_q1_a",
+              "text": "0,5,0",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_01_q1_b",
+              "text": "null,5,null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_01_q1_c",
+              "text": "0,5,null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_01_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_01_q2",
+          "lessonId": "ch06_01",
+          "type": "errorFind",
+          "question": "Which line in the following code causes an error?",
+          "code": "String[] colors = {\"赤\", \"青\", \"緑\"};\nSystem.out.println(colors.length());\nSystem.out.println(colors[0]);",
+          "explanation": "The length of an array is a field, not a method. Adding parentheses as length() causes a compilation error. The correct syntax is colors.length. Note that String's length() is a method and requires parentheses, but arrays are different.",
+          "choices": [
+            {
+              "id": "ch06_01_q2_a",
+              "text": "Line 1",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_01_q2_b",
+              "text": "Line 2",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch06_01_q2_c",
+              "text": "Line 3",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_01_q2_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_01_q3",
+          "lessonId": "ch06_01",
+          "type": "fillBlank",
+          "question": "Fill in the blank to get the last element of an array.\nint[] nums = {10, 20, 30};\nint last = nums[nums._____ - 1];",
+          "code": null,
+          "explanation": "The index of the last element of an array is length - 1. length is a field that returns the number of elements in the array. In this array, length is 3, so the last element is nums[2] (= 30).",
+          "choices": [
+            {
+              "id": "ch06_01_q3_a",
+              "text": "length",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_01_q3_b",
+              "text": "size",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_01_q3_c",
+              "text": "length()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_01_q3_d",
+              "text": "count",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch06_02",
+      "courseId": "ch06",
+      "title": "Multidimensional Arrays and the Arrays Class",
+      "summary": "Two-dimensional arrays and array utility methods",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch06_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to work with 2D [[array]]s (table-like data)\n- Useful [[method]]s such as Arrays.sort() and Arrays.toString()\n- Important notes on copying and comparing arrays\n\nWith the Arrays class, you can accomplish in a single line what used to require manual coding.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_02",
+          "sectionType": "code",
+          "title": "Two-Dimensional Arrays",
+          "body": "A 2D array manages data using \"rows and columns.\" It is ideal for tabular data.",
+          "code": "// 二次元配列の宣言と初期化\nint[][] matrix = {\n    {1, 2, 3},   // 0行目\n    {4, 5, 6},   // 1行目\n    {7, 8, 9}    // 2行目\n};\n\n// 要素アクセス: matrix[行][列]\nSystem.out.println(matrix[0][0]); // 1（0行0列）\nSystem.out.println(matrix[1][2]); // 6（1行2列）\nSystem.out.println(matrix[2][1]); // 8（2行1列）\n\n// 行数と列数\nSystem.out.println(matrix.length);    // 3（行数）\nSystem.out.println(matrix[0].length); // 3（0行目の列数）\n\n// 全要素の走査（二重ループ）\nfor (int i = 0; i < matrix.length; i++) {\n    for (int j = 0; j < matrix[i].length; j++) {\n        System.out.print(matrix[i][j] + \" \");\n    }\n    System.out.println();\n}",
+          "note": "Java's 2D arrays can also be jagged arrays where each row has a different number of columns. For example: int[][] jagged = {{1,2}, {3,4,5}, {6}};",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_02",
+          "sectionType": "code",
+          "title": "Key Methods of the Arrays Class",
+          "body": "The java.util.Arrays class provides useful methods for array operations.",
+          "code": "import java.util.Arrays;\n\nint[] nums = {5, 2, 8, 1, 9, 3};\n\n// ソート（昇順）\nArrays.sort(nums);\nSystem.out.println(Arrays.toString(nums));\n// [1, 2, 3, 5, 8, 9]\n\n// 文字列表現\nString[] fruits = {\"りんご\", \"みかん\", \"ぶどう\"};\nSystem.out.println(Arrays.toString(fruits));\n// [りんご, みかん, ぶどう]\n\n// 配列のコピー\nint[] original = {10, 20, 30};\nint[] copy = Arrays.copyOf(original, 5);\nSystem.out.println(Arrays.toString(copy));\n// [10, 20, 30, 0, 0]  ※拡大時は0で埋まる\n\n// 範囲コピー\nint[] sub = Arrays.copyOfRange(original, 0, 2);\nSystem.out.println(Arrays.toString(sub)); // [10, 20]\n\n// 全要素を指定値で埋める\nint[] filled = new int[5];\nArrays.fill(filled, 99);\nSystem.out.println(Arrays.toString(filled));\n// [99, 99, 99, 99, 99]\n\n// 配列の比較\nint[] a = {1, 2, 3};\nint[] b = {1, 2, 3};\nSystem.out.println(a == b);             // false（参照比較）\nSystem.out.println(Arrays.equals(a, b)); // true（内容比較）",
+          "note": "If you print an array directly with println, it displays a hash code like [I@1a2b3c4. Use Arrays.toString() to see the contents.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_02",
+          "sectionType": "code",
+          "title": "Binary Search and Partial Sort",
+          "body": "You can also perform fast searches on sorted arrays and partial sorts.",
+          "code": "import java.util.Arrays;\n\n// 二分探索（配列がソート済みであること！）\nint[] sorted = {10, 20, 30, 40, 50};\nint idx = Arrays.binarySearch(sorted, 30);\nSystem.out.println(idx); // 2（インデックス）\n\nint notFound = Arrays.binarySearch(sorted, 25);\nSystem.out.println(notFound); // 負の値（見つからない）\n\n// 部分ソート（fromIndex, toIndex）\nint[] data = {5, 3, 8, 1, 9, 2};\nArrays.sort(data, 1, 4); // index 1〜3をソート\nSystem.out.println(Arrays.toString(data));\n// [5, 1, 3, 8, 9, 2] ※index 1-3のみソート\n\n// 二次元配列の文字列表現\nint[][] m = {{1, 2}, {3, 4}};\nSystem.out.println(Arrays.deepToString(m));\n// [[1, 2], [3, 4]]\n\n// 二次元配列の比較\nint[][] m2 = {{1, 2}, {3, 4}};\nSystem.out.println(Arrays.deepEquals(m, m2)); // true",
+          "note": "Always use binarySearch on a sorted array. Using it on an unsorted array will not produce correct results.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_02",
+          "sectionType": "tip",
+          "title": "You Can't Copy an Array with \"=\"",
+          "body": "Assigning an array with = does not copy its contents—it creates a \"reference to the same array.\"\n\n| Method | Behavior |\n|---|---|\n| b = a | Shares the same array (changing b also changes a) |\n| b = Arrays.copyOf(a, a.length) | Creates an independent copy |\n| b = a.clone() | Creates an independent copy |\n\nThis relates to the important concept of \"[[reference types]].\" You will learn more about this in Chapter 7.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch06_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Two-dimensional array: access with matrix[row][column]\n- matrix.length for row count, matrix[i].length for column count\n- Arrays.sort() for ascending sort\n- Arrays.toString() to convert array contents to a string\n- Arrays.copyOf() to copy (with optional size change)\n- Arrays.fill() to fill all elements with the same value\n- Arrays.equals() for content comparison (== compares references, which is incorrect)\n- Arrays.binarySearch() for fast search on sorted arrays",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_02_q1",
+          "lessonId": "ch06_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int[][] m = {{10, 20}, {30, 40}, {50, 60}};\nSystem.out.println(m.length + \",\" + m[0].length);",
+          "explanation": "m.length is the number of rows, which is 3, and m[0].length is the number of columns in row 0, which is 2. In a 2D array, length returns the \"number of rows,\" and each row's length returns the \"number of columns.\"",
+          "choices": [
+            {
+              "id": "ch06_02_q1_a",
+              "text": "3,2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_02_q1_b",
+              "text": "2,3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_02_q1_c",
+              "text": "6,2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_02_q1_d",
+              "text": "3,3",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_02_q2",
+          "lessonId": "ch06_02",
+          "type": "fourChoice",
+          "question": "What is the correct way to compare the contents of two arrays?",
+          "code": "int[] a = {1, 2, 3};\nint[] b = {1, 2, 3};",
+          "explanation": "Use Arrays.equals() to compare array contents. The == operator compares references (memory addresses), so it returns false even if the contents are the same but the objects are different. a.equals(b) calls Object's equals, which produces the same result as ==.",
+          "choices": [
+            {
+              "id": "ch06_02_q2_a",
+              "text": "a == b",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_02_q2_b",
+              "text": "a.equals(b)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_02_q2_c",
+              "text": "Arrays.equals(a, b)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch06_02_q2_d",
+              "text": "Arrays.compare(a, b)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_02_q3",
+          "lessonId": "ch06_02",
+          "type": "fillBlank",
+          "question": "Fill in the blank to sort an array.\nint[] nums = {5, 3, 1};\nArrays._____(nums);",
+          "code": null,
+          "explanation": "Arrays.sort() sorts an array in ascending order. Dual-pivot quicksort is used for primitive arrays, and TimSort is used for object arrays. The original array is modified in place (no new array is created).",
+          "choices": [
+            {
+              "id": "ch06_02_q3_a",
+              "text": "sort",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_02_q3_b",
+              "text": "order",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_02_q3_c",
+              "text": "arrange",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_02_q3_d",
+              "text": "sorted",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch06_03",
+      "courseId": "ch06",
+      "title": "List and ArrayList",
+      "summary": "Basic operations with variable-length lists",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch06_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- **ArrayList**: a list that automatically resizes\n- Basic operations such as add, get, remove, and size\n- When to use [[array]]s vs. [[ArrayList]]\n\nArrayList is one of the most frequently used data structures in Java development.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_03",
+          "sectionType": "rule",
+          "title": "The List Interface and ArrayList",
+          "body": "List is an [[interface]] in Java's Collections Framework.\n\n| Class | Characteristics |\n|---|---|\n| List | Ordered, allows duplicates, index-accessible |\n| ArrayList | List implementation backed by an internal array (fastest and most common) |\n| LinkedList | List implementation using linked nodes (fast insertion/deletion) |\n\nBest practice is to declare [[variable]]s using the List interface type.\n  ○ List<String> list = new ArrayList<>();\n  △ ArrayList<String> list = new ArrayList<>();\n\nReasons for declaring with the interface type:\n- Makes it easy to change the implementation [[class]] later\n- More versatile for [[method]] parameters and return types",
+          "code": null,
+          "note": "The [[generics]] <String> means \"this List can only contain String elements.\" The <> ([[diamond operator]]) enables [[type inference]] on the right side.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_03",
+          "sectionType": "tip",
+          "title": "Differences Between ArrayList and Arrays",
+          "body": "Use these criteria when deciding which one to use:\n\n| Feature | Array | ArrayList |\n|---|---|---|\n| Size | Fixed (set at creation) | Variable (grows automatically) |\n| Primitive types | Can store | Cannot store (wrapper types required) |\n| Utility methods | Few | Rich (add, remove, contains, etc.) |\n| Performance | Slightly faster | Slightly slower |\n\nIn practice, ArrayList (List) is used in most cases.",
+          "code": null,
+          "note": "**ArrayList**<int> causes an error. Use ArrayList<Integer> instead (wrapper class).",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_03",
+          "sectionType": "code",
+          "title": "Basic ArrayList Operations",
+          "body": "Let's learn the key methods of ArrayList.",
+          "code": "import java.util.ArrayList;\nimport java.util.List;\n\nList<String> fruits = new ArrayList<>();\n\n// 追加\nfruits.add(\"りんご\");           // 末尾に追加\nfruits.add(\"みかん\");\nfruits.add(\"ぶどう\");\nfruits.add(1, \"バナナ\");         // index1に挿入\n// [りんご, バナナ, みかん, ぶどう]\n\n// 取得\nString first = fruits.get(0);    // \"りんご\"\nint size = fruits.size();        // 4\n\n// 変更\nfruits.set(0, \"いちご\");         // index0を置換\n// [いちご, バナナ, みかん, ぶどう]\n\n// 検索\nboolean has = fruits.contains(\"みかん\"); // true\nint idx = fruits.indexOf(\"バナナ\");     // 1\n\n// 削除\nfruits.remove(\"みかん\");         // 値で削除\nfruits.remove(0);                // インデックスで削除\n\n// ループ\nfor (String f : fruits) {\n    System.out.println(f);\n}\n\n// 空チェック\nSystem.out.println(fruits.isEmpty()); // false\nfruits.clear();                       // 全削除\nSystem.out.println(fruits.isEmpty()); // true",
+          "note": "For List<Integer>, remove(1) means \"remove the element at index 1.\" To remove by value, use remove(Integer.valueOf(1)).",
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_03",
+          "sectionType": "code",
+          "title": "Differences Between ArrayList and LinkedList",
+          "body": "Choose based on your use case.",
+          "code": "import java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.List;\n\n// ArrayList: 内部に配列 → ランダムアクセスが高速\nList<String> arrayList = new ArrayList<>();\narrayList.add(\"A\");\narrayList.add(\"B\");\narrayList.add(\"C\");\nString b = arrayList.get(1); // O(1) 高速！\n\n// LinkedList: ノードの連結 → 先頭・途中の挿入・削除が高速\nList<String> linkedList = new LinkedList<>();\nlinkedList.add(\"X\");\nlinkedList.add(\"Y\");\nlinkedList.add(\"Z\");\nlinkedList.add(0, \"W\"); // O(1) 先頭挿入が高速！\n\n// 使い分けの目安:\n// ・ランダムアクセスが多い → ArrayList（大半のケース）\n// ・先頭への追加・削除が頻繁 → LinkedList\n// ・迷ったらArrayListを選ぶ",
+          "note": "In practice, ArrayList is used in most cases. [[LinkedList]] is mainly used as a queue or [[stack]].",
+          "order": 5
+        },
+        {
+          "lessonId": "ch06_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Declaring variables with the List<E> interface is recommended\n| Item | Description |\n|---|---|\n| ArrayList | Array-based, O(1) random access, most common |\n| LinkedList | Link-based, O(1) insertion at head |\n| Key methods | add, get, set, remove, size, contains, indexOf, isEmpty, clear |\n- size() is a method (unlike array's length, which is a field)\n- The <> diamond [[operator]] enables type inference on the right side",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_03_q1",
+          "lessonId": "ch06_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "List<String> list = new ArrayList<>();\nlist.add(\"A\");\nlist.add(\"B\");\nlist.add(\"C\");\nlist.add(1, \"X\");\nSystem.out.println(list);",
+          "explanation": "add(1, \"X\") inserts \"X\" at index 1. Elements at index 1 and beyond are shifted to the right. The result is [A, X, B, C]. add(value) appends to the end, while add(index, value) inserts at the specified position.",
+          "choices": [
+            {
+              "id": "ch06_03_q1_a",
+              "text": "[A, X, B, C]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_03_q1_b",
+              "text": "[A, B, X, C]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_03_q1_c",
+              "text": "[X, A, B, C]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_03_q1_d",
+              "text": "[A, B, C, X]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_03_q2",
+          "lessonId": "ch06_03",
+          "type": "fourChoice",
+          "question": "Which is the most recommended way to declare an ArrayList variable?",
+          "code": null,
+          "explanation": "Declaring variables using the List interface type is a Java best practice. This way, even if you change the implementation class from ArrayList to LinkedList, you only need to modify the variable declaration (the principle of \"programming to an interface\").",
+          "choices": [
+            {
+              "id": "ch06_03_q2_a",
+              "text": "ArrayList<String> list = new ArrayList<String>();",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_03_q2_b",
+              "text": "List<String> list = new ArrayList<>();",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch06_03_q2_c",
+              "text": "var list = new ArrayList<String>();",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_03_q2_d",
+              "text": "Object list = new ArrayList<>();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_03_q3",
+          "lessonId": "ch06_03",
+          "type": "fillBlank",
+          "question": "Fill in the blank to get the number of elements in a List.\nList<String> list = new ArrayList<>();\nlist.add(\"A\");\nint count = list._____();",
+          "code": null,
+          "explanation": "The number of elements in a List is obtained using the size() method. Note that arrays use the length field, String uses the length() method, and List uses the size() method—each is different.",
+          "choices": [
+            {
+              "id": "ch06_03_q3_a",
+              "text": "size",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_03_q3_b",
+              "text": "length",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_03_q3_c",
+              "text": "count",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_03_q3_d",
+              "text": "getSize",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch06_03_q4",
+          "lessonId": "ch06_03",
+          "type": "codeComplete",
+          "question": "Complete the code to add an element to an ArrayList and get its size.",
+          "code": null,
+          "explanation": "ArrayList is an implementation of the List interface. Use add() to add elements and size() to get the element count. This differs from array's length.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "List<String> names = new __BLANK_1__<>();\nnames.__BLANK_2__(\"Alice\");\nSystem.out.println(names.__BLANK_3__());",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Implementation class",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "ArrayList",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "LinkedList",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "HashSet",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Add",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "add",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "put",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "insert",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_3",
+              "label": "③Size",
+              "choices": [
+                {
+                  "id": "b3_c1",
+                  "text": "size",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b3_c2",
+                  "text": "length",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b3_c3",
+                  "text": "count",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch06_04",
+      "courseId": "ch06",
+      "title": "Set and HashSet",
+      "summary": "Collections without duplicates",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch06_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The key feature of Set: no duplicates allowed\n- How to use [[HashSet]] and its important considerations\n- How to quickly check \"has this already been added?\"\n\nWhen you need to manage unique values, Set is the ideal choice.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_04",
+          "sectionType": "code",
+          "title": "Basic HashSet Operations",
+          "body": "HashSet is the most common implementation of the Set interface.",
+          "code": "import java.util.HashSet;\nimport java.util.Set;\n\nSet<String> colors = new HashSet<>();\n\n// 追加\ncolors.add(\"赤\");\ncolors.add(\"青\");\ncolors.add(\"緑\");\ncolors.add(\"赤\"); // 重複は無視される\n\nSystem.out.println(colors.size());  // 3（重複は1つ）\nSystem.out.println(colors);         // [赤, 青, 緑]（順序不定）\n\n// 存在チェック\nSystem.out.println(colors.contains(\"青\")); // true\n\n// 削除\ncolors.remove(\"緑\");\n\n// ループ\nfor (String c : colors) {\n    System.out.println(c);\n}\n\n// Listから重複を除去するテクニック\nList<String> list = List.of(\"A\", \"B\", \"A\", \"C\", \"B\");\nSet<String> unique = new HashSet<>(list);\nSystem.out.println(unique); // [A, B, C]",
+          "note": "HashSet does not guarantee order. Use LinkedHashSet if you need to preserve insertion order.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_04",
+          "sectionType": "code",
+          "title": "TreeSet and LinkedHashSet",
+          "body": "Each Set implementation [[class]] has its own characteristics.",
+          "code": "import java.util.*;\n\n// TreeSet: 要素がソートされる（自然順序）\nSet<Integer> treeSet = new TreeSet<>();\ntreeSet.add(30);\ntreeSet.add(10);\ntreeSet.add(20);\nSystem.out.println(treeSet); // [10, 20, 30] 常にソート順\n\n// LinkedHashSet: 挿入順序を保持\nSet<String> linked = new LinkedHashSet<>();\nlinked.add(\"C\");\nlinked.add(\"A\");\nlinked.add(\"B\");\nSystem.out.println(linked); // [C, A, B] 挿入順を維持\n\n// 使い分け:\n// HashSet     → 最速。順序不要の場合（大半のケース）\n// TreeSet     → ソート順が必要な場合\n// LinkedHashSet → 挿入順を保持したい場合\n\n// 集合演算\nSet<String> set1 = new HashSet<>(Set.of(\"A\", \"B\", \"C\"));\nSet<String> set2 = new HashSet<>(Set.of(\"B\", \"C\", \"D\"));\n\n// 積集合（共通要素）\nset1.retainAll(set2);\nSystem.out.println(set1); // [B, C]",
+          "note": "[[TreeSet]] uses a red-black tree internally, and its elements must implement [[Comparable]]. Standard types like [[String]] and Integer already implement Comparable.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_04",
+          "sectionType": "tip",
+          "title": "HashSet Does Not Guarantee Order",
+          "body": "Elements in a HashSet may not be retrieved in the order they were added.\n\n| Collection | Duplicates | Order |\n|---|---|---|\n| ArrayList | Allowed | Preserves insertion order |\n| HashSet | Not allowed | Unordered |\n| LinkedHashSet | Not allowed | Preserves insertion order |\n| TreeSet | Not allowed | Natural order (sorted) |\n\nIf you need ordering, use LinkedHashSet or TreeSet.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Set is a collection that does not allow duplicates\n| Class | Characteristics |\n|---|---|\n| HashSet | Fastest, unordered (most common) |\n| TreeSet | Sorted in natural order |\n| LinkedHashSet | Preserves insertion order |\n- contains() provides O(1) fast existence checks (HashSet)\n- Remove duplicates from a List: new HashSet<>(list)\n- retainAll() for intersection, removeAll() for difference",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_04_q1",
+          "lessonId": "ch06_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "Set<String> set = new HashSet<>();\nset.add(\"Java\");\nset.add(\"Python\");\nset.add(\"Java\");\nset.add(\"Go\");\nSystem.out.println(set.size());",
+          "explanation": "HashSet does not allow duplicates, so adding \"Java\" twice results in only one entry. The result is 3 elements: \"Java\", \"Python\", and \"Go\".",
+          "choices": [
+            {
+              "id": "ch06_04_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_04_q1_b",
+              "text": "4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_04_q1_c",
+              "text": "2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_04_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_04_q2",
+          "lessonId": "ch06_04",
+          "type": "fourChoice",
+          "question": "Which Set implementation keeps elements in sorted order?",
+          "code": null,
+          "explanation": "TreeSet uses a Red-Black Tree internally to keep elements sorted in natural order (ascending). HashSet has no defined order, and LinkedHashSet preserves insertion order. SortedSet is an interface, and TreeSet is its implementation.",
+          "choices": [
+            {
+              "id": "ch06_04_q2_a",
+              "text": "HashSet",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_04_q2_b",
+              "text": "LinkedHashSet",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_04_q2_c",
+              "text": "TreeSet",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch06_04_q2_d",
+              "text": "SortedSet",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_04_q3",
+          "lessonId": "ch06_04",
+          "type": "fourChoice",
+          "question": "Which is the correct way to remove duplicates from a List?",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"A\", \"C\", \"B\");",
+          "explanation": "Passing a List to the HashSet constructor automatically removes duplicates. new HashSet<>(list) creates a Set without duplicates. This technique leverages the inherent property of Set data structures that do not allow duplicate elements.",
+          "choices": [
+            {
+              "id": "ch06_04_q3_a",
+              "text": "list.removeDuplicates()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_04_q3_b",
+              "text": "list.distinct()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_04_q3_c",
+              "text": "new HashSet<>(list)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch06_04_q3_d",
+              "text": "Collections.unique(list)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch06_04_q4",
+          "lessonId": "ch06_04",
+          "type": "reorder",
+          "question": "Arrange the basic ArrayList operations in the correct order.",
+          "code": null,
+          "explanation": "ArrayList operations follow the order: create → add → remove → check size. After remove(0), size() returns 1.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "List<String> list = new ArrayList<>();",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "list.add(\"Alice\");",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "list.add(\"Bob\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "list.remove(0);",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "System.out.println(list.size());",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch06_05",
+      "courseId": "ch06",
+      "title": "Map and HashMap",
+      "summary": "Managing data with key-value pairs",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch06_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Map: managing data as \"key-value pairs\"\n- Basic operations: put, get, containsKey, keySet\n- How to represent data like a dictionary or phone book\n\nMap is a \"data structure searchable by name\" that is extremely common in practice.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_05",
+          "sectionType": "code",
+          "title": "Basic HashMap Operations",
+          "body": "[[HashMap]] is the most common implementation of the Map interface.",
+          "code": "import java.util.HashMap;\nimport java.util.Map;\n\nMap<String, Integer> scores = new HashMap<>();\n\n// 値の追加・更新\nscores.put(\"太郎\", 85);\nscores.put(\"花子\", 92);\nscores.put(\"次郎\", 78);\nscores.put(\"太郎\", 90);  // 同じキーは上書き\n\n// 値の取得\nint taro = scores.get(\"太郎\");  // 90\nSystem.out.println(scores.get(\"四郎\")); // null（存在しない）\n\n// デフォルト値付き取得\nint value = scores.getOrDefault(\"四郎\", 0); // 0\n\n// 存在チェック\nSystem.out.println(scores.containsKey(\"花子\")); // true\nSystem.out.println(scores.containsValue(92));   // true\n\n// サイズ\nSystem.out.println(scores.size()); // 3\n\n// 削除\nscores.remove(\"次郎\");\n\n// ループ（エントリーセット）\nfor (Map.Entry<String, Integer> e : scores.entrySet()) {\n    System.out.println(e.getKey() + \": \" + e.getValue());\n}",
+          "note": "Map keys must be unique (no duplicates). Calling put() with the same key overwrites the value.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_05",
+          "sectionType": "code",
+          "title": "Useful Map Methods and TreeMap",
+          "body": "Here are useful [[method]]s added since Java 8 and how to use [[TreeMap]].",
+          "code": "import java.util.*;\n\nMap<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 1);\nmap.put(\"B\", 2);\n\n// putIfAbsent: キーが存在しない場合のみ追加\nmap.putIfAbsent(\"A\", 99); // \"A\"は既にあるので変更なし\nmap.putIfAbsent(\"C\", 3);  // \"C\"を追加\n\n// merge: 既存値と新値を結合\nmap.merge(\"A\", 10, Integer::sum); // A: 1 + 10 = 11\n\n// forEach\nmap.forEach((k, v) -> System.out.println(k + \"=\" + v));\n\n// キーセット・値コレクション\nSet<String> keys = map.keySet();      // [A, B, C]\nCollection<Integer> vals = map.values(); // [11, 2, 3]\n\n// TreeMap: キーがソートされる\nMap<String, Integer> treeMap = new TreeMap<>();\ntreeMap.put(\"banana\", 200);\ntreeMap.put(\"apple\", 100);\ntreeMap.put(\"cherry\", 300);\nSystem.out.println(treeMap);\n// {apple=100, banana=200, cherry=300} キーでソート",
+          "note": "TreeMap sorts by the natural order of keys. HashMap has no defined order, and LinkedHashMap preserves insertion order. Remember the correspondence between Set and Map implementation [[class]]es.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_05",
+          "sectionType": "tip",
+          "title": "Choosing the Right Collection Implementation",
+          "body": "Choose the best collection for your purpose.\n\n**List types**: Ordered, allows duplicates\n- **ArrayList**: Most common. Random access ○, insertion/deletion △\n- [[LinkedList]]: Insertion/deletion at head ○, random access △\n\n**Set types**: Unordered, no duplicates\n| Class | Characteristics |\n|---|---|\n| HashSet | Fastest. No defined order |\n| TreeSet | Sorted order |\n| LinkedHashSet | Insertion order |\n\n**Map types**: Key-value pairs\n| Class | Characteristics |\n|---|---|\n| HashMap | Fastest. No defined key order |\n| TreeMap | Sorted by key |\n| LinkedHashMap | Insertion order |\n\nWhen in doubt: choose [[ArrayList]] / [[HashSet]] / HashMap!",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Map manages key-value pairs. Keys must be unique\n- put(key, value) to add, get(key) to retrieve\n- getOrDefault() to avoid null\n- entrySet() to loop over key-value pairs\n- putIfAbsent() does not overwrite existing keys\n- HashMap → fastest, TreeMap → sorted by key, LinkedHashMap → insertion order",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_05_q1",
+          "lessonId": "ch06_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "Map<String, Integer> map = new HashMap<>();\nmap.put(\"X\", 10);\nmap.put(\"Y\", 20);\nmap.put(\"X\", 30);\nSystem.out.println(map.get(\"X\") + \",\" + map.size());",
+          "explanation": "Calling put() with the same key \"X\" overwrites the value. After the first put(\"X\", 10), put(\"X\", 30) updates the value to 30. There are 2 keys (\"X\" and \"Y\"), so size() returns 2.",
+          "choices": [
+            {
+              "id": "ch06_05_q1_a",
+              "text": "30,2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_05_q1_b",
+              "text": "10,3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_05_q1_c",
+              "text": "10,2",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_05_q1_d",
+              "text": "30,3",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_05_q2",
+          "lessonId": "ch06_05",
+          "type": "fourChoice",
+          "question": "What is the return value when calling get() with a key that does not exist?",
+          "code": null,
+          "explanation": "When a non-existent key is specified in Map's get(), null is returned. To avoid NullPointerException, you can either check with containsKey() beforehand or use getOrDefault(key, defaultValue).",
+          "choices": [
+            {
+              "id": "ch06_05_q2_a",
+              "text": "0",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_05_q2_b",
+              "text": "Empty string",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_05_q2_c",
+              "text": "null",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch06_05_q2_d",
+              "text": "NoSuchElementException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_05_q3",
+          "lessonId": "ch06_05",
+          "type": "fillBlank",
+          "question": "Fill in the blank with the method used to loop over key-value pairs of a Map.\nfor (Map.Entry<String, Integer> e : map._____()) {",
+          "code": null,
+          "explanation": "entrySet() returns all entries (key-value pairs) of a Map as a Set. From each Map.Entry, getKey() retrieves the key and getValue() retrieves the value. keySet() returns only keys, and values() returns only values.",
+          "choices": [
+            {
+              "id": "ch06_05_q3_a",
+              "text": "entrySet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_05_q3_b",
+              "text": "entries",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_05_q3_c",
+              "text": "keySet",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_05_q3_d",
+              "text": "forEach",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch06_05_q4",
+          "lessonId": "ch06_05",
+          "type": "multiChoice",
+          "question": "Select all correct statements about ArrayList.",
+          "code": null,
+          "explanation": "ArrayList is a variable-length array that allows adding and removing elements. You can specify types using generics. Random access by index is O(1) and fast. However, insertion and deletion require shifting elements, making them O(n). Primitive types cannot be stored directly—wrapper classes must be used.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch06_05_q4_a",
+              "text": "Elements can be added and removed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_05_q4_b",
+              "text": "Index access is O(1) and fast",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch06_05_q4_c",
+              "text": "Primitive types can be stored directly",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_05_q4_d",
+              "text": "Types can be specified using generics",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch06_06",
+      "courseId": "ch06",
+      "title": "Immutable Collections and Collections Utility",
+      "summary": "Safe collections and utility methods",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch06_06",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Creating immutable collections with **List.of**() and Map.of()\n- The difference from [[Collections]].unmodifiableList()\n- The benefits of using immutable collections (improved safety)\n\nYou will learn design patterns that protect data from unintended modifications.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_06",
+          "sectionType": "code",
+          "title": "Immutable Collections (List.of / Set.of / Map.of)",
+          "body": "Since Java 9, factory [[method]]s can create unmodifiable collections.",
+          "code": "// 不変List（Java 9+）\nList<String> fruits = List.of(\"りんご\", \"みかん\", \"ぶどう\");\nSystem.out.println(fruits); // [りんご, みかん, ぶどう]\n// fruits.add(\"バナナ\"); // UnsupportedOperationException!\n\n// 不変Set（Java 9+）\nSet<Integer> nums = Set.of(1, 2, 3);\n// nums.add(4); // UnsupportedOperationException!\n\n// 不変Map（Java 9+）\nMap<String, Integer> scores = Map.of(\n    \"太郎\", 85,\n    \"花子\", 92,\n    \"次郎\", 78\n);\n// scores.put(\"四郎\", 70); // UnsupportedOperationException!\n\n// 多数のエントリがある場合はMap.ofEntries\nMap<String, Integer> map = Map.ofEntries(\n    Map.entry(\"A\", 1),\n    Map.entry(\"B\", 2),\n    Map.entry(\"C\", 3)\n);\n\n// 不変コレクションの特徴:\n// ・add/remove/put等の変更操作は UnsupportedOperationException\n// ・null要素を含められない（NullPointerException）\n// ・スレッドセーフ",
+          "note": "**List.of**() does not allow null elements. If you need a list that contains null, use [[ArrayList]].",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_06",
+          "sectionType": "tip",
+          "title": "Modification Operations on Immutable Collections Throw UnsupportedOperationException",
+          "body": "Collections created with **List.of**() or Map.of() cannot be modified.\n\n- Calling add, remove, put, etc. throws UnsupportedOperationException\n- Including a null element throws [[NullPointerException]]\n\nBy \"making data that should not change immutable,\" you can prevent bugs caused by unintended modifications.",
+          "code": null,
+          "note": "To make an immutable collection mutable: new **ArrayList**<>(**List.of**(1, 2, 3))",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_06",
+          "sectionType": "code",
+          "title": "The Collections Utility Class",
+          "body": "Here are useful methods from the java.util.Collections class.",
+          "code": "import java.util.*;\n\nList<Integer> list = new ArrayList<>(List.of(5, 2, 8, 1, 9));\n\n// ソート\nCollections.sort(list);\nSystem.out.println(list); // [1, 2, 5, 8, 9]\n\n// 逆順ソート\nCollections.sort(list, Collections.reverseOrder());\nSystem.out.println(list); // [9, 8, 5, 2, 1]\n\n// 最大値・最小値\nSystem.out.println(Collections.max(list)); // 9\nSystem.out.println(Collections.min(list)); // 1\n\n// シャッフル（ランダム並び替え）\nCollections.shuffle(list);\n\n// 要素の出現回数\nList<String> data = List.of(\"A\", \"B\", \"A\", \"C\", \"A\");\nint count = Collections.frequency(data, \"A\"); // 3\n\n// 変更不可ラッパー\nList<String> mutable = new ArrayList<>(List.of(\"X\", \"Y\"));\nList<String> immutable = Collections.unmodifiableList(mutable);\n// immutable.add(\"Z\"); // UnsupportedOperationException",
+          "note": "Collections.unmodifiableList() wraps an existing List to make it unmodifiable. Unlike Java 9+'s **List.of**(), modifications to the original List will be reflected in the wrapped list.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_06",
+          "sectionType": "code",
+          "title": "Converting Between Arrays and Lists",
+          "body": "Here's how to convert between [[array]]s and Lists.",
+          "code": "import java.util.*;\n\n// --- 配列 → List ---\nString[] array = {\"A\", \"B\", \"C\"};\n\n// Arrays.asList: 固定サイズのList（追加・削除不可）\nList<String> fixed = Arrays.asList(array);\n// fixed.add(\"D\"); // UnsupportedOperationException\nfixed.set(0, \"X\"); // OK（変更は可能）\n\n// 可変Listに変換（推奨）\nList<String> mutable = new ArrayList<>(Arrays.asList(array));\nmutable.add(\"D\"); // OK\n\n// Java 11+: List.of() で不変List\nList<String> immutable = List.of(array);\n\n// --- List → 配列 ---\nList<String> list = List.of(\"X\", \"Y\", \"Z\");\n\n// toArray（型指定）\nString[] arr = list.toArray(new String[0]);\nSystem.out.println(Arrays.toString(arr)); // [X, Y, Z]\n\n// Java 11+ toArray（メソッド参照）\nString[] arr2 = list.toArray(String[]::new);",
+          "note": "The List created by Arrays.asList() has a fixed size. You cannot add or remove elements, but modification via set() is allowed. It is also linked to the original array, so changes to one are reflected in the other.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch06_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **List.of**() / Set.of() / Map.of(): immutable collections (Java 9+)\n- Immutable collections cannot contain null\n- Collections.sort() to sort a list\n- Collections.reverseOrder() for reverse order\n- Collections.unmodifiableList() for an unmodifiable wrapper\n| Method | Description |\n|---|---|\n| Arrays.asList() | Array → fixed-size List (no add/remove) |\n| new ArrayList<>(Arrays.asList(arr)) | Convert to a mutable List |\n| list.toArray(new Type[0]) | List → array |",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_06_q1",
+          "lessonId": "ch06_06",
+          "type": "fourChoice",
+          "question": "Which operation is possible on a list created with List.of(\"A\", \"B\", \"C\")?",
+          "code": null,
+          "explanation": "An immutable list created with List.of() cannot be modified. add(), remove(), set(), and clear() all throw UnsupportedOperationException. However, get() for reading is allowed.",
+          "choices": [
+            {
+              "id": "ch06_06_q1_a",
+              "text": "add(\"D\")",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_06_q1_b",
+              "text": "remove(0)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_06_q1_c",
+              "text": "get(1)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch06_06_q1_d",
+              "text": "set(0, \"X\")",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_06_q2",
+          "lessonId": "ch06_06",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes a List created with Arrays.asList()?",
+          "code": null,
+          "explanation": "Arrays.asList() returns a fixed-size List. add() and remove() throw UnsupportedOperationException, but modifying existing elements with set() is allowed. It is also linked to the original array, so changes affect both directions.",
+          "choices": [
+            {
+              "id": "ch06_06_q2_a",
+              "text": "Adding, removing, and modifying elements are all possible",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_06_q2_b",
+              "text": "Adding and removing are not possible, but modifying is",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch06_06_q2_c",
+              "text": "Completely immutable—no modifications at all",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_06_q2_d",
+              "text": "Behaves exactly the same as List.of()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_06_q3",
+          "lessonId": "ch06_06",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"A\", \"C\", \"A\");\nSystem.out.println(Collections.frequency(list, \"A\"));",
+          "explanation": "Collections.frequency() returns how many times a specified element appears in the given collection. The list contains \"A\" three times (at indexes 0, 2, and 4), so 3 is output.",
+          "choices": [
+            {
+              "id": "ch06_06_q3_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_06_q3_b",
+              "text": "1",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_06_q3_c",
+              "text": "5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_06_q3_d",
+              "text": "0",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch06_07",
+      "courseId": "ch06",
+      "title": "Wrapper Classes and Autoboxing",
+      "summary": "Bridging primitive types and collections",
+      "estimatedMinutes": 8,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch06_07",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The role of wrapper [[class]]es (Integer, Double, etc.)\n- How [[autoboxing]] and unboxing work\n- When to use primitive types vs. wrapper classes\n\nThis knowledge is essential for storing numbers in collections.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch06_07",
+          "sectionType": "rule",
+          "title": "Wrapper Class List",
+          "body": "Each [[primitive type]] has a corresponding wrapper class.\n\n| Primitive Type | Wrapper Class |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\nKey points to remember:\n- The wrapper for int is Integer (not Int)\n- The wrapper for char is Character (not Char)\n- All others simply capitalize the first letter (double → Double)",
+          "code": null,
+          "note": "All wrapper classes belong to the java.lang package and can be used without importing.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch06_07",
+          "sectionType": "tip",
+          "title": "Autoboxing Performance Considerations",
+          "body": "Autoboxing is convenient, but be careful when handling large amounts of data.\n\n- Converting int → Integer may create a new object each time\n- Frequent conversions inside loops can degrade performance\n- Use equals() instead of == to compare Integer objects\n\nIn particular, == comparison for Integer only works reliably within the range -128 to 127.",
+          "code": null,
+          "note": "A common exam question: \"Integer a = 127; Integer b = 127; a == b → true\" but \"Integer a = 128; Integer b = 128; a == b → false\".",
+          "order": 3
+        },
+        {
+          "lessonId": "ch06_07",
+          "sectionType": "code",
+          "title": "Autoboxing and Unboxing",
+          "body": "Since Java 5, conversions between primitive types and wrapper classes happen automatically.",
+          "code": "// オートボクシング: プリミティブ → ラッパー（自動変換）\nInteger a = 100;         // int → Integer（自動）\nDouble b = 3.14;         // double → Double（自動）\n\n// アンボクシング: ラッパー → プリミティブ（自動変換）\nint c = a;               // Integer → int（自動）\ndouble d = b;            // Double → double（自動）\n\n// コレクションでの利用\nList<Integer> numbers = new ArrayList<>();\nnumbers.add(10);         // int → Integer（オートボクシング）\nnumbers.add(20);\nint first = numbers.get(0); // Integer → int（アンボクシング）\n\n// 計算も自動変換\nInteger x = 10;\nInteger y = 20;\nint sum = x + y; // Integer → int → 計算 → int\n\n// ⚠️ nullのアンボクシングに注意！\nInteger nullVal = null;\n// int n = nullVal; // NullPointerException!",
+          "note": "Unboxing a null value causes a [[NullPointerException]]. Be careful in situations where Map's get() may return null.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch06_07",
+          "sectionType": "code",
+          "title": "Useful Wrapper Class Methods",
+          "body": "Wrapper classes provide useful features such as [[type conversion]] and constants.",
+          "code": "// 文字列 → 数値変換（parseXxx）\nint i = Integer.parseInt(\"123\");         // 123\ndouble d = Double.parseDouble(\"3.14\");   // 3.14\nlong l = Long.parseLong(\"1000000\");      // 1000000\n\n// 数値 → 文字列変換\nString s1 = Integer.toString(123);         // \"123\"\nString s2 = String.valueOf(123);           // \"123\"（推奨）\n\n// 定数\nSystem.out.println(Integer.MAX_VALUE);     // 2147483647\nSystem.out.println(Integer.MIN_VALUE);     // -2147483648\nSystem.out.println(Double.MAX_VALUE);      // 1.7976931348623157E308\n\n// valueOf: キャッシュ付きオブジェクト生成\nInteger a1 = Integer.valueOf(127);\nInteger a2 = Integer.valueOf(127);\nSystem.out.println(a1 == a2);  // true（-128〜127はキャッシュ）\n\nInteger b1 = Integer.valueOf(128);\nInteger b2 = Integer.valueOf(128);\nSystem.out.println(b1 == b2);  // false（キャッシュ範囲外）\nSystem.out.println(b1.equals(b2)); // true（値比較）",
+          "note": "Integer values in the range -128 to 127 are cached, so == returns true. Outside this range, == returns false. Always use equals() to compare wrapper classes.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch06_07",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Collections cannot store primitive types directly\n| Item | Description |\n|---|---|\n| Wrapper classes | int → Integer, char → Character (note the names) |\n| Autoboxing | Automatic conversion from primitive → wrapper |\n| Unboxing | Automatic conversion from wrapper → primitive |\n- Unboxing null throws NullPointerException\n- Integer.parseInt() converts a string to a number\n- == comparison for Integer is only true for -128 to 127 → use equals()\n- Integer.MAX_VALUE / MIN_VALUE to get maximum and minimum values",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch06_07_q1",
+          "lessonId": "ch06_07",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "Integer a = 100;\nInteger b = 100;\nInteger c = 200;\nInteger d = 200;\nSystem.out.println((a == b) + \",\" + (c == d));",
+          "explanation": "Integer caches values in the range -128 to 127, so 100 reuses the same object and a == b is true. However, 200 is outside the cache range, so separate objects are created and c == d is false. Always use equals() to compare wrapper classes.",
+          "choices": [
+            {
+              "id": "ch06_07_q1_a",
+              "text": "true,false",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch06_07_q1_b",
+              "text": "true,true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_07_q1_c",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_07_q1_d",
+              "text": "false,true",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch06_07_q2",
+          "lessonId": "ch06_07",
+          "type": "fourChoice",
+          "question": "What is the wrapper class for the int type?",
+          "code": null,
+          "explanation": "The wrapper class for int is Integer. It is not Int (which doesn't exist) or Number (which is an abstract class). Only int and char have names that change significantly—to Integer and Character respectively. All other primitive types simply capitalize the first letter.",
+          "choices": [
+            {
+              "id": "ch06_07_q2_a",
+              "text": "Int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_07_q2_b",
+              "text": "Integer",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch06_07_q2_c",
+              "text": "Number",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch06_07_q2_d",
+              "text": "Numeric",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch06_07_q3",
+          "lessonId": "ch06_07",
+          "type": "errorFind",
+          "question": "Which line in the following code causes a runtime error?",
+          "code": "Integer val = null;\nSystem.out.println(val);\nint num = val;\nSystem.out.println(num);",
+          "explanation": "Line 3 attempts to unbox a null Integer to int, causing a NullPointerException. println can output null as the string \"null\", so it does not throw an error. During unboxing, intValue() is called internally, but a method cannot be called on a null object.",
+          "choices": [
+            {
+              "id": "ch06_07_q3_a",
+              "text": "Line 1",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch06_07_q3_b",
+              "text": "Line 2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch06_07_q3_c",
+              "text": "Line 3",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch06_07_q3_d",
+              "text": "Line 4",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1333 @@
+{
+  "courseId": "ch08",
+  "lessons": [
+    {
+      "id": "ch08_01",
+      "courseId": "ch08",
+      "title": "Basics of Inheritance",
+      "summary": "Extending existing classes to create new ones",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The basic syntax of **inheritance** (the extends keyword)\n- The relationship between parent [[class]]es (superclasses) and child classes (subclasses)\n- Designing for code reusability\n\nUnderstanding [[inheritance]] enables you to design large-scale programs efficiently.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "code",
+          "title": "Inheritance with extends",
+          "body": "A child class **inherits** from a parent class using the extends keyword.",
+          "code": "// Parent class (superclass)\n// Definition of the Animal class\nclass Animal {\n    String name;\n\n    // Definition of the eat method\n    void eat() {\n        System.out.println(name + \" is eating\");\n    }\n\n    // Definition of the sleep method\n    void sleep() {\n        System.out.println(name + \" is sleeping\");\n    }\n}\n\n// Child class (subclass)\n// Definition of the Dog class\nclass Dog extends Animal {\n    // Inherits parent's fields (name) and methods (eat, sleep)\n\n    // Method unique to the child class\n    void bark() {\n        System.out.println(name + \" says Woof!\");\n    }\n}\n\nDog dog = new Dog();\ndog.name = \"Buddy\";     // Parent class field\ndog.eat();              // Parent class method → Buddy is eating\ndog.bark();             // Child class method → Buddy says Woof!",
+          "note": "Java's **inheritance** is single inheritance. A class can only have one parent class. Multiple inheritance (extends A, B) is not allowed.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "rule",
+          "title": "The protected Access Modifier",
+          "body": "A comparison of [[access modifier]]s closely related to **inheritance**:\n\n| Modifier | Same Class | Same Package | Subclass | Other Packages |\n|--------|---|---|---|---|\n| private | ○ | × | × | × |\n| (default) | ○ | ○ | × | × |\n| protected | ○ | ○ | ○ | × |\n| public | ○ | ○ | ○ | ○ |\n\nprotected means \"accessible from subclasses.\"\nPrivate fields are inherited by subclasses but cannot be accessed directly.\nThey are accessed through public/protected methods like getters and setters.",
+          "code": null,
+          "note": "Package-private (no modifier) is only accessible within the same package and cannot be accessed from subclasses in a different package.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "tip",
+          "title": "The \"is-a\" Relationship in Inheritance",
+          "body": "**Inheritance** should be used when the \"A is a B\" relationship holds.\n\n✅ Appropriate inheritance:\n- Dog is an Animal\n- Student is a Person\n\n❌ Inappropriate inheritance:\n- Car is an Engine? → This is a \"has-a\" relationship\n → The Car class should have an engine field (composition)\n\nUse inheritance only for **is-a relationships**, and use composition (having a field) for has-a relationships.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Inheritance**: Use extends to inherit the functionality of a parent class\n- Java supports only single inheritance (one extends)\n- protected: Accessible from the same package + subclasses\n- Private fields are inherited but not directly accessible\n- Use inheritance when the **is-a relationship** holds",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_01_q1",
+          "lessonId": "ch08_01",
+          "type": "fillBlank",
+          "question": "Fill in the blank so that class B inherits from class A.\nclass B _____ A { }",
+          "code": null,
+          "explanation": "In Java, the extends keyword is used to inherit a class. Writing class B extends A makes B a subclass (child class) of A, inheriting A's public/protected members.",
+          "choices": [
+            {
+              "id": "ch08_01_q1_a",
+              "text": "extends",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_01_q1_b",
+              "text": "implements",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_01_q1_c",
+              "text": "inherits",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_01_q1_d",
+              "text": "super",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_01_q2",
+          "lessonId": "ch08_01",
+          "type": "fourChoice",
+          "question": "Which of the following is the correct description of the protected access modifier?",
+          "code": null,
+          "explanation": "protected allows access from \"classes within the same package\" and \"subclasses even in different packages.\" private is accessible only within the same class, and public is accessible from anywhere.",
+          "choices": [
+            {
+              "id": "ch08_01_q2_a",
+              "text": "Accessible only within the same class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_01_q2_b",
+              "text": "Accessible from the same package and subclasses",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_01_q2_c",
+              "text": "Accessible from anywhere",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_01_q2_d",
+              "text": "Accessible only from subclasses",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_01_q3",
+          "lessonId": "ch08_01",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class A {\n    void hello() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void world() { System.out.println(\"B\"); }\n}\nB b = new B();\nb.hello();\nb.world();",
+          "explanation": "Since B inherits from A, it can call A's hello() method. b.hello() outputs \"A\" and b.world() outputs \"B\".",
+          "choices": [
+            {
+              "id": "ch08_01_q3_a",
+              "text": "A\nB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_01_q3_b",
+              "text": "B\nA",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_01_q3_c",
+              "text": "A",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_01_q3_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_02",
+      "courseId": "ch08",
+      "title": "Constructor Chaining",
+      "summary": "Calling the parent constructor using super()",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How a child [[class]]'s [[constructor]] calls the parent class's constructor\n- Explicit invocation using super()\n- The conditions under which an implicit super() is inserted\n\nWithout understanding constructor chaining, you won't be able to identify the cause of [[compile]] errors.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "code",
+          "title": "Basics of super()",
+          "body": "Use super() in a child class constructor to call the parent class's constructor.",
+          "code": "// Definition of the Animal class\nclass Animal {\n    String name;\n\n    Animal(String name) {\n        this.name = name;\n        System.out.println(\"Animal constructor: \" + name);\n    }\n}\n\n// Definition of the Dog class\nclass Dog extends Animal {\n    String breed;\n\n    Dog(String name, String breed) {\n        super(name);  // Call parent constructor (must be the first line!)\n        this.breed = breed;\n        System.out.println(\"Dog constructor: \" + breed);\n    }\n}\n\nDog d = new Dog(\"Buddy\", \"Shiba Inu\");\n// Output:\n// Animal constructor: Buddy\n// Dog constructor: Shiba Inu\nSystem.out.println(d.name + \"(\" + d.breed + \")\");\n// Buddy(Shiba Inu)",
+          "note": "super() must be the first line of the constructor. It cannot be used together with this().",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "tip",
+          "title": "super() Must Be the First Line of the Constructor",
+          "body": "Important rules when calling super() within a constructor:\n\n- super() must be written as the first line of the constructor\n- this() (call to another constructor in the same class) and super() cannot be used at the same time\n- If the parent has no no-argument constructor, super(arguments) is required\n\nEven if you don't explicitly write super(), the compiler automatically inserts \"super()\" (no-argument version only).",
+          "code": null,
+          "note": "Exam questions frequently test \"constructor combinations that cause compile errors.\"",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "rule",
+          "title": "Implicit super() Invocation",
+          "body": "Important rules:\n\n1. If super() is not written in the child class constructor, the compiler automatically inserts super() (no-argument version)\n\n2. If the parent class has no no-argument constructor, the child class must explicitly write super(arguments) → Otherwise, a compile error occurs\n\n3. Both super() and this() must be the first line of the constructor, so they cannot be used at the same time\n\n4. Constructor execution order is \"parent → child\"\n   - Executed starting from the topmost Object class\n\n5. If no constructor is defined in a class, a no-argument default constructor is auto-generated. However, once you define any constructor, the default is not auto-generated",
+          "code": null,
+          "note": "Exam alert: If the parent has no default constructor and the child doesn't explicitly call super(), a compile error occurs.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "code",
+          "title": "Patterns That Cause Compile Errors",
+          "body": "Let's review common mistakes.",
+          "code": "// ❌ Compile error pattern\nclass Parent {\n    Parent(String msg) { // Only a parameterized constructor\n        System.out.println(msg);\n    }\n    // → Default constructor Parent() is NOT auto-generated!\n}\n\nclass Child extends Parent {\n    Child() {\n        // super() is implicitly inserted\n        // → Parent() doesn't exist, so compile error!\n    }\n}\n\n// ✅ Fix 1: Explicitly call super(argument)\nclass Child extends Parent {\n    Child() {\n        super(\"hello\"); // Call parent's parameterized constructor\n    }\n}\n\n// ✅ Fix 2: Add a no-argument constructor to the parent\nclass Parent {\n    Parent() {}            // Add no-argument constructor\n    Parent(String msg) {}  // Parameterized constructor\n}",
+          "note": "The \"//\" in code denotes a comment (explanatory text). It does not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch08_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- super(): Calls the parent class constructor\n- super() must be the first line of the constructor\n- If omitted, super() (no-argument) is auto-inserted\n- If the parent has no no-argument constructor, explicit super() is required\n- Constructor execution order: parent → child\n- super() and this() cannot be used together",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_02_q1",
+          "lessonId": "ch08_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class A {\n    A() { System.out.print(\"A \"); }\n}\nclass B extends A {\n    B() { System.out.print(\"B \"); }\n}\nclass C extends B {\n    C() { System.out.print(\"C \"); }\n}\nnew C();",
+          "explanation": "Constructors execute from parent to child. C() → B() → A() are called in order, but since super() executes first, the output order is A → B → C. C's constructor → implicit super() calls B's constructor → implicit super() calls A's constructor → \"A \" → \"B \" → \"C \".",
+          "choices": [
+            {
+              "id": "ch08_02_q1_a",
+              "text": "A B C ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_02_q1_b",
+              "text": "C B A ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_02_q1_c",
+              "text": "C ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_02_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_02_q2",
+          "lessonId": "ch08_02",
+          "type": "errorFind",
+          "question": "Where does a compile error occur in the following code?",
+          "code": "class Parent {\n    Parent(int x) {\n        System.out.println(x);\n    }\n}\nclass Child extends Parent {\n    Child() {\n        System.out.println(\"Child\");\n    }\n}",
+          "explanation": "Since super() is not written in Child's constructor, the compiler implicitly inserts super() (no-argument). However, Parent does not have a no-argument constructor, so a compile error occurs at line 7 (Child()). You need to explicitly write super(value).",
+          "choices": [
+            {
+              "id": "ch08_02_q2_a",
+              "text": "Definition of the Parent class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_02_q2_b",
+              "text": "Child's constructor (super() is needed)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_02_q2_c",
+              "text": "System.out.println(\"Child\")",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_02_q2_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_02_q3",
+          "lessonId": "ch08_02",
+          "type": "fourChoice",
+          "question": "Which statement about super() and this() is correct?",
+          "code": null,
+          "explanation": "super() calls the parent class constructor, and this() calls another constructor in the same class. Since both must be the first line of the constructor, they cannot be used at the same time.",
+          "choices": [
+            {
+              "id": "ch08_02_q3_a",
+              "text": "super() and this() can be used together in a constructor",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_02_q3_b",
+              "text": "super() can be written anywhere in a method",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_02_q3_c",
+              "text": "super() and this() cannot be used together (first-line constraint)",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch08_02_q3_d",
+              "text": "this() calls the parent class constructor",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_03",
+      "courseId": "ch08",
+      "title": "Method Overriding",
+      "summary": "Redefining a parent's method in a child class",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- **Override**: Redefining a parent [[method]] in a child [[class]]\n- The importance of the **@Override** [[annotation]]\n- The clear difference between [[overloading]] and [[overriding]]\n\nAlthough their names are similar, it is important to distinguish these entirely different concepts.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "code",
+          "title": "Implementing an Override",
+          "body": "Redefine a parent method using the **@Override** annotation.",
+          "code": "// Definition of the Animal class\nclass Animal {\n    // Definition of the speak method\n    void speak() {\n        System.out.println(\"...\");\n    }\n\n    // Definition of the getInfo method\n    String getInfo() {\n        return \"Animal\";\n    }\n}\n\n// Definition of the Cat class\nclass Cat extends Animal {\n    @Override  // Explicitly marks an override (recommended)\n    void speak() {\n        System.out.println(\"Meow\");\n    }\n\n    @Override\n    String getInfo() {\n        return \"Cat: \" + super.getInfo(); // Can also call the parent's method\n    }\n}\n\nAnimal a = new Cat();\na.speak();                     // Meow (child class method is executed)\nSystem.out.println(a.getInfo()); // Cat: Animal",
+          "note": "**@Override** is optional but strongly recommended. It helps detect typos as [[compile]] errors.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "tip",
+          "title": "Difference Between Override and Overload",
+          "body": "Despite similar names, these are entirely different concepts.\n\n| Item | Override | Overload |\n|---|---|---|\n| English | Override (redefine) | Overload (multiple definitions) |\n| Location | Between parent and child class | Within the same class |\n| Method name | Same | Same |\n| Parameters | Same | Different |\n| Return type | Same (covariant return also allowed) | Can differ |\n| Annotation | @Override recommended | None |\n",
+          "code": null,
+          "note": "If you add **@Override** and the method is not actually an **override** (e.g., due to a typo), the compiler will report an error.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "rule",
+          "title": "Rules of Overriding",
+          "body": "**Overriding** has strict rules:\n\n1. The method name and parameter list must match exactly\n2. The return type must be the same or a subtype ([[covariant return]] type)\n   - Parent: Object getX() → Child: [[String]] getX() ○\n3. The [[access modifier]] must be the same or less restrictive\n   - Parent: protected → Child: public ○\n   - Parent: public → Child: protected × Compile error\n4. The throws clause [[exception]] must be the same or a subclass\n5. final methods cannot be overridden\n6. [[Static method]]s are not overridden but \"hidden\"\n\nOverride vs Overload:\n| Comparison | Override | Overload |\n|---|---|---|\n| Location | Between parent-child classes | Within the same class |\n| Method name | Same | Same |\n| Parameters | Same | Different |\n| Return type | Same/subtype | Flexible |",
+          "code": null,
+          "note": "final methods and final classes indicate a design intent of \"no further changes.\" This is also why the String class is declared final.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "code",
+          "title": "Using super.methodName()",
+          "body": "How to call a parent's method from a child class.",
+          "code": "class Logger {\n    void log(String msg) {\n        System.out.println(\"[LOG] \" + msg);\n    }\n}\n\nclass TimedLogger extends Logger {\n    @Override\n    void log(String msg) {\n        // Leverage the parent's method while adding functionality\n        String timestamp = java.time.LocalTime.now().toString();\n        super.log(timestamp + \" - \" + msg);\n    }\n}\n\nTimedLogger logger = new TimedLogger();\nlogger.log(\"Server started\");\n// [LOG] 12:30:45.123 - Server started\n\n// Summary of super usage:\n// super.methodName()  → Call the parent's method\n// super.fieldName     → Access the parent's field (when same-named fields exist)\n// super()             → Call the parent's constructor",
+          "note": "The \"//\" in code denotes a comment (explanatory text). It does not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch08_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Override**: Redefine a parent method in a child class\n- Always add the **@Override** annotation\n- Name and parameters must be the same; return type must be the same or a subtype\n- Access must be the same or less restrictive\n- final methods cannot be overridden\n- Use super.methodName() to call the parent's method",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_03_q1",
+          "lessonId": "ch08_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class A {\n    void greet() { System.out.print(\"Hello \"); }\n}\nclass B extends A {\n    @Override\n    void greet() {\n        super.greet();\n        System.out.print(\"World\");\n    }\n}\nnew B().greet();",
+          "explanation": "B.greet() is called. First, super.greet() executes A's greet(), outputting \"Hello \". Then System.out.print(\"World\") outputs \"World\".",
+          "choices": [
+            {
+              "id": "ch08_03_q1_a",
+              "text": "Hello World",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_03_q1_b",
+              "text": "World",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_03_q1_c",
+              "text": "Hello ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_03_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_03_q2",
+          "lessonId": "ch08_03",
+          "type": "errorFind",
+          "question": "Where does a compile error occur in the following code?",
+          "code": "class Parent {\n    public void show() {\n        System.out.println(\"Parent\");\n    }\n}\nclass Child extends Parent {\n    @Override\n    private void show() {\n        System.out.println(\"Child\");\n    }\n}",
+          "explanation": "When overriding, the access modifier cannot be more restrictive than the parent's. Changing from public (parent) to private (child) violates this rule and causes a compile error. Access must be the same or less restrictive (since public is the least restrictive, only public is allowed here).",
+          "choices": [
+            {
+              "id": "ch08_03_q2_a",
+              "text": "@Override annotation",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_03_q2_b",
+              "text": "private void show() (access is more restrictive)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_03_q2_c",
+              "text": "System.out.println(\"Child\")",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_03_q2_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_03_q3",
+          "lessonId": "ch08_03",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the difference between overriding and overloading?",
+          "code": null,
+          "explanation": "Overriding redefines a method with the same name and parameters across parent-child classes. Overloading defines multiple methods with the same name but different parameters within the same class.",
+          "choices": [
+            {
+              "id": "ch08_03_q3_a",
+              "text": "Overriding changes the parameter types",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_03_q3_b",
+              "text": "Overloading is done between parent and child classes",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_03_q3_c",
+              "text": "Overriding redefines a parent method in a child; overloading uses the same name with different parameters",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch08_03_q3_d",
+              "text": "Both only require a different return type",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch08_03_q4",
+          "lessonId": "ch08_03",
+          "type": "codeComplete",
+          "question": "Complete the code to call the parent class constructor from a child class.",
+          "code": null,
+          "explanation": "Use extends to inherit a class and super() to call the parent class constructor. implements is used for interface implementation.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class Dog __BLANK_1__ Animal {\n    public Dog(String name) {\n        __BLANK_2__(name);\n    }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Inheritance",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "extends",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "implements",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "inherits",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Parent call",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "super",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "this",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "parent",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch08_04",
+      "courseId": "ch08",
+      "title": "Abstract Classes",
+      "summary": "Define a common framework and enforce implementation",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- The definition and usage of [[abstract class]]es\n- How abstract [[method]]s enforce implementation in child classes\n- Design patterns using abstract classes\n\nYou'll learn the design approach of \"providing a common skeleton while leaving the details to each class.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "code",
+          "title": "Defining and Using Abstract Classes",
+          "body": "Use the abstract keyword to declare classes and methods.",
+          "code": "// Abstract class\n// Definition of the Shape class\nabstract class Shape {\n    String color;\n\n    Shape(String color) {\n        this.color = color;\n    }\n\n    // Abstract method (no implementation, enforced in child classes)\n    abstract double area();\n\n    // Regular method (common logic can be written here)\n    // Definition of the display method\n    void display() {\n        System.out.println(color + \" shape, area: \" + area());\n    }\n}\n\n// Implement abstract methods in child classes\n// Definition of the Circle class\nclass Circle extends Shape {\n    double radius;\n\n    Circle(String color, double radius) {\n        super(color);\n        this.radius = radius;\n    }\n    @Override\n    // Definition of the area method\n    double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\n// Definition of the Rectangle class\nclass Rectangle extends Shape {\n    double w, h;\n\n    Rectangle(String color, double w, double h) {\n        super(color);\n        this.w = w;\n        this.h = h;\n    }\n    @Override\n    double area() {\n        return w * h;\n    }\n}\n\n// Shape s = new Shape(\"red\"); // Compile error! Cannot instantiate an abstract class\nShape s = new Circle(\"red\", 5.0);\ns.display(); // red shape, area: 78.539...",
+          "note": "The \"//\" in code denotes a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "tip",
+          "title": "Abstract Classes Cannot Be Instantiated",
+          "body": "An abstract class is an \"incomplete class\" and cannot be instantiated using new.\n\n- new Animal() → [[Compile]] error (if Animal is abstract)\n- Animal a = new Dog() → OK (if Dog **inherits** Animal and implements all abstract methods)\n\nThe purpose of abstract classes is to \"provide a common design while leaving the specific implementation to child classes.\"",
+          "code": null,
+          "note": "An abstract class can be defined even without abstract methods (used to prevent instantiation with new).",
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "rule",
+          "title": "Rules of Abstract Classes",
+          "body": "1. An abstract class cannot be instantiated (no new)\n2. Abstract method: abstract modifier + no method body + ends with semicolon\n   abstract void doSomething();  // No { }\n3. A class with abstract methods must be declared as an abstract class\n4. A child class must **override** all abstract methods\n   → If not, the child class must also be declared abstract\n5. Abstract classes can also have regular methods, fields, and [[constructor]]s\n6. Abstract methods cannot be private (they must be accessible from child classes)\n\nUse cases for abstract classes:\n- Consolidate common logic while enforcing individual implementations\n- Template Method pattern (common flow + customization points)",
+          "code": null,
+          "note": "Abstract classes cannot be instantiated, but they can define constructors. These are called via super() from child classes.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- abstract class: An incomplete class that cannot be instantiated\n- abstract method: No implementation; must be implemented in child classes\n- Can also have regular methods, fields, and constructors\n- If a child doesn't implement all abstract methods, it must also be abstract\n- Used for common logic + enforcing individual implementations",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_04_q1",
+          "lessonId": "ch08_04",
+          "type": "fourChoice",
+          "question": "Which statement about abstract classes is correct?",
+          "code": null,
+          "explanation": "An abstract class is a class with the abstract modifier and can have regular methods and fields. However, it cannot be instantiated (no new). It is possible to declare a class abstract even without abstract methods.",
+          "choices": [
+            {
+              "id": "ch08_04_q1_a",
+              "text": "Abstract classes can be instantiated with new",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_04_q1_b",
+              "text": "Abstract classes cannot have regular methods or fields",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_04_q1_c",
+              "text": "Abstract classes can have regular methods and fields",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch08_04_q1_d",
+              "text": "Abstract methods can be marked private",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_04_q2",
+          "lessonId": "ch08_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "abstract class Base {\n    abstract String name();\n    void print() { System.out.println(\"Name: \" + name()); }\n}\nclass Impl extends Base {\n    @Override\n    String name() { return \"Java\"; }\n}\nnew Impl().print();",
+          "explanation": "The Impl class implements name() to return \"Java\". The print() method is a regular method of Base that calls name(). Through polymorphism, Impl.name() is invoked, outputting \"Name: Java\".",
+          "choices": [
+            {
+              "id": "ch08_04_q2_a",
+              "text": "Name: Java",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_04_q2_b",
+              "text": "Name: null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_04_q2_c",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_04_q2_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_04_q3",
+          "lessonId": "ch08_04",
+          "type": "errorFind",
+          "question": "Which line causes a compile error in the following code?",
+          "code": "abstract class Animal {\n    abstract void speak();\n}\nclass Dog extends Animal {\n}\nDog d = new Dog();",
+          "explanation": "The Dog class does not override the abstract method speak(). A class that doesn't implement all abstract methods must be declared abstract. A compile error occurs at line 4 (class Dog extends Animal).",
+          "choices": [
+            {
+              "id": "ch08_04_q3_a",
+              "text": "Line 1",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_04_q3_b",
+              "text": "Line 4 (Dog class declaration)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_04_q3_c",
+              "text": "Line 6 (new Dog())",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_04_q3_d",
+              "text": "No error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch08_04_q4",
+          "lessonId": "ch08_04",
+          "type": "reorder",
+          "question": "Arrange the steps of class inheritance and method overriding in the correct order.",
+          "code": null,
+          "explanation": "First define the parent class, then create a child class with extends, and redefine the method using @Override.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "class Animal { void speak() { } }",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "class Dog extends Animal {",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "    @Override void speak() { }",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch08_05",
+      "courseId": "ch08",
+      "title": "Interfaces",
+      "summary": "Define contracts and promise implementations",
+      "estimatedMinutes": 8,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Defining [[interface]]s (the implements keyword)\n- The differences between [[class]]es and interfaces\n- How to implement multiple interfaces at the same time\n\nInterfaces define a contract of \"what a class can do.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "code",
+          "title": "Defining and Implementing Interfaces",
+          "body": "Define with the interface keyword and implement using implements.",
+          "code": "// Interface definition\n// Definition of the Printable interface\ninterface Printable {\n    void print(); // Implicitly public abstract\n}\n\n// Definition of the Loggable interface\ninterface Loggable {\n    void log(String message);\n}\n\n// Implementing multiple interfaces\n// Definition of the Document class\nclass Document implements Printable, Loggable {\n    String content;\n\n    Document(String content) {\n        this.content = content;\n    }\n\n    @Override\n    // Definition of the print method\n    public void print() {\n        System.out.println(\"Printing: \" + content);\n    }\n\n    @Override\n    // Definition of the log method\n    public void log(String message) {\n        System.out.println(\"[LOG] \" + message);\n    }\n}\n\n// Can be used as interface-typed variables\nPrintable p = new Document(\"Report\");\np.print();  // Printing: Report\n\nLoggable l = new Document(\"Design Doc\");\nl.log(\"Created\"); // [LOG] Created",
+          "note": "Interface [[method]]s are implicitly public abstract. If you don't add public in the implementing class, it causes a [[compile]] error.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "tip",
+          "title": "Choosing Between Abstract Classes and Interfaces",
+          "body": "Criteria for deciding which to use:\n\n| Feature | Abstract Class | Interface |\n|---|---|---|\n| Relationship | \"is a kind of\" | \"can do\" |\n| Multiple | Single inheritance only | Multiple implementations OK |\n| Fields | Allowed | Constants only (static final) |\n| Constructor | Allowed | Not allowed |\n| Example | Animal → Dog | Comparable, Serializable |\n\nSince Java 8, interfaces can have default methods (with implementations).",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "code",
+          "title": "Default Methods and Static Methods",
+          "body": "Since Java 8, interfaces can also define methods with implementations.",
+          "code": "// Definition of the Greeter interface\ninterface Greeter {\n    // Abstract method (implementation required)\n    String getName();\n\n    // Default method (has a default implementation, override is optional)\n    default void greet() {\n        System.out.println(\"Hello, \" + getName());\n    }\n\n    // Static method (called using the interface name)\n    // Definition of the info method\n    static void info() {\n        System.out.println(\"Greeter interface v1.0\");\n    }\n}\n\n// Definition of the User class\nclass User implements Greeter {\n    private String name;\n    User(String name) { this.name = name; }\n\n    @Override\n    // Definition of the getName method\n    public String getName() { return name; }\n    // greet() can use the default implementation as-is\n}\n\nUser u = new User(\"Alice\");\nu.greet();       // Hello, Alice (default implementation)\nGreeter.info();  // Greeter interface v1.0 (static call)\n\n// It's also possible to override the default method\n// Definition of the VIPUser class\nclass VIPUser implements Greeter {\n    @Override public String getName() { return \"VIP\"; }\n    @Override public void greet() {\n        System.out.println(\"Special greeting: Dear \" + getName());\n    }\n}",
+          "note": "Default methods were added in Java 8. They allow adding new methods to existing interfaces without breaking implementing classes.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "rule",
+          "title": "Interface vs Abstract Class",
+          "body": "| Feature | Interface | Abstract Class |\n|---|---|---|\n| Multiple inheritance | ○ (multiple implements) | × (one extends) |\n| Constructor | × | ○ |\n| Instance variables | × (constants only) | ○ |\n| default/static methods | ○ (Java 8+) | ○ |\n| Usage | \"What it can do\" contract | \"What it is\" common base |\n\nInterface fields:\n- Implicitly public static final (constants)\n- interface Colors { int RED = 1; } // = public static final int RED = 1;\n\nGuidelines:\n- \"A dog is a kind of animal\" → [[Abstract class]] (is-a)\n- \"A dog can swim\" → Interface (can-do / has-ability)",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch08_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- interface: Defines a contract (what a class can do)\n- Implemented with implements; multiple interface implementation is possible\n- Methods are implicitly public abstract\n- [[Default methods]]: Have default implementations (Java 8+)\n- Static methods: Called with InterfaceName.method()\n- Fields are implicitly public static final (constants only)\n- Abstract classes are is-a; interfaces are can-do",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_05_q1",
+          "lessonId": "ch08_05",
+          "type": "fillBlank",
+          "question": "Fill in the blank with the keyword used when a class implements an interface.\nclass Dog _____ Runnable { }",
+          "code": null,
+          "explanation": "The implements keyword is used when a class implements an interface. Unlike extends (inheritance), you can specify multiple interfaces separated by commas.",
+          "choices": [
+            {
+              "id": "ch08_05_q1_a",
+              "text": "implements",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q1_b",
+              "text": "extends",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q1_c",
+              "text": "inherits",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q1_d",
+              "text": "uses",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_05_q2",
+          "lessonId": "ch08_05",
+          "type": "fourChoice",
+          "question": "Which statement about default methods in Java 8+ interfaces is correct?",
+          "code": null,
+          "explanation": "Default methods provide a default implementation in the interface. Implementing classes may or may not override them. This allows adding new methods to existing interfaces without breaking existing implementing classes.",
+          "choices": [
+            {
+              "id": "ch08_05_q2_a",
+              "text": "Must always be overridden in the implementing class",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q2_b",
+              "text": "Provides a default implementation; overriding is optional",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q2_c",
+              "text": "Same as an abstract method",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q2_d",
+              "text": "Used with the private keyword",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_05_q3",
+          "lessonId": "ch08_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "interface Calc {\n    default int doubleIt(int n) { return n * 2; }\n}\nclass MyCalc implements Calc {\n    @Override\n    public int doubleIt(int n) { return n * 3; }\n}\nCalc c = new MyCalc();\nSystem.out.println(c.doubleIt(5));",
+          "explanation": "The MyCalc class overrides doubleIt to return n * 3 instead. Since c is actually an instance of MyCalc, the overridden method is called, producing 5 * 3 = 15.",
+          "choices": [
+            {
+              "id": "ch08_05_q3_a",
+              "text": "15",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q3_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q3_c",
+              "text": "5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q3_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch08_05_q4",
+          "lessonId": "ch08_05",
+          "type": "multiChoice",
+          "question": "Select all correct conditions for method overriding.",
+          "code": null,
+          "explanation": "For overriding, the method name and parameter list must be identical. The return type can be the same type or a covariant return type (subclass type). The access modifier must be the same or broader (e.g., expanding protected to public is OK, the reverse is not). Static methods cannot be overridden (they are hidden instead).",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch08_05_q4_a",
+              "text": "Method name and parameter list must be identical",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_05_q4_b",
+              "text": "Access modifier must be the same or broader",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_05_q4_c",
+              "text": "Static methods can also be overridden",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_05_q4_d",
+              "text": "Covariant return types are allowed",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_06",
+      "courseId": "ch08",
+      "title": "Type Checking and Casting",
+      "summary": "instanceof, upcasting, and downcasting",
+      "estimatedMinutes": 8,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Using the [[instanceof]] [[operator]] to check an object's type\n- The difference between **upcasting** and **downcasting**\n- Safe [[casting]] to prevent [[ClassCastException]]\n\nThis knowledge is essential for leveraging **polymorphism**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "code",
+          "title": "Type Checking with instanceof",
+          "body": "Check whether an object is of a specific type.",
+          "code": "// Definition of the Animal class\nclass Animal { }\n// Definition of the Dog class\nclass Dog extends Animal {\n    // Definition of the bark method\n    void bark() { System.out.println(\"Woof!\"); }\n}\n// Definition of the Cat class\nclass Cat extends Animal {\n    // Definition of the meow method\n    void meow() { System.out.println(\"Meow!\"); }\n}\n\n// Check type with instanceof\nAnimal a = new Dog();\nSystem.out.println(a instanceof Dog);    // true\nSystem.out.println(a instanceof Animal); // true (Dog is a kind of Animal)\nSystem.out.println(a instanceof Cat);    // false\n\n// null always returns false\nAnimal n = null;\nSystem.out.println(n instanceof Animal); // false\n\n// Practical example: check type before casting\nstatic void handleAnimal(Animal animal) {\n    // Conditional branch\n    if (animal instanceof Dog) {\n        Dog dog = (Dog) animal;\n        dog.bark();\n    // Check another condition\n    } else if (animal instanceof Cat) {\n        Cat cat = (Cat) animal;\n        cat.meow();\n    }\n}\n\n// Java 16+: Pattern matching\nif (animal instanceof Dog dog) {\n    dog.bark(); // No casting needed!\n}",
+          "note": "With [[pattern matching]] for instanceof in Java 16+, you can perform type checking and casting simultaneously.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "tip",
+          "title": "Downcasting Is Dangerous — Always Check with instanceof",
+          "body": "**Upcasting** is safe, but **downcasting** risks a ClassCastException.\n\n- Upcasting (child → parent): Always safe. Performed implicitly.\n- Downcasting (parent → child): Requires explicit casting. Throws an [[exception]] if the type is wrong.\n\nAlways check with **instanceof** before casting.\n\nFrom Java 16+, \"pattern matching instanceof\" is available (see Chapter 19).",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "code",
+          "title": "Upcasting and Downcasting",
+          "body": "Child → parent (**upcasting**) is safe; parent → child (**downcasting**) requires explicit casting.",
+          "code": "class Vehicle {\n    void run() { System.out.println(\"Running\"); }\n}\nclass Car extends Vehicle {\n    void drift() { System.out.println(\"Drifting!\"); }\n}\n\n// Upcasting (child → parent): implicit, always safe\nVehicle v = new Car();  // Automatic (no cast needed)\nv.run();                // OK\n// v.drift();           // Compile error! Vehicle type has no drift()\n\n// Downcasting (parent → child): explicit cast required\nCar c = (Car) v;        // Cast (actual type is Car, so it's OK)\nc.drift();              // OK → Drifting!\n\n// ⚠️ Downcasting to a type different from the actual type causes a runtime error\nVehicle v2 = new Vehicle(); // Actual type is Vehicle\n// Car c2 = (Car) v2;      // ClassCastException!\n\n// Safe downcasting: check with instanceof first\nif (v instanceof Car) {\n    Car safeCar = (Car) v;  // Safe\n    safeCar.drift();\n}",
+          "note": "The distinction between [[compile]] errors and runtime errors is important. **Downcasting** compiles successfully, but if the actual type is different, a ClassCastException occurs at runtime.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "| Concept | Description |\n|---|---|\n| instanceof | Checks the type of an object (null always returns false) |\n| Upcasting (child → parent) | Implicit, safe, child-specific methods unavailable |\n| Downcasting (parent → child) | Explicit cast required |\n- Downcasting to an incompatible type → ClassCastException\n- Check with instanceof before downcasting for safety\n- Java 16+: Pattern matching for type check + cast simultaneously",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_06_q1",
+          "lessonId": "ch08_06",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class A {}\nclass B extends A {}\nA obj = new B();\nSystem.out.print(obj instanceof A);\nSystem.out.print(\",\");\nSystem.out.print(obj instanceof B);",
+          "explanation": "The actual type of obj is B. Since B is a subclass of A, both obj instanceof A and obj instanceof B return true. instanceof checks the actual type hierarchy of the object.",
+          "choices": [
+            {
+              "id": "ch08_06_q1_a",
+              "text": "true,true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_06_q1_b",
+              "text": "true,false",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_06_q1_c",
+              "text": "false,true",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_06_q1_d",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_06_q2",
+          "lessonId": "ch08_06",
+          "type": "fourChoice",
+          "question": "What happens with the following code?",
+          "code": "class Animal {}\nclass Dog extends Animal {}\nAnimal a = new Animal();\nDog d = (Dog) a;",
+          "explanation": "The actual type of variable a is Animal. The downcast to Dog compiles successfully, but at runtime it cannot convert Animal to Dog, so a ClassCastException occurs.",
+          "choices": [
+            {
+              "id": "ch08_06_q2_a",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_06_q2_b",
+              "text": "ClassCastException (runtime error)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_06_q2_c",
+              "text": "Executes normally",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_06_q2_d",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_06_q3",
+          "lessonId": "ch08_06",
+          "type": "fourChoice",
+          "question": "What is the result of null instanceof String?",
+          "code": null,
+          "explanation": "When the left-hand side of instanceof is null, the result is always false. null is not an instance of any type. No NullPointerException is thrown.",
+          "choices": [
+            {
+              "id": "ch08_06_q3_a",
+              "text": "true",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch08_06_q3_b",
+              "text": "false",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch08_06_q3_c",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_06_q3_d",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch08_07",
+      "courseId": "ch08",
+      "title": "Leveraging Polymorphism",
+      "summary": "Building flexible programs with polymorphism",
+      "estimatedMinutes": 8,
+      "order": 7,
+      "contents": [
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Practical usage of **polymorphism**\n- The mechanism of calling child [[class]] [[method]]s through parent-type [[variable]]s\n- Flexible design enabled by [[polymorphism]]\n\nThis tests the combined skills of **inheritance**, **overriding**, and [[interface]]s.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "code",
+          "title": "A Practical Example of Polymorphism",
+          "body": "Different child classes can be handled the same way through parent-type variables.",
+          "code": "// Definition of the Shape class\nabstract class Shape {\n    abstract double area();\n\n    @Override\n    // Definition of the toString method\n    public String toString() {\n        return getClass().getSimpleName() + \": area=\" + area();\n    }\n}\n\n// Definition of the Circle class\nclass Circle extends Shape {\n    double r;\n    Circle(double r) { this.r = r; }\n    @Override double area() { return Math.PI * r * r; }\n}\n\n// Definition of the Rect class\nclass Rect extends Shape {\n    double w, h;\n    Rect(double w, double h) { this.w = w; this.h = h; }\n    @Override double area() { return w * h; }\n}\n\n// Polymorphism: different behaviors through the same Shape type\nShape[] shapes = {\n    new Circle(5),\n    new Rect(3, 4),\n    new Circle(2)\n};\n\n// Enhanced for loop (iterates over all elements of a collection)\nfor (Shape s : shapes) {\n    System.out.println(s.toString());\n    // Circle: area=78.539...\n    // Rect: area=12.0\n    // Circle: area=12.566...\n}\n\n// Total area is easy to calculate\n// Variable declaration and initialization\ndouble total = 0;\nfor (Shape s : shapes) total += s.area();\nSystem.out.println(\"Total area: \" + total);",
+          "note": "Even when adding new shapes (e.g., Triangle), existing loop code doesn't need to change. This is the greatest advantage of **polymorphism**.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "tip",
+          "title": "Three Requirements for Polymorphism",
+          "body": "**Polymorphism** requires the following three conditions:\n\n1. An **inheritance** relationship exists (extends / implements)\n2. A method is **overridden**\n3. A child class object is referenced through a parent class/interface type variable\n\nWhen all three are met, \"the same code exhibits different behaviors\" — polymorphism is achieved.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "code",
+          "title": "Methods of the Object Class",
+          "body": "Every class implicitly **inherits** from the Object class.",
+          "code": "// Key methods of the Object class:\n// toString() — Returns a string representation\n// equals()   — Determines equality\n// hashCode() — Returns a hash value\n\n// Definition of the Student class\nclass Student {\n    String name;\n    int id;\n\n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n    @Override\n    // Definition of the toString method\n    public String toString() {\n        return \"Student{name='\" + name + \"', id=\" + id + \"}\";\n    }\n    @Override\n    // Definition of the equals method\n    public boolean equals(Object obj) {\n        // Conditional branch\n        if (this == obj) return true;\n        if (!(obj instanceof Student)) return false;\n        Student other = (Student) obj;\n        return this.id == other.id &&\n               this.name.equals(other.name);\n    }\n    @Override\n    public int hashCode() {\n        return name.hashCode() * 31 + id;\n    }\n}\nStudent s1 = new Student(\"Taro\", 1);\nStudent s2 = new Student(\"Taro\", 1);\nSystem.out.println(s1.toString()); // Student{name='Taro', id=1}\nSystem.out.println(s1.equals(s2)); // true\nSystem.out.println(s1 == s2);      // false (reference comparison)",
+          "note": "If you **override** equals(), you must also [[override]] hashCode(). Two objects that are equal must return the same hashCode (necessary for [[HashMap]] and [[HashSet]] to work correctly).",
+          "order": 4
+        },
+        {
+          "lessonId": "ch08_07",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Polymorphism**: The same call produces different behavior depending on the type\n- Parent type [[array]]s/lists can handle different child classes together\n- Adding new types doesn't require modifying existing code\n- Every class implicitly **inherits** from Object\n- toString(): String representation (useful for debugging/display)\n- equals(): Equality check (note: == is reference comparison)\n- If you **override** equals() → you must also override hashCode()",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch08_07_q1",
+          "lessonId": "ch08_07",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class A {\n    String name() { return \"A\"; }\n}\nclass B extends A {\n    @Override\n    String name() { return \"B\"; }\n}\nA obj = new B();\nSystem.out.println(obj.name());",
+          "explanation": "The variable type is A but the actual object is B. Through polymorphism, the method of the actual type (B) is called at runtime, so \"B\" is output.",
+          "choices": [
+            {
+              "id": "ch08_07_q1_a",
+              "text": "B",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_07_q1_b",
+              "text": "A",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_07_q1_c",
+              "text": "AB",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_07_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch08_07_q2",
+          "lessonId": "ch08_07",
+          "type": "fourChoice",
+          "question": "When you override equals(), which method must you also override?",
+          "code": null,
+          "explanation": "When you override equals(), you must also override hashCode(). This is a Java contract: two objects that are equal must return the same hashCode. This is essential for HashMap and HashSet to work correctly.",
+          "choices": [
+            {
+              "id": "ch08_07_q2_a",
+              "text": "hashCode()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_07_q2_b",
+              "text": "toString()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_07_q2_c",
+              "text": "clone()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_07_q2_d",
+              "text": "finalize()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch08_07_q3",
+          "lessonId": "ch08_07",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Point {\n    int x, y;\n    Point(int x, int y) { this.x = x; this.y = y; }\n    @Override\n    public boolean equals(Object o) {\n        if (!(o instanceof Point)) return false;\n        Point p = (Point) o;\n        return this.x == p.x && this.y == p.y;\n    }\n}\nPoint a = new Point(1, 2);\nPoint b = new Point(1, 2);\nSystem.out.print(a == b);\nSystem.out.print(\",\");\nSystem.out.print(a.equals(b));",
+          "explanation": "a == b is a reference comparison, and since a and b are different objects, it returns false. a.equals(b) calls the overridden equals(), which checks x==1 && y==2, and since they match, it returns true. The key point is the difference between reference comparison (==) and equality check (equals).",
+          "choices": [
+            {
+              "id": "ch08_07_q3_a",
+              "text": "false,true",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch08_07_q3_b",
+              "text": "true,true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch08_07_q3_c",
+              "text": "false,false",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch08_07_q3_d",
+              "text": "true,false",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

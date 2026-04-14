@@ -1,0 +1,571 @@
+[
+  {
+    "id": "ch01",
+    "title": "Introduction",
+    "subtitle": "Prerequisites for Learning Java",
+    "order": 1,
+    "iconName": "book.fill",
+    "colorHex": "#3B82F6",
+    "isMVP": true,
+    "lessonCount": 3,
+    "fileName": "ch01_introduction",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "java_basics"
+    ],
+    "category": "basics"
+  },
+  {
+    "id": "ch02",
+    "title": "Output & Variables",
+    "subtitle": "Your First Success",
+    "order": 2,
+    "iconName": "text.cursor",
+    "colorHex": "#8B5CF6",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch02_output_variables",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "variables",
+      "java_basics"
+    ],
+    "category": "basics"
+  },
+  {
+    "id": "ch03",
+    "title": "Conditionals",
+    "subtitle": "Expressing Branching Logic",
+    "order": 3,
+    "iconName": "arrow.triangle.branch",
+    "colorHex": "#EC4899",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch03_conditionals",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "control_flow",
+      "operators"
+    ],
+    "category": "basics"
+  },
+  {
+    "id": "ch04",
+    "title": "Loops",
+    "subtitle": "Mastering Iteration",
+    "order": 4,
+    "iconName": "repeat",
+    "colorHex": "#F59E0B",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch04_loops",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "loops",
+      "control_flow"
+    ],
+    "category": "basics"
+  },
+  {
+    "id": "ch05",
+    "title": "Methods",
+    "subtitle": "Organizing Code into Functions",
+    "order": 5,
+    "iconName": "function",
+    "colorHex": "#10B981",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch05_methods",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "methods",
+      "java_basics"
+    ],
+    "category": "basics"
+  },
+  {
+    "id": "ch06",
+    "title": "Arrays & Lists",
+    "subtitle": "Working with Multiple Values",
+    "order": 6,
+    "iconName": "list.bullet.rectangle",
+    "colorHex": "#06B6D4",
+    "isMVP": true,
+    "lessonCount": 7,
+    "fileName": "ch06_arrays_lists",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "arrays",
+      "strings"
+    ],
+    "category": "basics"
+  },
+  {
+    "id": "ch07",
+    "title": "Introduction to Classes",
+    "subtitle": "Gateway to Object-Oriented Programming",
+    "order": 7,
+    "iconName": "cube",
+    "colorHex": "#6366F1",
+    "isMVP": true,
+    "lessonCount": 7,
+    "fileName": "ch07_classes",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "classes",
+      "encapsulation"
+    ],
+    "category": "oop"
+  },
+  {
+    "id": "ch08",
+    "title": "Inheritance & Interfaces",
+    "subtitle": "Learning Design Principles",
+    "order": 8,
+    "iconName": "arrow.triangle.merge",
+    "colorHex": "#D946EF",
+    "isMVP": true,
+    "lessonCount": 7,
+    "fileName": "ch08_inheritance",
+    "certificationLevel": "beginner",
+    "examTopics": [
+      "inheritance",
+      "polymorphism",
+      "interfaces"
+    ],
+    "category": "oop"
+  },
+  {
+    "id": "ch12",
+    "title": "Polymorphism",
+    "subtitle": "Mastering Dynamic Behavior",
+    "order": 9,
+    "iconName": "arrow.triangle.swap",
+    "colorHex": "#8B5CF6",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch12_polymorphism",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "polymorphism",
+      "inheritance"
+    ],
+    "category": "oop"
+  },
+  {
+    "id": "ch13",
+    "title": "Abstract Classes & Interfaces",
+    "subtitle": "Learning Design Abstraction",
+    "order": 10,
+    "iconName": "square.stack.3d.up",
+    "colorHex": "#D946EF",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch13_abstract_interface",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "interfaces",
+      "inheritance"
+    ],
+    "category": "oop"
+  },
+  {
+    "id": "ch20",
+    "title": "Nested Classes",
+    "subtitle": "Classes Within Classes",
+    "order": 11,
+    "iconName": "square.on.square",
+    "colorHex": "#8B5CF6",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch20_nested_classes",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "classes",
+      "encapsulation"
+    ],
+    "category": "oop"
+  },
+  {
+    "id": "ch09",
+    "title": "Exception Handling",
+    "subtitle": "Dealing with Errors",
+    "order": 12,
+    "iconName": "exclamationmark.triangle",
+    "colorHex": "#EF4444",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch09_exceptions",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "exceptions"
+    ],
+    "category": "error_handling"
+  },
+  {
+    "id": "ch14",
+    "title": "Advanced Exception Handling",
+    "subtitle": "Robust Error Management",
+    "order": 13,
+    "iconName": "exclamationmark.shield",
+    "colorHex": "#EF4444",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch14_exceptions_advanced",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "exceptions"
+    ],
+    "category": "error_handling"
+  },
+  {
+    "id": "ch25",
+    "title": "Exception Patterns in Practice",
+    "subtitle": "try-with-resources & Applications",
+    "order": 14,
+    "iconName": "exclamationmark.triangle.fill",
+    "colorHex": "#EF4444",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch25_exceptions_applied",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "exceptions"
+    ],
+    "category": "error_handling"
+  },
+  {
+    "id": "ch15",
+    "title": "Java API Fundamentals",
+    "subtitle": "Mastering Core Classes",
+    "order": 15,
+    "iconName": "shippingbox",
+    "colorHex": "#06B6D4",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch15_java_api",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "java_api",
+      "strings"
+    ],
+    "category": "standard_library"
+  },
+  {
+    "id": "ch26",
+    "title": "Date & Time API",
+    "subtitle": "Mastering java.time",
+    "order": 16,
+    "iconName": "calendar.badge.clock",
+    "colorHex": "#F59E0B",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch26_datetime",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "java_api"
+    ],
+    "category": "standard_library"
+  },
+  {
+    "id": "ch30",
+    "title": "Annotations",
+    "subtitle": "Leveraging Metadata",
+    "order": 17,
+    "iconName": "at",
+    "colorHex": "#EC4899",
+    "isMVP": true,
+    "lessonCount": 3,
+    "fileName": "ch30_annotations",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "annotations"
+    ],
+    "category": "standard_library"
+  },
+  {
+    "id": "ch19",
+    "title": "Java SE 17 New Features",
+    "subtitle": "enum, var, switch expressions, record & sealed",
+    "order": 18,
+    "iconName": "sparkles",
+    "colorHex": "#06B6D4",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch19_java17_features",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "java_basics",
+      "control_flow",
+      "java_api"
+    ],
+    "category": "standard_library"
+  },
+  {
+    "id": "ch21",
+    "title": "Generics",
+    "subtitle": "Type Safety with Type Parameters",
+    "order": 19,
+    "iconName": "diamond",
+    "colorHex": "#3B82F6",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch21_generics",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "generics"
+    ],
+    "category": "data_collections"
+  },
+  {
+    "id": "ch22",
+    "title": "Collections Framework",
+    "subtitle": "Mastering List, Set & Map",
+    "order": 20,
+    "iconName": "tray.2",
+    "colorHex": "#8B5CF6",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch22_collections",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "collections"
+    ],
+    "category": "data_collections"
+  },
+  {
+    "id": "ch16",
+    "title": "Introduction to Lambda",
+    "subtitle": "Gateway to Functional Programming",
+    "order": 21,
+    "iconName": "chevron.left.forwardslash.chevron.right",
+    "colorHex": "#10B981",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch16_lambda",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "lambda"
+    ],
+    "category": "functional_stream"
+  },
+  {
+    "id": "ch23",
+    "title": "Functional Interfaces",
+    "subtitle": "Predicate, Function & Consumer",
+    "order": 22,
+    "iconName": "function",
+    "colorHex": "#06B6D4",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch23_functional",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "lambda",
+      "streams"
+    ],
+    "category": "functional_stream"
+  },
+  {
+    "id": "ch24",
+    "title": "Stream API",
+    "subtitle": "Data Processing Pipelines",
+    "order": 23,
+    "iconName": "arrow.right.arrow.left.circle",
+    "colorHex": "#10B981",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch24_stream_api",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "streams",
+      "lambda"
+    ],
+    "category": "functional_stream"
+  },
+  {
+    "id": "ch10",
+    "title": "Database Overview",
+    "subtitle": "The Big Picture of Data Storage",
+    "order": 24,
+    "iconName": "cylinder",
+    "colorHex": "#14B8A6",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch10_database",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "java_api"
+    ],
+    "category": "database_web"
+  },
+  {
+    "id": "ch29",
+    "title": "JDBC",
+    "subtitle": "Database Connectivity Basics",
+    "order": 25,
+    "iconName": "cylinder",
+    "colorHex": "#6366F1",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch29_jdbc",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "jdbc"
+    ],
+    "category": "database_web"
+  },
+  {
+    "id": "ch11",
+    "title": "Web Overview",
+    "subtitle": "Gateway to Web Development",
+    "order": 26,
+    "iconName": "globe",
+    "colorHex": "#F97316",
+    "isMVP": true,
+    "lessonCount": 6,
+    "fileName": "ch11_web",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "java_api",
+      "modules"
+    ],
+    "category": "database_web"
+  },
+  {
+    "id": "ch38",
+    "title": "Introduction to Spring Boot",
+    "subtitle": "First Steps in Web App Development",
+    "order": 27,
+    "iconName": "leaf",
+    "colorHex": "#22C55E",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch38_spring_boot",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "java_api"
+    ],
+    "category": "database_web"
+  },
+  {
+    "id": "ch27",
+    "title": "Multithreading & Concurrency",
+    "subtitle": "Threads and Synchronization",
+    "order": 28,
+    "iconName": "arrow.triangle.branch",
+    "colorHex": "#D946EF",
+    "isMVP": true,
+    "lessonCount": 7,
+    "fileName": "ch27_concurrency",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "concurrency"
+    ],
+    "category": "concurrency_io"
+  },
+  {
+    "id": "ch28",
+    "title": "I/O and NIO.2",
+    "subtitle": "File Operations Overview",
+    "order": 29,
+    "iconName": "doc.on.doc",
+    "colorHex": "#14B8A6",
+    "isMVP": true,
+    "lessonCount": 5,
+    "fileName": "ch28_io_nio",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "io_nio"
+    ],
+    "category": "concurrency_io"
+  },
+  {
+    "id": "ch17",
+    "title": "Module System",
+    "subtitle": "Structuring Applications",
+    "order": 30,
+    "iconName": "square.grid.3x3",
+    "colorHex": "#F59E0B",
+    "isMVP": true,
+    "lessonCount": 3,
+    "fileName": "ch17_modules",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "modules"
+    ],
+    "category": "modules_i18n"
+  },
+  {
+    "id": "ch32",
+    "title": "Advanced Module System",
+    "subtitle": "Services and Migration",
+    "order": 31,
+    "iconName": "square.grid.3x3.fill",
+    "colorHex": "#F59E0B",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch32_modules_advanced",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "modules"
+    ],
+    "category": "modules_i18n"
+  },
+  {
+    "id": "ch31",
+    "title": "Localization",
+    "subtitle": "Locale & ResourceBundle",
+    "order": 32,
+    "iconName": "globe.americas",
+    "colorHex": "#F97316",
+    "isMVP": true,
+    "lessonCount": 3,
+    "fileName": "ch31_localization",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "localization"
+    ],
+    "category": "modules_i18n"
+  },
+  {
+    "id": "ch18",
+    "title": "Silver Comprehensive Exercises",
+    "subtitle": "Final Prep for Silver Exam",
+    "order": 33,
+    "iconName": "trophy",
+    "colorHex": "#EC4899",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch18_silver_exercises",
+    "certificationLevel": "silver",
+    "examTopics": [
+      "java_basics",
+      "control_flow",
+      "inheritance",
+      "exceptions",
+      "java_api"
+    ],
+    "category": "exam_practice"
+  },
+  {
+    "id": "ch33",
+    "title": "Gold Comprehensive Exercises",
+    "subtitle": "Final Prep for Gold Exam",
+    "order": 34,
+    "iconName": "trophy.fill",
+    "colorHex": "#EF4444",
+    "isMVP": true,
+    "lessonCount": 4,
+    "fileName": "ch33_gold_exercises",
+    "certificationLevel": "gold",
+    "examTopics": [
+      "generics",
+      "collections",
+      "streams",
+      "concurrency",
+      "io_nio"
+    ],
+    "category": "exam_practice"
+  }
+]

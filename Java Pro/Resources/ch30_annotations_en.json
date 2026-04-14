@@ -1,0 +1,610 @@
+{
+  "courseId": "ch30",
+  "lessons": [
+    {
+      "id": "ch30_01",
+      "courseId": "ch30",
+      "title": "Annotation Basics",
+      "summary": "Learn the concept and role of annotations. Understand built-in annotations such as @Override, @Deprecated, @SuppressWarnings, and @FunctionalInterface, as well as meta-annotations like @Target and @Retention.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "overview",
+          "title": "What Are Annotations?",
+          "body": "In this lesson, you will learn:\n\n- The role of **annotations** (attaching metadata)\n- Standard [[annotations]] such as @Override, @Deprecated, and @SuppressWarnings\n- Where annotations are placed and their effects\n\nUnderstand the mechanism for \"adding information to code.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "rule",
+          "title": "Built-in Annotations",
+          "body": "| Annotation | Description |\n|---|---|\n| @Override | Indicates that a method overrides a superclass method. Causes a compilation error if it does not actually override. |\n| @Deprecated | Indicates that an element is deprecated. Using it produces a compile-time warning. |\n| @SuppressWarnings | Suppresses compiler warnings. Specify warning categories such as \"unchecked\", \"deprecation\", and \"rawtypes\". |\n| @FunctionalInterface | Indicates that an interface is a functional interface (has exactly one abstract method). |\n| @SafeVarargs | Suppresses warnings about heap pollution from varargs methods. |",
+          "code": "// @Override: Explicitly indicating an override\nclass Animal {\n    void speak() { System.out.println(\"...\"); }\n}\nclass Dog extends Animal {\n    @Override\n    void speak() { System.out.println(\"ワン\"); }\n}\n\n// @Deprecated: Deprecated method\nclass OldApi {\n    @Deprecated(since = \"11\", forRemoval = true)\n    void oldMethod() { }\n}\n\n// @SuppressWarnings: Suppressing warnings\n@SuppressWarnings(\"unchecked\")\nList rawList = new ArrayList();\n\n// @FunctionalInterface: Functional interface\n@FunctionalInterface\ninterface Calculator {\n    int calculate(int a, int b);\n    // Having 2 abstract methods causes a compilation error\n}",
+          "note": "@Deprecated(forRemoval = true) is available since Java 9 and indicates that the element is scheduled for removal in a future version.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "rule",
+          "title": "Meta-annotations",
+          "body": "**Meta-annotations** are annotations applied to annotation definitions.\n| Annotation | Description |\n|---|---|\n| @Target | Specifies the kinds of elements to which the annotation can be applied (ElementType enum). |\n| @Retention | Specifies the retention scope of the annotation information (RetentionPolicy enum). |\n| @Documented | Specifies that the annotation information should be included in Javadoc. |\n| @Inherited | Specifies that the annotation is inherited by subclasses. |\n| @Repeatable | Specifies that an annotation can be applied multiple times to the same element (Java 8+). |",
+          "code": "import java.lang.annotation.*;\n\n// @Target: Restricting applicable targets\n// ElementType.TYPE → classes, interfaces, enums\n// ElementType.METHOD → methods\n// ElementType.FIELD → fields\n// ElementType.PARAMETER → parameters\n// ElementType.CONSTRUCTOR → constructors\n// ElementType.LOCAL_VARIABLE → local variables\n\n// @Retention: Retention policy\n// RetentionPolicy.SOURCE → source code only (discarded after compilation)\n// RetentionPolicy.CLASS → retained in class file (default)\n// RetentionPolicy.RUNTIME → accessible at runtime via reflection\n\n@Target(ElementType.METHOD)\n@Retention(RetentionPolicy.RUNTIME)\n@interface MyAnnotation {\n    String value();\n}",
+          "note": "The default @Retention if not specified is RetentionPolicy.CLASS. RUNTIME is required to access it via **reflection**.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "point",
+          "title": "ElementType and RetentionPolicy",
+          "body": "ElementType is an enum that restricts where an **annotation** can be applied.\nTo specify multiple ElementTypes, use array notation: @Target({ElementType.TYPE, ElementType.METHOD}).\nRetentionPolicy has three levels — SOURCE has the shortest and RUNTIME has the longest retention period.\n| Policy | Description |\n|---|---|\n| SOURCE | Used by the compiler and not included in the class file (e.g., @Override). |\n| CLASS | Included in the class file but cannot be accessed at runtime via reflection. |\n| RUNTIME | Accessible at runtime via reflection (widely used in frameworks). |",
+          "code": null,
+          "note": "@Override has @Retention(SOURCE), so it is not included in the [[compiled]] [[class]] file.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch30_01",
+          "sectionType": "tip",
+          "title": "Exam Prep: Annotation Basics",
+          "body": "| Annotation | Description |\n|---|---|\n| @Override | Applying it to a method that does not actually override causes a compilation error. |\n| @FunctionalInterface | Applying it to an interface with more than one abstract method causes a compilation error. |\n| @SuppressWarnings values | Specified as strings. For multiple values: @SuppressWarnings({\"unchecked\", \"deprecation\"}). |\n| Default @Retention | Remember that it is CLASS. |\nOmitting @Target allows the annotation to be applied to nearly all elements.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch30_01_q1",
+          "lessonId": "ch30_01",
+          "type": "fourChoice",
+          "question": "Which statement about the @Override annotation is correct?",
+          "code": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\npublic @interface LogExecution {\n    String value() default \"\";\n}",
+          "explanation": "@Override is an annotation that explicitly indicates a method overrides a superclass method. Applying it to a method that does not actually override causes a compilation error. This helps detect issues like method name typos early.",
+          "choices": [
+            {
+              "id": "ch30_01_q1_a",
+              "text": "Applying it to a non-overriding method causes a compilation error",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_01_q1_b",
+              "text": "Without it, the override becomes invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_01_q1_c",
+              "text": "It can also be applied to fields",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_01_q1_d",
+              "text": "It can be retrieved at runtime via reflection",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch30_01_q2",
+          "lessonId": "ch30_01",
+          "type": "fourChoice",
+          "question": "What is the default retention policy when @Retention is not specified?",
+          "code": "class Example {\n    @Override\n    public String toString() {\n        return \"Example\";\n    }\n\n    @Deprecated(since = \"2.0\")\n    public void oldMethod() { }\n}",
+          "explanation": "When @Retention is not specified, the default is RetentionPolicy.CLASS. In this case, the annotation information is included in the class file but cannot be retrieved at runtime via reflection. Specifying RUNTIME makes it accessible at runtime as well.",
+          "choices": [
+            {
+              "id": "ch30_01_q2_a",
+              "text": "RetentionPolicy.CLASS",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_01_q2_b",
+              "text": "RetentionPolicy.RUNTIME",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_01_q2_c",
+              "text": "RetentionPolicy.SOURCE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_01_q2_d",
+              "text": "There is no default; it must always be specified",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch30_01_q3",
+          "lessonId": "ch30_01",
+          "type": "fillBlank",
+          "question": "To restrict an annotation's target to methods only, specify @Target(ElementType.___).",
+          "code": "@SuppressWarnings(\"unchecked\")\npublic <T> List<T> convert(Object obj) {\n    return (List<T>) obj;\n}",
+          "explanation": "ElementType.METHOD restricts the annotation target to methods only. Specifying @Target(ElementType.METHOD) causes a compilation error when the annotation is applied to classes or fields.",
+          "choices": [
+            {
+              "id": "ch30_01_q3_a",
+              "text": "METHOD",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_01_q3_b",
+              "text": "FUNCTION",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_01_q3_c",
+              "text": "TYPE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_01_q3_d",
+              "text": "FIELD",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch30_02",
+      "courseId": "ch30",
+      "title": "Custom Annotations",
+      "summary": "Learn how to define custom annotations. Understand the @interface syntax, default values for elements, configuring @Retention and @Target, and marker annotations and single-value annotations.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "overview",
+          "title": "Custom Annotations Overview",
+          "body": "In this lesson, you will learn:\n\n- Defining **custom annotations** with @interface\n- Declaring elements (attributes) and their default values\n- **Meta-annotations** such as @Retention and @Target\n\nYou will learn how to design your own [[annotations]].",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "code",
+          "title": "Defining Annotations with @interface Syntax",
+          "body": "**Annotations** are defined with the @interface keyword (not interface).\nElements are declared in the form of [[methods]] with no arguments and no implementation body.\nDefault values can be specified with the default keyword.\nAn annotation with no elements is called a marker annotation.\nIf there is a single element named value(), the element name can be omitted when using the annotation (single-value annotation).",
+          "code": "import java.lang.annotation.*;\n\n// Marker annotation (no elements)\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Test {}\n\n// Single-value annotation\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Author {\n    String value();  // Can omit element name when using if named value\n}\n\n// Multi-element annotation\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Todo {\n    String description();\n    String assignee() default \"未定\";\n    int priority() default 3;\n}\n\n// Usage examples\n@Author(\"Taro\")  // Element name can be omitted for value()\n// MyApp class definition\nclass MyApp {\n    @Test\n    // testMethod method definition\n    void testMethod() {}\n\n    @Todo(description = \"実装する\", priority = 1)\n    // futureMethod method definition\n    void futureMethod() {}\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "rule",
+          "title": "Rules for Annotation Elements",
+          "body": "The return types of **annotation** elements are limited to the following.\n[[Primitive types]] (int, double, boolean, etc.), [[String]], Class<?>, enum types, and annotation types.\nAs well as one-dimensional [[arrays]] of these types.\nCollection types like [[ArrayList]] and Map cannot be used.\nDefault values must be [[compile]]-time constants.\nnull cannot be used as a default value.\nJava reserved words cannot be used as element names.",
+          "code": "import java.lang.annotation.*;\n\n// Elements with various types\n@Retention(RetentionPolicy.RUNTIME)\n@interface Config {\n    int count() default 10;           // Primitive type\n    String name();                     // String\n    Class<?> type() default Object.class; // Class\n    DayOfWeek day() default DayOfWeek.MONDAY; // Enum type\n    Author author();                   // Annotation type\n    String[] tags() default {};        // Array\n}\n\n// Using array elements\n@interface Roles {\n    String[] value();\n}\n\n// Curly braces can be omitted for single-element arrays\n@Roles(\"admin\")\n// Same as @Roles({\"admin\"})\nclass AdminService {}\n\n@Roles({\"admin\", \"manager\"})\nclass ManagerService {}\n\n// ★ Compilation error examples\n// @interface Bad {\n//     Object obj();        // Object is not allowed\n//     String s() default null; // null is not allowed\n// }",
+          "note": "Specifying null as a default value for an **annotation** element causes a compilation error. Use an empty string \"\" or empty array {} instead.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "code",
+          "title": "Configuring @Retention and @Target",
+          "body": "**Custom annotations** typically include @Retention and @Target.\n@Retention(RetentionPolicy.RUNTIME) is required for reading via **reflection**.\nUsing @Target to restrict applicable targets prevents unintended usage.\nTo specify multiple applicable targets, use array notation.",
+          "code": "import java.lang.annotation.*;\n\n// An annotation applicable to methods and fields\n@Retention(RetentionPolicy.RUNTIME)\n@Target({ElementType.METHOD, ElementType.FIELD})\n@interface Validate {\n    int min() default 0;\n    int max() default Integer.MAX_VALUE;\n    String message() default \"検証エラー\";\n}\n\n// User class definition\nclass User {\n    @Validate(min = 1, max = 50, message = \"名前は1〜50文字\")\n    private String name;\n\n    @Validate(min = 0, max = 150)\n    private int age;\n\n    @Validate(min = 5)\n    // setName method definition\n    public void setName(String name) {\n        this.name = name;\n    }\n}\n\n// When @Target is omitted\n// Can be applied to nearly all elements\n// except TYPE_PARAMETER and TYPE_USE",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch30_02",
+          "sectionType": "tip",
+          "title": "Exam Prep: Custom Annotations",
+          "body": "@interface is a different keyword from interface. Do not confuse them.\nAn element named value() allows omitting the element name and writing just the value when using the annotation.\nHowever, if there are other elements without default values besides value(), the name cannot be omitted.\nnull cannot be used for **annotation** elements. It also cannot be used as a default value.\nCurly braces {} can be omitted for single-element arrays.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch30_02_q1",
+          "lessonId": "ch30_02",
+          "type": "fourChoice",
+          "question": "Which type cannot be used as a custom annotation element?",
+          "code": "@Repeatable(Roles.class)\n@interface Role {\n    String value();\n}\n@interface Roles {\n    Role[] value();\n}\n\n@Role(\"admin\")\n@Role(\"user\")\nclass Admin { }",
+          "explanation": "Annotation element types are limited to primitive types, String, Class<?>, enum types, annotation types, and one-dimensional arrays of these types. ArrayList<String> is a collection type and cannot be used as an annotation element type.",
+          "choices": [
+            {
+              "id": "ch30_02_q1_a",
+              "text": "ArrayList<String>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_02_q1_b",
+              "text": "String",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_02_q1_c",
+              "text": "int",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_02_q1_d",
+              "text": "String[]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch30_02_q2",
+          "lessonId": "ch30_02",
+          "type": "fillBlank",
+          "question": "To define a custom annotation, use the ___ keyword.",
+          "code": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\npublic @interface LogExecution {\n    String value() default \"\";\n}",
+          "explanation": "Custom annotations are defined using the @interface keyword. Note that it differs from the regular interface keyword by having an @ prefix. Example: @interface MyAnnotation { String value(); }",
+          "choices": [
+            {
+              "id": "ch30_02_q2_a",
+              "text": "@interface",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_02_q2_b",
+              "text": "interface",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_02_q2_c",
+              "text": "@annotation",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_02_q2_d",
+              "text": "annotation",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch30_02_q3",
+          "lessonId": "ch30_02",
+          "type": "errorFind",
+          "question": "The following annotation definition has an error. Which part is problematic?",
+          "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Config {\n    String name();\n    String description() default null; // ★\n    int version() default 1;\n}",
+          "explanation": "Specifying null as a default value for an annotation element causes a compilation error. null cannot be used as a value for annotation elements. An empty string \"\" or similar should be used instead.",
+          "choices": [
+            {
+              "id": "ch30_02_q3_a",
+              "text": "null is specified as the default value",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_02_q3_b",
+              "text": "The @Retention value is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_02_q3_c",
+              "text": "name() does not have a default specified",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_02_q3_d",
+              "text": "The default value type for version() is invalid",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch30_02_q4",
+          "lessonId": "ch30_02",
+          "type": "codeComplete",
+          "question": "Complete the code to define a custom annotation.",
+          "code": "class Example {\n    @Override\n    public String toString() {\n        return \"Example\";\n    }\n\n    @Deprecated(since = \"2.0\")\n    public void oldMethod() { }\n}",
+          "explanation": "@Retention specifies the annotation's retention period, and @Target specifies the applicable target. Specifying RUNTIME allows access via reflection.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "@__BLANK_1__(RetentionPolicy.RUNTIME)\n@__BLANK_2__(ElementType.METHOD)\npublic @interface MyAnnotation {\n    String value();\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Retention period",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Retention",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Runtime",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Scope",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Target",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "Target",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "Element",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "Apply",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch30_02_q5",
+          "lessonId": "ch30_02",
+          "type": "multiChoice",
+          "question": "Select all Java standard annotations.",
+          "code": "@SuppressWarnings(\"unchecked\")\npublic <T> List<T> convert(Object obj) {\n    return (List<T>) obj;\n}",
+          "explanation": "@Override, @Deprecated, @SuppressWarnings, and @FunctionalInterface are Java standard annotations. @Autowired is a Spring Framework annotation.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "@Override",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "@Deprecated",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "@SuppressWarnings",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "@Autowired",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "@FunctionalInterface",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch30_03",
+      "courseId": "ch30",
+      "title": "Using Annotations in Practice",
+      "summary": "Learn @Repeatable annotations, retrieving annotation information via reflection, and examples of annotation usage in major frameworks.",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "overview",
+          "title": "Practical Annotation Usage Overview",
+          "body": "In this lesson, you will learn:\n\n- Retrieving **annotation** information via **reflection**\n- @Repeatable (repeating [[annotations]]) Java 8+\n- Examples of annotation usage in frameworks\n\nYou will learn how annotations are used in real-world scenarios.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "code",
+          "title": "@Repeatable Annotations",
+          "body": "@Repeatable allows the same **annotation** to be applied multiple times to the same element.\n@Repeatable requires a \"container annotation\" to be specified.\nThe container annotation must have a value() element whose type is an [[array]] of the repeatable annotation.\nThe @Retention and @Target of the container annotation must match those of the repeatable annotation.",
+          "code": "import java.lang.annotation.*;\n\n// 1. A repeatable annotation\n@Repeatable(Roles.class)  // Specify the container\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Role {\n    String value();\n}\n\n// 2. Container annotation\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface Roles {\n    Role[] value();  // Array of the repeatable annotation\n}\n\n// 3. Usage: Applying the same annotation multiple times\n@Role(\"admin\")\n@Role(\"manager\")\n@Role(\"user\")\n// MultiRoleUser class definition\nclass MultiRoleUser {\n}\n\n// Can also be written directly with the container annotation\n@Roles({@Role(\"admin\"), @Role(\"manager\")})\n// AnotherUser class definition\nclass AnotherUser {\n}",
+          "note": "The container **annotation**'s @Retention must be the same or a longer retention period than the repeatable annotation.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "code",
+          "title": "Retrieving Annotations via Reflection",
+          "body": "You can retrieve **annotation** information at runtime using the **reflection** API.\n| Method | Description |\n|---|---|\n| getAnnotation(Class) | Returns the annotation of the specified type, or null if not present. |\n| getAnnotations() | Returns all annotations as an array. |\n| isAnnotationPresent(Class) | Returns a boolean indicating whether the annotation is present. |\nOnly annotations with @Retention(RetentionPolicy.RUNTIME) can be retrieved.",
+          "code": "import java.lang.annotation.*;\nimport java.lang.reflect.Method;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Info {\n    String author();\n    String date();\n}\n\n// Service class definition\nclass Service {\n    @Info(author = \"Taro\", date = \"2024-04-01\")\n    // process method definition\n    public void process() {\n        System.out.println(\"処理実行\");\n    }\n\n    // other method definition\n    public void other() {}\n}\n\n// Retrieving annotations via reflection\n// Main class definition\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Method method = Service.class.getMethod(\"process\");\n\n        // Check for annotation presence\n        // Conditional branching\n        if (method.isAnnotationPresent(Info.class)) {\n            Info info = method.getAnnotation(Info.class);\n            System.out.println(\"作者: \" + info.author());\n            System.out.println(\"日付: \" + info.date());\n        }\n        // Output:\n        // 作者: Taro\n        // 日付: 2024-04-01\n\n        // Retrieve all annotations\n        Annotation[] anns = method.getAnnotations();\n        // Enhanced for loop (processes all elements of a collection in order)\n        for (Annotation a : anns) {\n            System.out.println(a);\n        }\n    }\n}",
+          "note": "The \"//\" in the code are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "point",
+          "title": "Reflection with @Repeatable",
+          "body": "There are two ways to retrieve @Repeatable **annotations** via **reflection**.\ngetAnnotationsByType(Class) retrieves @Repeatable annotations directly as an array.\nYou can also retrieve the container annotation with getAnnotation(Class).\nIf @Repeatable is applied only once, no container annotation is generated.\nIf applied two or more times, the annotations are stored in the container annotation.",
+          "code": "import java.lang.annotation.*;\n\n// Retrieving @Repeatable annotations\n// MultiRoleUser annotated with @Role(\"admin\") @Role(\"manager\")\n\nClass<?> clazz = MultiRoleUser.class;\n\n// Method 1: Direct retrieval with getAnnotationsByType()\nRole[] roles = clazz.getAnnotationsByType(Role.class);\nfor (Role r : roles) {\n    System.out.println(r.value());\n}\n// admin\n// manager\n// user\n\n// Method 2: Via the container annotation\nRoles container = clazz.getAnnotation(Roles.class);\nif (container != null) {\n    for (Role r : container.value()) {\n        System.out.println(r.value());\n    }\n}\n\n// When applied only once\n// @Role(\"admin\") class SingleRoleUser {}\n// getAnnotation(Roles.class) → null\n// getAnnotation(Role.class) → @Role(\"admin\")\n// getAnnotationsByType(Role.class) → {@Role(\"admin\")}",
+          "note": "getAnnotationsByType() was added in Java 8 and can be used regardless of whether @Repeatable is present.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch30_03",
+          "sectionType": "tip",
+          "title": "Exam Prep: Using Annotations in Practice",
+          "body": "@Repeatable requires a container **annotation** definition, whose value() must be an array type of the repeatable annotation.\nTo retrieve annotations via **reflection**, @Retention(RetentionPolicy.RUNTIME) is required.\ngetAnnotation() returns a single annotation of the specified type, or null if not present.\ngetAnnotationsByType() retrieves @Repeatable annotations as an array.\nBe familiar with annotation usage in frameworks (@Test, @Entity, @Autowired, etc.) as concepts.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch30_03_q1",
+          "lessonId": "ch30_03",
+          "type": "fourChoice",
+          "question": "What is required when defining a @Repeatable annotation?",
+          "code": "@Repeatable(Roles.class)\n@interface Role {\n    String value();\n}\n@interface Roles {\n    Role[] value();\n}\n\n@Role(\"admin\")\n@Role(\"user\")\nclass Admin { }",
+          "explanation": "To define a @Repeatable annotation, a container annotation that stores the repeatable annotations is required. The container annotation must have a value() element whose type is an array of the repeatable annotation (e.g., Role[] value()).",
+          "choices": [
+            {
+              "id": "ch30_03_q1_a",
+              "text": "A container annotation with an array of the repeatable annotation",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_03_q1_b",
+              "text": "An @Override annotation",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_03_q1_c",
+              "text": "A @SuppressWarnings specification",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_03_q1_d",
+              "text": "Implementation of the Serializable interface",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch30_03_q2",
+          "lessonId": "ch30_03",
+          "type": "fourChoice",
+          "question": "What @Retention value is required to retrieve annotation information via reflection?",
+          "code": null,
+          "explanation": "To retrieve annotation information at runtime via reflection, @Retention(RetentionPolicy.RUNTIME) is required. SOURCE is discarded after compilation, and CLASS is included in the class file but cannot be retrieved at runtime via reflection.",
+          "choices": [
+            {
+              "id": "ch30_03_q2_a",
+              "text": "RetentionPolicy.RUNTIME",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_03_q2_b",
+              "text": "RetentionPolicy.CLASS",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_03_q2_c",
+              "text": "RetentionPolicy.SOURCE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_03_q2_d",
+              "text": "Any value allows retrieval via reflection",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch30_03_q3",
+          "lessonId": "ch30_03",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.lang.annotation.*;\nimport java.lang.reflect.Method;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Priority {\n    int value() default 5;\n}\n\nclass Task {\n    @Priority(1)\n    public void urgent() {}\n\n    @Priority\n    public void normal() {}\n}\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Method m1 = Task.class.getMethod(\"urgent\");\n        Method m2 = Task.class.getMethod(\"normal\");\n        Priority p1 = m1.getAnnotation(Priority.class);\n        Priority p2 = m2.getAnnotation(Priority.class);\n        System.out.println(p1.value() + \",\" + p2.value());\n    }\n}",
+          "explanation": "The urgent() method has @Priority(1), so value() returns 1. The normal() method has @Priority without a specified value, so the default value of 5 is used. Therefore, the output is \"1,5\".",
+          "choices": [
+            {
+              "id": "ch30_03_q3_a",
+              "text": "1,5",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch30_03_q3_b",
+              "text": "1,0",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch30_03_q3_c",
+              "text": "1,null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch30_03_q3_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

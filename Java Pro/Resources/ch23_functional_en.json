@@ -1,0 +1,903 @@
+{
+  "courseId": "ch23",
+  "lessons": [
+    {
+      "id": "ch23_01",
+      "courseId": "ch23",
+      "title": "Predicate<T>",
+      "summary": "Learn how to use the test() method of the Predicate<T> interface, the default methods and(), or(), and negate(), and the static method isEqual().",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch23_01",
+          "sectionType": "overview",
+          "title": "What is Predicate<T>?",
+          "body": "In this lesson, you will learn:\n\n- The basics of [[Predicate]]<T> (a function that performs a conditional test)\n- Executing tests with the test() [[method]]\n- Composing conditions with and(), or(), and negate()\n\nThis is the first step toward **functional programming**, where \"conditions\" can be treated as values.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch23_01",
+          "sectionType": "rule",
+          "title": "Basics of the test() Method",
+          "body": "The abstract method of Predicate<T> is test(T t), which takes one argument and returns a boolean.\nAs a [[functional interface]], it can be implemented with [[lambda expressions]] or [[method references]].\nPredicate<String> performs a conditional test on a string, while Predicate<Integer> performs a test on an integer.\n[[Primitive types]] cannot be specified for the type parameter T; [[wrapper classes]] must be used instead.\nPrimitive specializations such as IntPredicate, LongPredicate, and DoublePredicate are also provided.",
+          "code": "import java.util.function.Predicate;\n\n// Test whether a string is not empty\nPredicate<String> isNotEmpty = s -> !s.isEmpty();\nSystem.out.println(isNotEmpty.test(\"Hello\"));  // true\nSystem.out.println(isNotEmpty.test(\"\"));        // false\n\n// Test whether a number is positive\nPredicate<Integer> isPositive = n -> n > 0;\nSystem.out.println(isPositive.test(5));   // true\nSystem.out.println(isPositive.test(-3));  // false\n\n// Using a method reference\nPredicate<String> isBlank = String::isBlank;\nSystem.out.println(isBlank.test(\"  \"));  // true",
+          "note": "Predicate<T> is used as an argument for Stream.filter() and Collection.removeIf().",
+          "order": 2
+        },
+        {
+          "lessonId": "ch23_01",
+          "sectionType": "code",
+          "title": "Composition with and(), or(), and negate()",
+          "body": "**Predicate** has three default methods: and(), or(), and negate().\n| Method | Description |\n|---|---|\n| and() | Corresponds to logical AND (&&); returns true if both conditions are satisfied. |\n| or() | Corresponds to logical OR (\\|\\|); returns true if either condition is satisfied. |\n| negate() | Corresponds to negation (!); inverts the boolean result of the condition. |\nThese methods return a Predicate, so they can be chained to build complex conditions.\nEvaluation uses short-circuit evaluation: and() stops at the first false, and or() stops at the first true.",
+          "code": "Predicate<String> hasA = s -> s.contains(\"A\");\nPredicate<String> lengthOver3 = s -> s.length() > 3;\n\n// and(): both conditions must be satisfied\nPredicate<String> combined = hasA.and(lengthOver3);\nSystem.out.println(combined.test(\"ABCD\"));  // true\nSystem.out.println(combined.test(\"AB\"));    // false (length too short)\nSystem.out.println(combined.test(\"BCDE\"));  // false (no A)\n\n// or(): either condition must be satisfied\nPredicate<String> either = hasA.or(lengthOver3);\nSystem.out.println(either.test(\"A\"));     // true\nSystem.out.println(either.test(\"BCDE\"));  // true\n\n// negate(): negation of the condition\nPredicate<String> noA = hasA.negate();\nSystem.out.println(noA.test(\"BCD\"));  // true\nSystem.out.println(noA.test(\"ABC\"));  // false",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch23_01",
+          "sectionType": "point",
+          "title": "The Predicate.isEqual() Static Method",
+          "body": "Predicate.isEqual(targetRef) is a static method that returns a Predicate which tests whether an argument is equal to targetRef using equals().\nIf targetRef is null, it returns a Predicate that tests whether the argument is null.\nInternally it uses Objects.equals(), enabling null-safe comparison.\nThis method makes it easy to create equality-testing Predicates concisely.\nOn the exam, the case of isEqual(null) may appear in questions.",
+          "code": "Predicate<String> isHello = Predicate.isEqual(\"Hello\");\nSystem.out.println(isHello.test(\"Hello\"));  // true\nSystem.out.println(isHello.test(\"World\"));  // false\nSystem.out.println(isHello.test(null));      // false\n\n// Equality test with null\nPredicate<String> isNull = Predicate.isEqual(null);\nSystem.out.println(isNull.test(null));     // true\nSystem.out.println(isNull.test(\"Hello\"));  // false\n\n// not() static method (Java 11+)\nPredicate<String> notEmpty = Predicate.not(String::isEmpty);\nSystem.out.println(notEmpty.test(\"\"));      // false\nSystem.out.println(notEmpty.test(\"Java\"));  // true",
+          "note": "Predicate.not() was added in Java 11. It has the same effect as negate(), but has the advantage of being usable as a static method.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch23_01",
+          "sectionType": "tip",
+          "title": "Integrating Predicate with the Stream API",
+          "body": "Predicate<T> is most frequently used as an argument to Stream.filter().\nDefining conditions as Predicate variables makes them easy to reuse and compose.\nUsing Collection.removeIf(Predicate), you can delete all elements that match a condition in one operation.\nStream.allMatch(), anyMatch(), and noneMatch() also accept Predicates.\nExternalizing conditions into variables improves testability and code readability.",
+          "code": "List<String> names = new ArrayList<>(List.of(\"Alice\", \"Bob\", \"Anna\", \"Charlie\"));\n\nPredicate<String> startsWithA = s -> s.startsWith(\"A\");\n\n// Used with filter\nnames.stream()\n     .filter(startsWithA)\n     .forEach(System.out::println);  // Alice, Anna\n\n// Used with removeIf\nnames.removeIf(startsWithA);\nSystem.out.println(names);  // [Bob, Charlie]\n\n// allMatch / anyMatch / noneMatch\nList<Integer> nums = List.of(2, 4, 6, 8);\nPredicate<Integer> isEven = n -> n % 2 == 0;\nSystem.out.println(nums.stream().allMatch(isEven));   // true\nSystem.out.println(nums.stream().anyMatch(isEven));   // true\nSystem.out.println(nums.stream().noneMatch(isEven));  // false",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch23_01_q1",
+          "lessonId": "ch23_01",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "Predicate<String> p1 = s -> s.length() > 3;\nPredicate<String> p2 = s -> s.startsWith(\"J\");\nPredicate<String> p3 = p1.and(p2);\n\nSystem.out.println(p3.test(\"Java\"));\nSystem.out.println(p3.test(\"Go\"));\nSystem.out.println(p3.test(\"JavaScript\"));",
+          "explanation": "p3 is the and() composition of p1 and p2. p3.test(\"Java\"): length() > 3 (4 > 3 = true) and startsWith(\"J\") (true), so true. p3.test(\"Go\"): length() > 3 (2 > 3 = false), so false. p3.test(\"JavaScript\"): length() > 3 (10 > 3 = true) and startsWith(\"J\") (true), so true.",
+          "choices": [
+            {
+              "id": "ch23_01_q1_a",
+              "text": "true\nfalse\ntrue",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_01_q1_b",
+              "text": "true\ntrue\ntrue",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_01_q1_c",
+              "text": "false\nfalse\ntrue",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_01_q1_d",
+              "text": "true\nfalse\nfalse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch23_01_q2",
+          "lessonId": "ch23_01",
+          "type": "fourChoice",
+          "question": "What is the return value when null is passed to a Predicate generated by Predicate.isEqual(null)?",
+          "code": "Predicate<String> p = Predicate.isEqual(null);\nSystem.out.println(p.test(null));",
+          "explanation": "Predicate.isEqual(null) returns a Predicate that tests whether the argument is null. Internally, Objects.equals(null, null) is called, which returns true. isEqual() performs null-safe equality testing.",
+          "choices": [
+            {
+              "id": "ch23_01_q2_a",
+              "text": "true is printed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_01_q2_b",
+              "text": "false is printed",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_01_q2_c",
+              "text": "NullPointerException is thrown",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_01_q2_d",
+              "text": "A compile error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch23_01_q3",
+          "lessonId": "ch23_01",
+          "type": "fillBlank",
+          "question": "The default method that negates (inverts) a Predicate's condition is ____().",
+          "code": null,
+          "explanation": "The negate() default method of Predicate returns a new Predicate that inverts the result of the original Predicate. For example, the negate() of isEmpty behaves equivalently to isNotEmpty. Since Java 11, the Predicate.not() static method is also available.",
+          "choices": [
+            {
+              "id": "ch23_01_q3_a",
+              "text": "negate",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_01_q3_b",
+              "text": "not",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_01_q3_c",
+              "text": "reverse",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_01_q3_d",
+              "text": "invert",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch23_02",
+      "courseId": "ch23",
+      "title": "Function<T,R> and UnaryOperator<T>",
+      "summary": "Learn the apply() method of Function<T,R>, the difference between the composition methods andThen() and compose(), and the characteristics of UnaryOperator<T>.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch23_02",
+          "sectionType": "overview",
+          "title": "What is Function<T,R>?",
+          "body": "In this lesson, you will learn:\n\n- How to use [[Function]]<T,R> (a function that performs [[type conversion]])\n- The difference from [[UnaryOperator]]<T> (conversion within the same type)\n- Chaining functions with andThen() and compose()\n\nYou can build pipelines that transform data.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch23_02",
+          "sectionType": "rule",
+          "title": "Basics of the apply() Method",
+          "body": "The abstract [[method]] of Function<T,R> is apply(T t), which takes an argument of type T and returns a result of type R.\nFor example, Function<String, Integer> is a function that takes a string and returns an integer.\nIt can be implemented with [[lambda expressions]] or [[method references]], and can be written concisely as String::length using a method reference.\nPrimitive specializations such as IntFunction<R>, ToIntFunction<T>, and IntToDoubleFunction are provided.\nUsing these specializations can avoid the cost of [[autoboxing]].",
+          "code": "import java.util.function.Function;\n\n// A function that returns the length of a string\nFunction<String, Integer> strLength = String::length;\nSystem.out.println(strLength.apply(\"Hello\"));  // 5\nSystem.out.println(strLength.apply(\"\"));       // 0\n\n// A function that doubles an integer\nFunction<Integer, Integer> doubleIt = n -> n * 2;\nSystem.out.println(doubleIt.apply(5));  // 10\n\n// A function that converts a string to uppercase\nFunction<String, String> toUpper = String::toUpperCase;\nSystem.out.println(toUpper.apply(\"java\"));  // JAVA",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch23_02",
+          "sectionType": "code",
+          "title": "The Difference Between andThen() and compose()",
+          "body": "andThen() performs composition by applying the current function first, then applying the specified function to the result.\ncompose() applies the specified function first, then applies the current function to that result.\nIn other words, f.andThen(g) is the same as g(f(x)), and f.compose(g) is the same as f(g(x)).\nIt is easier to understand if you remember that andThen() means \"after this function\" and compose() means \"before this function\".\nOn exams, the difference in application order between andThen() and compose() is frequently tested.\nBoth methods return a new Function, so the original Function is not modified.",
+          "code": "Function<Integer, Integer> multiply2 = n -> n * 2;\nFunction<Integer, Integer> add3 = n -> n + 3;\n\n// andThen: apply multiply2 first, then add3\n// multiply2(5) → 10 → add3(10) → 13\nFunction<Integer, Integer> mulThenAdd = multiply2.andThen(add3);\nSystem.out.println(mulThenAdd.apply(5));  // 13\n\n// compose: apply add3 first, then multiply2\n// add3(5) → 8 → multiply2(8) → 16\nFunction<Integer, Integer> addThenMul = multiply2.compose(add3);\nSystem.out.println(addThenMul.apply(5));  // 16\n\n// Composition with different types\nFunction<String, Integer> len = String::length;\nFunction<Integer, String> toStr = n -> \"Length: \" + n;\nFunction<String, String> lenMsg = len.andThen(toStr);\nSystem.out.println(lenMsg.apply(\"Java\"));  // Length: 4",
+          "note": "andThen(g): this → g order. compose(g): g → this order. Pay attention to the order!",
+          "order": 3
+        },
+        {
+          "lessonId": "ch23_02",
+          "sectionType": "point",
+          "title": "Function.identity() and UnaryOperator<T>",
+          "body": "Function.identity() is a static method that returns an identity function which returns its argument unchanged.\nIt is useful when you want to use the value as-is, such as in the valueMapper of Stream.toMap().\nUnaryOperator<T> is an [[interface]] that [[inherits]] from Function<T,T> and is used when the input and output are the same type.\nSince UnaryOperator is a sub-interface of Function<T,T>, it inherits the apply() method.\nList.replaceAll() takes a UnaryOperator<E> as its argument.",
+          "code": "import java.util.function.UnaryOperator;\n\n// UnaryOperator: input and output are the same type\nUnaryOperator<String> toUpper = String::toUpperCase;\nSystem.out.println(toUpper.apply(\"hello\"));  // HELLO\n\n// Function.identity(): returns the argument as-is\nFunction<String, String> identity = Function.identity();\nSystem.out.println(identity.apply(\"test\"));  // test\n\n// Usage with List.replaceAll()\nList<String> list = new ArrayList<>(List.of(\"a\", \"b\", \"c\"));\nlist.replaceAll(String::toUpperCase);\nSystem.out.println(list);  // [A, B, C]\n\n// Using identity with Stream.toMap()\nList<String> words = List.of(\"apple\", \"banana\", \"cherry\");\nMap<Integer, String> map = words.stream()\n    .collect(Collectors.toMap(String::length, Function.identity()));",
+          "note": "Since UnaryOperator<T> inherits from Function<T,T>, it can be used wherever a **Function** is required.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch23_02",
+          "sectionType": "tip",
+          "title": "Practical Patterns for Function Composition",
+          "body": "By leveraging [[function composition]], you can build data transformation pipelines declaratively.\nChaining multiple Functions with andThen() allows you to describe step-by-step transformations clearly.\nPassing a composed function to Stream.map() can reduce the number of [[intermediate operations]].\n**Composition** is [[lazily evaluated]], so no actual computation occurs until apply() is called.\nFunction composition improves reusability and makes testing easier.",
+          "code": "// Example of a data transformation pipeline\nFunction<String, String> trim = String::trim;\nFunction<String, String> lower = String::toLowerCase;\nFunction<String, String> normalize = trim.andThen(lower);\n\nSystem.out.println(normalize.apply(\"  HELLO  \"));  // hello\n\n// Using composition with Streams\nList<String> data = List.of(\" Java \", \" Python \", \" Go \");\ndata.stream()\n    .map(normalize)\n    .forEach(System.out::println);\n// java\n// python\n// go",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch23_02_q1",
+          "lessonId": "ch23_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "Function<Integer, Integer> f = n -> n + 10;\nFunction<Integer, Integer> g = n -> n * 3;\n\nSystem.out.println(f.andThen(g).apply(5));\nSystem.out.println(f.compose(g).apply(5));",
+          "explanation": "f.andThen(g).apply(5) first computes f(5) = 15, then g(15) = 45. f.compose(g).apply(5) first computes g(5) = 15, then f(15) = 25. andThen() applies in the order f → g, while compose() applies in the order g → f.",
+          "choices": [
+            {
+              "id": "ch23_02_q1_a",
+              "text": "45\n25",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_02_q1_b",
+              "text": "25\n45",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_02_q1_c",
+              "text": "45\n45",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_02_q1_d",
+              "text": "25\n25",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch23_02_q2",
+          "lessonId": "ch23_02",
+          "type": "fourChoice",
+          "question": "Which of the following statements about UnaryOperator<T> is correct?",
+          "code": null,
+          "explanation": "UnaryOperator<T> is an interface that extends Function<T,T>. It represents a function where the input and output are the same type T. Since it is a sub-interface of Function<T,T>, it inherits the apply() method. List.replaceAll() uses UnaryOperator<E> as its argument.",
+          "choices": [
+            {
+              "id": "ch23_02_q2_a",
+              "text": "It is an interface that extends Function<T,T>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_02_q2_b",
+              "text": "It is an interface that extends Consumer<T>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_02_q2_c",
+              "text": "It represents a function where the input and output types differ",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_02_q2_d",
+              "text": "It has execute() as its abstract method",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch23_02_q3",
+          "lessonId": "ch23_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "Function<String, Integer> len = String::length;\nFunction<Integer, Integer> triple = n -> n * 3;\nFunction<String, Integer> tripleLen = len.andThen(triple);\n\nSystem.out.println(tripleLen.apply(\"Java\"));\nSystem.out.println(tripleLen.apply(\"Hi\"));",
+          "explanation": "tripleLen = len.andThen(triple) first applies len (string length), then applies triple (multiply by 3) to the result. The length of \"Java\" is 4, 4 * 3 = 12. The length of \"Hi\" is 2, 2 * 3 = 6.",
+          "choices": [
+            {
+              "id": "ch23_02_q3_a",
+              "text": "12\n6",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_02_q3_b",
+              "text": "4\n2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_02_q3_c",
+              "text": "6\n12",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_02_q3_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch23_02_q4",
+          "lessonId": "ch23_02",
+          "type": "codeComplete",
+          "question": "Complete the code that converts a string to an integer using the Function interface.",
+          "code": null,
+          "explanation": "Function<T,R> is a functional interface that takes an argument of type T and returns a result of type R. It is executed with apply().",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__<String, Integer> toInt = s __BLANK_2__ Integer.parseInt(s);\nSystem.out.println(toInt.apply(\"42\"));",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Functional type",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "Function",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Predicate",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Consumer",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Arrow",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "->",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "=>",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "::",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch23_03",
+      "courseId": "ch23",
+      "title": "Consumer<T> and Supplier<T>",
+      "summary": "Learn the accept() method and andThen() composition of Consumer<T>, as well as the get() method and lazy evaluation mechanism of Supplier<T>.",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch23_03",
+          "sectionType": "overview",
+          "title": "The Roles of Consumer and Supplier",
+          "body": "In this lesson, you will learn:\n\n- How to use [[Consumer]]<T> (a function that consumes a value)\n- How to use [[Supplier]]<T> (a function that supplies a value)\n- Combining with forEach()\n\nExpress **side-effect** operations and value generation as functions.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch23_03",
+          "sectionType": "rule",
+          "title": "Consumer<T>'s accept() and andThen()",
+          "body": "The abstract [[method]] of Consumer<T> is accept(T t), which takes an argument and performs an operation, but has no return value (void).\nConsumer is used as the argument for Iterable.forEach() and Stream.forEach().\nMultiple Consumers can be chained using the default method andThen().\nConsumer<T> does not have or() or negate(). Logical operations are not possible because there is no return value.\nPrimitive specializations IntConsumer, LongConsumer, and DoubleConsumer are also available.",
+          "code": "import java.util.function.Consumer;\n\n// A Consumer that prints output\nConsumer<String> print = System.out::println;\nprint.accept(\"Hello\");  // Hello\n\n// A Consumer that converts to uppercase and prints\nConsumer<String> shout = s -> System.out.println(s.toUpperCase());\nshout.accept(\"hello\");  // HELLO\n\n// Chain with andThen()\nConsumer<String> printThenShout = print.andThen(shout);\nprintThenShout.accept(\"java\");\n// java\n// JAVA\n\n// Used with forEach\nList<String> list = List.of(\"A\", \"B\", \"C\");\nlist.forEach(print);  // A B C (printed on each line)",
+          "note": "Consumer<T> does not have or() or negate(). Only andThen() is available.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch23_03",
+          "sectionType": "code",
+          "title": "The get() Method of Supplier<T>",
+          "body": "The abstract method of Supplier<T> is get(), which takes no arguments and returns a value of type T.\nIt is used for object creation and providing default values.\n**Optional**.orElseGet() takes a Supplier as its argument and generates a default value with [[lazy evaluation]].\nA [[constructor]] reference (e.g., [[ArrayList]]::new) can be used as a Supplier.\nUsing orElseGet() instead of orElse() avoids unnecessary computation when a value is present.",
+          "code": "import java.util.function.Supplier;\n\n// A Supplier that provides a string\nSupplier<String> greeting = () -> \"Hello, World!\";\nSystem.out.println(greeting.get());  // Hello, World!\n\n// Creating objects with a constructor reference\nSupplier<List<String>> listFactory = ArrayList::new;\nList<String> newList = listFactory.get();\nnewList.add(\"Java\");\nSystem.out.println(newList);  // [Java]\n\n// Lazy evaluation with Optional\nOptional<String> opt = Optional.empty();\nString result = opt.orElseGet(() -> \"default value\");\nSystem.out.println(result);  // default value\n\n// Difference between orElse and orElseGet\n// orElse(heavyCompute())     → heavyCompute() is always executed\n// orElseGet(() -> heavyCompute()) → executed only when value is absent",
+          "note": "Using orElseGet(**Supplier**) avoids unnecessary computation when a value is present.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch23_03",
+          "sectionType": "point",
+          "title": "Practical Uses of Consumer and Supplier",
+          "body": "**Consumer** is used for operations on each element of a collection (log output, saving to DB, etc.).\nSupplier excels in the lazy initialization pattern, deferring object creation until it is needed.\nStream.generate(Supplier) can create an infinite stream.\nObjects.requireNonNull(obj, Supplier) allows lazy generation of the error message when null.\nUsage like Logger.info(() -> \"expensive message generation\") generates the message only when the log level is enabled.",
+          "code": "// Usage with Stream.generate\nSupplier<Double> randomSupplier = Math::random;\nStream.generate(randomSupplier)\n      .limit(3)\n      .forEach(System.out::println);\n// 0.123... 0.456... 0.789... (random values)\n\n// Leveraging Supplier with Objects.requireNonNull\nString name = null;\ntry {\n    Objects.requireNonNull(name, () -> \"name is\" + \" null\");\n} catch (NullPointerException e) {\n    System.out.println(e.getMessage());  // name is null\n}\n\n// Practical Consumer example: separating concerns\nConsumer<String> log = s -> System.out.println(\"[LOG] \" + s);\nConsumer<String> save = s -> System.out.println(\"[SAVE] \" + s);\nConsumer<String> process = log.andThen(save);\nprocess.accept(\"data\");\n// [LOG] data\n// [SAVE] data",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch23_03",
+          "sectionType": "tip",
+          "title": "Functional Interface Reference Table",
+          "body": "Let's organize the key [[functional interfaces]] in the java.util.function package.\n| Interface | Description |\n|---|---|\n| Predicate<T> | T → boolean (conditional test); abstract method is test(). |\n| Function<T,R> | T → R (transformation); abstract method is apply(). |\n| Consumer<T> | T → void (consumption); abstract method is accept(). |\n| Supplier<T> | () → T (supply); abstract method is get(). |\nAccurately memorizing the method names and argument/return type combinations for each [[interface]] is key to passing the Gold exam.",
+          "code": "// Reference table of key functional interfaces\n// Predicate<T>   : T → boolean  | test(T)      | filter, removeIf\n// Function<T,R>  : T → R        | apply(T)     | map, Stream.toMap\n// Consumer<T>    : T → void     | accept(T)    | forEach, peek\n// Supplier<T>    : () → T       | get()         | orElseGet, generate\n// UnaryOperator<T>  : T → T     | apply(T)     | replaceAll\n// BinaryOperator<T> : (T,T) → T | apply(T,T)   | reduce, merge",
+          "note": "On the exam, you need to accurately memorize the abstract method name for each interface.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch23_03_q1",
+          "lessonId": "ch23_03",
+          "type": "fourChoice",
+          "question": "Which is the correct abstract method of Supplier<T>?",
+          "code": null,
+          "explanation": "The abstract method of Supplier<T> is get(). It takes no arguments and returns a value of type T. Methods like supply(), provide(), and create() do not exist. Supplier is used for factory patterns and lazy evaluation.",
+          "choices": [
+            {
+              "id": "ch23_03_q1_a",
+              "text": "get()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_03_q1_b",
+              "text": "supply()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_03_q1_c",
+              "text": "provide()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_03_q1_d",
+              "text": "create()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch23_03_q2",
+          "lessonId": "ch23_03",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "Consumer<String> c1 = s -> System.out.print(s.toUpperCase());\nConsumer<String> c2 = s -> System.out.print(s.length());\nConsumer<String> c3 = c1.andThen(c2);\nc3.accept(\"Java\");",
+          "explanation": "c3 is a Consumer composed by c1.andThen(c2). First, c1 is executed and \"Java\".toUpperCase() prints \"JAVA\". Then c2 is executed and \"Java\".length() prints 4. With Consumer's andThen(), the same argument \"Java\" is passed to both Consumers.",
+          "choices": [
+            {
+              "id": "ch23_03_q2_a",
+              "text": "JAVA4",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_03_q2_b",
+              "text": "java4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_03_q2_c",
+              "text": "4JAVA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_03_q2_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch23_03_q3",
+          "lessonId": "ch23_03",
+          "type": "fillBlank",
+          "question": "The abstract method of Consumer<T> is ____(), which takes one argument and has no return value.",
+          "code": null,
+          "explanation": "The abstract method of Consumer<T> is accept(T t). It takes one argument and executes a process with no return value (void). It is used as the argument for Iterable.forEach() and Stream.forEach().",
+          "choices": [
+            {
+              "id": "ch23_03_q3_a",
+              "text": "accept",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_03_q3_b",
+              "text": "consume",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_03_q3_c",
+              "text": "apply",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_03_q3_d",
+              "text": "execute",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch23_04",
+      "courseId": "ch23",
+      "title": "BiFunction, BiPredicate, BiConsumer",
+      "summary": "Learn how to use the Bi-series functional interfaces that take two arguments, BinaryOperator<T>, and how to integrate them with Map.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch23_04",
+          "sectionType": "overview",
+          "title": "What are the Bi-series Interfaces?",
+          "body": "In this lesson, you will learn:\n\n- [[BiFunction]]<T,U,R> (a two-argument transformation function)\n- BiPredicate<T,U> (a two-argument conditional test)\n- BiConsumer<T,U> (a two-argument consuming function)\n\nThese are [[functional interfaces]] for scenarios that require two arguments.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch23_04",
+          "sectionType": "rule",
+          "title": "Basics of BiFunction<T,U,R>",
+          "body": "The abstract [[method]] of BiFunction<T,U,R> is apply(T t, U u), which takes two arguments and returns a result of type R.\nThe default method andThen() can be used to apply further transformations to the result.\nBiFunction does not have a compose() method (because the direction of composition is ambiguous with two arguments).\nBiFunction is used as the argument for Map.compute(), Map.merge(), and Map.replaceAll().\nBiPredicate<T,U> has the test(T t, U u) method and can be composed with and(), or(), and negate().",
+          "code": "import java.util.function.BiFunction;\nimport java.util.function.BiPredicate;\n\n// Generate a result from two arguments\nBiFunction<String, Integer, String> repeat = (s, n) -> s.repeat(n);\nSystem.out.println(repeat.apply(\"Ha\", 3));  // HaHaHa\n\n// Add a transformation with andThen\nBiFunction<Integer, Integer, Integer> add = Integer::sum;\nFunction<Integer, String> toStr = n -> \"Total: \" + n;\nBiFunction<Integer, Integer, String> addAndFormat = add.andThen(toStr);\nSystem.out.println(addAndFormat.apply(3, 7));  // Total: 10\n\n// BiPredicate: conditional test with two arguments\nBiPredicate<String, Integer> lengthCheck = (s, n) -> s.length() > n;\nSystem.out.println(lengthCheck.test(\"Java\", 3));  // true\nSystem.out.println(lengthCheck.test(\"Go\", 3));    // false",
+          "note": "BiFunction does not have a compose() method. Only andThen() is available.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch23_04",
+          "sectionType": "code",
+          "title": "BiConsumer and Map.forEach",
+          "body": "The abstract method of BiConsumer<T,U> is accept(T t, U u), which takes two arguments and performs a process with no return value.\nMap.forEach() takes a BiConsumer<K,V> as its argument and executes a process for each entry.\nBiConsumer also has the andThen() default method, allowing processes to be chained.\nWhile the normal Consumer<T> takes one argument, BiConsumer<T,U> takes two arguments.\nNote that the argument types differ between Map's forEach and List's forEach.",
+          "code": "import java.util.function.BiConsumer;\n\n// BiConsumer: takes two arguments\nBiConsumer<String, Integer> printEntry = \n    (key, value) -> System.out.println(key + \"=\" + value);\n\n// Used with Map.forEach\nMap<String, Integer> scores = Map.of(\"Alice\", 90, \"Bob\", 85, \"Charlie\", 92);\nscores.forEach(printEntry);\n// Alice=90\n// Bob=85\n// Charlie=92\n\n// Chaining with andThen()\nBiConsumer<String, Integer> logger = \n    (k, v) -> System.out.println(\"[LOG] \" + k + \":\" + v);\nBiConsumer<String, Integer> combined = printEntry.andThen(logger);\ncombined.accept(\"test\", 100);\n// test=100\n// [LOG] test:100",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch23_04",
+          "sectionType": "point",
+          "title": "BinaryOperator<T>",
+          "body": "[[BinaryOperator]]<T> is an [[interface]] that [[inherits]] from BiFunction<T,T,T> and takes two arguments of the same type, returning a result of the same type.\nBinaryOperator is used as the argument for Stream.reduce().\nThe static methods BinaryOperator.minBy([[Comparator]]) and maxBy(Comparator) are provided.\nminBy() returns a BinaryOperator that returns the smaller of two values, and maxBy() returns the larger.\nBinaryOperator is also used as the third argument (collision handler) of Map.merge().",
+          "code": "import java.util.function.BinaryOperator;\n\n// BinaryOperator: takes two arguments of the same type and returns the same type\nBinaryOperator<Integer> add = Integer::sum;\nSystem.out.println(add.apply(3, 5));  // 8\n\n// Used with Stream.reduce\nList<Integer> nums = List.of(1, 2, 3, 4, 5);\nint sum = nums.stream().reduce(0, Integer::sum);\nSystem.out.println(sum);  // 15\n\n// minBy / maxBy\nBinaryOperator<String> shorter = \n    BinaryOperator.minBy(Comparator.comparingInt(String::length));\nSystem.out.println(shorter.apply(\"Java\", \"Go\"));  // Go\n\nBinaryOperator<String> longer = \n    BinaryOperator.maxBy(Comparator.comparingInt(String::length));\nSystem.out.println(longer.apply(\"Java\", \"Go\"));   // Java\n\n// Used with Map.merge (sum values on collision)\nMap<String, Integer> map = new HashMap<>();\nmap.put(\"A\", 10);\nmap.merge(\"A\", 5, Integer::sum);\nSystem.out.println(map.get(\"A\"));  // 15",
+          "note": "BinaryOperator<T> is a sub-interface of BiFunction<T,T,T>.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch23_04",
+          "sectionType": "tip",
+          "title": "Comparing Bi-series and Single-argument Interfaces",
+          "body": "Each Bi-series interface has a corresponding single-argument version.\nFunction<T,R> → BiFunction<T,U,R>, Predicate<T> → BiPredicate<T,U>, Consumer<T> → BiConsumer<T,U> are the corresponding pairs.\nJava does not provide standard functional interfaces that take three or more arguments.\nWhen three or more arguments are needed, you can either define a custom functional interface or use currying.\nThe Gold exam covers up to the Bi-series interfaces.",
+          "code": "// Comparing single-argument and Bi versions\nFunction<String, Integer> f1 = String::length;           // 1 argument\nBiFunction<String, String, Integer> f2 =                 // 2 arguments\n    (s1, s2) -> s1.length() + s2.length();\n\nSystem.out.println(f1.apply(\"Java\"));           // 4\nSystem.out.println(f2.apply(\"Java\", \"Gold\"));   // 8\n\n// Currying for 3 arguments\nFunction<Integer, Function<Integer, Function<Integer, Integer>>> \n    addThree = a -> b -> c -> a + b + c;\nSystem.out.println(addThree.apply(1).apply(2).apply(3));  // 6",
+          "note": "There are no standard functional interfaces for three or more arguments. Use custom definitions or currying.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch23_04_q1",
+          "lessonId": "ch23_04",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "BinaryOperator<String> longer = \n    BinaryOperator.maxBy(Comparator.comparingInt(String::length));\nSystem.out.println(longer.apply(\"Java\", \"Python\"));\nSystem.out.println(longer.apply(\"Go\", \"C\"));",
+          "explanation": "BinaryOperator.maxBy() generates a BinaryOperator that returns the larger value based on the Comparator. Since we compare by string length, \"Java\" (4) vs \"Python\" (6) returns \"Python\", and \"Go\" (2) vs \"C\" (1) returns \"Go\".",
+          "choices": [
+            {
+              "id": "ch23_04_q1_a",
+              "text": "Python\nGo",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_04_q1_b",
+              "text": "Java\nC",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_04_q1_c",
+              "text": "Python\nC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_04_q1_d",
+              "text": "Java\nGo",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch23_04_q2",
+          "lessonId": "ch23_04",
+          "type": "fourChoice",
+          "question": "Which default method is defined in the BiFunction interface?",
+          "code": null,
+          "explanation": "BiFunction<T,U,R> only has the andThen() default method defined. The compose() method is not provided because the direction of composition is ambiguous with two arguments. or() and negate() are methods of BiPredicate.",
+          "choices": [
+            {
+              "id": "ch23_04_q2_a",
+              "text": "andThen()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_04_q2_b",
+              "text": "compose()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_04_q2_c",
+              "text": "or()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_04_q2_d",
+              "text": "Both andThen() and compose()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch23_04_q3",
+          "lessonId": "ch23_04",
+          "type": "errorFind",
+          "question": "The following code has a compile error. What is the cause of the error?",
+          "code": "BiFunction<String, Integer, String> bf = (s, n) -> s.repeat(n);\nBiFunction<String, Integer, Integer> result = bf.compose(String::length);",
+          "explanation": "BiFunction does not have a compose() method. BiFunction only supports andThen(). compose() is a default method defined only in the Function interface. BiFunction does not provide compose() because the direction of composition is indeterminate with two arguments.",
+          "choices": [
+            {
+              "id": "ch23_04_q3_a",
+              "text": "The compose() method does not exist in BiFunction",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_04_q3_b",
+              "text": "The return type of s.repeat(n) does not match",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_04_q3_c",
+              "text": "String::length cannot be used with BiFunction",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_04_q3_d",
+              "text": "Type inference for the lambda expression parameters fails",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch23_05",
+      "courseId": "ch23",
+      "title": "Function Composition and Chaining",
+      "summary": "Learn Function composition patterns, complex filtering with Predicate chains, and how to build validation pipelines for practical use.",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch23_05",
+          "sectionType": "overview",
+          "title": "The Concept of Function Composition",
+          "body": "In this lesson, you will learn:\n\n- How to apply functions sequentially with andThen()\n- How to apply functions in reverse order with compose()\n- Composing [[Predicates]] (and, or, negate)\n\nA technique for building complex operations by combining small functions.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch23_05",
+          "sectionType": "rule",
+          "title": "Building Function Chains",
+          "body": "By calling andThen() in succession, you can build a multi-stage data transformation pipeline.\nEach stage's function can be independently tested and reused.\nPassing a composed function to Stream.map() can consolidate multiple map() calls into one.\n**Composition** requires type consistency — the output type of the previous function must match the input type of the next function.\nIf the types don't match, a [[compile]] error occurs, ensuring type safety.",
+          "code": "// Multi-stage Function composition\nFunction<String, String> trim = String::trim;\nFunction<String, String> lower = String::toLowerCase;\nFunction<String, String> removeSpaces = s -> s.replace(\" \", \"\");\n\n// Pipeline: trim → lowercase → remove spaces\nFunction<String, String> normalize = \n    trim.andThen(lower).andThen(removeSpaces);\n\nSystem.out.println(normalize.apply(\"  Hello World  \"));\n// helloworld\n\n// Used with Streams (a single map suffices)\nList<String> inputs = List.of(\" Java \", \" Python \", \"  Go  \");\nList<String> results = inputs.stream()\n    .map(normalize)\n    .collect(Collectors.toList());\nSystem.out.println(results);  // [java, python, go]",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch23_05",
+          "sectionType": "code",
+          "title": "Compound Conditions with Predicate Chains",
+          "body": "By combining **Predicate**'s and(), or(), and negate(), you can declaratively build complex filtering conditions.\nExtracting individual conditions as Predicate variables makes them easy to reuse and test.\nAn and() chain of multiple conditions is true when all conditions are met (logical AND), while an or() chain is true when any is met (logical OR).\nInstead of parentheses, the order of and() and or() calls controls the evaluation order.\nand() does not have higher precedence than or(), so you must compose in the intended order.",
+          "code": "// Predicate chain with compound conditions\nPredicate<String> notEmpty = s -> !s.isEmpty();\nPredicate<String> startsWithJ = s -> s.startsWith(\"J\");\nPredicate<String> lengthOver3 = s -> s.length() > 3;\n\n// \"Not empty\" AND \"starts with J\" AND \"length > 3\"\nPredicate<String> filter = notEmpty\n    .and(startsWithJ)\n    .and(lengthOver3);\n\nList<String> langs = List.of(\"Java\", \"JavaScript\", \"Go\", \"Jython\", \"\", \"J\");\nlangs.stream()\n     .filter(filter)\n     .forEach(System.out::println);\n// Java\n// JavaScript\n// Jython\n\n// Combining with or()\nPredicate<String> startsWithP = s -> s.startsWith(\"P\");\nPredicate<String> jOrP = startsWithJ.or(startsWithP);\n\nList.of(\"Java\", \"Python\", \"Go\", \"PHP\").stream()\n    .filter(jOrP)\n    .forEach(System.out::println);\n// Java\n// Python\n// PHP",
+          "note": "The binding precedence of and() and or() differs from Java's && and ||; it follows the order of method calls.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch23_05",
+          "sectionType": "point",
+          "title": "Building a Validation Pipeline",
+          "body": "Using [[function composition]], you can build validation pipelines that progressively verify input values.\nThis is a pattern where Predicate chains define multiple validation conditions, and [[Function]] chains perform data transformations.\nSeparating validation and transformation makes the responsibility of each process clear.\nCombining with the [[Stream API]] allows declarative description of bulk validation and transformation on large datasets.\nIn practice, this is used for validating user input and API request validation.",
+          "code": "// Example of a validation pipeline\nPredicate<String> notNull = Objects::nonNull;\nPredicate<String> notBlank = s -> !s.isBlank();\nPredicate<String> validLength = s -> s.length() >= 3 && s.length() <= 20;\nPredicate<String> alphaNumeric = s -> s.matches(\"[a-zA-Z0-9]+\");\n\n// Chain all conditions\nPredicate<String> isValidUsername = notNull\n    .and(notBlank)\n    .and(validLength)\n    .and(alphaNumeric);\n\n// Transformation pipeline\nFunction<String, String> sanitize = \n    ((Function<String, String>) String::trim)\n    .andThen(String::toLowerCase);\n\n// Integrating validation and transformation\nList<String> inputs = List.of(\"Alice\", \"  \", \"Bo\", \"Charlie123\", \"@invalid\");\ninputs.stream()\n     .filter(isValidUsername)\n     .map(sanitize)\n     .forEach(System.out::println);\n// alice\n// charlie123",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch23_05",
+          "sectionType": "tip",
+          "title": "Best Practices for Function Composition",
+          "body": "Functions to be composed should ideally be **pure functions** without side effects.\nDefining each function as a meaningfully named variable makes the code's intent clear.\nIf an andThen() chain becomes too long, split it with intermediate variables to maintain readability.\nandThen() is generally preferred over compose() as it tends to be more readable.\nFunction composition delivers maximum benefit when combined with the Stream API.",
+          "code": "// Best practice: name each processing step\nFunction<String, String> step1_trim = String::trim;\nFunction<String, String> step2_lower = String::toLowerCase;\nFunction<String, String[]> step3_split = s -> s.split(\",\");\n\n// Composition reads in step order\nFunction<String, String> preprocess = step1_trim.andThen(step2_lower);\n\n// Feed the result into a Stream\nList<String> csvData = List.of(\n    \" Alice,Bob \",\n    \" Charlie,David \"\n);\n\ncsvData.stream()\n    .map(preprocess)         // Trim & lowercase\n    .map(step3_split)        // Split by comma\n    .flatMap(Arrays::stream) // Flatten\n    .forEach(System.out::println);\n// alice\n// bob\n// charlie\n// david",
+          "note": "Keep functions to be composed as **pure functions** without side effects whenever possible. This makes testing and parallel processing easier.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch23_05_q1",
+          "lessonId": "ch23_05",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "code": "Function<String, String> trim = String::trim;\nFunction<String, String> upper = String::toUpperCase;\nFunction<String, Integer> len = String::length;\n\nFunction<String, Integer> pipeline = trim.andThen(upper).andThen(len);\nSystem.out.println(pipeline.apply(\"  Hello  \"));\nSystem.out.println(pipeline.apply(\" Hi \"));",
+          "explanation": "The pipeline applies trim → upper → len in order. \"  Hello  \" trimmed is \"Hello\", uppercased is \"HELLO\", length is 5. \" Hi \" trimmed is \"Hi\", uppercased is \"HI\", length is 2. andThen() applies from left to right.",
+          "choices": [
+            {
+              "id": "ch23_05_q1_a",
+              "text": "5\n2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_05_q1_b",
+              "text": "9\n4",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_05_q1_c",
+              "text": "5\n4",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_05_q1_d",
+              "text": "Compile error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch23_05_q2",
+          "lessonId": "ch23_05",
+          "type": "fourChoice",
+          "question": "Which statement about the evaluation order of Predicate's and() and or() is correct?",
+          "code": "Predicate<String> p1 = s -> s.length() > 3;\nPredicate<String> p2 = s -> s.startsWith(\"A\");\nPredicate<String> p3 = s -> s.endsWith(\"e\");\nPredicate<String> combined = p1.or(p2).and(p3);",
+          "explanation": "Predicate's and() and or() do not have operator-like precedence as in Java; they are evaluated in the order of method chain calls. p1.or(p2).and(p3) first evaluates p1.or(p2), then applies and(p3) to the result. This means (p1 || p2) && p3.",
+          "choices": [
+            {
+              "id": "ch23_05_q2_a",
+              "text": "Evaluated in method chain order, resulting in (p1 || p2) && p3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_05_q2_b",
+              "text": "and() takes precedence over or(), resulting in p1 || (p2 && p3)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch23_05_q2_c",
+              "text": "or() takes precedence over and(), same as (p1 || p2) && p3 but for a different reason",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch23_05_q2_d",
+              "text": "The evaluation order is nondeterministic and results may vary between executions",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch23_05_q3",
+          "lessonId": "ch23_05",
+          "type": "reorder",
+          "question": "Arrange the code in the correct order to build a pipeline of \"trim → lowercase → get length\" using Function.andThen().",
+          "code": null,
+          "explanation": "First, declare the Function variables. Starting from the trim function, compose with andThen() to add the lower function, then compose again with andThen() to add the length function. Finally, apply it with apply(). Since andThen() applies sequentially from left to right, processing occurs in the order trim → lower → length.",
+          "choices": [
+            {
+              "id": "ch23_05_q3_a",
+              "text": "Function<String, String> trim = String::trim;",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch23_05_q3_b",
+              "text": "Function<String, String> lower = String::toLowerCase;",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch23_05_q3_c",
+              "text": "Function<String, Integer> length = String::length;",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch23_05_q3_d",
+              "text": "Function<String, Integer> pipeline = trim.andThen(lower).andThen(length);",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "ch23_05_q3_e",
+              "text": "System.out.println(pipeline.apply(\"  Hello  \"));",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "ch23_05_q3_a",
+            "ch23_05_q3_b",
+            "ch23_05_q3_c",
+            "ch23_05_q3_d",
+            "ch23_05_q3_e"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

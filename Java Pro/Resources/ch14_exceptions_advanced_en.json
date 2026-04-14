@@ -1,0 +1,960 @@
+{
+  "courseId": "ch14",
+  "lessons": [
+    {
+      "id": "ch14_01",
+      "courseId": "ch14",
+      "title": "Exception Hierarchy and Types",
+      "summary": "Understand Java's exception class hierarchy and the difference between checked and unchecked exceptions",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The [[exception]] hierarchy rooted at the Throwable class\n- The relationship between Error, Exception, and [[RuntimeException]]\n- The classification rules for [[checked exceptions]] and unchecked exceptions\n\nLet's understand the overall picture of exceptions from a hierarchical perspective.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "rule",
+          "title": "The Exception Class Hierarchy",
+          "body": "Java's exception hierarchy is structured as follows.\n\nThrowable (parent class of all exceptions and errors)\n├── Error (serious errors; typically not caught by programs)\n│   └── OutOfMemoryError, [[StackOverflowError]], etc.\n└── Exception (exceptions that programs can handle)\n    ├── RuntimeException (Unchecked exceptions: not checked by the compiler)\n    │   └── [[NullPointerException]], ArrayIndexOutOfBoundsException, etc.\n    └── Other Exceptions (Checked exceptions: try-catch or throws is required)\n        └── IOException, SQLException, ClassNotFoundException, etc.\n\nChecked exceptions cause a [[compilation]] error if not handled.\nUnchecked exceptions (RuntimeException and its subclasses) compile without handling.",
+          "code": null,
+          "note": "Error is also unchecked (not checked by the compiler), but should normally not be caught.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "code",
+          "title": "Examples of Common RuntimeExceptions",
+          "body": "Subclasses of RuntimeException often result from programming mistakes.\nLet's look at some representative unchecked exceptions in the following code.\nThese are not checked at compile time and only occur at runtime.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // NullPointerException\n        String s = null;\n        // s.length();  // 実行時にNullPointerException\n\n        // ArrayIndexOutOfBoundsException\n        int[] arr = {1, 2, 3};\n        // System.out.println(arr[5]);  // 範囲外アクセス\n\n        // ClassCastException\n        Object obj = \"Hello\";\n        // Integer num = (Integer) obj;  // 不正なキャスト\n\n        // ArithmeticException\n        // int result = 10 / 0;  // ゼロ除算\n\n        // NumberFormatException\n        // int n = Integer.parseInt(\"abc\");  // 数値に変換不可\n\n        System.out.println(\"すべてコメントアウト中のため正常終了\");\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "tip",
+          "title": "How to Distinguish Checked vs. Unchecked Exceptions",
+          "body": "When an exam question asks about exception types, the criteria are clear.\n\n| Type | Description |\n|---|---|\n| RuntimeException or its subclass | Unchecked exception |\n| Any other Exception | Checked exception |\n| Error and its subclasses | Unchecked (but catching is not recommended) |\n\nSpecifically, IOException and SQLException are checked exceptions.\nNullPointerException and IllegalArgumentException are unchecked exceptions.\nRemember the classification by whether \"the compiler enforces handling or not.\"",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Throwable branches into two families: Error and Exception\n- Error represents serious JVM-level problems that programs should not catch\n- Checked exceptions (such as IOException) must be handled with try-catch or throws\n- Unchecked exceptions (RuntimeException family) compile without handling\n- NullPointerException, [[ClassCastException]], and ArithmeticException are unchecked exceptions",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_01_q1",
+          "lessonId": "ch14_01",
+          "type": "fourChoice",
+          "question": "Which of the following is a checked exception?",
+          "code": null,
+          "explanation": "IOException is a subclass of Exception but not a subclass of RuntimeException, so it is a checked exception. NullPointerException, ArithmeticException, and ArrayIndexOutOfBoundsException are all subclasses of RuntimeException and therefore unchecked exceptions.",
+          "choices": [
+            {
+              "id": "ch14_01_q1_a",
+              "text": "NullPointerException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_01_q1_b",
+              "text": "IOException",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_01_q1_c",
+              "text": "ArithmeticException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_01_q1_d",
+              "text": "ArrayIndexOutOfBoundsException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_01_q2",
+          "lessonId": "ch14_01",
+          "type": "fourChoice",
+          "question": "Which of the following statements about Java's exception hierarchy is correct?",
+          "code": null,
+          "explanation": "In Java's exception hierarchy, Throwable is at the top, branching into Error and Exception. Within Exception, RuntimeException and its subclasses are unchecked exceptions, while the rest are checked exceptions. Error is not a subclass of Exception — it is a direct subclass of Throwable.",
+          "choices": [
+            {
+              "id": "ch14_01_q2_a",
+              "text": "Error is a subclass of Exception",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_01_q2_b",
+              "text": "RuntimeException is a checked exception",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_01_q2_c",
+              "text": "Throwable is the superclass of all errors and exceptions",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_01_q2_d",
+              "text": "Unchecked exceptions must always be handled at compile time",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_01_q3",
+          "lessonId": "ch14_01",
+          "type": "fillBlank",
+          "question": "RuntimeException and its subclasses are called [①] exceptions and are not checked by the compiler.",
+          "code": null,
+          "explanation": "RuntimeException and its subclasses are called \"unchecked exceptions.\" Since the compiler does not enforce handling, the code compiles even without try-catch or throws.",
+          "choices": [
+            {
+              "id": "ch14_01_q3_a",
+              "text": "Unchecked",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_01_q3_b",
+              "text": "Checked",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_01_q3_c",
+              "text": "Error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_01_q3_d",
+              "text": "Fatal",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch14_02",
+      "courseId": "ch14",
+      "title": "Multiple Catch and Multi-Catch",
+      "summary": "Learn the ordering of multiple catch blocks and the multi-catch syntax",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The ordering of multiple catch blocks\n- **Multi-catch** (Java 7+) for handling multiple [[exceptions]] in a single catch\n- The [[polymorphism]] of exceptions and specificity rules\n\nCorrect catch ordering is an important topic on exams as well.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "code",
+          "title": "Ordering of Multiple Catch Blocks",
+          "body": "When using multiple catch blocks, subclass exceptions must be written first.\nSince Exception is the superclass of all exceptions, it must be written last.\nCatch blocks are matched from top to bottom, and only the first matching block is executed.",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            int[] arr = {1, 2, 3};\n            System.out.println(arr[5]);\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"配列の範囲外: \" + e.getMessage());\n        } catch (RuntimeException e) {\n            System.out.println(\"実行時例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外: \" + e.getMessage());\n        }\n    }\n}",
+          "note": "In the code above, if the Exception catch were placed first, subsequent catch blocks would be unreachable and a [[compilation]] error would occur.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "tip",
+          "title": "Catch Block Ordering Rules",
+          "body": "When writing multiple catch blocks, you must order them from specific (child class) to general (parent class).\n\n| Order | Correct | Incorrect |\n|---|---|---|\n| 1st | FileNotFoundException | Exception |\n| 2nd | IOException | IOException |\n| 3rd | Exception | FileNotFoundException |\n\nIf a parent class is written first, the child class catch becomes unreachable, causing a compilation error.",
+          "code": null,
+          "note": "In a **multi-catch** catch(A | B e), if A and B have an [[inheritance]] relationship, it results in a compilation error.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "code",
+          "title": "Multi-Catch Syntax (Java 7+)",
+          "body": "Starting from Java 7, you can use the pipe (|) to catch multiple exception types in a single catch block.\nThis prevents code duplication when the same handling applies.\nHowever, if the exception types specified in a **multi-catch** have an inheritance relationship, a compilation error occurs.",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            // 変数の宣言と初期化\n            String s = \"abc\";\n            int num = Integer.parseInt(s);\n        } catch (NumberFormatException | ArithmeticException e) {\n            System.out.println(\"数値関連の例外: \" + e.getMessage());\n        } catch (Exception e) {\n            System.out.println(\"その他の例外\");\n        }\n    }\n}",
+          "note": "The variable e in a **multi-catch** is **implicitly final**. Reassigning it within the catch block, such as e = new Exception(), causes a compilation error.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "rule",
+          "title": "Multi-Catch Rules",
+          "body": "Here is a summary of the rules for using **multi-catch**.\n\n| Rule |\n| --- |\n| The multi-catch variable is implicitly final and cannot be reassigned |\n| Variables in regular catch blocks are not final and can be reassigned |\n| Multi-catch and regular catch blocks can be mixed |\n| Multiple exception types are separated by the pipe (|) |\n| 5 | Exception types in a multi-catch must not have an inheritance relationship (e.g., catch (Exception | IOException e) is a compilation error) |",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch14_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- In multiple catch blocks, write subclass exceptions first and superclass exceptions last\n- Incorrect ordering results in unreachable code and a compilation error\n- **Multi-catch** uses | (pipe) to catch multiple exceptions together\n- Exception types in a multi-catch with an inheritance relationship cause a compilation error\n- The multi-catch variable is **implicitly final** and cannot be reassigned",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_02_q1",
+          "lessonId": "ch14_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            String s = null;\n            System.out.println(s.length());\n        } catch (NullPointerException e) {\n            System.out.println(\"A\");\n        } catch (RuntimeException e) {\n            System.out.println(\"B\");\n        } catch (Exception e) {\n            System.out.println(\"C\");\n        }\n        System.out.println(\"D\");\n    }\n}",
+          "explanation": "s.length() throws a NullPointerException. The first catch matches NullPointerException, so \"A\" is printed. Once caught, subsequent catch blocks are not executed. \"D\" after the try-catch is also printed.",
+          "choices": [
+            {
+              "id": "ch14_02_q1_a",
+              "text": "A\nD",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_02_q1_b",
+              "text": "A\nB\nD",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_02_q1_c",
+              "text": "B\nD",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_02_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_02_q2",
+          "lessonId": "ch14_02",
+          "type": "fourChoice",
+          "question": "Which of the following statements about multi-catch syntax is correct?",
+          "code": null,
+          "explanation": "In multi-catch, the | (pipe) is used to specify multiple exception types. However, if the specified exception types have an inheritance relationship, a compilation error occurs. The multi-catch variable is implicitly final and cannot be reassigned within the catch block.",
+          "choices": [
+            {
+              "id": "ch14_02_q2_a",
+              "text": "In multi-catch, exception types are separated by commas (,)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_02_q2_b",
+              "text": "The multi-catch variable is implicitly final",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_02_q2_c",
+              "text": "Exception types with an inheritance relationship can be specified in multi-catch",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_02_q2_d",
+              "text": "Multi-catch has been available since Java 5",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_02_q3",
+          "lessonId": "ch14_02",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. What is the cause?",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            int x = Integer.parseInt(\"abc\");\n        } catch (Exception e) {\n            System.out.println(\"例外\");\n        } catch (NumberFormatException e) {\n            System.out.println(\"数値変換エラー\");\n        }\n    }\n}",
+          "explanation": "Exception is a superclass of NumberFormatException. When the superclass catch comes first, the subclass catch becomes unreachable, causing a compilation error. The NumberFormatException catch must be written before the Exception catch.",
+          "choices": [
+            {
+              "id": "ch14_02_q3_a",
+              "text": "The catch block order is incorrect (subclass must be written first)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_02_q3_b",
+              "text": "Integer.parseInt() throws a checked exception",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_02_q3_c",
+              "text": "Multiple statements are required inside the try block",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_02_q3_d",
+              "text": "The variable name e cannot be used in duplicate catch blocks",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch14_02_q4",
+          "lessonId": "ch14_02",
+          "type": "codeComplete",
+          "question": "Complete the code for auto-closing a resource with try-with-resources syntax.",
+          "code": null,
+          "explanation": "try-with-resources automatically calls close() on resources that implement AutoCloseable. BufferedReader.readLine() reads one line at a time.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ (BufferedReader br = new BufferedReader(new FileReader(\"test.txt\"))) {\n    String line = br.__BLANK_2__();\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Keyword",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "try",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "using",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "with",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Read method",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "readLine",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "read",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "nextLine",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch14_03",
+      "courseId": "ch14",
+      "title": "throws and throw",
+      "summary": "Learn how to declare exceptions in methods and explicitly throw exceptions",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- How to intentionally throw [[exceptions]] with the throw statement\n- How to declare exceptions in [[methods]] with the throws clause\n- Clearly distinguishing between throw and throws\n\nLet's learn to accurately use these two easily confused keywords.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "code",
+          "title": "Throwing Exceptions with throw",
+          "body": "The throw keyword allows you to raise an exception at any point.\nYou create an exception object with new and throw it with throw.\nWriting code after throw results in unreachable code and a [[compilation]] error.",
+          "code": "// Mainクラスの定義\npublic class Main {\n    // checkAgeメソッドの定義\n    static void checkAge(int age) {\n        // 条件分岐\n        if (age < 0) {\n            // 例外を投げる\n            throw new IllegalArgumentException(\"年齢は0以上でなければなりません: \" + age);\n        }\n        System.out.println(\"年齢: \" + age);\n    }\n\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            checkAge(-5);\n        } catch (IllegalArgumentException e) {\n            System.out.println(\"エラー: \" + e.getMessage());\n        }\n    }\n}",
+          "note": "IllegalArgumentException is a [[RuntimeException]] (unchecked exception), so the code compiles even without a throws declaration.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "tip",
+          "title": "Difference Between throw and throws",
+          "body": "| Item | throw | throws |\n|---|---|---|\n| Purpose | Throws an exception | Declares the possibility of an exception |\n| Location | Inside the method body | At the end of the method declaration |\n| Target | A single exception object | Exception classes (can be multiple) |\n| Example | throw new Exception() | throws IOException, SQLException |\n\nthrow means \"raise an exception right here and now,\" while [[throws]] declares \"this method might throw an exception.\"",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "code",
+          "title": "Declaring and Propagating Checked Exceptions with throws",
+          "body": "When throwing a checked exception, you must add throws to the method declaration.\nThe caller must either handle it with try-catch or propagate it further with throws.\nExceptions propagate up the call [[stack]] until they are handled; if not handled anywhere, the program terminates abnormally.",
+          "code": "import java.io.IOException;\n\n// Mainクラスの定義\npublic class Main {\n    // readFileメソッドの定義\n    static void readFile() throws IOException {\n        // 例外を投げる\n        throw new IOException(\"ファイルが見つかりません\");\n    }\n\n    // processFileメソッドの定義\n    static void processFile() throws IOException {\n        readFile();  // 例外をさらに上位に伝播\n    }\n\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try {\n            processFile();\n        } catch (IOException e) {\n            System.out.println(\"捕捉: \" + e.getMessage());\n        }\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "rule",
+          "title": "Differences Between throw and throws",
+          "body": "throw and throws have similar names but different roles.\n\n[throw]\n- Used inside a method\n- A command that actually throws an exception object\n- Used in the form: throw new ExceptionClass(message)\n\n[throws]\n- Used in the method declaration\n- Declares that the method may throw an exception\n- Multiple exception types can be specified with commas\n- Required for methods that throw checked exceptions\n\nUnchecked exceptions (RuntimeException family) compile even without throws.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch14_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- throw is the keyword that actually throws an exception object\n- throws is the keyword that declares a method may throw an exception\n- When throwing a checked exception, a throws declaration is mandatory\n- throws declaration is not required for unchecked exceptions (optional)\n- Exceptions propagate up the call stack until they are caught",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_03_q1",
+          "lessonId": "ch14_03",
+          "type": "fourChoice",
+          "question": "Which of the following statements about the throws keyword is correct?",
+          "code": null,
+          "explanation": "throws is used in a method declaration to declare checked exceptions that the method may throw. Unchecked exceptions (RuntimeException family) compile even without throws. throws does not actually throw an exception — it only indicates the possibility of one.",
+          "choices": [
+            {
+              "id": "ch14_03_q1_a",
+              "text": "throws is used inside a method to throw an exception object",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q1_b",
+              "text": "Declaring throws means an exception will always occur",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q1_c",
+              "text": "throws is added to the method declaration to indicate the possibility of throwing an exception",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q1_d",
+              "text": "throws is mandatory for methods that throw RuntimeException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_03_q2",
+          "lessonId": "ch14_03",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "public class Main {\n    static void methodA() {\n        System.out.println(\"A-start\");\n        throw new RuntimeException(\"エラー\");\n    }\n\n    public static void main(String[] args) {\n        try {\n            System.out.println(\"main-start\");\n            methodA();\n            System.out.println(\"main-end\");\n        } catch (RuntimeException e) {\n            System.out.println(\"caught\");\n        }\n    }\n}",
+          "explanation": "In main(), \"main-start\" is printed, then methodA() is called. In methodA(), \"A-start\" is printed, then a RuntimeException is thrown. The exception is caught by main()'s catch block, printing \"caught\". \"main-end\" is not printed because execution was interrupted by the exception.",
+          "choices": [
+            {
+              "id": "ch14_03_q2_a",
+              "text": "main-start\nA-start\ncaught",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q2_b",
+              "text": "main-start\nA-start\nmain-end\ncaught",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q2_c",
+              "text": "main-start\ncaught",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q2_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_03_q3",
+          "lessonId": "ch14_03",
+          "type": "fillBlank",
+          "question": "To throw a checked exception outside a method, you must add the [①] keyword to the method declaration and declare the exception type.",
+          "code": null,
+          "explanation": "When throwing a checked exception from a method, you must add the throws keyword to the method declaration and declare the exception type. Without this, a compilation error occurs. throw is a different keyword — it throws the exception itself.",
+          "choices": [
+            {
+              "id": "ch14_03_q3_a",
+              "text": "throws",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q3_b",
+              "text": "throw",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q3_c",
+              "text": "catch",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q3_d",
+              "text": "finally",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch14_03_q4",
+          "lessonId": "ch14_03",
+          "type": "multiChoice",
+          "question": "Select all correct statements about try-with-resources.",
+          "code": null,
+          "explanation": "In a try-with-resources statement, resources that implement AutoCloseable are automatically closed with close(). Multiple resources can be declared separated by semicolons, and they are closed in the reverse order of declaration. The catch and finally clauses are optional. If an exception occurs during close(), it is added as a suppressed exception to the original exception.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch14_03_q4_a",
+              "text": "Resources implementing AutoCloseable are automatically closed with close()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_03_q4_b",
+              "text": "Multiple resources can be declared and are closed in reverse order",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_03_q4_c",
+              "text": "A catch clause must always be written",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_03_q4_d",
+              "text": "Exceptions during close() are added as suppressed exceptions",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch14_04",
+      "courseId": "ch14",
+      "title": "Custom Exception Classes",
+      "summary": "Create custom exception classes to represent application-specific errors",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- How to create custom [[exception]] [[classes]]\n- Using **exception chaining** (cause) to propagate root causes\n- Exception design according to business rules\n\nThis is the technique for properly representing application-specific errors.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "code",
+          "title": "Custom Checked Exception Class",
+          "body": "You create a checked exception by [[extending]] Exception.\nIt is common practice for the [[constructor]] to accept a message and pass it to super.\nCallers must handle it with try-catch or throws.",
+          "code": "// InsufficientBalanceExceptionクラスの定義\nclass InsufficientBalanceException extends Exception {\n    private int balance;\n    private int amount;\n\n    InsufficientBalanceException(int balance, int amount) {\n        super(\"残高不足: 残高\" + balance + \"円に対して\" + amount + \"円の引き出し\");\n        this.balance = balance;\n        this.amount = amount;\n    }\n\n    // getBalanceメソッドの定義\n    int getBalance() { return balance; }\n    // getAmountメソッドの定義\n    int getAmount() { return amount; }\n}\n\n// BankAccountクラスの定義\nclass BankAccount {\n    private int balance;\n\n    BankAccount(int balance) { this.balance = balance; }\n\n    void withdraw(int amount) throws InsufficientBalanceException {\n        // 条件分岐\n        if (amount > balance) {\n            // 例外を投げる\n            throw new InsufficientBalanceException(balance, amount);\n        }\n        balance -= amount;\n        System.out.println(amount + \"円引き出し。残高: \" + balance + \"円\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount account = new BankAccount(1000);\n        // 例外が発生する可能性がある処理\n        try {\n            account.withdraw(500);\n            account.withdraw(800);\n        } catch (InsufficientBalanceException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "code",
+          "title": "Custom Unchecked Exception Class",
+          "body": "Extending [[RuntimeException]] creates an unchecked exception.\nSince handling is not enforced, callers do not need try-catch or throws.\nUnchecked exceptions are appropriate when indicating programming errors or bugs.",
+          "code": "// InvalidProductCodeExceptionクラスの定義\nclass InvalidProductCodeException extends RuntimeException {\n    InvalidProductCodeException(String code) {\n        super(\"無効な商品コード: \" + code);\n    }\n}\n\n// Productクラスの定義\nclass Product {\n    // validateメソッドの定義\n    static void validate(String code) {\n        // 条件分岐\n        if (code == null || code.length() != 8) {\n            // 例外を投げる\n            throw new InvalidProductCodeException(code);\n        }\n        System.out.println(\"商品コード \" + code + \" は有効です\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        Product.validate(\"PROD0001\");  // 有効\n        Product.validate(\"ABC\");       // 例外発生\n    }\n}",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "tip",
+          "title": "Best Practices for Custom Exceptions",
+          "body": "Here are best practices for creating **custom exceptions**.\n\n| Best Practice |\n| --- |\n| Name the class ending with \"Exception\" (naming convention) |\n| Provide at least a no-argument constructor and a String-argument constructor |\n| Recoverable errors → Extend Exception (checked exception) |\n| Programming errors → Extend RuntimeException (unchecked exception) |\n| Include additional error-related information as fields when needed |\n| 6 | Providing a constructor that accepts Throwable cause is convenient for exception chaining |",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **Custom exceptions** are created by extending Exception or RuntimeException\n- Extending Exception → Checked exception (handling is enforced)\n- Extending RuntimeException → Unchecked exception (handling is optional)\n- The basic pattern is passing a message to super in the constructor\n- Follow the naming convention of ending class names with \"Exception\"",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_04_q1",
+          "lessonId": "ch14_04",
+          "type": "fourChoice",
+          "question": "Which class should you extend to create a custom checked exception?",
+          "code": null,
+          "explanation": "To create a checked exception, extend the Exception class. Extending RuntimeException creates an unchecked exception. Directly extending Throwable is not recommended. Extending Error is for JVM-level errors and should not be used for application exceptions.",
+          "choices": [
+            {
+              "id": "ch14_04_q1_a",
+              "text": "RuntimeException",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_04_q1_b",
+              "text": "Throwable",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_04_q1_c",
+              "text": "Exception",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_04_q1_d",
+              "text": "Error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_04_q2",
+          "lessonId": "ch14_04",
+          "type": "reorder",
+          "question": "Arrange the code in the correct order to define and throw a custom checked exception.",
+          "code": null,
+          "explanation": "First, define the custom exception class (extending Exception), then define the constructor that passes a message to super, add throws to the method declaration, and finally throw the exception with throw new.",
+          "choices": [
+            {
+              "id": "ch14_04_q2_a",
+              "text": "class MyException extends Exception {",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_04_q2_b",
+              "text": "    MyException(String msg) { super(msg); }",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_04_q2_c",
+              "text": "void doWork() throws MyException {",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch14_04_q2_d",
+              "text": "    throw new MyException(\"エラー\");",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch14_04_q2_a",
+            "ch14_04_q2_b",
+            "ch14_04_q2_c",
+            "ch14_04_q2_d"
+          ],
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_04_q3",
+          "lessonId": "ch14_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class AgeException extends RuntimeException {\n    AgeException(String msg) { super(msg); }\n}\n\npublic class Main {\n    static void checkAge(int age) {\n        if (age < 0 || age > 150) {\n            throw new AgeException(\"不正: \" + age);\n        }\n        System.out.println(\"年齢OK: \" + age);\n    }\n\n    public static void main(String[] args) {\n        try {\n            checkAge(25);\n            checkAge(200);\n            checkAge(30);\n        } catch (AgeException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+          "explanation": "checkAge(25) satisfies the condition, so \"年齢OK: 25\" is printed. checkAge(200) exceeds 150, so an AgeException is thrown and \"不正: 200\" is printed by the catch block. checkAge(30) is not executed because it comes after the exception.",
+          "choices": [
+            {
+              "id": "ch14_04_q3_a",
+              "text": "年齢OK: 25\n不正: 200",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_04_q3_b",
+              "text": "年齢OK: 25\n不正: 200\n年齢OK: 30",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_04_q3_c",
+              "text": "年齢OK: 25\n年齢OK: 30",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_04_q3_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch14_05",
+      "courseId": "ch14",
+      "title": "try-with-resources",
+      "summary": "Safely manage resources with AutoCloseable and the try-with-resources syntax",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The syntax and behavior of **try-with-resources**\n- Implementing the [[AutoCloseable]] [[interface]]\n- The mechanism of suppressed exceptions\n\nLet's master the best approach for resource management.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "code",
+          "title": "Basic try-with-resources Syntax",
+          "body": "When a [[class]] implementing AutoCloseable is declared inside the try parentheses, close() is automatically called at the end of the block.\nclose() is always executed regardless of whether an exception occurs.\nMultiple resources can be declared separated by semicolons, and they are closed in the reverse order of declaration.",
+          "code": "class MyResource implements AutoCloseable {\n    String name;\n\n    MyResource(String name) {\n        this.name = name;\n        System.out.println(name + \" opened\");\n    }\n\n    void use() {\n        System.out.println(name + \" used\");\n    }\n\n    @Override\n    public void close() {\n        System.out.println(name + \" closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyResource r1 = new MyResource(\"R1\");\n             MyResource r2 = new MyResource(\"R2\")) {\n            r1.use();\n            r2.use();\n        }\n    }\n}\n// 出力:\n// R1 opened\n// R2 opened\n// R1 used\n// R2 used\n// R2 closed  ← 宣言と逆順にクローズ\n// R1 closed",
+          "note": "Resources are closed in the reverse order of declaration. This is the same behavior as a [[stack]] (LIFO).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "tip",
+          "title": "What Are Suppressed Exceptions?",
+          "body": "With **try-with-resources**, exceptions from both the try block and from close() can occur simultaneously.\n\n- The try block's exception propagates as the \"primary exception\"\n- The close() exception is attached to the primary exception as a \"suppressed exception\"\n- Can be retrieved with getSuppressed()\n\nWith traditional try-[[finally]], the close() exception would overwrite the try exception — a problematic behavior.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "rule",
+          "title": "try-with-resources Rules",
+          "body": "The **try-with-resources** syntax has the following rules.\n\n| Rule |\n| --- |\n| Classes declared in the try parentheses must implement AutoCloseable (or Closeable) |\n| Variables declared in the parentheses are implicitly final; reassigning them inside try causes a compilation error |\n| Multiple resources are separated by semicolons (;) |\n| Resources are closed in the reverse order of declaration |\n| catch and finally blocks are optional (traditional try requires at least catch or finally) |\n| 6 | Exceptions thrown by close() are added as \"suppressed exceptions\" to the try block's exception |",
+          "code": null,
+          "note": "Starting from Java 9, effectively final [[variables]] declared outside the try block can also be referenced inside the try parentheses.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "code",
+          "title": "Suppressed Exceptions",
+          "body": "When an exception occurs inside the try block and close() also throws an exception, the close() exception is recorded as a suppressed exception.\nThe main exception is passed to the catch handler with priority, and suppressed exceptions can be retrieved with getSuppressed().\nThis mechanism prevents the original error cause from being hidden.",
+          "code": "// ErrorResourceクラスの定義\nclass ErrorResource implements AutoCloseable {\n    @Override\n    // closeメソッドの定義\n    public void close() {\n        // 例外を投げる\n        throw new RuntimeException(\"close時のエラー\");\n    }\n}\n\n// Mainクラスの定義\npublic class Main {\n    // mainメソッドの定義\n    public static void main(String[] args) {\n        // 例外が発生する可能性がある処理\n        try (ErrorResource r = new ErrorResource()) {\n            // 例外を投げる\n            throw new RuntimeException(\"tryブロックのエラー\");\n        } catch (RuntimeException e) {\n            System.out.println(\"主例外: \" + e.getMessage());\n            // 拡張for文（コレクションの全要素を順番に処理）\n            for (Throwable s : e.getSuppressed()) {\n                System.out.println(\"抑制: \" + s.getMessage());\n            }\n        }\n    }\n}\n// 出力:\n// 主例外: tryブロックのエラー\n// 抑制: close時のエラー",
+          "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch14_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- **try-with-resources** automatically closes resources that implement AutoCloseable\n- Resources are closed in the reverse order of their declaration\n- With [[try-with-resources]], catch and finally can be omitted\n- The try block's exception takes priority, and close() exceptions become suppressed exceptions\n- Variables in the parentheses are **implicitly final** and cannot be reassigned",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch14_05_q1",
+          "lessonId": "ch14_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "class Res implements AutoCloseable {\n    String name;\n    Res(String name) {\n        this.name = name;\n        System.out.println(\"open: \" + name);\n    }\n    @Override\n    public void close() {\n        System.out.println(\"close: \" + name);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (Res a = new Res(\"A\"); Res b = new Res(\"B\")) {\n            System.out.println(\"use\");\n        }\n    }\n}",
+          "explanation": "Resource A is created and \"open: A\" is printed, then B is created and \"open: B\" is printed. After \"use\" is printed in the try block, resources are closed in the reverse order of declaration: \"close: B\" → \"close: A\".",
+          "choices": [
+            {
+              "id": "ch14_05_q1_a",
+              "text": "open: A\nopen: B\nuse\nclose: B\nclose: A",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_05_q1_b",
+              "text": "open: A\nopen: B\nuse\nclose: A\nclose: B",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_05_q1_c",
+              "text": "open: B\nopen: A\nuse\nclose: A\nclose: B",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_05_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch14_05_q2",
+          "lessonId": "ch14_05",
+          "type": "fourChoice",
+          "question": "Which interface must a resource class implement to be automatically closed in try-with-resources syntax?",
+          "code": null,
+          "explanation": "Resources that are automatically closed in try-with-resources syntax must implement the AutoCloseable interface (or its sub-interface Closeable). Serializable and Iterable are unrelated.",
+          "choices": [
+            {
+              "id": "ch14_05_q2_a",
+              "text": "Serializable",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch14_05_q2_b",
+              "text": "AutoCloseable",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch14_05_q2_c",
+              "text": "Iterable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_05_q2_d",
+              "text": "Comparable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch14_05_q3",
+          "lessonId": "ch14_05",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. What is the cause?",
+          "code": "class MyStream {\n    void write(String data) {\n        System.out.println(data);\n    }\n    void close() {\n        System.out.println(\"closed\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        try (MyStream s = new MyStream()) {\n            s.write(\"Hello\");\n        }\n    }\n}",
+          "explanation": "To use try-with-resources syntax, the resource class must implement the AutoCloseable (or Closeable) interface. Although the MyStream class has a close() method, it does not implement AutoCloseable, causing a compilation error.",
+          "choices": [
+            {
+              "id": "ch14_05_q3_a",
+              "text": "MyStream class does not implement AutoCloseable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch14_05_q3_b",
+              "text": "The return type of close() cannot be void",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch14_05_q3_c",
+              "text": "A catch block is required for try-with-resources",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch14_05_q3_d",
+              "text": "The write() method must be static",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3339 @@
+[
+  {
+    "id": "se17g2_q001",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of the BinaryOperator<T> interface?",
+    "code": null,
+    "explanation": "BinaryOperator<T> extends BiFunction<T,T,T> and is a functional interface that takes two arguments of the same type and returns a result of the same type. It has static methods minBy() and maxBy() that take a Comparator and return a BinaryOperator. The arguments and return value of the apply method are all the same type T.",
+    "choices": [
+      {
+        "id": "se17g2_q001_a",
+        "text": "Extends BiFunction<T,T,T>, takes two arguments of the same type and returns the same type",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q001_b",
+        "text": "Extends Function<T,T>, takes one argument and returns the same type",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q001_c",
+        "text": "Extends BiConsumer<T,T>, takes two arguments and returns no result",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q001_d",
+        "text": "Extends Predicate<T> and returns a boolean",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q002",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, Integer> len = String::length;\n        Function<Integer, String> repeat = n -> \"*\".repeat(n);\n        var result = len.andThen(repeat).apply(\"Java\");\n        System.out.println(result);\n    }\n}",
+    "explanation": "len.andThen(repeat) first applies len, then applies repeat to the result. len.apply(\"Java\") returns 4, and repeat.apply(4) returns \"****\". andThen() is a method that passes the result of the current function as input to the next function. String.repeat() is a method added in Java 11 that repeats a string a specified number of times.",
+    "choices": [
+      {
+        "id": "se17g2_q002_a",
+        "text": "4",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q002_b",
+        "text": "****",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q002_c",
+        "text": "Java",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q002_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q003",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is the correct constructor reference in this code?",
+    "code": "import java.util.function.Supplier;\nimport java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        Supplier<ArrayList<String>> factory = ___;\n        var list = factory.get();\n        list.add(\"hello\");\n        System.out.println(list);\n    }\n}",
+    "explanation": "A constructor reference is written in the form ClassName::new. ArrayList::new references the no-argument constructor and can be used as Supplier<ArrayList<String>>. It is equivalent to () -> new ArrayList<>(), but the constructor reference is more concise. new ArrayList::new and ArrayList::constructor are invalid syntax.",
+    "choices": [
+      {
+        "id": "se17g2_q003_a",
+        "text": "ArrayList::new",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q003_b",
+        "text": "new ArrayList::new",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q003_c",
+        "text": "ArrayList::constructor",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q003_d",
+        "text": "ArrayList::create",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q004",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct code to fill in the blank. It determines whether a string starts with \"J\" or has a length of 5 or more.",
+    "code": "import java.util.function.Predicate;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> startsJ = s -> s.startsWith(\"J\");\n        Predicate<String> longStr = s -> s.length() >= 5;\n        Predicate<String> combined = startsJ._____(longStr);\n        System.out.println(combined.test(\"Hello\")); // true\n        System.out.println(combined.test(\"Java\"));  // true\n        System.out.println(combined.test(\"Go\"));    // false\n    }\n}",
+    "explanation": "Predicate.or() returns the logical OR of two Predicates. startsJ.or(longStr) returns true if the string starts with \"J\" or has a length of 5 or more. \"Hello\" has length 5 so it's true, \"Java\" starts with \"J\" so it's true, and \"Go\" satisfies neither condition so it's false. and() returns the logical AND, and negate() returns the negation.",
+    "choices": [
+      {
+        "id": "se17g2_q004_a",
+        "text": "and",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q004_b",
+        "text": "or",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q004_c",
+        "text": "negate",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q004_d",
+        "text": "compose",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q005",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "Which of the following is the correct cause of the compilation error in this code?",
+    "code": "import java.util.function.Function;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, String> reader = path -> {\n            throw new IOException(\"File not found\");\n        };\n        System.out.println(reader.apply(\"test.txt\"));\n    }\n}",
+    "explanation": "The apply() method of Function<String, String> is not declared to throw checked exceptions. Therefore, code that throws IOException (a checked exception) inside a lambda expression results in a compilation error. To use a lambda expression that throws a checked exception, you need to define a custom functional interface with a throws declaration, or handle it with try-catch inside the lambda expression.",
+    "choices": [
+      {
+        "id": "se17g2_q005_a",
+        "text": "Function<String, String> can only return strings",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q005_b",
+        "text": "Compilation error because a checked exception cannot be thrown inside a lambda expression",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q005_c",
+        "text": "IOException is a RuntimeException so a catch is required",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q005_d",
+        "text": "Lambda expressions cannot contain throw statements",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q006",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.function.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Predicate<String> notEmpty = Predicate.not(String::isEmpty);\n        Predicate<String> hasDigit = s -> s.chars().anyMatch(Character::isDigit);\n        var combined = notEmpty.and(hasDigit);\n        List.of(\"abc\", \"a1b\", \"\", \"123\", \"xyz\").stream()\n            .filter(combined)\n            .forEach(s -> System.out.print(s + \" \"));\n    }\n}",
+    "explanation": "Predicate.not() is a static method added in Java 11 that returns the negation of the specified Predicate. notEmpty returns true if the string is not empty. hasDigit returns true if the string contains a digit. combined is notEmpty AND hasDigit, so only strings that are non-empty and contain digits match. \"a1b\" and \"123\" satisfy the conditions, so \"a1b 123 \" is output.",
+    "choices": [
+      {
+        "id": "se17g2_q006_a",
+        "text": "abc a1b 123 xyz ",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q006_b",
+        "text": "a1b 123 ",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q006_c",
+        "text": "123 ",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q006_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q007",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct descriptions about the types of method references? (Select 2)",
+    "code": null,
+    "explanation": "There are four types of method references: (1) static method reference: Integer::parseInt, (2) instance method reference of a particular object: str::length, (3) instance method reference of an arbitrary object of a particular type: String::toLowerCase, (4) constructor reference: ArrayList::new. Integer::parseInt is a static method reference that can be assigned to Function<String, Integer>. System.out::println is an instance method reference of a particular object (System.out) that can be assigned to Consumer<T>.",
+    "choices": [
+      {
+        "id": "se17g2_q007_a",
+        "text": "Integer::parseInt is a static method reference and can be used as Function<String, Integer>",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q007_b",
+        "text": "String::toLowerCase is a static method reference",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q007_c",
+        "text": "System.out::println is an instance method reference of a particular object",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q007_d",
+        "text": "A constructor reference cannot be assigned to any functional interface other than Supplier",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "lambda",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q008",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of this code?",
+    "code": "import java.util.function.*;\n\npublic class Main {\n    static <T> T transform(T input, UnaryOperator<T> op) {\n        return op.apply(input);\n    }\n    public static void main(String[] args) {\n        var result = transform(\"Hello\", s -> s.substring(0, 3));\n        System.out.println(result);\n    }\n}",
+    "explanation": "transform() is a generic method, and the type parameter T is inferred from the arguments. Since \"Hello\" is of type String, T is inferred as String, and the lambda expression is evaluated as UnaryOperator<String>. s.substring(0, 3) returns \"Hel\". Type inference occurs at compile time, and generic type information is erased at runtime.",
+    "choices": [
+      {
+        "id": "se17g2_q008_a",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q008_b",
+        "text": "Hel is output",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q008_c",
+        "text": "Hello is output",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q008_d",
+        "text": "A ClassCastException occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "lambda",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q009",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        String result = List.of(\"Java\", \"Python\", \"Go\").stream()\n            .collect(Collectors.joining(\", \", \"[\", \"]\"));\n        System.out.println(result);\n    }\n}",
+    "explanation": "Collectors.joining(delimiter, prefix, suffix) concatenates the elements of the stream with the specified delimiter, prefix, and suffix. With delimiter=\", \", prefix=\"[\", and suffix=\"]\", the result is \"[Java, Python, Go]\". The single-argument version joining(delimiter) concatenates without prefix or suffix.",
+    "choices": [
+      {
+        "id": "se17g2_q009_a",
+        "text": "Java, Python, Go",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q009_b",
+        "text": "[Java, Python, Go]",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q009_c",
+        "text": "[Java,Python,Go]",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q009_d",
+        "text": "JavaPythonGo",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q010",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of the Stream.ofNullable(T t) method?",
+    "code": null,
+    "explanation": "Stream.ofNullable() is a method added in Java 9. If the argument is not null, it returns a stream containing only that element; if null, it returns an empty stream. It does not throw NullPointerException. This is useful for safely handling null values in combination with Optional.stream().",
+    "choices": [
+      {
+        "id": "se17g2_q010_a",
+        "text": "Throws NullPointerException if the argument is null",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q010_b",
+        "text": "Returns a single-element stream containing null if the argument is null",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q010_c",
+        "text": "Returns an empty stream if the argument is null, or a single-element stream if non-null",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q010_d",
+        "text": "Returns Optional.empty() if the argument is null",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q011",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What happens when this code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> src = List.of(\"a\", \"b\", \"c\");\n        var result = src.stream()\n            .collect(Collectors.toMap(\n                s -> s.toUpperCase(),\n                s -> s.length()\n            ));\n        result.put(\"D\", 1);\n        System.out.println(result);\n    }\n}",
+    "explanation": "The list generated by List.of() is immutable, but Collectors.toMap() generates a HashMap by default, so the resulting Map is mutable. Since all keys are different (A, B, C), no IllegalStateException due to duplicate keys occurs. result.put(\"D\", 1) also works normally, and {A=1, B=1, C=1, D=1} is output (order is not guaranteed).",
+    "choices": [
+      {
+        "id": "se17g2_q011_a",
+        "text": "An UnsupportedOperationException is thrown",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q011_b",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q011_c",
+        "text": "Executes successfully and outputs a Map",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q011_d",
+        "text": "An IllegalStateException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q012",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        long count = Stream.of(\"apple\", \"banana\", \"cherry\", \"date\")\n            .peek(s -> System.out.print(s.charAt(0)))\n            .filter(s -> s.length() > 4)\n            .count();\n        System.out.println(count);\n    }\n}",
+    "explanation": "From Java 9 onwards, count() may internally optimize by skipping peek and filter when the stream's size is known in advance. However, since there is a filter, the optimization does not apply, and all elements are processed. peek outputs the first character of each element (a, b, c, d), and filter retains \"apple\" (5), \"banana\" (6), and \"cherry\" (6), resulting in count=3. The output is \"abcd3\".",
+    "choices": [
+      {
+        "id": "se17g2_q012_a",
+        "text": "abc3",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q012_b",
+        "text": "abcd3",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q012_c",
+        "text": "3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q012_d",
+        "text": "abcd\n3",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q013",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct code to fill in the blank. When there are duplicate keys, the existing value is retained.",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var map = Stream.of(\"apple\", \"avocado\", \"banana\", \"blueberry\")\n            .collect(Collectors.toMap(\n                s -> s.charAt(0),\n                s -> s,\n                _____\n            ));\n        System.out.println(map);\n        // {a=apple, b=banana}\n    }\n}",
+    "explanation": "The third argument of Collectors.toMap() is a BinaryOperator (merge function) that determines which value to adopt when keys are duplicated. Using (existing, replacement) -> existing retains the existing value. Using (e, r) -> r replaces with the new value. If the merge function is omitted, an IllegalStateException is thrown when keys are duplicated.",
+    "choices": [
+      {
+        "id": "se17g2_q013_a",
+        "text": "(existing, replacement) -> existing",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q013_b",
+        "text": "(existing, replacement) -> replacement",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q013_c",
+        "text": "(existing, replacement) -> existing + replacement",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q013_d",
+        "text": "null",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q014",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of lazy evaluation in streams?",
+    "code": null,
+    "explanation": "Intermediate operations of streams (filter, map, peek, etc.) are lazily evaluated. Intermediate operations are not executed until a terminal operation (collect, forEach, count, etc.) is called. This avoids unnecessary computations and enables efficient processing in combination with short-circuit evaluations (findFirst, anyMatch, etc.).",
+    "choices": [
+      {
+        "id": "se17g2_q014_a",
+        "text": "All operations are executed immediately",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q014_b",
+        "text": "Intermediate operations are not executed until a terminal operation is called",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q014_c",
+        "text": "Only filter is lazily evaluated",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q014_d",
+        "text": "Lazy evaluation is only effective with parallel streams",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q015",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct descriptions of Collectors.teeing()? (Select 2)",
+    "code": null,
+    "explanation": "Collectors.teeing() is a collector added in Java 12 that combines the results of two downstream collectors using a BiFunction. For example, you can calculate the average using Collectors.teeing(Collectors.counting(), Collectors.summingInt(x->x), (count, sum) -> sum/count). The two downstream collectors independently collect elements in parallel, and the results are combined with the merge function at the end.",
+    "choices": [
+      {
+        "id": "se17g2_q015_a",
+        "text": "Combines the results of two downstream collectors using a BiFunction",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q015_b",
+        "text": "Can combine three or more downstream collectors",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q015_c",
+        "text": "Each element is passed to only one downstream collector",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q015_d",
+        "text": "Each element is passed to both downstream collectors",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q016",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = List.of(1, 2, 3, 4, 5, 6, 7, 8);\n        var taken = list.stream()\n            .takeWhile(n -> n < 5)\n            .collect(Collectors.toList());\n        var dropped = list.stream()\n            .dropWhile(n -> n < 5)\n            .collect(Collectors.toList());\n        System.out.println(taken + \" \" + dropped);\n    }\n}",
+    "explanation": "takeWhile() keeps taking elements while the condition is true and stops when it becomes false. [1,2,3,4] is obtained. dropWhile() skips elements while the condition is true and returns all remaining elements from the point where it becomes false. [5,6,7,8] is obtained. Both methods were added in Java 9 and are useful for ordered streams.",
+    "choices": [
+      {
+        "id": "se17g2_q016_a",
+        "text": "[1, 2, 3, 4] [5, 6, 7, 8]",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q016_b",
+        "text": "[1, 2, 3, 4, 5] [6, 7, 8]",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q016_c",
+        "text": "[1, 2, 3, 4] [1, 2, 3, 4, 5, 6, 7, 8]",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q016_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "streams",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q017",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Based on the PECS (Producer Extends, Consumer Super) principle, which wildcard is correct for a parameter that reads (produces) data from a collection?",
+    "code": null,
+    "explanation": "According to the PECS principle, use <? extends T> when reading (producing) data from a collection, and <? super T> when putting (consuming) data into a collection. With <? extends T>, you can read as type T or a subclass of T, but you can only add null. With <? super T>, you can safely add type T, but when reading, you can only retrieve as Object type.",
+    "choices": [
+      {
+        "id": "se17g2_q017_a",
+        "text": "<? super T>",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q017_b",
+        "text": "<? extends T>",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q017_c",
+        "text": "<T>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q017_d",
+        "text": "<?>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q018",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the cause of the compilation error in this code?",
+    "code": "public class Util {\n    public static <T extends Comparable<T> & Cloneable> T findMax(T a, T b) {\n        return a.compareTo(b) >= 0 ? a : b;\n    }\n    public static void main(String[] args) {\n        System.out.println(findMax(\"abc\", 123));\n    }\n}",
+    "explanation": "findMax() specifies a compound bound of Comparable<T> & Cloneable for the type parameter T. When called with String and Integer, the common type is Object & Serializable & Comparable<...>, and both do not implement Cloneable. Furthermore, since the T in Comparable<T> does not match, type inference fails and a compilation error occurs.",
+    "choices": [
+      {
+        "id": "se17g2_q018_a",
+        "text": "A common type parameter T cannot be found for String and Integer type inference",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q018_b",
+        "text": "Multiple bounds cannot be specified for a type parameter",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q018_c",
+        "text": "Since Comparable<T> is an interface, extends cannot be used",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q018_d",
+        "text": "The compareTo() method cannot be called inside a static method",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q019",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static <T> List<T> merge(List<? extends T> a, List<? extends T> b) {\n        var result = new ArrayList<T>();\n        result.addAll(a);\n        result.addAll(b);\n        return result;\n    }\n    public static void main(String[] args) {\n        List<Integer> ints = List.of(1, 2);\n        List<Double> doubles = List.of(3.0, 4.0);\n        List<Number> merged = merge(ints, doubles);\n        System.out.println(merged);\n    }\n}",
+    "explanation": "The type parameter T of the merge() method is inferred as Number. List<? extends Number> accepts both List<Integer> and List<Double>. All elements are added to ArrayList<Number> via addAll(), and [1, 2, 3.0, 4.0] is output. Wildcards allow merging lists of different subtypes into one.",
+    "choices": [
+      {
+        "id": "se17g2_q019_a",
+        "text": "[1, 2, 3.0, 4.0]",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q019_b",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q019_c",
+        "text": "ClassCastException",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q019_d",
+        "text": "[1, 2, 3, 4]",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q020",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of the purpose of the recursive type bound declaration <T extends Comparable<T>>?",
+    "code": null,
+    "explanation": "The recursive type bound <T extends Comparable<T>> guarantees that type T is comparable with itself. This allows two objects of type T to be compared using compareTo(). It is a widely used pattern in Collections.sort() and Collections.max(). It is an important use of generics for performing type-safe comparison by natural ordering.",
+    "choices": [
+      {
+        "id": "se17g2_q020_a",
+        "text": "Guarantees that instances of type T are immutable",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q020_b",
+        "text": "Guarantees that type T is comparable with itself",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q020_c",
+        "text": "Guarantees that type T is serializable",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q020_d",
+        "text": "Restricts the inheritance hierarchy of type T to at most one level",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q021",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct wildcard type to fill in the blank for this method. It is a method that copies elements from one list to another.",
+    "code": "public static <T> void copy(List<? super T> dest, List<_____ T> src) {\n    for (T item : src) {\n        dest.add(item);\n    }\n}",
+    "explanation": "Following the PECS principle, the src list provides data (Producer) so <? extends T> is used. The dest list receives data (Consumer) so <? super T> is used. This is the same design pattern as the java.util.Collections.copy() method. Using extends allows reading elements as type T from a list of T's subtypes.",
+    "choices": [
+      {
+        "id": "se17g2_q021_a",
+        "text": "? extends",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q021_b",
+        "text": "? super",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q021_c",
+        "text": "?",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q021_d",
+        "text": "(No wildcard needed, just T)",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q022",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "public class Box<T> {\n    private T value;\n    Box(T value) { this.value = value; }\n    T getValue() { return value; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Box<String> sBox = new Box<>(\"Hello\");\n        Box rawBox = sBox;\n        rawBox = new Box<>(123);\n        String s = (String) rawBox.getValue();\n        System.out.println(s);\n    }\n}",
+    "explanation": "rawBox is a raw type Box reference. With rawBox = new Box<>(123), a Box holding the Integer value 123 is assigned to rawBox. rawBox.getValue() returns Object type, and an attempt to cast with (String) fails because the actual value is Integer, so a ClassCastException is thrown at runtime. Using raw types results in loss of type safety.",
+    "choices": [
+      {
+        "id": "se17g2_q022_a",
+        "text": "Hello",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q022_b",
+        "text": "123",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q022_c",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q022_d",
+        "text": "A ClassCastException is thrown at runtime",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q023",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct descriptions of type erasure? (Select 2)",
+    "code": null,
+    "explanation": "Due to type erasure, generic type parameter information does not remain in the bytecode after compilation. List<String> and List<Integer> are treated as the same List class at runtime. If there is a bound (e.g., T extends Number), T is replaced with the bound type (Number). If there is no bound, it is replaced with Object. The instanceof operator cannot be used to check generic types.",
+    "choices": [
+      {
+        "id": "se17g2_q023_a",
+        "text": "List<String> and List<Integer> are indistinguishable at runtime",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q023_b",
+        "text": "Generic type parameters can always be obtained at runtime using reflection",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q023_c",
+        "text": "A bounded type parameter <T extends Number> is replaced with Number after compilation",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q023_d",
+        "text": "Type erasure was abolished in Java 17",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "generics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q024",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of this code?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> original = new ArrayList<>(List.of(\"a\", \"b\", \"c\"));\n        List<?> wildcard = original;\n        // wildcard.add(\"d\");  // Line A\n        Object obj = wildcard.get(0);  // Line B\n        wildcard.add(null);  // Line C\n        System.out.println(wildcard.size());\n    }\n}",
+    "explanation": "With an unbounded wildcard List<?>, the result of get() can be obtained as Object type (Line B). add() only accepts null (Line C). Since null is assignable to all reference types, it compiles successfully. Uncommenting Line A would cause a compilation error. Since the null add at Line C and the Object retrieval via get at Line B are valid, size 4 is output.",
+    "choices": [
+      {
+        "id": "se17g2_q024_a",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q024_b",
+        "text": "4 is output",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q024_c",
+        "text": "3 is output",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q024_d",
+        "text": "A NullPointerException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "generics",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q025",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of the floorEntry(5) method of NavigableMap<Integer, String>?",
+    "code": null,
+    "explanation": "NavigableMap.floorEntry(key) returns the entry associated with the greatest key less than or equal to the specified key. If there is no such entry, it returns null. Similarly, ceilingEntry() returns the entry with the smallest key greater than or equal to the key, lowerEntry() returns the entry with the greatest key strictly less than the key, and higherEntry() returns the entry with the smallest key strictly greater than the key.",
+    "choices": [
+      {
+        "id": "se17g2_q025_a",
+        "text": "Returns the entry with the smallest key greater than key 5",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q025_b",
+        "text": "Returns the entry associated with the greatest key less than or equal to key 5",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q025_c",
+        "text": "Returns the entry with the smallest key greater than or equal to key 5",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q025_d",
+        "text": "Returns only the entry that exactly matches key 5",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q026",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var original = new ArrayList<>(List.of(\"x\", \"y\", \"z\"));\n        var copy = List.copyOf(original);\n        original.add(\"w\");\n        System.out.println(original.size() + \" \" + copy.size());\n    }\n}",
+    "explanation": "List.copyOf() is a method added in Java 10 that creates an immutable list by making a shallow copy of the original list. Changes to the original list do not affect the copy. Adding \"w\" to original makes original have 4 elements, but copy remains with 3 elements. The output is \"4 3\".",
+    "choices": [
+      {
+        "id": "se17g2_q026_a",
+        "text": "4 4",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q026_b",
+        "text": "4 3",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q026_c",
+        "text": "3 3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q026_d",
+        "text": "An UnsupportedOperationException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q027",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct method to fill in the blank. It is an operation to add an element to the head of a Deque.",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> deque = new ArrayDeque<>();\n        deque.add(\"B\");\n        deque._____(\"A\");\n        deque.addLast(\"C\");\n        System.out.println(deque); // [A, B, C]\n    }\n}",
+    "explanation": "In the Deque interface, addFirst() adds an element to the head, and addLast() adds to the tail. offerFirst()/offerLast() behave similarly but differ when capacity is limited (offer returns false, while add throws an exception). push() has the same behavior as addFirst(). Adding \"A\" to the head results in [A, B, C].",
+    "choices": [
+      {
+        "id": "se17g2_q027_a",
+        "text": "addFirst",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q027_b",
+        "text": "addLast",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q027_c",
+        "text": "add",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q027_d",
+        "text": "insert",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q028",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What happens when this code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<>(List.of(\"a\", \"b\", \"c\", \"d\"));\n        for (String s : list) {\n            if (s.equals(\"b\")) {\n                list.remove(s);\n            }\n        }\n        System.out.println(list);\n    }\n}",
+    "explanation": "Directly modifying a collection during iteration with an enhanced for loop (for-each) throws a ConcurrentModificationException. The for-each internally uses an Iterator, and structural modifications from anything other than the Iterator are illegal. To safely remove elements, use Iterator.remove() or list.removeIf(s -> s.equals(\"b\")).",
+    "choices": [
+      {
+        "id": "se17g2_q028_a",
+        "text": "[a, c, d] is output",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q028_b",
+        "text": "A ConcurrentModificationException is thrown",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q028_c",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q028_d",
+        "text": "[a, b, c, d] is output (nothing is removed)",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q029",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of Map.computeIfAbsent(key, mappingFunction)?",
+    "code": null,
+    "explanation": "computeIfAbsent() executes the mappingFunction to compute a value and registers it in the map only when the value associated with the specified key is null or does not exist. If a value already exists, the mappingFunction is not called and the existing value is returned as-is. A common pattern is using it to initialize multi-maps like Map<String, List<String>>.",
+    "choices": [
+      {
+        "id": "se17g2_q029_a",
+        "text": "Always executes the mappingFunction and updates the value",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q029_b",
+        "text": "Executes the mappingFunction only when the key has a null or unregistered value",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q029_c",
+        "text": "Removes the value when the key exists",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q029_d",
+        "text": "Throws NullPointerException if the mappingFunction returns null",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q030",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct description of the behavior when a custom Comparator is passed to a TreeSet?",
+    "code": null,
+    "explanation": "When a Comparator is passed to a TreeSet, ordering and equality determination are performed using the specified Comparator instead of the elements' natural ordering (Comparable). Two elements for which Comparator.compare() returns 0 are considered equal, and only one is stored in the Set. This determination is independent of the equals() method.",
+    "choices": [
+      {
+        "id": "se17g2_q030_a",
+        "text": "Elements for which the Comparator returns 0 are treated as duplicates and only one is stored in the Set",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q030_b",
+        "text": "Even if the Comparator returns 0, both are stored if equals() returns false",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q030_c",
+        "text": "A compilation error occurs in TreeSet if elements do not implement Comparable",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q030_d",
+        "text": "The Comparator is used only for search, and the storage order is insertion order",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q031",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct about Unmodifiable Collections? (Choose 2)",
+    "code": null,
+    "explanation": "List.of(), Set.of(), and Map.of() are factory methods for unmodifiable collections added in Java 9. Attempting to include a null element throws a NullPointerException. Calling modification operations such as add() or remove() throws an UnsupportedOperationException. Collections.unmodifiableList() merely returns a view of the original list, so changes to the original list are reflected in the view.",
+    "choices": [
+      {
+        "id": "se17g2_q031_a",
+        "text": "Including a null element in a list created with List.of() throws a NullPointerException",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q031_b",
+        "text": "A list created with List.of() can be modified through subList",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q031_c",
+        "text": "Collections.unmodifiableList() creates an independent copy of the list",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q031_d",
+        "text": "Modification operations on a list created with List.of() throw an UnsupportedOperationException",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "collections",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q032",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "What is the correct output of this code?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var map = new HashMap<String, Integer>();\n        map.put(\"a\", 1);\n        map.put(\"b\", 2);\n        map.merge(\"a\", 10, Integer::sum);\n        map.merge(\"c\", 10, Integer::sum);\n        System.out.println(map);\n    }\n}",
+    "explanation": "Map.merge(key, value, remappingFunction) registers the value as-is if the key does not exist, and applies the remappingFunction to the existing value and the new value if the key exists. For \"a\", the existing value 1 and 10 are summed to become 11, and \"c\" is new so 10 is registered directly. The result is {a=11, b=2, c=10}.",
+    "choices": [
+      {
+        "id": "se17g2_q032_a",
+        "text": "{a=10, b=2, c=10}",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q032_b",
+        "text": "{a=11, b=2, c=10}",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q032_c",
+        "text": "{a=1, b=2, c=10}",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q032_d",
+        "text": "A NullPointerException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "collections",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q033",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between CompletableFuture.thenApply() and thenCompose()?",
+    "code": null,
+    "explanation": "thenApply() takes a Function<T, U> and wraps the result in a CompletableFuture<U>. thenCompose() takes a Function<T, CompletionStage<U>> and flattens the resulting CompletableFuture. thenCompose() is used to avoid nested CompletableFutures, similar to Stream's flatMap().",
+    "choices": [
+      {
+        "id": "se17g2_q033_a",
+        "text": "thenApply() executes asynchronously and thenCompose() executes synchronously",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q033_b",
+        "text": "thenApply() transforms values and thenCompose() flattens CompletableFutures",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q033_c",
+        "text": "thenApply() handles exceptions and thenCompose() transforms results",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q033_d",
+        "text": "They are functionally identical and only differ in name",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q034",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "Which of the following correctly identifies the problem with this code?",
+    "code": "import java.util.*;\n\npublic class Main {\n    private static int counter = 0;\n    \n    public static void main(String[] args) throws Exception {\n        var list = Collections.synchronizedList(new ArrayList<Integer>());\n        var threads = new ArrayList<Thread>();\n        for (int i = 0; i < 1000; i++) {\n            var t = new Thread(() -> {\n                counter++;\n                list.add(counter);\n            });\n            threads.add(t);\n            t.start();\n        }\n        for (var t : threads) t.join();\n        System.out.println(\"Size: \" + list.size() + \", Counter: \" + counter);\n    }\n}",
+    "explanation": "counter++ is not an atomic operation; it consists of three steps: read, increment, and write. When multiple threads operate on counter simultaneously, a data race occurs, and the value of counter may end up less than 1000. The list is protected by synchronizedList, but the counter variable is not protected. An AtomicInteger or synchronized block is needed.",
+    "choices": [
+      {
+        "id": "se17g2_q034_a",
+        "text": "synchronizedList cannot be safely accessed from multiple threads, causing an exception",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q034_b",
+        "text": "counter++ is not an atomic operation, causing a data race that results in an incorrect counter value",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q034_c",
+        "text": "A ConcurrentModificationException is thrown at list.add()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q034_d",
+        "text": "A lambda expression cannot be passed to the Thread() constructor",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q035",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService es = Executors.newFixedThreadPool(2);\n        Future<String> f1 = es.submit(() -> {\n            Thread.sleep(100);\n            return \"A\";\n        });\n        Future<String> f2 = es.submit(() -> \"B\");\n        System.out.print(f2.get());\n        System.out.print(f1.get());\n        es.shutdown();\n    }\n}",
+    "explanation": "The f2 task completes immediately and returns \"B\". The f1 task returns \"A\" after sleeping for 100 milliseconds. f2.get() returns \"B\" and prints it, then f1.get() blocks until the task completes (if it hasn't already) and returns \"A\". Since the output is determined by the order of get() calls, the output is \"BA\".",
+    "choices": [
+      {
+        "id": "se17g2_q035_a",
+        "text": "AB",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q035_b",
+        "text": "BA",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q035_c",
+        "text": "The output order is indeterminate",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q035_d",
+        "text": "A TimeoutException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q036",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes a difference between ReentrantLock and the synchronized keyword?",
+    "code": null,
+    "explanation": "ReentrantLock is an implementation of the java.util.concurrent.locks.Lock interface that provides more flexible mutual exclusion control than synchronized. It supports timed lock acquisition with tryLock(), interruptible lock waiting with lockInterruptibly(), and managing multiple wait conditions with Condition objects. synchronized does not offer these features.",
+    "choices": [
+      {
+        "id": "se17g2_q036_a",
+        "text": "ReentrantLock always has better performance than synchronized",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q036_b",
+        "text": "ReentrantLock supports timed lock acquisition with tryLock()",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q036_c",
+        "text": "Unlike ReentrantLock, synchronized is not reentrant",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q036_d",
+        "text": "ReentrantLock is managed by the JVM and does not require an explicit unlock()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q037",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct method to fill in the blank. This code increments a counter in a thread-safe manner.",
+    "code": "import java.util.concurrent.atomic.AtomicInteger;\n\npublic class Counter {\n    private AtomicInteger count = new AtomicInteger(0);\n    \n    public int increment() {\n        return count._____();\n    }\n    \n    public int getCount() {\n        return count.get();\n    }\n}",
+    "explanation": "AtomicInteger.incrementAndGet() atomically increments the value by 1 and returns the updated value. getAndIncrement() returns the value before incrementing. addAndGet(1) has a similar effect, but incrementAndGet() is the most suitable for this purpose. These methods use CAS (Compare-And-Swap) operations to update values in a thread-safe manner.",
+    "choices": [
+      {
+        "id": "se17g2_q037_a",
+        "text": "incrementAndGet",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q037_b",
+        "text": "increment",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q037_c",
+        "text": "addOne",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q037_d",
+        "text": "plusOne",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q038",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the problem with this code?",
+    "code": "public class DeadlockExample {\n    private final Object lockA = new Object();\n    private final Object lockB = new Object();\n    \n    public void method1() {\n        synchronized (lockA) {\n            synchronized (lockB) {\n                System.out.println(\"method1\");\n            }\n        }\n    }\n    \n    public void method2() {\n        synchronized (lockB) {\n            synchronized (lockA) {\n                System.out.println(\"method2\");\n            }\n        }\n    }\n}",
+    "explanation": "method1() acquires locks in the order lockA → lockB, while method2() acquires locks in the order lockB → lockA. If two threads call method1() and method2() simultaneously, a deadlock can occur where each thread waits for the lock held by the other. The solution is to acquire locks in the same order (e.g., lockA → lockB) in all methods.",
+    "choices": [
+      {
+        "id": "se17g2_q038_a",
+        "text": "Nesting synchronized blocks causes a compilation error",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q038_b",
+        "text": "The reverse lock acquisition order can cause a deadlock",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q038_c",
+        "text": "Object instances cannot be used as lock targets",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q038_d",
+        "text": "final fields cannot be used with synchronized",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q039",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the effect of the volatile modifier?",
+    "code": null,
+    "explanation": "The volatile keyword guarantees that a field's value is read from and written to main memory directly rather than from the CPU cache. This ensures that a value written by one thread is immediately visible to other threads (visibility guarantee). However, it does not guarantee atomicity of compound operations (e.g., the read-update-write of i++).",
+    "choices": [
+      {
+        "id": "se17g2_q039_a",
+        "text": "It guarantees that field updates are visible to all threads",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q039_b",
+        "text": "It provides exclusive control over all accesses to the field",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q039_c",
+        "text": "It guarantees atomicity of compound operations on the field",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q039_d",
+        "text": "It makes the field immutable",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q040",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        var cf = CompletableFuture.supplyAsync(() -> \"Hello\")\n            .thenApply(s -> s + \" World\")\n            .thenApply(String::toUpperCase);\n        System.out.println(cf.get());\n    }\n}",
+    "explanation": "supplyAsync() asynchronously produces \"Hello\", then thenApply() concatenates \" World\" to get \"Hello World\", and the next thenApply() applies toUpperCase() to produce \"HELLO WORLD\". thenApply() is chainable and passes the result of the previous operation as input to the next. get() blocks until the result is available.",
+    "choices": [
+      {
+        "id": "se17g2_q040_a",
+        "text": "Hello World",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q040_b",
+        "text": "HELLO WORLD",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q040_c",
+        "text": "HELLO",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q040_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "concurrency",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q041",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between Files.walk() and Files.list()?",
+    "code": null,
+    "explanation": "Files.list() returns only entries directly under the specified directory (depth 1). Files.walk() recursively returns all entries under the specified directory. Files.walk() allows specifying maxDepth as a second argument. Both return Stream<Path> and need to be closed with try-with-resources.",
+    "choices": [
+      {
+        "id": "se17g2_q041_a",
+        "text": "Files.list() recursively returns all files, and Files.walk() returns only direct children",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q041_b",
+        "text": "Files.walk() recursively traverses all levels, and Files.list() returns only direct children",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q041_c",
+        "text": "Files.walk() returns List<Path> and Files.list() returns Stream<Path>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q041_d",
+        "text": "They are functionally the same, but Files.walk() belongs to NIO.2 and Files.list() belongs to java.io",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q042",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.nio.file.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path p1 = Path.of(\"/home/user/docs\");\n        Path p2 = Path.of(\"/home/user/photos/vacation\");\n        Path relative = p1.relativize(p2);\n        System.out.println(relative);\n    }\n}",
+    "explanation": "Path.relativize() returns a relative path from the this path to the argument path. To go from /home/user/docs to /home/user/photos/vacation, you first move up one level from docs (..), then navigate to photos/vacation. The result is \"../photos/vacation\". Both paths must be either absolute or both relative, otherwise an IllegalArgumentException is thrown.",
+    "choices": [
+      {
+        "id": "se17g2_q042_a",
+        "text": "/home/user/photos/vacation",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q042_b",
+        "text": "../photos/vacation",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q042_c",
+        "text": "photos/vacation",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q042_d",
+        "text": "An IllegalArgumentException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q043",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct method to fill in the blank. This code reads all lines from a file and retrieves them as a list.",
+    "code": "import java.nio.file.*;\nimport java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        List<String> lines = Files._____(Path.of(\"data.txt\"));\n        lines.forEach(System.out::println);\n    }\n}",
+    "explanation": "Files.readAllLines(Path) reads all lines of a file as a List<String>. Files.readString() returns the entire content as a single String. Files.lines() returns a Stream<String>, but what is required here is a List. Files.readAllBytes() returns a byte array.",
+    "choices": [
+      {
+        "id": "se17g2_q043_a",
+        "text": "readAllLines",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q043_b",
+        "text": "readLines",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q043_c",
+        "text": "lines",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q043_d",
+        "text": "readAllBytes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q044",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the problem with this code?",
+    "code": "import java.io.*;\n\npublic class Employee implements Serializable {\n    private static final long serialVersionUID = 1L;\n    private String name;\n    private transient int salary;\n    private Address address; // Address class is non-serializable\n\n    public Employee(String name, int salary, Address address) {\n        this.name = name;\n        this.salary = salary;\n        this.address = address;\n    }\n}\n\nclass Address {\n    String city;\n    Address(String city) { this.city = city; }\n}",
+    "explanation": "The Employee class implements Serializable, but the type of the address field, Address, does not implement Serializable. Since the transient modifier is not applied, serializing an Employee object will attempt to serialize the Address object as well, throwing a NotSerializableException. The solution is either to implement Serializable in Address or to add the transient modifier to the address field.",
+    "choices": [
+      {
+        "id": "se17g2_q044_a",
+        "text": "The serialVersionUID value is invalid",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q044_b",
+        "text": "The transient field salary does not satisfy the Serializable requirements",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q044_c",
+        "text": "Address does not implement Serializable, causing a NotSerializableException",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q044_d",
+        "text": "The constructor is not public, so serialization is not possible",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q045",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes a characteristic of the Files.lines(Path) method?",
+    "code": null,
+    "explanation": "Files.lines(Path) returns a Stream<String> with each line of the file as an element. It is lazily evaluated, making it memory-efficient even for large files. The stream returned by this method is AutoCloseable and must be closed after use. Using try-with-resources is recommended. Unlike readAllLines(), it does not load all lines into memory at once.",
+    "choices": [
+      {
+        "id": "se17g2_q045_a",
+        "text": "It loads the entire file into memory before converting it to a Stream",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q045_b",
+        "text": "It returns a lazily evaluated Stream<String> and is memory-efficient",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q045_c",
+        "text": "It returns a List<String>",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q045_d",
+        "text": "It can also be used to read binary files",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q046",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the Files.find(Path, int, BiPredicate) method?",
+    "code": null,
+    "explanation": "Files.find() recursively searches for files from the specified directory up to the maximum depth, returning a Stream<Path> of paths that satisfy the BiPredicate<Path, BasicFileAttributes>. The first argument of the BiPredicate is a Path and the second is BasicFileAttributes, enabling filtering based on file attributes (size, last modified time, whether it is a directory, etc.). It is similar to adding a filter to Files.walk(), but with efficient access to file attributes.",
+    "choices": [
+      {
+        "id": "se17g2_q046_a",
+        "text": "It searches by regular expression pattern on file names",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q046_b",
+        "text": "It performs a text search on file contents",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q046_c",
+        "text": "It filters using a BiPredicate of Path and BasicFileAttributes and returns a Stream<Path>",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q046_d",
+        "text": "It returns the results as a List<File>",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "io_nio",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q047",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is correct about PreparedStatement parameter setting?",
+    "code": null,
+    "explanation": "PreparedStatement parameter indices start from 1. You set a value for the first placeholder (?) using setString(1, value). Specifying 0 throws a SQLException. PreparedStatement prevents SQL injection and also improves performance through precompilation.",
+    "choices": [
+      {
+        "id": "se17g2_q047_a",
+        "text": "Parameter indices start from 0",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q047_b",
+        "text": "Parameter indices start from 1",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q047_c",
+        "text": "Parameters are set using the setParameter() method",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q047_d",
+        "text": "Parameters are specified by name (e.g., :name)",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q048",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the problem with this code?",
+    "code": "import java.sql.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        try (var conn = DriverManager.getConnection(\"jdbc:h2:mem:test\");\n             var stmt = conn.prepareStatement(\"SELECT * FROM users WHERE id = ?\")) {\n            var rs = stmt.executeQuery();\n            while (rs.next()) {\n                System.out.println(rs.getString(\"name\"));\n            }\n        }\n    }\n}",
+    "explanation": "The PreparedStatement contains a parameter (?), but no parameter value is set using stmt.setInt() or stmt.setString(). Calling executeQuery() without setting the parameter throws a SQLException. Unset parameter placeholders cause errors during SQL execution.",
+    "choices": [
+      {
+        "id": "se17g2_q048_a",
+        "text": "The ResultSet is not explicitly closed with close()",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q048_b",
+        "text": "executeQuery() is called without setting a value for the parameter (?)",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q048_c",
+        "text": "PreparedStatement cannot be used with try-with-resources",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q048_d",
+        "text": "execute() should be used instead of executeQuery()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q049",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct method to fill in the blank. This code configures manual transaction management.",
+    "code": "import java.sql.*;\n\npublic class Main {\n    public static void transfer(Connection conn) throws SQLException {\n        conn._____(false);\n        try {\n            // Debit from account A\n            // Credit to account B\n            conn.commit();\n        } catch (SQLException e) {\n            conn.rollback();\n            throw e;\n        }\n    }\n}",
+    "explanation": "Calling Connection.setAutoCommit(false) disables auto-commit and enables manual transaction management. By default, auto-commit (true) is enabled, and each SQL statement is committed individually. Manual management allows multiple SQL operations to be executed as a single transaction, and all operations can be undone with rollback() in case of an error.",
+    "choices": [
+      {
+        "id": "se17g2_q049_a",
+        "text": "setAutoCommit",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q049_b",
+        "text": "setTransaction",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q049_c",
+        "text": "beginTransaction",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q049_d",
+        "text": "setManualCommit",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q050",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "Which of the following correctly describes the ResultSet cursor behavior when this code is executed?",
+    "code": "import java.sql.*;\n\npublic class Main {\n    static void query(Connection conn) throws SQLException {\n        var stmt = conn.prepareStatement(\n            \"SELECT name FROM products\",\n            ResultSet.TYPE_SCROLL_INSENSITIVE,\n            ResultSet.CONCUR_READ_ONLY\n        );\n        var rs = stmt.executeQuery();\n        rs.afterLast();\n        while (rs.previous()) {\n            System.out.print(rs.getString(\"name\") + \" \");\n        }\n    }\n}",
+    "explanation": "Specifying TYPE_SCROLL_INSENSITIVE creates a scrollable ResultSet, enabling cursor movement methods such as previous(), absolute(), and relative(). afterLast() moves the cursor after the last row, and previous() traverses in reverse order. As a result, the names from the products table are printed in reverse order. With TYPE_FORWARD_ONLY, calling previous() would throw a SQLException.",
+    "choices": [
+      {
+        "id": "se17g2_q050_a",
+        "text": "The names from the products table are printed in reverse order",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q050_b",
+        "text": "The names from the products table are printed in forward order",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q050_c",
+        "text": "A SQLException is thrown",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q050_d",
+        "text": "Nothing is printed",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q051",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is the correct format for the argument to DriverManager.getConnection() used for JDBC connections?",
+    "code": null,
+    "explanation": "A JDBC connection URL is specified in the format jdbc:subprotocol:subname. For example, jdbc:mysql://localhost:3306/mydb or jdbc:h2:mem:test. There are also overloads that take a username as the second argument and a password as the third argument. The URL must start with jdbc:, not http:// or dbc://.",
+    "choices": [
+      {
+        "id": "se17g2_q051_a",
+        "text": "http://localhost:3306/mydb",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q051_b",
+        "text": "jdbc:mysql://localhost:3306/mydb",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q051_c",
+        "text": "dbc:mysql:localhost:3306:mydb",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q051_d",
+        "text": "mysql://jdbc@localhost:3306/mydb",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q052",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the JDBC Savepoint feature?",
+    "code": null,
+    "explanation": "A Savepoint marks a specific point within a transaction, allowing you to roll back to that point. It is created with Connection.setSavepoint() and you can roll back to that point with Connection.rollback(savepoint). It is useful when you want to undo only part of a transaction rather than rolling back the entire transaction. releaseSavepoint() can be used to release a Savepoint.",
+    "choices": [
+      {
+        "id": "se17g2_q052_a",
+        "text": "It allows partial rollback to a specific point within a transaction",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q052_b",
+        "text": "It sets an auto-commit point within a transaction",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q052_c",
+        "text": "It creates a database backup point",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q052_d",
+        "text": "It shares a transaction among multiple Connections",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "jdbc",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q053",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the effect of requires transitive in module-info.java?",
+    "code": null,
+    "explanation": "Declaring requires transitive moduleX means that modules depending on this module also automatically gain read access to moduleX. In other words, a transitive dependency is created. With a regular requires, only the directly dependent module gains access, but adding transitive propagates the dependency chain.",
+    "choices": [
+      {
+        "id": "se17g2_q053_a",
+        "text": "All packages in this module are automatically exported",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q053_b",
+        "text": "Modules that depend on this module also automatically gain access to the specified module",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q053_c",
+        "text": "Dependencies are resolved only at runtime",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q053_d",
+        "text": "It allows circular dependencies between modules",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q054",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the problem with this module configuration?",
+    "code": "// module-info.java (module A)\nmodule moduleA {\n    exports com.app.util;\n}\n\n// module-info.java (module B)\nmodule moduleB {\n    exports com.app.util;\n}",
+    "explanation": "In the Java Platform Module System (JPMS), exporting the same package name from multiple modules is called a split package and is prohibited. If the com.app.util package exists in both moduleA and moduleB, an error occurs during module resolution. Each package must belong to only one module.",
+    "choices": [
+      {
+        "id": "se17g2_q054_a",
+        "text": "A split package error occurs because the same package exists in multiple modules",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q054_b",
+        "text": "Using the same package name in exports is syntactically fine",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q054_c",
+        "text": "A compilation error occurs because there are no requires declarations",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q054_d",
+        "text": "The module prefix cannot be used in module names",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q055",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct keyword to fill in the blank in this module-info.java. This is a service provider registration declaration.",
+    "code": "module myapp.provider {\n    requires myapp.api;\n    _____ myapp.api.MessageService with myapp.provider.EmailService;\n}",
+    "explanation": "The provides...with syntax is used to register a service provider in the ServiceLoader pattern. The service interface is specified after provides, and the implementation class is specified after with. The module that uses the service uses the uses keyword.",
+    "choices": [
+      {
+        "id": "se17g2_q055_a",
+        "text": "provides",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q055_b",
+        "text": "exports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q055_c",
+        "text": "uses",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q055_d",
+        "text": "opens",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q056",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes a characteristic of the Unnamed Module?",
+    "code": null,
+    "explanation": "The Unnamed Module is the module to which JAR files and classes placed on the classpath belong. The Unnamed Module can read all modules (including named modules), but named modules cannot declare a requires on the Unnamed Module. This is a mechanism for compatibility during module migration.",
+    "choices": [
+      {
+        "id": "se17g2_q056_a",
+        "text": "It can read all modules",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q056_b",
+        "text": "It can be referenced by name and depended on from other modules",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q056_c",
+        "text": "It requires package export declarations",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q056_d",
+        "text": "It must include a module-info.java file",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q057",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct about ServiceLoader? (Choose 2)",
+    "code": null,
+    "explanation": "ServiceLoader is a class for implementing the Service Provider Interface (SPI) pattern. In a modular environment, providers are registered using the provides...with declaration in module-info.java, and the uses declaration indicates that a service is used. Service instances can be obtained with ServiceLoader.load(). Provider classes require either a no-argument constructor or a public static provider() method.",
+    "choices": [
+      {
+        "id": "se17g2_q057_a",
+        "text": "The uses declaration is specified in the module-info of the module that uses the service",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q057_b",
+        "text": "The provides...with declaration is specified in the module that uses the service",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q057_c",
+        "text": "ServiceLoader.load() searches for and returns implementations of the specified service",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q057_d",
+        "text": "Service provider classes must be abstract",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q058",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes exports...to (qualified export)?",
+    "code": null,
+    "explanation": "exports package to module1, module2; is a qualified export that exposes the specified package only to specific modules. Modules not specified with to cannot access the types in that package. This allows internal APIs to be exposed only to specific frameworks or test modules. opens can also be qualified with a to clause in the same way.",
+    "choices": [
+      {
+        "id": "se17g2_q058_a",
+        "text": "It exposes the specified package to all modules",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q058_b",
+        "text": "It exposes the specified package only to specific modules",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q058_c",
+        "text": "It exposes only specific classes",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q058_d",
+        "text": "It allows only reflective access",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q059",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "What happens when a JAR file without module-info.java is placed on the module path?",
+    "code": null,
+    "explanation": "When a JAR file without module-info.java is placed on the module path, it is treated as an Automatic Module. The automatic module name is derived from the JAR file name or taken from the Automatic-Module-Name attribute in MANIFEST.MF. An automatic module exports all its packages and reads all modules (including the Unnamed Module).",
+    "choices": [
+      {
+        "id": "se17g2_q059_a",
+        "text": "It is treated as an automatic module and all its packages are exported",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q059_b",
+        "text": "It is not recognized as a module and causes an error",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q059_c",
+        "text": "It is treated as an Unnamed Module",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q059_d",
+        "text": "It is treated as an empty module and no packages are exposed",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q060",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "Which of the following correctly describes the effect of the opens declaration in this module-info.java?",
+    "code": "module myapp {\n    exports com.myapp.api;\n    opens com.myapp.internal;\n}",
+    "explanation": "exports allows access at both compile time and runtime. opens allows runtime access via reflection but does not allow direct references at compile time. The com.myapp.internal package is accessible via reflection (e.g., by frameworks such as Jackson or Hibernate), but it cannot be directly imported and used from other modules.",
+    "choices": [
+      {
+        "id": "se17g2_q060_a",
+        "text": "com.myapp.internal is accessible at both compile time and runtime",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q060_b",
+        "text": "com.myapp.internal is accessible only at runtime via reflection",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q060_c",
+        "text": "com.myapp.internal is not accessible from outside at all",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q060_d",
+        "text": "opens and exports have exactly the same effect",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q061",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is the correct procedure for using the @Repeatable annotation?",
+    "code": null,
+    "explanation": "To use @Repeatable, you must (1) annotate the repeatable annotation with @Repeatable(ContainerAnnotation.class), and (2) define a container annotation that has a value() method returning an array of the repeatable annotation. The compiler automatically applies the container annotation, allowing the same annotation to be applied multiple times to the same element.",
+    "choices": [
+      {
+        "id": "se17g2_q061_a",
+        "text": "Simply adding the @Repeatable annotation is sufficient; no container annotation is needed",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q061_b",
+        "text": "Add @Repeatable to the repeatable annotation and define a value() method in the container annotation",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q061_c",
+        "text": "Add @Repeatable to the container annotation",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q061_d",
+        "text": "@Repeatable can only be used with the same target and cannot be applied to classes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q062",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the problem with the following code?",
+    "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.SOURCE)\n@interface MyAnnotation {\n    String value();\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        var annot = Main.class.getAnnotation(MyAnnotation.class);\n        System.out.println(annot);\n    }\n}",
+    "explanation": "The code itself does not cause a compilation error, but there is a logical problem. RetentionPolicy.SOURCE means the annotation information is discarded after compilation. Therefore, calling getAnnotation() via reflection at runtime will always return null. To retrieve annotation information at runtime, RetentionPolicy.RUNTIME must be specified.",
+    "choices": [
+      {
+        "id": "se17g2_q062_a",
+        "text": "An annotation with RetentionPolicy.SOURCE cannot be retrieved at runtime and null is returned",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q062_b",
+        "text": "Compilation error because the value() method has no default value",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q062_c",
+        "text": "The @interface declaration requires the public modifier",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q062_d",
+        "text": "getAnnotation() can only be used on objects other than Class",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q063",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@interface Config {\n    String name() default \"default\";\n    int version() default 1;\n}\n\n@Config(name = \"MyApp\", version = 3)\npublic class Main {\n    public static void main(String[] args) {\n        Config config = Main.class.getAnnotation(Config.class);\n        System.out.println(config.name() + \" v\" + config.version());\n    }\n}",
+    "explanation": "Since RetentionPolicy.RUNTIME is specified, the annotation information can be retrieved via reflection at runtime. Because @Config(name = \"MyApp\", version = 3) is applied, config.name() returns \"MyApp\" and config.version() returns 3. The output is \"MyApp v3\".",
+    "choices": [
+      {
+        "id": "se17g2_q063_a",
+        "text": "default v1",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q063_b",
+        "text": "MyApp v3",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q063_c",
+        "text": "NullPointerException",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q063_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q064",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following can be used as annotation element types? (Choose 2)",
+    "code": null,
+    "explanation": "The types allowed as annotation element types are: primitive types, String, Class, enum, annotation types, and one-dimensional arrays of these. Generic collection types such as List<String>, general object types (e.g., Object), and Map types cannot be used.",
+    "choices": [
+      {
+        "id": "se17g2_q064_a",
+        "text": "String",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q064_b",
+        "text": "List<String>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q064_c",
+        "text": "enum type",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q064_d",
+        "text": "Object",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q065",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the effect of the @Inherited meta-annotation?",
+    "code": null,
+    "explanation": "When an annotation annotated with @Inherited is applied to a class, it is automatically inherited by its subclasses. However, @Inherited only has an effect on annotations applied to classes; it has no effect on annotations applied to methods or fields. Additionally, annotations on interfaces are not inherited by implementing classes.",
+    "choices": [
+      {
+        "id": "se17g2_q065_a",
+        "text": "Annotations applied to a class are automatically inherited by subclasses",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q065_b",
+        "text": "Annotations on a method are inherited by overriding methods",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q065_c",
+        "text": "Annotations on an interface are inherited by implementing classes",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q065_d",
+        "text": "Annotations are inherited for all target elements",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q066",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "In the following annotation definition, which of the following correctly describes the effect of @Target(ElementType.TYPE_USE)?",
+    "code": "import java.lang.annotation.*;\n\n@Target(ElementType.TYPE_USE)\n@Retention(RetentionPolicy.RUNTIME)\n@interface NonNull {}",
+    "explanation": "ElementType.TYPE_USE was added in Java 8 and allows annotations to be applied wherever a type is used. This includes variable declarations, generic type arguments (List<@NonNull String>), casts ((@NonNull String) obj), instanceof, throws clauses, and more. The traditional ElementType.TYPE only targets class/interface declarations.",
+    "choices": [
+      {
+        "id": "se17g2_q066_a",
+        "text": "Can only be applied to class declarations",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q066_b",
+        "text": "Can be applied wherever a type is used (generic arguments, casts, etc.)",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q066_c",
+        "text": "Can only be applied to method return types",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q066_d",
+        "text": "Can only be applied to local variables",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "annotations",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q067",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "What is the correct search order (fallback chain) for a ResourceBundle? When the locale is ja_JP, what is the search order for a properties file-based ResourceBundle?",
+    "code": null,
+    "explanation": "A ResourceBundle searches starting from the most specific locale and falls back to more general locales if not found. For ja_JP: Messages_ja_JP.properties → Messages_ja.properties → Messages.properties (default) is the search order. If none are found, a MissingResourceException is thrown.",
+    "choices": [
+      {
+        "id": "se17g2_q067_a",
+        "text": "Messages.properties → Messages_ja.properties → Messages_ja_JP.properties",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q067_b",
+        "text": "Messages_ja_JP.properties → Messages_ja.properties → Messages.properties",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q067_c",
+        "text": "Messages_ja.properties → Messages_ja_JP.properties → Messages.properties",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q067_d",
+        "text": "Only Messages_ja_JP.properties is searched",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q068",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "import java.time.*;\nimport java.time.format.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        var dt = LocalDateTime.of(2024, 3, 15, 14, 30, 0);\n        var fmt = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm\");\n        System.out.println(dt.format(fmt));\n    }\n}",
+    "explanation": "DateTimeFormatter.ofPattern() specifies a custom format pattern. yyyy represents a 4-digit year, MM a 2-digit month, dd a 2-digit day, HH the hour in 24-hour format, and mm the minutes. LocalDateTime.of(2024, 3, 15, 14, 30, 0) represents March 15, 2024 at 14:30:00, so \"2024/03/15 14:30\" is output.",
+    "choices": [
+      {
+        "id": "se17g2_q068_a",
+        "text": "2024-03-15 14:30",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q068_b",
+        "text": "2024/03/15 14:30",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q068_c",
+        "text": "2024/3/15 2:30",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q068_d",
+        "text": "15/03/2024 14:30",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q069",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fillBlank",
+    "question": "Select the correct code to fill in the blank. It formats a number in currency format for the Japanese locale.",
+    "code": "import java.text.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        double price = 1500.0;\n        NumberFormat nf = NumberFormat._____(Locale.JAPAN);\n        System.out.println(nf.format(price)); // ￥1,500\n    }\n}",
+    "explanation": "NumberFormat.getCurrencyInstance(Locale) returns the currency format for the specified locale. Specifying Locale.JAPAN formats the number in Japanese yen format (￥1,500). getInstance() returns a general-purpose number format, and getPercentInstance() returns a percentage format.",
+    "choices": [
+      {
+        "id": "se17g2_q069_a",
+        "text": "getCurrencyInstance",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q069_b",
+        "text": "getInstance",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q069_c",
+        "text": "getNumberInstance",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q069_d",
+        "text": "getMoneyInstance",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q070",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Locale.Builder?",
+    "code": null,
+    "explanation": "Locale.Builder uses the builder pattern to construct Locale objects. You can chain calls to setLanguage(), setRegion(), setVariant(), setScript(), etc., and finish with build(). The new Locale() constructor is a legacy API, and Builder is recommended for full BCP47 tag support. If an invalid value is set, an IllFormedLocaleException is thrown when build() is called.",
+    "choices": [
+      {
+        "id": "se17g2_q070_a",
+        "text": "You can use setLanguage() and setRegion() to construct a Locale",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q070_b",
+        "text": "Locale.Builder is a utility class with only static methods",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q070_c",
+        "text": "A partial Locale object can be obtained without calling build()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q070_d",
+        "text": "It was deprecated in Java 17 and replaced by Locale.of()",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q071",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What happens when the following code is executed?",
+    "code": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ResourceBundle rb = ResourceBundle.getBundle(\"Messages\", Locale.JAPAN);\n        String greeting = rb.getString(\"nonexistent.key\");\n        System.out.println(greeting);\n    }\n}",
+    "explanation": "ResourceBundle.getString() returns the string corresponding to the specified key, but if the key does not exist, it throws a java.util.MissingResourceException. Note that it throws an exception rather than returning null. It is recommended to check whether the key exists using containsKey() beforehand.",
+    "choices": [
+      {
+        "id": "se17g2_q071_a",
+        "text": "null is output",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q071_b",
+        "text": "An empty string is output",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q071_c",
+        "text": "A MissingResourceException is thrown",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q071_d",
+        "text": "\"nonexistent.key\" is output as-is",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q072",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "When DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL) is used with Locale.JAPAN, which of the following is the closest format?",
+    "code": null,
+    "explanation": "FormatStyle.FULL provides the most detailed date format. For the Japanese locale, it displays as \"2024年3月15日金曜日\" (year, month, day, and day of the week in kanji). FormatStyle.SHORT is \"2024/03/15\", MEDIUM is \"2024/03/15\", and LONG is \"2024年3月15日\". The format automatically changes to the appropriate form based on the locale.",
+    "choices": [
+      {
+        "id": "se17g2_q072_a",
+        "text": "2024/03/15",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q072_b",
+        "text": "2024年3月15日金曜日",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q072_c",
+        "text": "March 15, 2024",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q072_d",
+        "text": "15-Mar-2024",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "localization",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q073",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the permits clause of a sealed class?",
+    "code": null,
+    "explanation": "The permits clause of a sealed class explicitly lists the subclasses that are allowed to extend it. The permits clause can be omitted only when all permitted subclasses are defined within the same compilation unit (same file). Each subclass specified in permits must have one of the following modifiers: final, sealed, or non-sealed.",
+    "choices": [
+      {
+        "id": "se17g2_q073_a",
+        "text": "The permits clause can only be used with abstract classes",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q073_b",
+        "text": "Subclasses specified in permits must be either final, sealed, or non-sealed",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q073_c",
+        "text": "The permits clause cannot be omitted and subclasses must always be explicitly listed",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q073_d",
+        "text": "Subclasses specified in permits can be defined in a different module",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q074",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "public class Main {\n    sealed interface Shape permits Circle, Rectangle {}\n    record Circle(double radius) implements Shape {}\n    record Rectangle(double width, double height) implements Shape {}\n\n    static double area(Shape shape) {\n        if (shape instanceof Circle c) {\n            return Math.PI * c.radius() * c.radius();\n        } else if (shape instanceof Rectangle r) {\n            return r.width() * r.height();\n        }\n        throw new IllegalArgumentException();\n    }\n\n    public static void main(String[] args) {\n        System.out.printf(\"%.1f%n\", area(new Rectangle(3, 4)));\n    }\n}",
+    "explanation": "The Rectangle record automatically has width() and height() accessor methods. The area() method checks if shape is an instance of Rectangle and casts it to pattern variable r. r.width() * r.height() is 3 * 4 = 12.0. printf(\"%.1f%n\", 12.0) outputs \"12.0\" with one decimal place. Records can implicitly participate as final in a sealed interface's permits.",
+    "choices": [
+      {
+        "id": "se17g2_q074_a",
+        "text": "12.0",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q074_b",
+        "text": "12",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q074_c",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q074_d",
+        "text": "IllegalArgumentException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q075",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the effect of the non-sealed modifier in the following code?",
+    "code": "sealed class Vehicle permits Car, Truck {}\nfinal class Car extends Vehicle {}\nnon-sealed class Truck extends Vehicle {}",
+    "explanation": "The non-sealed modifier is applied to a subclass of a sealed class to remove the inheritance restriction from that subclass onward. Since Truck is non-sealed, any class can freely extend Truck. On the other hand, Car is final, so no class can extend Car. The non-sealed modifier allows open inheritance in part of a sealed hierarchy.",
+    "choices": [
+      {
+        "id": "se17g2_q075_a",
+        "text": "No class can extend the Truck class",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q075_b",
+        "text": "Any class can freely extend Truck",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q075_c",
+        "text": "The Truck class can no longer be instantiated",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q075_d",
+        "text": "The sealed restriction of Vehicle is inherited by Truck's subhierarchy",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q076",
+    "lessonId": "exam_se17_gold_2",
+    "type": "multiChoice",
+    "question": "Which of the following are correct descriptions of sealed interfaces? (Choose 2)",
+    "code": null,
+    "explanation": "Sealed interfaces, like classes, can restrict the types that are allowed to implement them using the permits clause. The types specified in the permits clause can be classes, records, or interfaces (sealed/non-sealed). Since records are implicitly final, they can be used as direct implementation types of a sealed interface. Enums can implement sealed interfaces, but they must be listed in the permits clause.",
+    "choices": [
+      {
+        "id": "se17g2_q076_a",
+        "text": "Records can be used as permitted implementation types of a sealed interface",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q076_b",
+        "text": "Sealed interfaces cannot have abstract methods",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q076_c",
+        "text": "Interfaces specified in the permits clause must be either sealed, non-sealed, or final",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q076_d",
+        "text": "The permits clause of a sealed interface can contain a mix of classes, records, and other interfaces",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q077",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes pattern matching in switch expressions (preview feature) in Java 17?",
+    "code": null,
+    "explanation": "Pattern matching in switch expressions was introduced as a preview feature in Java 17. Type patterns (e.g., case Integer i) can be used in case labels, allowing instanceof checks and casts to be performed simultaneously. Guard conditions (when clause) were added in later versions, but in the Java 17 preview, conditional patterns using && were supported. Exhaustiveness checking is also possible in combination with sealed classes.",
+    "choices": [
+      {
+        "id": "se17g2_q077_a",
+        "text": "Type patterns can be used in case labels to perform instanceof and cast simultaneously",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q077_b",
+        "text": "Pattern matching in switch expressions was finalized as a standard feature in Java 17",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q077_c",
+        "text": "Null cases cannot be handled in a switch",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q077_d",
+        "text": "Pattern matching can only be used in switch expressions, not in switch statements",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q078",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "What is the problem with the following code?",
+    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat {}\n    final class Dog implements Animal {\n        String name() { return \"Dog\"; }\n    }\n    final class Cat implements Animal {\n        String name() { return \"Cat\"; }\n    }\n\n    static String identify(Animal animal) {\n        if (animal instanceof Dog d) {\n            return d.name();\n        }\n        // Cat の場合の処理がない\n        return \"Unknown\";\n    }\n}",
+    "explanation": "The code itself does not cause a compilation error. However, there is a logical problem. Animal is a sealed interface that only permits Dog and Cat. The identify method only handles the Dog case, and returns \"Unknown\" for Cat. The compiler does not perform exhaustiveness checking for sealed types in regular if-else statements (it does in switch expression pattern matching). This code compiles and runs normally, returning \"Unknown\", but proper handling for Cat is missing.",
+    "choices": [
+      {
+        "id": "se17g2_q078_a",
+        "text": "Compilation error because not all subtypes of the sealed interface are handled",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q078_b",
+        "text": "It compiles but has a logic error where the Cat case is not handled and \"Unknown\" is returned",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q078_c",
+        "text": "instanceof pattern matching cannot be used with sealed interfaces",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q078_d",
+        "text": "instanceof cannot be used with final classes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q079",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the scope of pattern variables defined in instanceof pattern matching, which was finalized in Java 16?",
+    "code": null,
+    "explanation": "Pattern variables in instanceof pattern matching have flow scoping. The variable is only in scope where the instanceof is guaranteed to be true. For example, inside the block of if (obj instanceof String s), s can be used, but not in the else block. Also, after if (!(obj instanceof String s)) return;, s can be used.",
+    "choices": [
+      {
+        "id": "se17g2_q079_a",
+        "text": "Pattern variables have scope throughout the entire method",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q079_b",
+        "text": "Pattern variables are only valid in the flow where instanceof is guaranteed to be true",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q079_c",
+        "text": "Pattern variables can always be used outside the if block",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q079_d",
+        "text": "Pattern variables become invalid immediately after the if statement in which they are declared",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q080",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when this code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object obj = \"Hello, Java 17!\";\n        if (obj instanceof String s && s.length() > 5) {\n            System.out.println(s.toUpperCase());\n        } else {\n            System.out.println(\"short\");\n        }\n    }\n}",
+    "explanation": "obj is a String with the value \"Hello, Java 17!\". The pattern matching instanceof String s is performed and s is bound to \"Hello, Java 17!\". On the right side of &&, s.length() > 5 is evaluated, and since the string length is 15, the condition is true. s.toUpperCase() outputs \"HELLO, JAVA 17!\". Due to short-circuit evaluation of the && operator, s.length() is not evaluated if instanceof is false.",
+    "choices": [
+      {
+        "id": "se17g2_q080_a",
+        "text": "Hello, Java 17!",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q080_b",
+        "text": "HELLO, JAVA 17!",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q080_c",
+        "text": "short",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q080_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q081",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            System.out.print(\"A \");\n            throw new IllegalStateException(\"error\");\n        } catch (IllegalStateException e) {\n            System.out.print(\"B \");\n            throw new RuntimeException(\"wrap\", e);\n        } finally {\n            System.out.print(\"C \");\n        }\n    }\n}",
+    "explanation": "In the try block, \"A \" is output, and in the catch clause, \"B \" is output. The catch clause throws a new RuntimeException, but before that, the finally clause executes and outputs \"C \". After that, the RuntimeException(\"wrap\") is thrown, and since it is not caught, a stack trace is printed. The result is \"A B C \" followed by a stack trace.",
+    "choices": [
+      {
+        "id": "se17g2_q081_a",
+        "text": "A B C followed by a RuntimeException stack trace",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q081_b",
+        "text": "Only A B is output",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q081_c",
+        "text": "A C followed by an IllegalStateException stack trace",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q081_d",
+        "text": "Only A B C is output (the exception is suppressed by finally)",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17g2_q082",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes exception chaining?",
+    "code": "try {\n    callDatabase();\n} catch (SQLException e) {\n    throw new ServiceException(\"DB error\", e);\n}",
+    "explanation": "Exception chaining is a technique of wrapping a low-level exception in a high-level exception. By passing the cause (original exception) to the constructor, the original exception can be retrieved via the getCause() method. This allows throwing an exception appropriate to the abstraction level while preserving the root cause for debugging purposes.",
+    "choices": [
+      {
+        "id": "se17g2_q082_a",
+        "text": "A low-level exception is wrapped in a high-level exception and the cause can be retrieved with getCause()",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q082_b",
+        "text": "The original exception is automatically logged in exception chaining",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q082_c",
+        "text": "A checked exception cannot be wrapped in an unchecked exception",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q082_d",
+        "text": "Exception chaining adds the exception as a suppressed exception",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q083",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause?",
+    "code": "public class Main {\n    static void process() throws Exception {\n        throw new Exception(\"error\");\n    }\n    public static void main(String[] args) {\n        try {\n            process();\n        } catch (Exception | RuntimeException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+    "explanation": "In multi-catch, RuntimeException is a subclass of Exception, so catch (Exception | RuntimeException e) is redundant. Since RuntimeException is included in Exception, catching exception types that have an inheritance relationship in a multi-catch causes a compilation error.",
+    "choices": [
+      {
+        "id": "se17g2_q083_a",
+        "text": "RuntimeException is a subclass of Exception, and exceptions with an inheritance relationship cannot be multi-caught",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q083_b",
+        "text": "Because the process() method is static",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q083_c",
+        "text": "Because the main method has no throws declaration",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q083_d",
+        "text": "Because only a maximum of 2 exception types can be specified in multi-catch",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q084",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between the AutoCloseable and Closeable interfaces?",
+    "code": null,
+    "explanation": "Closeable is a sub-interface of AutoCloseable. Closeable's close() is declared to throw IOException, while AutoCloseable's close() is declared to throw Exception. Closeable is used for I/O-related resources, while AutoCloseable is used for more general-purpose resources.",
+    "choices": [
+      {
+        "id": "se17g2_q084_a",
+        "text": "Closeable is a sub-interface of AutoCloseable",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q084_b",
+        "text": "AutoCloseable is a sub-interface of Closeable",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q084_c",
+        "text": "They have no inheritance relationship and are independent interfaces",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q084_d",
+        "text": "Closeable's close() throws Exception, and AutoCloseable's close() throws IOException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q085",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    static int count = 0;\n    static int divide(int a, int b) {\n        try {\n            return a / b;\n        } catch (ArithmeticException e) {\n            return -1;\n        } finally {\n            count++;\n        }\n    }\n    public static void main(String[] args) {\n        System.out.print(divide(10, 2) + \" \");\n        System.out.print(divide(10, 0) + \" \");\n        System.out.print(count);\n    }\n}",
+    "explanation": "divide(10, 2): Normally returns 10/2=5, and in finally count becomes 1. divide(10, 0): ArithmeticException occurs, catch returns -1, and in finally count becomes 2. The result is \"5 -1 2\". The finally block always executes regardless of whether execution completes normally or an exception occurs.",
+    "choices": [
+      {
+        "id": "se17g2_q085_a",
+        "text": "5 -1 2",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q085_b",
+        "text": "5 -1 1",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q085_c",
+        "text": "5 0 2",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q085_d",
+        "text": "ArithmeticException is thrown after 5",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q086",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String html = \"\"\"\n                <html>\n                    <body>Hello</body>\n                </html>\n                \"\"\";\n        System.out.println(html.strip().startsWith(\"<html>\"));\n        System.out.println(html.lines().count());\n    }\n}",
+    "explanation": "A text block's content starts from the newline immediately after the opening \"\"\". The indentation position of the closing \"\"\" (16 spaces) is removed as common indentation. After removing leading and trailing whitespace with strip(), the content starts with \"<html>\", so the result is true. lines() counts 3 lines (<html>, <body>Hello</body>, </html>), so the result is 3.",
+    "choices": [
+      {
+        "id": "se17g2_q086_a",
+        "text": "true\n3",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q086_b",
+        "text": "false\n3",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q086_c",
+        "text": "true\n5",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q086_d",
+        "text": "false\n5",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q087",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Regarding the combination of record classes and the Stream API, which of the following is the correct output?",
+    "code": "import java.util.List;\n\npublic class Main {\n    record Employee(String name, int salary) {}\n\n    public static void main(String[] args) {\n        var employees = List.of(\n            new Employee(\"Alice\", 500),\n            new Employee(\"Bob\", 300),\n            new Employee(\"Carol\", 400)\n        );\n        employees.stream()\n            .filter(e -> e.salary() > 350)\n            .map(Employee::name)\n            .sorted()\n            .forEach(n -> System.out.print(n + \" \"));\n    }\n}",
+    "explanation": "Three Employee records are created using List.of(). filter() selects Alice (500) and Carol (400) whose salary > 350. map() gets the name(), and sorted() sorts alphabetically to produce \"Alice Carol\". forEach() outputs \"Alice Carol \". Record accessor method names are the same as the field names (name(), salary()).",
+    "choices": [
+      {
+        "id": "se17g2_q087_a",
+        "text": "Alice Carol",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q087_b",
+        "text": "Carol Alice",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q087_c",
+        "text": "Alice Bob Carol",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q087_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q088",
+    "lessonId": "exam_se17_gold_2",
+    "type": "outputPredict",
+    "question": "What is the output when the following switch expression is executed?",
+    "code": "public class Main {\n    sealed interface Animal permits Dog, Cat, Bird {}\n    record Dog(String name) implements Animal {}\n    record Cat(String name) implements Animal {}\n    record Bird(String name) implements Animal {}\n\n    static String sound(Animal a) {\n        return switch (a) {\n            case Dog d -> d.name() + \": Woof\";\n            case Cat c -> c.name() + \": Meow\";\n            case Bird b -> b.name() + \": Tweet\";\n        };\n    }\n\n    public static void main(String[] args) {\n        System.out.println(sound(new Cat(\"Tama\")));\n    }\n}",
+    "explanation": "The switch expression with pattern matching covers all subtypes of the sealed interface Animal. new Cat(\"Tama\") matches case Cat c, and c.name() returns \"Tama\", so \"Tama: Meow\" is returned. Since all permits of the sealed interface are covered by case clauses, no default is needed.",
+    "choices": [
+      {
+        "id": "se17g2_q088_a",
+        "text": "Tama: Meow",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q088_b",
+        "text": "Cat: Meow",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q088_c",
+        "text": "Compilation error: default clause is required",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q088_d",
+        "text": "Compilation error: records cannot implement sealed interfaces",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "pattern_matching",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17g2_q089",
+    "lessonId": "exam_se17_gold_2",
+    "type": "errorFind",
+    "question": "The following record definition has a compilation error. What is the cause?",
+    "code": "public record MutablePoint(int x, int y) {\n    public void setX(int x) {\n        this.x = x;\n    }\n}",
+    "explanation": "A record's components (x, y) are implicitly declared as private final fields. Therefore, attempting to reassign the final field with this.x = x in the setX() method causes a compilation error. Records are designed to be immutable, and their fields cannot be modified.",
+    "choices": [
+      {
+        "id": "se17g2_q089_a",
+        "text": "Record fields are implicitly final and cannot be reassigned",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q089_b",
+        "text": "Methods cannot be added to records",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q089_c",
+        "text": "Because the parameter name of setX is the same as the component name",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q089_d",
+        "text": "Public methods cannot be defined in records",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "sealed_classes",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17g2_q090",
+    "lessonId": "exam_se17_gold_2",
+    "type": "fourChoice",
+    "question": "Which of the following is correct about the formatted() method of text blocks?",
+    "code": "String sql = \"\"\"\n        SELECT * FROM %s\n        WHERE id = %d\n        \"\"\".formatted(\"users\", 42);\nSystem.out.println(sql.strip());",
+    "explanation": "The formatted() method of a text block provides functionality equivalent to String.format(). \"users\" is substituted for %s and 42 for %d, resulting in \"SELECT * FROM users\\nWHERE id = 42\". strip() removes leading and trailing whitespace before output. formatted() is an instance method added in Java 15.",
+    "choices": [
+      {
+        "id": "se17g2_q090_a",
+        "text": "SELECT * FROM users\nWHERE id = 42",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17g2_q090_b",
+        "text": "SELECT * FROM %s\nWHERE id = %d",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17g2_q090_c",
+        "text": "Compilation error: formatted() does not exist",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17g2_q090_d",
+        "text": "SELECT * FROM \"users\"\nWHERE id = \"42\"",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  }
+]

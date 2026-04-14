@@ -1,0 +1,1126 @@
+{
+  "courseId": "ch22",
+  "lessons": [
+    {
+      "id": "ch22_01",
+      "courseId": "ch22",
+      "title": "Overview of Collections",
+      "summary": "Grasp the overall picture of the Java Collections Framework, and learn the interface hierarchy and the Iterator mechanism.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "overview",
+          "title": "What is the Collections Framework?",
+          "body": "In this lesson, you will learn:\n\n- The overall structure of the **collections** framework\n- The different roles of List, Set, Map, and Queue\n- How to choose implementation [[classes]] for each [[interface]]\n\nChoosing the right collection directly impacts performance and readability.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "rule",
+          "title": "Interface Hierarchy",
+          "body": "At the top of the **collections** framework is the Iterable interface, with the Collection interface below it.\nThree interfaces [[inherit]] from Collection: List, Set, and Queue. Map has an independent hierarchy.\n\n| Interface | Characteristics |\n|---|---|\n| List | Maintains order and allows duplicates. |\n| Set | Does not allow duplicates. |\n| Queue | Has a first-in, first-out (FIFO) structure. |\n| Map | Manages key-value pairs; duplicate keys are not allowed. Does not inherit from Collection. |\n\nAccurately understanding this hierarchy is the first step to mastering the Gold exam.",
+          "code": "// Collections Framework hierarchy (conceptual diagram)\n// Iterable<E>\n//   └── Collection<E>\n//         ├── List<E>      ... ArrayList, LinkedList\n//         ├── Set<E>       ... HashSet, TreeSet, LinkedHashSet\n//         └── Queue<E>     ... ArrayDeque, PriorityQueue\n//               └── Deque<E> ... ArrayDeque\n//\n// Map<K,V> (independent)   ... HashMap, TreeMap, LinkedHashMap\n\nCollection<String> col = new ArrayList<>();\ncol.add(\"A\");\ncol.add(\"B\");\nSystem.out.println(col.size());  // 2",
+          "note": "Map does not inherit from the Collection interface. This is a point often tested on the exam.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "code",
+          "title": "Iterable and Iterator",
+          "body": "Classes that implement the Iterable interface can be used with the for-each statement.\n\n| Interface | Description |\n|---|---|\n| Iterable<E> | An interface that enables traversal with the enhanced for statement. Provides the iterator() method. |\n| Iterator<E> | Uses hasNext() to check for the next element and next() to retrieve it. Elements can be safely removed with remove(). |\n\nUsing [[Iterator]], elements can be safely removed during iteration.\nDirectly removing elements from a **collection** within a for-each statement will cause a ConcurrentModificationException.",
+          "code": "List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\n\n// for-each statement (internally uses Iterator)\nfor (String s : list) {\n    System.out.println(s);\n}\n\n// Safe removal using Iterator\nIterator<String> it = list.iterator();\nwhile (it.hasNext()) {\n    String s = it.next();\n    if (s.equals(\"B\")) {\n        it.remove();  // Can be safely removed\n    }\n}\nSystem.out.println(list);  // [A, C]\n\n// Note: remove during for-each is NOT allowed\n// for (String s : list) {\n//     list.remove(s);  // ConcurrentModificationException!\n// }",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "point",
+          "title": "Key Methods of the Collection Interface",
+          "body": "The Collection interface defines [[methods]] common to all **collections** (except Map).\n\n| Method | Description |\n|---|---|\n| add(E e) | Adds an element. |\n| remove(Object o) | Removes the specified element. |\n| contains(Object o) | Determines whether the specified element is contained. |\n| size() | Returns the number of elements. |\n| isEmpty() | Determines whether the collection is empty. |\n| clear() | Removes all elements. |\n\nBulk operation methods such as addAll(), removeAll(), and retainAll() are also available.\nThe toArray() method can convert a collection to an [[array]].",
+          "code": "Collection<String> c = new ArrayList<>();\nc.add(\"X\");\nc.add(\"Y\");\nc.add(\"Z\");\n\nSystem.out.println(c.contains(\"Y\"));  // true\nSystem.out.println(c.size());          // 3\nSystem.out.println(c.isEmpty());       // false\n\nc.remove(\"Y\");\nSystem.out.println(c);  // [X, Z]\n\n// Bulk operations\nCollection<String> other = List.of(\"Z\", \"W\");\nc.addAll(other);       // [X, Z, Z, W]\nc.retainAll(other);    // [Z, Z, W] (keeps only elements contained in other)",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_01",
+          "sectionType": "tip",
+          "title": "Difference Between for-each and the forEach Method",
+          "body": "Since Java 8, the forEach([[Consumer]]) method was added to Iterable.\nThe for-each statement is also called the [[enhanced for statement]] and internally uses an Iterator.\nThe forEach() method can be used in combination with [[lambda expressions]] and [[method references]].\nBoth can be used to traverse elements, but note that continue and break cannot be used within the forEach() method.\nThe differences and restrictions between the two may be tested on the exam.",
+          "code": "List<String> list = List.of(\"A\", \"B\", \"C\");\n\n// for-each statement\nfor (String s : list) {\n    System.out.println(s);\n}\n\n// forEach method (lambda expression)\nlist.forEach(s -> System.out.println(s));\n\n// forEach method (method reference)\nlist.forEach(System.out::println);",
+          "note": "break and continue cannot be used within the forEach() method. Use a for-each statement when you need to interrupt processing midway.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_01_q1",
+          "lessonId": "ch22_01",
+          "type": "fourChoice",
+          "question": "Which statement about the interface hierarchy of the Java Collections Framework is correct?",
+          "code": null,
+          "explanation": "The Map interface does not inherit from the Collection interface. Map is an independent hierarchy that manages key-value pairs. List, Set, and Queue all inherit from Collection. Iterable is the super-interface of Collection.",
+          "choices": [
+            {
+              "id": "ch22_01_q1_a",
+              "text": "Map does not inherit from the Collection interface",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_01_q1_b",
+              "text": "List inherits from the Map interface",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_01_q1_c",
+              "text": "Set inherits from the Queue interface",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_01_q1_d",
+              "text": "Collection does not inherit from Iterable",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_01_q2",
+          "lessonId": "ch22_01",
+          "type": "fourChoice",
+          "question": "What happens when you directly remove an element from a collection during iteration with a for-each statement?",
+          "code": "List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\nfor (String s : list) {\n    if (s.equals(\"B\")) {\n        list.remove(s);\n    }\n}",
+          "explanation": "An Iterator is used internally in the for-each statement. If you remove an element using the collection's own remove() method during iteration with an Iterator, a ConcurrentModificationException is thrown. Use the Iterator's remove() method for safe removal.",
+          "choices": [
+            {
+              "id": "ch22_01_q2_a",
+              "text": "ConcurrentModificationException is thrown",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_01_q2_b",
+              "text": "\"B\" is successfully removed, resulting in [A, C]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_01_q2_c",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_01_q2_d",
+              "text": "NullPointerException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_01_q3",
+          "lessonId": "ch22_01",
+          "type": "fillBlank",
+          "question": "What method do you call on an Iterator to safely remove an element from a collection?\n\nIterator<String> it = list.iterator();\nwhile (it.hasNext()) {\n    String s = it.next();\n    if (s.equals(\"B\")) {\n        it.___();\n    }\n}",
+          "code": null,
+          "explanation": "The Iterator's remove() method safely removes the element last returned by next() from the collection. While calling the collection's own remove() within a for-each statement causes a ConcurrentModificationException, the Iterator's remove() can safely remove elements.",
+          "choices": [
+            {
+              "id": "ch22_01_q3_a",
+              "text": "remove",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_01_q3_b",
+              "text": "delete",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_01_q3_c",
+              "text": "clear",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_01_q3_d",
+              "text": "discard",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch22_02",
+      "courseId": "ch22",
+      "title": "List — ArrayList and LinkedList",
+      "summary": "Learn the characteristics of the List interface and ArrayList/LinkedList, how to create immutable lists, and how to use ListIterator.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "overview",
+          "title": "Characteristics of the List Interface",
+          "body": "In this lesson, you will learn:\n\n- Performance differences between [[ArrayList]] and [[LinkedList]]\n- Index access vs insertion/deletion efficiency\n- Choosing the appropriate List for the use case\n\nUnderstand the differences in internal structure and use them correctly.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "rule",
+          "title": "Performance Comparison of ArrayList and LinkedList",
+          "body": "ArrayList uses an internal [[array]], so random access by index is fast at O(1).\nHowever, insertion or deletion in the middle requires shifting elements, making it O(n).\nLinkedList is a doubly-linked list, so adding or removing at the head or tail is fast at O(1).\nIndex access in LinkedList requires traversing the list, making it O(n).\nIn general, ArrayList is recommended for most cases.\nLinkedList can also be used as a Queue or Deque, but [[ArrayDeque]] is more efficient.",
+          "code": "// ArrayList — Fast random access\nList<String> arrayList = new ArrayList<>();\narrayList.add(\"A\");\narrayList.add(\"B\");\narrayList.add(\"C\");\nString item = arrayList.get(1);  // Fast at O(1)\n\n// LinkedList — Fast head/tail operations\nLinkedList<String> linkedList = new LinkedList<>();\nlinkedList.addFirst(\"X\");  // O(1)\nlinkedList.addLast(\"Y\");   // O(1)\nlinkedList.add(1, \"Z\");    // Insertion in the middle\nSystem.out.println(linkedList);  // [X, Z, Y]",
+          "note": "When in doubt, use ArrayList. LinkedList is only advantageous when frequently adding/removing from the head.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "code",
+          "title": "Immutable Lists — List.of() and List.copyOf()",
+          "body": "Since Java 9, immutable lists can be concisely created with List.of().\nCalling add() or remove() on a list created with List.of() throws UnsupportedOperationException.\nList.copyOf() creates an immutable copy from an existing **collection**.\nList.of() does not allow null elements; passing null causes a [[NullPointerException]].\n[[Collections]].unmodifiableList() also creates an immutable list, but differs in that changes to the original list are reflected.",
+          "code": "// List.of() — Creating an immutable list\nList<String> immutable = List.of(\"A\", \"B\", \"C\");\n// immutable.add(\"D\");  // UnsupportedOperationException\n// immutable.set(0, \"X\");  // UnsupportedOperationException\n\n// List.copyOf() — Creating an immutable list from an existing collection\nList<String> original = new ArrayList<>(List.of(\"X\", \"Y\"));\nList<String> copy = List.copyOf(original);\noriginal.add(\"Z\");  // original is mutable\nSystem.out.println(copy);  // [X, Y] (copy is not affected)\n\n// null elements are not allowed\n// List.of(\"A\", null);  // NullPointerException",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "point",
+          "title": "Bidirectional Traversal with ListIterator",
+          "body": "ListIterator extends Iterator and supports bidirectional traversal and element addition/modification of lists.\nhasPrevious() and previous() allow reverse traversal, and nextIndex() and previousIndex() retrieve the index of the current position.\nThe set(E) [[method]] replaces the element last returned by next() or previous().\nThe add(E) method inserts a new element at the current position.\nListIterator is a feature specific to the List interface and cannot be used with Set or Queue.",
+          "code": "List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\nListIterator<String> li = list.listIterator();\n\n// Forward traversal\nwhile (li.hasNext()) {\n    int idx = li.nextIndex();\n    String s = li.next();\n    System.out.println(idx + \": \" + s);  // 0: A, 1: B, 2: C\n}\n\n// Reverse traversal\nwhile (li.hasPrevious()) {\n    String s = li.previous();\n    System.out.println(s);  // C, B, A\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_02",
+          "sectionType": "tip",
+          "title": "Notes on Arrays.asList()",
+          "body": "Arrays.asList() converts an array to a List, but the returned List has a fixed size.\nElement modification (set) is possible, but adding (add) or removing (remove) throws UnsupportedOperationException.\nAlso, the list created with Arrays.asList() is linked to the original array, so changes in one are reflected in the other.\nIf you need a mutable list, use new ArrayList<>(Arrays.asList(...)) or List.of().\nExam questions about the restrictions of Arrays.asList() are common.",
+          "code": "String[] array = {\"A\", \"B\", \"C\"};\nList<String> list = Arrays.asList(array);\n\nlist.set(0, \"X\");  // OK: Element modification is possible\n// list.add(\"D\");  // UnsupportedOperationException\n// list.remove(0); // UnsupportedOperationException\n\n// Linked to the original array\nSystem.out.println(array[0]);  // X (list change is reflected in the array)\n\n// To make it mutable\nList<String> mutable = new ArrayList<>(Arrays.asList(\"A\", \"B\", \"C\"));\nmutable.add(\"D\");  // OK",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_02_q1",
+          "lessonId": "ch22_02",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\n        list.add(1, \"X\");\n        list.remove(2);\n        System.out.println(list);\n    }\n}",
+          "explanation": "The initial list is [A, B, C]. add(1, \"X\") inserts \"X\" at index 1, resulting in [A, X, B, C]. Then remove(2) removes the element at index 2, which is \"B\", resulting in [A, X, C].",
+          "choices": [
+            {
+              "id": "ch22_02_q1_a",
+              "text": "[A, X, C]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_02_q1_b",
+              "text": "[A, X, B]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_02_q1_c",
+              "text": "[X, B, C]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_02_q1_d",
+              "text": "[A, B, X]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_02_q2",
+          "lessonId": "ch22_02",
+          "type": "fourChoice",
+          "question": "Which operation can be performed on an immutable list created with List.of()?",
+          "code": null,
+          "explanation": "An immutable list created with List.of() allows element retrieval (get) and size checking (size), but all modification operations such as add(), remove(), and set() throw UnsupportedOperationException. Searching with contains() is also possible.",
+          "choices": [
+            {
+              "id": "ch22_02_q2_a",
+              "text": "Retrieving elements with get()",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_02_q2_b",
+              "text": "Adding elements with add()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_02_q2_c",
+              "text": "Modifying elements with set()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_02_q2_d",
+              "text": "Removing elements with remove()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_02_q3",
+          "lessonId": "ch22_02",
+          "type": "errorFind",
+          "question": "The following code has an error. Which is the correct cause of the error?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = List.of(\"A\", \"B\", null);\n        System.out.println(list);\n    }\n}",
+          "explanation": "List.of() does not allow null elements. Attempting to include a null element throws NullPointerException. This is a specification of List.of() and is a common restriction shared by immutable collection factory methods (List.of, Set.of, Map.of).",
+          "choices": [
+            {
+              "id": "ch22_02_q3_a",
+              "text": "null cannot be included in List.of() and NullPointerException is thrown",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_02_q3_b",
+              "text": "List.of() can only accept up to 2 arguments",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_02_q3_c",
+              "text": "The return type of List.of() is Collection, not List",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_02_q3_d",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch22_02_q4",
+          "lessonId": "ch22_02",
+          "type": "codeComplete",
+          "question": "Complete the code that stores and retrieves key-value pairs using a HashMap.",
+          "code": null,
+          "explanation": "HashMap<K,V> specifies the key type and value type. Use put() to add entries and get() to retrieve the value for a key. These are fundamental Map interface operations that you should always remember.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "Map<String, Integer> scores = new __BLANK_1__<>();\nscores.__BLANK_2__(\"Alice\", 95);\nSystem.out.println(scores.__BLANK_3__(\"Alice\"));",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Implementation class",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "HashMap",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "HashSet",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "ArrayList",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Adding a value",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "put",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "add",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "set",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_3",
+              "label": "③Retrieving a value",
+              "choices": [
+                {
+                  "id": "b3_c1",
+                  "text": "get",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b3_c2",
+                  "text": "find",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b3_c3",
+                  "text": "fetch",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch22_03",
+      "courseId": "ch22",
+      "title": "Set — HashSet, TreeSet, LinkedHashSet",
+      "summary": "Learn the characteristics of the Set interface and the differences between the three major implementation classes, and the contract of equals() and hashCode().",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "overview",
+          "title": "Characteristics of the Set Interface",
+          "body": "In this lesson, you will learn:\n\n- How [[HashSet]] achieves fast lookups (hash table)\n- Sorted sets with [[TreeSet]]\n- Preserving insertion order with LinkedHashSet\n\nLearn the criteria for choosing the right Set implementation for your requirements.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "rule",
+          "title": "HashSet — Unordered and Fast",
+          "body": "HashSet is a hash table-based implementation where adding, removing, and searching elements are fast at O(1).\nThe order of elements is not guaranteed, and the iteration order is unpredictable.\nInternally, it uses a [[HashMap]], where elements are stored as keys.\nExactly one null element can be stored.\nIt is the most commonly used Set implementation and is recommended when order is not needed.",
+          "code": "Set<String> hashSet = new HashSet<>();\nhashSet.add(\"Banana\");\nhashSet.add(\"Apple\");\nhashSet.add(\"Cherry\");\nhashSet.add(\"Apple\");  // Duplicate → not added (returns false)\n\nSystem.out.println(hashSet.size());  // 3\nSystem.out.println(hashSet);  // Order is undefined (e.g., [Cherry, Apple, Banana])\n\n// null elements can also be stored\nhashSet.add(null);\nSystem.out.println(hashSet.contains(null));  // true",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "code",
+          "title": "TreeSet and LinkedHashSet",
+          "body": "| Class | Characteristics |\n|---|---|\n| HashSet | Fastest but unordered. Most commonly used. |\n| TreeSet | Automatically orders elements in sorted order. Elements must implement Comparable or a Comparator must be specified. |\n| LinkedHashSet | Preserves insertion order. Combines HashSet's speed with order preservation. |",
+          "code": "// TreeSet — Maintains sorted order\nSet<String> treeSet = new TreeSet<>();\ntreeSet.add(\"Banana\");\ntreeSet.add(\"Apple\");\ntreeSet.add(\"Cherry\");\nSystem.out.println(treeSet);  // [Apple, Banana, Cherry] (natural order)\n\nTreeSet<Integer> nums = new TreeSet<>(Set.of(5, 2, 8, 1, 9));\nSystem.out.println(nums.first());    // 1\nSystem.out.println(nums.last());     // 9\nSystem.out.println(nums.floor(6));   // 5 (greatest element <= 6)\nSystem.out.println(nums.ceiling(6)); // 8 (smallest element >= 6)\n\n// LinkedHashSet — Preserves insertion order\nSet<String> linkedSet = new LinkedHashSet<>();\nlinkedSet.add(\"Banana\");\nlinkedSet.add(\"Apple\");\nlinkedSet.add(\"Cherry\");\nSystem.out.println(linkedSet);  // [Banana, Apple, Cherry] (insertion order)",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "point",
+          "title": "The equals() and hashCode() Contract",
+          "body": "For HashSet and HashMap to work correctly, the contract between equals() and hashCode() must be followed.\nTwo objects for which equals() returns true must return the same hashCode().\nBreaking this contract can result in duplicate elements being stored in a HashSet, or elements becoming unsearchable.\nIt is acceptable for hashCode() to be the same while equals() returns false (hash collision).\nOn the Gold exam, unexpected behavior due to inconsistencies between equals() and hashCode() is tested.",
+          "code": "public class Student {\n    private String name;\n    private int id;\n\n    // If you override equals(), you must also override hashCode()\n    @Override\n    public boolean equals(Object o) {\n        if (this == o) return true;\n        if (!(o instanceof Student)) return false;\n        Student s = (Student) o;\n        return id == s.id && Objects.equals(name, s.name);\n    }\n\n    @Override\n    public int hashCode() {\n        return Objects.hash(name, id);\n    }\n}\n\n// With correct implementation, duplicates are eliminated in HashSet\nSet<Student> set = new HashSet<>();\nset.add(new Student(\"Taro\", 1));\nset.add(new Student(\"Taro\", 1));  // Not added because equals() returns true\nSystem.out.println(set.size());  // 1",
+          "note": "If you [[override]] equals(), you must always override hashCode() as well. This is a fundamental Java rule.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_03",
+          "sectionType": "tip",
+          "title": "Immutable Set with Set.of()",
+          "body": "Since Java 9, immutable Sets can be concisely created with Set.of().\nSet.of() throws IllegalArgumentException if duplicate elements are passed.\nLike List.of(), null elements are not allowed.\nSet.copyOf() can also create an immutable Set from an existing **collection**.\nImmutable Sets throw UnsupportedOperationException when modification operations (add, remove, etc.) are performed.",
+          "code": "// Set.of() — Creating an immutable Set\nSet<String> immutableSet = Set.of(\"A\", \"B\", \"C\");\n// immutableSet.add(\"D\");  // UnsupportedOperationException\n\n// Passing duplicate elements throws IllegalArgumentException\n// Set.of(\"A\", \"B\", \"A\");  // IllegalArgumentException\n\n// Set.copyOf()\nList<String> list = List.of(\"X\", \"Y\", \"X\");\nSet<String> copySet = Set.copyOf(list);  // Duplicates are removed\nSystem.out.println(copySet.size());  // 2",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_03_q1",
+          "lessonId": "ch22_03",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Set<String> set = new TreeSet<>();\n        set.add(\"Banana\");\n        set.add(\"Apple\");\n        set.add(\"Cherry\");\n        set.add(\"Apple\");\n        System.out.println(set);\n    }\n}",
+          "explanation": "TreeSet maintains elements in sorted order and does not allow duplicates. Even though \"Apple\" is added twice, only one is kept. Since elements are sorted in natural order (alphabetical), the output is [Apple, Banana, Cherry].",
+          "choices": [
+            {
+              "id": "ch22_03_q1_a",
+              "text": "[Apple, Banana, Cherry]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_03_q1_b",
+              "text": "[Banana, Apple, Cherry, Apple]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_03_q1_c",
+              "text": "[Banana, Apple, Cherry]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_03_q1_d",
+              "text": "[Cherry, Banana, Apple]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_03_q2",
+          "lessonId": "ch22_03",
+          "type": "fourChoice",
+          "question": "Which statement about the equals() and hashCode() contract is correct?",
+          "code": null,
+          "explanation": "Two objects for which equals() returns true must always return the same hashCode(). This is a Java contract that is essential for HashSet and HashMap to work correctly. Conversely, it is acceptable for hashCode() to be the same while equals() returns false (hash collision).",
+          "choices": [
+            {
+              "id": "ch22_03_q2_a",
+              "text": "If equals() is true, hashCode() must return the same value",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_03_q2_b",
+              "text": "If hashCode() is the same, equals() must also return true",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_03_q2_c",
+              "text": "Overriding only equals() is sufficient for HashSet to work correctly",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_03_q2_d",
+              "text": "Overriding only hashCode() is sufficient for HashSet to work correctly",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_03_q3",
+          "lessonId": "ch22_03",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        TreeSet<Integer> set = new TreeSet<>(Set.of(10, 3, 7, 15, 1));\n        System.out.println(set.floor(8));\n    }\n}",
+          "explanation": "TreeSet's floor(E) method returns the greatest element less than or equal to the specified value. The elements in the set are {1, 3, 7, 10, 15}, and the greatest element less than or equal to 8 is 7. Note that ceiling(8) would return 10, the smallest element greater than or equal to 8.",
+          "choices": [
+            {
+              "id": "ch22_03_q3_a",
+              "text": "7",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_03_q3_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_03_q3_c",
+              "text": "3",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_03_q3_d",
+              "text": "8",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch22_04",
+      "courseId": "ch22",
+      "title": "Map — HashMap, TreeMap",
+      "summary": "Learn the basic operations of the Map interface and the differences between HashMap and TreeMap, and how to create immutable Maps.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "overview",
+          "title": "What is the Map Interface?",
+          "body": "In this lesson, you will learn:\n\n- How [[HashMap]] achieves fast key access\n- Managing keys in sorted order with [[TreeMap]]\n- Using Map.Entry, keySet(), and values()\n\nA way to efficiently manage key-value pairs.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "code",
+          "title": "Basic Operations of HashMap",
+          "body": "HashMap is a hash table-based Map implementation where adding, retrieving, and removing key-value pairs are fast at O(1).\nUse put(K, V) to add entries and get(K) to retrieve the value for a key.\ncontainsKey(K) checks for key existence, and containsValue(V) checks for value existence.\ngetOrDefault(K, V) is a convenient [[method]] that returns a default value when the key doesn't exist.\nputIfAbsent(K, V) sets the value only if the key doesn't already exist.",
+          "code": "Map<String, Integer> map = new HashMap<>();\nmap.put(\"Alice\", 90);\nmap.put(\"Bob\", 85);\nmap.put(\"Carol\", 92);\n\nSystem.out.println(map.get(\"Bob\"));        // 85\nSystem.out.println(map.get(\"Dave\"));       // null\nSystem.out.println(map.getOrDefault(\"Dave\", 0));  // 0\n\nmap.put(\"Alice\", 95);  // Overwrites existing key's value\nSystem.out.println(map.get(\"Alice\"));  // 95\n\nmap.putIfAbsent(\"Alice\", 100);  // Key already exists, so no change\nSystem.out.println(map.get(\"Alice\"));  // 95\n\nSystem.out.println(map.containsKey(\"Bob\"));    // true\nSystem.out.println(map.containsValue(85));     // true\nSystem.out.println(map.size());                // 3",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "rule",
+          "title": "Ways to Traverse a Map",
+          "body": "There are three ways to traverse a Map.\n| Method | Description |\n|---|---|\n| keySet() | Returns a Set of keys, allowing iteration based on keys. |\n| values() | Returns a Collection of values, allowing iteration over values only. |\n| entrySet() | Returns a Set of Map.Entry<K,V>, allowing simultaneous access to both keys and values. |\nUsing entrySet() is the most efficient and is recommended when both keys and values are needed.\nSince Java 8, the forEach(BiConsumer) method can also be used.",
+          "code": "Map<String, Integer> map = new HashMap<>();\nmap.put(\"Alice\", 90);\nmap.put(\"Bob\", 85);\nmap.put(\"Carol\", 92);\n\n// Traversing keys with keySet()\nfor (String key : map.keySet()) {\n    System.out.println(key + \": \" + map.get(key));\n}\n\n// Traversing keys and values simultaneously with entrySet() (recommended)\nfor (Map.Entry<String, Integer> entry : map.entrySet()) {\n    System.out.println(entry.getKey() + \": \" + entry.getValue());\n}\n\n// forEach() method (Java 8+)\nmap.forEach((key, value) -> System.out.println(key + \": \" + value));",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "point",
+          "title": "TreeMap and Key Ordering",
+          "body": "TreeMap stores keys sorted by natural order (**Comparable**) or by a [[Comparator]]-specified order.\nTreeMap implements the NavigableMap interface and provides navigation methods such as floorKey(), ceilingKey(), higherKey(), and lowerKey().\nfirstKey() and lastKey() retrieve the smallest and largest keys.\nsubMap(), headMap(), and tailMap() retrieve sub-Maps for a specified key range.\nTreeMap does not allow null as a key ([[NullPointerException]] is thrown).",
+          "code": "TreeMap<String, Integer> treeMap = new TreeMap<>();\ntreeMap.put(\"Charlie\", 70);\ntreeMap.put(\"Alice\", 90);\ntreeMap.put(\"Bob\", 85);\n\nSystem.out.println(treeMap);  // {Alice=90, Bob=85, Charlie=70}\nSystem.out.println(treeMap.firstKey());      // Alice\nSystem.out.println(treeMap.lastKey());       // Charlie\nSystem.out.println(treeMap.floorKey(\"Bob\")); // Bob\nSystem.out.println(treeMap.higherKey(\"Bob\")); // Charlie\n\n// Sub-Map\nSystem.out.println(treeMap.subMap(\"Alice\", \"Charlie\"));  // {Alice=90, Bob=85}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_04",
+          "sectionType": "tip",
+          "title": "Map.of() and Map.entry()",
+          "body": "Since Java 9, immutable Maps can be concisely created with Map.of().\nMap.of() takes keys and values as alternating arguments and supports up to 10 entries.\nFor 11 or more entries, use Map.ofEntries() combined with Map.entry().\nMap.of() does not allow duplicate keys or null keys/values, and violations throw IllegalArgumentException or NullPointerException.\nMap.copyOf() can also create an immutable Map from an existing Map.",
+          "code": "// Map.of() — Creating an immutable Map\nMap<String, Integer> map = Map.of(\"A\", 1, \"B\", 2, \"C\", 3);\n// map.put(\"D\", 4);  // UnsupportedOperationException\n\n// Map.ofEntries() — For 11 or more entries\nMap<String, Integer> large = Map.ofEntries(\n    Map.entry(\"A\", 1),\n    Map.entry(\"B\", 2),\n    Map.entry(\"C\", 3)\n);\n\n// Duplicate keys throw IllegalArgumentException\n// Map.of(\"A\", 1, \"A\", 2);  // IllegalArgumentException\n\n// Map.copyOf()\nMap<String, Integer> original = new HashMap<>();\noriginal.put(\"X\", 10);\nMap<String, Integer> copy = Map.copyOf(original);\n// copy.put(\"Y\", 20);  // UnsupportedOperationException",
+          "note": "Map.of() supports up to 10 key-value pairs. For more, use Map.ofEntries().",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_04_q1",
+          "lessonId": "ch22_04",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Integer> map = new HashMap<>();\n        map.put(\"A\", 1);\n        map.put(\"B\", 2);\n        map.put(\"A\", 3);\n        map.putIfAbsent(\"B\", 4);\n        System.out.println(map.get(\"A\") + \", \" + map.get(\"B\"));\n    }\n}",
+          "explanation": "First, put(\"A\", 1) creates {A=1}, put(\"B\", 2) creates {A=1, B=2}. put(\"A\", 3) overwrites key \"A\"'s value to 3, resulting in {A=3, B=2}. putIfAbsent(\"B\", 4) does not change the value since key \"B\" already exists. As a result, get(\"A\") returns 3 and get(\"B\") returns 2.",
+          "choices": [
+            {
+              "id": "ch22_04_q1_a",
+              "text": "3, 2",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q1_b",
+              "text": "1, 2",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q1_c",
+              "text": "3, 4",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q1_d",
+              "text": "1, 4",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_04_q2",
+          "lessonId": "ch22_04",
+          "type": "fillBlank",
+          "question": "Which method is used to traverse a Map's key-value pairs simultaneously?\n\nfor (Map.Entry<String, Integer> entry : map.___()) {\n    System.out.println(entry.getKey() + \": \" + entry.getValue());\n}",
+          "code": null,
+          "explanation": "The entrySet() method returns all key-value pairs of a Map as a Set of Map.Entry<K,V>. When both keys and values are needed, entrySet() is the most efficient traversal method. keySet() returns only keys, and values() returns only values.",
+          "choices": [
+            {
+              "id": "ch22_04_q2_a",
+              "text": "entrySet",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q2_b",
+              "text": "keySet",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q2_c",
+              "text": "values",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q2_d",
+              "text": "entries",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_04_q3",
+          "lessonId": "ch22_04",
+          "type": "fourChoice",
+          "question": "Which statement about TreeMap is correct?",
+          "code": null,
+          "explanation": "TreeMap stores keys sorted by natural order (Comparable) or by the order specified by a Comparator passed to the constructor. It implements the NavigableMap interface and provides navigation methods such as floorKey() and ceilingKey(). HashMap does not guarantee order, and LinkedHashMap preserves insertion order.",
+          "choices": [
+            {
+              "id": "ch22_04_q3_a",
+              "text": "Keys are maintained in sorted order",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q3_b",
+              "text": "null can be used as a key",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q3_c",
+              "text": "Insertion order is preserved",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q3_d",
+              "text": "Faster access than HashMap",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch22_04_q4",
+          "lessonId": "ch22_04",
+          "type": "multiChoice",
+          "question": "Select all correct statements about HashMap.",
+          "code": null,
+          "explanation": "HashMap allows one null key and multiple null values. Order is not guaranteed (use LinkedHashMap for order guarantee). Duplicate keys are not allowed; putting with the same key overwrites the value. It is not thread-safe; use ConcurrentHashMap for multi-threaded environments.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch22_04_q4_a",
+              "text": "One null key can be used",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_04_q4_b",
+              "text": "Insertion order is guaranteed",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_04_q4_c",
+              "text": "When a key is duplicated, the value is overwritten",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch22_04_q4_d",
+              "text": "It is not thread-safe",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch22_05",
+      "courseId": "ch22",
+      "title": "Queue and Deque",
+      "summary": "Learn the operation methods of the Queue and Deque interfaces, and how to use ArrayDeque and PriorityQueue.",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "overview",
+          "title": "What is the Queue Interface?",
+          "body": "In this lesson, you will learn:\n\n- Basic operations of [[Queue]] (FIFO: First-In, First-Out)\n- Implementing [[stacks]]/queues with [[Deque]] (double-ended queue)\n- Differences between offer/poll/peek vs add/remove/element\n\nLearn how to use queues, which are fundamental data structures.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "rule",
+          "title": "Two Groups of Queue Operation Methods",
+          "body": "Queue [[methods]] are divided into two groups based on behavior when the operation fails.\n| Method | Description |\n|---|---|\n| add() | Throws IllegalStateException when the queue is full, while offer() returns false. |\n| remove() | Throws NoSuchElementException when the queue is empty, while poll() returns null. |\n| element() | Throws NoSuchElementException when the queue is empty, while peek() returns null. |\nFor unbounded queues, there is virtually no difference between add() and offer(), but the null return of poll() and peek() should be remembered.",
+          "code": "Queue<String> queue = new ArrayDeque<>();\n\n// Adding elements\nqueue.offer(\"A\");\nqueue.offer(\"B\");\nqueue.offer(\"C\");\nSystem.out.println(queue);  // [A, B, C]\n\n// Examining the head element (without removing)\nSystem.out.println(queue.peek());  // A\nSystem.out.println(queue.size());  // 3\n\n// Removing the head element\nSystem.out.println(queue.poll());  // A\nSystem.out.println(queue.poll());  // B\nSystem.out.println(queue);         // [C]\n\n// Operations on an empty queue\nqueue.clear();\nSystem.out.println(queue.poll());     // null\nSystem.out.println(queue.peek());     // null\n// queue.remove();  // NoSuchElementException\n// queue.element(); // NoSuchElementException",
+          "note": "poll() and peek() return null when the queue is empty, while remove() and element() throw [[exceptions]].",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "code",
+          "title": "ArrayDeque — Stack and Queue",
+          "body": "| Interface | Description |\n|---|---|\n| Deque | Double-ended queue. An interface that allows adding and removing from both the head and the tail. |\n| ArrayDeque | Array-based Deque implementation. Can be used as both a stack and a queue. |\n\nUsing [[ArrayDeque]] is preferred over the Stack class (Stack is based on Vector and has inferior performance).\nnull elements cannot be stored ([[NullPointerException]] is thrown).",
+          "code": "// Using as a queue (FIFO)\nDeque<String> queue = new ArrayDeque<>();\nqueue.offerLast(\"A\");   // Add to the tail\nqueue.offerLast(\"B\");\nqueue.offerLast(\"C\");\nSystem.out.println(queue.pollFirst());  // A (remove from the head)\nSystem.out.println(queue.pollFirst());  // B\n\n// Using as a stack (LIFO)\nDeque<String> stack = new ArrayDeque<>();\nstack.push(\"X\");  // Add to the head (= offerFirst)\nstack.push(\"Y\");\nstack.push(\"Z\");\nSystem.out.println(stack.pop());  // Z (remove from the head = pollFirst)\nSystem.out.println(stack.pop());  // Y\nSystem.out.println(stack.peek()); // X (examine only = peekFirst)",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "point",
+          "title": "PriorityQueue — Priority Queue",
+          "body": "PriorityQueue is a queue that retrieves elements in priority order (natural order or [[Comparator]]-specified order).\nInternally, it uses a [[heap]] data structure, and the minimum value (in natural order) is always at the head.\nElements retrieved by poll() or peek() are always the element with the highest priority (smallest).\nHowever, note that the iteration order with the iterator (for-each statement) is not guaranteed to be sorted.\nnull elements cannot be stored.",
+          "code": "// PriorityQueue with natural order (ascending)\nPriorityQueue<Integer> pq = new PriorityQueue<>();\npq.offer(30);\npq.offer(10);\npq.offer(20);\n\nSystem.out.println(pq.peek());  // 10 (minimum value)\nSystem.out.println(pq.poll());  // 10\nSystem.out.println(pq.poll());  // 20\nSystem.out.println(pq.poll());  // 30\n\n// PriorityQueue in descending order (with Comparator)\nPriorityQueue<Integer> descPq = new PriorityQueue<>(Comparator.reverseOrder());\ndescPq.offer(30);\ndescPq.offer(10);\ndescPq.offer(20);\nSystem.out.println(descPq.poll());  // 30 (maximum value)",
+          "note": "The for-each traversal order of PriorityQueue is not in sorted order. If you want to retrieve elements in sorted order, call poll() repeatedly.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_05",
+          "sectionType": "tip",
+          "title": "Deque Methods Reference Table",
+          "body": "Deque provides methods for both the head (First) and the tail (Last).\n| Operation | Methods |\n|---|---|\n| Add | offerFirst()/offerLast() (throwing: addFirst()/addLast()) |\n| Remove | pollFirst()/pollLast() (throwing: removeFirst()/removeLast()) |\n| Examine | peekFirst()/peekLast() (throwing: getFirst()/getLast()) |\nRemember: for queue usage, use offerLast + pollFirst; for stack usage, use push (= offerFirst) + pop (= pollFirst).\nExam questions feature code using Deque as both a queue and a stack.",
+          "code": null,
+          "note": "push() is the same as offerFirst(), and pop() is the same as removeFirst(). Remember the method correspondence when using Deque as a stack.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_05_q1",
+          "lessonId": "ch22_05",
+          "type": "fourChoice",
+          "question": "What happens when the poll() method is called on an empty Queue?",
+          "code": null,
+          "explanation": "The poll() method returns null when the queue is empty. On the other hand, the remove() method throws NoSuchElementException when the queue is empty. The difference between these two methods is a frequently tested point on the Java Gold exam.",
+          "choices": [
+            {
+              "id": "ch22_05_q1_a",
+              "text": "Returns null",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_05_q1_b",
+              "text": "NoSuchElementException is thrown",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_05_q1_c",
+              "text": "IllegalStateException is thrown",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_05_q1_d",
+              "text": "NullPointerException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_05_q2",
+          "lessonId": "ch22_05",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> stack = new ArrayDeque<>();\n        stack.push(\"A\");\n        stack.push(\"B\");\n        stack.push(\"C\");\n        System.out.println(stack.pop());\n        System.out.println(stack.peek());\n    }\n}",
+          "explanation": "push() adds elements to the head (top of the Deque). After push(\"A\") → push(\"B\") → push(\"C\"), the head of the stack is C. pop() removes and outputs the head element C. peek() examines (without removing) the current head element B and outputs it.",
+          "choices": [
+            {
+              "id": "ch22_05_q2_a",
+              "text": "C\nB",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_05_q2_b",
+              "text": "A\nB",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_05_q2_c",
+              "text": "C\nA",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_05_q2_d",
+              "text": "A\nA",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_05_q3",
+          "lessonId": "ch22_05",
+          "type": "errorFind",
+          "question": "The following code has an error. Which is the correct cause of the error?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> deque = new ArrayDeque<>();\n        deque.offer(\"A\");\n        deque.offer(null);\n        deque.offer(\"C\");\n        System.out.println(deque);\n    }\n}",
+          "explanation": "ArrayDeque cannot store null elements. Attempting to add a null element with offer() or add() throws NullPointerException. This is because ArrayDeque's internal implementation uses null to indicate \"no element\". If you need to store null elements, use LinkedList instead.",
+          "choices": [
+            {
+              "id": "ch22_05_q3_a",
+              "text": "null element cannot be added to ArrayDeque and NullPointerException is thrown",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_05_q3_b",
+              "text": "The offer() method does not exist in the Deque interface",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_05_q3_c",
+              "text": "ArrayDeque cannot store more than 3 elements",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_05_q3_d",
+              "text": "A compilation error occurs",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch22_06",
+      "courseId": "ch22",
+      "title": "Collections Utility",
+      "summary": "Learn the utility methods of the Collections class and the sorting mechanism with Comparable and Comparator.",
+      "estimatedMinutes": 6,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "overview",
+          "title": "What is the Collections Class?",
+          "body": "In this lesson, you will learn:\n\n- How to use [[Collections]].sort() and Collections.unmodifiableList()\n- Defining natural order with the [[Comparable]] [[interface]]\n- Custom sorting with [[Comparator]]\n\nLet's make use of the convenient tools for **collection** operations.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "code",
+          "title": "Key Methods of the Collections Class",
+          "body": "| Method | Description |\n|---|---|\n| sort() | Sorts a list in natural order |\n| reverse() | Reverses the order of elements |\n| shuffle() | Randomly rearranges elements |\n| frequency() | Returns the number of occurrences of a specified element |\n| unmodifiableList() | Returns an unmodifiable view of the list |",
+          "code": "List<String> list = new ArrayList<>(List.of(\"C\", \"A\", \"B\", \"A\"));\n\n// Sort\nCollections.sort(list);\nSystem.out.println(list);  // [A, A, B, C]\n\n// Reverse\nCollections.reverse(list);\nSystem.out.println(list);  // [C, B, A, A]\n\n// Frequency\nint count = Collections.frequency(list, \"A\");\nSystem.out.println(count);  // 2\n\n// Maximum and minimum values\nSystem.out.println(Collections.max(list));  // C\nSystem.out.println(Collections.min(list));  // A\n\n// Unmodifiable list\nList<String> unmod = Collections.unmodifiableList(list);\n// unmod.add(\"D\");  // UnsupportedOperationException\nlist.add(\"D\");       // The original list is still mutable\nSystem.out.println(unmod.size());  // 5 (changes to the original list are reflected)",
+          "note": "Collections.unmodifiableList() returns a view of the original list, so changes to the original list are reflected. List.copyOf() creates an independent copy.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "rule",
+          "title": "Comparable and Comparator",
+          "body": "The Comparable interface is used to define natural order and implements the compareTo(T) [[method]].\n[[String]], Integer, Double, and other standard [[classes]] already implement Comparable.\n\n| Interface | Description |\n|---|---|\n| Comparable<T> | Defines natural order. Implements the compareTo(T o) method. |\n| Comparator<T> | Defines custom order. Implements the compare(T o1, T o2) method. |\n\nComparable provides one natural order, while Comparator can provide multiple different sort orders.\nBy passing a Comparator to Collections.sort(), you can sort in a custom order.",
+          "code": "// Comparable — Defining natural order\npublic class Student implements Comparable<Student> {\n    String name;\n    int score;\n\n    public Student(String name, int score) {\n        this.name = name;\n        this.score = score;\n    }\n\n    @Override\n    public int compareTo(Student other) {\n        return Integer.compare(this.score, other.score);  // Ascending by score\n    }\n}\n\n// Comparator — Custom order\nComparator<Student> byName = (s1, s2) -> s1.name.compareTo(s2.name);\nComparator<Student> byScoreDesc = (s1, s2) -> Integer.compare(s2.score, s1.score);\n\nList<Student> students = new ArrayList<>();\nCollections.sort(students);         // Comparable order (ascending by score)\nCollections.sort(students, byName); // Comparator order (by name)",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "point",
+          "title": "Comparator.comparing() and thenComparing()",
+          "body": "Since Java 8, Comparator factory methods can be used to concisely create Comparators.\n**Comparator**.comparing() takes a key extraction function and creates a Comparator based on that key.\nChaining thenComparing() enables sorting with multiple conditions.\nThe reversed() method obtains a Comparator in reverse order.\nComparator.naturalOrder() and Comparator.reverseOrder() concisely provide natural order and its reverse.",
+          "code": "// Concise notation using Comparator.comparing()\nComparator<Student> byName = Comparator.comparing(s -> s.name);\nComparator<Student> byScore = Comparator.comparingInt(s -> s.score);\n\n// Sorting with multiple conditions (descending by score → ascending by name)\nComparator<Student> comp = Comparator\n    .comparingInt((Student s) -> s.score).reversed()\n    .thenComparing(s -> s.name);\n\nList<Student> students = new ArrayList<>();\nstudents.add(new Student(\"Taro\", 85));\nstudents.add(new Student(\"Hanako\", 92));\nstudents.add(new Student(\"Jiro\", 85));\nstudents.sort(comp);\n// Result: Hanako(92), Jiro(85), Taro(85)",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch22_06",
+          "sectionType": "tip",
+          "title": "Choosing Between List.sort() and Comparator",
+          "body": "Since Java 8, the List interface also has sort(**Comparator**) added as a default method.\nlist.sort(comp) is equivalent to Collections.sort(list, comp), but can be written more concisely.\nTo sort in natural order, use list.sort(Comparator.naturalOrder()) or Collections.sort(list).\nFor sorting lists that contain null, Comparator.nullsFirst() and Comparator.nullsLast() are convenient.\nCombining these methods allows handling complex sorting requirements.",
+          "code": "List<String> list = new ArrayList<>(List.of(\"C\", \"A\", \"B\"));\n\n// Sorting in natural order with List.sort()\nlist.sort(Comparator.naturalOrder());\nSystem.out.println(list);  // [A, B, C]\n\n// Sorting in reverse order\nlist.sort(Comparator.reverseOrder());\nSystem.out.println(list);  // [C, B, A]\n\n// Sorting a list containing nulls\nList<String> withNull = new ArrayList<>(Arrays.asList(\"B\", null, \"A\"));\nwithNull.sort(Comparator.nullsFirst(Comparator.naturalOrder()));\nSystem.out.println(withNull);  // [null, A, B]\n\nwithNull.sort(Comparator.nullsLast(Comparator.naturalOrder()));\nSystem.out.println(withNull);  // [A, B, null]",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch22_06_q1",
+          "lessonId": "ch22_06",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>(List.of(\"Banana\", \"Apple\", \"Cherry\"));\n        list.sort(Comparator.comparingInt(String::length));\n        System.out.println(list);\n    }\n}",
+          "explanation": "Comparator.comparingInt(String::length) creates a Comparator that compares by string length. \"Apple\" is 5 characters, \"Banana\" is 6 characters, and \"Cherry\" is 6 characters. When lengths are equal, the original order is preserved (stable sort). Therefore, the result is [Apple, Banana, Cherry].",
+          "choices": [
+            {
+              "id": "ch22_06_q1_a",
+              "text": "[Apple, Banana, Cherry]",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_06_q1_b",
+              "text": "[Apple, Cherry, Banana]",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_06_q1_c",
+              "text": "[Banana, Apple, Cherry]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_06_q1_d",
+              "text": "[Cherry, Banana, Apple]",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch22_06_q2",
+          "lessonId": "ch22_06",
+          "type": "fourChoice",
+          "question": "Which statement about the difference between Comparable and Comparator is correct?",
+          "code": null,
+          "explanation": "A class that implements the Comparable interface defines its own natural order. It implements the compareTo(T) method and provides a single ordering for the class. On the other hand, Comparator is an interface that provides comparison logic externally via the compare(T, T) method, allowing multiple different sort orders to be defined for the same class.",
+          "choices": [
+            {
+              "id": "ch22_06_q2_a",
+              "text": "Comparable defines natural order in the class itself, while Comparator provides comparison logic externally",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_06_q2_b",
+              "text": "Comparable was deprecated in Java 8 and unified into Comparator",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch22_06_q2_c",
+              "text": "Comparator cannot be written with lambda expressions, but Comparable can",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch22_06_q2_d",
+              "text": "Comparable inherits from the Collection interface",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch22_06_q3",
+          "lessonId": "ch22_06",
+          "type": "reorder",
+          "question": "Arrange the code that sorts by name length in ascending order using Comparator.comparing() in the correct order.",
+          "code": null,
+          "explanation": "Pass a key extraction function to Comparator.comparing() to create a Comparator, then sort with list.sort(). The correct order is: ①List<String> list = ... → ②Comparator<String> comp = ... → ③Comparator.comparing(... → ④s -> s.length()); → ⑤list.sort(comp);",
+          "choices": [
+            {
+              "id": "ch22_06_q3_a",
+              "text": "List<String> list = new ArrayList<>(List.of(\"Bob\", \"Alice\", \"Jo\"));",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch22_06_q3_b",
+              "text": "Comparator<String> comp =",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch22_06_q3_c",
+              "text": "Comparator.comparing(",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch22_06_q3_d",
+              "text": "s -> s.length());",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "ch22_06_q3_e",
+              "text": "list.sort(comp);",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "ch22_06_q3_a",
+            "ch22_06_q3_b",
+            "ch22_06_q3_c",
+            "ch22_06_q3_d",
+            "ch22_06_q3_e"
+          ],
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

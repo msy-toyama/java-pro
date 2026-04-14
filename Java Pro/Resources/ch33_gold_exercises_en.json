@@ -1,0 +1,775 @@
+{
+  "courseId": "ch33",
+  "lessons": [
+    {
+      "id": "ch33_01",
+      "courseId": "ch33",
+      "title": "Generics and Collections: Applied Problems",
+      "summary": "Practice tricky problems involving wildcards, type inference, and edge cases in collections.",
+      "estimatedMinutes": 8,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch33_01",
+          "sectionType": "overview",
+          "title": "Key Points in Applied Generics",
+          "body": "In this lesson, you will learn:\n\n- [[Generics]] [[wildcard]] bounds problems\n- Complex [[collection]] operation problems\n- Applied sorting with [[Comparable]]/[[Comparator]]\n\nThese are applied exercises in the generics and collections area, which are frequently tested on the Gold exam.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch33_01",
+          "sectionType": "code",
+          "title": "Pitfalls of Wildcards",
+          "body": "You cannot add elements other than null to List<? extends Number>.\nYou can add Integer or its subtypes to List<? super Integer>, but when retrieving, the type is Object.\nAccurately understanding these constraints is the key to passing the exam.",
+          "code": "List<? extends Number> list1 = new ArrayList<Integer>();\n// list1.add(1);       // コンパイルエラー！\n// list1.add(1.0);     // コンパイルエラー！\nlist1.add(null);       // nullのみ追加可能\nNumber n = list1.get(0); // 取得はNumber型\n\nList<? super Integer> list2 = new ArrayList<Number>();\nlist2.add(1);          // OK\nlist2.add(2);          // OK\n// list2.add(1.0);     // コンパイルエラー！\nObject o = list2.get(0); // 取得はObject型",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch33_01",
+          "sectionType": "code",
+          "title": "Type Inference and the Diamond Operator",
+          "body": "The [[diamond operator]] from Java 7 onward infers types from the left-hand side.\nIn generic [[method]] [[type inference]], both the argument types and the return type are considered.\nIf type inference cannot be resolved, it may fall back to the Object type.",
+          "code": "// ダイヤモンド演算子\nList<String> list = new ArrayList<>(); // OK\nvar list2 = new ArrayList<>(); // ArrayList<Object>と推論される\n\n// ジェネリックメソッドの型推論\npublic static <T> List<T> of(T... elements) {\n    return Arrays.asList(elements);\n}\n\nList<String> names = of(\"a\", \"b\"); // T=String\nList<Object> mixed = of(\"a\", 1);   // T=Object（共通の型）",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch33_01",
+          "sectionType": "point",
+          "title": "Edge Cases in Collections",
+          "body": "Immutable collections created with List.of() and Map.of() cannot contain null.\n[[Collections]].unmodifiableList() creates a list where changes to the original list are reflected.\nList.copyOf() creates an independent copy that is not affected by changes to the original list.\nElements added to a [[TreeSet]] must implement Comparable or have a Comparator provided.\nArrays.asList() returns a fixed-size list, but elements can still be modified.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch33_01",
+          "sectionType": "tip",
+          "title": "Common Exam Traps",
+          "body": "List<Object> is not a supertype of List<String> (generics are invariant).\nCalling add() on a list from Arrays.asList() throws an UnsupportedOperationException.\nCalling set() on a list from List.of() also throws an UnsupportedOperationException.\nNote that these [[exceptions]] are runtime exceptions, so [[compilation]] succeeds.",
+          "code": null,
+          "note": "Many exam questions test whether the code compiles versus whether an exception is thrown at runtime.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch33_01_q1",
+          "lessonId": "ch33_01",
+          "type": "outputPredict",
+          "question": "Choose the result of executing the following code.",
+          "code": "List<Integer> original = new ArrayList<>(List.of(1, 2, 3));\nList<Integer> unmod = Collections.unmodifiableList(original);\noriginal.add(4);\nSystem.out.println(unmod.size());",
+          "explanation": "Collections.unmodifiableList() returns a view of the original list. When an element is added to the original list with original.add(4), the change is reflected in unmod. Therefore, the size is 4.",
+          "choices": [
+            {
+              "id": "ch33_01_q1_a",
+              "text": "4",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_01_q1_b",
+              "text": "3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_01_q1_c",
+              "text": "An UnsupportedOperationException is thrown",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_01_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch33_01_q2",
+          "lessonId": "ch33_01",
+          "type": "errorFind",
+          "question": "The following code has a compilation error. What is the cause?",
+          "code": "List<? extends Number> numbers = new ArrayList<Integer>();\nnumbers.add(10);\nSystem.out.println(numbers.get(0));",
+          "explanation": "List<? extends Number> represents \"a list of some type that extends Number,\" but since the specific type is unknown, you cannot add elements other than null. numbers.add(10) causes a compilation error.",
+          "choices": [
+            {
+              "id": "ch33_01_q2_a",
+              "text": "You cannot add elements other than null to List<? extends Number>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_01_q2_b",
+              "text": "ArrayList<Integer> cannot be assigned to List<? extends Number>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_01_q2_c",
+              "text": "The return type of get(0) is Number and cannot be passed to println",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_01_q2_d",
+              "text": "new ArrayList<>() cannot be used with a wildcard type",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch33_01_q3",
+          "lessonId": "ch33_01",
+          "type": "outputPredict",
+          "question": "Choose the result of executing the following code.",
+          "code": "var list = new ArrayList<>();\nlist.add(\"hello\");\nlist.add(123);\nSystem.out.println(list.get(0).getClass().getSimpleName());",
+          "explanation": "With var list = new ArrayList<>(), there is no type inference target for the diamond operator, so it becomes ArrayList<Object>. Although the String \"hello\" is stored as Object type, getClass() returns the actual runtime type, so \"String\" is output.",
+          "choices": [
+            {
+              "id": "ch33_01_q3_a",
+              "text": "String",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_01_q3_b",
+              "text": "Object",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_01_q3_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_01_q3_d",
+              "text": "A ClassCastException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch33_02",
+      "courseId": "ch33",
+      "title": "Stream API: Applied Problems",
+      "summary": "Practice complex stream pipelines, Collector edge cases, and Optional chaining.",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch33_02",
+          "sectionType": "overview",
+          "title": "Key Points in Applied Stream API",
+          "body": "In this lesson, you will learn:\n\n- Tracing complex Stream pipelines\n- Applied usage of [[Collectors]] grouping and partitioning\n- [[Optional]] chaining operations\n\nThe [[Stream API]] area is one of the most important topics on the Gold exam.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch33_02",
+          "sectionType": "code",
+          "title": "Applied Collectors",
+          "body": "Combining downstream collectors with [[groupingBy]] enables complex aggregations.\n[[partitioningBy]] splits data into two groups based on a [[Predicate]] condition (true/false).\nCollectors.toMap() throws an IllegalStateException when key collisions occur.",
+          "code": "List<String> words = List.of(\"apple\", \"banana\", \"avocado\", \"blueberry\", \"cherry\");\n\n// groupingBy + counting()\nMap<Character, Long> countByInitial = words.stream()\n    .collect(Collectors.groupingBy(\n        s -> s.charAt(0),\n        Collectors.counting()));\n// {a=2, b=2, c=1}\n\n// toMap() でキー衝突 → 例外\n// words.stream().collect(Collectors.toMap(\n//     s -> s.charAt(0), s -> s)); // IllegalStateException\n\n// toMap() でマージ関数を指定\nMap<Character, String> merged = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0), s -> s,\n        (s1, s2) -> s1 + \",\" + s2));\n// {a=apple,avocado, b=banana,blueberry, c=cherry}",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch33_02",
+          "sectionType": "code",
+          "title": "flatMap and Optional",
+          "body": "flatMap() is used to flatten a stream of streams.\nOptional.flatMap() is used to prevent nested Optionals.\nThe or() [[method]] of Optional is available since Java 9.",
+          "code": "// flatMapでネストされたリストを平坦化\nList<List<Integer>> nested = List.of(\n    List.of(1, 2), List.of(3, 4), List.of(5));\nList<Integer> flat = nested.stream()\n    .flatMap(Collection::stream)\n    .collect(Collectors.toList());\n// [1, 2, 3, 4, 5]\n\n// Optional.flatMapの使い方\nOptional<String> name = Optional.of(\"Java\");\nOptional<String> result = name\n    .map(String::toUpperCase)              // Optional<String>\n    .flatMap(s -> s.equals(\"JAVA\")\n        ? Optional.of(s) : Optional.empty()); // Optional<String>\nSystem.out.println(result); // Optional[JAVA]",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch33_02",
+          "sectionType": "point",
+          "title": "Lazy Evaluation and Short-Circuiting",
+          "body": "[[Intermediate operations]] in streams are [[lazily evaluated]] (not executed until a [[terminal operation]] is called).\nfindFirst() and anyMatch() are short-circuiting operations that stop processing once the condition is met.\nlimit() is also a short-circuiting operation that stops upstream processing once the required number of elements is reached.\nUsing peek() lets you observe the execution timing of intermediate operations, which helps in understanding lazy evaluation.\nOperations that modify stream state inside forEach() can be problematic as side effects.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch33_02",
+          "sectionType": "tip",
+          "title": "Exam Question Patterns",
+          "body": "Note that the return type of reduce() differs depending on whether an identity value is provided.\nreduce(identity, accumulator) with an identity returns type T.\nreduce(accumulator) without an identity returns Optional<T>.\nCollectors.joining() is a Collector specialized for string concatenation.\nOn the exam, you may also be asked that forEach() on a [[parallel stream]] does not guarantee order.",
+          "code": null,
+          "note": "Use forEachOrdered() to guarantee order on a parallel stream.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch33_02_q1",
+          "lessonId": "ch33_02",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "List<String> list = List.of(\"a\", \"bb\", \"ccc\", \"dd\", \"e\");\nlong count = list.stream()\n    .filter(s -> s.length() > 1)\n    .peek(System.out::print)\n    .count();\nSystem.out.println(count);",
+          "explanation": "peek is an intermediate operation, so it is executed when the terminal operation count() is called. After filter, the remaining elements are \"bb\", \"ccc\", and \"dd\" — 3 elements. peek outputs each, then count() outputs 3. Note: In Java 9+, count() optimization may skip peek, but this optimization does not apply when size-changing operations like filter() are included.",
+          "choices": [
+            {
+              "id": "ch33_02_q1_a",
+              "text": "bbcccdd3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_02_q1_b",
+              "text": "3",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_02_q1_c",
+              "text": "abbcccdde5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_02_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch33_02_q2",
+          "lessonId": "ch33_02",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "Optional<String> opt = Optional.of(\"hello\");\nString result = opt\n    .filter(s -> s.length() > 10)\n    .map(String::toUpperCase)\n    .orElse(\"default\");\nSystem.out.println(result);",
+          "explanation": "filter(s -> s.length() > 10) fails for \"hello\" (length 5), resulting in Optional.empty(). map() on an empty Optional does nothing. orElse(\"default\") returns \"default\".",
+          "choices": [
+            {
+              "id": "ch33_02_q2_a",
+              "text": "default",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_02_q2_b",
+              "text": "HELLO",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_02_q2_c",
+              "text": "hello",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_02_q2_d",
+              "text": "A NoSuchElementException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch33_02_q3",
+          "lessonId": "ch33_02",
+          "type": "errorFind",
+          "question": "What happens when the following code is executed?",
+          "code": "List<String> words = List.of(\"cat\", \"car\", \"dog\");\nMap<Character, String> map = words.stream()\n    .collect(Collectors.toMap(\n        s -> s.charAt(0), s -> s));",
+          "explanation": "Collectors.toMap() throws an IllegalStateException when key collisions occur. \"cat\" and \"car\" both produce the key 'c', causing a collision. This can be resolved by specifying a merge function (third argument).",
+          "choices": [
+            {
+              "id": "ch33_02_q3_a",
+              "text": "An IllegalStateException is thrown (duplicate key 'c')",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_02_q3_b",
+              "text": "{c=car, d=dog} is created successfully",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_02_q3_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_02_q3_d",
+              "text": "A NullPointerException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch33_02_q4",
+          "lessonId": "ch33_02",
+          "type": "codeComplete",
+          "question": "Complete the sealed class definition.",
+          "code": null,
+          "explanation": "A sealed class uses permits to restrict which subclasses can extend it. It was officially introduced in Java 17.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public __BLANK_1__ class Shape __BLANK_2__ Circle, Rectangle {\n    public abstract double area();\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Modifier",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "sealed",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "final",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "abstract",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Permission",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "permits",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "allows",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "extends",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch33_03",
+      "courseId": "ch33",
+      "title": "Concurrency and I/O: Applied Problems",
+      "summary": "Tackle applied problems on thread safety scenarios and NIO.2 path operations.",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch33_03",
+          "sectionType": "overview",
+          "title": "Key Points in Applied Concurrency and I/O",
+          "body": "In this lesson, you will learn:\n\n- [[Thread]] synchronization and [[deadlock]] issues\n- Understanding the behavior of [[ExecutorService]]/[[CompletableFuture]]\n- NIO.2 file operations and Stream integration\n\nStrengthen your overall skills with practical concurrency and I/O problems.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch33_03",
+          "sectionType": "code",
+          "title": "Thread Safety Problem Patterns",
+          "body": "Operating on non-thread-safe collections from multiple threads can cause ConcurrentModificationException or data inconsistencies.\nUnderstand countermeasures using atomic variables and [[synchronized]] blocks.",
+          "code": "// 問題のあるコード\nList<Integer> list = new ArrayList<>();\nExecutorService exec = Executors.newFixedThreadPool(3);\nfor (int i = 0; i < 1000; i++) {\n    final int val = i;\n    exec.submit(() -> list.add(val)); // スレッドセーフでない\n}\nexec.shutdown();\nexec.awaitTermination(10, TimeUnit.SECONDS);\n// list.size()は1000未満になる可能性がある\n\n// 修正: スレッドセーフなコレクションを使用\nList<Integer> safeList = Collections.synchronizedList(new ArrayList<>());\n// または\nList<Integer> cowList = new CopyOnWriteArrayList<>();",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch33_03",
+          "sectionType": "code",
+          "title": "Path Operations",
+          "body": "Path.resolve() concatenates a relative path.\nPath.relativize() computes the relative relationship between two paths.\nPath.normalize() removes redundant elements (. and ..).",
+          "code": "Path p1 = Path.of(\"/home/user\");\nPath p2 = Path.of(\"docs/file.txt\");\n\n// resolve: パスの結合\nSystem.out.println(p1.resolve(p2));\n// /home/user/docs/file.txt\n\n// relativize: 相対パスの算出\nPath p3 = Path.of(\"/home/user/docs\");\nPath p4 = Path.of(\"/home/user/pics\");\nSystem.out.println(p3.relativize(p4));\n// ../pics\n\n// normalize: 冗長な要素の除去\nPath p5 = Path.of(\"/home/user/../user/./docs\");\nSystem.out.println(p5.normalize());\n// /home/user/docs",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch33_03",
+          "sectionType": "point",
+          "title": "CyclicBarrier and ConcurrentHashMap",
+          "body": "CyclicBarrier is a barrier that waits until a specified number of threads arrive.\nThreads that call await() reach the barrier point, and all threads resume simultaneously once all have arrived.\n[[ConcurrentHashMap]]'s compute() and merge() are executed as atomic operations.\nConcurrentHashMap also features the ability to specify a parallelismThreshold for parallel forEach() execution.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch33_03",
+          "sectionType": "tip",
+          "title": "I/O Exam Considerations",
+          "body": "Files.lines() returns a Stream, so it must be closed with [[try-with-resources]].\nFiles.readAllLines() returns a List<String> and does not require stream closing.\nFiles.walk() does not follow symbolic links by default.\nrelativize() throws an IllegalArgumentException if both paths are not of the same type (absolute/relative).",
+          "code": null,
+          "note": "To follow symbolic links with Files.walk(), specify FileVisitOption.FOLLOW_LINKS.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch33_03_q1",
+          "lessonId": "ch33_03",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "Path p1 = Path.of(\"/home/user/docs\");\nPath p2 = Path.of(\"/home/user/photos/vacation\");\nSystem.out.println(p1.relativize(p2));",
+          "explanation": "The relative path from /home/user/docs to /home/user/photos/vacation is computed. Go one level up from docs (..), then navigate to photos/vacation. The result is \"../photos/vacation\".",
+          "choices": [
+            {
+              "id": "ch33_03_q1_a",
+              "text": "../photos/vacation",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_03_q1_b",
+              "text": "photos/vacation",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_03_q1_c",
+              "text": "../../photos/vacation",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_03_q1_d",
+              "text": "An IllegalArgumentException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch33_03_q2",
+          "lessonId": "ch33_03",
+          "type": "fourChoice",
+          "question": "Which list allows elements to be safely added from multiple threads?",
+          "code": null,
+          "explanation": "CopyOnWriteArrayList is a thread-safe list implementation. It creates a copy of the internal array on writes, so reads are lock-free and fast. ArrayList and LinkedList are not thread-safe.",
+          "choices": [
+            {
+              "id": "ch33_03_q2_a",
+              "text": "CopyOnWriteArrayList",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_03_q2_b",
+              "text": "ArrayList",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_03_q2_c",
+              "text": "LinkedList",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_03_q2_d",
+              "text": "A list created with Arrays.asList()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch33_03_q3",
+          "lessonId": "ch33_03",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "Path p = Path.of(\"/home/./user/../user/docs\");\nSystem.out.println(p.normalize());",
+          "explanation": "normalize() resolves \".\" (current directory) and \"..\" (parent directory). /home/./user becomes /home/user, and /home/user/../user becomes /home/user, so the final result is /home/user/docs.",
+          "choices": [
+            {
+              "id": "ch33_03_q3_a",
+              "text": "/home/user/docs",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_03_q3_b",
+              "text": "/home/./user/../user/docs",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_03_q3_c",
+              "text": "/home/docs",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_03_q3_d",
+              "text": "An InvalidPathException is thrown",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch33_03_q4",
+          "lessonId": "ch33_03",
+          "type": "multiChoice",
+          "question": "Select all features that were officially introduced in Java 17.",
+          "code": null,
+          "explanation": "Sealed classes, pattern matching (instanceof), and text blocks are official in Java 17. Record classes were introduced in Java 16, and lambda expressions were introduced in Java 8.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Sealed classes",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "Pattern matching (instanceof)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "Record classes",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "Text blocks",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "Lambda expressions",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 3,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch33_04",
+      "courseId": "ch33",
+      "title": "Comprehensive Practice Challenge",
+      "summary": "Take on comprehensive problems combining modules, annotations, exceptions, inheritance, and generics.",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch33_04",
+          "sectionType": "overview",
+          "title": "Preparing for Comprehensive Problems",
+          "body": "In this lesson, you will learn:\n\n- How to approach comprehensive problems that combine multiple topics\n- Techniques for accurately tracing code execution results\n- Time allocation strategies and review tips\n\nThis is a practice challenge simulating the actual Gold exam.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch33_04",
+          "sectionType": "code",
+          "title": "Combining Exception Handling and Inheritance",
+          "body": "There are constraints on [[checked exceptions]] when [[overriding]] [[methods]].\nA sub[[class]] method can only throw the same or narrower [[checked]] [[exceptions]] than the superclass method.\nThis constraint does not apply to unchecked exceptions.",
+          "code": "class Parent {\n    void doWork() throws IOException {\n        throw new IOException();\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    void doWork() throws FileNotFoundException {\n        // OK: FileNotFoundExceptionはIOExceptionのサブクラス\n        throw new FileNotFoundException();\n    }\n}\n\nclass BadChild extends Parent {\n    // @Override\n    // void doWork() throws Exception { // コンパイルエラー！\n    //     ExceptionはIOExceptionのスーパークラス\n    // }\n}",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch33_04",
+          "sectionType": "code",
+          "title": "Combining Generics and Inheritance",
+          "body": "When [[inheriting]] from generic classes, careful handling of type parameters is required.\nThere are cases of instantiating with a concrete type and cases of carrying over the type parameter.\n[[Type erasure]] causes [[generics]] type information to be lost at runtime.",
+          "code": "// Containerクラスの定義\nabstract class Container<T> {\n    abstract T getValue();\n    abstract void setValue(T value);\n}\n\n// StringContainerクラスの定義\nclass StringContainer extends Container<String> {\n    private String value;\n    @Override\n    // getValueメソッドの定義\n    String getValue() { return value; }\n    @Override\n    // setValueメソッドの定義\n    void setValue(String value) { this.value = value; }\n}\n\n// GenericPairクラスの定義\nclass GenericPair<A, B> extends Container<A> {\n    private A first;\n    private B second;\n    @Override\n    A getValue() { return first; }\n    @Override\n    void setValue(A value) { this.first = value; }\n    B getSecond() { return second; }\n}",
+          "note": "Lines beginning with \"//\" are comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch33_04",
+          "sectionType": "point",
+          "title": "Annotations and Modules",
+          "body": "Understand how to use @Deprecated and @SuppressWarnings(\"deprecation\").\n@Deprecated(since=\"9\", forRemoval=true) uses attributes available from Java 9 onward.\n[[Modules]] can specify transitive dependencies with the requires transitive declaration.\nrequires static represents compile-time-only dependencies that are not needed at runtime.\nQuestions combining these concepts may appear on the exam.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch33_04",
+          "sectionType": "tip",
+          "title": "Strategies for Comprehensive Problems",
+          "body": "First, check for compilation errors. If the code does not compile, there is no need to consider the execution result.\nNext, check for potential runtime exceptions.\nAlso verify catch clause ordering and [[multi-catch]] constraints (exceptions with a subclass relationship cannot be multi-caught).\nGeneric type compatibility requires careful examination.\nSkip time-consuming questions and answer the ones you can solve with certainty first — this is the strategy for passing.",
+          "code": null,
+          "note": "Allow approximately 2 minutes per question on the exam. If you're unsure, mark it and move on.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch33_04_q1",
+          "lessonId": "ch33_04",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "class Base {\n    String name = \"Base\";\n    String getName() { return name; }\n}\nclass Sub extends Base {\n    String name = \"Sub\";\n    @Override\n    String getName() { return name; }\n}\n\nBase obj = new Sub();\nSystem.out.println(obj.name + \" \" + obj.getName());",
+          "explanation": "Field access is resolved by the compile-time type (Base), so obj.name is \"Base\". Method calls, however, are resolved by the runtime type (Sub), so obj.getName() returns \"Sub\".",
+          "choices": [
+            {
+              "id": "ch33_04_q1_a",
+              "text": "Base Sub",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_04_q1_b",
+              "text": "Sub Sub",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_04_q1_c",
+              "text": "Base Base",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_04_q1_d",
+              "text": "Sub Base",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch33_04_q2",
+          "lessonId": "ch33_04",
+          "type": "errorFind",
+          "question": "The following code contains a compilation error. What is the cause?",
+          "code": "class Animal {\n    void speak() throws IOException {\n        System.out.println(\"...\");\n    }\n}\nclass Dog extends Animal {\n    @Override\n    void speak() throws Exception {\n        System.out.println(\"Woof!\");\n    }\n}",
+          "explanation": "An overriding method can only throw the same or a subclass of the checked exceptions declared by the superclass method. Since Exception is a superclass of IOException, declaring a broader exception causes a compilation error.",
+          "choices": [
+            {
+              "id": "ch33_04_q2_a",
+              "text": "The override throws a broader checked exception than the superclass",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_04_q2_b",
+              "text": "The @Override annotation is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_04_q2_c",
+              "text": "Animal.speak() does not actually throw an IOException",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_04_q2_d",
+              "text": "println cannot be used in Dog.speak()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch33_04_q3",
+          "lessonId": "ch33_04",
+          "type": "outputPredict",
+          "question": "Choose the output of the following code.",
+          "code": "try {\n    try {\n        throw new RuntimeException(\"inner\");\n    } catch (RuntimeException e) {\n        throw new RuntimeException(\"caught\");\n    } finally {\n        System.out.print(\"finally \");\n    }\n} catch (RuntimeException e) {\n    System.out.print(e.getMessage());\n}",
+          "explanation": "In the inner try, RuntimeException(\"inner\") is thrown and caught in the catch clause, which throws a new RuntimeException(\"caught\"). The finally block always executes, printing \"finally \", and then the outer catch clause prints e.getMessage(), which is \"caught\".",
+          "choices": [
+            {
+              "id": "ch33_04_q3_a",
+              "text": "finally caught",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch33_04_q3_b",
+              "text": "finally inner",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch33_04_q3_c",
+              "text": "caught finally",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch33_04_q3_d",
+              "text": "inner finally caught",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

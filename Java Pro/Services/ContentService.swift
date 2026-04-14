@@ -44,6 +44,26 @@ final class ContentService {
 
     // MARK: - ロード
 
+    /// 言語切替時にキャッシュをクリアして再ロードする。
+    func reloadForLanguageChange() async {
+        // 全キャッシュクリア
+        courseIndexes = []
+        chapters = [:]
+        sortedLessonsCache = [:]
+        lessonsIndex = [:]
+        quizzesIndex = [:]
+        quizIdsByTypeCache = [:]
+        isQuizTypeCacheDirty = true
+        glossary = []
+        isLoaded = false
+        isCourseIndexLoaded = false
+        loadError = nil
+        loadingChapterIds = []
+
+        // 再ロード
+        await loadAllContentAsync()
+    }
+
     /// バンドル内の全教材データを読み込む。起動時に1回だけ呼ぶ。
     /// - Note: 非同期版 `loadAllContentAsync()` を使用してください。
     @available(*, deprecated, message: "Use loadAllContentAsync() instead")
@@ -69,8 +89,10 @@ final class ContentService {
         defer { isLoadingAsync = false }
 
         // Phase 1: コースインデックスだけ先にロード（軽量・高速）
+        let currentLanguage = LanguageManager.shared.currentLanguage
         let courseResult: ([CourseIndex], String?) = await Task.detached(priority: .userInitiated) {
-            if let data = Self.loadJSONDataFromBundle(fileName: "courses_index") {
+            let fileName = Self.localizedFileName("courses_index", language: currentLanguage)
+            if let data = Self.loadJSONDataFromBundle(fileName: fileName) {
                 if let decoded = Self.decodeCourseIndexes(from: data) {
                     return (decoded.sorted { $0.order < $1.order }, nil)
                 } else {
@@ -95,14 +117,16 @@ final class ContentService {
             var errors: [String] = []
 
             for course in courseResult.0 {
-                if let data = Self.loadJSONDataFromBundle(fileName: course.fileName) {
-                    chapterData.append((course.id, course.fileName, data))
+                let localizedName = Self.localizedFileName(course.fileName, language: currentLanguage)
+                if let data = Self.loadJSONDataFromBundle(fileName: localizedName) {
+                    chapterData.append((course.id, localizedName, data))
                 } else {
                     errors.append("\(course.fileName).json が見つかりません")
                 }
             }
 
-            if let data = Self.loadJSONDataFromBundle(fileName: "glossary") {
+            let glossaryFile = Self.localizedFileName("glossary", language: currentLanguage)
+            if let data = Self.loadJSONDataFromBundle(fileName: glossaryFile) {
                 glossaryData = data
             } else {
                 errors.append("glossary.json が見つかりません")
@@ -181,6 +205,19 @@ final class ContentService {
             return nil
         }
         return try? Data(contentsOf: url)
+    }
+
+    /// 言語対応のファイル名を解決する。
+    /// 英語の場合: `fileName_en` を優先、見つからなければ日本語版にフォールバック。
+    /// 日本語の場合: 元の `fileName` をそのまま使用。
+    private nonisolated static func localizedFileName(_ baseName: String, language: AppLanguage) -> String {
+        guard language == .english else { return baseName }
+        let enName = "\(baseName)_en"
+        // 英語版が存在すればそれを使用、なければ日本語版にフォールバック
+        if Bundle.main.url(forResource: enName, withExtension: "json") != nil {
+            return enName
+        }
+        return baseName
     }
 
     /// バンドルJSONをデコードする（nonisolated — Task.detached コンテキストで安全に使用可能）。

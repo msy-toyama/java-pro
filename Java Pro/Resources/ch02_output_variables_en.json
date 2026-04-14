@@ -1,0 +1,1278 @@
+{
+  "courseId": "ch02",
+  "lessons": [
+    {
+      "id": "ch02_01",
+      "courseId": "ch02",
+      "title": "Displaying Text",
+      "summary": "Understand the differences between println, print, and printf",
+      "estimatedMinutes": 3,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How to display text on the screen using **System.out.println**()\n- The difference between println and print\n- String concatenation (the + [[operator]])\n\nThe first step in programming is \"displaying text on the screen.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "code",
+          "title": "Three Ways to Display Output",
+          "body": "There are three main [[method]]s for displaying text in Java.",
+          "code": "// 改行あり\nSystem.out.println(\"Hello\");\nSystem.out.println(\"World\");\n// 出力: Hello\n//       World\n\n// 改行なし\nSystem.out.print(\"Hello\");\nSystem.out.print(\"World\");\n// 出力: HelloWorld\n\n// 書式指定\nSystem.out.printf(\"名前は%sです。年齢は%d歳です。\", \"太郎\", 20);\n// 出力: 名前は太郎です。年齢は20歳です。",
+          "note": "The \"ln\" in println stands for \"line.\" It automatically adds a newline after the output.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "tip",
+          "title": "Difference Between println and print",
+          "body": "This is a common point of confusion for beginners.\n\n| Method | Behavior | Output Example |\n|---|---|---|\n| println | Adds a newline after output | Hello(newline)World |\n| print | Does not add a newline | HelloWorld |\n\nprintln is short for \"print + line.\" In most cases, you will use println.",
+          "code": null,
+          "note": "You can also add a newline with the newline character \"\\n\" when using print, but println is simpler.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "| Item | Description |\n|---|---|\n| println | Prints output followed by a newline (most commonly used) |\n| print | Prints output without a newline |\n| printf | Prints formatted output (%s = string, %d = integer) |",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "code",
+          "title": "Escape Sequences",
+          "body": "To represent special characters such as newlines and tabs within a string, use **escape sequences** that start with a backslash (\\).\nThese are used when you want to insert a newline in the middle of a string, separate from println's automatic newline.",
+          "code": "// \\n → 改行\nSystem.out.println(\"Hello\\nWorld\");\n// 出力: Hello\n//       World\n\n// \\t → タブ（字下げ）\nSystem.out.println(\"名前\\t年齢\");\nSystem.out.println(\"太郎\\t20\");\n// 出力: 名前\t年齢\n//       太郎\t20\n\n// \\\\ → バックスラッシュ自身\nSystem.out.println(\"C:\\\\Users\\\\\");\n// 出力: C:\\Users\\\n\n// \\\" → ダブルクォート\nSystem.out.println(\"彼は\\\"Java\\\"が好きです\");\n// 出力: 彼は\"Java\"が好きです",
+          "note": "\\n (newline) and \\t (tab) are especially common. To include a double quote inside a string [[literal]], escape it with \\\".",
+          "order": 5
+        },
+        {
+          "lessonId": "ch02_01",
+          "sectionType": "rule",
+          "title": "printf Format Specifiers",
+          "body": "Let's learn the commonly used format specifiers for printf.\n\n| Specifier | Meaning | Example |\n|--------|------|------|\n| %s | String | printf(\"%s\", \"Java\") → Java |\n| %d | Integer | printf(\"%d\", 42) → 42 |\n| %f | Decimal (default 6 digits) | printf(\"%f\", 3.14) → 3.140000 |\n| %.2f | Decimal (2 digits specified) | printf(\"%.2f\", 3.14) → 3.14 |\n| %n | Newline (OS-dependent newline character) | printf(\"Hello%n\") |",
+          "code": "int price = 1980;\ndouble tax = 1.10;\nSystem.out.printf(\"商品価格: %d円%n\", price);\nSystem.out.printf(\"税込価格: %.0f円%n\", price * tax);\n// 出力: 商品価格: 1980円\n//       税込価格: 2178円",
+          "note": "printf does not automatically add a newline. Add %n or \\n at the end if you want a newline.",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_01_q1",
+          "lessonId": "ch02_01",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "System.out.print(\"A\");\nSystem.out.println(\"B\");\nSystem.out.print(\"C\");",
+          "explanation": "print(\"A\") outputs A without a newline, println(\"B\") outputs B followed by a newline, and print(\"C\") outputs C. The result is AB(newline)C.",
+          "choices": [
+            {
+              "id": "ch02_01_q1_a",
+              "text": "AB\\nC",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_01_q1_b",
+              "text": "A\\nB\\nC",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_01_q1_c",
+              "text": "ABC",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_01_q1_d",
+              "text": "A B C",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "AB\nC",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_01_q2",
+          "lessonId": "ch02_01",
+          "type": "fourChoice",
+          "question": "Which method does NOT add a newline after output?",
+          "code": null,
+          "explanation": "print() outputs without a newline. println() outputs with a newline.",
+          "choices": [
+            {
+              "id": "ch02_01_q2_a",
+              "text": "System.out.println()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_01_q2_b",
+              "text": "System.out.print()",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_01_q2_c",
+              "text": "System.out.printLine()",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_01_q2_d",
+              "text": "System.out.write()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_01_q3",
+          "lessonId": "ch02_01",
+          "type": "fillBlank",
+          "question": "What should go in the blank to display an integer using formatted output?\nSystem.out.printf(\"The total is _____ yen\", 1000);",
+          "code": null,
+          "explanation": "%d is the format specifier for embedding an integer. %s is for strings, and %f is for decimals.",
+          "choices": [
+            {
+              "id": "ch02_01_q3_a",
+              "text": "%d",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_01_q3_b",
+              "text": "%s",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_01_q3_c",
+              "text": "%f",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_01_q3_d",
+              "text": "%n",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch02_02",
+      "courseId": "ch02",
+      "title": "What Are Variables?",
+      "summary": "Understand the mechanism of naming and storing data",
+      "estimatedMinutes": 4,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- What a [[variable]] is (a container for data)\n- How to declare variables and assign values\n- Variable naming rules (camelCase)\n\nVariables are the most fundamental concept in programming.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "rule",
+          "title": "Declaring and Assigning Variables",
+          "body": "Using a variable involves two steps:\n\n1. Declaration: Create the variable (prepare the container)\n2. Assignment: Store a value (put data into the container)\n\nPerforming both steps at the same time is called \"initialization.\"",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "tip",
+          "title": "Variables Are Like \"Named Boxes\"",
+          "body": "Think of a variable as a \"named box.\"\n\n- Giving the box a name = declaring a variable\n- Putting a value in the box = assigning a value\n- Looking at what's inside the box = referencing a variable\n\nYou can also replace the value in the box later (reassignment).",
+          "code": null,
+          "note": "In Java, the convention is to use camelCase for variable names (e.g., myAge, totalCount).",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "code",
+          "title": "Using Variables",
+          "body": "Use the format: type variableName = value;",
+          "code": "// 宣言と代入を別々に\nint age;        // 宣言（int型の変数ageを作る）\nage = 25;       // 代入（ageに25を入れる）\n\n// 初期化（宣言と代入を同時に）\nString name = \"太郎\";\ndouble height = 170.5;\n\n// 変数の値を表示\nSystem.out.println(name);   // 太郎\nSystem.out.println(age);    // 25",
+          "note": "The \"//\" in code is a comment (explanatory note). It does not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "rule",
+          "title": "Variable Naming Rules",
+          "body": "- Must start with a letter, underscore (_), or dollar sign ($) — not a digit\n- From the second character onward, letters, digits, underscores (_), and dollar signs ($) are allowed\n- Names are case-sensitive (age and Age are different)\n- Reserved words (class, int, for, etc.) cannot be used\n- By convention, use camelCase (myAge, userName)",
+          "code": null,
+          "note": "Japanese variable names are technically possible, but English is standard in practice.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch02_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Create a variable with \"type variableName = value;\"\n- Declaration (create the container) and assignment (store the value) are separate steps\n- Doing both at once is called initialization\n- camelCase is the convention for variable names",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_02_q1",
+          "lessonId": "ch02_02",
+          "type": "errorFind",
+          "question": "The following code has an error. What is the cause?",
+          "code": "int 1number = 10;",
+          "explanation": "Variable names cannot start with a digit. They must begin with a letter, underscore (_), or dollar sign ($). number1 would be a valid variable name.",
+          "choices": [
+            {
+              "id": "ch02_02_q1_a",
+              "text": "int cannot be used as a type name",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_02_q1_b",
+              "text": "The variable name starts with a digit",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_02_q1_c",
+              "text": "10 cannot be assigned",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_02_q1_d",
+              "text": "The semicolon is unnecessary",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:2: error: <identifier> expected\n        int 1number = 10;\n               ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_02_q2",
+          "lessonId": "ch02_02",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int x = 10;\nx = 20;\nSystem.out.println(x);",
+          "explanation": "A variable's value can be overwritten (reassigned). Since x is first set to 10, then reassigned to 20, the output is 20.",
+          "choices": [
+            {
+              "id": "ch02_02_q2_a",
+              "text": "10",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_02_q2_b",
+              "text": "20",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_02_q2_c",
+              "text": "1020",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_02_q2_d",
+              "text": "Causes an error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "20\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_02_q3",
+          "lessonId": "ch02_02",
+          "type": "fourChoice",
+          "question": "Which of the following is a valid variable name?",
+          "code": null,
+          "explanation": "myAge is a valid variable name in camelCase. my-age is invalid because hyphens are not allowed, class is a reserved word, and 3rdValue is invalid because it starts with a digit.",
+          "choices": [
+            {
+              "id": "ch02_02_q3_a",
+              "text": "my-age",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_02_q3_b",
+              "text": "class",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_02_q3_c",
+              "text": "myAge",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch02_02_q3_d",
+              "text": "3rdValue",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch02_02_q4",
+          "lessonId": "ch02_02",
+          "type": "reorder",
+          "question": "Arrange the lines in the correct order to create a Java program that outputs \"Hello World\".",
+          "code": null,
+          "explanation": "A Java program is structured in this order: class declaration → main method → statements → closing braces.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public class Main {",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "    public static void main(String[] args) {",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "        System.out.println(\"Hello World\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "    }",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "}",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch02_03",
+      "courseId": "ch02",
+      "title": "Understanding Data Types",
+      "summary": "How to use int, double, String, boolean, and char",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Java's **primitive data types** (8 types)\n- How to use integer, floating-point, character, and boolean types\n- The size and value range of each type\n\nUnderstanding [[data type]]s will help you choose the right [[variable]]s.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "rule",
+          "title": "Primitive Data Types",
+          "body": "Java has 8 **primitive data types**, but let's start by learning these 4:\n\n| Type | Description |\n|---|---|\n| int | Integer (approx. -2.1 billion to 2.1 billion) |\n| double | Decimal (floating-point number) |\n| boolean | Boolean value (true or false) |\n| char | Single character (enclosed in single quotes) |",
+          "code": null,
+          "note": "There are also long (large integers), float (lower-precision decimals), byte, and short (smaller integers), but beginners can start with just int and double.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "code",
+          "title": "Using Data Types",
+          "body": "Let's look at declaration examples for each type.",
+          "code": "// 変数の宣言と初期化\nint age = 25;              // 整数\ndouble price = 198.5;      // 小数\nboolean isStudent = true;  // 真偽値\nchar initial = 'A';        // 1文字\nString name = \"太郎\";      // 文字列（参照型）",
+          "note": "String is not a **primitive data type** but a \"**reference type**.\" However, it is designed to be especially easy to use. The uppercase S at the beginning is a telltale sign.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "tip",
+          "title": "Difference Between Primitive and Reference Types",
+          "body": "Primitive types (int, double, etc.) hold the value itself. **Reference types** ([[String]], [[array]]s, etc.) hold the \"location\" of the data.\n\nThis distinction becomes important in later chapters, but for now, just remember that \"String is special because it starts with an uppercase letter.\"",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- int (integer), double (decimal), boolean (true/false), char (single character) are the basics\n- String (text) is a **reference type** but is used frequently\n- char uses single quotes, String uses double quotes\n- Assigning a value to a variable of a different type causes an error",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_03_q1",
+          "lessonId": "ch02_03",
+          "type": "fourChoice",
+          "question": "Which type is appropriate for handling decimal numbers?",
+          "code": null,
+          "explanation": "double is the type for handling decimal (floating-point) numbers. int is for integers only, boolean is for true/false values, and char is for single characters.",
+          "choices": [
+            {
+              "id": "ch02_03_q1_a",
+              "text": "int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_03_q1_b",
+              "text": "double",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_03_q1_c",
+              "text": "boolean",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_03_q1_d",
+              "text": "char",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_03_q2",
+          "lessonId": "ch02_03",
+          "type": "errorFind",
+          "question": "The following code has an error. What is the cause?",
+          "code": "String msg = 'こんにちは';",
+          "explanation": "String values must be enclosed in double quotes (\"). Single quotes (') are used for the char type (a single character).",
+          "choices": [
+            {
+              "id": "ch02_03_q2_a",
+              "text": "Japanese characters cannot be used",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_03_q2_b",
+              "text": "It is enclosed in single quotes",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_03_q2_c",
+              "text": "The variable name msg is invalid",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_03_q2_d",
+              "text": "The type name String is wrong",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:2: error: unclosed character literal\n        String msg = 'こんにちは';\n                     ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_03_q3",
+          "lessonId": "ch02_03",
+          "type": "fillBlank",
+          "question": "Complete the variable declaration for storing a boolean value.\n_____ isReady = true;",
+          "code": null,
+          "explanation": "boolean is the type for handling true or false values. It is commonly used in conditional checks.",
+          "choices": [
+            {
+              "id": "ch02_03_q3_a",
+              "text": "boolean",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_03_q3_b",
+              "text": "bool",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_03_q3_c",
+              "text": "Boolean",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_03_q3_d",
+              "text": "bit",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch02_03_q4",
+          "lessonId": "ch02_03",
+          "type": "codeComplete",
+          "question": "Complete the code to assign a value to an int variable and print it.",
+          "code": null,
+          "explanation": "int is the integer type, and System.out.println() outputs with a newline. print() also works but outputs without a newline.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "__BLANK_1__ age = 25;\nSystem.out.__BLANK_2__(age);",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Type",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "int",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "String",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "double",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Output",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "println",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "print",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "write",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch02_04",
+      "courseId": "ch02",
+      "title": "Calculations with Variables",
+      "summary": "Understand arithmetic operators and operator precedence",
+      "estimatedMinutes": 4,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- How [[type conversion]] ([[casting]]) works\n- Automatic conversion (**implicit casting**) vs. **explicit casting**\n- Being aware of data loss during type conversion\n\nUnderstanding type conversion is important when mixing different [[data type]]s.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "code",
+          "title": "Arithmetic Operators",
+          "body": "Here are the calculation symbols ([[operator]]s) available in Java.",
+          "code": "// 変数の宣言と初期化\nint a = 10;\nint b = 3;\n\nSystem.out.println(a + b);  // 13（足し算）\nSystem.out.println(a - b);  // 7 （引き算）\nSystem.out.println(a * b);  // 30（掛け算）\nSystem.out.println(a / b);  // 3 （割り算・整数同士は小数切捨て）\nSystem.out.println(a % b);  // 1 （余り）",
+          "note": "When dividing integers, the decimal part is truncated. 10 / 3 = 3, not 3.33...",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "tip",
+          "title": "Watch the Direction of Type Conversion",
+          "body": "Conversion from a smaller type to a larger type (widening conversion) happens automatically, but conversion from a larger type to a smaller type (narrowing conversion) requires an explicit cast.\n\n| Direction | Example | Behavior |\n|---|---|---|\n| Widening (automatic) | int → long, double | Value is preserved as-is |\n| Narrowing (explicit) | double → int | Decimal part is truncated |\n\ndouble d = 9.7; int i = (int) d; → i becomes 9 (not rounded).",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "code",
+          "title": "Compound Assignment Operators",
+          "body": "These are shorthand notations that perform a calculation and assignment at the same time.",
+          "code": "// 変数の宣言と初期化\nint score = 100;\nscore += 10;  // score = score + 10;  → 110\nscore -= 20;  // score = score - 20;  → 90\nscore *= 2;   // score = score * 2;   → 180\nscore /= 3;   // score = score / 3;   → 60\nscore++;      // score = score + 1;   → 61\nscore--;      // score = score - 1;   → 60",
+          "note": "The // in code is a comment (explanatory note). It does not affect program behavior.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- +  -  *  /  % are the five basic operators\n- Integer division (/) truncates the decimal part\n- % gives the remainder (useful for checking even numbers, etc.)\n- +=, -=, ++, -- are shorthand notations",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_04_q1",
+          "lessonId": "ch02_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int a = 7;\nint b = 2;\nSystem.out.println(a / b);",
+          "explanation": "When dividing int values, the decimal part is truncated. 7 ÷ 2 = 3.5, but since the type is int, the result is 3.",
+          "choices": [
+            {
+              "id": "ch02_04_q1_a",
+              "text": "3",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_04_q1_b",
+              "text": "3.5",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_04_q1_c",
+              "text": "4",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_04_q1_d",
+              "text": "Causes an error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "3\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_04_q2",
+          "lessonId": "ch02_04",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "int x = 10;\nx += 5;\nx *= 2;\nSystem.out.println(x);",
+          "explanation": "x=10 → x+=5 makes it 15 → x*=2 makes it 30. Compound assignment operators are shorthand for \"left = left operator right.\"",
+          "choices": [
+            {
+              "id": "ch02_04_q2_a",
+              "text": "20",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_04_q2_b",
+              "text": "25",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_04_q2_c",
+              "text": "30",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch02_04_q2_d",
+              "text": "35",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "30\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_04_q3",
+          "lessonId": "ch02_04",
+          "type": "fourChoice",
+          "question": "What is the result of 10 % 3?",
+          "code": null,
+          "explanation": "% is the modulus operator, which gives the remainder of a division. 10 ÷ 3 = 3 remainder 1, so 10 % 3 = 1.",
+          "choices": [
+            {
+              "id": "ch02_04_q3_a",
+              "text": "3",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_04_q3_b",
+              "text": "1",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_04_q3_c",
+              "text": "0",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_04_q3_d",
+              "text": "3.33",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch02_04_q4",
+          "lessonId": "ch02_04",
+          "type": "multiChoice",
+          "question": "Select all valid Java primitive types.",
+          "code": null,
+          "explanation": "int, boolean, and double are primitive types. String is a reference type, and Integer is a wrapper class for int (a reference type).",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "int",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "boolean",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "String",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "double",
+              "isCorrect": true,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "Integer",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 3,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch02_05",
+      "courseId": "ch02",
+      "title": "Working with Strings",
+      "summary": "Learn how to concatenate, get the length of, and compare strings",
+      "estimatedMinutes": 4,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Declaring and using constants (final)\n- Why you should use constants (avoiding magic numbers)\n- Naming conventions for constants (uppercase snake_case)\n\nProtect values that should never change by making them \"constants.\"",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "code",
+          "title": "String Concatenation",
+          "body": "You can join strings together using the + [[operator]].",
+          "code": "// 変数の宣言と初期化\nString first = \"Hello\";\nString second = \"World\";\nString greeting = first + \" \" + second;\nSystem.out.println(greeting);  // Hello World\n\n// 数値と文字列の結合\nint age = 20;\nSystem.out.println(\"年齢は\" + age + \"歳\");  // 年齢は20歳",
+          "note": "When you concatenate a string and a number with +, the number is automatically converted to a string.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "tip",
+          "title": "Constants Use Uppercase Snake Case",
+          "body": "In Java, it is conventional to name constants (final variables) using uppercase snake_case.\n\n- Correct examples: MAX_SIZE, TAX_RATE, DEFAULT_NAME\n- Avoid: maxSize, taxrate, MAXSIZE\n\nAdding final prevents reassignment. Replace \"magic numbers\" (mysterious numbers with unclear meaning) in your program with constants.",
+          "code": null,
+          "note": "Example of a magic number: if (price > 1000) → if (price > FREE_SHIPPING_THRESHOLD)",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "code",
+          "title": "Commonly Used String Methods",
+          "body": "String has many useful [[method]]s.",
+          "code": "// 変数の宣言と初期化\nString s = \"Hello, Java!\";\n\ns.length()          // 12（文字数）\ns.charAt(0)         // 'H'（0番目の文字）\ns.contains(\"Java\")  // true（含むか判定）\ns.toUpperCase()     // \"HELLO, JAVA!\"\ns.toLowerCase()     // \"hello, java!\"\ns.replace(\"Java\", \"World\")  // \"Hello, World!\"\n\n// 文字列の比較は equals() を使う\nString a = \"abc\";\nString b = \"abc\";\na.equals(b)  // true ✓\n// a == b は参照の比較なので使わない ✗",
+          "note": "The // in code is a comment (explanatory note). It does not affect program behavior.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Use the + operator to concatenate strings\n- Use length() to get the number of characters\n- Use equals() to compare strings (do not use ==)\n- String is **immutable** — methods return a new string",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch02_05",
+          "sectionType": "code",
+          "title": "Searching and Extracting Strings",
+          "body": "Let's also learn methods for extracting parts of a string and searching for positions. These are frequently used in practice.",
+          "code": "String s = \"Hello, Java!\";\n\n// indexOf: 文字列の位置を検索（見つからなければ-1）\ns.indexOf(\"Java\")     // 7\ns.indexOf(\"Python\")   // -1\n\n// substring: 文字列の一部を切り出し\ns.substring(7)        // \"Java!\"（7番目以降）\ns.substring(0, 5)     // \"Hello\"（0〜4番目）\n\n// trim: 前後の空白を除去\n\"  Hello  \".trim()    // \"Hello\"\n\n// startsWith / endsWith: 先頭・末尾の判定\ns.startsWith(\"Hello\") // true\ns.endsWith(\"!\")       // true\n\n// isEmpty / isBlank（Java 11以降）\n\"\".isEmpty()           // true\n\"  \".isEmpty()         // false\n\"  \".isBlank()         // true（空白のみ）",
+          "note": "The second argument of substring means \"up to but not including that position.\" substring(0, 5) returns the 5 characters at positions 0, 1, 2, 3, and 4.",
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_05_q1",
+          "lessonId": "ch02_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "String s = \"Java\";\nSystem.out.println(s.length());",
+          "explanation": "length() returns the number of characters in a string. \"Java\" has 4 characters, so 4 is output.",
+          "choices": [
+            {
+              "id": "ch02_05_q1_a",
+              "text": "3",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_05_q1_b",
+              "text": "4",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_05_q1_c",
+              "text": "5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_05_q1_d",
+              "text": "Causes an error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "4\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_05_q2",
+          "lessonId": "ch02_05",
+          "type": "fourChoice",
+          "question": "What is the correct way to compare strings?",
+          "code": null,
+          "explanation": "In Java, use the equals() method to compare the contents of strings. == compares references (memory locations), which can produce unexpected results.",
+          "choices": [
+            {
+              "id": "ch02_05_q2_a",
+              "text": "a == b",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_05_q2_b",
+              "text": "a.equals(b)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_05_q2_c",
+              "text": "a.compare(b)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_05_q2_d",
+              "text": "a.is(b)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_05_q3",
+          "lessonId": "ch02_05",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "System.out.println(\"数値:\" + 3 + 5);",
+          "explanation": "String + number is concatenated from left to right. \"数値:\" + 3 = \"数値:3\", then \"数値:3\" + 5 = \"数値:35\".",
+          "choices": [
+            {
+              "id": "ch02_05_q3_a",
+              "text": "数値:8",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_05_q3_b",
+              "text": "数値:35",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch02_05_q3_c",
+              "text": "数値:3 5",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_05_q3_d",
+              "text": "Causes an error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "数値:35\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch02_06",
+      "courseId": "ch02",
+      "title": "Type Conversion",
+      "summary": "Learn the difference between automatic conversion and explicit casting",
+      "estimatedMinutes": 4,
+      "order": 6,
+      "contents": [
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "overview",
+          "title": "What You'll Learn",
+          "body": "In this lesson, you will learn:\n\n- Basic operations on strings ([[String]])\n- String concatenation, length retrieval, and comparison\n- The difference between the equals method and the == [[operator]]\n\nStrings are the most frequently used data in Java. Make sure you master the basic operations.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "code",
+          "title": "Automatic Type Conversion (Implicit Conversion)",
+          "body": "Conversion from a smaller type to a larger type happens automatically.",
+          "code": "int i = 100;\ndouble d = i;  // int → double は自動変換OK\nSystem.out.println(d);  // 100.0\n\n// 小さい型 → 大きい型の順\n// byte → short → int → long → float → double",
+          "note": "The \"//\" in code is a comment (explanatory note). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "code",
+          "title": "Casting (Explicit Conversion)",
+          "body": "Converting from a larger type to a smaller type requires you to explicitly write a [[cast]].",
+          "code": "double d = 3.14;\nint i = (int) d;  // キャスト: double → int\nSystem.out.println(i);  // 3（小数点以下は切り捨て）\n\n// 文字列 → 数値の変換\nString numStr = \"123\";\nint num = Integer.parseInt(numStr);  // 123\ndouble dbl = Double.parseDouble(\"3.14\"); // 3.14\n\n// 数値 → 文字列の変換\nString s = String.valueOf(100);  // \"100\"",
+          "note": "Information can be lost during casting. For example, the decimal part is discarded when converting from double to int.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "tip",
+          "title": "Be Careful with == vs. equals()",
+          "body": "This is the most common source of bugs in Java string comparison.\n\n| Operator/Method | What It Compares | Usable for Strings? |\n|---|---|---|\n| == | Reference (memory location) | × May not compare correctly |\n| equals() | Value (string content) | ○ Always compares correctly |\n\nAlways use equals() to compare strings.",
+          "code": null,
+          "note": "Primitive types like int and double can be compared with ==. equals() is used for comparing objects.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch02_06",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "| Item | Description |\n|---|---|\n| Small → Large (widening) | Automatic conversion (e.g., int → double) |\n| Large → Small (narrowing) | Cast required (e.g., (int)d format) |\n| String → Number | Use Integer.parseInt(), etc. |\n| Number → String | Use String.valueOf() |\n- Information may be lost during casting",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch02_06_q1",
+          "lessonId": "ch02_06",
+          "type": "outputPredict",
+          "question": "What is the output of the following code?",
+          "code": "double d = 9.8;\nint i = (int) d;\nSystem.out.println(i);",
+          "explanation": "When casting from double to int, the decimal part is truncated. 9.8 becomes 9 (it is not rounded).",
+          "choices": [
+            {
+              "id": "ch02_06_q1_a",
+              "text": "9",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_06_q1_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_06_q1_c",
+              "text": "9.8",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_06_q1_d",
+              "text": "Causes an error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "9\n",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_06_q2",
+          "lessonId": "ch02_06",
+          "type": "errorFind",
+          "question": "The following code has an error. What is the cause?",
+          "code": "double d = 3.14;\nint i = d;",
+          "explanation": "Conversion from double to int involves potential data loss, so it is not done automatically. An explicit cast like (int) d is required.",
+          "choices": [
+            {
+              "id": "ch02_06_q2_a",
+              "text": "The variable name i is invalid",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch02_06_q2_b",
+              "text": "3.14 is an invalid value",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_06_q2_c",
+              "text": "A cast is required",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch02_06_q2_d",
+              "text": "A semicolon is missing",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": {
+            "output": "",
+            "exitCode": 1,
+            "hasError": true,
+            "errorMessage": "Main.java:3: error: incompatible types: possible lossy conversion from double to int\n        int i = d;\n                ^\n1 error",
+            "errorType": "CompilationError"
+          },
+          "fixedExecutionResult": {
+            "output": "",
+            "exitCode": 0,
+            "hasError": false,
+            "errorMessage": null,
+            "errorType": null
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch02_06_q3",
+          "lessonId": "ch02_06",
+          "type": "fillBlank",
+          "question": "Complete the code to convert the string \"42\" to an int value.\nint num = Integer._____(\"42\");",
+          "code": null,
+          "explanation": "Integer.parseInt() is the method that converts a string to an int. If you pass a string that cannot be converted, a NumberFormatException is thrown.",
+          "choices": [
+            {
+              "id": "ch02_06_q3_a",
+              "text": "parseInt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch02_06_q3_b",
+              "text": "toInt",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch02_06_q3_c",
+              "text": "convert",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch02_06_q3_d",
+              "text": "valueOf",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        }
+      ]
+    }
+  ]
+}

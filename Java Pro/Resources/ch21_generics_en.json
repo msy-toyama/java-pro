@@ -1,0 +1,1026 @@
+{
+  "courseId": "ch21",
+  "lessons": [
+    {
+      "id": "ch21_01",
+      "courseId": "ch21",
+      "title": "Generics Basics",
+      "summary": "Learn the purpose and basic syntax of generics, and understand how to write type-safe code.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch21_01",
+          "sectionType": "overview",
+          "title": "What are Generics?",
+          "body": "In this lesson, you will learn:\n\n- The purpose of **generics** (improving **type safety**)\n- Declaring and using **type parameters** <T>\n- The dangers of [[casting]] without [[generics]]\n\nBy parameterizing types, bugs can be detected at [[compile]] time.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch21_01",
+          "sectionType": "rule",
+          "title": "Defining a Generic Class",
+          "body": "A generic [[class]] is defined by declaring a **type parameter** in angle brackets (<>) after the class name.\nThe type parameter can be used as the type for fields, [[method]] arguments, and return values within the class.\nWhen creating an [[instance]], you specify a concrete type, causing the class to behave as if specialized for that type.\nSince Java 7, the [[diamond operator]] (<>) can be used to omit the type argument on the right side.\nOnly [[reference types]] can be specified as type parameters; [[primitive types]] like int and double cannot be used.",
+          "code": "// Generic class definition\npublic class Box<T> {\n    private T value;\n\n    public void set(T value) {\n        this.value = value;\n    }\n\n    public T get() {\n        return value;\n    }\n}\n\n// Usage example\nBox<String> strBox = new Box<>();  // Diamond operator\nstrBox.set(\"Hello\");\nString s = strBox.get();  // No cast needed\n\nBox<Integer> intBox = new Box<>();\nintBox.set(42);\nint n = intBox.get();  // Auto-unboxing",
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch21_01",
+          "sectionType": "rule",
+          "title": "Type Parameter Naming Conventions",
+          "body": "By convention, single uppercase letters are used for type parameters.\nT (Type) represents a general type and is the most widely used.\nE (Element) is used for collection element types (e.g., List<E>).\nK (Key) and V (Value) are used for map keys and values (e.g., Map<K, V>).\nN (Number) is sometimes used for numeric types.\nClasses with multiple type parameters can also be defined, declared separated by commas.",
+          "code": "// Class with multiple type parameters\npublic class Pair<K, V> {\n    private K key;\n    private V value;\n\n    public Pair(K key, V value) {\n        this.key = key;\n        this.value = value;\n    }\n\n    public K getKey() { return key; }\n    public V getValue() { return value; }\n}\n\n// Usage example\nPair<String, Integer> pair = new Pair<>(\"Age\", 25);",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch21_01",
+          "sectionType": "point",
+          "title": "Benefits of Type Safety and No Casting",
+          "body": "Without **generics**, any object can be stored in a collection.\nWhen retrieving elements, explicit casting is required, and casting to the wrong type results in a runtime [[exception]].\nWith generics, storing an invalid type is detected at compile time.\nThis prevents runtime [[ClassCastException]] and enables safe code.\n[[Type inference]] also reduces verbose code and improves code readability.",
+          "code": "// Without generics (not recommended)\nList list = new ArrayList();\nlist.add(\"Hello\");\nlist.add(123);  // No compile error\nString s = (String) list.get(1);  // ClassCastException at runtime\n\n// With generics (recommended)\nList<String> safeList = new ArrayList<>();\nsafeList.add(\"Hello\");\n// safeList.add(123);  // Compile error!\nString s2 = safeList.get(0);  // No cast needed",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch21_01",
+          "sectionType": "tip",
+          "title": "Notes on Raw Types",
+          "body": "Using a generic class without specifying the type parameter is called a raw type.\nUsing raw types causes compile-time warnings (unchecked warning).\nAdding elements to a raw type collection loses **type safety**.\nOn the Java Gold exam, questions about mixing raw types and generic types may appear.\nRaw types are permitted for compatibility with existing legacy code, but always specify type parameters in new code.",
+          "code": null,
+          "note": "Raw types will compile, but since type safety is not guaranteed, they should be avoided as a rule.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch21_01_q1",
+          "lessonId": "ch21_01",
+          "type": "fourChoice",
+          "question": "Which of the following is a primary benefit of using generics?",
+          "code": null,
+          "explanation": "The primary benefit of generics is ensuring type safety at compile time. This causes invalid type assignments to result in compile errors, preventing ClassCastException at runtime. Improved execution speed and reduced memory usage are not direct benefits of generics.",
+          "choices": [
+            {
+              "id": "ch21_01_q1_a",
+              "text": "Compile-time type safety is ensured",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_01_q1_b",
+              "text": "Program execution speed is improved",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_01_q1_c",
+              "text": "Memory usage is significantly reduced",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_01_q1_d",
+              "text": "Primitive types can be directly stored in collections",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch21_01_q2",
+          "lessonId": "ch21_01",
+          "type": "fillBlank",
+          "question": "Fill in the blanks to complete the following generic class definition.\n\npublic class Container<___> {\n    private ___ item;\n    public void set(___ item) { this.item = item; }\n    public ___ get() { return item; }\n}",
+          "code": null,
+          "explanation": "A generic class's type parameter is defined at class declaration and used as the type for fields, method arguments, and return values. By convention, T is used as a general type parameter. The same type parameter T is specified in all blanks.",
+          "choices": [
+            {
+              "id": "ch21_01_q2_a",
+              "text": "T",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_01_q2_b",
+              "text": "Object",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_01_q2_c",
+              "text": "E",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_01_q2_d",
+              "text": "Type",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch21_01_q3",
+          "lessonId": "ch21_01",
+          "type": "fourChoice",
+          "question": "Which of the following code snippets will cause a compile error?",
+          "code": "// A\nBox<int> box1 = new Box<>();\n// B\nBox<String> box2 = new Box<>();\n// C\nBox<Integer> box3 = new Box<>();\n// D\nBox<Object> box4 = new Box<>();",
+          "explanation": "Primitive types (int, double, char, etc.) cannot be specified as generic type parameters. Only reference types (Integer, String, Object, etc.) can be used. Therefore, Box<int> causes a compile error. If you need to use a primitive type, use the corresponding wrapper class (Integer, Double, etc.).",
+          "choices": [
+            {
+              "id": "ch21_01_q3_a",
+              "text": "A: Box<int>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_01_q3_b",
+              "text": "B: Box<String>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_01_q3_c",
+              "text": "C: Box<Integer>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_01_q3_d",
+              "text": "D: Box<Object>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch21_02",
+      "courseId": "ch21",
+      "title": "Generic Methods",
+      "summary": "Learn how to define generic methods that declare type parameters at the method level, and understand type inference.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch21_02",
+          "sectionType": "overview",
+          "title": "What are Generic Methods?",
+          "body": "In this lesson, you will learn:\n\n- Syntax for defining generic [[methods]]\n- The difference between [[class]] **type parameters** and method type parameters\n- Utilizing the [[diamond operator]] <> with [[type inference]]\n\nA mechanism that allows flexible type specification at the method level.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch21_02",
+          "sectionType": "code",
+          "title": "Defining a Generic Method",
+          "body": "To define a generic method, declare the **type parameter** in angle brackets immediately before the return type.\nThe declared type parameter can be used as the type for that method's arguments, return value, and local [[variables]].\nMethod type parameters are independent of class type parameters, and even if they have the same name, they are treated as separate type parameters.\nGeneric methods increase code reusability and allow the same logic to be applied to different types.",
+          "code": "// Util class definition\npublic class Util {\n    // Generic method definition\n    // getFirst method definition\n    public <T> T getFirst(List<T> list) {\n        // Conditional branch\n        if (list == null || list.isEmpty()) {\n            return null;\n        }\n        return list.get(0);\n    }\n\n    // Generic method with multiple type parameters\n    public <K, V> String format(K key, V value) {\n        return key + \" = \" + value;\n    }\n}\n\n// Usage example\nUtil util = new Util();\nList<String> names = List.of(\"Alice\", \"Bob\");\n// Variable declaration and initialization\nString first = util.getFirst(names);  // T is inferred as String",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch21_02",
+          "sectionType": "rule",
+          "title": "How Type Inference Works",
+          "body": "When calling a generic method, in most cases, you don't need to explicitly specify the type parameter.\nThe compiler infers the concrete type of the type parameter from the argument types (Type Inference).\nTo explicitly specify the type, write the dot [[operator]] and type argument before the method name.\nFor [[static methods]], use the format ClassName.<Type>methodName.\nSince Java 8, type inference capabilities have been enhanced, and explicit type specification is unnecessary in more cases.",
+          "code": "public class TypeInference {\n    public static <T> List<T> singletonList(T item) {\n        List<T> list = new ArrayList<>();\n        list.add(item);\n        return list;\n    }\n\n    public static void main(String[] args) {\n        // Type inference (usually written this way)\n        List<String> list1 = singletonList(\"Hello\");\n\n        // Explicitly specifying the type\n        List<String> list2 = TypeInference.<String>singletonList(\"Hello\");\n\n        // Explicit specification may be needed when type inference is ambiguous\n        List<Object> list3 = TypeInference.<Object>singletonList(null);\n    }\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch21_02",
+          "sectionType": "point",
+          "title": "Static Methods and Type Parameters",
+          "body": "Static methods cannot access the class's type parameters.\nThis is because class type parameters are tied to [[instances]], and static methods do not depend on instances.\nTherefore, when you want to use **generics** in a static method, you must declare the method's own type parameter.\nThis point is frequently tested on the Java Gold exam.",
+          "code": "public class Container<T> {\n    private T value;\n\n    // OK: Instance methods can use the class type parameter T\n    public T getValue() {\n        return value;\n    }\n\n    // Compile error: Static methods cannot use the class type parameter T\n    // public static T create() { return null; }\n\n    // OK: Declaring the method's own type parameter <U>\n    public static <U> Container<U> of(U value) {\n        Container<U> c = new Container<>();\n        c.value = value;\n        return c;\n    }\n}",
+          "note": "Attempting to use the class's type parameter in a static method will cause a [[compile]] error. Always declare the method's own type parameter.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch21_02",
+          "sectionType": "tip",
+          "title": "Use Cases for Generic Methods",
+          "body": "Generic methods are particularly useful in utility classes.\nThey are widely used in the standard library, such as the [[Collections]] class's sort() and emptyList().\nThey are suitable when you want to create a relationship between method argument types and return types.\nFor example, they can be used for methods that return a value of the same type as the input, or methods that guarantee two arguments are of the same type.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch21_02_q1",
+          "lessonId": "ch21_02",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "public class Main {\n    public static <T> T pickFirst(T a, T b) {\n        return a;\n    }\n    public static void main(String[] args) {\n        String result = pickFirst(\"Hello\", \"World\");\n        System.out.println(result);\n    }\n}",
+          "explanation": "The pickFirst method returns the first of the two arguments. The type parameter T is inferred as String. pickFirst(\"Hello\", \"World\") returns the first argument \"Hello\", so the output is \"Hello\".",
+          "choices": [
+            {
+              "id": "ch21_02_q1_a",
+              "text": "Hello",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_02_q1_b",
+              "text": "World",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_02_q1_c",
+              "text": "HelloWorld",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_02_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch21_02_q2",
+          "lessonId": "ch21_02",
+          "type": "fourChoice",
+          "question": "Which of the following will cause a compile error?",
+          "code": "public class MyClass<T> {\n    // A\n    public T instanceMethod(T param) { return param; }\n    // B\n    public static <U> U staticGeneric(U param) { return param; }\n    // C\n    public static T staticMethod(T param) { return param; }\n    // D\n    public <U> U anotherMethod(U param) { return param; }\n}",
+          "explanation": "The class type parameter T cannot be used in static methods. Method C uses the class type parameter T in a static method, causing a compile error. As in B, declaring the method's own type parameter <U> allows generics to be used in static methods.",
+          "choices": [
+            {
+              "id": "ch21_02_q2_a",
+              "text": "A: instanceMethod",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch21_02_q2_b",
+              "text": "B: staticGeneric",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_02_q2_c",
+              "text": "C: staticMethod",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch21_02_q2_d",
+              "text": "D: anotherMethod",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch21_02_q3",
+          "lessonId": "ch21_02",
+          "type": "fillBlank",
+          "question": "Choose the correct syntax for invoking a generic method with an explicit type specification.\n\nList<String> list = Util.___singletonList(\"A\");",
+          "code": null,
+          "explanation": "When calling a static generic method with an explicit type specification, use the format ClassName.<Type>methodName. Util.<String>singletonList(\"A\") is the correct syntax. The type argument is written after the dot operator and before the method name.",
+          "choices": [
+            {
+              "id": "ch21_02_q3_a",
+              "text": "<String>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_02_q3_b",
+              "text": "(String)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_02_q3_c",
+              "text": "[String]",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_02_q3_d",
+              "text": "{String}",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch21_02_q4",
+          "lessonId": "ch21_02",
+          "type": "codeComplete",
+          "question": "Complete the definition of the generic class.",
+          "code": null,
+          "explanation": "Generics declare a type parameter with <T> and use T as a type within the class. Type safety is guaranteed at compile time.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "public class Box__BLANK_1__ {\n    private __BLANK_2__ value;\n    public T getValue() { return value; }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "①Type parameter",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "<T>",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "(T)",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "[T]",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "②Field type",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "T",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "Object",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "var",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch21_03",
+      "courseId": "ch21",
+      "title": "Bounded Type Parameters",
+      "summary": "Learn how to use bounded type parameters to impose constraints on type parameters.",
+      "estimatedMinutes": 6,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch21_03",
+          "sectionType": "overview",
+          "title": "What are Bounded Type Parameters?",
+          "body": "In this lesson, you will learn:\n\n- Setting an upper bound on **type parameters** with extends\n- Enabling [[method]] calls with bounded type parameters\n- Multiple type bounds (combining with &)\n\nA way to add the constraint \"must be at least this type\" to type parameters.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch21_03",
+          "sectionType": "code",
+          "title": "Using Upper Bounds",
+          "body": "An upper bound is specified in the format <T extends UpperBoundType>.\nSetting an upper bound restricts the **type parameter** T to subtypes of the specified type.\nThis allows methods defined in the upper bound type to be safely called on variables of type T.\nNot only [[classes]] but also [[interfaces]] can be specified as upper bounds.",
+          "code": "// Generic method restricted to Number and its subtypes\npublic static <T extends Number> double sum(List<T> list) {\n    double total = 0.0;\n    for (T element : list) {\n        total += element.doubleValue();  // Can call Number's methods\n    }\n    return total;\n}\n\n// Usage example\nList<Integer> intList = List.of(1, 2, 3);\ndouble result1 = sum(intList);  // OK: Integer is a subclass of Number\n\nList<Double> dblList = List.of(1.5, 2.5);\ndouble result2 = sum(dblList);  // OK: Double is a subclass of Number\n\n// List<String> strList = List.of(\"a\");\n// sum(strList);  // Compile error: String is not a subclass of Number",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch21_03",
+          "sectionType": "rule",
+          "title": "Multiple Bounds",
+          "body": "To set multiple bounds on a type parameter, separate them with & (ampersand).\nMultiple bounds require the type parameter to satisfy multiple types simultaneously.\nWhen combining classes and interfaces, the class must be listed first.\nWhen only interfaces are used, there is no ordering constraint, but at most one class can be specified.\nMultiple bounds allow expressing more strict type constraints.",
+          "code": "// Restricted to types implementing both Comparable and Serializable\npublic static <T extends Comparable<T> & Serializable> T findMax(List<T> list) {\n    T max = list.get(0);\n    for (T item : list) {\n        if (item.compareTo(max) > 0) {\n            max = item;\n        }\n    }\n    return max;\n}\n\n// When mixing class + interface, the class comes first\n// <T extends Number & Comparable<T>>  // OK\n// <T extends Comparable<T> & Number>  // Compile error (class comes after)",
+          "note": "When using multiple bounds with both a class and interfaces, the class must always be listed first.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch21_03",
+          "sectionType": "point",
+          "title": "Recursive Type Bounds",
+          "body": "A recursive type bound is a pattern where the type parameter has a bound that references itself.\nA typical example is <T extends [[Comparable]]<T>>, which ensures that T types can be compared with each other.\nThis pattern is frequently used in sorting and computing the maximum/minimum values of collections.\nIn the Java standard API, the Enum class also uses a recursive type bound: Enum<E extends Enum<E>>.\nUnderstanding this pattern may be tested on the Gold exam.",
+          "code": "// Example of recursive type bound\npublic class SortUtil {\n    // Guarantees that T implements Comparable<T>\n    public static <T extends Comparable<T>> T max(T a, T b) {\n        return a.compareTo(b) >= 0 ? a : b;\n    }\n\n    public static void main(String[] args) {\n        String result = max(\"Apple\", \"Banana\");  // \"Banana\"\n        Integer num = max(10, 20);  // 20\n    }\n}",
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch21_03",
+          "sectionType": "tip",
+          "title": "Differences Between Bounded Type Parameters and Wildcards",
+          "body": "Bounded type parameters (<T extends X>) and **wildcards** (<? extends X>) are similar but serve different roles.\nBounded type parameters give the type a name (T), so it can be referenced as the same type within the method.\n[[Wildcards]] have no name, so they cannot be referenced as the same type in multiple places.\nUse bounded type parameters when you need to relate the return type with multiple argument types.\nIf you simply need to read elements from a collection, wildcards are simpler.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch21_03_q1",
+          "lessonId": "ch21_03",
+          "type": "fourChoice",
+          "question": "Which is the correct type parameter declaration for the following generic method?\n\"T must be a subclass of Number and implement Comparable\"",
+          "code": null,
+          "explanation": "When specifying multiple bounds, separate them with &. When mixing classes and interfaces, the rule is that the class must come first. Therefore, <T extends Number & Comparable<T>> is the correct notation. Comma-separated notation or putting the interface first will cause compile errors.",
+          "choices": [
+            {
+              "id": "ch21_03_q1_a",
+              "text": "<T extends Number & Comparable<T>>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_03_q1_b",
+              "text": "<T extends Comparable<T> & Number>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_03_q1_c",
+              "text": "<T extends Number, Comparable<T>>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_03_q1_d",
+              "text": "<T super Number & Comparable<T>>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch21_03_q2",
+          "lessonId": "ch21_03",
+          "type": "errorFind",
+          "question": "The following code has a compile error. What is the cause of the error?",
+          "code": "public class Calculator {\n    public static <T> double sum(List<T> list) {\n        double total = 0;\n        for (T item : list) {\n            total += item.doubleValue();\n        }\n        return total;\n    }\n}",
+          "explanation": "Since no bound is specified for the type parameter T, T is treated as Object type. The Object type does not have a doubleValue() method, so it causes a compile error. By setting an upper bound like <T extends Number>, you can call Number class's doubleValue().",
+          "choices": [
+            {
+              "id": "ch21_03_q2_a",
+              "text": "No bound is specified for T, so doubleValue() cannot be called",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_03_q2_b",
+              "text": "Generic types cannot be used in for-each statements",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_03_q2_c",
+              "text": "Generics cannot be used in static methods",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_03_q2_d",
+              "text": "The return type double is incompatible with T",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch21_03_q3",
+          "lessonId": "ch21_03",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "public class Main {\n    public static <T extends Comparable<T>> T max(T a, T b) {\n        return a.compareTo(b) >= 0 ? a : b;\n    }\n    public static void main(String[] args) {\n        System.out.println(max(3, 7));\n        System.out.println(max(\"Apple\", \"Banana\"));\n    }\n}",
+          "explanation": "The max method returns the larger of the two arguments. In max(3, 7), they are compared as Integer type, and 7 is larger so 7 is returned. In max(\"Apple\", \"Banana\"), they are compared lexicographically as String type, and \"Banana\" is larger so \"Banana\" is returned.",
+          "choices": [
+            {
+              "id": "ch21_03_q3_a",
+              "text": "7\nBanana",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_03_q3_b",
+              "text": "3\nApple",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_03_q3_c",
+              "text": "7\nApple",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_03_q3_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch21_03_q4",
+          "lessonId": "ch21_03",
+          "type": "multiChoice",
+          "question": "Select all correct statements about generic type parameter bounds.",
+          "code": null,
+          "explanation": "The upper bound (extends) is for read-only (Producer), and the lower bound (super) is for write-only (Consumer), following the PECS principle. The wildcard <?> is an unbounded type that accepts any type but cannot add elements. Multiple upper bounds can be specified with one class plus multiple interfaces.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch21_03_q4_a",
+              "text": "<? extends T> is an upper bound and is suited for reading",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_03_q4_b",
+              "text": "<? super T> is a lower bound and is suited for writing",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch21_03_q4_c",
+              "text": "<?> can add any value other than null",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_03_q4_d",
+              "text": "Multiple upper bounds can be specified with &",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch21_03_q5",
+          "lessonId": "ch21_03",
+          "type": "multiChoice",
+          "question": "Select all correct statements about generics restrictions.",
+          "code": null,
+          "explanation": "Due to type erasure, generics have the following restrictions: primitive types are not allowed, new T() is not allowed, and the class type parameter T cannot be used in static contexts. There is no limit on the number of type parameters.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "Primitive types cannot be used as type parameters",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "Instances of a type parameter cannot be created with new",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "Type parameters cannot be used in static fields",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "A maximum of 3 type parameters is allowed",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 3,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch21_04",
+      "courseId": "ch21",
+      "title": "Wildcards",
+      "summary": "Learn the types and usage of wildcards (?), and the PECS principle.",
+      "estimatedMinutes": 6,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch21_04",
+          "sectionType": "overview",
+          "title": "Overview of Wildcards",
+          "body": "In this lesson, you will learn:\n\n- The basic concept of **wildcards** (?)\n- How to use upper bounded [[wildcards]] (? extends T)\n- How to use lower bounded wildcards (? super T)\n\nLet's understand the PECS principle (Producer-Extends, [[Consumer]]-Super).",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch21_04",
+          "sectionType": "code",
+          "title": "Unbounded and Upper Bounded Wildcards",
+          "body": "The unbounded **wildcard** <?> means accepting any type.\nSince the element type is unknown, no elements can be added to the list except null.\nThe upper bounded wildcard <? extends T> accepts collections containing elements of type T or its subtypes.\nElements can be read from a list with an upper bounded wildcard, but no elements can be added (except null).",
+          "code": "// Unbounded wildcard\npublic static void printAll(List<?> list) {\n    for (Object item : list) {\n        System.out.println(item);\n    }\n    // list.add(\"test\");  // Compile error (cannot add anything except null)\n}\n\n// Upper bounded wildcard\npublic static double sumOfList(List<? extends Number> list) {\n    double total = 0;\n    for (Number n : list) {  // Can read as Number type\n        total += n.doubleValue();\n    }\n    // list.add(1);  // Compile error (cannot add)\n    return total;\n}\n\n// Usage example\nList<Integer> intList = List.of(1, 2, 3);\nList<Double> dblList = List.of(1.5, 2.5);\nsumOfList(intList);  // OK\nsumOfList(dblList);   // OK",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch21_04",
+          "sectionType": "code",
+          "title": "Lower Bounded Wildcards",
+          "body": "The lower bounded wildcard <? super T> accepts collections containing elements of type T or its supertypes.\nElements of type T and its subtypes can be added to a list with a lower bounded wildcard.\nHowever, when reading elements, they can only be retrieved as Object type.\nThis is because the exact type of the elements is unknown.",
+          "code": "// Lower bounded wildcard\npublic static void addNumbers(List<? super Integer> list) {\n    list.add(1);      // OK: Can add Integer type\n    list.add(2);\n    list.add(3);\n    // list.add(1.5);  // Compile error: Double is not a subtype of Integer\n\n    // Reading is only possible as Object type\n    Object obj = list.get(0);\n    // Integer n = list.get(0);  // Compile error\n}\n\n// Usage example\nList<Number> numList = new ArrayList<>();\naddNumbers(numList);   // OK: Number is a supertype of Integer\n\nList<Object> objList = new ArrayList<>();\naddNumbers(objList);   // OK: Object is a supertype of Integer\n\n// List<Double> dblList = new ArrayList<>();\n// addNumbers(dblList);  // Compile error: Double is not a supertype of Integer",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch21_04",
+          "sectionType": "rule",
+          "title": "The PECS Principle",
+          "body": "PECS (Producer Extends, Consumer Super) is a principle for remembering how to use wildcards.\nWhen using a collection as a Producer (retrieving data from it), use <? extends T>.\nWhen using a collection as a Consumer (adding data to it), use <? super T>.\nWhen both reading and writing are needed, don't use wildcards — specify the exact type.\nThis principle is typically demonstrated in the signature of the [[Collections]].copy() [[method]].",
+          "code": "// Typical example of PECS: Collections.copy()\n// dest: receives data (Consumer) → super\n// src:  provides data (Producer) → extends\npublic static <T> void copy(List<? super T> dest, List<? extends T> src) {\n    for (int i = 0; i < src.size(); i++) {\n        dest.set(i, src.get(i));\n    }\n}\n\n// Usage example\nList<Number> dest = new ArrayList<>(Arrays.asList(0, 0, 0));\nList<Integer> src = List.of(1, 2, 3);\nCollections.copy(dest, src);  // dest = [1, 2, 3]",
+          "note": "PECS: Remember \"extends for retrieving (Producer)\" and \"super for inserting (Consumer)\".",
+          "order": 4
+        },
+        {
+          "lessonId": "ch21_04",
+          "sectionType": "tip",
+          "title": "Wildcard Restrictions",
+          "body": "Wildcards cannot be used in [[class]] or method **type parameter** declarations.\nclass MyClass<?> will cause a [[compile]] error.\nWildcards are only for use at \"type usage sites\", not at \"type definition sites\".\nThe fact that no elements other than null can be added to upper bounded wildcard lists requires special attention.\nThrough a mechanism called wildcard capture, the compiler may internally assign a temporary type to the wildcard.",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch21_04_q1",
+          "lessonId": "ch21_04",
+          "type": "fourChoice",
+          "question": "According to the PECS principle, which wildcard should be used when reading data from a collection (Produce)?",
+          "code": null,
+          "explanation": "Under the PECS principle, extends is used for a Producer (the side that retrieves data). Using <? extends T> allows safely reading elements of type T and its subtypes. super is used for a Consumer (the side that writes data).",
+          "choices": [
+            {
+              "id": "ch21_04_q1_a",
+              "text": "<? extends T>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_04_q1_b",
+              "text": "<? super T>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_04_q1_c",
+              "text": "<?>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_04_q1_d",
+              "text": "<T extends ?>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch21_04_q2",
+          "lessonId": "ch21_04",
+          "type": "outputPredict",
+          "question": "What happens when the following code is executed?",
+          "code": "public class Main {\n    public static void printList(List<? extends Number> list) {\n        for (Number n : list) {\n            System.out.print(n.intValue() + \" \");\n        }\n    }\n    public static void main(String[] args) {\n        List<Integer> list = List.of(10, 20, 30);\n        printList(list);\n    }\n}",
+          "explanation": "List<Integer> can be assigned to List<? extends Number>. Since Integer is a subclass of Number, it can be read as Number type. intValue() is a method of the Number class and outputs the integer value of each element. The result is \"10 20 30 \".",
+          "choices": [
+            {
+              "id": "ch21_04_q2_a",
+              "text": "10 20 30 ",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_04_q2_b",
+              "text": "10.0 20.0 30.0 ",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_04_q2_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_04_q2_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch21_04_q3",
+          "lessonId": "ch21_04",
+          "type": "errorFind",
+          "question": "The following code has a compile error. What is the cause of the error?",
+          "code": "public class Main {\n    public static void addToList(List<? extends Number> list) {\n        list.add(10);\n        list.add(20);\n    }\n    public static void main(String[] args) {\n        List<Integer> list = new ArrayList<>();\n        addToList(list);\n    }\n}",
+          "explanation": "No elements other than null can be added to a list with the upper bounded wildcard <? extends Number>. This is because the actual type of the list is unknown (whether it's List<Integer> or List<Double>), so type safety cannot be guaranteed. To add elements, use <? super Integer> instead.",
+          "choices": [
+            {
+              "id": "ch21_04_q3_a",
+              "text": "No elements except null can be added to a <? extends Number> list",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_04_q3_b",
+              "text": "The int literal 10 cannot be converted to Number type",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_04_q3_c",
+              "text": "List<Integer> cannot be assigned to List<? extends Number>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_04_q3_d",
+              "text": "Wildcards cannot be used in static methods",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch21_04_q4",
+          "lessonId": "ch21_04",
+          "type": "reorder",
+          "question": "Arrange the elements of a generic method definition in the correct order.",
+          "code": null,
+          "explanation": "A generic method follows this order: access modifier → static → type parameter → return type and method name → body.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "public",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "static",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "<T extends Comparable<T>>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "T max(T a, T b)",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "{ return a.compareTo(b) > 0 ? a : b; }",
+              "isCorrect": false,
+              "order": 5
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch21_05",
+      "courseId": "ch21",
+      "title": "Type Erasure and Generics Restrictions",
+      "summary": "Learn how Java generics are handled at runtime (type erasure) and the restrictions of generics.",
+      "estimatedMinutes": 6,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch21_05",
+          "sectionType": "overview",
+          "title": "What is Type Erasure?",
+          "body": "In this lesson, you will learn:\n\n- How **type erasure** (Type Erasure) works\n- What cannot be done with **generics** (new T(), [[instanceof]] T, etc.)\n- Why bridge [[methods]] are automatically generated\n\nLet's understand the implications of [[generics]] information being erased after [[compilation]].",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch21_05",
+          "sectionType": "code",
+          "title": "How Type Erasure Works",
+          "body": "The compiler transforms generic code into equivalent code without **type parameters** through **type erasure**.\nNecessary [[casts]] are automatically inserted.\nBridge methods may be generated, which exist to maintain polymorphism in [[inheritance]] with generics.\nThe code after [[type erasure]] is compatible with Java code from before the introduction of generics.",
+          "code": "// Before compilation (source code)\n// Box class definition\npublic class Box<T> {\n    private T value;\n    public T get() { return value; }\n    // set method definition\n    public void set(T value) { this.value = value; }\n}\n\nBox<String> box = new Box<>();\nbox.set(\"Hello\");\n// Variable declaration and initialization\nString s = box.get();\n\n// After type erasure (bytecode equivalent)\n// Box class definition\npublic class Box {\n    private Object value;\n    public Object get() { return value; }\n    // set method definition\n    public void set(Object value) { this.value = value; }\n}\n\nBox box = new Box();\nbox.set(\"Hello\");\nString s = (String) box.get();  // Cast is automatically inserted",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch21_05",
+          "sectionType": "rule",
+          "title": "Generics Restrictions",
+          "body": "Understanding the main restrictions of generics due to type erasure is very important for the Java Gold exam.\n[[Primitive types]] cannot be used as **type parameters** (Box<int> is not allowed; use Box<Integer>).\nType parameters cannot be used to create [[instances]] (new T() is not allowed).\nGeneric type [[arrays]] cannot be created directly (new T[] and new List<String>[] are not allowed).\nThe instanceof operator cannot be used with parameterized types (obj instanceof List<String> is not allowed).\nThe class type parameter cannot be used in [[static fields]] or [[static methods]].",
+          "code": "public class Restrictions<T> {\n    // Compile error: Primitive types are not allowed\n    // Box<int> box;\n\n    // Compile error: new T() is not allowed\n    // public T create() { return new T(); }\n\n    // Compile error: Creating generic arrays is not allowed\n    // T[] array = new T[10];\n\n    // Compile error: instanceof with parameterized types is not allowed\n    // if (obj instanceof List<String>) { }\n\n    // OK: instanceof with unbounded wildcard is allowed\n    public boolean isList(Object obj) {\n        return obj instanceof List<?>;\n    }\n\n    // OK: instanceof with raw type is also allowed\n    public boolean isListRaw(Object obj) {\n        return obj instanceof List;\n    }\n}",
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch21_05",
+          "sectionType": "point",
+          "title": "Generics and Overloading",
+          "body": "Due to type erasure, methods that differ only in the generic type parameter cannot be [[overloaded]].\nFor example, method(List<String>) and method(List<Integer>) both become method(List) after type erasure, so they cannot coexist in the same class.\nThis causes a compile error.\nYou need to correctly understand the effects of type erasure and avoid method signature conflicts.",
+          "code": "public class OverloadExample {\n    // Compile error: Same signature after type erasure\n    // public void process(List<String> list) { }\n    // public void process(List<Integer> list) { }\n\n    // After type erasure, both become the same:\n    // public void process(List list) { }\n\n    // Solution: Use different method names\n    public void processStrings(List<String> list) { }\n    public void processIntegers(List<Integer> list) { }\n}",
+          "note": "Overloading where signatures become identical after type erasure will cause a compile error.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch21_05",
+          "sectionType": "tip",
+          "title": "Retaining Type Information with Type Tokens",
+          "body": "While type parameter information is lost at runtime due to type erasure, a technique called type tokens can be used to retain type information.\nBy passing a Class object as an argument, type information can be used even at runtime.\nThis technique is widely used in frameworks and libraries.\nAdditionally, generic information of subclasses can sometimes be obtained via [[reflection]].",
+          "code": "// Example using type tokens\npublic class TypeSafeMap {\n    private Map<Class<?>, Object> map = new HashMap<>();\n\n    public <T> void put(Class<T> type, T value) {\n        map.put(type, value);\n    }\n\n    public <T> T get(Class<T> type) {\n        return type.cast(map.get(type));\n    }\n}\n\n// Usage example\nTypeSafeMap tsm = new TypeSafeMap();\ntsm.put(String.class, \"Hello\");\ntsm.put(Integer.class, 42);\nString s = tsm.get(String.class);  // No cast needed",
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch21_05_q1",
+          "lessonId": "ch21_05",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes Java's type erasure?",
+          "code": null,
+          "explanation": "Java generics perform type checking only at compile time, and type parameter information is erased during bytecode generation. As a result, generic type parameter information does not exist at runtime. Unbounded type parameters are replaced with Object, and bounded type parameters are replaced with their bound type.",
+          "choices": [
+            {
+              "id": "ch21_05_q1_a",
+              "text": "Type checking is done at compile time, then type parameter info is erased at runtime",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_05_q1_b",
+              "text": "Type parameter information is retained at runtime",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_05_q1_c",
+              "text": "Type erasure significantly improves execution speed",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_05_q1_d",
+              "text": "Type erasure was deprecated in Java 11",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch21_05_q2",
+          "lessonId": "ch21_05",
+          "type": "fourChoice",
+          "question": "Which of the following code snippets will NOT cause a compile error?",
+          "code": null,
+          "explanation": "With the instanceof operator, parameterized types (like List<String>) cannot be used, but the unbounded wildcard (List<?>) is allowed. Due to type erasure, List<String> and List<Integer> are indistinguishable at runtime, so instanceof checks with parameterized types are meaningless. On the other hand, List<?> is allowed because it only checks \"whether it's some kind of List\".",
+          "choices": [
+            {
+              "id": "ch21_05_q2_a",
+              "text": "obj instanceof List<?>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_05_q2_b",
+              "text": "obj instanceof List<String>",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_05_q2_c",
+              "text": "obj instanceof Map<String, Integer>",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_05_q2_d",
+              "text": "obj instanceof Comparable<Integer>",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch21_05_q3",
+          "lessonId": "ch21_05",
+          "type": "errorFind",
+          "question": "The following code has a compile error. What is the cause of the error?",
+          "code": "public class Factory<T> {\n    public T createInstance() {\n        return new T();\n    }\n\n    public static void main(String[] args) {\n        Factory<String> factory = new Factory<>();\n        String s = factory.createInstance();\n    }\n}",
+          "explanation": "Due to type erasure, the concrete type information of T does not exist at runtime, so instances cannot be created with new T(). The compiler cannot resolve the constructor for type T, causing a compile error. As alternatives, you can receive a Class<T> object and create an instance via reflection, or use a Supplier<T>.",
+          "choices": [
+            {
+              "id": "ch21_05_q3_a",
+              "text": "Instance creation with new T() using a type parameter is not allowed",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch21_05_q3_b",
+              "text": "The type specification Factory<String> is invalid",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch21_05_q3_c",
+              "text": "Return type T cannot be assigned to a String variable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch21_05_q3_d",
+              "text": "Generics cannot be used inside the main method",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

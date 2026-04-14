@@ -1,0 +1,691 @@
+{
+  "courseId": "ch20",
+  "lessons": [
+    {
+      "id": "ch20_01",
+      "courseId": "ch20",
+      "title": "Overview of Nested Classes",
+      "summary": "Get an overview of the four types of nested classes (inner classes) in Java and understand their characteristics and use cases.",
+      "estimatedMinutes": 7,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "overview",
+          "title": "What are Nested Classes?",
+          "body": "In this lesson, you will learn:\n\n- Overview of the four types of nested [[classes]]\n- Definition and usage of inner classes ([[inner classes]])\n- How to access members of the outer class\n\nLearn the mechanism of defining classes within classes.",
+          "code": null,
+          "note": "Practical Tips: **Nested classes** are used to define \"auxiliary types used only within that class\". For example, the Node class inside [[HashMap]] and the Builder class in the Builder pattern are representative examples.",
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "rule",
+          "title": "Four Types of Nested Classes",
+          "body": "| Type | Definition Location | static | Outer Class Reference | Primary Use |\n|---|---|---|---|---|\n| Static Nested Class | Directly inside a class | ✅ | ❌ | Helper class |\n| Member Class (inner class) | Directly inside a class | ❌ | ✅ | Processing dependent on outer state |\n| Local Class | Inside a method | ❌ | ✅ | Temporary type within a method |\n| Anonymous Class | Inside an expression | ❌ | ✅ | One-time interface implementation |\n\nKey difference: Static nested classes can be used without an [[instance]] of the outer class, while inner classes (non-static) require an instance of the outer class.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "code",
+          "title": "Quick Examples of the Four Types",
+          "body": "Let's look at the following code example.\n\nReal-world use cases:\n• Static nested: `Map.Entry`, `Builder pattern`\n• Member class: `Iterator` implementation, `ViewHolder`\n• **Local class**: Rarely used in modern Java\n• [[Anonymous class]]: GUI event listeners, callbacks",
+          "code": "// Outer class definition\npublic class Outer {\n    private int value = 10;\n\n    // 1. Static nested class\n    static class StaticNested {\n        // show method definition\n        void show() {\n            // Cannot access value (because it's static)\n            System.out.println(\"static nested\");\n        }\n    }\n\n    // 2. Member class (inner class)\n    // Inner class definition\n    class Inner {\n        // show method definition\n        void show() {\n            // Can access the outer class's field\n            System.out.println(\"inner: \" + value);\n        }\n    }\n\n    void method() {\n        // 3. Local class\n        // Local class definition\n        class Local {\n            void show() {\n                System.out.println(\"local: \" + value);\n            }\n        }\n        new Local().show();\n\n        // 4. Anonymous class\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(\"anonymous: \" + value);\n            }\n        };\n        r.run();\n    }\n}",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "tip",
+          "title": "Organizing the Four Types of Nested Classes",
+          "body": "| Type | Location | static | Outer Instance |\n|---|---|---|---|\n| Inner class | Inside a class | No | Required |\n| Static nested class | Inside a class | Yes | Not required |\n| Local class | Inside a method | No | - |\n| Anonymous class | Inside an expression | No | - |\n\nThe most commonly used is the static nested class. **Inner classes** hold an implicit reference to the outer instance, which can cause memory leaks.",
+          "code": null,
+          "note": "Since Java 16, the restriction on static members in inner classes has been relaxed.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_01",
+          "sectionType": "point",
+          "title": "Summary",
+          "body": "• There are 4 types of nested classes — static nested, member (inner), local, and anonymous\n• Static nested classes cannot access instance members of the outer class\n• Inner classes (non-static) can access even private members of the outer class\n• Understanding the use cases for each type and choosing the right one is important\n• On the Gold exam, the difference between static nested classes and member classes is frequently tested",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_01_q1",
+          "lessonId": "ch20_01",
+          "type": "fourChoice",
+          "question": "Which nested class can be used without an instance of the outer class?",
+          "explanation": "A static nested class has the static modifier, so it can be used directly without an instance of the outer class. The other three types are non-static (inner classes) and are associated with an instance of the outer class.",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch20_01_q1_a",
+              "text": "Static nested class",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_01_q1_b",
+              "text": "Member class (inner class)",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_01_q1_c",
+              "text": "Local class",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_01_q1_d",
+              "text": "Anonymous class",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_01_q2",
+          "lessonId": "ch20_01",
+          "type": "fillBlank",
+          "question": "Why can a member class (inner class) access the private fields of the outer class? Fill in the blank.\n\n\"An inner class implicitly holds a [___] of the outer class\"",
+          "explanation": "An inner class (non-static) holds an **implicit reference to the outer class instance**. This allows it to directly access the outer class's private fields and methods.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_01_q2_a",
+              "text": "reference to the instance",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_01_q2_b",
+              "text": "class object",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_01_q2_c",
+              "text": "constructor",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_01_q2_d",
+              "text": "static member",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_01_q3",
+          "lessonId": "ch20_01",
+          "type": "multiChoice",
+          "question": "Select all that apply to a **non-static inner class (member class)**.",
+          "explanation": "A member class (inner class) has an implicit reference to the outer class and can access private members. Since Java 16, static methods are also allowed in inner classes. It cannot be instantiated without an outer instance.",
+          "difficulty": "hard",
+          "choices": [
+            {
+              "id": "ch20_01_q3_a",
+              "text": "Can access private fields of the outer class",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_01_q3_b",
+              "text": "Can be instantiated with new without an outer class instance",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_01_q3_c",
+              "text": "Has an implicit reference to the outer class",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch20_01_q3_d",
+              "text": "Can define static methods (Java 16+)",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "requiredSelections": 3
+        }
+      ]
+    },
+    {
+      "id": "ch20_02",
+      "courseId": "ch20",
+      "title": "Static Nested Classes and Member Classes",
+      "summary": "Learn the detailed differences between static nested classes and member classes, and how to instantiate them.",
+      "estimatedMinutes": 8,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "overview",
+          "title": "Static Nested Class vs Member Class",
+          "body": "In this lesson, you will learn:\n\n- Definition and characteristics of static nested [[classes]]\n- Differences from **inner classes** (no outer class [[instance]] required)\n- Appropriate use cases for static nested classes\n\nWhether you add static or not significantly changes the behavior.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "code",
+          "title": "Details of Static Nested Classes",
+          "body": "Let's look at the following code example.\n\nReal-world usage: In the Builder pattern, static nested classes like `User.Builder` are used to achieve readable object creation such as `new User.Builder(\"Tanaka\").age(25).build()`. Also, `java.util.Map.Entry` is a representative example of a static nested class.",
+          "code": "public class Outer {\n    private static int staticVal = 100;\n    private int instanceVal = 200;\n\n    // Static nested class\n    static class StaticNested {\n        void show() {\n            System.out.println(staticVal);    // ✅ Can access static members\n            // System.out.println(instanceVal); // ❌ Cannot access instance members\n        }\n\n        static void staticMethod() {\n            System.out.println(\"static nested static method\");\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        // Instantiating a static nested class\n        // No instance of the outer class is needed\n        Outer.StaticNested sn = new Outer.StaticNested();\n        sn.show();\n\n        // Calling a static method\n        Outer.StaticNested.staticMethod();\n    }\n}",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "tip",
+          "title": "Why Static Nested Classes Are Recommended",
+          "body": "In most cases, static nested classes are more appropriate than inner classes.\n\n- Inner classes hold an implicit reference to the outer class → potential memory leaks\n- Static nested classes are independent and can be used without an outer instance\n- Effective Java recommendation: \"If you nest, make it static\"\n\nIf you don't need access to the outer class's instance members, add static.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "code",
+          "title": "Details of Member Classes (Inner Classes)",
+          "body": "Let's look at the following code example.\n\nReal-world usage: When implementing a collection's [[Iterator]], it is standard practice to define it as a member class. Since it can directly access the outer class's internal data, it can efficiently traverse elements. The RecyclerView.ViewHolder in Android development follows a similar pattern.",
+          "code": "// Outer class definition\npublic class Outer {\n    private int value = 42;\n\n    // Inner class definition\n    class Inner {\n        private int value = 99;\n\n        // show method definition\n        void show() {\n            System.out.println(value);            // 99 (Inner.this.value)\n            System.out.println(this.value);        // 99 (this = Inner)\n            System.out.println(Outer.this.value);  // 42 (outer class reference)\n        }\n    }\n}\n\n// Main class definition\npublic class Main {\n    // main method definition\n    public static void main(String[] args) {\n        // Instantiating a member class\n        // An instance of the outer class is required!\n        Outer outer = new Outer();\n        Outer.Inner inner = outer.new Inner();\n        //                    ↑ Note the outer.new syntax\n        inner.show();\n\n        // Writing it in one line\n        Outer.Inner inner2 = new Outer().new Inner();\n    }\n}",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "rule",
+          "title": "Comparison Table",
+          "body": "| Aspect | Static Nested Class | Member Class |\n|---|---|---|\n| static modifier | Yes | No |\n| Access outer's static members | ✅ | ✅ |\n| Access outer's instance members | ❌ | ✅ |\n| Use Outer.this | ❌ | ✅ |\n| Instantiation | `new Outer.StaticNested()` | `outer.new Inner()` |\n| Define static members | ✅ | Java 16+ only |\n| Access modifiers | All 4 types | All 4 types |\n| Memory leak risk | None | Yes (holds outer reference) |",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch20_02",
+          "sectionType": "point",
+          "title": "Summary",
+          "body": "• Static nested class — `new Outer.StaticNested()`, no outer instance required\n• Member class — `outer.new Inner()`, outer instance is required\n• Member class uses `Outer.this` to get the this reference of the outer class\n• Same-named field access: `this.x` (inner) vs `Outer.this.x` (outer)\n• Design guideline: Choose static nested classes when outer instance is not needed (avoids memory leaks)",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_02_q1",
+          "lessonId": "ch20_02",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "explanation": "The local variable x=30 is in the nearest scope, this.x refers to Inner's field x=20, and Outer.this.x refers to the outer class Outer's field x=10.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_02_q1_a",
+              "text": "30\\n20\\n10",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_02_q1_b",
+              "text": "10\\n20\\n30",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_02_q1_c",
+              "text": "30\\n30\\n10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_02_q1_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "class Outer {\n    int x = 10;\n    class Inner {\n        int x = 20;\n        void show() {\n            int x = 30;\n            System.out.println(x);\n            System.out.println(this.x);\n            System.out.println(Outer.this.x);\n        }\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Outer().new Inner().show();\n    }\n}"
+        },
+        {
+          "id": "ch20_02_q2",
+          "lessonId": "ch20_02",
+          "type": "errorFind",
+          "question": "Find the error in the following code.",
+          "explanation": "Instantiating a member class (non-static inner class) requires an instance of the outer class. The correct way is `Outer outer = new Outer(); Outer.Inner inner = outer.new Inner();`.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_02_q2_a",
+              "text": "new Outer.Inner() is used (outer.new Inner() is correct)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_02_q2_b",
+              "text": "Inner class without static can only be used within Outer",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_02_q2_c",
+              "text": "The type name Outer.Inner is wrong",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_02_q2_d",
+              "text": "There is no error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "class Outer {\n    class Inner {\n        void greet() { System.out.println(\"Hello\"); }\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Outer.Inner inner = new Outer.Inner();\n        inner.greet();\n    }\n}"
+        },
+        {
+          "id": "ch20_02_q3",
+          "lessonId": "ch20_02",
+          "type": "fillBlank",
+          "question": "About access from a static nested class to the outer class's members, fill in the blank.\n\n\"From a static nested class, only [___] members of the outer class can be accessed\"",
+          "explanation": "A static nested class does not hold a reference to the outer class's instance, so it can only access the outer class's **static members**. It cannot access instance members.",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch20_02_q3_a",
+              "text": "static",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_02_q3_b",
+              "text": "public",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_02_q3_c",
+              "text": "instance",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_02_q3_d",
+              "text": "all",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        }
+      ]
+    },
+    {
+      "id": "ch20_03",
+      "courseId": "ch20",
+      "title": "Local Classes and Anonymous Classes",
+      "summary": "Learn how to use local classes defined inside methods and anonymous classes without names.",
+      "estimatedMinutes": 8,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "overview",
+          "title": "Defining Classes Inside Methods",
+          "body": "In this lesson, you will learn:\n\n- Local [[classes]] (classes defined inside [[methods]])\n- Syntax of [[anonymous classes]] (classes without names)\n- Relationship with [[lambda expressions]] and how to choose between them\n\nMethods for defining classes used only within a specific [[scope]].",
+          "code": null,
+          "note": "Practical Tips: **Local classes** are rarely used in modern Java development. **Anonymous classes** were used for GUI app (Swing/JavaFX) event listeners and thread creation (new Thread(new [[Runnable() {...}), but since Java 8, they have been replaced by lambda expressions.",
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "code",
+          "title": "Local Classes",
+          "body": "Let's look at the following code example.",
+          "code": "public class Outer {\n    private String name = \"Outer\";\n\n    void process(String prefix) {\n        int count = 5;  // Effectively final (never reassigned)\n\n        // Local class definition\n        class Helper {\n            void execute() {\n                // Can access outer class fields\n                System.out.println(name);\n                // Can access method local variables\n                // (but must be effectively final)\n                System.out.println(prefix + count);\n            }\n        }\n\n        // Instantiating the local class\n        Helper h = new Helper();\n        h.execute();\n\n        // count = 10; // If this exists, count in Helper causes a compilation error\n    }\n}\n\n// Note: Access modifiers cannot be applied to local classes\n// Note: static cannot be applied (Java 16+ allows static but it's special)",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "tip",
+          "title": "Differences Between Anonymous Classes and Lambda Expressions",
+          "body": "Lambda expressions are shorthand for anonymous classes, but there are some differences.\n\n| Aspect | Anonymous Class | Lambda Expression |\n|---|---|---|\n| Target | Any interface/class | Functional interfaces only |\n| this | The anonymous class itself | The enclosing class |\n| State | Can have fields | Cannot |\n| Readability | Verbose | Concise |\n\nFor [[functional interfaces]], lambda expressions are recommended.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "code",
+          "title": "Anonymous Classes",
+          "body": "Let's look at the following code example.",
+          "code": "// Main class definition\npublic class Main {\n    // Anonymous implementation of an interface\n    // main method definition\n    public static void main(String[] args) {\n        // Anonymous class implementation of Comparator\n        List<String> names = new ArrayList<>(List.of(\"Charlie\", \"Alice\", \"Bob\"));\n\n        Comparator<String> comp = new Comparator<String>() {\n            @Override\n            // compare method definition\n            public int compare(String a, String b) {\n                return a.length() - b.length();  // Compare by string length\n            }\n        };\n        names.sort(comp);\n        System.out.println(names); // [Bob, Alice, Charlie]\n\n        // Anonymous subclass of an abstract class\n        // Greeting class definition\n        abstract class Greeting {\n            abstract String message();\n        }\n        Greeting g = new Greeting() {\n            @Override\n            String message() {\n                return \"Hello\";\n            }\n        };\n        System.out.println(g.message());\n\n        // Overriding a concrete class is also possible\n        Object obj = new Object() {\n            @Override\n            public String toString() {\n                return \"Custom Object\";\n            }\n        };\n        System.out.println(obj); // Custom Object\n    }\n}",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "rule",
+          "title": "Restrictions of Anonymous Classes",
+          "body": "1. No name — cannot be referenced as a type name (not reusable)\n2. Cannot define a [[constructor]] — because it has no name\n3. Only one superclass or [[interface]] — cannot implement multiple interfaces simultaneously\n4. Can only reference effectively final local [[variables]]\n5. Cannot use both extends and implements simultaneously\n\nEffectively final means:\nA variable whose value is never changed after declaration. Since Java 8, even without the explicit final keyword, a variable is treated as effectively final if it is never reassigned.",
+          "code": null,
+          "note": null,
+          "order": 5
+        },
+        {
+          "lessonId": "ch20_03",
+          "sectionType": "point",
+          "title": "Summary",
+          "body": "• Local class — defined inside a method, usable only within that method\n• Anonymous class — no name, class definition and [[instance]] creation happen simultaneously\n• Both can only access effectively final local variables\n• Anonymous classes cannot define constructors\n• Anonymous classes can [[inherit]]/implement only one interface or one class\n• Java 8+: Many anonymous classes can be replaced with lambda expressions (for functional interfaces)",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_03_q1",
+          "lessonId": "ch20_03",
+          "type": "errorFind",
+          "question": "Find the error in the following code.",
+          "explanation": "Local variables referenced from an anonymous class (or lambda expression) must be **effectively final**. Since `count = 5;` reassigns the value, count is not effectively final and causes a compilation error.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_03_q1_a",
+              "text": "count is referenced in the anonymous class, but count is not effectively final because it is reassigned",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_03_q1_b",
+              "text": "Runnable requires generics",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_03_q1_c",
+              "text": "Local variables cannot be referenced inside an anonymous class",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_03_q1_d",
+              "text": "There is no error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        count = 5;  // Reassignment\n\n        Runnable r = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(count);\n            }\n        };\n        r.run();\n    }\n}"
+        },
+        {
+          "id": "ch20_03_q2",
+          "lessonId": "ch20_03",
+          "type": "fourChoice",
+          "question": "Which statement about anonymous classes is correct?",
+          "explanation": "Anonymous classes have no name, so **constructors cannot be defined**. However, adding methods and defining fields is possible. Implementing multiple interfaces simultaneously is not supported.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_03_q2_a",
+              "text": "Constructors cannot be defined",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_03_q2_b",
+              "text": "Multiple interfaces can be simultaneously implemented",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_03_q2_c",
+              "text": "Methods cannot be added because it has no name",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_03_q2_d",
+              "text": "Can be defined with the static modifier",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_03_q3",
+          "lessonId": "ch20_03",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "explanation": "The variable name is never reassigned after declaration, so it is effectively final and can be referenced from the anonymous class. greet() returns \"Hello, World\".",
+          "difficulty": "easy",
+          "choices": [
+            {
+              "id": "ch20_03_q3_a",
+              "text": "Hello, World",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_03_q3_b",
+              "text": "Hello, null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_03_q3_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_03_q3_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "interface Greeter {\n    String greet();\n}\npublic class Main {\n    public static void main(String[] args) {\n        String name = \"World\";\n        Greeter g = new Greeter() {\n            @Override\n            public String greet() {\n                return \"Hello, \" + name;\n            }\n        };\n        System.out.println(g.greet());\n    }\n}"
+        }
+      ]
+    },
+    {
+      "id": "ch20_04",
+      "courseId": "ch20",
+      "title": "From Anonymous Classes to Lambda Expressions",
+      "summary": "Learn how to replace anonymous classes with lambda expressions, differences from lambdas, and nested class design patterns.",
+      "estimatedMinutes": 8,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "overview",
+          "title": "Relationship Between Anonymous Classes and Lambda Expressions",
+          "body": "In this lesson, you will learn:\n\n- Criteria for choosing between nested [[classes]]\n- Comparison of access rules for each type of nested class\n- Practical usage patterns (Builder, [[Iterator]], etc.)\n\nLearn to choose the appropriate type of nested class.",
+          "code": null,
+          "note": "Practical Tips: Modern frameworks like Spring Framework and JUnit 5 heavily use [[functional interfaces]], so [[lambda expressions]] are used on a daily basis. Example: assertThrows(Exception.class, () -> service.process());  Refactoring [[anonymous classes]] to lambda expressions is also commonly done when modernizing legacy code.",
+          "order": 1
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "code",
+          "title": "Converting Anonymous Classes to Lambda Expressions",
+          "body": "Let's look at the following code example.",
+          "code": "import java.util.Comparator;\nimport java.util.function.Predicate;\n\n// Main class definition\npublic class Main {\n    // main method definition\n    public static void main(String[] args) {\n        // Anonymous class version\n        Comparator<String> comp1 = new Comparator<String>() {\n            @Override\n            // compare method definition\n            public int compare(String a, String b) {\n                return a.length() - b.length();\n            }\n        };\n\n        // Lambda expression version (type inference for parameters is also possible)\n        Comparator<String> comp2 = (a, b) -> a.length() - b.length();\n\n        // Predicate example\n        Predicate<String> isLong1 = new Predicate<String>() {\n            @Override\n            public boolean test(String s) {\n                return s.length() > 5;\n            }\n        };\n        Predicate<String> isLong2 = s -> s.length() > 5;\n\n        // Runnable example\n        Runnable r1 = new Runnable() {\n            @Override\n            public void run() {\n                System.out.println(\"Hello\");\n            }\n        };\n        Runnable r2 = () -> System.out.println(\"Hello\");\n    }\n}",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "tip",
+          "title": "Migrating from Anonymous Classes to Lambda Expressions",
+          "body": "Since Java 8, functional [[interface]] implementations can be replaced from anonymous classes to lambda expressions.\n\n- **Anonymous class**: new [[Comparator]]<String>() { public int compare(String a, String b) { return a.compareTo(b); } }\n- Lambda expression: (a, b) -> a.compareTo(b)\n- [[Method reference]]: String::compareTo\n\nThe code becomes dramatically more concise, so use lambda expressions actively for functional interfaces.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "rule",
+          "title": "Critical Differences Between Anonymous Classes and Lambda Expressions",
+          "body": "| Aspect | Anonymous Class | Lambda Expression |\n|---|---|---|\n| Target | Classes and interfaces in general | Functional interfaces only |\n| this reference | The anonymous class itself | The outer class (enclosing class) |\n| Abstract methods | Multiple allowed | Only one |\n| Constructor | Cannot be defined | N/A |\n| Field definition | Possible | Not possible |\n| Class file | Separately generated (Outer$1.class) | invokedynamic |\n\nEspecially important: `this` inside a lambda expression refers to the outer class [[instance]]. `this` inside an anonymous class refers to the anonymous class's own instance.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "code",
+          "title": "Difference in this — Frequently Tested on Exams",
+          "body": "Let's look at the following code example.",
+          "code": "public class Outer {\n    private String name = \"Outer\";\n\n    void test() {\n        // Anonymous class: this refers to the anonymous class itself\n        Runnable r1 = new Runnable() {\n            @Override\n            public void run() {\n                // this → instance of the anonymous class\n                System.out.println(this.getClass().getSimpleName());\n                // Output: \"\" (anonymous class has no name)\n            }\n        };\n\n        // Lambda expression: this refers to the outer class (Outer)\n        Runnable r2 = () -> {\n            // this → instance of Outer\n            System.out.println(this.name);\n            // Output: \"Outer\"\n        };\n\n        r1.run();\n        r2.run();\n    }\n}\n\n// Case where lambda conversion is not possible\ninterface MultiMethod {\n    void method1();\n    void method2();  // 2 abstract methods → cannot use lambda\n}",
+          "note": "The \"//\" in the code indicates a comment (explanatory text). It does not affect program execution.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch20_04",
+          "sectionType": "point",
+          "title": "Summary of Choosing Nested Classes",
+          "body": "Guidelines for choosing:\n• Static nested class — outer instance not needed. Helper types (Builder, Entry, etc.)\n• Member class — outer state is needed (Iterator implementation, etc.). Static is recommended when possible\n• **Local class** — type temporarily used within a [[method]]. Rarely used\n• Anonymous class — one-time implementation. Lambda expression is recommended for functional interfaces\n• Lambda expression — concise implementation of functional interfaces. Note that this refers to the outer class\n\nEffective Java recommendation: \"**Make nested classes static** whenever possible\" (prevents memory leaks)",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch20_04_q1",
+          "lessonId": "ch20_04",
+          "type": "outputPredict",
+          "question": "Predict the output of the following code.",
+          "explanation": "Inside a lambda expression, this refers to the **instance of the outer class (App)**. Therefore, `this.name` outputs the name field \"App\" of the App instance. Note that this differs from the behavior in anonymous classes.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_04_q1_a",
+              "text": "App",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_04_q1_b",
+              "text": "null",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_04_q1_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_04_q1_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "code": "public class App {\n    String name = \"App\";\n\n    void run() {\n        Runnable lambda = () -> System.out.println(this.name);\n        lambda.run();\n    }\n\n    public static void main(String[] args) {\n        new App().run();\n    }\n}"
+        },
+        {
+          "id": "ch20_04_q2",
+          "lessonId": "ch20_04",
+          "type": "fourChoice",
+          "question": "In which case can an anonymous class NOT be converted to a lambda expression?",
+          "explanation": "Lambda expressions can only be used with **functional interfaces (having one abstract method)**. Interfaces with two or more abstract methods cannot be converted to lambda expressions. The presence of default methods is irrelevant.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_04_q2_a",
+              "text": "The interface being implemented has 2 abstract methods",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_04_q2_b",
+              "text": "The interface has a default method",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch20_04_q2_c",
+              "text": "The anonymous class references an external variable",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch20_04_q2_d",
+              "text": "The anonymous class uses generics in its arguments",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null
+        },
+        {
+          "id": "ch20_04_q3",
+          "lessonId": "ch20_04",
+          "type": "reorder",
+          "question": "Arrange the steps for converting an anonymous class to a lambda expression in the correct order.",
+          "explanation": "Lambda conversion steps: (1) Verify it's a functional interface → (2) Remove the anonymous class boilerplate → (3) Remove the method name and keep only the parameters → (4) Connect parameters and body with ->. If the body is a single statement, {} and return can also be omitted.",
+          "difficulty": "normal",
+          "choices": [
+            {
+              "id": "ch20_04_q3_a",
+              "text": "Verify that the target is a functional interface (1 abstract method)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch20_04_q3_b",
+              "text": "Remove the new InterfaceName() { ... } syntax",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch20_04_q3_c",
+              "text": "Remove the method name and @Override, keeping only the parameter list",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch20_04_q3_d",
+              "text": "Write the arrow (->) between the parameter list and the body",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch20_04_q3_a",
+            "ch20_04_q3_b",
+            "ch20_04_q3_c",
+            "ch20_04_q3_d"
+          ]
+        }
+      ]
+    }
+  ]
+}

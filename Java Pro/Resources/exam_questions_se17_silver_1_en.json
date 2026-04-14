@@ -1,0 +1,3165 @@
+[
+  {
+    "id": "se17s1_q001",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes how Java programs are executed in Java SE 17?",
+    "code": null,
+    "explanation": "Since Java SE 11, a 'Launch Single-File Source-Code Programs' feature was added, allowing you to directly execute a single source file with the java command without compiling with javac. However, programs spanning multiple files still require compilation with javac.",
+    "choices": [
+      {
+        "id": "se17s1_q001_a",
+        "text": "Java programs must always be compiled with javac before being executed with the java command",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q001_b",
+        "text": "A single source file can be directly executed with the java command",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q001_c",
+        "text": "The javac command was removed in Java SE 17",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q001_d",
+        "text": "The java command can only execute .class files",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q002",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following statements about Java source files is correct?",
+    "code": null,
+    "explanation": "A single source file can contain multiple class definitions, but only one public class. If a public class exists, the file name must match that class name. The package declaration is written at the beginning of the file, and import statements are written after the package declaration.",
+    "choices": [
+      {
+        "id": "se17s1_q002_a",
+        "text": "Only one class can be defined in a single source file",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q002_b",
+        "text": "Import statements must be written before the package declaration",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q002_c",
+        "text": "If a public class exists, the file name must match that class name",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q002_d",
+        "text": "The package declaration cannot be omitted and must always be written",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q003",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Java\" + 17 + 21);\n        System.out.println(17 + 21 + \"Java\");\n    }\n}",
+    "explanation": "In the first line, since it starts with the string \"Java\", all + operators perform string concatenation, resulting in \"Java1721\". In the second line, the numeric addition 17+21=38 is performed first, then string concatenation produces \"38Java\".",
+    "choices": [
+      {
+        "id": "se17s1_q003_a",
+        "text": "Java1721\n38Java",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q003_b",
+        "text": "Java38\n38Java",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q003_c",
+        "text": "Java1721\nJava38",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q003_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q004",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank to correctly define a class belonging to the package com.example.\n\n___ com.example;\n\npublic class App {\n    // ...\n}",
+    "code": null,
+    "explanation": "The package keyword is used for package declarations. The package declaration is written at the beginning of the source file (excluding comments) to specify the package to which the class belongs.",
+    "choices": [
+      {
+        "id": "se17s1_q004_a",
+        "text": "import",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q004_b",
+        "text": "package",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q004_c",
+        "text": "module",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q004_d",
+        "text": "namespace",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q005",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "import java.util.List;\npackage com.example;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = List.of(\"A\", \"B\");\n        System.out.println(list);\n    }\n}",
+    "explanation": "The package declaration must be written at the beginning of the source file (excluding comments). Since the import statement appears before the package declaration, a compilation error occurs. The correct order is to write the package declaration first, followed by import statements.",
+    "choices": [
+      {
+        "id": "se17s1_q005_a",
+        "text": "The List.of() method does not exist",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q005_b",
+        "text": "The import statement is written before the package declaration",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q005_c",
+        "text": "The generics specification List<String> is incorrect",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q005_d",
+        "text": "The main method signature is incorrect",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_basics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q006",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Java primitive types?",
+    "code": null,
+    "explanation": "Java has 8 primitive types: byte (8-bit), short (16-bit), int (32-bit), long (64-bit), float (32-bit), double (64-bit), char (16-bit), and boolean. char stores 16-bit Unicode characters.",
+    "choices": [
+      {
+        "id": "se17s1_q006_a",
+        "text": "string is a primitive type",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q006_b",
+        "text": "char stores 8-bit characters",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q006_c",
+        "text": "int stores a 32-bit integer",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q006_d",
+        "text": "There are a total of 6 primitive types",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q007",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes local variables?",
+    "code": null,
+    "explanation": "Local variables must be initialized before use. Instance variables and class variables have default values, but local variables do not. Attempting to use an uninitialized local variable results in a compilation error.",
+    "choices": [
+      {
+        "id": "se17s1_q007_a",
+        "text": "Local variables are automatically assigned default values",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q007_b",
+        "text": "Local variables do not need to be initialized at declaration, but must be initialized before use",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q007_c",
+        "text": "Access modifiers can be applied to local variables",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q007_d",
+        "text": "Local variables can be accessed from outside the method",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q008",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int a = 10;\n        long b = a;\n        float f = b;\n        System.out.println(a + \" \" + b + \" \" + f);\n    }\n}",
+    "explanation": "int to long is an implicit widening conversion and works without issues. long to float is also an implicit widening conversion. Since float is a floating-point number, it displays as 10.0. The result is \"10 10 10.0\".",
+    "choices": [
+      {
+        "id": "se17s1_q008_a",
+        "text": "10 10 10",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q008_b",
+        "text": "10 10 10.0",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q008_c",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q008_d",
+        "text": "10 10L 10.0f",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q009",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Choose the appropriate keyword to fill in the blank so that the variable num becomes unmodifiable.\n\n___ int num = 100;",
+    "code": null,
+    "explanation": "Using the final keyword makes a variable unmodifiable (constant). Attempting to reassign a final variable results in a compilation error.",
+    "choices": [
+      {
+        "id": "se17s1_q009_a",
+        "text": "const",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q009_b",
+        "text": "static",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q009_c",
+        "text": "final",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q009_d",
+        "text": "immutable",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q010",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        double d = 3.14;\n        int n = d;\n        System.out.println(n);\n    }\n}",
+    "explanation": "Converting from double to int is a narrowing conversion and cannot be done implicitly. An explicit cast int n = (int) d; is required. Since data loss may occur, the compiler detects this as an error.",
+    "choices": [
+      {
+        "id": "se17s1_q010_a",
+        "text": "The double literal 3.14 is written incorrectly",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q010_b",
+        "text": "Implicit narrowing conversion from double to int is not allowed",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q010_c",
+        "text": "println() cannot output int types",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q010_d",
+        "text": "double types cannot be used inside the main method",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "variables",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q011",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Java operator precedence?",
+    "code": null,
+    "explanation": "Java operators have a clear precedence. Multiplication (*) and division (/) have higher precedence than addition (+) and subtraction (-). Operators with the same precedence are evaluated left to right (left-associative). Assignment operators are right-associative.",
+    "choices": [
+      {
+        "id": "se17s1_q011_a",
+        "text": "Addition (+) has higher precedence than multiplication (*)",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q011_b",
+        "text": "All operators are evaluated from left to right",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q011_c",
+        "text": "Multiplication (*) and division (/) have higher precedence than addition (+) and subtraction (-)",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q011_d",
+        "text": "Parentheses () do not affect operator precedence",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q012",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 5;\n        int y = x++ + ++x;\n        System.out.println(\"x=\" + x + \" y=\" + y);\n    }\n}",
+    "explanation": "x++ is a post-increment that uses the current value 5. then increments x to 6. ++x is a pre-increment that increments x to 7, then uses the value 7. Therefore y = 5 + 7 = 12. The final result is x=7, y=12.",
+    "choices": [
+      {
+        "id": "se17s1_q012_a",
+        "text": "x=7 y=12",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q012_b",
+        "text": "x=7 y=11",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q012_c",
+        "text": "x=6 y=12",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q012_d",
+        "text": "x=7 y=13",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q013",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        boolean flag = true;\n        int result = flag ? 1 : \"two\";\n        System.out.println(result);\n    }\n}",
+    "explanation": "The second and third operands of the ternary operator must be of compatible types. Since int (1) and String (\"two\") are not compatible, the result cannot be assigned to an int variable, causing a compilation error.",
+    "choices": [
+      {
+        "id": "se17s1_q013_a",
+        "text": "The ternary operator cannot be used with boolean types",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q013_b",
+        "text": "The types of the second and third operands of the ternary operator do not match and cannot be assigned to an int variable",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q013_c",
+        "text": "A boolean variable cannot be used in the condition part of the ternary operator",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q013_d",
+        "text": "The string literal \"two\" is written incorrectly",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q014",
+    "lessonId": "exam_se17_silver_1",
+    "type": "multiChoice",
+    "question": "Which of the following are valid comparison operators in Java? (Select 2)",
+    "code": null,
+    "explanation": "Java comparison operators include == (equal to), != (not equal to), <, >, <=, and >=. = is an assignment operator, not a comparison operator. === does not exist in Java (it is a JavaScript operator).",
+    "choices": [
+      {
+        "id": "se17s1_q014_a",
+        "text": "==",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q014_b",
+        "text": "=",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q014_c",
+        "text": "!=",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q014_d",
+        "text": "===",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "operators",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q015",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the difference between the logical operators && and &?",
+    "code": null,
+    "explanation": "&& performs short-circuit evaluation; if the left operand is false, the right operand is not evaluated. On the other hand, & always evaluates both operands. This difference is significant when the right operand has side effects.",
+    "choices": [
+      {
+        "id": "se17s1_q015_a",
+        "text": "&& performs short-circuit evaluation; if the left operand is false, the right operand is not evaluated",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q015_b",
+        "text": "& performs short-circuit evaluation; if the left operand is false, the right operand is not evaluated",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q015_c",
+        "text": "There is no difference in behavior between && and &",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q015_d",
+        "text": "& cannot be used with boolean types",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "operators",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q016",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes if-else statements?",
+    "code": null,
+    "explanation": "The condition expression of an if statement must return a boolean value. In Java, unlike C, int values cannot be used as conditions. If the condition expression is not of boolean type, a compilation error occurs.",
+    "choices": [
+      {
+        "id": "se17s1_q016_a",
+        "text": "int values can be used as the condition of an if statement",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q016_b",
+        "text": "The condition of an if statement must be a boolean expression",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q016_c",
+        "text": "An else clause must always be written with an if statement",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q016_d",
+        "text": "Curly braces {} cannot be omitted even if the if body contains only one statement",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q017",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 3;\n        switch (x) {\n            case 1:\n                System.out.println(\"A\");\n            case 2:\n                System.out.println(\"B\");\n            case 3:\n                System.out.println(\"C\");\n            case 4:\n                System.out.println(\"D\");\n            default:\n                System.out.println(\"E\");\n        }\n    }\n}",
+    "explanation": "When a switch statement has no break statements, all case clauses after the matched case are executed (fall-through). Since x=3 matches case 3, the code for case 3, case 4, and default are all executed.",
+    "choices": [
+      {
+        "id": "se17s1_q017_a",
+        "text": "C",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q017_b",
+        "text": "C\nD\nE",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q017_c",
+        "text": "C\nD",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q017_d",
+        "text": "A\nB\nC\nD\nE",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q018",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the ternary (conditional) operator?",
+    "code": null,
+    "explanation": "The ternary operator takes the form: condition ? value1 : value2. It returns value1 if the condition is true, and value2 if false. Since it returns a value as an expression, it can be used for variable assignment or as a method argument. It serves as an alternative to if-else statements.",
+    "choices": [
+      {
+        "id": "se17s1_q018_a",
+        "text": "The ternary operator takes three operands and returns a value based on the condition",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q018_b",
+        "text": "The ternary operator does not return a value",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q018_c",
+        "text": "An int type can be specified for the condition part of the ternary operator",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q018_d",
+        "text": "The ternary operator cannot be nested",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q019",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        long value = 100L;\n        switch (value) {\n            case 100:\n                System.out.println(\"百\");\n                break;\n            default:\n                System.out.println(\"その他\");\n        }\n    }\n}",
+    "explanation": "The long type cannot be used in a switch statement expression. Types allowed in switch statements are byte, short, char, int, String, enum, and their wrapper classes. long, float, double, and boolean cannot be used.",
+    "choices": [
+      {
+        "id": "se17s1_q019_a",
+        "text": "The case clause requires L after the integer literal",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q019_b",
+        "text": "The long type cannot be used in a switch statement expression",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q019_c",
+        "text": "A break statement is required in the default clause",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q019_d",
+        "text": "The literal 100L is written incorrectly",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q020",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following is correct regarding if and else if statements?",
+    "code": null,
+    "explanation": "In an if-else if-else statement, conditions are evaluated from top to bottom, and only the block of the first condition that evaluates to true is executed. Once a true condition is found, subsequent conditions are not evaluated.",
+    "choices": [
+      {
+        "id": "se17s1_q020_a",
+        "text": "All if conditions are evaluated",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q020_b",
+        "text": "Only the block of the first condition that evaluates to true is executed",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q020_c",
+        "text": "Only one else if clause can be written",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q020_d",
+        "text": "The else clause must be written immediately after the if statement",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "control_flow",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q021",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the header of a for statement: for(initialization; condition; update)?",
+    "code": null,
+    "explanation": "The initialization, condition, and update sections of a for statement can each be omitted. for(;;) with all sections omitted creates an infinite loop. When the condition section is omitted, it is treated as true.",
+    "choices": [
+      {
+        "id": "se17s1_q021_a",
+        "text": "Omitting all of the initialization, condition, and update sections causes a compilation error",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q021_b",
+        "text": "The condition section cannot be omitted",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q021_c",
+        "text": "The initialization, condition, and update sections can each be omitted",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q021_d",
+        "text": "Multiple variables cannot be declared in the initialization section",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q022",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int i = 0;\n        while (i < 5) {\n            if (i == 3) break;\n            System.out.print(i + \" \");\n            i++;\n        }\n    }\n}",
+    "explanation": "The while loop starts with i=0, and when i==3, the loop is exited via break. The print statement is executed for i=0, 1, 2, so \"0 1 2 \" is output.",
+    "choices": [
+      {
+        "id": "se17s1_q022_a",
+        "text": "0 1 2 3",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q022_b",
+        "text": "0 1 2 ",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q022_c",
+        "text": "0 1 2 3 4",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q022_d",
+        "text": "1 2 3",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q023",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the do-while statement?",
+    "code": null,
+    "explanation": "The do-while statement evaluates the condition at the end of the loop, so the loop body is always executed at least once. The while statement evaluates the condition first, so it may not execute at all if the condition is false. This is the key difference between do-while and while.",
+    "choices": [
+      {
+        "id": "se17s1_q023_a",
+        "text": "Like the while statement, the do-while statement may not execute at all if the condition is false",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q023_b",
+        "text": "The loop body of a do-while statement is always executed at least once",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q023_c",
+        "text": "The break statement cannot be used in a do-while statement",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q023_d",
+        "text": "A semicolon is not required at the end of a do-while statement",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q024",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank for the enhanced for (for-each) statement.\n\nint[] nums = {1, 2, 3, 4, 5};\nfor (int n ___ nums) {\n    System.out.println(n);\n}",
+    "code": null,
+    "explanation": "The syntax of the enhanced for (for-each) statement is: for (elementType variable : arrayOrIterable). The colon (:) is used to iterate through each element of an array or collection.",
+    "choices": [
+      {
+        "id": "se17s1_q024_a",
+        "text": "in",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q024_b",
+        "text": ":",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q024_c",
+        "text": "of",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q024_d",
+        "text": "->",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q025",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "What happens when the following code is compiled and executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] nums = {10, 20, 30};\n        for (int i = 0; i < nums.length; i++) {\n            nums[i] = nums[i] * 2;\n        }\n        for (long n : nums) {\n            System.out.println(n);\n        }\n    }\n}",
+    "explanation": "This code does not cause a compilation error. Implicit widening conversion from int to long is allowed, so a long variable can receive int array elements in a for-each statement. Compilation succeeds and outputs 20, 40, 60.",
+    "choices": [
+      {
+        "id": "se17s1_q025_a",
+        "text": "A long variable cannot be used with an int[] in an enhanced for statement",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q025_b",
+        "text": "The array length property must be the length() method",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q025_c",
+        "text": "No compilation error occurs and the code executes normally",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q025_d",
+        "text": "The array initialization syntax is incorrect",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "loops",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q026",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Java arrays?",
+    "code": null,
+    "explanation": "Java arrays are fixed-length and cannot be resized once created. The array size is obtained through the length field (not a method). Arrays are reference types and are created using new or with an initializer.",
+    "choices": [
+      {
+        "id": "se17s1_q026_a",
+        "text": "The size of an array can be changed after creation",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q026_b",
+        "text": "Arrays are primitive types",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q026_c",
+        "text": "The size of an array is obtained using the length() method",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q026_d",
+        "text": "Arrays are fixed-length and cannot be resized after creation",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q027",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "import java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {5, 3, 1, 4, 2};\n        Arrays.sort(arr);\n        System.out.println(arr[2]);\n        System.out.println(arr.length);\n    }\n}",
+    "explanation": "After sorting in ascending order with Arrays.sort(), the array becomes {1, 2, 3, 4, 5}. arr[2] is the element at index 2, which is 3. arr.length is the array length, which is 5. Therefore 3 and 5 are output.",
+    "choices": [
+      {
+        "id": "se17s1_q027_a",
+        "text": "1\n5",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q027_b",
+        "text": "3\n5",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q027_c",
+        "text": "4\n5",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q027_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q028",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "What happens when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] arr = new int[3];\n        arr[0] = 10;\n        arr[1] = 20;\n        arr[2] = 30;\n        arr[3] = 40;\n        System.out.println(arr[2]);\n    }\n}",
+    "explanation": "The array size is 3 (indices 0-2), but an attempt is made to access arr[3]. No compilation error occurs, but an ArrayIndexOutOfBoundsException is thrown at runtime.",
+    "choices": [
+      {
+        "id": "se17s1_q028_a",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q028_b",
+        "text": "30 is output",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q028_c",
+        "text": "An ArrayIndexOutOfBoundsException is thrown at runtime",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q028_d",
+        "text": "40 is output",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q029",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "What is the correct output of the following code?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[][] matrix = {{1, 2}, {3, 4, 5}, {6}};\n        System.out.println(matrix.length);\n        System.out.println(matrix[1].length);\n    }\n}",
+    "explanation": "Java multidimensional arrays support jagged arrays (irregular arrays). matrix.length is the length of the outer array, which is 3. matrix[1] is {3, 4, 5}, so matrix[1].length is 3.",
+    "choices": [
+      {
+        "id": "se17s1_q029_a",
+        "text": "3\n3",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q029_b",
+        "text": "3\n2",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q029_c",
+        "text": "2\n3",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q029_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q030",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following is a correct array declaration?",
+    "code": null,
+    "explanation": "Java provides several syntaxes for array declaration. int[] arr = new int[5]; is a correct declaration. new int[]; requires a size specification. new int[5]{1,2,3,4,5} cannot use both size specification and an initializer simultaneously. int arr[] = new int[5]; is also correct, but int[] arr = new int[5]; is the most common form.",
+    "choices": [
+      {
+        "id": "se17s1_q030_a",
+        "text": "int[] arr = new int[];",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q030_b",
+        "text": "int[] arr = new int[5];",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q030_c",
+        "text": "int[] arr = new int[5]{1,2,3,4,5};",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q030_d",
+        "text": "int[5] arr = new int[];",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "arrays",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q031",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes method overloading?",
+    "code": null,
+    "explanation": "Method overloading means defining methods with the same name but different parameter types, count, or order. Methods that differ only in return type cannot be overloaded. Differences in access modifiers are also not overloading criteria.",
+    "choices": [
+      {
+        "id": "se17s1_q031_a",
+        "text": "Method names must be different",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q031_b",
+        "text": "Methods can be overloaded if only the return type differs",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q031_c",
+        "text": "Methods with the same name but different parameter types or count can be defined",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q031_d",
+        "text": "Overloaded methods must have the same parameter list",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q032",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    static void print(String... args) {\n        System.out.println(args.length);\n        for (String s : args) {\n            System.out.print(s + \" \");\n        }\n        System.out.println();\n    }\n    public static void main(String[] args) {\n        print(\"A\", \"B\", \"C\");\n    }\n}",
+    "explanation": "The varargs parameter String... args is internally treated as String[]. Since three arguments \"A\", \"B\", \"C\" are passed, args.length is 3. Then each element is output in order.",
+    "choices": [
+      {
+        "id": "se17s1_q032_a",
+        "text": "3\nA B C ",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q032_b",
+        "text": "1\nA B C ",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q032_c",
+        "text": "3\nABC",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q032_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q033",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes method return values?",
+    "code": null,
+    "explanation": "In methods with a void return type, the return statement can be omitted. In methods with a non-void return type, a return statement is required in all execution paths. Even in void methods, return; (without a value) can be used for early return.",
+    "choices": [
+      {
+        "id": "se17s1_q033_a",
+        "text": "A return statement must always be written in void methods",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q033_b",
+        "text": "In void methods, the return statement can be omitted, and return; can be used for early return",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q033_c",
+        "text": "A return statement can be omitted in methods with an int return type",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q033_d",
+        "text": "Writing code after a return statement does not cause a compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q034",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Main {\n    static void greet(String name, String... titles) {\n        System.out.println(name + \": \" + String.join(\", \", titles));\n    }\n    static void greet(String... args) {\n        System.out.println(String.join(\" \", args));\n    }\n    public static void main(String[] args) {\n        greet(\"田中\", \"部長\", \"課長\");\n    }\n}",
+    "explanation": "Both methods match the call greet(\"田中\", \"部長\", \"課長\"), so the compiler cannot determine which one to call, resulting in an ambiguous invocation compilation error. Overloaded methods with varargs can create ambiguity.",
+    "choices": [
+      {
+        "id": "se17s1_q034_a",
+        "text": "The overloaded methods with varargs are ambiguous and the call cannot be resolved",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q034_b",
+        "text": "The String.join() method does not exist",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q034_c",
+        "text": "Only one varargs method can be defined per class",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q034_d",
+        "text": "A String parameter cannot precede a varargs parameter",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q035",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes static methods?",
+    "code": "public class Counter {\n    private int count = 0;\n    private static int total = 0;\n    \n    public static void addTotal() {\n        total++;\n    }\n}",
+    "explanation": "A static method belongs to the class and can be called without creating an instance. From a static method, only static fields and static methods can be directly accessed; instance fields and instance methods cannot be directly accessed. The this keyword also cannot be used.",
+    "choices": [
+      {
+        "id": "se17s1_q035_a",
+        "text": "Instance variables can be directly accessed from a static method",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q035_b",
+        "text": "The this keyword can be used in a static method",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q035_c",
+        "text": "From a static method, only static variables and static methods can be directly accessed",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q035_d",
+        "text": "An instance is required to call a static method",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "methods",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q036",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the immutability of the String class?",
+    "code": null,
+    "explanation": "Java String objects are immutable. Calling methods like replace() or toUpperCase() does not modify the original String object; a new String object is returned. StringBuilder is recommended for frequent string modifications.",
+    "choices": [
+      {
+        "id": "se17s1_q036_a",
+        "text": "The content of a String object can be modified",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q036_b",
+        "text": "The replace() method directly modifies the original String object",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q036_c",
+        "text": "String objects are immutable, and method calls return a new object",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q036_d",
+        "text": "StringBuilder is also immutable like String",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q037",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String s = \"Hello World\";\n        System.out.println(s.substring(6));\n        System.out.println(s.substring(0, 5));\n        System.out.println(s.indexOf('o'));\n    }\n}",
+    "explanation": "substring(6) returns from index 6 to the end, which is \"World\". substring(0, 5) returns from index 0 to 4, which is \"Hello\". indexOf('o') returns the index of the first occurrence of 'o', which is 4.",
+    "choices": [
+      {
+        "id": "se17s1_q037_a",
+        "text": "World\nHello\n4",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q037_b",
+        "text": "Hello\nWorld\n4",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q037_c",
+        "text": "World\nHello\n7",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q037_d",
+        "text": "World\nHello\n-1",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q038",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes text blocks introduced in Java SE 15?",
+    "code": "String json = \"\"\"\n        {\n            \"name\": \"Java\",\n            \"version\": 17\n        }\n        \"\"\";",
+    "explanation": "Text blocks are multi-line string literals enclosed in triple quotes (\"\"\"). The position of the closing \"\"\" determines the removal of incidental whitespace. Escape sequences can also be used within text blocks. The result is a String object.",
+    "choices": [
+      {
+        "id": "se17s1_q038_a",
+        "text": "The type of a text block is TextBlock",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q038_b",
+        "text": "Escape sequences cannot be used within text blocks",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q038_c",
+        "text": "Text blocks are enclosed in triple quotes and the result is of type String",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q038_d",
+        "text": "Characters can be written after the opening \"\"\"",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q039",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank to concatenate strings using StringBuilder.\n\nStringBuilder sb = new StringBuilder(\"Hello\");\nsb.___(\" World\");\nSystem.out.println(sb.toString());",
+    "code": null,
+    "explanation": "The append() method of StringBuilder appends a string to the end. Since StringBuilder is mutable, the append method modifies and returns the same object. The result outputs \"Hello World\".",
+    "choices": [
+      {
+        "id": "se17s1_q039_a",
+        "text": "add",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q039_b",
+        "text": "append",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q039_c",
+        "text": "concat",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q039_d",
+        "text": "insert",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q040",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has an error. What is the cause of the error?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String s = \"Hello\";\n        s.concat(\" World\");\n        System.out.println(s);\n    }\n}",
+    "explanation": "This code does not cause a compilation error, but does not produce the expected result. Since String is an immutable object, concat() returns a new String object, but since the return value is not assigned to a variable, the value of s remains \"Hello\". This is a logic error (bug).",
+    "choices": [
+      {
+        "id": "se17s1_q040_a",
+        "text": "The concat() method does not exist",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q040_b",
+        "text": "Since String is immutable, the return value of concat() is not reassigned to a variable",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q040_c",
+        "text": "A string literal cannot be used as an argument to concat()",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q040_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "strings",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q041",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the record class officially introduced in Java SE 16?",
+    "code": "public record Point(int x, int y) {}",
+    "explanation": "Record is a feature for concisely defining data carrier classes. The compiler automatically generates a constructor, getters (x(), y()), equals(), hashCode(), and toString() methods. Record fields are implicitly final, and the record class itself is also final.",
+    "choices": [
+      {
+        "id": "se17s1_q041_a",
+        "text": "Fields of a record class are mutable",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q041_b",
+        "text": "A record class can extend other classes",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q041_c",
+        "text": "equals(), hashCode(), and toString() are automatically generated in a record class",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q041_d",
+        "text": "Additional instance fields can be defined in a record class",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q042",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    static class Animal {\n        String name;\n        Animal() {\n            this(\"Unknown\");\n            System.out.println(\"Animal()\");\n        }\n        Animal(String name) {\n            this.name = name;\n            System.out.println(\"Animal(\" + name + \")\");\n        }\n    }\n    public static void main(String[] args) {\n        Animal a = new Animal();\n    }\n}",
+    "explanation": "The no-argument constructor calls the parameterized constructor via this(\"Unknown\"). First, Animal(String) is executed and \"Animal(Unknown)\" is output. Then the remainder of Animal() executes and \"Animal()\" is output.",
+    "choices": [
+      {
+        "id": "se17s1_q042_a",
+        "text": "Animal()\nAnimal(Unknown)",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q042_b",
+        "text": "Animal(Unknown)\nAnimal()",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q042_c",
+        "text": "Animal(Unknown)",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q042_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q043",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes sealed classes officially introduced in Java SE 17?",
+    "code": null,
+    "explanation": "A sealed class uses the permits keyword to explicitly restrict which classes can extend it. Subclasses specified by permits must be declared as final, sealed, or non-sealed. This enables strict control over the class hierarchy.",
+    "choices": [
+      {
+        "id": "se17s1_q043_a",
+        "text": "There are no restrictions on subclasses of a sealed class",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q043_b",
+        "text": "Subclasses of a sealed class must be declared as final, sealed, or non-sealed",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q043_c",
+        "text": "Sealed cannot be applied to interfaces",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q043_d",
+        "text": "Sealed classes cannot be combined with abstract classes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q044",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public record Employee(String name, int age) {\n    private String department;\n    \n    public Employee(String name, int age, String department) {\n        this.name = name;\n        this.age = age;\n        this.department = department;\n    }\n}",
+    "explanation": "In a record class, instance fields other than the record header (components) cannot be added. private String department; causes a compilation error. This restriction exists to maintain the conciseness of records as data carriers.",
+    "choices": [
+      {
+        "id": "se17s1_q044_a",
+        "text": "A constructor cannot be defined in a record class",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q044_b",
+        "text": "Instance fields other than the record header cannot be added to a record class",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q044_c",
+        "text": "private cannot be used for record class fields",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q044_d",
+        "text": "The number of constructor arguments differs from the record header",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "classes",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q045",
+    "lessonId": "exam_se17_silver_1",
+    "type": "multiChoice",
+    "question": "Which of the following statements about Java classes are correct? (Select 2)",
+    "code": null,
+    "explanation": "In Java, a class can only inherit from one class (single inheritance). Also, a constructor must have the same name as the class. If a return type is specified for a constructor, it is treated as a method. An abstract class cannot be directly instantiated.",
+    "choices": [
+      {
+        "id": "se17s1_q045_a",
+        "text": "Java allows multiple class inheritance (multiple inheritance)",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q045_b",
+        "text": "The constructor name must match the class name",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q045_c",
+        "text": "An abstract class cannot be directly instantiated",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q045_d",
+        "text": "All classes must explicitly extend the Object class",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "classes",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q046",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Java access modifiers?",
+    "code": null,
+    "explanation": "Java has 4 access levels: public (accessible from anywhere), protected (accessible from the same package and subclasses), default (no modifier, same package only), and private (same class only). protected is also accessible from classes in the same package.",
+    "choices": [
+      {
+        "id": "se17s1_q046_a",
+        "text": "Protected members are accessible only from subclasses",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q046_b",
+        "text": "When access modifiers are omitted, the access level is the same as public",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q046_c",
+        "text": "Protected members are accessible from the same package and subclasses",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q046_d",
+        "text": "Private members are accessible from subclasses",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q047",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following best describes the purpose of encapsulation?",
+    "code": null,
+    "explanation": "The main purpose of encapsulation is to hide data (fields) and allow access only through methods, preventing unauthorized data modification and ensuring that changes to internal implementation do not affect external code.",
+    "choices": [
+      {
+        "id": "se17s1_q047_a",
+        "text": "To improve program execution speed",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q047_b",
+        "text": "To hide data and control unauthorized access from outside",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q047_c",
+        "text": "To combine multiple classes into one",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q047_d",
+        "text": "To reduce memory usage",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q048",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following class designs best adheres to the principle of encapsulation?",
+    "code": null,
+    "explanation": "The principle of encapsulation requires making fields private and providing access through public getter/setter methods. Validation can be added to setters to prevent invalid values. Public fields risk being directly modified from outside.",
+    "choices": [
+      {
+        "id": "se17s1_q048_a",
+        "text": "Make fields public so they can be accessed from anywhere",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q048_b",
+        "text": "Make fields private and provide public getters/setters as needed",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q048_c",
+        "text": "Make all methods private",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q048_d",
+        "text": "Make fields protected to allow direct access from subclasses",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q049",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    static class Person {\n        private String name;\n        private int age;\n        \n        Person(String name, int age) {\n            this.name = name;\n            this.age = setAge(age);\n        }\n        \n        private int setAge(int age) {\n            return age < 0 ? 0 : age;\n        }\n        \n        public String toString() {\n            return name + \"(\" + age + \")\";\n        }\n    }\n    public static void main(String[] args) {\n        Person p = new Person(\"太郎\", -5);\n        System.out.println(p);\n    }\n}",
+    "explanation": "In the constructor, setAge(-5) is called, and since -5 < 0, 0 is returned. So age becomes 0. The toString() method outputs \"太郎(0)\".",
+    "choices": [
+      {
+        "id": "se17s1_q049_a",
+        "text": "太郎(-5)",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q049_b",
+        "text": "太郎(0)",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q049_c",
+        "text": "An exception is thrown",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q049_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q050",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank to allow the name field to be retrieved from outside.\n\npublic class Student {\n    private String name;\n    \n    public ___ getName() {\n        return name;\n    }\n}",
+    "code": null,
+    "explanation": "The return type of a getter method must match the type of the field. Since the name field is of type String, the return type of the getName method must also be String.",
+    "choices": [
+      {
+        "id": "se17s1_q050_a",
+        "text": "void",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q050_b",
+        "text": "String",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q050_c",
+        "text": "int",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q050_d",
+        "text": "Object",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "encapsulation",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q051",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Java inheritance?",
+    "code": null,
+    "explanation": "Java does not allow multiple class inheritance; only one class can be inherited (single inheritance). However, multiple interfaces can be implemented. A subclass inherits private members of the parent class but cannot directly access them.",
+    "choices": [
+      {
+        "id": "se17s1_q051_a",
+        "text": "Java allows inheriting from multiple classes simultaneously",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q051_b",
+        "text": "A subclass can directly access private members of the parent class",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q051_c",
+        "text": "A subclass can extend only one class and implement multiple interfaces",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q051_d",
+        "text": "A final class can be inherited",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q052",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    static class Parent {\n        void greet() {\n            System.out.println(\"Hello from Parent\");\n        }\n    }\n    static class Child extends Parent {\n        @Override\n        void greet() {\n            super.greet();\n            System.out.println(\"Hello from Child\");\n        }\n    }\n    public static void main(String[] args) {\n        Parent p = new Child();\n        p.greet();\n    }\n}",
+    "explanation": "A Child object is assigned to a variable of type Parent. Since the greet() method is overridden, Child's greet() is called. super.greet() outputs \"Hello from Parent\", then \"Hello from Child\" is output.",
+    "choices": [
+      {
+        "id": "se17s1_q052_a",
+        "text": "Hello from Parent",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q052_b",
+        "text": "Hello from Child",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q052_c",
+        "text": "Hello from Parent\nHello from Child",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q052_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q053",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "In the following sealed class definition, which is the correct declaration for the Rectangle class?",
+    "code": "public sealed class Shape permits Circle, Rectangle {}\nfinal class Circle extends Shape {}\n// Definition for Rectangle?",
+    "explanation": "Subclasses of a sealed class must be declared as final, sealed, or non-sealed. Since Rectangle is a class permitted by permits, it must be declared with one of these modifiers. Making it non-sealed allows Rectangle to be further inherited.",
+    "choices": [
+      {
+        "id": "se17s1_q053_a",
+        "text": "class Rectangle extends Shape {}",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q053_b",
+        "text": "abstract class Rectangle extends Shape {}",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q053_c",
+        "text": "non-sealed class Rectangle extends Shape {}",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q053_d",
+        "text": "open class Rectangle extends Shape {}",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q054",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Main {\n    static class Parent {\n        public int getValue() {\n            return 10;\n        }\n    }\n    static class Child extends Parent {\n        @Override\n        public String getValue() {\n            return \"ten\";\n        }\n    }\n}",
+    "explanation": "When overriding a method, the return type must be covariant — it must be the same as or a subtype of the original method's return type. Since int and String are not compatible, a compilation error occurs.",
+    "choices": [
+      {
+        "id": "se17s1_q054_a",
+        "text": "The @Override annotation cannot be used",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q054_b",
+        "text": "The return type cannot be changed from int to String in an override",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q054_c",
+        "text": "Parent class is final and cannot be overridden",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q054_d",
+        "text": "Overriding is not possible in static inner classes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "inheritance",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q055",
+    "lessonId": "exam_se17_silver_1",
+    "type": "multiChoice",
+    "question": "Which of the following are correct rules for method overriding? (Select 3)",
+    "code": null,
+    "explanation": "Override rules: (1) The parameter list must be identical. (2) The return type must be the same or a subtype (covariant return type). (3) The access modifier must be the same or broader. (4) The throws clause can specify narrower (more specific) exceptions or no exceptions. Static methods cannot be overridden (they are hidden).",
+    "choices": [
+      {
+        "id": "se17s1_q055_a",
+        "text": "The parameter list must be identical to the parent class method",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q055_b",
+        "text": "The access modifier can be narrower than the parent class method",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q055_c",
+        "text": "The return type must be the same as or a subtype of the parent class method",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q055_d",
+        "text": "Static methods cannot be overridden",
+        "isCorrect": true,
+        "order": 4
+      },
+      {
+        "id": "se17s1_q055_e",
+        "text": "Private methods can be overridden",
+        "isCorrect": false,
+        "order": 5
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 3,
+    "certificationTopic": "inheritance",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q056",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes polymorphism?",
+    "code": null,
+    "explanation": "With polymorphism, a parent class variable can hold a subclass object, and the overridden method of the subclass is called at runtime (dynamic dispatch). This allows different behaviors through the same interface.",
+    "choices": [
+      {
+        "id": "se17s1_q056_a",
+        "text": "A parent class object can be assigned to a subclass variable",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q056_b",
+        "text": "A parent class variable can reference a subclass object, and the subclass method is called at runtime",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q056_c",
+        "text": "Polymorphism determines which method to call at compile time",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q056_d",
+        "text": "Polymorphism works with final methods",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q057",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed? (Using pattern matching for instanceof from Java SE 16)",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object obj = \"Hello Java 17\";\n        if (obj instanceof String s && s.length() > 5) {\n            System.out.println(s.toUpperCase());\n        } else {\n            System.out.println(\"Not a long string\");\n        }\n    }\n}",
+    "explanation": "Pattern matching for instanceof (Java SE 16+) allows declaring a variable s cast to the checked type simultaneously with the instanceof check. obj is \"Hello Java 17\" (String type, length 13), so the condition is true, and s.toUpperCase() outputs \"HELLO JAVA 17\".",
+    "choices": [
+      {
+        "id": "se17s1_q057_a",
+        "text": "HELLO JAVA 17",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q057_b",
+        "text": "Hello Java 17",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q057_c",
+        "text": "Not a long string",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q057_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q058",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the following code?",
+    "code": "public class Main {\n    static class Animal {\n        void sound() { System.out.println(\"...\"); }\n    }\n    static class Dog extends Animal {\n        void sound() { System.out.println(\"Woof\"); }\n        void fetch() { System.out.println(\"Fetching\"); }\n    }\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        a.fetch();\n    }\n}",
+    "explanation": "The type of variable a is Animal, and the Animal class does not define a fetch() method. Since a is treated as Animal type at compile time, calling fetch() causes a compilation error. It could be called with a downcast: ((Dog)a).fetch().",
+    "choices": [
+      {
+        "id": "se17s1_q058_a",
+        "text": "\"Fetching\" is output",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q058_b",
+        "text": "\"Woof\" is output",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q058_c",
+        "text": "A compilation error occurs (Animal type does not have a fetch method)",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q058_d",
+        "text": "A ClassCastException is thrown at runtime",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q059",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank for pattern matching for instanceof (Java SE 16+).\n\nObject obj = \"Hello\";\nif (obj ___ String s) {\n    System.out.println(s.length());\n}",
+    "code": null,
+    "explanation": "Pattern matching for instanceof uses the instanceof keyword to perform type checking and automatic casting to a variable simultaneously. With obj instanceof String s, if obj is of type String, the automatically cast value is assigned to s.",
+    "choices": [
+      {
+        "id": "se17s1_q059_a",
+        "text": "is",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q059_b",
+        "text": "instanceof",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q059_c",
+        "text": "matches",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q059_d",
+        "text": "cast",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q060",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "What happens when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object obj = Integer.valueOf(42);\n        String s = (String) obj;\n        System.out.println(s);\n    }\n}",
+    "explanation": "obj references an Integer object. Attempting to cast it to String throws a ClassCastException at runtime because Integer and String have no inheritance relationship. At compile time, the downcast from Object to String is allowed, but the type mismatch is detected at runtime.",
+    "choices": [
+      {
+        "id": "se17s1_q060_a",
+        "text": "\"42\" is output",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q060_b",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q060_c",
+        "text": "A ClassCastException is thrown at runtime",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q060_d",
+        "text": "null is output",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "polymorphism",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q061",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes default methods in interfaces?",
+    "code": null,
+    "explanation": "Since Java SE 8, default methods can be defined in interfaces. Default methods have an implementation. They can be overridden in implementing classes, but if not overridden, the default implementation is used.",
+    "choices": [
+      {
+        "id": "se17s1_q061_a",
+        "text": "Default methods are abstract and cannot have an implementation",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q061_b",
+        "text": "Default methods have an implementation and can be overridden in implementing classes",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q061_c",
+        "text": "Default methods were first introduced in Java SE 17",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q061_d",
+        "text": "Default methods must always be overridden in implementing classes",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q062",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes interfaces?",
+    "code": null,
+    "explanation": "Fields in a Java interface are implicitly public static final, meaning they are treated as constants. Interfaces cannot be instantiated. A class can implement multiple interfaces.",
+    "choices": [
+      {
+        "id": "se17s1_q062_a",
+        "text": "Fields of an interface are instance variables",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q062_b",
+        "text": "A class can implement only one interface",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q062_c",
+        "text": "Fields of an interface are implicitly public static final",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q062_d",
+        "text": "An interface can be instantiated with the new keyword",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q063",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the following sealed interface definition?",
+    "code": "public sealed interface Drawable permits Circle, Square {\n    void draw();\n}\nfinal class Circle implements Drawable {\n    public void draw() { System.out.println(\"Circle\"); }\n}\nnon-sealed class Square implements Drawable {\n    public void draw() { System.out.println(\"Square\"); }\n}",
+    "explanation": "A sealed interface allows only the classes or interfaces specified with permits to implement or extend it. Circle is declared as final, so it cannot be further inherited. Square is declared as non-sealed, so other classes can freely extend Square.",
+    "choices": [
+      {
+        "id": "se17s1_q063_a",
+        "text": "Classes other than Circle and Square can also implement Drawable",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q063_b",
+        "text": "Circle can be further extended, but Square cannot",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q063_c",
+        "text": "Square is non-sealed so it can be further extended, but Circle is final so it cannot be inherited",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q063_d",
+        "text": "Methods cannot be defined in a sealed interface",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q064",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "interface Greeter {\n    default String greet() {\n        return \"Hello\";\n    }\n}\n\ninterface JapaneseGreeter extends Greeter {\n    default String greet() {\n        return \"こんにちは\";\n    }\n}\n\npublic class Main implements JapaneseGreeter {\n    public static void main(String[] args) {\n        Main m = new Main();\n        System.out.println(m.greet());\n    }\n}",
+    "explanation": "The Main class implements JapaneseGreeter, which overrides the greet() method from Greeter. Since the default method of JapaneseGreeter is used, \"こんにちは\" is output.",
+    "choices": [
+      {
+        "id": "se17s1_q064_a",
+        "text": "Hello",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q064_b",
+        "text": "こんにちは",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q064_c",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q064_d",
+        "text": "A runtime error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q065",
+    "lessonId": "exam_se17_silver_1",
+    "type": "multiChoice",
+    "question": "Which of the following can be defined in an interface? (Select 2)",
+    "code": null,
+    "explanation": "Since Java SE 8, interfaces can define abstract methods, default methods, and static methods. Since Java SE 9, private methods can also be defined. Constructors and instance fields cannot be defined in interfaces.",
+    "choices": [
+      {
+        "id": "se17s1_q065_a",
+        "text": "Constructors",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q065_b",
+        "text": "Default methods",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q065_c",
+        "text": "Instance fields",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q065_d",
+        "text": "Static methods",
+        "isCorrect": true,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "interfaces",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q066",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes Java exceptions?",
+    "code": null,
+    "explanation": "Java exceptions are classified into checked exceptions (subclasses of Exception, excluding RuntimeException) and unchecked exceptions (subclasses of RuntimeException). Checked exceptions must be declared in a method's throws clause or handled with try-catch. Unchecked exceptions do not have this requirement.",
+    "choices": [
+      {
+        "id": "se17s1_q066_a",
+        "text": "RuntimeException is a checked exception",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q066_b",
+        "text": "Checked exceptions must be handled with catch or throws, otherwise a compilation error occurs",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q066_c",
+        "text": "All exceptions must be handled with try-catch",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q066_d",
+        "text": "The Error class is a subclass of the Exception class",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q067",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            System.out.println(\"A\");\n            int result = 10 / 0;\n            System.out.println(\"B\");\n        } catch (ArithmeticException e) {\n            System.out.println(\"C\");\n        } finally {\n            System.out.println(\"D\");\n        }\n        System.out.println(\"E\");\n    }\n}",
+    "explanation": "After \"A\" is output, an ArithmeticException is thrown by 10/0. \"B\" is not executed. \"C\" is output in the catch block, and \"D\" is output in the finally block. After finally, the program continues normally and \"E\" is output.",
+    "choices": [
+      {
+        "id": "se17s1_q067_a",
+        "text": "A\nC\nD\nE",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q067_b",
+        "text": "A\nB\nC\nD\nE",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q067_c",
+        "text": "A\nC\nD",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q067_d",
+        "text": "A\nD\nE",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q068",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "What category of exception is NullPointerException classified as?",
+    "code": null,
+    "explanation": "NullPointerException is a subclass of RuntimeException and is classified as an unchecked exception. Since unchecked exceptions are not checked by the compiler, try-catch or throws declarations are not required.",
+    "choices": [
+      {
+        "id": "se17s1_q068_a",
+        "text": "Checked exception",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q068_b",
+        "text": "Unchecked exception (RuntimeException)",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q068_c",
+        "text": "Error",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q068_d",
+        "text": "Compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q069",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank for the try-with-resources statement to enable automatic resource closing.\n\ntry (___ reader = new BufferedReader(new FileReader(\"data.txt\"))) {\n    String line = reader.readLine();\n    System.out.println(line);\n}",
+    "code": null,
+    "explanation": "In a try-with-resources statement, resources that implement AutoCloseable can be declared. BufferedReader implements AutoCloseable, so declaring it explicitly as BufferedReader type is the correct approach. While a Reader type would compile, readLine() is a method specific to BufferedReader, so using Reader type would cause a compilation error.",
+    "choices": [
+      {
+        "id": "se17s1_q069_a",
+        "text": "Reader",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q069_b",
+        "text": "BufferedReader",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q069_c",
+        "text": "AutoCloseable",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q069_d",
+        "text": "FileReader",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q070",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "The following code has a compilation error. What is the cause of the error?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            throw new Exception(\"Error\");\n        } catch (RuntimeException e) {\n            System.out.println(\"Runtime: \" + e.getMessage());\n        }\n    }\n}",
+    "explanation": "throw new Exception(\"Error\") throws a checked exception. The catch block only catches RuntimeException, so Exception is not caught. Since a checked exception must be caught or declared with throws, a compilation error occurs.",
+    "choices": [
+      {
+        "id": "se17s1_q070_a",
+        "text": "The syntax of the throw statement is incorrect",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q070_b",
+        "text": "The checked exception (Exception) is not caught and there is no throws declaration",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q070_c",
+        "text": "A string cannot be passed to the Exception class constructor",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q070_d",
+        "text": "Syntax error in catching Exception with RuntimeException",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "exceptions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q071",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes var (local variable type inference) introduced in Java SE 10?",
+    "code": null,
+    "explanation": "var is a keyword used for local variable type inference, where the type is inferred from the initializer expression. var can only be used with local variables; it cannot be used for fields, method parameters, or return types. Declaration without initialization or initialization with null is not allowed.",
+    "choices": [
+      {
+        "id": "se17s1_q071_a",
+        "text": "var can also be used for class fields",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q071_b",
+        "text": "var can be declared without initialization",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q071_c",
+        "text": "var is used for local variable type inference, where the type is inferred from the initializer expression",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q071_d",
+        "text": "var is a keyword that enables dynamic typing",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q072",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the unmodifiable list created by List.of()?",
+    "code": "import java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> list = List.of(\"Apple\", \"Banana\", \"Cherry\");\n        System.out.println(list.size());\n        list.add(\"Date\");\n    }\n}",
+    "explanation": "The list created by List.of() is unmodifiable. The size() method outputs the element count of 3, but calling add() throws an UnsupportedOperationException at runtime. No compilation error occurs.",
+    "choices": [
+      {
+        "id": "se17s1_q072_a",
+        "text": "3 is output, followed by an UnsupportedOperationException being thrown",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q072_b",
+        "text": "3 and Date are output",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q072_c",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q072_d",
+        "text": "An IllegalStateException is thrown",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "java_api",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q073",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following uses of var causes a compilation error?",
+    "code": null,
+    "explanation": "var x = null; causes a compilation error because the type cannot be inferred from the null literal. var a = 10; infers int, var b = \"hello\"; infers String, and var c = List.of(1,2,3); infers List<Integer>, all of which are correctly inferred.",
+    "choices": [
+      {
+        "id": "se17s1_q073_a",
+        "text": "var a = 10;",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q073_b",
+        "text": "var b = \"hello\";",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q073_c",
+        "text": "var x = null;",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q073_d",
+        "text": "var c = List.of(1, 2, 3);",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q074",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the code with var and generics?",
+    "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<>();\n        list.add(\"Hello\");\n        list.add(123);\n    }\n}",
+    "explanation": "With var list = new ArrayList<>(), the diamond operator causes the compiler to infer ArrayList<Object>. Therefore, both String and int (auto-boxed to Integer) can be added. No compilation error occurs.",
+    "choices": [
+      {
+        "id": "se17s1_q074_a",
+        "text": "A compilation error occurs (type mismatch)",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q074_b",
+        "text": "list is inferred as ArrayList<String>",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q074_c",
+        "text": "list is inferred as ArrayList<Object>, and both String and Integer can be added",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q074_d",
+        "text": "A ClassCastException is thrown at runtime",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q075",
+    "lessonId": "exam_se17_silver_1",
+    "type": "multiChoice",
+    "question": "In which of the following locations can var NOT be used? (Select 3)",
+    "code": null,
+    "explanation": "var can only be used for local variable type inference. It cannot be used for method parameters, method return types, or class field declarations. It can be used as a local variable in for statements and try-with-resources statements.",
+    "choices": [
+      {
+        "id": "se17s1_q075_a",
+        "text": "Method parameters",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q075_b",
+        "text": "Method return type",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q075_c",
+        "text": "For loop variable",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q075_d",
+        "text": "Class field",
+        "isCorrect": true,
+        "order": 4
+      },
+      {
+        "id": "se17s1_q075_e",
+        "text": "Lambda expression parameters (Java SE 11+)",
+        "isCorrect": false,
+        "order": 5
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 3,
+    "certificationTopic": "var_type_inference",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q076",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes switch expressions officially introduced in Java SE 14?",
+    "code": null,
+    "explanation": "Switch expressions were finalized in Java SE 14. Switch expressions can return a value. Using arrow syntax (->) prevents fall-through. To return a value from multiple statements, use the yield keyword or write the expression directly on the right side of the arrow syntax.",
+    "choices": [
+      {
+        "id": "se17s1_q076_a",
+        "text": "In switch expressions, the break keyword is used to return a value",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q076_b",
+        "text": "Using arrow syntax (->) in a switch expression prevents fall-through",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q076_c",
+        "text": "Switch expressions cannot return a value",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q076_d",
+        "text": "There is no case where the default case cannot be omitted in a switch expression",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q077",
+    "lessonId": "exam_se17_silver_1",
+    "type": "outputPredict",
+    "question": "What is the output when the following code is executed?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int day = 3;\n        String result = switch (day) {\n            case 1, 7 -> \"Weekend\";\n            case 2, 3, 4, 5, 6 -> {\n                String msg = \"Weekday\";\n                yield msg + \" (Day \" + day + \")\";\n            }\n            default -> \"Unknown\";\n        };\n        System.out.println(result);\n    }\n}",
+    "explanation": "day=3 matches case 2,3,4,5,6. Inside the block, msg is assigned \"Weekday\", and yield returns msg + \" (Day \" + day + \")\", which is \"Weekday (Day 3)\". The result of the switch expression is assigned to result and output.",
+    "choices": [
+      {
+        "id": "se17s1_q077_a",
+        "text": "Weekday",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q077_b",
+        "text": "Weekday (Day 3)",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q077_c",
+        "text": "Unknown",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q077_d",
+        "text": "A compilation error occurs",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q078",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Choose the keyword used to return a value from a block within a switch expression.\n\nString result = switch (value) {\n    case 1 -> {\n        String s = \"One\";\n        ___ s;\n    }\n    default -> \"Other\";\n};",
+    "code": null,
+    "explanation": "When using a block {} with arrow syntax in a switch expression, the yield keyword is used to return a value. return is used for method return values and cannot be used inside switch expressions. break is for traditional switch statements.",
+    "choices": [
+      {
+        "id": "se17s1_q078_a",
+        "text": "return",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q078_b",
+        "text": "yield",
+        "isCorrect": true,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q078_c",
+        "text": "break",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q078_d",
+        "text": "output",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q079",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the following switch expression?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String season = \"SPRING\";\n        int code = switch (season) {\n            case \"SPRING\", \"SUMMER\" -> 1;\n            case \"AUTUMN\", \"WINTER\" -> 2;\n            default -> 0;\n        };\n        System.out.println(code);\n    }\n}",
+    "explanation": "When using arrow syntax in a switch expression, multiple values can be specified in one case separated by commas. season=\"SPRING\" matches case \"SPRING\", \"SUMMER\", so 1 is returned. A semicolon is required after the switch expression since it returns a value.",
+    "choices": [
+      {
+        "id": "se17s1_q079_a",
+        "text": "1 is output",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q079_b",
+        "text": "2 is output",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q079_c",
+        "text": "0 is output",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q079_d",
+        "text": "Multiple values cannot be specified in one case, causing a compilation error",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q080",
+    "lessonId": "exam_se17_silver_1",
+    "type": "multiChoice",
+    "question": "Which of the following are features of switch expressions? (Select 2)",
+    "code": null,
+    "explanation": "Switch expressions were officially introduced in Java SE 14. Switch expressions can return values. Using arrow syntax (->) prevents fall-through. All cases must be exhaustive, so default is often required for non-enum types. The traditional colon syntax can still be used.",
+    "choices": [
+      {
+        "id": "se17s1_q080_a",
+        "text": "Switch expressions can return a value and be assigned to a variable",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q080_b",
+        "text": "Only arrow syntax (->) can be used in switch expressions",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q080_c",
+        "text": "Arrow syntax in switch expressions does not cause fall-through",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q080_d",
+        "text": "A default case cannot be written in switch expressions",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "requiredSelections": 2,
+    "certificationTopic": "switch_expressions",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q081",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following is NOT a valid directive in module-info.java?",
+    "code": null,
+    "explanation": "The directives that can be written in module-info.java are: requires (dependency declaration), exports (package exposure), opens (reflection access), uses (service usage), and provides (service provision) — 5 types. imports is not a module directive; it is a regular import statement used in Java source files.",
+    "choices": [
+      {
+        "id": "se17s1_q081_a",
+        "text": "requires",
+        "isCorrect": false,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q081_b",
+        "text": "exports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q081_c",
+        "text": "imports",
+        "isCorrect": true,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q081_d",
+        "text": "opens",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q082",
+    "lessonId": "exam_se17_silver_1",
+    "type": "errorFind",
+    "question": "A compilation error occurs in the following configuration. What is the cause?",
+    "code": "// module-info.java\nmodule com.app {\n    requires com.lib;\n}\n\n// App.java\npackage com.app;\nimport com.lib.internal.Helper;\n\npublic class App {\n    public static void main(String[] args) {\n        Helper.doWork();\n    }\n}\n\n// com.lib's module-info.java\nmodule com.lib {\n    exports com.lib.api;\n    // com.lib.internal is not exported\n}",
+    "explanation": "The com.lib module only exports the com.lib.api package; the com.lib.internal package is not exported. In the module system, classes in unexported packages cannot be accessed from other modules even if they are public, so a compilation error occurs at the import statement.",
+    "choices": [
+      {
+        "id": "se17s1_q082_a",
+        "text": "The com.lib.internal package is not exported",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q082_b",
+        "text": "The requires com.lib declaration is invalid",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q082_c",
+        "text": "The Helper class is not public",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q082_d",
+        "text": "The main method signature is incorrect",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "normal"
+  },
+  {
+    "id": "se17s1_q083",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fillBlank",
+    "question": "Fill in the blank in module-info.java to expose the module's package.\n\nmodule com.example.lib {\n    ___ com.example.lib.api;\n}",
+    "code": null,
+    "explanation": "The exports directive makes the specified package within a module accessible from other modules. Only public types in exported packages can be used from other modules.",
+    "choices": [
+      {
+        "id": "se17s1_q083_a",
+        "text": "exports",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q083_b",
+        "text": "opens",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q083_c",
+        "text": "provides",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q083_d",
+        "text": "public",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "easy"
+  },
+  {
+    "id": "se17s1_q084",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the unnamed module?",
+    "code": null,
+    "explanation": "Code without a module-info.java is placed on the classpath and treated as the unnamed module. The unnamed module can read exported packages of all modules, but named modules cannot access the unnamed module.",
+    "choices": [
+      {
+        "id": "se17s1_q084_a",
+        "text": "Code without a module-info.java operates as the unnamed module on the classpath",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q084_b",
+        "text": "The unnamed module cannot access packages of other modules",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q084_c",
+        "text": "The unnamed module can be referenced from named modules",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q084_d",
+        "text": "The unnamed module was deprecated in Java 17",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  },
+  {
+    "id": "se17s1_q085",
+    "lessonId": "exam_se17_silver_1",
+    "type": "fourChoice",
+    "question": "Which of the following correctly describes the opens directive?",
+    "code": "module com.example.app {\n    opens com.example.app.model;\n}",
+    "explanation": "The opens directive allows the specified package to be accessible via reflection (runtime access). While exports permits compile-time access, opens permits reflective access at runtime. This is needed when frameworks (JPA, Jackson, etc.) operate on objects using reflection.",
+    "choices": [
+      {
+        "id": "se17s1_q085_a",
+        "text": "opens allows runtime access via reflection",
+        "isCorrect": true,
+        "order": 1
+      },
+      {
+        "id": "se17s1_q085_b",
+        "text": "opens has the same effect as exports",
+        "isCorrect": false,
+        "order": 2
+      },
+      {
+        "id": "se17s1_q085_c",
+        "text": "Packages exposed with opens can be imported at compile time",
+        "isCorrect": false,
+        "order": 3
+      },
+      {
+        "id": "se17s1_q085_d",
+        "text": "opens can only be used for the entire module and not at the package level",
+        "isCorrect": false,
+        "order": 4
+      }
+    ],
+    "correctOrder": null,
+    "certificationTopic": "modules",
+    "difficulty": "hard"
+  }
+]

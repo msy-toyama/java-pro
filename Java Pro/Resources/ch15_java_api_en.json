@@ -1,0 +1,1012 @@
+{
+  "courseId": "ch15",
+  "lessons": [
+    {
+      "id": "ch15_01",
+      "courseId": "ch15",
+      "title": "Wrapper Classes",
+      "summary": "Understand wrapper classes corresponding to primitive data types and the mechanism of Autoboxing and Unboxing",
+      "estimatedMinutes": 5,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The role of **wrapper classes** (Integer, Double, etc.)\n- The difference between valueOf() and parseXxx() [[methods]]\n- How **autoboxing** and **unboxing** work\n\nThese are important [[classes]] that bridge primitive types and object types.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "rule",
+          "title": "Primitive Types and Their Wrapper Classes",
+          "body": "Each of Java's 8 primitive [[data types]] has a corresponding **wrapper class**.\n\n| Primitive Type | Wrapper Class |\n|---|---|\n| byte | Byte |\n| short | Short |\n| int | Integer |\n| long | Long |\n| float | Float |\n| double | Double |\n| char | Character |\n| boolean | Boolean |\n\nNote that the wrapper for int is Integer, and for char it is Character.\nAll other wrapper classes simply capitalize the first letter of the primitive type name.\nAll wrapper classes belong to the java.lang package and can be used without import statements.",
+          "code": null,
+          "note": "Pay attention to the spelling: Integer (not Int) and Character (not Char).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "code",
+          "title": "How Autoboxing and Unboxing Work",
+          "body": "Autoboxing is the automatic conversion from a primitive data type to its corresponding **wrapper class**.\nConversely, unboxing is the automatic conversion from a wrapper class to a primitive data type.\nSince Java 5, the compiler performs these conversions automatically.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // Autoboxing: int → Integer\n        Integer num1 = 100;  // Integer.valueOf(100) is called automatically\n\n        // Unboxing: Integer → int\n        int num2 = num1;  // num1.intValue() is called automatically\n\n        // Autoboxing with ArrayList\n        java.util.ArrayList<Integer> list = new java.util.ArrayList<>();\n        list.add(42);  // int 42 is autoboxed and added as Integer(42)\n        int val = list.get(0);  // Unboxed and assigned to val as int\n\n        System.out.println(num1);  // 100\n        System.out.println(num2);  // 100\n        System.out.println(val);   // 42\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "tip",
+          "title": "Note the Difference Between valueOf() and parseXxx()",
+          "body": "Since these are often confused, let's organize them in a table.\n\n| Method | Return Type | Example |\n|---|---|---|\n| Integer.valueOf(\"123\") | Integer (wrapper type) | Returns an object |\n| Integer.parseInt(\"123\") | int (primitive type) | Returns a primitive |\n\nBoth convert a string to a number, but the return type is different.\n\nPassing a string that cannot be converted to a number throws a NumberFormatException.",
+          "code": null,
+          "note": "On exams, you may also be asked about Integer.valueOf()'s cache for values -128 to 127.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "code",
+          "title": "The parse and valueOf Methods",
+          "body": "**Wrapper classes** provide parse methods that convert strings to numeric values, and valueOf methods that return wrapper objects.\nInteger.parseInt converts a string to an int (primitive data type).\nInteger.valueOf converts a string to an Integer (wrapper object).\nPassing a string that cannot be converted to a number throws a NumberFormatException.\nSimilar methods are available in each wrapper class.",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        // String → primitive data type\n        int a = Integer.parseInt(\"123\");\n        double b = Double.parseDouble(\"3.14\");\n        boolean c = Boolean.parseBoolean(\"true\");\n\n        // String → wrapper object\n        Integer d = Integer.valueOf(\"456\");\n        Double e = Double.valueOf(\"2.71\");\n\n        System.out.println(a);  // 123\n        System.out.println(b);  // 3.14\n        System.out.println(c);  // true\n        System.out.println(d);  // 456\n        System.out.println(e);  // 2.71\n\n        // NumberFormatException example\n        // int f = Integer.parseInt(\"abc\");  // Runtime error\n    }\n}",
+          "note": "Boolean.parseBoolean returns true only when the argument is \"true\" (case-insensitive); all other values return false. No [[exception]] is thrown.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_01",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- Each primitive data type has a corresponding **wrapper class** (int → Integer, char → Character)\n- Autoboxing is the automatic conversion from primitive to wrapper; unboxing is the reverse\n- Integer.parseInt converts a string to int; Integer.valueOf converts a string to Integer\n- Passing a non-convertible string throws a NumberFormatException\n- Boolean.parseBoolean never throws an exception; everything other than \"true\" returns false",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_01_q1",
+          "lessonId": "ch15_01",
+          "type": "fourChoice",
+          "question": "Which is the wrapper class corresponding to int?",
+          "code": null,
+          "explanation": "The wrapper class for int is Integer. Int is not a class that exists in Java. Unlike byte → Byte, short → Short, and long → Long where you simply capitalize the first letter, int → Integer and char → Character have special names.",
+          "choices": [
+            {
+              "id": "ch15_01_q1_a",
+              "text": "Int",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_01_q1_b",
+              "text": "Integer",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_01_q1_c",
+              "text": "IntWrapper",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_01_q1_d",
+              "text": "Number",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_01_q2",
+          "lessonId": "ch15_01",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "Integer a = 10;\nint b = a + 20;\nSystem.out.println(b);",
+          "explanation": "Integer a = 10 autoboxes the int value 10 into an Integer type. In a + 20, a is unboxed back to an int value, and 10 + 20 = 30 is calculated. As a result, 30 is assigned to b, and 30 is printed.",
+          "choices": [
+            {
+              "id": "ch15_01_q2_a",
+              "text": "30",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_01_q2_b",
+              "text": "10",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_01_q2_c",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_01_q2_d",
+              "text": "Runtime error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_01_q3",
+          "lessonId": "ch15_01",
+          "type": "fillBlank",
+          "question": "Complete the code to convert the string \"100\" to an int type.\nint num = Integer.______(\"100\");",
+          "code": null,
+          "explanation": "Integer.parseInt() is a static method that converts a string to a primitive int. It parses the given string as a base-10 number and returns an int value. If the string cannot be parsed as a number, a NumberFormatException is thrown.",
+          "choices": [
+            {
+              "id": "ch15_01_q3_a",
+              "text": "parseInt",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_01_q3_b",
+              "text": "valueOf",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_01_q3_c",
+              "text": "toInt",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_01_q3_d",
+              "text": "parse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch15_02",
+      "courseId": "ch15",
+      "title": "Key Methods of the String Class",
+      "summary": "Understand the frequently used methods of the String class and the concept of immutability",
+      "estimatedMinutes": 5,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The meaning of String **immutability**\n- Key [[methods]] such as charAt, substring, indexOf, and replace\n- Proper usage of string comparison (equals vs ==)\n\nThis is the most frequently tested API group on both exams and in practice.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "code",
+          "title": "Basic String Methods",
+          "body": "The String class has many useful methods.\nlength() returns the length of the string, and charAt() returns the character at a specified position.\nsubstring() retrieves a substring, and indexOf() searches for the position of a character.\nNote that indices start from 0 in these methods.",
+          "code": "// Definition of the Main class\npublic class Main {\n    // Definition of the main method\n    public static void main(String[] args) {\n        // Variable declaration and initialization\n        String s = \"Hello Java\";\n\n        System.out.println(s.length());       // 10\n        System.out.println(s.charAt(0));       // H\n        System.out.println(s.charAt(6));       // J\n        System.out.println(s.indexOf('J'));    // 6\n        System.out.println(s.indexOf(\"Java\")); // 6\n        System.out.println(s.indexOf('Z'));    // -1 (when not found)\n\n        // substring(beginIndex) - from beginIndex to the end\n        System.out.println(s.substring(6));    // Java\n        // substring(beginIndex, endIndex) - from beginIndex to before endIndex\n        System.out.println(s.substring(0, 5)); // Hello\n    }\n}",
+          "note": "Note that the endIndex in substring(beginIndex, endIndex) is exclusive. s.substring(0, 5) returns characters at indices 0 through 4.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "tip",
+          "title": "Understanding String Immutability",
+          "body": "Once a String object is created, its contents cannot be changed.\n\n- str.toUpperCase() → returns a new String (the original str is unchanged)\n- str.replace(\"a\", \"b\") → returns a new String (the original str is unchanged)\n- str + \"append\" → returns a new String (the original str is unchanged)\n\nIf you don't reassign the return value to a [[variable]], the result of the operation is lost.",
+          "code": null,
+          "note": "A common exam question asks what the value of str is after String str = \"hello\"; str.toUpperCase(); (Answer: still \"hello\").",
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "rule",
+          "title": "The Difference Between equals() and ==",
+          "body": "When comparing Strings, you need to accurately understand the difference between equals() and ==.\nThe == [[operator]] compares whether two objects have the same \"reference.\"\nThe equals() method compares whether the string \"contents\" are the same.\nStrings created with [[literals]] are stored in the string pool, so == may return true.\nHowever, strings created with new String() have different references, so == returns false.\nAlways use equals() when comparing string contents.\nThe compareTo method compares strings lexicographically, returning 0 if equal, a negative value if less, and a positive value if greater.",
+          "code": null,
+          "note": "Exam questions frequently test the difference between == and equals(). Always use equals() for string comparison.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "code",
+          "title": "String Immutability",
+          "body": "Once a String object is created, its contents cannot be modified.\nEven when methods like toUpperCase() and replace() are called, the original string remains unchanged, and a new String object is returned.\nThis property is called \"immutable.\"\nTo use the modified string, you must assign the return value to a variable.",
+          "code": "// Definition of the Main class\npublic class Main {\n    // Definition of the main method\n    public static void main(String[] args) {\n        // Variable declaration and initialization\n        String s = \"Hello\";\n        s.toUpperCase();  // A new string is created, but s is unchanged\n        System.out.println(s);  // Hello (unchanged)\n\n        String upper = s.toUpperCase();  // Receive the return value\n        System.out.println(upper);  // HELLO\n\n        String s2 = s.replace('l', 'r');\n        System.out.println(s);   // Hello (unchanged)\n        System.out.println(s2);  // Herro\n\n        String s3 = s.concat(\" World\");\n        System.out.println(s);   // Hello (unchanged)\n        System.out.println(s3);  // Hello World\n    }\n}",
+          "note": "【Practical Tips】In business applications, String's immutability makes it safe to use as [[HashMap]] keys and for sharing between [[threads]]. For extensive string concatenation, use [[StringBuilder]] for better performance — this is a fundamental practice in the field.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_02",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "| Method | Description |\n|---|---|\n| length() | Returns the string's length; charAt(i) returns the character at index i (0-based) |\n| substring(begin, end) | Returns a substring from begin to before end |\n| indexOf() | Returns the position of a character/string, or -1 if not found |\n- == compares references; equals() compares contents. Use equals() for string comparison\n- String is immutable — method calls do not change the original string",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_02_q1",
+          "lessonId": "ch15_02",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "String s = \"JavaSilver\";\nSystem.out.println(s.substring(4, 10));",
+          "explanation": "substring(4, 10) extracts characters from index 4 to index 9. In \"JavaSilver\", index 4 is 'S' and index 9 is 'r', so \"Silver\" is output. The key point is that endIndex 10 is exclusive.",
+          "choices": [
+            {
+              "id": "ch15_02_q1_a",
+              "text": "Silver",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_02_q1_b",
+              "text": "aSilve",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_02_q1_c",
+              "text": "Silve",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_02_q1_d",
+              "text": "StringIndexOutOfBoundsException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_02_q2",
+          "lessonId": "ch15_02",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes String immutability?",
+          "code": null,
+          "explanation": "String objects are immutable — calling methods like toUpperCase() or replace() does not change the original string. These methods create and return a new String object. To change the original, you must reassign the return value to a variable.",
+          "choices": [
+            {
+              "id": "ch15_02_q2_a",
+              "text": "Calling toUpperCase() changes the original string to uppercase",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_02_q2_b",
+              "text": "String methods return a new String object without modifying the original",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_02_q2_c",
+              "text": "String is a final class so it cannot be inherited, but its contents can be modified",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_02_q2_d",
+              "text": "Calling concat() appends a string to the end of the original string",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_02_q3",
+          "lessonId": "ch15_02",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "String s1 = \"Hello\";\nString s2 = new String(\"Hello\");\nSystem.out.println(s1 == s2);\nSystem.out.println(s1.equals(s2));",
+          "explanation": "s1 is created with a literal and stored in the string pool. s2 is created with the new operator, so a separate object is created on the heap. == compares references, so it returns false since they are different objects. equals() compares contents, so it returns true since both are \"Hello\".",
+          "choices": [
+            {
+              "id": "ch15_02_q3_a",
+              "text": "true\ntrue",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_02_q3_b",
+              "text": "false\ntrue",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_02_q3_c",
+              "text": "false\nfalse",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_02_q3_d",
+              "text": "true\nfalse",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch15_02_q4",
+          "lessonId": "ch15_02",
+          "type": "codeComplete",
+          "question": "Complete the code for extracting a substring and converting it to uppercase.",
+          "code": null,
+          "explanation": "Use substring(start, end) to extract a substring and toUpperCase() to convert it to uppercase. Since String is immutable, a new instance is returned.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "String s = \"Hello World\";\nString sub = s.__BLANK_1__(0, 5);\nString upper = sub.__BLANK_2__();",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Substring",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "substring",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "slice",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "substr",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Uppercase conversion",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "toUpperCase",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "upper",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "capitalize",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch15_03",
+      "courseId": "ch15",
+      "title": "StringBuilder",
+      "summary": "Understand how to use the StringBuilder class for mutable string operations and its differences from String",
+      "estimatedMinutes": 5,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- The role of [[StringBuilder]] (mutable string operations)\n- The append, insert, delete, and reverse methods\n- Criteria for choosing between String and StringBuilder\n\nStringBuilder is overwhelmingly faster for large-scale string concatenation.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "code",
+          "title": "Basic StringBuilder Operations",
+          "body": "Let's look at the key methods of StringBuilder.\n| Method | Description |\n|---|---|\n| append() | Appends a string to the end. |\n| insert() | Inserts a string at the specified position. |\n| delete() | Deletes characters in the specified range. |\n| reverse() | Reverses the entire string. |",
+          "code": "public class Main {\n    public static void main(String[] args) {\n        StringBuilder sb = new StringBuilder(\"Hello\");\n\n        // append: add to the end\n        sb.append(\" World\");\n        System.out.println(sb);  // Hello World\n\n        // insert: insert at specified position\n        sb.insert(5, \",\");\n        System.out.println(sb);  // Hello, World\n\n        // delete: delete specified range (beginIndex, endIndex)\n        sb.delete(5, 6);\n        System.out.println(sb);  // Hello World\n\n        // reverse: reverse the string\n        StringBuilder sb2 = new StringBuilder(\"Java\");\n        sb2.reverse();\n        System.out.println(sb2);  // avaJ\n\n        // length: get the length\n        System.out.println(sb.length());  // 11\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "code",
+          "title": "Method Chaining",
+          "body": "Methods like append() and insert() in StringBuilder return a reference to the StringBuilder itself.\nThis allows you to chain multiple method calls together using \".\" notation.\nThis is called \"method chaining\" and offers the benefit of more concise code.",
+          "code": "// Definition of the Main class\npublic class Main {\n    // Definition of the main method\n    public static void main(String[] args) {\n        // Chaining multiple operations with method chaining\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"Java\").append(\" \").append(\"Silver\").insert(0, \"★\");\n        System.out.println(sb);  // ★Java Silver\n\n        // This is equivalent to the following\n        StringBuilder sb2 = new StringBuilder();\n        sb2.append(\"Java\");\n        sb2.append(\" \");\n        sb2.append(\"Silver\");\n        sb2.insert(0, \"★\");\n        System.out.println(sb2);  // ★Java Silver\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "tip",
+          "title": "When to Use String vs StringBuilder",
+          "body": "You need to choose between String and StringBuilder depending on the situation.\n\n【When String is appropriate】\n- When you rarely modify strings\n- When [[thread]] safety is needed (String is thread-safe because it is immutable)\n- When only a small number of string concatenations are needed\n\n【When StringBuilder is appropriate】\n- When concatenating strings repeatedly inside a loop\n- When frequently inserting or deleting strings\n- When performance is critical\n\nThere is also a [[class]] called StringBuffer. It has the same functionality as StringBuilder but is thread-safe.\nStringBuilder is more likely to appear on certification exams.",
+          "code": null,
+          "note": "StringBuilder is not thread-safe. Use StringBuffer in multithreaded environments.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_03",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- StringBuilder is mutable — the original object is modified directly\n- append() adds to the end, insert() inserts at a position, delete() removes a range, reverse() reverses\n- Method chaining allows multiple operations in a single statement\n- StringBuilder is more efficient than String for string concatenation within loops\n- Note that StringBuilder is not thread-safe (StringBuffer is thread-safe)",
+          "code": null,
+          "note": null,
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_03_q1",
+          "lessonId": "ch15_03",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "StringBuilder sb = new StringBuilder(\"ABCDE\");\nsb.delete(1, 3);\nSystem.out.println(sb);",
+          "explanation": "delete(1, 3) removes characters from index 1 up to (but not including) index 3 — that is, indexes 1 and 2. In \"ABCDE\", index 1 is 'B' and index 2 is 'C', so these are removed, leaving \"ADE\".",
+          "choices": [
+            {
+              "id": "ch15_03_q1_a",
+              "text": "ADE",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q1_b",
+              "text": "ACE",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q1_c",
+              "text": "ABDE",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q1_d",
+              "text": "AE",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_03_q2",
+          "lessonId": "ch15_03",
+          "type": "fourChoice",
+          "question": "Which statement correctly describes the difference between StringBuilder and String?",
+          "code": null,
+          "explanation": "String is immutable, so a new object is created each time a string operation is performed. StringBuilder, on the other hand, is mutable and modifies its internal buffer directly, making it efficient for repeated string modifications. StringBuilder is not thread-safe.",
+          "choices": [
+            {
+              "id": "ch15_03_q2_a",
+              "text": "StringBuilder is immutable and String is mutable",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q2_b",
+              "text": "StringBuilder is mutable and the original object is modified directly",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q2_c",
+              "text": "StringBuilder is thread-safe and recommended for multithreaded environments",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q2_d",
+              "text": "StringBuilder methods always return void, so chaining is not possible",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_03_q3",
+          "lessonId": "ch15_03",
+          "type": "fillBlank",
+          "question": "What is the method name that reverses a StringBuilder's string?\nsb.______();",
+          "code": null,
+          "explanation": "reverse() is a method that reverses the contents of a StringBuilder. For example, applying reverse() to \"Java\" produces \"avaJ\". This method returns the StringBuilder itself, so it can be used in method chaining.",
+          "choices": [
+            {
+              "id": "ch15_03_q3_a",
+              "text": "reverse",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q3_b",
+              "text": "flip",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q3_c",
+              "text": "invert",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q3_d",
+              "text": "swap",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch15_03_q4",
+          "lessonId": "ch15_03",
+          "type": "multiChoice",
+          "question": "Select all correct characteristics of the String class.",
+          "code": null,
+          "explanation": "String is immutable — once created, it cannot be changed. String literals are shared in the String Pool, and the same literal references the same object. Each concatenation with the + operator creates a new object, so StringBuilder is recommended for concatenation in loops. String is a final class and cannot be inherited.",
+          "requiredSelections": 3,
+          "choices": [
+            {
+              "id": "ch15_03_q4_a",
+              "text": "It is immutable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_03_q4_b",
+              "text": "String literals are shared in the String Pool",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_03_q4_c",
+              "text": "You can create subclasses to extend its functionality",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_03_q4_d",
+              "text": "It is defined as a final class",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_03_q5",
+          "lessonId": "ch15_03",
+          "type": "reorder",
+          "question": "Arrange the steps for building a string with StringBuilder in the correct order.",
+          "code": null,
+          "explanation": "StringBuilder follows the flow: create → append to add → toString() to convert to String.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "StringBuilder sb = new StringBuilder();",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "sb.append(\"Hello\");",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "sb.append(\" World\");",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "String result = sb.toString();",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "c1",
+            "c2",
+            "c3",
+            "c4"
+          ],
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "ch15_04",
+      "courseId": "ch15",
+      "title": "Key ArrayList Operations",
+      "summary": "Understand ArrayList's basic operations, generics, and processing elements with the enhanced for loop",
+      "estimatedMinutes": 5,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- Key [[ArrayList]] operations (add, get, set, remove)\n- Safe element removal using [[Iterator]]\n- The danger of removing elements during iteration with a for-each loop\n\nArrayList is the most commonly used collection in practice.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "code",
+          "title": "Basic ArrayList Operations",
+          "body": "Let's look at creating an ArrayList and its basic [[methods]].\nadd() adds elements, and get() retrieves an element by index.\nset() replaces an element at a specified position, and remove() deletes an element.\nsize() returns the current number of elements.",
+          "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> list = new ArrayList<>();\n\n        // add: adding elements\n        list.add(\"Java\");\n        list.add(\"Python\");\n        list.add(\"C++\");\n        System.out.println(list);  // [Java, Python, C++]\n\n        // get: retrieve by index\n        System.out.println(list.get(0));  // Java\n\n        // set: replace element at specified position\n        list.set(1, \"Ruby\");\n        System.out.println(list);  // [Java, Ruby, C++]\n\n        // remove: delete element (by index)\n        list.remove(2);\n        System.out.println(list);  // [Java, Ruby]\n\n        // size: number of elements\n        System.out.println(list.size());  // 2\n    }\n}",
+          "note": "When an int value is passed to remove(), it is treated as an index; when an object is passed, it removes by value.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "tip",
+          "title": "Do Not Call remove Inside a for-each Loop",
+          "body": "The following code will throw a ConcurrentModificationException:\n\nfor ([[String]] s : list) { if (condition) list.remove(s); }\n\nSafe removal methods:\n- Use Iterator's remove() method\n- Use list.removeIf(condition) (Java 8+, most recommended)\n- Use a reverse index loop to remove elements\n\nremoveIf() allows you to specify conditions with [[lambda expressions]] and is the most concise approach.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "code",
+          "title": "ArrayList Operations with the Enhanced For Loop (for-each)",
+          "body": "Using the [[enhanced for loop]], you can concisely iterate over all elements of an ArrayList.\nYou can access each element without worrying about indices, making the code more readable.\nHowever, modifying the list (adding or removing elements) during iteration throws a ConcurrentModificationException.\nA regular [[for loop]] allows more flexible operations using indices.",
+          "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> fruits = new ArrayList<>();\n        fruits.add(\"Apple\");\n        fruits.add(\"Banana\");\n        fruits.add(\"Cherry\");\n\n        // Enhanced for loop\n        for (String fruit : fruits) {\n            System.out.println(fruit);\n        }\n        // Apple\n        // Banana\n        // Cherry\n\n        // Regular for loop (with index)\n        for (int i = 0; i < fruits.size(); i++) {\n            System.out.println(i + \": \" + fruits.get(i));\n        }\n        // 0: Apple\n        // 1: Banana\n        // 2: Cherry\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "rule",
+          "title": "Generics Basics",
+          "body": "You can specify [[generics]] (type parameters) for ArrayList to restrict the type of elements it can store.\nDeclaring ArrayList<String> allows only String-type elements to be stored.\nPrimitive [[data types]] (such as int and double) cannot be used as type parameters.\nUse **wrapper classes** (such as Integer and Double) instead.\nSpecifying generics ensures type safety at [[compile]] time and eliminates the need for [[casting]] when retrieving elements.\nThe [[diamond operator]] <> allows you to omit the type parameter on the right side.",
+          "code": null,
+          "note": "ArrayList<int> causes a compilation error. You must write ArrayList<Integer>.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_04",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- ArrayList is a variable-length list whose size changes as elements are added or removed\n- add() adds, get() retrieves, set() replaces, remove() deletes, size() returns the element count\n- Use generics to specify types; primitive data types cannot be used — **wrapper classes** are required\n- The enhanced for loop can concisely iterate over all elements\n- Modifying a list during a for-each loop throws a ConcurrentModificationException",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_04_q1",
+          "lessonId": "ch15_04",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> list = new ArrayList<>();\n        list.add(\"A\");\n        list.add(\"B\");\n        list.add(\"C\");\n        list.remove(1);\n        System.out.println(list.get(1));\n    }\n}",
+          "explanation": "First, list = [A, B, C]. remove(1) removes \"B\" at index 1, resulting in list = [A, C]. Then get(1) retrieves \"C\" at index 1. The key point is that elements shift after a removal.",
+          "choices": [
+            {
+              "id": "ch15_04_q1_a",
+              "text": "B",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_04_q1_b",
+              "text": "C",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_04_q1_c",
+              "text": "A",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_04_q1_d",
+              "text": "IndexOutOfBoundsException",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_04_q2",
+          "lessonId": "ch15_04",
+          "type": "errorFind",
+          "question": "The following code contains an error. What is the cause of the error?",
+          "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<int> numbers = new ArrayList<>();\n        numbers.add(10);\n        numbers.add(20);\n        System.out.println(numbers.get(0));\n    }\n}",
+          "explanation": "Primitive types (int, double, etc.) cannot be used as generic type parameters for ArrayList. ArrayList<int> is a compilation error. You must write ArrayList<Integer> instead. With wrapper classes, autoboxing allows you to pass int values directly to add().",
+          "choices": [
+            {
+              "id": "ch15_04_q2_a",
+              "text": "Primitive types cannot be used in ArrayList<int>. It must be ArrayList<Integer>",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_04_q2_b",
+              "text": "The import statement for ArrayList is missing",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_04_q2_c",
+              "text": "int values cannot be passed directly to the add() method",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_04_q2_d",
+              "text": "The return value of get(0) must be received as an int type",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_04_q3",
+          "lessonId": "ch15_04",
+          "type": "fourChoice",
+          "question": "Which method retrieves the number of elements in an ArrayList?",
+          "code": null,
+          "explanation": "To get the number of elements in an ArrayList, use the size() method. Be careful not to confuse it with the length field for arrays (arr.length) or the length() method for Strings. The methods count() and getSize() do not exist in ArrayList.",
+          "choices": [
+            {
+              "id": "ch15_04_q3_a",
+              "text": "length()",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_04_q3_b",
+              "text": "count()",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_04_q3_c",
+              "text": "size()",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch15_04_q3_d",
+              "text": "getSize()",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch15_05",
+      "courseId": "ch15",
+      "title": "LocalDate / LocalDateTime",
+      "summary": "Understand date and time operations and formatting using LocalDate and LocalDateTime from the java.time package",
+      "estimatedMinutes": 5,
+      "order": 5,
+      "contents": [
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "overview",
+          "title": "What You Will Learn",
+          "body": "In this lesson, you will learn:\n\n- LocalDate (date only), LocalTime (time only), and [[LocalDateTime]] (both)\n- How to create, add, compare, and format dates and times\n- Format conversion using [[DateTimeFormatter]]\n\nYou'll learn the basics of the new Date/Time API introduced in Java 8.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "code",
+          "title": "Creating LocalDate and Key Methods",
+          "body": "LocalDate is a [[class]] that represents a date (year, month, day).\nUse now() to get the current date and of() to create a specific date.\ngetYear(), getMonthValue(), and getDayOfMonth() return individual date components.\nplusDays() and minusMonths() allow date arithmetic.\nLike String, LocalDate is immutable, so operations return new objects.",
+          "code": "import java.time.LocalDate;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Current date\n        LocalDate today = LocalDate.now();\n        System.out.println(today);  // e.g., 2026-04-07\n\n        // Specify a date\n        LocalDate date = LocalDate.of(2025, 1, 15);\n        System.out.println(date);  // 2025-01-15\n\n        // Retrieving individual values\n        System.out.println(date.getYear());        // 2025\n        System.out.println(date.getMonthValue());  // 1\n        System.out.println(date.getDayOfMonth());  // 15\n\n        // Date arithmetic (the original object is unchanged)\n        LocalDate nextWeek = date.plusDays(7);\n        System.out.println(nextWeek);  // 2025-01-22\n\n        LocalDate lastMonth = date.minusMonths(1);\n        System.out.println(lastMonth);  // 2024-12-15\n    }\n}",
+          "note": "The month in LocalDate.of() is specified as a number from 1 to 12 (not zero-based).",
+          "order": 2
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "tip",
+          "title": "LocalDate Is Designed to Be Immutable",
+          "body": "Like String, [[methods]] of LocalDate do not modify the original object.\n\n- date.plusDays(1) → returns a new LocalDate\n- date.withMonth(12) → returns a new LocalDate\n\nBe careful: if you don't capture the return value, the result is lost.\n\nAlso, you cannot use [[constructors]]; objects are created using of() and now().",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "code",
+          "title": "Working with LocalDateTime",
+          "body": "LocalDateTime is a class that holds both a date and a time.\nUse the of() method to create an [[instance]] by specifying year, month, day, hour, minute, and second.\nplusHours() and minusMinutes() allow time arithmetic.\nLike LocalDate, it is immutable.",
+          "code": "import java.time.LocalDateTime;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Current date and time\n        LocalDateTime now = LocalDateTime.now();\n        System.out.println(now);  // e.g., 2026-04-07T14:30:15.123\n\n        // Specify a date and time\n        LocalDateTime dt = LocalDateTime.of(2025, 6, 15, 10, 30, 0);\n        System.out.println(dt);  // 2025-06-15T10:30\n\n        // Date and time arithmetic\n        LocalDateTime later = dt.plusHours(3);\n        System.out.println(later);  // 2025-06-15T13:30\n\n        LocalDateTime earlier = dt.minusDays(2).minusMinutes(15);\n        System.out.println(earlier);  // 2025-06-13T10:15\n\n        // LocalDateTime is immutable\n        dt.plusYears(1);  // A new object is returned, but dt is unchanged\n        System.out.println(dt);  // 2025-06-15T10:30\n    }\n}",
+          "note": "The \"//\" in the code denotes comments (explanatory text). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "rule",
+          "title": "Formatting with DateTimeFormatter",
+          "body": "DateTimeFormatter allows you to convert dates and times to custom-formatted strings.\nCreate a formatter by passing a pattern string to the ofPattern method.\nThe main pattern characters are as follows:\n\nyyyy: Year (4 digits)\nMM: Month (2 digits)\ndd: Day (2 digits)\nHH: Hour (24-hour format, 2 digits)\nmm: Minute (2 digits)\nss: Second (2 digits)\n\nUse the format() method to convert a LocalDate or LocalDateTime to a string.\nConversely, the parse() method can create a LocalDate from a string.",
+          "code": null,
+          "note": "M for month is uppercase; m for minute is lowercase. Be careful not to mix them up.",
+          "order": 5
+        },
+        {
+          "lessonId": "ch15_05",
+          "sectionType": "point",
+          "title": "Key Points",
+          "body": "- LocalDate handles dates only; LocalDateTime handles both dates and times\n- Objects are created using now() or of() (factory methods), not the new operator\n- Arithmetic methods like plusDays() and minusHours() return new objects\n- LocalDate/LocalDateTime are immutable — the original object is never changed\n- DateTimeFormatter.ofPattern() enables custom format string conversion",
+          "code": null,
+          "note": null,
+          "order": 6
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch15_05_q1",
+          "lessonId": "ch15_05",
+          "type": "fourChoice",
+          "question": "Which is the correct way to create a LocalDate instance?",
+          "code": null,
+          "explanation": "LocalDate cannot be created with the new operator. Use factory methods such as LocalDate.of() or LocalDate.now(). LocalDate.of(2025, 1, 15) returns a LocalDate object representing January 15, 2025. The constructor is private, so new LocalDate() causes a compilation error.",
+          "choices": [
+            {
+              "id": "ch15_05_q1_a",
+              "text": "new LocalDate(2025, 1, 15)",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_05_q1_b",
+              "text": "LocalDate.of(2025, 1, 15)",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_05_q1_c",
+              "text": "LocalDate.create(2025, 1, 15)",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_05_q1_d",
+              "text": "LocalDate.parse(2025, 1, 15)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch15_05_q2",
+          "lessonId": "ch15_05",
+          "type": "outputPredict",
+          "question": "What is the output when the following code is executed?",
+          "code": "import java.time.LocalDate;\npublic class Main {\n    public static void main(String[] args) {\n        LocalDate date = LocalDate.of(2025, 3, 20);\n        date.plusDays(10);\n        System.out.println(date.getDayOfMonth());\n    }\n}",
+          "explanation": "LocalDate is immutable. date.plusDays(10) returns a new LocalDate object, but since the return value is not assigned to a variable, the original date remains unchanged. Therefore, date.getDayOfMonth() returns the original value of 20.",
+          "choices": [
+            {
+              "id": "ch15_05_q2_a",
+              "text": "30",
+              "isCorrect": false,
+              "order": 1
+            },
+            {
+              "id": "ch15_05_q2_b",
+              "text": "20",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch15_05_q2_c",
+              "text": "10",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_05_q2_d",
+              "text": "Compilation error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch15_05_q3",
+          "lessonId": "ch15_05",
+          "type": "fillBlank",
+          "question": "Specify the pattern for \"year-month-day\" format (e.g., 2025-06-15) with DateTimeFormatter.\nDateTimeFormatter fmt = DateTimeFormatter.ofPattern(\"______\");",
+          "code": null,
+          "explanation": "In DateTimeFormatter patterns, yyyy represents a 4-digit year, MM represents a 2-digit month, and dd represents a 2-digit day. Using yyyy-MM-dd produces output like \"2025-06-15\". Note that M for month is uppercase — lowercase mm means \"minutes.\"",
+          "choices": [
+            {
+              "id": "ch15_05_q3_a",
+              "text": "yyyy-MM-dd",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch15_05_q3_b",
+              "text": "YYYY-mm-DD",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch15_05_q3_c",
+              "text": "yyyy/mm/dd",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch15_05_q3_d",
+              "text": "yy-MM-dd",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

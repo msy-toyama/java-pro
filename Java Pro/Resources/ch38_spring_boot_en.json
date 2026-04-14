@@ -1,0 +1,780 @@
+{
+  "courseId": "ch38",
+  "lessons": [
+    {
+      "id": "ch38_01",
+      "courseId": "ch38",
+      "title": "What Is Spring Boot?",
+      "summary": "Learn about the overview of Spring Boot, how it differs from the Spring Framework, and the concept of Convention over Configuration.",
+      "estimatedMinutes": 6,
+      "order": 1,
+      "contents": [
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "overview",
+          "title": "Overview of Spring Boot",
+          "body": "In this lesson, you will learn:\n\n- What **Spring Boot** is (a simplified version of the Spring Framework)\n- The basic concept of DI (**Dependency Injection**)\n- The \"Convention over Configuration\" philosophy of [[Spring Boot]]\n\nIt is the most popular framework for Java web application development.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "rule",
+          "title": "Differences Between Spring Framework and Spring Boot",
+          "body": "The Spring Framework is powerful, but it required a large amount of XML configuration and Java configuration.\n**Spring Boot** automates much of the configuration through AutoConfiguration.\nSpring Boot provides the necessary libraries bundled together via starter dependencies.\nWith an embedded server, there is no need to deploy WAR files to an external server.\nConfiguration can be concisely managed using application.properties or application.yml.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "point",
+          "title": "Convention over Configuration",
+          "body": "Convention over Configuration is the central design philosophy of **Spring Boot**.\nSince reasonable default values are preconfigured, explicit configuration is kept to a minimum.\nFor example, the default port number is 8080, and the default context path is \"/\".\nThe idea is to override default values only when necessary.\nThis allows you to build applications quickly with less code.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "code",
+          "title": "A Minimal Spring Boot Application",
+          "body": "A **Spring Boot** application can be started simply by adding the @SpringBootApplication annotation to a [[class]] that has a [[main method]].\nThe application starts with the SpringApplication.run() [[method]].",
+          "code": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApplication.class, args);\n    }\n}\n\n// これだけでWebサーバーが起動し、\n// http://localhost:8080 でアクセス可能になる",
+          "note": "Lines starting with \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_01",
+          "sectionType": "tip",
+          "title": "Spring Boot Versions",
+          "body": "**Spring Boot** 3.x requires Java 17 or higher.\nSpring Boot 3.x supports Jakarta EE 9+ (javax → jakarta package change).\nSpring Boot 2.x works with Java 8 or higher, but is approaching end of support.\nFor new projects, the use of Spring Boot 3.x is recommended.",
+          "code": null,
+          "note": "Since **Spring Boot** 3.x and later changed the javax package to jakarta, care must be taken when migrating existing code.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_01_q1",
+          "lessonId": "ch38_01",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes what Spring Boot simplified compared to the Spring Framework?",
+          "code": "@RestController\n@RequestMapping(\"/api/users\")\npublic class UserController {\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n}",
+          "explanation": "Spring Boot's AutoConfiguration feature automates much of the XML and Java configuration that was required in the Spring Framework. Developers only need to provide minimal configuration.",
+          "choices": [
+            {
+              "id": "ch38_01_q1_a",
+              "text": "AutoConfiguration automated much of the configuration",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_01_q1_b",
+              "text": "Java syntax was simplified",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_01_q1_c",
+              "text": "Database configuration became unnecessary",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_01_q1_d",
+              "text": "Testing became unnecessary",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_01_q2",
+          "lessonId": "ch38_01",
+          "type": "errorFind",
+          "question": "Find the error in the following Spring Boot code.",
+          "code": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApp {\n    public void main(String[] args) {\n        SpringApplication.run(MyApp.class, args);\n    }\n}",
+          "explanation": "The main method is missing the static modifier. The main method that calls SpringApplication.run() must be `public static void main(String[] args)`. Without static, the JVM cannot recognize it as an entry point.",
+          "choices": [
+            {
+              "id": "ch38_01_q2_a",
+              "text": "The main method is missing the static modifier",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_01_q2_b",
+              "text": "The position of @SpringBootApplication is incorrect",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_01_q2_c",
+              "text": "An import is missing",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_01_q2_d",
+              "text": "There is no error",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_01_q3",
+          "lessonId": "ch38_01",
+          "type": "fourChoice",
+          "question": "What is the minimum Java version required to use Spring Boot 3.x?",
+          "code": "@Service\npublic class UserService {\n    @Autowired\n    private UserRepository repo;\n\n    @Transactional\n    public User save(User user) {\n        return repo.save(user);\n    }\n}",
+          "explanation": "Spring Boot 3.x supports Jakarta EE 9+ and requires Java 17 or higher. It does not work with Java 8 or Java 11.",
+          "choices": [
+            {
+              "id": "ch38_01_q3_a",
+              "text": "Java 17",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_01_q3_b",
+              "text": "Java 11",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_01_q3_c",
+              "text": "Java 8",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_01_q3_d",
+              "text": "Java 21",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "ch38_02",
+      "courseId": "ch38",
+      "title": "Creating a Project",
+      "summary": "Learn how to create a project with Spring Initializr, understand the directory structure, and the @SpringBootApplication annotation.",
+      "estimatedMinutes": 6,
+      "order": 2,
+      "contents": [
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "overview",
+          "title": "What Is Spring Initializr?",
+          "body": "In this lesson, you will learn:\n\n- How to generate a project with Spring Initializr\n- Managing dependencies with pom.xml / build.gradle\n- Starting the application and understanding the basic structure\n\nLet's actually create and run a project.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "rule",
+          "title": "Project Structure",
+          "body": "A **Spring Boot** project follows the standard Maven/Gradle directory structure.\nJava source code is placed in src/main/java.\nConfiguration files and static resources are placed in src/main/resources.\napplication.properties or application.yml is the main configuration file.\nTest code is placed in src/test/java.\nBuild settings and dependencies are managed in pom.xml (Maven) or build.gradle (Gradle).",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "code",
+          "title": "Example Project Structure",
+          "body": "Let's take a look at the directory structure of a typical **Spring Boot** project.\nIt is convention to place the main [[class]] in the root package.",
+          "code": "# Spring Bootプロジェクトの標準ディレクトリ構造\nmy-app/\n├── pom.xml\n├── src/\n│   ├── main/\n│   │   ├── java/\n│   │   │   └── com/example/myapp/\n│   │   │       ├── MyAppApplication.java\n│   │   │       ├── controller/\n│   │   │       │   └── HelloController.java\n│   │   │       ├── service/\n│   │   │       │   └── HelloService.java\n│   │   │       └── model/\n│   │   │           └── User.java\n│   │   └── resources/\n│   │       ├── application.properties\n│   │       ├── static/\n│   │       └── templates/\n│   └── test/\n│       └── java/\n│           └── com/example/myapp/\n│               └── MyAppApplicationTests.java",
+          "note": "Lines starting with \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "point",
+          "title": "The @SpringBootApplication Annotation",
+          "body": "@SpringBootApplication is a meta-annotation that combines three [[annotations]].\n| Annotation | Role |\n|---|---|\n| @Configuration | Indicates that this class is a source of Bean definitions. |\n| @EnableAutoConfiguration | Enables AutoConfiguration. |\n| @ComponentScan | Automatically scans for components under the current package. |\nTherefore, it is important to place the main class in the root package.\nComponents in sub-packages are automatically detected.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_02",
+          "sectionType": "tip",
+          "title": "application.properties Settings",
+          "body": "You can change the server port with server.port=9090.\nYou can set the database connection URL with spring.datasource.url.\nYou can change the log level with logging.level.root=DEBUG.\nThe profile feature (e.g., application-dev.properties) allows you to manage settings per environment.",
+          "code": null,
+          "note": "application.yml allows you to write the same settings in YAML format, making the hierarchical structure easier to read.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_02_q1",
+          "lessonId": "ch38_02",
+          "type": "fourChoice",
+          "question": "In which directory should Spring Boot project configuration files be placed?",
+          "code": "@Entity\n@Table(name = \"users\")\npublic class User {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    \n    @Column(nullable = false)\n    private String name;\n}",
+          "explanation": "Spring Boot configuration files (such as application.properties) are placed in the src/main/resources directory. The contents of this directory are placed at the root of the classpath.",
+          "choices": [
+            {
+              "id": "ch38_02_q1_a",
+              "text": "src/main/resources",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_02_q1_b",
+              "text": "src/main/java",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_02_q1_c",
+              "text": "src/main/config",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_02_q1_d",
+              "text": "src/main/webapp",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_02_q2",
+          "lessonId": "ch38_02",
+          "type": "fillBlank",
+          "question": "Among the three annotations included in @SpringBootApplication, provide the name of the annotation that performs automatic component detection.\n@_____",
+          "code": "@SpringBootApplication\npublic class MyApp {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApp.class, args);\n    }\n}",
+          "explanation": "@ComponentScan automatically detects classes annotated with @Component, @Service, @Repository, @Controller, etc. in the current package and sub-packages, and registers them as Beans.",
+          "choices": [
+            {
+              "id": "ch38_02_q2_a",
+              "text": "ComponentScan",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_02_q2_b",
+              "text": "AutoScan",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_02_q2_c",
+              "text": "EnableAutoConfiguration",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_02_q2_d",
+              "text": "Configuration",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_02_q3",
+          "lessonId": "ch38_02",
+          "type": "errorFind",
+          "question": "Find the problem in the following Spring Boot project structure.\nUserController is not being auto-detected. Why?",
+          "code": "com/example/\n├── MyApplication.java  (@SpringBootApplication)\ncom/other/\n├── controller/\n│   └── UserController.java  (@RestController)",
+          "explanation": "@ComponentScan in @SpringBootApplication automatically scans packages under the main class's package (com.example). Since UserController is in the com.other package, it falls outside the scan range. You need to either place the controller under the main class's package or explicitly specify the basePackages in @ComponentScan.",
+          "choices": [
+            {
+              "id": "ch38_02_q3_a",
+              "text": "The Controller is not under the main class's package (com.example)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_02_q3_b",
+              "text": "@Controller is needed instead of @RestController",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_02_q3_c",
+              "text": "A scan configuration is needed in application.properties",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_02_q3_d",
+              "text": "The controller folder is unnecessary",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch38_02_q4",
+          "lessonId": "ch38_02",
+          "type": "codeComplete",
+          "question": "Complete the Spring Boot REST controller.",
+          "code": "@RestController\n@RequestMapping(\"/api/users\")\npublic class UserController {\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n}",
+          "explanation": "@RestController is a controller that returns JSON responses. @GetMapping maps GET requests.",
+          "choices": [],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": "@__BLANK_1__\npublic class UserController {\n    @__BLANK_2__(\"/users\")\n    public List<User> getUsers() { return userService.findAll(); }\n}",
+          "blanks": [
+            {
+              "id": "blank_1",
+              "label": "① Annotation",
+              "choices": [
+                {
+                  "id": "b1_c1",
+                  "text": "RestController",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b1_c2",
+                  "text": "Controller",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b1_c3",
+                  "text": "Component",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "id": "blank_2",
+              "label": "② Mapping",
+              "choices": [
+                {
+                  "id": "b2_c1",
+                  "text": "GetMapping",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b2_c2",
+                  "text": "RequestMapping",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b2_c3",
+                  "text": "PostMapping",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ],
+          "combinedResults": null,
+          "requiredSelections": null,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch38_03",
+      "courseId": "ch38",
+      "title": "RESTful API Basics",
+      "summary": "Learn about @RestController, HTTP method mappings, and how to handle request parameters.",
+      "estimatedMinutes": 7,
+      "order": 3,
+      "contents": [
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "overview",
+          "title": "What Is a RESTful API?",
+          "body": "In this lesson, you will learn:\n\n- Creating REST APIs with **@RestController**\n- Request mapping with @GetMapping, @PostMapping, etc.\n- Retrieving request data with @RequestBody and @PathVariable\n\nThis is the most fundamental API development pattern in **Spring Boot**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "code",
+          "title": "@RestController and Mappings",
+          "body": "**@RestController** is an [[annotation]] applied to controller [[classes]].\nYou define endpoints corresponding to HTTP methods using @GetMapping, @PostMapping, @PutMapping, and @DeleteMapping.\nThe return value of each method is automatically converted to JSON by the Jackson library.",
+          "code": "import org.springframework.web.bind.annotation.*;\nimport java.util.*;\n\n@RestController\n@RequestMapping(\"/api/users\")\n// UserControllerクラスの定義\npublic class UserController {\n\n    @GetMapping\n    // getAllUsersメソッドの定義\n    public List<User> getAllUsers() {\n        return userService.findAll();\n    }\n\n    @GetMapping(\"/{id}\")\n    public User getUser(@PathVariable Long id) {\n        return userService.findById(id);\n    }\n\n    @PostMapping\n    public User createUser(@RequestBody User user) {\n        return userService.save(user);\n    }\n\n    @DeleteMapping(\"/{id}\")\n    // deleteUserメソッドの定義\n    public void deleteUser(@PathVariable Long id) {\n        userService.deleteById(id);\n    }\n}",
+          "note": "Lines starting with \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "rule",
+          "title": "Request Parameter Annotations",
+          "body": "| Annotation | Description |\n|---|---|\n| @PathVariable | Receives part of the URL path as a variable (e.g., /users/{id}). |\n| @RequestParam | Receives query parameters (e.g., /users?name=Java). |\n| @RequestBody | Converts the JSON in the request body into an object. |\nYou can specify the required attribute and defaultValue attribute for @PathVariable and @RequestParam.\n@RequestBody is primarily used with POST and PUT requests.",
+          "code": null,
+          "note": null,
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "code",
+          "title": "Examples of Using Request Parameters",
+          "body": "Let's look at specific usage examples for each annotation.\nYou can set default values for query parameters.",
+          "code": "@RestController\n@RequestMapping(\"/api\")\n// SearchControllerクラスの定義\npublic class SearchController {\n\n    // GET /api/search?keyword=Java&page=1\n    @GetMapping(\"/search\")\n    public List<Item> search(\n            @RequestParam String keyword,\n            @RequestParam(defaultValue = \"1\") int page) {\n        return itemService.search(keyword, page);\n    }\n\n    // GET /api/items/42\n    @GetMapping(\"/items/{id}\")\n    public Item getItem(@PathVariable(\"id\") Long itemId) {\n        return itemService.findById(itemId);\n    }\n\n    // POST /api/items (body: {\"name\":\"Book\",\"price\":1500})\n    @PostMapping(\"/items\")\n    public Item addItem(@RequestBody Item item) {\n        return itemService.save(item);\n    }\n}",
+          "note": "Lines starting with \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_03",
+          "sectionType": "tip",
+          "title": "Responses and Status Codes",
+          "body": "You can explicitly set HTTP status codes using ResponseEntity<T>.\nYou can change the default status code with @ResponseStatus(HttpStatus.CREATED).\nBy default, 200 OK is returned on success, and 500 Internal Server Error on [[exceptions]].\nYou can customize error responses for specific exceptions using @ExceptionHandler.",
+          "code": null,
+          "note": "Factory methods such as ResponseEntity.ok(body) and ResponseEntity.notFound().build() are convenient.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_03_q1",
+          "lessonId": "ch38_03",
+          "type": "fourChoice",
+          "question": "Which of the following correctly describes @RestController?",
+          "code": "@Service\npublic class UserService {\n    @Autowired\n    private UserRepository repo;\n\n    @Transactional\n    public User save(User user) {\n        return repo.save(user);\n    }\n}",
+          "explanation": "@RestController is an annotation that combines @Controller and @ResponseBody. The return value of methods is returned directly as the HTTP response body (usually JSON), rather than being interpreted as a view name.",
+          "choices": [
+            {
+              "id": "ch38_03_q1_a",
+              "text": "The return value of methods is automatically returned as the HTTP response body",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_03_q1_b",
+              "text": "The return value of methods is interpreted as an HTML template name",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_03_q1_c",
+              "text": "The class becomes a repository for database access",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_03_q1_d",
+              "text": "The class handles business logic in the service layer",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_03_q2",
+          "lessonId": "ch38_03",
+          "type": "fillBlank",
+          "question": "Provide the name of the annotation that receives part of the URL path as a variable.\npublic User getUser(@_____ Long id) { ... }",
+          "code": "@Entity\n@Table(name = \"users\")\npublic class User {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    \n    @Column(nullable = false)\n    private String name;\n}",
+          "explanation": "@PathVariable is an annotation that binds a variable contained in the URL path (e.g., the id part of /users/{id}) to a method parameter.",
+          "choices": [
+            {
+              "id": "ch38_03_q2_a",
+              "text": "PathVariable",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_03_q2_b",
+              "text": "RequestParam",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_03_q2_c",
+              "text": "RequestBody",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_03_q2_d",
+              "text": "PathParam",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_03_q3",
+          "lessonId": "ch38_03",
+          "type": "reorder",
+          "question": "Arrange the correct order in which a request from a client is processed in a Spring Boot RESTful API.",
+          "code": "@SpringBootApplication\npublic class MyApp {\n    public static void main(String[] args) {\n        SpringApplication.run(MyApp.class, args);\n    }\n}",
+          "explanation": "A request is processed in this order: (1) The HTTP request reaches the embedded Tomcat → (2) DispatcherServlet routes the request → (3) The corresponding Controller method is executed → (4) The return value is converted to JSON by Jackson and returned as a response.",
+          "choices": [
+            {
+              "id": "ch38_03_q3_a",
+              "text": "The HTTP request reaches the embedded Tomcat",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_03_q3_b",
+              "text": "DispatcherServlet routes the request to a Controller based on the URL",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "ch38_03_q3_c",
+              "text": "The corresponding @GetMapping (or similar) method is executed",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "ch38_03_q3_d",
+              "text": "The return value is converted to JSON and returned as a response",
+              "isCorrect": true,
+              "order": 4
+            }
+          ],
+          "correctOrder": [
+            "ch38_03_q3_a",
+            "ch38_03_q3_b",
+            "ch38_03_q3_c",
+            "ch38_03_q3_d"
+          ],
+          "difficulty": "hard"
+        },
+        {
+          "id": "ch38_03_q4",
+          "lessonId": "ch38_03",
+          "type": "multiChoice",
+          "question": "Select all of the major Spring Boot annotations.",
+          "code": null,
+          "explanation": "@SpringBootApplication, @RestController, @Autowired, and @RequestMapping are major Spring Boot annotations. @Override is a standard Java annotation and is not Spring-specific.",
+          "choices": [
+            {
+              "id": "c1",
+              "text": "@SpringBootApplication",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "c2",
+              "text": "@RestController",
+              "isCorrect": true,
+              "order": 2
+            },
+            {
+              "id": "c3",
+              "text": "@Autowired",
+              "isCorrect": true,
+              "order": 3
+            },
+            {
+              "id": "c4",
+              "text": "@Override",
+              "isCorrect": false,
+              "order": 4
+            },
+            {
+              "id": "c5",
+              "text": "@RequestMapping",
+              "isCorrect": true,
+              "order": 5
+            }
+          ],
+          "correctOrder": null,
+          "executionResult": null,
+          "fixedExecutionResult": null,
+          "codeTemplate": null,
+          "blanks": null,
+          "combinedResults": null,
+          "requiredSelections": 4,
+          "certificationTopic": null,
+          "difficulty": "normal"
+        }
+      ]
+    },
+    {
+      "id": "ch38_04",
+      "courseId": "ch38",
+      "title": "DI and Bean Management",
+      "summary": "Learn the concept of Dependency Injection (DI) and how to use @Component, @Service, @Repository, and @Autowired.",
+      "estimatedMinutes": 7,
+      "order": 4,
+      "contents": [
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "overview",
+          "title": "What Is Dependency Injection (DI)?",
+          "body": "In this lesson, you will learn:\n\n- How DI (**Dependency Injection**) works and **@Autowired**\n- How to use @Component, @Service, and @Repository appropriately\n- The lifecycle of **Beans** (managed objects)\n\nLet's understand the DI container that underpins the design of **Spring Boot**.",
+          "code": null,
+          "note": null,
+          "order": 1
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "rule",
+          "title": "Stereotype Annotations",
+          "body": "In Spring, stereotype [[annotations]] are used according to the role of a [[class]].\n| Annotation | Role |\n|---|---|\n| @Component | Represents a general-purpose Spring-managed component. |\n| @Service | Used for service layer classes that contain business logic. |\n| @Repository | Used for data access layer classes, adding exception translation capability. |\n| @Controller | Used for MVC controllers (parent of @RestController). |\nAll stereotype annotations internally include @Component.",
+          "code": null,
+          "note": null,
+          "order": 2
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "code",
+          "title": "DI Implementation Example",
+          "body": "You can automatically inject dependencies using the **@Autowired** annotation.\n[[Constructor]] injection is the most recommended approach.\nWhen there is only one constructor, @Autowired can be omitted.",
+          "code": "// サービスクラス\n@Service\n// UserServiceクラスの定義\npublic class UserService {\n    private final UserRepository repository;\n\n    // コンストラクタインジェクション（推奨）\n    // コンストラクタが1つの場合@Autowired省略可能\n    public UserService(UserRepository repository) {\n        this.repository = repository;\n    }\n\n    // findAllメソッドの定義\n    public List<User> findAll() {\n        return repository.findAll();\n    }\n}\n\n// リポジトリクラス\n@Repository\n// UserRepositoryクラスの定義\npublic class UserRepository {\n    // findAllメソッドの定義\n    public List<User> findAll() {\n        // データベースアクセス\n        return List.of(new User(\"Alice\"), new User(\"Bob\"));\n    }\n}\n\n// コントローラー\n@RestController\n// UserControllerクラスの定義\npublic class UserController {\n    private final UserService userService;\n\n    public UserController(UserService userService) {\n        this.userService = userService;\n    }\n    @GetMapping(\"/users\")\n    public List<User> getUsers() {\n        return userService.findAll();\n    }\n}",
+          "note": "Lines starting with \"//\" in the code are comments (explanatory notes). They do not affect program execution.",
+          "order": 3
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "point",
+          "title": "Types of Injection Methods",
+          "body": "| Method | Description |\n|---|---|\n| Constructor Injection | Receives dependencies as constructor arguments. This is the most recommended approach. |\n| Field Injection | Applies @Autowired directly to a field. Not recommended as it makes testing difficult. |\n| Setter Injection | Applies @Autowired to a setter method. Suitable for optional dependencies. |\nConstructor injection allows the use of final fields, ensuring immutability.\nThe official Spring documentation also recommends constructor injection.",
+          "code": null,
+          "note": null,
+          "order": 4
+        },
+        {
+          "lessonId": "ch38_04",
+          "sectionType": "tip",
+          "title": "Bean Scope and Lifecycle",
+          "body": "Spring Beans are singleton [[scope]] by default (one [[instance]] across the entire application).\nAdding @Scope(\"prototype\") creates a new instance each time it is injected.\nWeb scopes such as request, session, and application scope are also available.\n@PostConstruct defines processing after Bean initialization, and @PreDestroy defines processing before destruction.",
+          "code": null,
+          "note": "Singleton Beans must be designed to be [[thread]]-safe. Aim to keep them stateless.",
+          "order": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "id": "ch38_04_q1",
+          "lessonId": "ch38_04",
+          "type": "fourChoice",
+          "question": "What is the most recommended method of dependency injection in Spring Boot?",
+          "code": null,
+          "explanation": "Constructor injection is the most recommended. It offers benefits such as allowing the use of final fields to ensure immutability, easier testing, and making dependencies explicit.",
+          "choices": [
+            {
+              "id": "ch38_04_q1_a",
+              "text": "Constructor injection",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_04_q1_b",
+              "text": "Field injection",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_04_q1_c",
+              "text": "Setter injection",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_04_q1_d",
+              "text": "Method injection",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "easy"
+        },
+        {
+          "id": "ch38_04_q2",
+          "lessonId": "ch38_04",
+          "type": "errorFind",
+          "question": "Find the problem in the following Spring Boot code.",
+          "code": "@Service\npublic class OrderService {\n    @Autowired\n    private OrderRepository repository;\n\n    public List<Order> getOrders() {\n        return repository.findAll();\n    }\n}",
+          "explanation": "This code uses field injection (applying @Autowired directly to a field). While it works, the Spring official documentation recommends **constructor injection**. Field injection has issues such as not being able to use final to ensure immutability, and difficulty injecting mocks during testing.",
+          "choices": [
+            {
+              "id": "ch38_04_q2_a",
+              "text": "Field injection is used (constructor injection is recommended)",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_04_q2_b",
+              "text": "@Component should be used instead of @Service",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_04_q2_c",
+              "text": "@Repository is needed on OrderRepository",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_04_q2_d",
+              "text": "There is no problem (the code is optimal)",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "normal"
+        },
+        {
+          "id": "ch38_04_q3",
+          "lessonId": "ch38_04",
+          "type": "fillBlank",
+          "question": "Provide the name of the default scope for Spring Beans.\n@Scope(\"_____\")",
+          "code": null,
+          "explanation": "In Spring, the default scope for Beans is singleton. In singleton scope, only one instance is created within the DI container, and the same instance is shared across all injection points.",
+          "choices": [
+            {
+              "id": "ch38_04_q3_a",
+              "text": "singleton",
+              "isCorrect": true,
+              "order": 1
+            },
+            {
+              "id": "ch38_04_q3_b",
+              "text": "prototype",
+              "isCorrect": false,
+              "order": 2
+            },
+            {
+              "id": "ch38_04_q3_c",
+              "text": "request",
+              "isCorrect": false,
+              "order": 3
+            },
+            {
+              "id": "ch38_04_q3_d",
+              "text": "session",
+              "isCorrect": false,
+              "order": 4
+            }
+          ],
+          "correctOrder": null,
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}
