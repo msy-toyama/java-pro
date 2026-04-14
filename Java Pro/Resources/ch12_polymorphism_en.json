@@ -22,7 +22,7 @@
           "lessonId": "ch12_01",
           "sectionType": "rule",
           "title": "Fundamental Rules of Polymorphism",
-          "body": "In Java, **polymorphism** can be broadly divided into two types.\n\n1. [[Compile]]-time polymorphism (static binding): Achieved through [[method]] [[overloading]]. The method to be called is determined at compile time based on the argument types and count.\n\n2. Runtime polymorphism (dynamic binding): Achieved through method [[overriding]]. When a subclass [[instance]] is assigned to a parent [[class]] [[variable]] and an overridden method is called, the method is selected based on the actual object's type.\n\nFor the Java Silver exam, runtime polymorphism (dynamic binding) is especially important.",
+          "body": "In Java, **polymorphism** can be broadly divided into two types.\n\n1. [[Compile]]-time polymorphism (static binding): Achieved through [[method]] [[overloading]]. The method to be called is determined at compile time based on the argument types and count.\n\n2. Runtime polymorphism (dynamic binding): Achieved through method [[overriding]].\n\nWhen a subclass [[instance]] is assigned to a parent [[class]] [[variable]] and an overridden method is called, the method is selected based on the actual object's type.\n\nFor the Java Silver exam, runtime polymorphism (dynamic binding) is especially important.",
           "code": null,
           "note": "[[Static methods]] and private methods cannot be overridden, so they are not subject to **polymorphism**.",
           "order": 2
@@ -31,7 +31,7 @@
           "lessonId": "ch12_01",
           "sectionType": "code",
           "title": "Basic Example of Polymorphism",
-          "body": "When you reference a subclass instance through a parent class variable and call an overridden method, the method corresponding to the actual object's type is executed. This is the essence of runtime **polymorphism**.",
+          "body": "When you reference a subclass instance through a parent class variable and call an overridden method, the method corresponding to the actual object's type is executed.\n\nThis is the essence of runtime **polymorphism**.",
           "code": "// AnimalClass definition\nclass Animal {\n    // speakMethod definition\n    void speak() {\n        System.out.println(\"...\");\n    }\n}\n\n// DogClass definition\nclass Dog extends Animal {\n    @Override\n    // speakMethod definition\n    void speak() {\n        System.out.println(\"Woof\");\n    }\n}\n\n// CatClass definition\nclass Cat extends Animal {\n    @Override\n    void speak() {\n        System.out.println(\"Meow\");\n    }\n}\n\n// MainClass definition\npublic class Main {\n    public static void main(String[] args) {\n        Animal a1 = new Dog();  // Reference Dog with parent class type\n        Animal a2 = new Cat();  // Reference Cat with parent class type\n        a1.speak();  // Woof(Dog's speak() is called)\n        a2.speak();  // Meow(Cat's speak() is called)\n    }\n}",
           "note": "Lines starting with \"//\" are comments (explanatory notes). They do not affect program execution.",
           "order": 3

@@ -175,7 +175,7 @@ struct RichBodyView: View {
             let trimmed = s.trimmingCharacters(in: .whitespaces)
             if trimmed.isEmpty { return false }
             if trimmed.hasPrefix("|") { return false }
-            if trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}") { return false }
+            if trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}") || trimmed.hasPrefix("- ") { return false }
             if isNumberedLine(trimmed) { return false }
             // 元の行が先頭スペースを持つ（字下げ）場合は継続行
             let leadingSpaces = original.prefix(while: { $0 == " " || $0 == "\u{3000}" })
@@ -244,8 +244,8 @@ struct RichBodyView: View {
         for (lineIndex, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             let isTableLine = trimmed.hasPrefix("|") && trimmed.hasSuffix("|") && trimmed.filter({ $0 == "|" }).count >= 2
-            // ・(U+30FB) と •(U+2022) の両方を箇条書きとして認識
-            let isBulletLine = trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}")
+            // ・(U+30FB)、•(U+2022)、- (ハイフン+スペース) を箇条書きとして認識
+            let isBulletLine = trimmed.hasPrefix("\u{30FB}") || trimmed.hasPrefix("\u{2022}") || trimmed.hasPrefix("- ")
             let isNumLine = isNumberedLine(trimmed)
             let isContinuation = isNumberedContinuation(trimmed, original: line, lineIndex: lineIndex)
 
@@ -262,7 +262,7 @@ struct RichBodyView: View {
                 if inNumbered {
                     // 番号リスト項目の子箇条書き → 直前の項目に結合
                     if !numberedBuffer.isEmpty {
-                        let content = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
+                        let content = Self.stripBulletPrefix(trimmed)
                         numberedBuffer[numberedBuffer.count - 1] += "\n・" + content
                     }
                 } else {
@@ -270,8 +270,8 @@ struct RichBodyView: View {
                         flushText()
                         inBullet = true
                     }
-                    // 「・」または「•」を除去してテキスト部分のみ格納
-                    let content = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
+                    // 「・」「•」「- 」を除去してテキスト部分のみ格納
+                    let content = Self.stripBulletPrefix(trimmed)
                     bulletBuffer.append(content)
                 }
             } else if isNumLine {
@@ -304,6 +304,14 @@ struct RichBodyView: View {
         else { flushText() }
 
         return segments
+    }
+
+    /// 箇条書きプレフィックス（・, •, - ）を除去してテキスト部分を返す。
+    private static func stripBulletPrefix(_ text: String) -> String {
+        if text.hasPrefix("- ") {
+            return String(text.dropFirst(2)).trimmingCharacters(in: .whitespaces)
+        }
+        return String(text.dropFirst()).trimmingCharacters(in: .whitespaces)
     }
 
     /// テーブル行群を解析してParsedTableを生成する。
