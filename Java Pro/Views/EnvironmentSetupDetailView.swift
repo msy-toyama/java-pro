@@ -132,7 +132,7 @@ struct EnvironmentSetupDetailView: View {
                 title: "Windows での Java セットアップ",
                 iconName: "desktopcomputer",
                 steps: [
-                    SetupStep(id: "s1", title: "JDKをダウンロード", body: "Oracle公式サイトからJDK 17以降をダウンロードします。", code: nil, tip: "LTS版がおすすめです"),
+                    SetupStep(id: "s1", title: "JDKをダウンロード", body: "JDK公式配布サイト（Oracle / Adoptium 等）からJDK 17以降をダウンロードします。", code: nil, tip: "LTS版がおすすめです"),
                     SetupStep(id: "s2", title: "環境変数の設定", body: "JAVA_HOMEを設定しPATHに追加します。", code: "set JAVA_HOME=C:\\Program Files\\Java\\jdk-17", tip: nil)
                 ]
             )

@@ -33,7 +33,7 @@
           "title": "What is LTS (Long-Term Support)?",
           "body": "| Version | Release Year | LTS |\n|---|---|---|\n| Java 8 | 2014 | ○ LTS |\n| Java 11 | 2018 | ○ LTS |\n| Java 17 | 2021 | ○ LTS |\n| Java 21 | 2023 | ○ LTS |\n\nLTS versions receive long-term support from enterprises, making them the most commonly used versions in production.\nNon-LTS versions are released every six months but have shorter support periods.",
           "code": null,
-          "note": "Oracle certification exams target Java SE 11 and Java SE 17 versions.",
+          "note": "Java SE certification exams target the SE 11 and SE 17 versions.",
           "order": 3
         },
         {
