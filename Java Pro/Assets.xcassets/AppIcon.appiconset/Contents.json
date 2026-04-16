@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "logoV1.png",
+      "filename" : "logo_pu.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "logoV1 1.png",
+      "filename" : "logo_pu 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "logoV1 2.png",
+      "filename" : "logo_pu 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

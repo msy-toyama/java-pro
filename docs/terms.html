@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -298,6 +298,14 @@
             .nav-brand span{display:none}
             .page-header h1{font-size:1.25rem}
         }
+
+        /* ===== Language toggle ===== */
+        .lang-toggle{display:flex;gap:2px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-full);padding:2px;margin-left:8px}
+        .lang-toggle button{background:none;border:none;color:var(--text-3);font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:var(--r-full);cursor:pointer;transition:all .25s var(--ease);font-family:inherit}
+        .lang-toggle button.active{background:var(--accent-2);color:#fff}
+        .lang-toggle button:hover:not(.active){color:var(--text-1)}
+        html[data-lang="en"] .lang-ja{display:none!important}
+        html[data-lang="ja"] .lang-en{display:none!important}
     </style>
 </head>
 <body>
@@ -306,13 +314,13 @@
     <nav class="nav" id="navbar">
         <div class="nav-inner">
             <a href="home.html" class="nav-brand">
-                <div class="nav-logo">PP</div>
-                <span>プロプロ</span>
+                <span>プログラミングのプロになる</span>
             </a>
             <div class="nav-links">
-                <a href="home.html">ホーム</a>
-                <a href="terms.html" class="active">利用規約</a>
-                <a href="privacy.html">プライバシー</a>
+                <a href="home.html"><span class="lang-ja">ホーム</span><span class="lang-en">Home</span></a>
+                <a href="terms.html" class="active"><span class="lang-ja">利用規約</span><span class="lang-en">Terms</span></a>
+                <a href="privacy.html"><span class="lang-ja">プライバシー</span><span class="lang-en">Privacy</span></a>
+                <div class="lang-toggle"><button data-lang="ja" class="active">JP</button><button data-lang="en">EN</button></div>
             </div>
         </div>
     </nav>
@@ -322,171 +330,171 @@
         <!-- ヘッダー -->
         <div class="page-header">
             <div class="badge">&#128196; Terms of Service</div>
-            <h1>利用規約</h1>
-            <div class="updated">最終更新日: 2026年4月12日</div>
+            <h1><span class="lang-ja">利用規約</span><span class="lang-en">Terms of Service</span></h1>
+            <div class="updated"><span class="lang-ja">最終更新日: 2026年4月12日</span><span class="lang-en">Last updated: April 12, 2026</span></div>
         </div>
 
         <!-- 非公式バナー -->
         <div class="unofficial-banner">
             <div class="icon">&#9888;&#65039;</div>
             <div class="content">
-                <div class="title">非公式アプリケーションについて</div>
-                <p>プロプロ（プログラミングのプロになる -Java入門-）は Oracle 認定資格の学習を支援する<strong>非公式</strong>のアプリケーションです。Oracle Corporation、Pearson VUE、その他の試験実施機関による認定・推奨・後援を受けたものではありません。本アプリ内の模擬試験・学習コンテンツはすべて独自に作成されており、公式試験問題を含みません。</p>
+                <div class="title"><span class="lang-ja">非公式アプリケーションについて</span><span class="lang-en">Unofficial Application</span></div>
+                <p><span class="lang-ja">プロプロ（プログラミングのプロになる -Java入門-）は Oracle 認定資格の学習を支援する<strong>非公式</strong>のアプリケーションです。Oracle Corporation、Pearson VUE、その他の試験実施機関による認定・推奨・後援を受けたものではありません。本アプリ内の模擬試験・学習コンテンツはすべて独自に作成されており、公式試験問題を含みません。</span><span class="lang-en">ProPro (Become a Programming Pro - Java Intro -) is an <strong>unofficial</strong> application that supports Oracle certification study. It is not certified, endorsed, or sponsored by Oracle Corporation, Pearson VUE, or any other testing organization. All mock exams and learning content are independently created and do not contain official exam questions.</span></p>
             </div>
         </div>
 
         <!-- 目次 -->
         <div class="toc">
-            <div class="toc-title">目次</div>
+            <div class="toc-title"><span class="lang-ja">目次</span><span class="lang-en">Table of Contents</span></div>
             <ol>
-                <li><a href="#sec1" data-num="1.">適用</a></li>
-                <li><a href="#sec2" data-num="2.">サービスの内容</a></li>
-                <li><a href="#sec3" data-num="3.">無料範囲と課金</a></li>
-                <li><a href="#sec4" data-num="4.">知的財産権と商標</a></li>
-                <li><a href="#sec5" data-num="5.">非公式コンテンツ</a></li>
-                <li><a href="#sec6" data-num="6.">禁止事項</a></li>
-                <li><a href="#sec7" data-num="7.">免責事項</a></li>
-                <li><a href="#sec8" data-num="8.">学習データの取り扱い</a></li>
-                <li><a href="#sec9" data-num="9.">規約の変更</a></li>
-                <li><a href="#sec10" data-num="10.">準拠法・管轄</a></li>
+                <li><a href="#sec1" data-num="1."><span class="lang-ja">適用</span><span class="lang-en">Applicability</span></a></li>
+                <li><a href="#sec2" data-num="2."><span class="lang-ja">サービスの内容</span><span class="lang-en">Service Description</span></a></li>
+                <li><a href="#sec3" data-num="3."><span class="lang-ja">無料範囲と課金</span><span class="lang-en">Free Content & Pricing</span></a></li>
+                <li><a href="#sec4" data-num="4."><span class="lang-ja">知的財産権と商標</span><span class="lang-en">Intellectual Property</span></a></li>
+                <li><a href="#sec5" data-num="5."><span class="lang-ja">非公式コンテンツ</span><span class="lang-en">Unofficial Content</span></a></li>
+                <li><a href="#sec6" data-num="6."><span class="lang-ja">禁止事項</span><span class="lang-en">Prohibited Actions</span></a></li>
+                <li><a href="#sec7" data-num="7."><span class="lang-ja">免責事項</span><span class="lang-en">Disclaimer</span></a></li>
+                <li><a href="#sec8" data-num="8."><span class="lang-ja">学習データの取り扱い</span><span class="lang-en">Learning Data</span></a></li>
+                <li><a href="#sec9" data-num="9."><span class="lang-ja">規約の変更</span><span class="lang-en">Policy Changes</span></a></li>
+                <li><a href="#sec10" data-num="10."><span class="lang-ja">準拠法・管轄</span><span class="lang-en">Governing Law</span></a></li>
             </ol>
         </div>
 
         <!-- 第1条 -->
         <div class="section" id="sec1">
-            <h2><span class="num">1</span>適用</h2>
-            <p>本利用規約（以下「本規約」といいます）は、Masaya Kobayashi（以下「開発者」といいます）が提供する iOS アプリケーション「プログラミングのプロになる -Java入門-」（通称「プロプロ」、以下「本アプリ」といいます）の利用条件を定めるものです。</p>
-            <p>ユーザーは、本アプリをダウンロード、インストール、または使用することにより、本規約のすべての条項に同意したものとみなされます。本規約に同意いただけない場合は、本アプリの使用をお控えください。</p>
+            <h2><span class="num">1</span><span class="lang-ja">適用</span><span class="lang-en">Applicability</span></h2>
+            <p><span class="lang-ja">本利用規約（以下「本規約」といいます）は、Masaya Kobayashi（以下「開発者」といいます）が提供する iOS アプリケーション「プログラミングのプロになる -Java入門-」（通称「プロプロ」、以下「本アプリ」といいます）の利用条件を定めるものです。</span><span class="lang-en">These Terms of Service ("Terms") set forth the conditions for use of the iOS application "Become a Programming Pro - Java Intro -" ("ProPro" / "the App") provided by Masaya Kobayashi ("the Developer").</span></p>
+            <p><span class="lang-ja">ユーザーは、本アプリをダウンロード、インストール、または使用することにより、本規約のすべての条項に同意したものとみなされます。本規約に同意いただけない場合は、本アプリの使用をお控えください。</span><span class="lang-en">By downloading, installing, or using the App, you agree to all provisions of these Terms. If you do not agree, please refrain from using the App.</span></p>
         </div>
 
         <!-- 第2条 -->
         <div class="section" id="sec2">
-            <h2><span class="num">2</span>サービスの内容</h2>
-            <p>本アプリは、Java プログラミング言語の学習および Oracle Java 認定資格（SE 11 / SE 17 の Silver / Gold）の取得に向けた学習を支援する iOS アプリケーションです。以下の機能を提供します。</p>
+            <h2><span class="num">2</span><span class="lang-ja">サービスの内容</span><span class="lang-en">Service Description</span></h2>
+            <p><span class="lang-ja">本アプリは、Java プログラミング言語の学習および Oracle Java 認定資格（SE 11 / SE 17 の Silver / Gold）の取得に向けた学習を支援する iOS アプリケーションです。以下の機能を提供します。</span><span class="lang-en">The App is an iOS application that supports learning the Java programming language and preparing for Oracle Java certifications (SE 11 / SE 17 Silver / Gold). It provides the following features.</span></p>
             <ol>
-                <li>体系的な Java 学習コンテンツ（全34コース・169レッスン）の閲覧</li>
-                <li>多様なクイズ形式による理解度確認（四択・複数選択・穴埋め・並び替え・出力予測・エラー発見・コード補完・試験形式の全8種、計575問）</li>
-                <li>実践演習（39チャプター・108問）および Java 環境構築ガイド（5セクション）</li>
-                <li>非公式模擬試験の受験（SE11/SE17 &#215; Silver/Gold &#215; 各2セット = 計8種・690問）</li>
-                <li>学習進捗の管理およびゲーミフィケーション（XP・バッジ・レベル・連続学習日数）</li>
-                <li>弱点分析・資格別進捗トラッキング</li>
-                <li>間隔反復法に基づく復習システム（4段階：即時&#8594; 24時間 &#8594; 3日 &#8594; 7日 &#8594; 習得完了）</li>
-                <li>Java 用語集（202語）の閲覧・検索</li>
-                <li>学習リマインダー通知（ローカル通知）</li>
-                <li>初回利用時のガイドツアー（各画面の使い方案内）</li>
+                <li><span class="lang-ja">体系的な Java 学習コンテンツ（全34コース・169レッスン）の閲覧</span><span class="lang-en">Structured Java learning content (34 courses, 169 lessons)</span></li>
+                <li><span class="lang-ja">多様なクイズ形式による理解度確認（四択・複数選択・穴埋め・並び替え・出力予測・エラー発見・コード補完・試験形式の全8種、計575問）</span><span class="lang-en">Comprehension quizzes in 8 formats (multiple choice, multi-select, fill-in-the-blank, reorder, output prediction, error detection, code completion, exam format — 575 questions)</span></li>
+                <li><span class="lang-ja">実践演習（39チャプター・108問）および Java 環境構築ガイド（5セクション）</span><span class="lang-en">Practice exercises (39 chapters, 108 problems) and Java environment setup guide (5 sections)</span></li>
+                <li><span class="lang-ja">非公式模擬試験の受験（SE11/SE17 &#215; Silver/Gold &#215; 各2セット = 計8種・690問）</span><span class="lang-en">Unofficial mock exams (SE11/SE17 × Silver/Gold × 2 sets each = 8 types, 690 questions)</span></li>
+                <li><span class="lang-ja">学習進捗の管理およびゲーミフィケーション（XP・バッジ・レベル・連続学習日数）</span><span class="lang-en">Study progress management and gamification (XP, badges, levels, study streaks)</span></li>
+                <li><span class="lang-ja">弱点分析・資格別進捗トラッキング</span><span class="lang-en">Weakness analysis and certification-specific progress tracking</span></li>
+                <li><span class="lang-ja">間隔反復法に基づく復習システム（4段階：即時&#8594; 24時間 &#8594; 3日 &#8594; 7日 &#8594; 習得完了）</span><span class="lang-en">Spaced repetition review system (4 levels: immediate → 24h → 3 days → 7 days → mastered)</span></li>
+                <li><span class="lang-ja">Java 用語集（202語）の閲覧・検索</span><span class="lang-en">Java glossary (202 terms) browsing and search</span></li>
+                <li><span class="lang-ja">学習リマインダー通知（ローカル通知）</span><span class="lang-en">Study reminder notifications (local notifications)</span></li>
+                <li><span class="lang-ja">初回利用時のガイドツアー（各画面の使い方案内）</span><span class="lang-en">First-use guided tour (how-to for each screen)</span></li>
             </ol>
             <div class="highlight">
-                <p>本アプリは Java 学習を支援するツールであり、資格試験の合格を保証するものではありません。</p>
+                <p><span class="lang-ja">本アプリは Java 学習を支援するツールであり、資格試験の合格を保証するものではありません。</span><span class="lang-en">The App is a Java learning support tool and does not guarantee passing any certification exam.</span></p>
             </div>
         </div>
 
         <!-- 第3条 -->
         <div class="section" id="sec3">
-            <h2><span class="num">3</span>無料範囲と課金</h2>
+            <h2><span class="num">3</span><span class="lang-ja">無料範囲と課金</span><span class="lang-en">Free Content & Pricing</span></h2>
             <ol>
-                <li><strong>無料コンテンツ:</strong> 本アプリは無料でダウンロードできます。入門コース（Beginner 8コース・46レッスンの全レッスン・クイズ）、SE11 Silver 模擬試験1、用語集、バッジ・レベルシステム、復習機能、環境構築ガイドは無料でご利用いただけます。</li>
-                <li><strong>フルアクセス（買い切り &#165;480）:</strong> Silver / Gold 範囲のコース、残り7種の模擬試験、および有料実践演習をご利用いただくには、アプリ内課金（買い切り）による「フルアクセス」の購入が必要です。サブスクリプション（月額・年額課金）ではありません。</li>
-                <li><strong>決済:</strong> 購入は Apple の App Store 決済を通じて行われます。課金・返金については <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener noreferrer">Apple メディアサービス利用規約</a> に準拠します。</li>
-                <li><strong>購入の復元:</strong> 機種変更やアプリの再インストール時は、設定画面の「購入を復元」ボタンから購入済みの権利を復元できます。</li>
+                <li><span class="lang-ja"><strong>無料コンテンツ:</strong> 本アプリは無料でダウンロードできます。入門コース（Beginner 8コース・46レッスンの全レッスン・クイズ）、SE11 Silver 模擬試験1、用語集、バッジ・レベルシステム、復習機能、環境構築ガイドは無料でご利用いただけます。</span><span class="lang-en"><strong>Free Content:</strong> The App is free to download. Beginner courses (8 courses, 46 lessons with all quizzes), SE11 Silver Mock Exam 1, glossary, badge/level system, review feature, and environment setup guide are available for free.</span></li>
+                <li><span class="lang-ja"><strong>フルアクセス（買い切り &#165;480）:</strong> Silver / Gold 範囲のコース、残り7種の模擬試験、および有料実践演習をご利用いただくには、アプリ内課金（買い切り）による「フルアクセス」の購入が必要です。サブスクリプション（月額・年額課金）ではありません。</span><span class="lang-en"><strong>Full Access (¥480, one-time):</strong> To access Silver/Gold courses, remaining 7 mock exams, and paid practice exercises, a one-time in-app purchase of "Full Access" is required. This is not a subscription.</span></li>
+                <li><span class="lang-ja"><strong>決済:</strong> 購入は Apple の App Store 決済を通じて行われます。課金・返金については <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener noreferrer">Apple メディアサービス利用規約</a> に準拠します。</span><span class="lang-en"><strong>Payment:</strong> Purchases are processed through Apple's App Store. Billing and refunds are governed by <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener noreferrer">Apple Media Services Terms</a>.</span></li>
+                <li><span class="lang-ja"><strong>購入の復元:</strong> 機種変更やアプリの再インストール時は、設定画面の「購入を復元」ボタンから購入済みの権利を復元できます。</span><span class="lang-en"><strong>Restore Purchase:</strong> When switching devices or reinstalling the App, use the "Restore Purchases" button in Settings to restore your purchase.</span></li>
             </ol>
         </div>
 
         <!-- 第4条 -->
         <div class="section" id="sec4">
-            <h2><span class="num">4</span>知的財産権と商標</h2>
+            <h2><span class="num">4</span><span class="lang-ja">知的財産権と商標</span><span class="lang-en">Intellectual Property & Trademarks</span></h2>
             <ol>
-                <li>本アプリに含まれるすべてのコンテンツ（テキスト、コード例、クイズ問題、解説、デザイン、アイコン等）の著作権は、別段の記載がない限り開発者に帰属します。</li>
-                <li>「Java」「Oracle」「Oracle Certified Professional」は Oracle Corporation およびその関連会社の登録商標または商標です。その他の商標はすべて各権利者に帰属します。</li>
-                <li>本アプリにおけるこれら商標の使用は、対応する資格試験の学習コンテンツを説明する目的に限定されます。</li>
+                <li><span class="lang-ja">本アプリに含まれるすべてのコンテンツ（テキスト、コード例、クイズ問題、解説、デザイン、アイコン等）の著作権は、別段の記載がない限り開発者に帰属します。</span><span class="lang-en">All content in the App (text, code examples, quiz questions, explanations, design, icons, etc.) is copyrighted by the Developer unless otherwise noted.</span></li>
+                <li><span class="lang-ja">「Java」「Oracle」「Oracle Certified Professional」は Oracle Corporation およびその関連会社の登録商標または商標です。その他の商標はすべて各権利者に帰属します。</span><span class="lang-en">"Java", "Oracle", and "Oracle Certified Professional" are registered trademarks of Oracle Corporation. All other trademarks belong to their respective owners.</span></li>
+                <li><span class="lang-ja">本アプリにおけるこれら商標の使用は、対応する資格試験の学習コンテンツを説明する目的に限定されます。</span><span class="lang-en">Use of these trademarks in the App is limited to describing learning content for the corresponding certification exams.</span></li>
             </ol>
         </div>
 
         <!-- 第5条 -->
         <div class="section" id="sec5">
-            <h2><span class="num">5</span>非公式コンテンツに関する重要事項</h2>
+            <h2><span class="num">5</span><span class="lang-ja">非公式コンテンツに関する重要事項</span><span class="lang-en">Important Notice About Unofficial Content</span></h2>
             <div class="highlight">
-                <p>本条は、本アプリと Oracle 認定資格試験の関係について重要な内容を記載しています。必ずお読みください。</p>
+                <p><span class="lang-ja">本条は、本アプリと Oracle 認定資格試験の関係について重要な内容を記載しています。必ずお読みください。</span><span class="lang-en">This section contains important information about the App's relationship with Oracle certifications. Please read carefully.</span></p>
             </div>
             <ol>
-                <li>本アプリは Oracle Corporation、Pearson VUE、その他の認定試験実施機関とは<strong>一切関係のない非公式な学習支援アプリケーション</strong>です。いかなる認定・推奨・後援も受けておりません。</li>
-                <li>本アプリ内の模擬試験問題はすべて開発者が独自に作成したものであり、<strong>Oracle の公式試験問題（実試験で出題される問題）を一切含みません</strong>。出題形式・難易度・範囲は公式試験と異なる場合があります。</li>
-                <li>本アプリでの学習成績や模擬試験の結果は、実際の Oracle 認定試験の合否を予測・保証するものではありません。</li>
-                <li>Oracle 認定資格試験に関する最新の出題範囲・試験形式・合格基準・受験方法等は、必ず <a href="https://education.oracle.com/ja/" target="_blank" rel="noopener noreferrer">Oracle University 公式サイト</a> でご確認ください。</li>
+                <li><span class="lang-ja">本アプリは Oracle Corporation、Pearson VUE、その他の認定試験実施機関とは<strong>一切関係のない非公式な学習支援アプリケーション</strong>です。いかなる認定・推奨・後援も受けておりません。</span><span class="lang-en">The App is an <strong>unofficial learning support application</strong> with no affiliation to Oracle Corporation, Pearson VUE, or any other certification body.</span></li>
+                <li><span class="lang-ja">本アプリ内の模擬試験問題はすべて開発者が独自に作成したものであり、<strong>Oracle の公式試験問題（実試験で出題される問題）を一切含みません</strong>。出題形式・難易度・範囲は公式試験と異なる場合があります。</span><span class="lang-en">All mock exam questions are independently created by the Developer and <strong>do not contain any official Oracle exam questions</strong>. Format, difficulty, and scope may differ from official exams.</span></li>
+                <li><span class="lang-ja">本アプリでの学習成績や模擬試験の結果は、実際の Oracle 認定試験の合否を予測・保証するものではありません。</span><span class="lang-en">Study results and mock exam scores do not predict or guarantee results on actual Oracle certification exams.</span></li>
+                <li><span class="lang-ja">Oracle 認定資格試験に関する最新の出題範囲・試験形式・合格基準・受験方法等は、必ず <a href="https://education.oracle.com/ja/" target="_blank" rel="noopener noreferrer">Oracle University 公式サイト</a> でご確認ください。</span><span class="lang-en">For the latest exam scope, format, passing criteria, and registration, please visit the <a href="https://education.oracle.com/" target="_blank" rel="noopener noreferrer">Oracle University official website</a>.</span></li>
             </ol>
         </div>
 
         <!-- 第6条 -->
         <div class="section" id="sec6">
-            <h2><span class="num">6</span>禁止事項</h2>
-            <p>ユーザーは、本アプリの利用にあたり、以下の行為を行ってはなりません。</p>
+            <h2><span class="num">6</span><span class="lang-ja">禁止事項</span><span class="lang-en">Prohibited Actions</span></h2>
+            <p><span class="lang-ja">ユーザーは、本アプリの利用にあたり、以下の行為を行ってはなりません。</span><span class="lang-en">Users must not engage in any of the following actions when using the App.</span></p>
             <ol>
-                <li>本アプリのコンテンツ（問題文、解説、コード例等）を無断で複製、転載、配布、販売、または二次利用する行為</li>
-                <li>本アプリのリバースエンジニアリング、逆コンパイル、逆アセンブル、またはソースコードの抽出を試みる行為</li>
-                <li>不正な手段による課金の回避、アプリの改ざん、または不正利用を行う行為</li>
-                <li>本アプリの運営を妨害し、他のユーザーの利用を阻害する行為</li>
-                <li>法令、公序良俗、または本規約に違反する行為</li>
+                <li><span class="lang-ja">本アプリのコンテンツ（問題文、解説、コード例等）を無断で複製、転載、配布、販売、または二次利用する行為</span><span class="lang-en">Copying, reprinting, distributing, selling, or repurposing content (questions, explanations, code examples, etc.) without permission</span></li>
+                <li><span class="lang-ja">本アプリのリバースエンジニアリング、逆コンパイル、逆アセンブル、またはソースコードの抽出を試みる行為</span><span class="lang-en">Reverse engineering, decompiling, disassembling, or attempting to extract source code</span></li>
+                <li><span class="lang-ja">不正な手段による課金の回避、アプリの改ざん、または不正利用を行う行為</span><span class="lang-en">Circumventing payments, modifying the App, or engaging in unauthorized use</span></li>
+                <li><span class="lang-ja">本アプリの運営を妨害し、他のユーザーの利用を阻害する行為</span><span class="lang-en">Interfering with the App's operation or obstructing other users</span></li>
+                <li><span class="lang-ja">法令、公序良俗、または本規約に違反する行為</span><span class="lang-en">Violating laws, public order, or these Terms</span></li>
             </ol>
         </div>
 
         <!-- 第7条 -->
         <div class="section" id="sec7">
-            <h2><span class="num">7</span>免責事項</h2>
+            <h2><span class="num">7</span><span class="lang-ja">免責事項</span><span class="lang-en">Disclaimer</span></h2>
             <ol>
-                <li>本アプリは「現状のまま（as is）」で提供されます。特定目的への適合性、正確性、完全性について、明示・黙示を問わず一切の保証を行いません。</li>
-                <li>開発者はコンテンツの正確性向上に最善の努力を尽くしますが、Java 言語仕様の更新や Oracle 認定試験の出題範囲の変更に即座に対応できない場合があります。</li>
-                <li>本アプリの利用または利用不能により生じた直接的・間接的な損害について、開発者は法令で許容される範囲において一切の責任を負いません。</li>
-                <li>本アプリは予告なくサービスの内容変更、一時停止、または終了を行う場合があります。</li>
-                <li>通信障害、端末の故障、OS アップデート等の外的要因による不具合について、開発者は責任を負いません。</li>
+                <li><span class="lang-ja">本アプリは「現状のまま（as is）」で提供されます。特定目的への適合性、正確性、完全性について、明示・黙示を問わず一切の保証を行いません。</span><span class="lang-en">The App is provided "as is". No warranties, express or implied, are made regarding fitness for a particular purpose, accuracy, or completeness.</span></li>
+                <li><span class="lang-ja">開発者はコンテンツの正確性向上に最善の努力を尽くしますが、Java 言語仕様の更新や Oracle 認定試験の出題範囲の変更に即座に対応できない場合があります。</span><span class="lang-en">The Developer strives for content accuracy but may not immediately reflect Java specification updates or Oracle exam scope changes.</span></li>
+                <li><span class="lang-ja">本アプリの利用または利用不能により生じた直接的・間接的な損害について、開発者は法令で許容される範囲において一切の責任を負いません。</span><span class="lang-en">The Developer is not liable for any direct or indirect damages arising from use or inability to use the App, to the extent permitted by law.</span></li>
+                <li><span class="lang-ja">本アプリは予告なくサービスの内容変更、一時停止、または終了を行う場合があります。</span><span class="lang-en">The App may change, suspend, or terminate services without prior notice.</span></li>
+                <li><span class="lang-ja">通信障害、端末の故障、OS アップデート等の外的要因による不具合について、開発者は責任を負いません。</span><span class="lang-en">The Developer is not responsible for issues caused by network failures, device malfunction, OS updates, or other external factors.</span></li>
             </ol>
         </div>
 
         <!-- 第8条 -->
         <div class="section" id="sec8">
-            <h2><span class="num">8</span>学習データの取り扱い</h2>
+            <h2><span class="num">8</span><span class="lang-ja">学習データの取り扱い</span><span class="lang-en">Learning Data</span></h2>
             <ol>
-                <li>学習進捗、クイズ結果、模擬試験スコア等のデータは、すべて<strong>ユーザーの端末内にのみ保存</strong>されます。外部サーバーへの送信は一切行いません。</li>
-                <li>アプリのアンインストールまたは設定画面の「学習データをリセット」操作により、学習データは完全に消失します。開発者はデータの復元について一切の責任を負いません。</li>
-                <li>なお、アプリ内課金（フルアクセス）の購入権利は Apple アカウントに紐づいているため、「購入を復元」機能で回復できます。</li>
+                <li><span class="lang-ja">学習進捗、クイズ結果、模擬試験スコア等のデータは、すべて<strong>ユーザーの端末内にのみ保存</strong>されます。外部サーバーへの送信は一切行いません。</span><span class="lang-en">Study progress, quiz results, mock exam scores, and other data are <strong>stored only on the user's device</strong>. No data is sent to external servers.</span></li>
+                <li><span class="lang-ja">アプリのアンインストールまたは設定画面の「学習データをリセット」操作により、学習データは完全に消失します。開発者はデータの復元について一切の責任を負いません。</span><span class="lang-en">Uninstalling the App or using "Reset Learning Data" in Settings will permanently delete all learning data. The Developer is not responsible for data recovery.</span></li>
+                <li><span class="lang-ja">なお、アプリ内課金（フルアクセス）の購入権利は Apple アカウントに紐づいているため、「購入を復元」機能で回復できます。</span><span class="lang-en">The Full Access purchase is tied to your Apple account and can be restored via "Restore Purchases".</span></li>
             </ol>
-            <p>データの取り扱いに関する詳細は <a href="privacy.html">プライバシーポリシー</a> をご確認ください。</p>
+            <p><span class="lang-ja">データの取り扱いに関する詳細は <a href="privacy.html">プライバシーポリシー</a> をご確認ください。</span><span class="lang-en">For details on data handling, please see our <a href="privacy.html">Privacy Policy</a>.</span></p>
         </div>
 
         <!-- 第9条 -->
         <div class="section" id="sec9">
-            <h2><span class="num">9</span>規約の変更</h2>
-            <p>開発者は、法令の改正、サービス内容の変更、その他必要に応じて本規約を変更できるものとします。重要な変更を行う場合は、本アプリ内の通知または本ページの更新により周知します。</p>
-            <p>変更後の規約は公開された時点から効力を生じ、変更後に本アプリの利用を継続した場合は、変更後の規約に同意したものとみなされます。</p>
+            <h2><span class="num">9</span><span class="lang-ja">規約の変更</span><span class="lang-en">Changes to Terms</span></h2>
+            <p><span class="lang-ja">開発者は、法令の改正、サービス内容の変更、その他必要に応じて本規約を変更できるものとします。重要な変更を行う場合は、本アプリ内の通知または本ページの更新により周知します。</span><span class="lang-en">The Developer may modify these Terms in response to legal changes, service updates, or other needs. Significant changes will be communicated via in-app notification or updates to this page.</span></p>
+            <p><span class="lang-ja">変更後の規約は公開された時点から効力を生じ、変更後に本アプリの利用を継続した場合は、変更後の規約に同意したものとみなされます。</span><span class="lang-en">Updated Terms take effect upon publication. Continued use of the App after changes constitutes acceptance of the updated Terms.</span></p>
         </div>
 
         <!-- 第10条 -->
         <div class="section" id="sec10">
-            <h2><span class="num">10</span>準拠法・管轄</h2>
-            <p>本規約は日本国法に準拠し、日本国法に従って解釈されるものとします。本規約に関する一切の紛争については、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+            <h2><span class="num">10</span><span class="lang-ja">準拠法・管轄</span><span class="lang-en">Governing Law & Jurisdiction</span></h2>
+            <p><span class="lang-ja">本規約は日本国法に準拠し、日本国法に従って解釈されるものとします。本規約に関する一切の紛争については、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</span><span class="lang-en">These Terms are governed by and construed in accordance with the laws of Japan. The Tokyo District Court shall have exclusive jurisdiction as the court of first instance for any disputes.</span></p>
         </div>
 
         <!-- 信頼バッジ -->
         <div class="trust-badges">
             <div class="trust-badge">
                 <div class="icon">&#128274;</div>
-                <div class="label">データ端末内保存</div>
-                <div class="desc">個人情報の収集・外部送信は一切ありません</div>
+                <div class="label"><span class="lang-ja">データ端末内保存</span><span class="lang-en">On-Device Data</span></div>
+                <div class="desc"><span class="lang-ja">個人情報の収集・外部送信は一切ありません</span><span class="lang-en">No personal data collection or external transmission</span></div>
             </div>
             <div class="trust-badge">
                 <div class="icon">&#128142;</div>
-                <div class="label">買い切り課金</div>
-                <div class="desc">サブスク不要。一度の購入で全機能を永久利用</div>
+                <div class="label"><span class="lang-ja">買い切り課金</span><span class="lang-en">One-Time Purchase</span></div>
+                <div class="desc"><span class="lang-ja">サブスク不要。一度の購入で全機能を永久利用</span><span class="lang-en">No subscription. Full lifetime access with one purchase</span></div>
             </div>
             <div class="trust-badge">
                 <div class="icon">&#128221;</div>
-                <div class="label">独自作成コンテンツ</div>
-                <div class="desc">全問題・解説を独自に作成。公式問題は不使用</div>
+                <div class="label"><span class="lang-ja">独自作成コンテンツ</span><span class="lang-en">Original Content</span></div>
+                <div class="desc"><span class="lang-ja">全問題・解説を独自に作成。公式問題は不使用</span><span class="lang-en">All questions & explanations independently created</span></div>
             </div>
         </div>
 
         <!-- お問い合わせ -->
         <div class="contact-section">
-            <h2>お問い合わせ</h2>
-            <p>本規約に関するご質問やご意見は、Instagram DM にてお気軽にお問い合わせください。</p>
+            <h2><span class="lang-ja">お問い合わせ</span><span class="lang-en">Contact</span></h2>
+            <p><span class="lang-ja">本規約に関するご質問やご意見は、Instagram DM にてお気軽にお問い合わせください。</span><span class="lang-en">For questions or feedback about these Terms, please contact us via Instagram DM.</span></p>
             <a href="https://www.instagram.com/photoyasan16" target="_blank" rel="noopener noreferrer" class="instagram-link">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 @photoyasan16
@@ -499,21 +507,21 @@
     <footer class="footer">
         <div class="footer-grid">
             <div>
-                <div class="footer-brand"><div class="footer-logo">PP</div><span class="footer-brand-name">プロプロ</span></div>
-                <p class="footer-desc">プログラミングのプロになる -Java入門-<br>Java SE資格試験の出題範囲を網羅した本格学習アプリ。</p>
+                <div class="footer-brand"><span class="footer-brand-name">プログラミングのプロになる</span></div>
+                <p class="footer-desc"><span class="lang-ja">プログラミングのプロになる -Java入門-<br>Java SE資格試験の出題範囲を網羅した本格学習アプリ。</span><span class="lang-en">Become a Programming Pro - Java Intro -<br>A comprehensive Java learning app covering SE certification topics.</span></p>
             </div>
             <div>
-                <h4>リンク</h4>
-                <ul class="footer-links"><li><a href="home.html">ホーム</a></li></ul>
+                <h4><span class="lang-ja">リンク</span><span class="lang-en">Links</span></h4>
+                <ul class="footer-links"><li><a href="home.html"><span class="lang-ja">ホーム</span><span class="lang-en">Home</span></a></li></ul>
             </div>
             <div>
-                <h4>法的情報</h4>
-                <ul class="footer-links"><li><a href="terms.html">利用規約</a></li><li><a href="privacy.html">プライバシーポリシー</a></li><li><a href="https://www.instagram.com/photoyasan16" target="_blank" rel="noopener noreferrer">Instagram</a></li></ul>
+                <h4><span class="lang-ja">法的情報</span><span class="lang-en">Legal</span></h4>
+                <ul class="footer-links"><li><a href="terms.html"><span class="lang-ja">利用規約</span><span class="lang-en">Terms of Service</span></a></li><li><a href="privacy.html"><span class="lang-ja">プライバシーポリシー</span><span class="lang-en">Privacy Policy</span></a></li><li><a href="https://www.instagram.com/photoyasan16" target="_blank" rel="noopener noreferrer">Instagram</a></li></ul>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="footer-copy">&copy; 2026 Masaya Kobayashi. All rights reserved.</div>
-            <div class="footer-disc">「Java」「Oracle」「Oracle Certified Professional」は Oracle Corporation の登録商標です。<br>プロプロ は Oracle Corporation とは一切関係のない非公式アプリケーションです。</div>
+            <div class="footer-disc"><span class="lang-ja">「Java」「Oracle」「Oracle Certified Professional」は Oracle Corporation の登録商標です。<br>プロプロ は Oracle Corporation とは一切関係のない非公式アプリケーションです。</span><span class="lang-en">"Java", "Oracle", and "Oracle Certified Professional" are registered trademarks of Oracle Corporation.<br>ProPro is an unofficial application and is not affiliated with Oracle Corporation.</span></div>
         </div>
     </footer>
 
@@ -534,6 +542,25 @@
         window.addEventListener('scroll', () => {
             btt.classList.toggle('vis', window.scrollY > 400);
         }, { passive: true });
+
+        /* Language toggle */
+        function setLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            document.documentElement.lang = lang;
+            localStorage.setItem('pp-lang', lang);
+            document.querySelectorAll('.lang-toggle button').forEach(b => {
+                b.classList.toggle('active', b.dataset.lang === lang);
+            });
+        }
+        document.querySelectorAll('.lang-toggle button').forEach(b => {
+            b.addEventListener('click', () => setLang(b.dataset.lang));
+        });
+        (function() {
+            const saved = localStorage.getItem('pp-lang');
+            if (saved) { setLang(saved); return; }
+            const browserLang = navigator.language || navigator.userLanguage || 'ja';
+            setLang(browserLang.startsWith('ja') ? 'ja' : 'en');
+        })();
     </script>
 </body>
 </html>
